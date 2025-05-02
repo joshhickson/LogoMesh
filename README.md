@@ -1,6 +1,6 @@
 
 # 🧠 ThoughtWeb
-
+https://discord.gg/6ydDxzMjvD
 ThoughtWeb is a visual thinking tool built in React that allows you to create, organize, and navigate complex thoughts through interconnected thought bubbles, nested segments, and flexible metadata filtering.
 
 Designed as a **personal knowledge graph meets mind-mapping engine**, ThoughtWeb supports segment-level filtering, AI-ready JSON export, and deep extensibility — perfect for building your own second brain.
