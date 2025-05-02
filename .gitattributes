@@ -1,0 +1,27 @@
+# Normalize line endings
+* text=auto eol=lf
+
+# Set consistent language-specific behavior
+*.js     text eol=lf
+*.jsx    text eol=lf
+*.json   text eol=lf
+*.css    text eol=lf
+*.html   text eol=lf
+*.md     text eol=lf
+*.ts     text eol=lf
+*.tsx    text eol=lf
+
+# Prevent binary files from being modified
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.svg    binary
+*.ico    binary
+*.ttf    binary
+*.woff   binary
+*.woff2  binary
+
+# Exclude OS-generated files
+.DS_Store  export-ignore
+Thumbs.db  export-ignore
