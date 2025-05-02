@@ -34,6 +34,24 @@ ThoughtWeb is not just a mind map. It's a **thinking OS**.
 
 ---
 
+## 🧭 Why ThoughtWeb Exists
+
+ThoughtWeb is more than a note-taking tool—it is a cognitive interface for building, evolving, and aligning conceptual thought. Where others embed abstractions deep inside machine layers, ThoughtWeb empowers users to map and refine their own reasoning in a persistent, interpretable structure.
+
+This system prioritizes:
+
+- **Human agency** over black-box automation  
+- **Conceptual clarity** over raw token fluency  
+- **Transparency** over model opacity  
+- **Cognitive fingerprinting** over one-size-fits-all prompts  
+- **Sovereignty** over dependency
+
+Rather than tuning intelligence for benchmark performance, ThoughtWeb externalizes it—anchoring ideas in field-tagged, modular segments that can evolve, connect, and persist beyond any single interaction. It provides both the interface and infrastructure for humans to *think with structure*, organize insight, and optionally guide AI systems through grounded abstraction rather than shallow pattern-matching.
+
+ThoughtWeb is a framework for truth-driven intelligence—**a system for thinking, not just outputting.**
+
+---
+
 ## ⚙️ Stack
 
 - **React + Tailwind** (lightweight, hot-reloadable UI)
@@ -95,32 +113,31 @@ Each file exported from ThoughtWeb follows this schema:
     }
   ]
 }
+```
 
-🚧 Development Tasks (Ongoing)
+---
 
-Fix segment field entry (buttons work but need stable update)
+## 🚧 Development Tasks (Ongoing)
 
-Add vector embedding generation
+- Fix segment field entry (buttons work but need stable update)
+- Add vector embedding generation
+- Allow real-time field-type filtering (e.g. numeric range queries)
+- Add collaboration features (multi-user or versioned sync)
+- Add Thought Timeline view (sort by created_at)
+- Export preset filters / views for fast context switching
 
-Allow real-time field-type filtering (e.g. numeric range queries)
+---
 
-Add collaboration features (multi-user or versioned sync)
+## 🧠 Developer Philosophy
 
-Add Thought Timeline view (sort by created_at)
+- Always prefer structured flexibility over rigid constraints.
+- The system should teach itself to the user through use.
+- Everything that matters must be exportable and portable.
+- The codebase should never assume “this is how people think” — it should adapt to how people evolve their thinking.
 
-    Export preset filters / views for fast context switching
+---
 
-🧠 Developer Philosophy
-
-    Always prefer structured flexibility over rigid constraints.
-
-    The system should teach itself to the user through use.
-
-    Everything that matters must be exportable and portable.
-
-    The codebase should never assume “this is how people think” — it should adapt to how people evolve their thinking.
-
-✨ Final Note
+## ✨ Final Note
 
 If you're reading this, you’re not just coding — you’re helping build a better way to think.
 
