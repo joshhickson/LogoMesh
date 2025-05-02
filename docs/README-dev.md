@@ -1,5 +1,7 @@
 # 🧠 ThoughtWeb — Developer Onboarding
 
+https://discord.gg/6ydDxzMjvD
+
 Welcome to the core of ThoughtWeb: a schema-driven, AI-ready, visually organized thought engine designed for flexible knowledge structuring, deep filtering, and scalable augmentation.
 
 This document exists to help new contributors or returning developers quickly get up to speed on what ThoughtWeb is — and how to develop inside it.
