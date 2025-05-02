@@ -1,3 +1,154 @@
+Absolutely — I just reviewed your public repo: ✅ **`https://github.com/joshhickson/thought-web`**
+It’s clean and ready for a strong `README.md`.
+
+Here’s a **starter README** tailored specifically for your project, based on what you’ve built so far:
+
+---
+
+## 📘 `README.md` for `thought-web`
+
+````markdown
+# 🧠 ThoughtWeb
+
+ThoughtWeb is a visual thinking tool built in React that allows you to create, organize, and navigate complex thoughts through interconnected thought bubbles, nested segments, and flexible metadata filtering.
+
+Designed as a **personal knowledge graph meets mind-mapping engine**, ThoughtWeb supports segment-level filtering, AI-ready JSON export, and deep extensibility — perfect for building your own second brain.
+
+---
+
+## 🔧 Features
+
+- 📌 **Thought Bubbles** with customizable title, description, tags, and color
+- 🧩 **Nested Segments** inside each thought, each with their own title, content, and attributes
+- 🏷️ **Multi-attribute Classification** per segment (field name, value, and type)
+- 🔍 **Advanced Filtering** by attribute field name, field type, and field value
+- 🌈 **Canvas Highlighting** of matching bubbles (non-matches fade)
+- 🎨 **Light/Dark Mode Toggle**
+- 📤 **Export all or filtered thoughts** to JSON (AI-parsable structure)
+- 📥 **Import JSON backups**
+- 🛠️ **Batch Editing Tools** — apply tags or color to filtered results
+- 🧪 **Scalable Architecture** for AI integration and custom visualizations
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/joshhickson/thought-web.git
+cd thought-web
+````
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Start local server
+
+```bash
+npm start
+```
+
+Visit `http://localhost:3000` in your browser.
+
+---
+
+## 📦 Build for Static Export
+
+```bash
+npm run build
+```
+
+This creates a `build/` folder you can upload or open offline.
+Perfect for iPad/iPhone use or PWA setup.
+
+---
+
+## 🧠 JSON Schema Overview
+
+Thoughts are saved locally and exported as structured JSON:
+
+```json
+{
+  "id": "bubble-001",
+  "title": "Example Thought",
+  "description": "A high-level idea.",
+  "tags": [{ "name": "philosophy", "color": "#f97316" }],
+  "color": "#f97316",
+  "position": { "x": 123, "y": 456 },
+  "segments": [
+    {
+      "id": "segment-001",
+      "title": "Key Quote",
+      "content": "We hold these truths...",
+      "attributes": [
+        {
+          "fieldName": "Segment Concept",
+          "fieldValue": "Quote",
+          "fieldType": "text"
+        },
+        ...
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## 🛣️ Roadmap
+
+* [x] Filtered export
+* [x] Multi-select filtering
+* [x] Canvas visualization
+* [x] Batch editing
+* [ ] Segment editing
+* [ ] AI-assisted input
+* [ ] Timeline view
+* [ ] Filter presets
+
+---
+
+## 📄 License
+
+MIT — free to fork, remix, and evolve.
+
+---
+
+## ✨ Created by [Josh Hickson](https://github.com/joshhickson)
+
+````
+
+---
+
+### ✅ What to do next:
+
+1. Copy this into a new file: `/thought-web/README.md`
+2. Commit & push:
+```bash
+git add README.md
+git commit -m "Add project README"
+git push
+````
+
+---
+
+Would you like me to:
+
+* Generate a **logo or header banner** for your README?
+* Help create **GitHub issue templates** or **feature labels** for version tracking?
+
+You’re now officially in pro territory — let’s level up the polish if you want to keep pushing! 🚀
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
