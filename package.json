@@ -44,11 +44,6 @@
     "jest": "^27.5.1"
   },
   "jest": {
-    "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
-    "moduleFileExtensions": ["js", "jsx"],
-    "transform": {
-      "^.+\\.[tj]sx?$": "babel-jest"
-    }
+    "testEnvironment": "jsdom"
   }
 }
