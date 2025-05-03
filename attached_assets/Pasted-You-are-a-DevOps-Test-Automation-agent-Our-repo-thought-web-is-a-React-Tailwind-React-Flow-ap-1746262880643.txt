@@ -1,0 +1,107 @@
+You are a DevOps & Test Automation agent.  
+Our repo `thought-web` is a React+Tailwind+React-Flow app running on Replit.  
+Your goal is to fully automate tests, linting, roadmap syncing, and deployments.
+
+---
+
+### 1. Install & configure Husky + lint-staged
+
+- Add dependencies: `husky`, `lint-staged`
+- Run `npx husky install`
+- Create `.husky/pre-commit` with:
+  ```bash
+  #!/usr/bin/env sh
+  npx lint-staged
+
+    Update package.json:
+
+    "husky": { "hooks": { "pre-commit": "lint-staged" }},
+    "lint-staged": {
+      "src/**/*.{js,jsx,ts,tsx,json,css,md}": [
+        "prettier --write",
+        "npm test -- --findRelatedTests",
+        "git add"
+      ]
+    }
+
+2. Add test “watch” scripts
+
+    Install Vitest and testing utilities:
+
+npm install -D vitest jsdom @testing-library/react @testing-library/jest-dom
+
+Create vitest.config.ts:
+
+import { defineConfig } from 'vitest/config';
+export default defineConfig({ test: { environment: 'jsdom', globals: true, setupFiles: './vitest.setup.ts' } });
+
+Create vitest.setup.ts:
+
+import '@testing-library/jest-dom';
+
+In package.json add:
+
+    "scripts": {
+      "test": "vitest",
+      "test:watch": "vitest --watch"
+    }
+
+3. Scaffold GitHub Actions
+
+    Under .github/workflows/ci.yml, create:
+
+    name: CI
+
+    on: [push, pull_request]
+    jobs:
+      build:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+          - uses: actions/setup-node@v3 with: { node-version: '20' }
+          - run: npm ci
+          - run: npm run lint    # add lint script if needed
+          - run: npm test
+
+      deploy:
+        needs: build
+        if: github.ref == 'refs/heads/master'
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+          - run: |
+              npm install -g replit
+              replit login --token ${{ secrets.REPLIT_TOKEN }}
+              replit deploy --app thought-web
+
+4. (Optional) Sync Roadmap from Issues
+
+    Create scripts/generate-roadmap.js that:
+
+        Fetches GitHub issues labeled roadmap
+
+        Transforms them into v0.5-compliant JSON
+
+        Writes docs/thoughtweb_planning_roadmap.json
+
+    Add GitHub Action .github/workflows/roadmap-sync.yml:
+
+    on:
+      schedule: cron(0 0 * * MON)
+    jobs:
+      sync:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+          - run: node scripts/generate-roadmap.js
+          - uses: stefanzweifel/git-auto-commit-action@v4 with: { commit_message: "chore: sync roadmap", file_pattern: "docs/thoughtweb_planning_roadmap.json" }
+
+Tasking instructions:
+
+    Read each numbered section.
+
+    Create or modify the files exactly as specified.
+
+    Stage, commit, and push each change.
+
+    After each step, report back with “✅ Step X complete” or any errors.
