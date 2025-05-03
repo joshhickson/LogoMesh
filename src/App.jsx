@@ -76,7 +76,7 @@ function App() {
         activeFilters={activeFilters}
       />
 
-      {selectedThought && <ThoughtDetailPanel thought={selectedThought} />}
+      {selectedThought && <ThoughtDetailPanel thought={selectedThought} setThoughts={setThoughts} />}
       {showModal && <AddThoughtModal setShowModal={setShowModal} addThought={addThought} />}
     </div>
   );
