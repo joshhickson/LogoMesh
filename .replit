@@ -1,6 +1,14 @@
-run = "npm start"
+run = "npm run start"
 language = "nodejs"
-entrypoint = "src/index.js"
+modules = ["nodejs-20", "web", "nix"]
 
 [nix]
 packages = ["nodejs", "npm"]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "npm run start"]
+
+[[ports]]
+localPort = 3000
+externalPort = 80
