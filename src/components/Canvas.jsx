@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactFlow, { 
   MiniMap, 
@@ -9,16 +10,31 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 
 function Canvas({ thoughts, setSelectedThought, activeFilters }) {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  // Convert thoughts to nodes
+  const initialNodes = thoughts.map((thought) => ({
+    id: thought.thought_bubble_id,
+    type: 'default',
+    data: { label: thought.title },
+    position: thought.position || { x: Math.random() * 400, y: Math.random() * 400 },
+    style: {
+      background: thought.color || '#f3f4f6',
+      border: activeFilters?.includes(thought.thought_bubble_id) ? '3px solid #3b82f6' : '1px solid #d1d5db',
+      opacity: activeFilters?.length ? (activeFilters.includes(thought.thought_bubble_id) ? 1 : 0.3) : 1,
+      borderRadius: 8,
+      padding: 10,
+    },
+  }));
+
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const onNodeClick = (event, node) => {
     const thought = thoughts.find(t => t.thought_bubble_id === node.id);
-    setSelectedThought(thought);
+    if (thought) setSelectedThought(thought);
   };
 
   return (
-    <div style={{ flex: 1, height: '100%' }}>
+    <div style={{ width: '100%', height: '100%' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
