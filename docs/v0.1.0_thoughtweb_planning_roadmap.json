@@ -1,0 +1,243 @@
+{
+  "export_metadata": {
+    "version": "0.5.0",
+    "exported_at": "2025-05-03T05:35:26.464452Z"
+  },
+  "thoughts": [
+    {
+      "thought_bubble_id": "88c1cb05-8ada-41cd-a488-3fa44af6e3b3",
+      "title": "Editable Segments",
+      "description": "Allow users to click and edit individual segments in a modal.",
+      "tag": "ui",
+      "segments": [
+        {
+          "segment_id": "5a4e6352-0fd4-4156-ae9d-7d633a9e3a91",
+          "title": "Editable Segments",
+          "description": "Allow users to click and edit individual segments in a modal.",
+          "fields": {
+            "Feature Type": "UI",
+            "Priority": "High",
+            "Target Version": "0.6.0"
+          }
+        }
+      ]
+    },
+    {
+      "thought_bubble_id": "e110d0ed-11bb-4bd0-bd8a-074840421476",
+      "title": "Segment Type Field Parsing",
+      "description": "Allow parsing of field types such as text, location, date, numeric for better filtering.",
+      "tag": "schema",
+      "segments": [
+        {
+          "segment_id": "37fafdb5-d6df-4342-8054-b78ef69d29ca",
+          "title": "Segment Type Field Parsing",
+          "description": "Allow parsing of field types such as text, location, date, numeric for better filtering.",
+          "fields": {
+            "Feature Type": "Schema",
+            "Priority": "High",
+            "Target Version": "0.6.0"
+          }
+        }
+      ]
+    },
+    {
+      "thought_bubble_id": "f3692f17-ef2c-42ec-8f7c-52875fe30697",
+      "title": "Color Tag Picker",
+      "description": "Add ability to select a color per bubble or per segment.",
+      "tag": "ui",
+      "segments": [
+        {
+          "segment_id": "823487ac-2df3-4c88-a485-a111b12ee56c",
+          "title": "Color Tag Picker",
+          "description": "Add ability to select a color per bubble or per segment.",
+          "fields": {
+            "Feature Type": "UI",
+            "Priority": "Medium",
+            "Target Version": "0.6.0"
+          }
+        }
+      ]
+    },
+    {
+      "thought_bubble_id": "e2abf333-f208-40dc-bae0-1b09a37d705d",
+      "title": "Delete/Edit Thought Bubble",
+      "description": "UI button logic to delete or rename a thought bubble.",
+      "tag": "ui",
+      "segments": [
+        {
+          "segment_id": "919be9fb-f8d0-46b7-9566-090d08a5b5dd",
+          "title": "Delete/Edit Thought Bubble",
+          "description": "UI button logic to delete or rename a thought bubble.",
+          "fields": {
+            "Feature Type": "UI",
+            "Priority": "Medium",
+            "Target Version": "0.6.0"
+          }
+        }
+      ]
+    },
+    {
+      "thought_bubble_id": "680af9aa-c73a-429c-9b38-058a6565ac0c",
+      "title": "Sort and Collapse Segments",
+      "description": "Enable sorting and collapsibility for bubbles with many segments.",
+      "tag": "ui",
+      "segments": [
+        {
+          "segment_id": "b119cd55-8aea-481d-9687-d224ae06d5f7",
+          "title": "Sort and Collapse Segments",
+          "description": "Enable sorting and collapsibility for bubbles with many segments.",
+          "fields": {
+            "Feature Type": "UI",
+            "Priority": "Low",
+            "Target Version": "0.6.0"
+          }
+        }
+      ]
+    },
+    {
+      "thought_bubble_id": "0dbe1a37-68ad-40eb-af59-488c3e67f365",
+      "title": "Auto-Save State",
+      "description": "Ensure session persistence using localStorage or IndexedDB.",
+      "tag": "data",
+      "segments": [
+        {
+          "segment_id": "4de31c21-d6a9-403d-9a23-f764f734bf37",
+          "title": "Auto-Save State",
+          "description": "Ensure session persistence using localStorage or IndexedDB.",
+          "fields": {
+            "Feature Type": "Data",
+            "Priority": "High",
+            "Target Version": "0.6.0"
+          }
+        }
+      ]
+    },
+    {
+      "thought_bubble_id": "f08b9921-b852-4bd3-a88e-7d64420ced99",
+      "title": "AI Assistant Integration",
+      "description": "Optional toggle to call AI to suggest fields, auto-tag thoughts, and summarize content.",
+      "tag": "ai",
+      "segments": [
+        {
+          "segment_id": "b9742377-973a-4b33-94d2-7dc6e5d977a5",
+          "title": "AI Assistant Integration",
+          "description": "Optional toggle to call AI to suggest fields, auto-tag thoughts, and summarize content.",
+          "fields": {
+            "Feature Type": "Experimental",
+            "Priority": "Future",
+            "Target Version": "0.7.0"
+          }
+        }
+      ]
+    },
+    {
+      "thought_bubble_id": "795eeaf2-cd3f-435f-af3e-0d489c5577a1",
+      "title": "Inline Segment Editing",
+      "description": "Allow direct in-place editing of segments from the detail panel.",
+      "tag": "ui",
+      "segments": [
+        {
+          "segment_id": "4040a81f-5427-45bd-9d88-360760f287d0",
+          "title": "Inline Segment Editing",
+          "description": "Allow direct in-place editing of segments from the detail panel.",
+          "fields": {
+            "Feature Type": "UI",
+            "Priority": "High",
+            "Target Version": "0.6.0"
+          }
+        }
+      ]
+    },
+    {
+      "thought_bubble_id": "80d20b6a-a4be-4bc8-9ef2-0ba65e477b53",
+      "title": "Delete & Rename Bubbles",
+      "description": "Add UI controls to delete or rename thought bubbles directly.",
+      "tag": "ui",
+      "segments": [
+        {
+          "segment_id": "cc41f40e-13d5-4b16-8acd-330666bea3f5",
+          "title": "Delete & Rename Bubbles",
+          "description": "Add UI controls to delete or rename thought bubbles directly.",
+          "fields": {
+            "Feature Type": "UI",
+            "Priority": "Medium",
+            "Target Version": "0.6.0"
+          }
+        }
+      ]
+    },
+    {
+      "thought_bubble_id": "f91a058f-194c-47df-9172-e1cbfe42aaaf",
+      "title": "Drag-and-Drop Reposition",
+      "description": "Enable dragging bubbles on the canvas and persist new positions.",
+      "tag": "ui",
+      "segments": [
+        {
+          "segment_id": "23e25689-27c3-4bd1-acba-20d05b0a9359",
+          "title": "Drag-and-Drop Reposition",
+          "description": "Enable dragging bubbles on the canvas and persist new positions.",
+          "fields": {
+            "Feature Type": "UI",
+            "Priority": "Medium",
+            "Target Version": "0.6.0"
+          }
+        }
+      ]
+    },
+    {
+      "thought_bubble_id": "0934fffe-0ad1-40ae-84bd-07609ae92665",
+      "title": "Field-Type-Aware Filters",
+      "description": "Implement specialized filter inputs based on field type (e.g., date pickers, sliders).",
+      "tag": "schema",
+      "segments": [
+        {
+          "segment_id": "be0d2ab7-285b-481c-8db3-020902ae2426",
+          "title": "Field-Type-Aware Filters",
+          "description": "Implement specialized filter inputs based on field type (e.g., date pickers, sliders).",
+          "fields": {
+            "Feature Type": "Schema",
+            "Priority": "High",
+            "Target Version": "0.6.0"
+          }
+        }
+      ]
+    },
+    {
+      "thought_bubble_id": "f996468d-6ba8-4b8e-b376-b0df46304ec2",
+      "title": "Bulk Actions UX Polish",
+      "description": "Improve bulk action UI into a contextual toolbar when filters are active.",
+      "tag": "ui",
+      "segments": [
+        {
+          "segment_id": "7f3497e2-60f2-4c32-87a1-ab6605dfdab5",
+          "title": "Bulk Actions UX Polish",
+          "description": "Improve bulk action UI into a contextual toolbar when filters are active.",
+          "fields": {
+            "Feature Type": "UI",
+            "Priority": "Medium",
+            "Target Version": "0.6.1"
+          }
+        }
+      ]
+    },
+    {
+      "thought_bubble_id": "c38c53b7-b646-416e-a8cc-44e44eafd154",
+      "title": "Inline Color Picker",
+      "description": "Allow changing bubble or segment color via an inline color picker.",
+      "tag": "ui",
+      "segments": [
+        {
+          "segment_id": "51e3b138-3528-46e8-a9ea-00a7e6d3c4e8",
+          "title": "Inline Color Picker",
+          "description": "Allow changing bubble or segment color via an inline color picker.",
+          "fields": {
+            "Feature Type": "UI",
+            "Priority": "Medium",
+            "Target Version": "0.6.1"
+          }
+        }
+      ]
+    }
+  ],
+  "description": "ThoughtWeb Planning Roadmap: A structured list of upcoming features and enhancements, represented as thought bubbles for import and visualization in ThoughtWeb. Each bubble outlines feature details, priority, and target version."
+}

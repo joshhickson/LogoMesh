@@ -56,22 +56,21 @@ function App() {
     <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
       <Sidebar
         thoughts={thoughts}
+        setThoughts={setThoughts}
         setSelectedThought={setSelectedThought}
         setShowModal={setShowModal}
         toggleDarkMode={toggleDarkMode}
         setActiveFilters={setActiveFilters}
       />
+
       <Canvas
         thoughts={thoughts}
         setSelectedThought={setSelectedThought}
         activeFilters={activeFilters}
       />
-      {selectedThought && (
-        <ThoughtDetailPanel thought={selectedThought} />
-      )}
-      {showModal && (
-        <AddThoughtModal setShowModal={setShowModal} addThought={addThought} />
-      )}
+
+      {selectedThought && <ThoughtDetailPanel thought={selectedThought} />}
+      {showModal && <AddThoughtModal setShowModal={setShowModal} addThought={addThought} />}
     </div>
   );
 }
