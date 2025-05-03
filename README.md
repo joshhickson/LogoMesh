@@ -1,5 +1,5 @@
 
-# 🧠 ThoughtWeb
+#ThoughtWeb
 
 https://discord.gg/6ydDxzMjvD
 
@@ -9,22 +9,22 @@ Designed as a **personal knowledge graph meets mind-mapping engine**, ThoughtWeb
 
 ---
 
-## 🔧 Features
+##Features
 
-- 📌 **Thought Bubbles** with customizable title, description, tags, and color
-- 🧩 **Nested Segments** inside each thought, each with their own title, content, and attributes
-- 🏷️ **Multi-attribute Classification** per segment (field name, value, and type)
-- 🔍 **Advanced Filtering** by attribute field name, field type, and field value
-- 🌈 **Canvas Highlighting** of matching bubbles (non-matches fade)
-- 🎨 **Light/Dark Mode Toggle**
-- 📤 **Export all or filtered thoughts** to JSON (AI-parsable structure)
-- 📥 **Import JSON backups**
-- 🛠️ **Batch Editing Tools** — apply tags or color to filtered results
-- 🧪 **Scalable Architecture** for AI integration and custom visualizations
+- **Thought Bubbles** with customizable title, description, tags, and color
+- **Nested Segments** inside each thought, each with their own title, content, and attributes
+- **Multi-attribute Classification** per segment (field name, value, and type)
+- **Advanced Filtering** by attribute field name, field type, and field value
+- **Canvas Highlighting** of matching bubbles (non-matches fade)
+- **Light/Dark Mode Toggle**
+- **Export all or filtered thoughts** to JSON (AI-parsable structure)
+- **Import JSON backups**
+- **Batch Editing Tools** — apply tags or color to filtered results
+- **Scalable Architecture** for AI integration and custom visualizations
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Clone the repo
 
@@ -49,7 +49,7 @@ Visit `http://localhost:3000` in your browser.
 
 ---
 
-## 📦 Build for Static Export
+## Build for Static Export
 
 ```bash
 npm run build
@@ -60,7 +60,7 @@ Perfect for iPad/iPhone use or PWA setup.
 
 ---
 
-## 🧠 JSON Schema Overview
+## JSON Schema Overview
 
 Thoughts are saved locally and exported as structured JSON:
 
@@ -138,7 +138,7 @@ Thoughts are saved locally and exported as structured JSON:
 
 ---
 
-## 🛣️ Roadmap
+## Roadmap
 
 * [x] Filtered export
 * [x] Multi-select filtering
@@ -151,7 +151,7 @@ Thoughts are saved locally and exported as structured JSON:
 
 ---
 
-## 📄 License
+## License
 
 MIT — free to fork, remix, and evolve.
 
@@ -163,7 +163,7 @@ MIT — free to fork, remix, and evolve.
 
 ---
 
-### ✅ What to do next:
+### What to do next:
 
 1. Copy this into a new file: `/thought-web/README.md`
 2. Commit & push:
