@@ -5,7 +5,14 @@ import ThoughtDetailPanel from './components/ThoughtDetailPanel';
 import AddThoughtModal from './components/AddThoughtModal';
 
 function App() {
-  const [thoughts, setThoughts] = useState([]);
+  const [thoughts, setThoughts] = useState(() => {
+    const savedThoughts = localStorage.getItem('thoughts');
+    return savedThoughts ? JSON.parse(savedThoughts) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('thoughts', JSON.stringify(thoughts));
+  }, [thoughts]);
   const [selectedThought, setSelectedThought] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
