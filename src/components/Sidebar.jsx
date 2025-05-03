@@ -26,46 +26,42 @@ function Sidebar({
   const uniqueFieldNames = [...new Set(allFields.map(([key]) => key).filter(Boolean))];
   const uniqueFieldTypes = ['text', 'location', 'date', 'numeric']; // Placeholder for future
 
-  // Compute filtered thoughts based on current filters
-  const filteredThoughts = thoughts
-    .map(thought => {
-      const filteredSegments = (thought.segments || []).filter(segment => {
-        const fields = segment.fields || {};
-        const matchesFieldName =
-          filterFieldName.length === 0 ||
-          filterFieldName.some(name => Object.keys(fields).includes(name));
+  // Memoize filtered thoughts computation
+  const filteredThoughts = React.useMemo(() => {
+    return thoughts
+      .map(thought => {
+        const filteredSegments = (thought.segments || []).filter(segment => {
+          const fields = segment.fields || {};
+          const matchesFieldName =
+            filterFieldName.length === 0 ||
+            filterFieldName.some(name => Object.keys(fields).includes(name));
 
-        const matchesFieldValue =
-          !filterFieldValue ||
-          Object.values(fields).some(val =>
-            typeof val === 'string' &&
-            val.toLowerCase().includes(filterFieldValue.toLowerCase())
-          );
+          const matchesFieldValue =
+            !filterFieldValue ||
+            Object.values(fields).some(val =>
+              typeof val === 'string' &&
+              val.toLowerCase().includes(filterFieldValue.toLowerCase())
+            );
 
-        const matchesFieldType = filterFieldType.length === 0;
-        return matchesFieldName && matchesFieldValue && matchesFieldType;
-      });
+          const matchesFieldType = filterFieldType.length === 0;
+          return matchesFieldName && matchesFieldValue && matchesFieldType;
+        });
 
-      return { ...thought, filteredSegments };
-    })
-    .filter(
-      thought =>
-        thought.filteredSegments.length > 0 ||
-        (!filterFieldName.length && !filterFieldValue && !filterFieldType.length)
-    );
+        return { ...thought, filteredSegments };
+      })
+      .filter(
+        thought =>
+          thought.filteredSegments.length > 0 ||
+          (!filterFieldName.length && !filterFieldValue && !filterFieldType.length)
+      );
+  }, [thoughts, filterFieldName, filterFieldValue, filterFieldType]);
 
   // Sync active filters to parent for canvas highlighting
   useEffect(() => {
     const ids = filteredThoughts.map(t => t.thought_bubble_id);
     setFilteredThoughtIds(ids);
     setActiveFilters(ids);
-  }, [
-    filterFieldName,
-    filterFieldValue,
-    filterFieldType,
-    filteredThoughts,
-    setActiveFilters
-  ]);
+  }, [filteredThoughts, setActiveFilters]);
 
   // Export handlers
   const handleExportAll = () => exportToJsonFile(thoughts);
