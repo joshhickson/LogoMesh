@@ -1,14 +1,17 @@
-# 🧠 ThoughtWeb — Developer Onboarding
+# ThoughtWeb — Developer Onboarding
+
+Tired of models forgetting essential details in past conversations? Bored with surface level context and meta-capabilities in LLMs? Want to create a scaffold for proto-awareness, with viewable and editable training parameters in LCMs? Love owning your own data? ThoughtWeb is for you!
+
 
 https://discord.gg/6ydDxzMjvD
 
-Welcome to the core of ThoughtWeb: a schema-driven, AI-ready, visually organized thought engine designed for flexible knowledge structuring, deep filtering, and scalable augmentation.
+ThoughtWeb is: a schema-driven, AI-ready, visually organized thought engine designed for flexible knowledge structuring, deep filtering, and scalable augmentation. Think Neo4j, but for LLMs. 
 
 This document exists to help new contributors or returning developers quickly get up to speed on what ThoughtWeb is — and how to develop inside it.
 
 ---
 
-## 🎯 Mission
+## Mission
 
 **To empower individuals to structure, filter, and grow their thoughts with precision.**
 
@@ -25,7 +28,7 @@ Modern thinking tools either:
 
 ---
 
-## 🌌 Vision
+## Vision
 
 ThoughtWeb is not just a mind map. It's a **thinking OS**.
 
@@ -36,7 +39,9 @@ ThoughtWeb is not just a mind map. It's a **thinking OS**.
 
 ---
 
-## 🧭 Why ThoughtWeb Exists
+## Why ThoughtWeb Exists
+
+Tired of Chat-GPT forgetting essential details in past conversations? Bored with surface level context and awareness skills in LLMs? Want to create a scaffold for proto-awareness and viewable and editable training parameters in LCMs? Love owning your own data? ThoughtWeb is for you.
 
 ThoughtWeb is more than a note-taking tool—it is a cognitive interface for building, evolving, and aligning conceptual thought. Where others embed abstractions deep inside machine layers, ThoughtWeb empowers users to map and refine their own reasoning in a persistent, interpretable structure.
 
@@ -54,7 +59,7 @@ ThoughtWeb is a framework for truth-driven intelligence—**a system for thinkin
 
 ---
 
-## ⚙️ Stack
+## Stack
 
 - **React + Tailwind** (lightweight, hot-reloadable UI)
 - **React Flow** (node visualization engine)
@@ -63,7 +68,7 @@ ThoughtWeb is a framework for truth-driven intelligence—**a system for thinkin
 
 ---
 
-## 📐 Key Concepts
+## Key Concepts
 
 ### Thought Bubble
 A visual container on the canvas. Holds metadata and an array of **segments**.
@@ -79,7 +84,7 @@ The key to filtering, AI embedding, and structure. Each segment’s `fields` can
 
 ---
 
-## 📦 Schema Overview
+## Schema Overview
 
 Each file exported from ThoughtWeb follows this schema:
 
@@ -119,7 +124,7 @@ Each file exported from ThoughtWeb follows this schema:
 
 ---
 
-## 🚧 Development Tasks (Ongoing)
+## Development Tasks (Ongoing)
 
 - Fix segment field entry (buttons work but need stable update)
 - Add vector embedding generation
@@ -130,7 +135,7 @@ Each file exported from ThoughtWeb follows this schema:
 
 ---
 
-## 🧠 Developer Philosophy
+## Developer Philosophy
 
 - Always prefer structured flexibility over rigid constraints.
 - The system should teach itself to the user through use.
@@ -139,7 +144,7 @@ Each file exported from ThoughtWeb follows this schema:
 
 ---
 
-## ✨ Final Note
+## Final Note
 
 If you're reading this, you’re not just coding — you’re helping build a better way to think.
 
