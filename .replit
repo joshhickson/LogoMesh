@@ -1,0 +1,6 @@
+run = "npm start"
+language = "nodejs"
+entrypoint = "src/index.js"
+
+[nix]
+packages = ["nodejs", "npm"]
