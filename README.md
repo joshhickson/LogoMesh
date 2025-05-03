@@ -89,6 +89,36 @@ Thoughts are saved locally and exported as structured JSON:
 ```
 
 ---
+## thought-web/ directory
+│
+├── public/                         # Static public assets (e.g. index.html)
+│
+├── src/                            # Core React application source
+│   ├── components/                 # Visual components and layout parts
+│   │   ├── AddThoughtModal.jsx     # Modal for creating new thought bubbles
+│   │   ├── Canvas.jsx              # Main canvas for visualizing thought web
+│   │   ├── Sidebar.jsx             # Sidebar with controls and filter UI
+│   │   └── ThoughtDetailPanel.jsx  # Expanded detail view for selected thoughts
+│   │
+│   ├── utils/                      # Helper functions and data I/O
+│   │   ├── exportHandler.js        # Exports thought data to JSON
+│   │   ├── importHandler.js        # Parses and imports JSON files
+│   │   └── import.js               # Handles drag/drop import logic
+│   │
+│   ├── App.jsx                     # App entry point, layout structure
+│   ├── index.js                    # Main render file
+│   └── index.css                   # Global CSS and Tailwind setup
+│
+├── docs/                           # Project documentation and onboarding
+│   ├── README-dev.md               # Developer-focused intro, vision, and setup
+│   └── schema.json                 # Current data schema for thought bubbles
+│
+├── tailwind.config.js             # Tailwind CSS configuration
+├── package.json                   # Project dependencies and scripts
+├── package-lock.json              # Dependency lock file
+└── .gitattributes/.gitignore      # Git-specific configuration
+---
+---
 
 ## 🛣️ Roadmap
 
