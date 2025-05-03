@@ -1,48 +1,51 @@
+
 import React from 'react';
-import ReactFlow, { MiniMap, Controls } from 'react-flow-renderer';
+import ReactFlow, { 
+  MiniMap, 
+  Controls, 
+  Background,
+  useNodesState,
+  useEdgesState
+} from 'reactflow';
+import 'reactflow/dist/style.css';
 
 function Canvas({ thoughts, setSelectedThought, activeFilters }) {
-  // Build React Flow nodes from your thoughts
-  const nodes = thoughts.map((thought) => {
-    const matchesFilter = !activeFilters?.length || activeFilters.includes(thought.thought_bubble_id);
+  // Convert thoughts to nodes
+  const initialNodes = thoughts.map((thought) => ({
+    id: thought.thought_bubble_id,
+    type: 'default',
+    data: { label: thought.title },
+    position: thought.position || { x: Math.random() * 400, y: Math.random() * 400 },
+    style: {
+      background: thought.color || '#f3f4f6',
+      border: activeFilters?.includes(thought.thought_bubble_id) ? '3px solid #3b82f6' : '1px solid #d1d5db',
+      opacity: activeFilters?.length ? (activeFilters.includes(thought.thought_bubble_id) ? 1 : 0.3) : 1,
+      borderRadius: 8,
+      padding: 10,
+    },
+  }));
 
-    return {
-      id: thought.thought_bubble_id,               // use the schema’s ID
-      type: 'default',
-      data: { label: thought.title },
-      position: thought.position || { x: Math.random() * 400, y: Math.random() * 400 },
-      style: {
-        background: thought.color || '#f3f4f6',
-        border: matchesFilter ? '3px solid #3b82f6' : '1px solid #d1d5db',
-        opacity: matchesFilter ? 1 : 0.3,
-        borderRadius: 8,
-        padding: 10,
-        transition: 'all 0.3s ease',
-      },
-    };
-  });
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
-  // If you ever need edges, build an array here:
-  const edges = []; // no edges defined yet
-
-  const onElementClick = (_, element) => {
-    // find by thought_bubble_id
-    const found = thoughts.find(t => t.thought_bubble_id === element.id);
-    if (found) setSelectedThought(found);
+  const onNodeClick = (event, node) => {
+    const thought = thoughts.find(t => t.thought_bubble_id === node.id);
+    if (thought) setSelectedThought(thought);
   };
 
   return (
-    <div className="flex-1 bg-gray-100 dark:bg-gray-900">
+    <div style={{ width: '100%', height: '100%' }}>
       <ReactFlow
-        elements={[...nodes, ...edges]}
-        onElementClick={onElementClick}
-        style={{ width: '100%', height: '100%' }}
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onNodeClick={onNodeClick}
+        fitView
       >
-        <MiniMap 
-          nodeStrokeColor={n => (activeFilters.includes(n.id) ? '#3b82f6' : '#888')} 
-          nodeColor={n => (activeFilters.includes(n.id) ? '#3b82f6' : '#fff')} 
-        />
+        <Background />
         <Controls />
+        <MiniMap />
       </ReactFlow>
     </div>
   );
