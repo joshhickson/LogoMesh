@@ -1,8 +1,11 @@
 # ThoughtWeb — Developer Onboarding
 
+Tired of models forgetting essential details in past conversations? Bored with surface level context and meta-capabilities in LLMs? Want to create a scaffold for proto-awareness, with viewable and editable training parameters in LCMs? Love owning your own data? ThoughtWeb is for you!
+
+
 https://discord.gg/6ydDxzMjvD
 
-Welcome to the core of ThoughtWeb: a schema-driven, AI-ready, visually organized thought engine designed for flexible knowledge structuring, deep filtering, and scalable augmentation.
+ThoughtWeb is: a schema-driven, AI-ready, visually organized thought engine designed for flexible knowledge structuring, deep filtering, and scalable augmentation. Think Neo4j, but for LLMs. 
 
 This document exists to help new contributors or returning developers quickly get up to speed on what ThoughtWeb is — and how to develop inside it.
 
@@ -37,6 +40,8 @@ ThoughtWeb is not just a mind map. It's a **thinking OS**.
 ---
 
 ## Why ThoughtWeb Exists
+
+Tired of Chat-GPT forgetting essential details in past conversations? Bored with surface level context and awareness skills in LLMs? Want to create a scaffold for proto-awareness and viewable and editable training parameters in LCMs? Love owning your own data? ThoughtWeb is for you.
 
 ThoughtWeb is more than a note-taking tool—it is a cognitive interface for building, evolving, and aligning conceptual thought. Where others embed abstractions deep inside machine layers, ThoughtWeb empowers users to map and refine their own reasoning in a persistent, interpretable structure.
 
