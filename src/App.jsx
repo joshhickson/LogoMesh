@@ -44,6 +44,8 @@ function App() {
   // Persist changes to localStorage
   useEffect(() => {
     localStorage.setItem('thought-web-data', JSON.stringify(thoughts));
+    // Sync with graph service
+    thoughts.forEach(thought => graphService.addThought(thought));
   }, [thoughts]);
 
   useEffect(() => {
