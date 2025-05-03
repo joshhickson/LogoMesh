@@ -42,5 +42,13 @@
     "@testing-library/react": "^16.3.0",
     "babel-jest": "^29.7.0",
     "jest": "^27.5.1"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
+    "moduleFileExtensions": ["js", "jsx"],
+    "transform": {
+      "^.+\\.[tj]sx?$": "babel-jest"
+    }
   }
 }
