@@ -1,6 +1,24 @@
 import React from 'react';
 
-function ThoughtDetailPanel({ thought }) {
+function ThoughtDetailPanel({ thought, setThoughts }) {
+  const [editingSegment, setEditingSegment] = useState(null);
+
+  const handleSegmentEdit = (segmentId, field, value) => {
+    setThoughts(prevThoughts => 
+      prevThoughts.map(t => {
+        if (t.thought_bubble_id === thought.thought_bubble_id) {
+          return {
+            ...t,
+            segments: t.segments.map(s => 
+              s.segment_id === segmentId ? { ...s, [field]: value } : s
+            )
+          };
+        }
+        return t;
+      })
+    );
+  };
+
   return (
     <div className="w-1/4 p-4 border-l bg-gray-50 dark:bg-gray-800 overflow-y-auto">
       <h2 className="text-lg font-bold mb-2">{thought.title}</h2>
@@ -26,8 +44,17 @@ function ThoughtDetailPanel({ thought }) {
         <h3 className="text-md font-semibold mb-2">Segments:</h3>
         {(thought.segments || []).map((segment, index) => (
           <div key={segment.segment_id || index} className="mb-4 border-t pt-2">
-            <p className="font-medium">{segment.title}</p>
-            <p className="text-sm mb-1">{segment.content}</p>
+            <input
+              type="text"
+              value={segment.title}
+              onChange={(e) => handleSegmentEdit(segment.segment_id, 'title', e.target.value)}
+              className="font-medium w-full bg-transparent border-b border-transparent hover:border-gray-300 focus:border-blue-500 outline-none"
+            />
+            <textarea
+              value={segment.content}
+              onChange={(e) => handleSegmentEdit(segment.segment_id, 'content', e.target.value)}
+              className="text-sm mb-1 w-full bg-transparent border border-transparent hover:border-gray-300 focus:border-blue-500 outline-none resize-y"
+            />
 
             {/* Segment Fields */}
             {segment.fields && Object.keys(segment.fields).length > 0 && (
