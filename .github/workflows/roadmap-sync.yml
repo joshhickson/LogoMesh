@@ -1,0 +1,17 @@
+
+name: Roadmap Sync
+
+on:
+  schedule:
+    - cron: '0 0 * * MON'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: node scripts/generate-roadmap.js
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: sync roadmap"
+          file_pattern: "docs/thoughtweb_planning_roadmap.json"
