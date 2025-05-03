@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function ThoughtDetailPanel({ thought, setThoughts }) {
-  const [editingSegment, setEditingSegment] = useState(null);
+  // State management is now handled through parent component
   
   const handleThoughtEdit = (field, value) => {
     setThoughts(prevThoughts => 

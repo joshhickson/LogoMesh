@@ -1,0 +1,66 @@
+{
+  "claude_agent_prompts": [
+    {
+      "context": "You are my development assistant on the ThoughtWeb project. ThoughtWeb is a local-first, tag-driven, cognitively-aligned thought network designed to help users visualize and evolve their own thinking. The system emphasizes emergence, persistent context, and AI interoperability. Our next phase includes integrating Cypher-based querying, MCP-style task routing, and local agent orchestration. All AI must remain user-activated or rule-triggered, not autonomous by default."
+    },
+    {
+      "category": "Mission Alignment",
+      "questions": [
+        "Based on the current codebase and Replit project structure, how would you summarize the core mission of this repo?",
+        "Does the structure of this codebase reflect a focus on cognitive augmentation, local autonomy, or AI integration? Why or why not?",
+        "What assumptions is the current system making about user input, storage, and interaction models?"
+      ]
+    },
+    {
+      "category": "Graph + Cypher Integration",
+      "questions": [
+        "How difficult would it be to implement a Cypher-compatible graph structure using our current data model (thought bubbles, segments, tags)?",
+        "What are the first steps you\u2019d recommend to bridge from our JSON format to a true graph format?",
+        "How might we persist or sync graph data using a lightweight local solution (e.g., Neo4j embedded or in-browser with Memgraph.js)?",
+        "Could you design a sample Cypher query based on a real ThoughtWeb example (e.g., 'find all segments tagged philosophy and AI')?"
+      ]
+    },
+    {
+      "category": "MCP / Agent-Oriented Design",
+      "questions": [
+        "How modular is the current system in terms of routing tasks or responding to external triggers?",
+        "Could you design a minimal invoked or triggered agent loop that monitors specific tags or fields, makes a decision (with or without AI), and triggers an action (e.g., add a related thought)?",
+        "What architecture would you recommend for implementing an MCP-style task routing system inside ThoughtWeb?"
+      ]
+    },
+    {
+      "category": "Replit-Specific Questions",
+      "questions": [
+        "What current Replit services (e.g., secrets, DB, background workers) are we using, and how could they be leveraged for agent memory or scheduling?",
+        "How could we integrate a Claude-based natural language \u2192 Cypher converter inside this Replit project?",
+        "If we added Neo4j to this setup, what\u2019s the best way to bridge between our current UI and Neo4j queries?"
+      ]
+    },
+    {
+      "category": "n8n Integration",
+      "questions": [
+        "How could we use n8n to trigger workflows based on changes to ThoughtWeb JSON files (e.g., tags being added or segments reaching a threshold)?",
+        "Could you design a sample n8n flow that listens for updates to a specific tag and queries Neo4j using Cypher?",
+        "What\u2019s the best way to store and retrieve AI-generated thoughts inside an n8n workflow?",
+        "How can n8n be used to simulate an intelligent MCP-style layer\u2014receiving signals, querying the graph, running AI tasks, and updating the ThoughtWeb model?",
+        "What would a minimal viable integration between n8n, Claude (or OpenAI), and Neo4j look like for our current use case?"
+      ]
+    },
+    {
+      "category": "Agent Ethics + Invocation",
+      "questions": [
+        "Based on the design values in our README, how should agent behavior be constrained to avoid excessive automation or unwanted inference?",
+        "Can you recommend a pattern for user-invoked vs. signal-triggered agents that respects user agency and still allows for powerful automation?",
+        "How can we track agent actions to ensure interpretability, reversibility, and user control?",
+        "Should ThoughtWeb enforce a standard like 'explain before acting' for AI interventions, and how might that be built into the routing system?"
+      ]
+    },
+    {
+      "category": "Forward Vision",
+      "questions": [
+        "What do you see as the most compelling use case we could build over the next 7\u201314 days that showcases the power of Cypher + AI + user thoughts?",
+        "Based on the mission, what is missing structurally from the codebase to move in the direction of a 'cognitive operating system'?"
+      ]
+    }
+  ]
+}
