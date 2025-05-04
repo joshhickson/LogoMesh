@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { newBubbleId, newSegmentId } from '../utils/eventBus';
 
 const defaultFieldOptions = [
   'Concept Type',
@@ -20,7 +21,7 @@ function AddThoughtModal({ createThought, onClose }) {
     setSegments([
       ...segments,
       {
-        segment_id: Date.now().toString() + Math.random().toString(36).substring(2),
+        segment_id: newSegmentId(),
         title: '',
         content: '',
         fields: {},
@@ -48,7 +49,7 @@ function AddThoughtModal({ createThought, onClose }) {
     }
 
     const newThought = {
-      thought_bubble_id: 'tb_' + Date.now().toString(),
+      thought_bubble_id: newBubbleId(),
       title,
       description,
       created_at: new Date().toISOString(),
