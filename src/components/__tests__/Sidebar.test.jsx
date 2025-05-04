@@ -1,18 +1,30 @@
 
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import Sidebar from '../Sidebar';
 
 describe('Sidebar', () => {
   const mockThoughts = [
     {
       thought_bubble_id: 'test-1',
-      title: 'Test Thought 1',
-      segments: [{ title: 'Segment 1', fields: { type: 'test' } }]
+      title: 'Philosophy Thought',
+      segments: [
+        {
+          segment_id: 'seg-1',
+          title: 'Logic',
+          fields: { type: 'concept', domain: 'philosophy' }
+        }
+      ]
     },
     {
       thought_bubble_id: 'test-2',
-      title: 'Test Thought 2',
-      segments: [{ title: 'Segment 2', fields: { type: 'other' } }]
+      title: 'AI Thought',
+      segments: [
+        {
+          segment_id: 'seg-2',
+          title: 'Neural Networks',
+          fields: { type: 'technology', domain: 'AI' }
+        }
+      ]
     }
   ];
 
@@ -25,18 +37,30 @@ describe('Sidebar', () => {
     setActiveFilters: jest.fn()
   };
 
-  test('renders all thoughts', () => {
+  test('renders all thoughts initially', () => {
     render(<Sidebar {...mockProps} />);
-    expect(screen.getByText('Test Thought 1')).toBeInTheDocument();
-    expect(screen.getByText('Test Thought 2')).toBeInTheDocument();
+    expect(screen.getByText('Philosophy Thought')).toBeInTheDocument();
+    expect(screen.getByText('AI Thought')).toBeInTheDocument();
   });
 
-  test('filters thoughts correctly', () => {
+  test('filters thoughts based on field name', () => {
     render(<Sidebar {...mockProps} />);
-    const filterInput = screen.getByPlaceholderText(/filter/i);
-    fireEvent.change(filterInput, { target: { value: 'Test Thought 1' } });
-    
-    expect(screen.getByText('Test Thought 1')).toBeInTheDocument();
-    expect(screen.queryByText('Test Thought 2')).not.toBeInTheDocument();
+    const select = screen.getByText('+ Add predefined field');
+    fireEvent.change(select, { target: { value: 'domain' } });
+    expect(mockProps.setActiveFilters).toHaveBeenCalled();
+  });
+
+  test('resets filters when reset button clicked', () => {
+    render(<Sidebar {...mockProps} />);
+    const resetButton = screen.getByText('Reset Filters');
+    fireEvent.click(resetButton);
+    expect(mockProps.setActiveFilters).toHaveBeenCalledWith([]);
+  });
+
+  test('opens add thought modal when button clicked', () => {
+    render(<Sidebar {...mockProps} />);
+    const addButton = screen.getByText('Add New Thought');
+    fireEvent.click(addButton);
+    expect(mockProps.setShowModal).toHaveBeenCalledWith(true);
   });
 });

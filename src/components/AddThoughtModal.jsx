@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { newBubbleId, newSegmentId } from '../utils/eventBus';
+import { VoiceInputManager } from '../utils/VoiceInputManager';
 
 const defaultFieldOptions = [
   'Concept Type',
@@ -9,18 +11,71 @@ const defaultFieldOptions = [
   'Related Concepts'
 ];
 
-function AddThoughtModal({ setShowModal, addThought }) {
+function AddThoughtModal({ createThought, onClose }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [tag, setTag] = useState('');
+  const [tags, setTags] = useState([]);
   const [color, setColor] = useState('#f97316');
   const [segments, setSegments] = useState([]);
+  const [isListening, setIsListening] = useState(false);
+  const voiceManagerRef = useRef(null);
+
+  useEffect(() => {
+    voiceManagerRef.current = new VoiceInputManager(
+      (transcript, isFinal, isNewSegment) => {
+        if (isFinal) {
+          if (isNewSegment && segments.length > 0) {
+            const lastSegment = segments[segments.length - 1];
+            setSegments(prev => prev.map(seg => 
+              seg.segment_id === lastSegment.segment_id 
+                ? {...seg, content: seg.content + ' ' + transcript}
+                : seg
+            ));
+          } else {
+            setDescription(prev => prev + ' ' + transcript);
+          }
+        }
+      },
+      (error) => {
+        console.error('Speech recognition error:', error);
+        setIsListening(false);
+        // Show error in UI
+        const errorMessages = {
+          'network': 'Network error occurred. Please check your connection.',
+          'service-not-allowed': 'Speech recognition service not allowed.',
+          'no-speech': 'No speech detected. Please try again.',
+          'default': 'An error occurred with speech recognition.'
+        };
+        alert(errorMessages[error] || errorMessages.default);
+      }
+    );
+    
+    return () => {
+      if (voiceManagerRef.current) {
+        voiceManagerRef.current.stopListening();
+      }
+    };
+  }, []);
+
+  const toggleVoiceInput = () => {
+    if (!voiceManagerRef.current?.isSupported()) {
+      alert('Speech recognition is not supported in your browser');
+      return;
+    }
+
+    if (isListening) {
+      voiceManagerRef.current.stopListening();
+    } else {
+      voiceManagerRef.current.startListening();
+    }
+    setIsListening(!isListening);
+  };
 
   const addSegment = () => {
     setSegments([
       ...segments,
       {
-        segment_id: Date.now().toString() + Math.random().toString(36).substring(2),
+        segment_id: newSegmentId(),
         title: '',
         content: '',
         fields: {},
@@ -48,19 +103,28 @@ function AddThoughtModal({ setShowModal, addThought }) {
     }
 
     const newThought = {
-      thought_bubble_id: 'tb_' + Date.now().toString(),
+      thought_bubble_id: newBubbleId(),
       title,
       description,
       created_at: new Date().toISOString(),
       color,
-      tags: [{ name: tag || 'General', color }],
+      tags: tags.map(tag => ({name: tag, color})), //Adjusted tag handling
       position: { x: Math.random() * 400, y: Math.random() * 400 },
       segments
     };
 
-    addThought(newThought);
-    setShowModal(false);
+    createThought(newThought);
+    onClose(); //Close the modal using onClose prop.
   };
+
+  const handleTagChange = (e) => {
+    const newTag = e.target.value;
+    if (newTag) {
+      setTags([...tags, newTag]);
+      e.target.value = "";
+    }
+  }
+
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center overflow-y-auto">
@@ -75,19 +139,44 @@ function AddThoughtModal({ setShowModal, addThought }) {
           onChange={(e) => setTitle(e.target.value)}
           className="w-full mb-2 p-2 border rounded"
         />
-        <textarea
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full mb-2 p-2 border rounded"
-        />
-        <input
-          type="text"
-          placeholder="Main Tag"
-          value={tag}
-          onChange={(e) => setTag(e.target.value)}
-          className="w-full mb-2 p-2 border rounded"
-        />
+        <div className="relative w-full mb-2">
+          <div className="relative">
+            <textarea
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full p-2 border rounded"
+            />
+            {isListening && (
+              <div className="absolute bottom-0 left-0 right-0 bg-gray-100 dark:bg-gray-700 p-2 text-sm italic">
+                Listening... Click microphone to stop
+              </div>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={toggleVoiceInput}
+            className={`absolute right-2 bottom-2 p-2 rounded-full ${
+              isListening ? 'bg-red-500' : 'bg-gray-200'
+            }`}
+            title={isListening ? 'Stop recording' : 'Start recording'}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+              <line x1="12" y1="19" x2="12" y2="23" />
+              <line x1="8" y1="23" x2="16" y2="23" />
+            </svg>
+          </button>
+        </div>
+        <div>
+          <input type="text" placeholder="Add Tag" onChange={handleTagChange} className="w-full mb-2 p-2 border rounded"/>
+          <ul>
+            {tags.map((tag, index) => (
+              <li key={index}>{tag}</li>
+            ))}
+          </ul>
+        </div>
         <input
           type="color"
           value={color}
@@ -175,7 +264,7 @@ function AddThoughtModal({ setShowModal, addThought }) {
           Add Thought
         </button>
         <button
-          onClick={() => setShowModal(false)}
+          onClick={onClose}
           className="w-full bg-gray-300 dark:bg-gray-600 text-black dark:text-white py-2 rounded"
         >
           Cancel

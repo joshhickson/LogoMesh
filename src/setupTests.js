@@ -17,6 +17,23 @@ window.matchMedia = window.matchMedia || function() {
 // Configure Jest
 jest.setTimeout(10000);
 
+// Mock SpeechRecognition API
+class MockSpeechRecognition {
+  constructor() {
+    this.continuous = false;
+    this.interimResults = false;
+    this.onstart = null;
+    this.onresult = null;
+    this.onerror = null;
+    this.onend = null;
+  }
+  start() { if (this.onstart) this.onstart(); }
+  stop() { if (this.onend) this.onend(); }
+}
+
+window.SpeechRecognition = MockSpeechRecognition;
+window.webkitSpeechRecognition = MockSpeechRecognition;
+
 // Configure file extensions
 jest.moduleFileExtensions = ['js', 'jsx'];
 
