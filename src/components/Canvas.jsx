@@ -27,7 +27,19 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
       }
     }));
 
+    // Create edges from segments
+    const flowEdges = thoughts.flatMap(thought => 
+      (thought.segments || []).map(segment => ({
+        id: `${thought.thought_bubble_id}-${segment.segment_id}`,
+        source: thought.thought_bubble_id,
+        target: segment.segment_id,
+        style: { strokeDasharray: '5 5' }, // Dotted line for fuzzy connections
+        animated: true
+      }))
+    );
+
     setNodes(flowNodes);
+    setEdges(flowEdges);
   }, [thoughts, activeFilters]);
 
   const handleNodeClick = (event, node) => {
@@ -35,6 +47,15 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
     if (thought) {
       setSelectedThought(thought);
     }
+  };
+
+  const handleNodeDragStop = (event, node) => {
+    const updatedThoughts = thoughts.map(thought => 
+      thought.thought_bubble_id === node.id 
+        ? {...thought, position: node.position}
+        : thought
+    );
+    localStorage.setItem('thought-web-data', JSON.stringify(updatedThoughts));
   };
 
   return (
@@ -45,6 +66,7 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onNodeClick={handleNodeClick}
+        onNodeDragStop={handleNodeDragStop}
         fitView
       >
         <Background />
