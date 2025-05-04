@@ -71,6 +71,38 @@ Key files modified:
 - Local Storage (Data Persistence)
 - Event Bus (Component Communication)
 
+## Graph Framework Evolution
+Initially considered Memgraph for graph database functionality but removed it due to:
+1. Complexity overhead for local-first architecture
+2. Version compatibility issues (requires Node 0.6.x, current Node v20.12.2)
+3. Deployment constraints in browser-based environment
+
+Current Implementation:
+- Using native Map data structures for in-memory graph representation
+- Local storage persistence with JSON serialization
+- Event-driven updates for real-time UI synchronization
+
+This approach provides:
+- Simplified deployment architecture
+- Direct browser storage integration
+- Reduced external dependencies
+
+## Known Issues
+Current Error State (March 2024):
+- Module build error in Canvas.jsx related to import syntax
+- Neo4j discovery errors indicating connectivity issues
+- File system module ('fs') not found in browser context
+
+Root Cause Analysis:
+1. Browser environment limitations for Node.js specific modules
+2. Import statement ordering in Canvas.jsx needs restructuring
+3. Graph service initialization timing issues
+
+Next Steps:
+1. Implement browser-compatible graph data structures
+2. Refactor Canvas component to handle async graph operations
+3. Consider implementing a lightweight graph query interface
+
 ## Schema Structure
 Current implementation uses the following data structure:
 
