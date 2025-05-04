@@ -3,6 +3,30 @@ class GraphService {
     this.loadState();
   }
 
+  thoughtToNode(thought) {
+    return {
+      id: thought.thought_bubble_id,
+      labels: ['Thought'],
+      properties: thought
+    };
+  }
+
+  segmentToNode(segment, thoughtId) {
+    const node = {
+      id: segment.segment_id,
+      labels: ['Segment'],
+      properties: segment
+    };
+    
+    const relationship = {
+      from: thoughtId,
+      to: segment.segment_id,
+      type: 'HAS_SEGMENT'
+    };
+
+    return { node, relationship };
+  }
+
   async initializeDb() {
     // Initialize in-memory graph
     await this.loadState();
