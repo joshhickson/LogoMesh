@@ -3,9 +3,27 @@ import neo4j from 'neo4j-driver';
 
 class GraphService {
   constructor() {
-    // Initialize with in-memory graph for now
+    // Keep in-memory graph as cache
     this.thoughts = new Map();
     this.relationships = new Map();
+    
+    // Initialize Neo4j connection
+    const uri = process.env.NEO4J_URI || 'neo4j://0.0.0.0:7687';
+    const user = process.env.NEO4J_USER || 'neo4j';
+    const password = process.env.NEO4J_PASSWORD || 'password';
+    
+    this.driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
+  }
+
+  async initializeDb() {
+    const session = this.driver.session();
+    try {
+      // Create constraints
+      await session.run('CREATE CONSTRAINT thought_id IF NOT EXISTS FOR (t:Thought) REQUIRE t.id IS UNIQUE');
+      await session.run('CREATE CONSTRAINT segment_id IF NOT EXISTS FOR (s:Segment) REQUIRE s.id IS UNIQUE');
+    } finally {
+      await session.close();
+    }
   }
 
   // Convert thought bubble to graph node
@@ -25,85 +43,98 @@ class GraphService {
 
   // Convert segment to node and create relationship
   segmentToNode(segment, thoughtId) {
-    const segmentNode = {
-      id: segment.segment_id,
-      labels: ['Segment'],
-      properties: {
-        title: segment.title,
-        content: segment.content,
-        fields: segment.fields || []
+    return {
+      node: {
+        id: segment.segment_id,
+        labels: ['Segment'],
+        properties: {
+          title: segment.title,
+          content: segment.content,
+          fields: segment.fields || []
+        }
+      },
+      relationship: {
+        from: thoughtId,
+        to: segment.segment_id,
+        type: 'CONTAINS'
       }
     };
-
-    const relationship = {
-      from: thoughtId,
-      to: segment.segment_id,
-      type: 'CONTAINS'
-    };
-
-    return { node: segmentNode, relationship };
   }
 
-  // Execute Cypher query on in-memory graph
+  async addThought(thought) {
+    const session = this.driver.session();
+    try {
+      const node = this.thoughtToNode(thought);
+      
+      // Create thought node
+      await session.run(
+        `CREATE (t:Thought {
+          id: $id,
+          title: $title,
+          description: $description,
+          tags: $tags,
+          color: $color,
+          created_at: $created_at
+        })`,
+        node.properties
+      );
+
+      // Add segments if they exist
+      if (thought.segments) {
+        for (const segment of thought.segments) {
+          const { node: segmentNode, relationship } = this.segmentToNode(segment, thought.thought_bubble_id);
+          
+          await session.run(
+            `CREATE (s:Segment {
+              id: $id,
+              title: $title,
+              content: $content,
+              fields: $fields
+            })`,
+            segmentNode.properties
+          );
+
+          await session.run(
+            `MATCH (t:Thought {id: $fromId}), (s:Segment {id: $toId})
+             CREATE (t)-[:CONTAINS]->(s)`,
+            { fromId: relationship.from, toId: relationship.to }
+          );
+        }
+      }
+
+      // Update in-memory cache
+      this.thoughts.set(node.id, node);
+    } finally {
+      await session.close();
+    }
+  }
+
   async executeCypher(query, params = {}) {
-    if (query.includes('MATCH (t:Thought)')) {
-      if (query.includes('WHERE')) {
-        const tagMatch = query.match(/t.properties.tags CONTAINS '(.+?)'/);
-        if (tagMatch) {
-          const targetTag = tagMatch[1];
-          return Array.from(this.thoughts.values())
-            .filter(thought => thought.properties.tags.includes(targetTag));
-        }
-      }
-      return Array.from(this.thoughts.values());
+    const session = this.driver.session();
+    try {
+      const result = await session.run(query, params);
+      return result.records.map(record => record.toObject());
+    } finally {
+      await session.close();
     }
-    
-    if (query.includes('MATCH (s:Segment)')) {
-      const segments = [];
-      this.thoughts.forEach(thought => {
-        if (thought.segments) {
-          segments.push(...thought.segments);
-        }
-      });
-      return segments;
-    }
-
-    if (query.includes('MATCH (t:Thought)-[r:CONTAINS]->(s:Segment)')) {
-      const relationships = Array.from(this.relationships.values());
-      return relationships.map(rel => ({
-        thought: this.thoughts.get(rel.from),
-        segment: this.thoughts.get(rel.to)
-      }));
-    }
-    
-    return [];
   }
 
-  // Helper methods for common queries
   async findThoughtsByTag(tag) {
     return this.executeCypher(
-      "MATCH (t:Thought) WHERE t.properties.tags CONTAINS $tag RETURN t",
+      "MATCH (t:Thought) WHERE $tag IN t.tags RETURN t",
       { tag }
     );
   }
 
   async findConnectedSegments(thoughtId) {
     return this.executeCypher(
-      "MATCH (t:Thought)-[r:CONTAINS]->(s:Segment) WHERE t.id = $thoughtId RETURN s",
+      "MATCH (t:Thought {id: $thoughtId})-[:CONTAINS]->(s:Segment) RETURN s",
       { thoughtId }
     );
   }
 
-  // Add thought to graph
-  addThought(thought) {
-    const node = this.thoughtToNode(thought);
-    this.thoughts.set(node.id, node);
-
-    thought.segments?.forEach(segment => {
-      const { node: segmentNode, relationship } = this.segmentToNode(segment, thought.thought_bubble_id);
-      this.thoughts.set(segmentNode.id, segmentNode);
-      this.relationships.set(`${relationship.from}-${relationship.to}`, relationship);
-    });
+  async close() {
+    await this.driver.close();
   }
 }
 
