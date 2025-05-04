@@ -14,6 +14,25 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
+  const onConnect = useCallback((params) => {
+    // Create new segment when edge is drawn
+    const sourceThought = thoughts.find(t => t.thought_bubble_id === params.source);
+    const targetThought = thoughts.find(t => t.thought_bubble_id === params.target);
+    
+    if (sourceThought && targetThought) {
+      const newSegment = {
+        segment_id: `seg_${params.source}_${params.target}`,
+        sourcePosition: sourceThought.position,
+        targetPosition: targetThought.position
+      };
+      
+      sourceThought.segments = [...(sourceThought.segments || []), newSegment];
+      localStorage.setItem('thought-web-data', JSON.stringify(thoughts));
+      
+      setEdges(eds => addEdge(params, eds));
+    }
+  }, [thoughts]);
+
   React.useEffect(() => {
     // Convert thoughts to ReactFlow nodes
     const flowNodes = thoughts.map(thought => ({
@@ -82,6 +101,7 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
         onNodeClick={handleNodeClick}
         onNodeDragStop={handleNodeDragStop}
         fitView
