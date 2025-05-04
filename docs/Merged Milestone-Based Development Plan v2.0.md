@@ -14,7 +14,7 @@
       - Observed outcome / test result
       - Any error messages, hallucinations, or edge-case discoveries
    
-- ** Create state_snapshots/ folder in root**
+- **Create state_snapshots/ folder in root**
   - Purpose: Stores .json exports of full graph state at milestone checkpoints.
   - Action: At the end of each major phase (e.g. post-ReGraph, post-filter layer), export graph data using the current JSON schema and save to:
       - state_snapshots/v0.1_init.json
