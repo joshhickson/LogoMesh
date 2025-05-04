@@ -1,72 +1,109 @@
 
 import React from 'react';
-import ReactFlow, { 
-  MiniMap, 
-  Controls, 
+import ReactFlow, {
+  MiniMap,
+  Controls,
   Background,
   useNodesState,
   useEdgesState
 } from 'reactflow';
-import { graphService } from '../services/graphService';
 import 'reactflow/dist/style.css';
+import { graphService } from '../services/graphService';
 
 function Canvas({ thoughts, setSelectedThought, activeFilters }) {
-  const [filteredThoughts, setFilteredThoughts] = React.useState(thoughts);
-
-  React.useEffect(() => {
-    if (activeFilters?.length) {
-      const filterByTags = async () => {
-        try {
-          const results = await Promise.all(
-            activeFilters.map(tag => graphService.findThoughtsByTag(tag))
-          );
-          const filtered = results.flat().map(t => t.properties);
-          setFilteredThoughts(filtered);
-        } catch (error) {
-          console.warn('Graph filtering unavailable:', error);
-          // Fall back to client-side filtering
-          const filtered = thoughts.filter(thought => 
-            thought.tags?.some(tag => activeFilters.includes(tag.name))
-          );
-          setFilteredThoughts(filtered);
-        }
-      };
-      filterByTags();
-    } else {
-      setFilteredThoughts(thoughts);
-    }
-  }, [thoughts, activeFilters]);
-
-  const initialNodes = filteredThoughts.map((thought) => ({
-    id: thought.thought_bubble_id,
-    type: 'default',
-    data: { label: thought.title },
-    position: thought.position || { x: Math.random() * 400, y: Math.random() * 400 },
-    style: {
-      background: thought.color || '#f3f4f6',
-      border: activeFilters?.includes(thought.thought_bubble_id) ? '3px solid #3b82f6' : '1px solid #d1d5db',
-      opacity: activeFilters?.length ? (activeFilters.includes(thought.thought_bubble_id) ? 1 : 0.3) : 1,
-      borderRadius: 8,
-      padding: 10,
-    },
-  }));
-
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
-  const onNodeClick = (event, node) => {
+  const onConnect = useCallback((params) => {
+    // Create new segment when edge is drawn
+    const sourceThought = thoughts.find(t => t.thought_bubble_id === params.source);
+    const targetThought = thoughts.find(t => t.thought_bubble_id === params.target);
+    
+    if (sourceThought && targetThought) {
+      const newSegment = {
+        segment_id: `seg_${params.source}_${params.target}`,
+        sourcePosition: sourceThought.position,
+        targetPosition: targetThought.position
+      };
+      
+      sourceThought.segments = [...(sourceThought.segments || []), newSegment];
+      localStorage.setItem('thought-web-data', JSON.stringify(thoughts));
+      
+      setEdges(eds => addEdge(params, eds));
+    }
+  }, [thoughts]);
+
+  React.useEffect(() => {
+    // Convert thoughts to ReactFlow nodes
+    const flowNodes = thoughts.map(thought => ({
+      id: thought.thought_bubble_id,
+      data: { label: thought.title },
+      position: thought.position || { x: 0, y: 0 },
+      style: {
+        background: thought.color || '#f3f4f6',
+        opacity: activeFilters?.length ? 
+          (activeFilters.includes(thought.thought_bubble_id) ? 1 : 0.3) : 1
+      }
+    }));
+
+    // Create edges from segments
+    const flowEdges = thoughts.flatMap(thought => 
+      (thought.segments || []).map(segment => ({
+        id: `${thought.thought_bubble_id}-${segment.segment_id}`,
+        source: thought.thought_bubble_id,
+        target: segment.segment_id,
+        style: { strokeDasharray: '5 5' }, // Dotted line for fuzzy connections
+        animated: true
+      }))
+    );
+
+    setNodes(flowNodes);
+    setEdges(flowEdges);
+  }, [thoughts, activeFilters]);
+
+  const handleNodeClick = (event, node) => {
     const thought = thoughts.find(t => t.thought_bubble_id === node.id);
-    if (thought) setSelectedThought(thought);
+    if (thought) {
+      setSelectedThought(thought);
+    }
+  };
+
+  const handleNodeDragStop = (event, node) => {
+    const updatedThoughts = thoughts.map(thought => {
+      if (thought.thought_bubble_id === node.id) {
+        return {
+          ...thought,
+          position: node.position,
+          segments: (thought.segments || []).map(segment => ({
+            ...segment,
+            sourcePosition: node.position
+          }))
+        };
+      }
+      return thought;
+    });
+    
+    // Update edges to follow node positions
+    const newEdges = edges.map(edge => ({
+      ...edge,
+      sourcePosition: nodes.find(n => n.id === edge.source)?.position,
+      targetPosition: nodes.find(n => n.id === edge.target)?.position
+    }));
+    
+    setEdges(newEdges);
+    localStorage.setItem('thought-web-data', JSON.stringify(updatedThoughts));
   };
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div className="w-full h-full">
       <ReactFlow
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        onNodeClick={onNodeClick}
+        onConnect={onConnect}
+        onNodeClick={handleNodeClick}
+        onNodeDragStop={handleNodeDragStop}
         fitView
       >
         <Background />
