@@ -3,36 +3,6 @@ class GraphService {
     this.loadState();
   }
 
-  thoughtToNode(thought) {
-    return {
-      id: thought.thought_bubble_id,
-      labels: ['Thought'],
-      properties: thought
-    };
-  }
-
-  segmentToNode(segment, thoughtId) {
-    const node = {
-      id: segment.segment_id,
-      labels: ['Segment'],
-      properties: segment
-    };
-    
-    const relationship = {
-      from: thoughtId,
-      to: segment.segment_id,
-      type: 'HAS_SEGMENT'
-    };
-
-    return { node, relationship };
-  }
-
-  async initializeDb() {
-    // Initialize in-memory graph
-    await this.loadState();
-    return Promise.resolve();
-  }
-
   loadState() {
     const savedState = localStorage.getItem('thoughtweb-state');
     if (savedState) {
@@ -56,16 +26,44 @@ class GraphService {
     localStorage.setItem('thoughtweb-state', JSON.stringify(state));
   }
 
+  async initializeDb() {
+    this.loadState();
+    return Promise.resolve();
+  }
+
+  async findThoughtsByTag(tagName) {
+    return Array.from(this.nodes.values())
+      .filter(node => 
+        node.labels?.includes('Thought') && 
+        node.properties.tags?.some(tag => tag.name === tagName)
+      )
+      .map(node => ({ properties: node.properties }));
+  }
+
   async addThought(thought) {
-    const node = this.thoughtToNode(thought);
+    const node = {
+      id: thought.thought_bubble_id,
+      labels: ['Thought'],
+      properties: thought
+    };
     this.nodes.set(node.id, node);
 
     if (thought.segments) {
-      for (const segment of thought.segments) {
-        const { node: segmentNode, relationship } = this.segmentToNode(segment, thought.thought_bubble_id);
+      thought.segments.forEach(segment => {
+        const segmentNode = {
+          id: segment.segment_id,
+          labels: ['Segment'],
+          properties: segment
+        };
         this.nodes.set(segmentNode.id, segmentNode);
+
+        const relationship = {
+          from: thought.thought_bubble_id,
+          to: segment.segment_id,
+          type: 'HAS_SEGMENT'
+        };
         this.relationships.set(`${relationship.from}-${relationship.to}`, relationship);
-      }
+      });
     }
 
     this._persistState();
@@ -78,33 +76,6 @@ class GraphService {
       return 'location';
     }
     return 'text';
-  }
-
-  async findThoughtsByTag(tag) {
-    return Array.from(this.nodes.values())
-      .filter(node => node.labels.includes('Thought') && node.properties.tags.includes(tag))
-      .map(node => ({ properties: node }));
-  }
-
-  async findConnectedSegments(thoughtId) {
-    return Array.from(this.relationships.values())
-      .filter(rel => rel.from === thoughtId)
-      .map(rel => this.nodes.get(rel.to))
-      .filter(node => node.labels.includes('Segment'));
-  }
-
-  async updateSegment(segmentId, field, value) {
-    const node = this.nodes.get(segmentId);
-    if (!node) return;
-
-    if (field.startsWith('fields.')) {
-      const fieldName = field.split('.')[1];
-      node.properties.fields[fieldName] = value;
-    } else {
-      node.properties[field] = value;
-    }
-
-    this._persistState();
   }
 }
 

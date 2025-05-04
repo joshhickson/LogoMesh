@@ -49,18 +49,8 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('thought-web-data', JSON.stringify(thoughts));
-    // Initialize Neo4j and sync thoughts
-    const syncGraph = async () => {
-      try {
-        await graphService.initializeDb();
-        for (const thought of thoughts) {
-          await graphService.addThought(thought);
-        }
-      } catch (error) {
-        console.warn('Graph sync warning:', error);
-      }
-    };
-    syncGraph();
+    // Sync with in-memory graph
+    thoughts.forEach(thought => graphService.addThought(thought));
   }, [thoughts]);
 
 
