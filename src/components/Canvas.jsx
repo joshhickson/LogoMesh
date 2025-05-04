@@ -1,11 +1,12 @@
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import ReactFlow, {
   MiniMap,
   Controls,
   Background,
   useNodesState,
-  useEdgesState
+  useEdgesState,
+  addEdge
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { graphService } from '../services/graphService';
@@ -31,7 +32,7 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
       
       setEdges(eds => addEdge(params, eds));
     }
-  }, [thoughts]);
+  }, [thoughts, setEdges]);
 
   React.useEffect(() => {
     // Convert thoughts to ReactFlow nodes
