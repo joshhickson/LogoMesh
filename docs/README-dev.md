@@ -164,6 +164,10 @@ A sub-element inside a thought. Contains:
 
 ---
 
+## ([Execution History](https://github.com/joshhickson/thought-web/blob/master/docs/Claude-Log.md))
+
+---
+
 This is not just productivity software.
 This is a cognitive framework for the evolution of intelligence.
 Welcome to ThoughtWeb.
