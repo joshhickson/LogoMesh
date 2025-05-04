@@ -1,6 +1,13 @@
 
 import { exportToJsonFile } from '../exportHandler';
 import { importFromJsonFile } from '../importHandler';
+import { newBubbleId, newSegmentId } from '../eventBus';
+
+// Mock eventBus functions
+jest.mock('../eventBus', () => ({
+  newBubbleId: jest.fn().mockReturnValue('test-bubble-id'),
+  newSegmentId: jest.fn().mockReturnValue('test-segment-id')
+}));
 
 describe('Data Handling', () => {
   const mockThoughts = [{
@@ -8,34 +15,118 @@ describe('Data Handling', () => {
     title: 'Test Thought',
     description: 'Test description',
     created_at: '2023-01-01T00:00:00.000Z',
-    segments: [],
-    tags: [],
-    color: '#000000',
+    segments: [{
+      segment_id: 'segment-123',
+      title: 'Test Segment',
+      content: 'Test content',
+      fields: { type: 'note' }
+    }],
+    tags: [{ name: 'test', color: '#10b981' }],
+    color: '#10b981',
     position: { x: 0, y: 0 }
   }];
 
-  // Mock DOM elements for file operations
   beforeEach(() => {
+    // Mock DOM elements
     global.URL.createObjectURL = jest.fn();
     document.createElement = jest.fn().mockReturnValue({
       setAttribute: jest.fn(),
       click: jest.fn(),
-      remove: jest.fn()
+      remove: jest.fn(),
+      type: '',
+      accept: '',
+      onchange: null
     });
     document.body.appendChild = jest.fn();
   });
 
-  test('exportToJsonFile creates correct payload structure', () => {
-    const appendChildSpy = jest.spyOn(document.body, 'appendChild');
-    exportToJsonFile(mockThoughts);
-    
-    expect(appendChildSpy).toHaveBeenCalled();
-    const anchorNode = appendChildSpy.mock.calls[0][0];
-    const exportData = decodeURIComponent(anchorNode.href).split(',')[1];
-    const parsedData = JSON.parse(exportData);
-    
-    expect(parsedData).toHaveProperty('export_metadata');
-    expect(parsedData).toHaveProperty('thoughts');
-    expect(parsedData.thoughts).toEqual(mockThoughts);
+  describe('Export Handler', () => {
+    test('exports with correct metadata structure', () => {
+      const appendChildSpy = jest.spyOn(document.body, 'appendChild');
+      exportToJsonFile(mockThoughts);
+      
+      expect(appendChildSpy).toHaveBeenCalled();
+      const anchorNode = appendChildSpy.mock.calls[0][0];
+      const exportData = decodeURIComponent(anchorNode.href).split(',')[1];
+      const parsedData = JSON.parse(exportData);
+      
+      expect(parsedData).toHaveProperty('export_metadata');
+      expect(parsedData.export_metadata).toHaveProperty('version', '0.5.0');
+      expect(parsedData).toHaveProperty('thoughts');
+      expect(parsedData.thoughts).toEqual(mockThoughts);
+    });
+  });
+
+  describe('Import Handler', () => {
+    test('normalizes legacy format thoughts', () => {
+      const legacyThought = {
+        title: 'Legacy Thought',
+        segments: [{
+          title: 'Legacy Segment',
+          fields: {}
+        }]
+      };
+      
+      const callback = jest.fn();
+      const fileReader = {
+        result: JSON.stringify([legacyThought]),
+        readAsText: jest.fn()
+      };
+      
+      global.FileReader = jest.fn(() => fileReader);
+      
+      importFromJsonFile(callback);
+      
+      const changeEvent = { target: { files: [new Blob()] } };
+      document.createElement().onchange(changeEvent);
+      
+      fileReader.onload({ target: { result: fileReader.result } });
+      
+      expect(callback).toHaveBeenCalledWith([{
+        thought_bubble_id: 'test-bubble-id',
+        title: 'Legacy Thought',
+        description: '',
+        created_at: expect.any(String),
+        tags: [],
+        color: '#10b981',
+        position: expect.any(Object),
+        segments: [{
+          segment_id: 'test-segment-id',
+          title: 'Legacy Segment',
+          content: '',
+          fields: {},
+          embedding_vector: []
+        }]
+      }]);
+    });
+
+    test('handles modern format with metadata', () => {
+      const modernExport = {
+        export_metadata: {
+          version: '0.5.0',
+          exported_at: new Date().toISOString(),
+          author: 'Test',
+          tool: 'ThoughtWeb'
+        },
+        thoughts: mockThoughts
+      };
+      
+      const callback = jest.fn();
+      const fileReader = {
+        result: JSON.stringify(modernExport),
+        readAsText: jest.fn()
+      };
+      
+      global.FileReader = jest.fn(() => fileReader);
+      
+      importFromJsonFile(callback);
+      
+      const changeEvent = { target: { files: [new Blob()] } };
+      document.createElement().onchange(changeEvent);
+      
+      fileReader.onload({ target: { result: fileReader.result } });
+      
+      expect(callback).toHaveBeenCalledWith(mockThoughts);
+    });
   });
 });
