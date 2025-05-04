@@ -1,55 +1,36 @@
+
 import React from 'react';
-import { Alchemy, GraphCanvas } from 'alchemy-graph-react';
+import ReactFlow, {
+  MiniMap,
+  Controls,
+  Background,
+  useNodesState,
+  useEdgesState
+} from 'reactflow';
+import 'reactflow/dist/style.css';
 import { graphService } from '../services/graphService';
 
 function Canvas({ thoughts, setSelectedThought, activeFilters }) {
-  const [graphData, setGraphData] = React.useState({ nodes: [], edges: [] });
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   React.useEffect(() => {
-    // Convert thoughts to ReGraph format
-    const nodes = thoughts.map(thought => ({
+    // Convert thoughts to ReactFlow nodes
+    const flowNodes = thoughts.map(thought => ({
       id: thought.thought_bubble_id,
-      caption: thought.title,
-      properties: thought,
-      type: 'thought',
+      data: { label: thought.title },
+      position: thought.position || { x: 0, y: 0 },
       style: {
-        fill: thought.color || '#f3f4f6',
-        stroke: activeFilters?.includes(thought.thought_bubble_id) ? '#3b82f6' : '#d1d5db',
-        opacity: activeFilters?.length ? (activeFilters.includes(thought.thought_bubble_id) ? 1 : 0.3) : 1
+        background: thought.color || '#f3f4f6',
+        opacity: activeFilters?.length ? 
+          (activeFilters.includes(thought.thought_bubble_id) ? 1 : 0.3) : 1
       }
     }));
 
-    // Create edges from segment relationships
-    const edges = [];
-    thoughts.forEach(thought => {
-      if (thought.segments) {
-        thought.segments.forEach(segment => {
-          edges.push({
-            source: thought.thought_bubble_id,
-            target: segment.segment_id,
-            caption: 'HAS_SEGMENT'
-          });
-        });
-      }
-    });
-
-    setGraphData({ nodes, edges });
+    setNodes(flowNodes);
   }, [thoughts, activeFilters]);
 
-  const config = {
-    nodeCaption: 'caption',
-    nodeStyle: {
-      radius: 25,
-      borderWidth: 2,
-      cursor: 'pointer'
-    },
-    edgeStyle: {
-      width: 1,
-      arrow: true
-    }
-  };
-
-  const handleNodeClick = (node) => {
+  const handleNodeClick = (event, node) => {
     const thought = thoughts.find(t => t.thought_bubble_id === node.id);
     if (thought) {
       setSelectedThought(thought);
@@ -58,9 +39,18 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
 
   return (
     <div className="w-full h-full">
-      <Alchemy graphData={graphData} config={config} onNodeClick={handleNodeClick}>
-        <GraphCanvas />
-      </Alchemy>
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onNodeClick={handleNodeClick}
+        fitView
+      >
+        <Background />
+        <Controls />
+        <MiniMap />
+      </ReactFlow>
     </div>
   );
 }
