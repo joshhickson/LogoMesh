@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { newBubbleId, newSegmentId } from '../utils/eventBus';
+import { VoiceInputManager } from '../utils/VoiceInputManager';
 
 const defaultFieldOptions = [
   'Concept Type',
@@ -16,6 +17,39 @@ function AddThoughtModal({ createThought, onClose }) {
   const [tags, setTags] = useState([]);
   const [color, setColor] = useState('#f97316');
   const [segments, setSegments] = useState([]);
+  const [isListening, setIsListening] = useState(false);
+  const voiceManagerRef = useRef(null);
+
+  useEffect(() => {
+    voiceManagerRef.current = new VoiceInputManager(
+      (transcript, isFinal) => {
+        if (isFinal) {
+          setDescription(prev => prev + ' ' + transcript);
+        }
+      },
+      (error) => console.error('Speech recognition error:', error)
+    );
+    
+    return () => {
+      if (voiceManagerRef.current) {
+        voiceManagerRef.current.stopListening();
+      }
+    };
+  }, []);
+
+  const toggleVoiceInput = () => {
+    if (!voiceManagerRef.current?.isSupported()) {
+      alert('Speech recognition is not supported in your browser');
+      return;
+    }
+
+    if (isListening) {
+      voiceManagerRef.current.stopListening();
+    } else {
+      voiceManagerRef.current.startListening();
+    }
+    setIsListening(!isListening);
+  };
 
   const addSegment = () => {
     setSegments([
@@ -85,12 +119,29 @@ function AddThoughtModal({ createThought, onClose }) {
           onChange={(e) => setTitle(e.target.value)}
           className="w-full mb-2 p-2 border rounded"
         />
-        <textarea
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full mb-2 p-2 border rounded"
-        />
+        <div className="relative w-full mb-2">
+          <textarea
+            placeholder="Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full p-2 border rounded"
+          />
+          <button
+            type="button"
+            onClick={toggleVoiceInput}
+            className={`absolute right-2 bottom-2 p-2 rounded-full ${
+              isListening ? 'bg-red-500' : 'bg-gray-200'
+            }`}
+            title={isListening ? 'Stop recording' : 'Start recording'}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+              <line x1="12" y1="19" x2="12" y2="23" />
+              <line x1="8" y1="23" x2="16" y2="23" />
+            </svg>
+          </button>
+        </div>
         <div>
           <input type="text" placeholder="Add Tag" onChange={handleTagChange} className="w-full mb-2 p-2 border rounded"/>
           <ul>
