@@ -50,11 +50,28 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   };
 
   const handleNodeDragStop = (event, node) => {
-    const updatedThoughts = thoughts.map(thought => 
-      thought.thought_bubble_id === node.id 
-        ? {...thought, position: node.position}
-        : thought
-    );
+    const updatedThoughts = thoughts.map(thought => {
+      if (thought.thought_bubble_id === node.id) {
+        return {
+          ...thought,
+          position: node.position,
+          segments: (thought.segments || []).map(segment => ({
+            ...segment,
+            sourcePosition: node.position
+          }))
+        };
+      }
+      return thought;
+    });
+    
+    // Update edges to follow node positions
+    const newEdges = edges.map(edge => ({
+      ...edge,
+      sourcePosition: nodes.find(n => n.id === edge.source)?.position,
+      targetPosition: nodes.find(n => n.id === edge.target)?.position
+    }));
+    
+    setEdges(newEdges);
     localStorage.setItem('thought-web-data', JSON.stringify(updatedThoughts));
   };
 
