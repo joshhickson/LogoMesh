@@ -1,70 +1,95 @@
-# ThoughtWeb — Developer Onboarding
+# ThoughtWeb — Developer Vision & Architecture Guide
 
-Tired of models forgetting essential details in past conversations? Bored with surface level context and meta-capabilities in LLMs? Want to create a scaffold for proto-awareness, with viewable and editable training parameters in LCMs? Love owning your own data? ThoughtWeb is for you!
+Welcome to the core of **ThoughtWeb**: a schema-driven, AI-compatible, self-organizing cognitive graph engine built for local-first emergent thinking, recursive querying, and future AI self-reflection.
 
-
-https://discord.gg/6ydDxzMjvD
-
-ThoughtWeb is: a schema-driven, AI-ready, visually organized thought engine designed for flexible knowledge structuring, deep filtering, and scalable augmentation. Think Neo4j, but for LLMs. 
-
-This document exists to help new contributors or returning developers quickly get up to speed on what ThoughtWeb is — and how to develop inside it.
+This document is designed for both human developers and Claude 3.5 (Replit agent) to understand the evolving structure, mission, and logic of ThoughtWeb. It defines how the system should behave, why it matters, and how we implement it step-by-step.
 
 ---
 
 ## Mission
 
-**To empower individuals to structure, filter, and grow their thoughts with precision.**
+**ThoughtWeb empowers users and AI to externalize, structure, and evolve their thinking through a visual, filterable, recursive graph engine — optimized for emergence, insight, and local-first autonomy.**
 
-Modern thinking tools either:
-- Flatten information (lists, notes, blocks),
-- Overwhelm with noise (graphs without clarity),
-- Or trap users in rigid workflows.
+Rather than simulate intelligence via token prediction, ThoughtWeb provides an explicit substrate for:
 
-**ThoughtWeb** breaks that cycle. It’s a space where:
-- Thought bubbles are flexible containers of meaning
-- Segments hold layered context
-- Every part is extensible, filterable, and exportable
-- The system grows with your mind — and eventually, helps guide it
+- **Self-reflection** through transparent node/segment tracking
+- **Emergent pattern discovery** via color filters, tags, and abstraction layers
+- **Cognitive scaffolding** for human or AI agents using a shared substrate
+- **Error-tolerant fuzzy logic** by design (fuzzy links, contradictions, gaps)
+- **Future AI co-pilots** that evolve by querying and reasoning about their own graph state
 
 ---
 
-## Vision
+## Core Architecture
 
-ThoughtWeb is not just a mind map. It's a **thinking OS**.
+### Stack (Current & Target)
 
-- It should feel as comfortable for journaling as it is for concept modeling.
-- It should scale from one idea to ten thousand.
-- It should be easy to port, visualize, and AI-augment.
-- It should outlast note apps — and act as the long-term substrate for your evolving worldview.
-
----
-
-## Why ThoughtWeb Exists
-
-Tired of Chat-GPT forgetting essential details in past conversations? Bored with surface level context and awareness skills in LLMs? Want to create a scaffold for proto-awareness and viewable and editable training parameters in LCMs? Love owning your own data? ThoughtWeb is for you.
-
-ThoughtWeb is more than a note-taking tool—it is a cognitive interface for building, evolving, and aligning conceptual thought. Where others embed abstractions deep inside machine layers, ThoughtWeb empowers users to map and refine their own reasoning in a persistent, interpretable structure.
-
-This system prioritizes:
-
-- **Human agency** over black-box automation  
-- **Conceptual clarity** over raw token fluency  
-- **Transparency** over model opacity  
-- **Cognitive fingerprinting** over one-size-fits-all prompts  
-- **Sovereignty** over dependency
-
-Rather than tuning intelligence for benchmark performance, ThoughtWeb externalizes it—anchoring ideas in field-tagged, modular segments that can evolve, connect, and persist beyond any single interaction. It provides both the interface and infrastructure for humans to *think with structure*, organize insight, and optionally guide AI systems through grounded abstraction rather than shallow pattern-matching.
-
-ThoughtWeb is a framework for truth-driven intelligence—**a system for thinking, not just outputting.**
+| Layer | Technology |
+|-------|------------|
+| Frontend | React + ReGraph (Cambridge Intelligence) |
+| Backend Data | SQLite (via `better-sqlite3` or `sql.js`) |
+| Local LLM (Future) | llama.cpp / Ollama |
+| Storage Format | JSON import/export, embedded field structure |
+| Visual Graph Engine | ReGraph (React-based) |
+| Hosting | Replit (Mac Mini compatible, local preferred) |
 
 ---
 
-## Stack
+## Data Model Overview
 
-- **React + Tailwind** (lightweight, hot-reloadable UI)
-- **React Flow** (node visualization engine)
-- **LocalStorage** (simple persistence for now)
-- **JSON-first schema design** (everything exportable + parseable)
+### Core Objects:
+- **Thought Bubble**: A parent node containing multiple thought segments. Visualized as a ReGraph node.
+- **Segment**: A discrete atomic unit of thought, with associated metadata.
+
+### Fields Per Segment:
+- `segment_id`: Unique identifier
+- `content`: The core text or idea
+- `tags`: List of descriptive labels
+- `color`: Visual color assigned by user
+- `abstraction_level`: One of: `fact`, `hypothesis`, `emerging_pattern`
+- `fuzzy_links[]`: Optional array of weak or speculative relations
+- `embedding_vector`: *(optional placeholder for LLM integration)*
+
+---
+
+## Milestone-Based Development Plan
+
+### PHASE 1: Scaffold & Realignment (Weeks 1–2)
+- [ ] Replace current visual canvas with ReGraph
+- [ ] Migrate thought bubbles to ReGraph node/edge model
+- [ ] Set up local SQLite DB schema
+- [ ] Move all existing JSON bubbles/segments into SQLite
+- [ ] Enable full data load/save cycle between SQLite and React state
+
+### PHASE 2: Interaction & Filters (Weeks 2–4)
+- [ ] Add filter controls for tags, colors, abstraction levels
+- [ ] Add “fuzzy link” style to visually represent uncertainty
+- [ ] Add toggle to hide/show lower-abstraction bubbles
+- [ ] Begin capturing user inputs into structured segments (no free-floating text)
+
+### PHASE 3: AI Hooks (Month 2–3)
+- [ ] Add embedding vector placeholder field to each segment
+- [ ] Enable basic LLM-assisted queries over SQLite (Claude or local model)
+- [ ] Implement “Summarize Thought Map” prototype (via rule-based logic first)
+- [ ] Allow users (or LLM) to generate new connections or spot contradictions
+
+### PHASE 4: Emergence Engine (Month 3+)
+- [ ] Add heatmap layer for active segments
+- [ ] Add recursive query interface (e.g., “Which of my thoughts contradict?”)
+- [ ] Allow AI or user to see “past paths” of thought exploration
+- [ ] Prototype self-reflective prompt generator: “What ideas are missing?”
+
+---
+
+## Guiding Principles (for Claude + Human Devs)
+
+1. **Everything is traceable** — Segment relationships must be inspectable, not hidden in latent space.
+2. **Data must be filterable by design** — Don’t hardcode views; build dynamic filters.
+3. **Thoughts are layered, not flat** — Abstraction levels matter.
+4. **Uncertainty is allowed** — Fuzzy links are a first-class citizen.
+5. **System must support recursive queries** — Self-reflection is the end goal.
+6. **Local-first always wins** — Prioritize performance and offline compatibility.
+7. **No black boxes** — AI should evolve via interaction, not obfuscation.
 
 ---
 
