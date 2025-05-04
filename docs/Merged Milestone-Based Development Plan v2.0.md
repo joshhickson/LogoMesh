@@ -29,14 +29,15 @@
       - Any suggested prompts that increased precision
       - Promising follow-ups or forked ideas to revisit
 
-- **ReGraph & Data**  
-  - Replace visual canvas with **ReGraph**  
-  - Migrate bubbles to ReGraph node/edge model  
+- **Graph Visualization & Data**  
+  - Replace visual canvas with **Cytoscape.js** (open-source alternative to ReGraph)  
+  - Create React wrapper using `ref` integration pattern  
+  - Migrate bubbles to Cytoscape node/edge model with initial layout  
 
 - **Local Persistence**  
   - Set up **SQLite** DB schema  
   - Migrate JSON bubbles/segments into SQLite  
-  - Full React ↔ SQLite load/save cycle  
+  - Full React ↔ SQLite load/save cycle via API or in-browser WebAssembly (e.g., sql.js)  
 
 - **Abstraction Taxonomy Definition**  
   - Co-design **concept hierarchy**:  
@@ -45,6 +46,11 @@
     3. **Theme** (clusters of ideas)  
     4. **Goal** (outcomes)  
   - Tag each bubble with its level + **memory cue** (anchor/trigger)  
+
+- **Automation Foundations**  
+  - Set up self-hosted or cloud-based **n8n** instance  
+  - Define webhook triggers for bubble/segment sync events  
+  - Scaffold logic flows for auto-tagging, backup, and embedding prep  
 
 - **DevOps Foundations**  
   - Containerize front-end + SQLite (**Docker Compose**)  
@@ -57,7 +63,7 @@
   - Basic interactions: click-select, hover-preview, drag-pan/zoom  
   - Onboarding tour stub with progressive-disclosure  
 
-> **Goal:** a solid, repeatable dev environment with clear hierarchy and consistent UI patterns.
+> **Goal:** a solid, repeatable dev environment with clear hierarchy, automation readiness, and consistent UI patterns.
 
 ---
 
