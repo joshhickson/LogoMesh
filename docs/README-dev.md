@@ -164,7 +164,7 @@ A sub-element inside a thought. Contains:
 
 ---
 
-## ([Execution History](https://github.com/joshhickson/thought-web/blob/master/docs/Claude-Log.md))
+## [Execution History](https://github.com/joshhickson/thought-web/blob/master/docs/Claude-Log.md)
 
 ---
 
