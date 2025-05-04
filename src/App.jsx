@@ -33,7 +33,7 @@ function App() {
 
     const updatedThoughts = [...thoughts, newThought];
     setThoughts(updatedThoughts);
-    
+
     // Persist to localStorage with metadata
     const persistData = {
       export_metadata: {

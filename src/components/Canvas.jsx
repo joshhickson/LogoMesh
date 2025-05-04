@@ -1,78 +1,66 @@
-
 import React from 'react';
-import ReactFlow, { 
-  MiniMap, 
-  Controls, 
-  Background,
-  useNodesState,
-  useEdgesState
-} from 'reactflow';
+import { Alchemy, GraphCanvas } from 'alchemy-react';
 import { graphService } from '../services/graphService';
-import 'reactflow/dist/style.css';
 
 function Canvas({ thoughts, setSelectedThought, activeFilters }) {
-  const [filteredThoughts, setFilteredThoughts] = React.useState(thoughts);
+  const [graphData, setGraphData] = React.useState({ nodes: [], edges: [] });
 
   React.useEffect(() => {
-    if (activeFilters?.length) {
-      const filterByTags = async () => {
-        try {
-          const results = await Promise.all(
-            activeFilters.map(tag => graphService.findThoughtsByTag(tag))
-          );
-          const filtered = results.flat().map(t => t.properties);
-          setFilteredThoughts(filtered);
-        } catch (error) {
-          console.warn('Graph filtering unavailable:', error);
-          // Fall back to client-side filtering
-          const filtered = thoughts.filter(thought => 
-            thought.tags?.some(tag => activeFilters.includes(tag.name))
-          );
-          setFilteredThoughts(filtered);
-        }
-      };
-      filterByTags();
-    } else {
-      setFilteredThoughts(thoughts);
-    }
+    // Convert thoughts to ReGraph format
+    const nodes = thoughts.map(thought => ({
+      id: thought.thought_bubble_id,
+      caption: thought.title,
+      properties: thought,
+      type: 'thought',
+      style: {
+        fill: thought.color || '#f3f4f6',
+        stroke: activeFilters?.includes(thought.thought_bubble_id) ? '#3b82f6' : '#d1d5db',
+        opacity: activeFilters?.length ? (activeFilters.includes(thought.thought_bubble_id) ? 1 : 0.3) : 1
+      }
+    }));
+
+    // Create edges from segment relationships
+    const edges = [];
+    thoughts.forEach(thought => {
+      if (thought.segments) {
+        thought.segments.forEach(segment => {
+          edges.push({
+            source: thought.thought_bubble_id,
+            target: segment.segment_id,
+            caption: 'HAS_SEGMENT'
+          });
+        });
+      }
+    });
+
+    setGraphData({ nodes, edges });
   }, [thoughts, activeFilters]);
 
-  const initialNodes = filteredThoughts.map((thought) => ({
-    id: thought.thought_bubble_id,
-    type: 'default',
-    data: { label: thought.title },
-    position: thought.position || { x: Math.random() * 400, y: Math.random() * 400 },
-    style: {
-      background: thought.color || '#f3f4f6',
-      border: activeFilters?.includes(thought.thought_bubble_id) ? '3px solid #3b82f6' : '1px solid #d1d5db',
-      opacity: activeFilters?.length ? (activeFilters.includes(thought.thought_bubble_id) ? 1 : 0.3) : 1,
-      borderRadius: 8,
-      padding: 10,
+  const config = {
+    nodeCaption: 'caption',
+    nodeStyle: {
+      radius: 25,
+      borderWidth: 2,
+      cursor: 'pointer'
     },
-  }));
+    edgeStyle: {
+      width: 1,
+      arrow: true
+    }
+  };
 
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
-  const onNodeClick = (event, node) => {
+  const handleNodeClick = (node) => {
     const thought = thoughts.find(t => t.thought_bubble_id === node.id);
-    if (thought) setSelectedThought(thought);
+    if (thought) {
+      setSelectedThought(thought);
+    }
   };
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onNodeClick={onNodeClick}
-        fitView
-      >
-        <Background />
-        <Controls />
-        <MiniMap />
-      </ReactFlow>
+    <div className="w-full h-full">
+      <Alchemy graphData={graphData} config={config} onNodeClick={handleNodeClick}>
+        <GraphCanvas />
+      </Alchemy>
     </div>
   );
 }
