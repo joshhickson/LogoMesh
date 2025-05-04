@@ -16,21 +16,32 @@ function App() {
 
   const createThought = useCallback(({ title, description, tags, segments }) => {
     const newThought = {
-      thought_bubble_id: `tb_${ulid()}`,
+      thought_bubble_id: newBubbleId(),
       title,
       description,
-      tags,
+      tags: tags.map(tag => ({name: tag, color: '#10b981'})), // Default color for tags
       created_at: new Date().toISOString(),
       position: { x: Math.random() * 500, y: Math.random() * 500 },
       segments: segments.map(segment => ({
         ...segment,
-        segment_id: `seg_${ulid()}`
+        segment_id: newSegmentId(),
+        embedding_vector: [] // Prepare for future AI features
       }))
     };
 
     const updatedThoughts = [...thoughts, newThought];
     setThoughts(updatedThoughts);
-    localStorage.setItem('thought-web-data', JSON.stringify(updatedThoughts));
+    
+    // Persist to localStorage with metadata
+    const persistData = {
+      export_metadata: {
+        version: '0.5.0',
+        exported_at: new Date().toISOString(),
+        thought_count: updatedThoughts.length
+      },
+      thoughts: updatedThoughts
+    };
+    localStorage.setItem('thought-web-data', JSON.stringify(persistData));
     return newThought;
   }, [thoughts]);
 
