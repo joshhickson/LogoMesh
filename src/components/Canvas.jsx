@@ -1,6 +1,9 @@
 
 import React from 'react';
 import ReactFlow, { 
+
+import { graphService } from '../services/graphService';
+
   MiniMap, 
   Controls, 
   Background,
@@ -10,6 +13,22 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 
 function Canvas({ thoughts, setSelectedThought, activeFilters }) {
+  const [filteredThoughts, setFilteredThoughts] = React.useState(thoughts);
+
+  React.useEffect(() => {
+    if (activeFilters?.length) {
+      const filterByTags = async () => {
+        const results = await Promise.all(
+          activeFilters.map(tag => graphService.findThoughtsByTag(tag))
+        );
+        const filtered = results.flat().map(t => t.properties);
+        setFilteredThoughts(filtered);
+      };
+      filterByTags();
+    } else {
+      setFilteredThoughts(thoughts);
+    }
+  }, [thoughts, activeFilters]);
   // Convert thoughts to nodes
   const initialNodes = thoughts.map((thought) => ({
     id: thought.thought_bubble_id,
