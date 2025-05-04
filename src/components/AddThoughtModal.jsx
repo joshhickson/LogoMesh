@@ -120,12 +120,19 @@ function AddThoughtModal({ createThought, onClose }) {
           className="w-full mb-2 p-2 border rounded"
         />
         <div className="relative w-full mb-2">
-          <textarea
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full p-2 border rounded"
-          />
+          <div className="relative">
+            <textarea
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full p-2 border rounded"
+            />
+            {isListening && (
+              <div className="absolute bottom-0 left-0 right-0 bg-gray-100 dark:bg-gray-700 p-2 text-sm italic">
+                Listening... Click microphone to stop
+              </div>
+            )}
+          </div>
           <button
             type="button"
             onClick={toggleVoiceInput}
