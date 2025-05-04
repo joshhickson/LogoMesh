@@ -1,15 +1,13 @@
 
 import React from 'react';
 import ReactFlow, { 
-
-import { graphService } from '../services/graphService';
-
   MiniMap, 
   Controls, 
   Background,
   useNodesState,
   useEdgesState
 } from 'reactflow';
+import { graphService } from '../services/graphService';
 import 'reactflow/dist/style.css';
 
 function Canvas({ thoughts, setSelectedThought, activeFilters }) {
@@ -29,7 +27,7 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
       setFilteredThoughts(thoughts);
     }
   }, [thoughts, activeFilters]);
-  // Convert thoughts to nodes
+
   const initialNodes = thoughts.map((thought) => ({
     id: thought.thought_bubble_id,
     type: 'default',
