@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Canvas from './components/Canvas';
 import { newBubbleId, newSegmentId } from './utils/eventBus';
+import { graphService } from './services/graphService';
 import Sidebar from './components/Sidebar';
 import ThoughtDetailPanel from './components/ThoughtDetailPanel';
 import AddThoughtModal from './components/AddThoughtModal';
