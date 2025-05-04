@@ -1,0 +1,57 @@
+useCallback is not defined
+renderWithHooks@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:29581:31
+mountIndeterminateComponent@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:33552:17
+beginWork@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:34855:20
+callCallback@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:19837:18
+invokeGuardedCallbackDev@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:19881:20
+invokeGuardedCallback@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:19938:35
+beginWork$1@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39836:32
+performUnitOfWork@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39084:16
+workLoopSync@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39007:26
+renderRootSync@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:38980:11
+performConcurrentWorkOnRoot@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:38375:78
+workLoop@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:46522:46
+flushWork@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:46500:18
+
+useCallback is not defined
+renderWithHooks@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:29581:31
+mountIndeterminateComponent@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:33552:17
+beginWork@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:34855:20
+callCallback@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:19837:18
+invokeGuardedCallbackDev@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:19881:20
+invokeGuardedCallback@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:19938:35
+beginWork$1@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39836:32
+performUnitOfWork@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39084:16
+workLoopSync@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39007:26
+renderRootSync@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:38980:11
+recoverFromConcurrentError@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:38472:38
+performConcurrentWorkOnRoot@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:38385:26
+workLoop@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:46522:46
+flushWork@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:46500:18
+performWorkUntilDeadline@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:46737:25
+
+The above error occurred in the <Canvas> component:
+
+Canvas@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:51030:16
+div
+App@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:50373:82
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+t@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630
+value@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766
+8988/value/this.asyncTimer<@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+
+useCallback is not defined
+renderWithHooks@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:29581:31
+mountIndeterminateComponent@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:33552:17
+beginWork@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:34855:20
+beginWork$1@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39814:18
+performUnitOfWork@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39084:16
+workLoopSync@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39007:26
+renderRootSync@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:38980:11
+recoverFromConcurrentError@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:38472:38
+performConcurrentWorkOnRoot@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:38385:26
+workLoop@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:46522:46
+flushWork@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:46500:18
+performWorkUntilDeadline@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:46737:25
