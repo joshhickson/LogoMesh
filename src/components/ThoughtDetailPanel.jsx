@@ -27,6 +27,66 @@ function ThoughtDetailPanel({ thought, setThoughts }) {
         return t;
       })
     );
+    // Update in graph service
+    graphService.updateSegment(segmentId, field, value).catch(console.error);
+  };
+
+  const handleAddField = (segmentId) => {
+    const fieldName = prompt('Enter field name:');
+    if (!fieldName) return;
+    
+    setThoughts(prevThoughts => 
+      prevThoughts.map(t => {
+        if (t.thought_bubble_id === thought.thought_bubble_id) {
+          return {
+            ...t,
+            segments: t.segments.map(s => 
+              s.segment_id === segmentId ? {
+                ...s,
+                fields: { ...s.fields, [fieldName]: '' }
+              } : s
+            )
+          };
+        }
+        return t;
+      })
+    );
+  };
+
+  const handleRemoveField = (segmentId, fieldName) => {
+    setThoughts(prevThoughts => 
+      prevThoughts.map(t => {
+        if (t.thought_bubble_id === thought.thought_bubble_id) {
+          return {
+            ...t,
+            segments: t.segments.map(s => {
+              if (s.segment_id === segmentId) {
+                const { [fieldName]: removed, ...remainingFields } = s.fields;
+                return { ...s, fields: remainingFields };
+              }
+              return s;
+            })
+          };
+        }
+        return t;
+      })
+    );
+  };
+
+  const handleDeleteSegment = (segmentId) => {
+    if (!confirm('Are you sure you want to delete this segment?')) return;
+    
+    setThoughts(prevThoughts => 
+      prevThoughts.map(t => {
+        if (t.thought_bubble_id === thought.thought_bubble_id) {
+          return {
+            ...t,
+            segments: t.segments.filter(s => s.segment_id !== segmentId)
+          };
+        }
+        return t;
+      })
+    );
   };
 
   return (
@@ -62,29 +122,62 @@ function ThoughtDetailPanel({ thought, setThoughts }) {
       <div>
         <h3 className="text-md font-semibold mb-2">Segments:</h3>
         {(thought.segments || []).map((segment, index) => (
-          <div key={segment.segment_id || index} className="mb-4 border-t pt-2">
-            <input
-              type="text"
-              value={segment.title}
-              onChange={(e) => handleSegmentEdit(segment.segment_id, 'title', e.target.value)}
-              className="font-medium w-full bg-transparent border-b border-transparent hover:border-gray-300 focus:border-blue-500 outline-none"
-            />
+          <div key={segment.segment_id || index} className="mb-4 border rounded-lg p-4 bg-gray-50 dark:bg-gray-800">
+            <div className="flex justify-between items-center mb-2">
+              <input
+                type="text"
+                value={segment.title}
+                onChange={(e) => handleSegmentEdit(segment.segment_id, 'title', e.target.value)}
+                className="font-medium w-full bg-transparent border-b border-transparent hover:border-gray-300 focus:border-blue-500 outline-none"
+                placeholder="Segment Title"
+              />
+              <button
+                onClick={() => handleDeleteSegment(segment.segment_id)}
+                className="text-red-500 hover:text-red-700 ml-2"
+                title="Delete Segment"
+              >
+                ×
+              </button>
+            </div>
+            
             <textarea
               value={segment.content}
               onChange={(e) => handleSegmentEdit(segment.segment_id, 'content', e.target.value)}
-              className="text-sm mb-1 w-full bg-transparent border border-transparent hover:border-gray-300 focus:border-blue-500 outline-none resize-y"
+              className="text-sm mb-3 w-full bg-transparent border rounded p-2 hover:border-gray-300 focus:border-blue-500 outline-none resize-y"
+              placeholder="Segment Content"
             />
 
             {/* Segment Fields */}
-            {segment.fields && Object.keys(segment.fields).length > 0 && (
-              <div className="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                {Object.entries(segment.fields).map(([fieldName, fieldValue], i) => (
-                  <p key={i}>
-                    <strong>{fieldName}:</strong> {Array.isArray(fieldValue) ? fieldValue.join(', ') : fieldValue}
-                  </p>
-                ))}
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <h4 className="text-sm font-medium">Fields</h4>
+                <button
+                  onClick={() => handleAddField(segment.segment_id)}
+                  className="text-sm text-blue-500 hover:text-blue-700"
+                >
+                  + Add Field
+                </button>
               </div>
-            )}
+              
+              {segment.fields && Object.entries(segment.fields).map(([fieldName, fieldValue], i) => (
+                <div key={i} className="flex items-center gap-2 text-sm">
+                  <span className="font-medium min-w-[100px]">{fieldName}:</span>
+                  <input
+                    type="text"
+                    value={fieldValue}
+                    onChange={(e) => handleSegmentEdit(segment.segment_id, `fields.${fieldName}`, e.target.value)}
+                    className="flex-1 bg-transparent border rounded px-2 py-1"
+                  />
+                  <button
+                    onClick={() => handleRemoveField(segment.segment_id, fieldName)}
+                    className="text-red-500 hover:text-red-700"
+                    title="Remove Field"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
