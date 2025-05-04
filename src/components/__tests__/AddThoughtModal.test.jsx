@@ -86,15 +86,28 @@ describe('AddThoughtModal', () => {
   });
 });
 test('handles voice input correctly', () => {
-    const { getByTitle } = render(
+    const { getByTitle, getByPlaceholderText } = render(
       <AddThoughtModal createThought={mockCreateThought} onClose={mockOnClose} />
     );
     
     const micButton = getByTitle('Start recording');
-    fireEvent.click(micButton);
+    const description = getByPlaceholderText('Description');
     
+    // Test start recording
+    fireEvent.click(micButton);
     expect(screen.getByText('Listening... Click microphone to stop')).toBeInTheDocument();
     
+    // Test transcript update
+    const voiceInput = "Voice input test";
+    fireEvent.change(description, { target: { value: voiceInput } });
+    expect(description.value).toBe(voiceInput);
+    
+    // Test stop recording
     fireEvent.click(micButton);
     expect(screen.queryByText('Listening... Click microphone to stop')).not.toBeInTheDocument();
+    
+    // Test browser support error
+    delete window.webkitSpeechRecognition;
+    fireEvent.click(micButton);
+    expect(window.alert).toHaveBeenCalledWith('Speech recognition is not supported in your browser');
   });

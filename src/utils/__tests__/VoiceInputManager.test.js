@@ -47,13 +47,20 @@ describe('VoiceInputManager', () => {
 
   test('handles speech recognition results', () => {
     const manager = new VoiceInputManager(onTranscriptUpdate, onError);
-    const mockResults = [
+    
+    // Test short phrase
+    const shortResults = [
       [{ isFinal: true, [0]: { transcript: 'Hello world.' } }]
     ];
-    
-    mockRecognition.onresult({ resultIndex: 0, results: mockResults });
-    
-    expect(onTranscriptUpdate).toHaveBeenCalledWith('Hello world.', true, true);
+    mockRecognition.onresult({ resultIndex: 0, results: shortResults });
+    expect(onTranscriptUpdate).toHaveBeenCalledWith('Hello world.', true, false);
+
+    // Test long sentence that should trigger segmentation
+    const longResults = [
+      [{ isFinal: true, [0]: { transcript: 'This is a very long sentence that should trigger automatic segmentation because it exceeds thirty characters.' } }]
+    ];
+    mockRecognition.onresult({ resultIndex: 0, results: longResults });
+    expect(onTranscriptUpdate).toHaveBeenCalledWith('This is a very long sentence that should trigger automatic segmentation because it exceeds thirty characters.', true, true);
   });
 
   test('handles speech recognition errors', () => {
