@@ -1,22 +1,66 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Canvas from './components/Canvas';
 import Sidebar from './components/Sidebar';
 import ThoughtDetailPanel from './components/ThoughtDetailPanel';
 import AddThoughtModal from './components/AddThoughtModal';
+import { v4 as ulid } from 'ulid'; //Import ulid
+
 
 function App() {
   const [thoughts, setThoughts] = useState(() => {
-    const savedThoughts = localStorage.getItem('thoughts');
-    return savedThoughts ? JSON.parse(savedThoughts) : [];
+    const saved = localStorage.getItem('thought-web-data');
+    return saved ? JSON.parse(saved) : [];
   });
+  const [selectedThought, setSelectedThought] = useState(null);
+  const [activeFilters, setActiveFilters] = useState([]);
+
+  const createThought = useCallback(({ title, description, tags, segments }) => {
+    const newThought = {
+      thought_bubble_id: newBubbleId(),
+      title,
+      description,
+      tags: tags.map(tag => ({name: tag, color: '#10b981'})), // Default color for tags
+      created_at: new Date().toISOString(),
+      position: { x: Math.random() * 500, y: Math.random() * 500 },
+      segments: segments.map(segment => ({
+        ...segment,
+        segment_id: newSegmentId(),
+        embedding_vector: [] // Prepare for future AI features
+      }))
+    };
+
+    const updatedThoughts = [...thoughts, newThought];
+    setThoughts(updatedThoughts);
+    
+    // Persist to localStorage with metadata
+    const persistData = {
+      export_metadata: {
+        version: '0.5.0',
+        exported_at: new Date().toISOString(),
+        thought_count: updatedThoughts.length
+      },
+      thoughts: updatedThoughts
+    };
+    localStorage.setItem('thought-web-data', JSON.stringify(persistData));
+    return newThought;
+  }, [thoughts]);
 
   useEffect(() => {
-    localStorage.setItem('thoughts', JSON.stringify(thoughts));
+    localStorage.setItem('thought-web-data', JSON.stringify(thoughts));
+    // Initialize Neo4j and sync thoughts
+    const syncGraph = async () => {
+      await graphService.initializeDb();
+      for (const thought of thoughts) {
+        await graphService.addThought(thought);
+      }
+    };
+    syncGraph().catch(console.error);
   }, [thoughts]);
-  const [selectedThought, setSelectedThought] = useState(null);
+
+
   const [showModal, setShowModal] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
-  const [activeFilters, setActiveFilters] = useState([]);
+
 
   // Load thoughts and theme preference
   useEffect(() => {
@@ -40,19 +84,6 @@ function App() {
       document.documentElement.classList.add('dark');
     }
   }, []);
-
-  // Persist changes to localStorage
-  useEffect(() => {
-    localStorage.setItem('thought-web-data', JSON.stringify(thoughts));
-    // Initialize Neo4j and sync thoughts
-    const syncGraph = async () => {
-      await graphService.initializeDb();
-      for (const thought of thoughts) {
-        await graphService.addThought(thought);
-      }
-    };
-    syncGraph().catch(console.error);
-  }, [thoughts]);
 
   useEffect(() => {
     localStorage.setItem('thought-web-dark-mode', darkMode.toString());
@@ -85,7 +116,7 @@ function App() {
       />
 
       {selectedThought && <ThoughtDetailPanel thought={selectedThought} setThoughts={setThoughts} />}
-      {showModal && <AddThoughtModal setShowModal={setShowModal} addThought={addThought} />}
+      {showModal && <AddThoughtModal setShowModal={setShowModal} addThought={createThought} />} {/*Updated addThought to createThought*/}
     </div>
   );
 }
