@@ -44,6 +44,14 @@ function App() {
   // Persist changes to localStorage
   useEffect(() => {
     localStorage.setItem('thought-web-data', JSON.stringify(thoughts));
+    // Initialize Neo4j and sync thoughts
+    const syncGraph = async () => {
+      await graphService.initializeDb();
+      for (const thought of thoughts) {
+        await graphService.addThought(thought);
+      }
+    };
+    syncGraph().catch(console.error);
   }, [thoughts]);
 
   useEffect(() => {
