@@ -17,6 +17,12 @@ function Sidebar({
   const [filterFieldValue, setFilterFieldValue] = useState('');
   const [filterFieldType, setFilterFieldType] = useState([]);
   const [filteredThoughtIds, setFilteredThoughtIds] = useState([]);
+  const [filterValuesByType, setFilterValuesByType] = useState({
+    date: { from: '', to: '' },
+    numeric: { min: '', max: '' },
+    location: { radius: '', center: '' },
+    text: ''
+  });
 
   // Gather all field entries for dynamic filters
   const allFields = thoughts.flatMap(thought =>
@@ -36,12 +42,34 @@ function Sidebar({
             filterFieldName.length === 0 ||
             filterFieldName.some(name => Object.keys(fields).includes(name));
 
-          const matchesFieldValue =
-            !filterFieldValue ||
-            Object.values(fields).some(val =>
-              typeof val === 'string' &&
-              val.toLowerCase().includes(filterFieldValue.toLowerCase())
-            );
+          const matchesFieldValue = !filterFieldValue || Object.entries(fields).some(([key, val]) => {
+            const fieldType = graphService.getFieldType(key);
+            
+            switch (fieldType) {
+              case 'date': {
+                const date = new Date(val);
+                const from = filterValuesByType.date.from ? new Date(filterValuesByType.date.from) : null;
+                const to = filterValuesByType.date.to ? new Date(filterValuesByType.date.to) : null;
+                return (!from || date >= from) && (!to || date <= to);
+              }
+              case 'numeric': {
+                const num = parseFloat(val);
+                const min = filterValuesByType.numeric.min ? parseFloat(filterValuesByType.numeric.min) : null;
+                const max = filterValuesByType.numeric.max ? parseFloat(filterValuesByType.numeric.max) : null;
+                return (!min || num >= min) && (!max || num <= max);
+              }
+              case 'location': {
+                if (!filterValuesByType.location.center || !filterValuesByType.location.radius) return true;
+                const [lat, lon] = val.split(',').map(n => parseFloat(n.trim()));
+                const [centerLat, centerLon] = filterValuesByType.location.center.split(',').map(n => parseFloat(n.trim()));
+                const radius = parseFloat(filterValuesByType.location.radius);
+                const distance = Math.sqrt(Math.pow(lat - centerLat, 2) + Math.pow(lon - centerLon, 2));
+                return distance <= radius;
+              }
+              default:
+                return val.toLowerCase().includes(filterFieldValue.toLowerCase());
+            }
+          });
 
           const matchesFieldType = filterFieldType.length === 0;
           return matchesFieldName && matchesFieldValue && matchesFieldType;
