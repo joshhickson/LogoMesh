@@ -14,14 +14,14 @@
       - Observed outcome / test result
       - Any error messages, hallucinations, or edge-case discoveries
    
-- ** Create state_snapshots/ folder in root
+- ** Create state_snapshots/ folder in root**
   - Purpose: Stores .json exports of full graph state at milestone checkpoints.
   - Action: At the end of each major phase (e.g. post-ReGraph, post-filter layer), export graph data using the current JSON schema and save to:
       - state_snapshots/v0.1_init.json
       - state_snapshots/v0.2_with_filters.json
       - state_snapshots/v1.0_ai_ready.json
 
-- **Create todo/Claude_Feedback.md
+- **Create todo/Claude_Feedback.md**
   - Purpose: Running scratchpad for user observations about Claude’s behavior.
   - Action: After every 2–3 Claude sessions, document:
       - Repeated inefficiencies
