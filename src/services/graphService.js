@@ -3,6 +3,12 @@ class GraphService {
     this.loadState();
   }
 
+  async initializeDb() {
+    // Initialize in-memory graph
+    await this.loadState();
+    return Promise.resolve();
+  }
+
   loadState() {
     const savedState = localStorage.getItem('thoughtweb-state');
     if (savedState) {
