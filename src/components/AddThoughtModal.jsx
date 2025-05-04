@@ -22,12 +22,32 @@ function AddThoughtModal({ createThought, onClose }) {
 
   useEffect(() => {
     voiceManagerRef.current = new VoiceInputManager(
-      (transcript, isFinal) => {
+      (transcript, isFinal, isNewSegment) => {
         if (isFinal) {
-          setDescription(prev => prev + ' ' + transcript);
+          if (isNewSegment && segments.length > 0) {
+            const lastSegment = segments[segments.length - 1];
+            setSegments(prev => prev.map(seg => 
+              seg.segment_id === lastSegment.segment_id 
+                ? {...seg, content: seg.content + ' ' + transcript}
+                : seg
+            ));
+          } else {
+            setDescription(prev => prev + ' ' + transcript);
+          }
         }
       },
-      (error) => console.error('Speech recognition error:', error)
+      (error) => {
+        console.error('Speech recognition error:', error);
+        setIsListening(false);
+        // Show error in UI
+        const errorMessages = {
+          'network': 'Network error occurred. Please check your connection.',
+          'service-not-allowed': 'Speech recognition service not allowed.',
+          'no-speech': 'No speech detected. Please try again.',
+          'default': 'An error occurred with speech recognition.'
+        };
+        alert(errorMessages[error] || errorMessages.default);
+      }
     );
     
     return () => {

@@ -3,8 +3,13 @@ import { VoiceInputManager } from '../VoiceInputManager';
 
 describe('VoiceInputManager', () => {
   let mockRecognition;
+  let onTranscriptUpdate;
+  let onError;
   
   beforeEach(() => {
+    onTranscriptUpdate = jest.fn();
+    onError = jest.fn();
+    
     mockRecognition = {
       start: jest.fn(),
       stop: jest.fn(),
@@ -38,5 +43,32 @@ describe('VoiceInputManager', () => {
     manager.stopListening();
     expect(mockRecognition.stop).toHaveBeenCalled();
     expect(manager.isListening).toBe(false);
+  });
+
+  test('handles speech recognition results', () => {
+    const manager = new VoiceInputManager(onTranscriptUpdate, onError);
+    const mockResults = [
+      [{ isFinal: true, [0]: { transcript: 'Hello world.' } }]
+    ];
+    
+    mockRecognition.onresult({ resultIndex: 0, results: mockResults });
+    
+    expect(onTranscriptUpdate).toHaveBeenCalledWith('Hello world.', true, true);
+  });
+
+  test('handles speech recognition errors', () => {
+    const manager = new VoiceInputManager(onTranscriptUpdate, onError);
+    
+    mockRecognition.onerror({ error: 'network' });
+    
+    expect(onError).toHaveBeenCalledWith('network');
+  });
+
+  test('checks browser support correctly', () => {
+    const manager = new VoiceInputManager(onTranscriptUpdate, onError);
+    expect(manager.isSupported()).toBe(true);
+    
+    delete window.webkitSpeechRecognition;
+    expect(manager.isSupported()).toBe(false);
   });
 });
