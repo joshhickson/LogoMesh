@@ -20,8 +20,15 @@ export class VoiceInputManager {
 
         for (let i = event.resultIndex; i < event.results.length; ++i) {
           if (event.results[i].isFinal) {
-            finalTranscript += event.results[i][0].transcript;
-            this.onTranscriptUpdate(finalTranscript, true);
+            const transcript = event.results[i][0].transcript;
+            // Split on sentence endings or long pauses
+            if (transcript.match(/[.!?]|\.\.\.|$/) && transcript.length > 30) {
+              finalTranscript += transcript;
+              this.onTranscriptUpdate(finalTranscript, true, true); // Third param indicates new segment
+            } else {
+              finalTranscript += transcript;
+              this.onTranscriptUpdate(finalTranscript, true, false);
+            }
           } else {
             interimTranscript += event.results[i][0].transcript;
             this.onTranscriptUpdate(interimTranscript, false);
@@ -31,6 +38,13 @@ export class VoiceInputManager {
 
       this.recognition.onerror = (event) => {
         this.onError(event.error);
+        if (event.error === 'network' || event.error === 'service-not-allowed') {
+          setTimeout(() => {
+            if (this.isListening) {
+              this.startListening(); // Attempt reconnection
+            }
+          }, 1000);
+        }
       };
     }
   }
