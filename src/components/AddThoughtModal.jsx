@@ -9,10 +9,10 @@ const defaultFieldOptions = [
   'Related Concepts'
 ];
 
-function AddThoughtModal({ setShowModal, addThought }) {
+function AddThoughtModal({ createThought, onClose }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [tag, setTag] = useState('');
+  const [tags, setTags] = useState([]);
   const [color, setColor] = useState('#f97316');
   const [segments, setSegments] = useState([]);
 
@@ -53,14 +53,23 @@ function AddThoughtModal({ setShowModal, addThought }) {
       description,
       created_at: new Date().toISOString(),
       color,
-      tags: [{ name: tag || 'General', color }],
+      tags: tags.map(tag => ({name: tag, color})), //Adjusted tag handling
       position: { x: Math.random() * 400, y: Math.random() * 400 },
       segments
     };
 
-    addThought(newThought);
-    setShowModal(false);
+    createThought(newThought);
+    onClose(); //Close the modal using onClose prop.
   };
+
+  const handleTagChange = (e) => {
+    const newTag = e.target.value;
+    if (newTag) {
+      setTags([...tags, newTag]);
+      e.target.value = "";
+    }
+  }
+
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center overflow-y-auto">
@@ -81,13 +90,14 @@ function AddThoughtModal({ setShowModal, addThought }) {
           onChange={(e) => setDescription(e.target.value)}
           className="w-full mb-2 p-2 border rounded"
         />
-        <input
-          type="text"
-          placeholder="Main Tag"
-          value={tag}
-          onChange={(e) => setTag(e.target.value)}
-          className="w-full mb-2 p-2 border rounded"
-        />
+        <div>
+          <input type="text" placeholder="Add Tag" onChange={handleTagChange} className="w-full mb-2 p-2 border rounded"/>
+          <ul>
+            {tags.map((tag, index) => (
+              <li key={index}>{tag}</li>
+            ))}
+          </ul>
+        </div>
         <input
           type="color"
           value={color}
@@ -175,7 +185,7 @@ function AddThoughtModal({ setShowModal, addThought }) {
           Add Thought
         </button>
         <button
-          onClick={() => setShowModal(false)}
+          onClick={onClose}
           className="w-full bg-gray-300 dark:bg-gray-600 text-black dark:text-white py-2 rounded"
         >
           Cancel
