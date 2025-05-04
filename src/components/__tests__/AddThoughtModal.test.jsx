@@ -3,8 +3,14 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import AddThoughtModal from '../AddThoughtModal';
 
 describe('AddThoughtModal', () => {
-  const mockCreateThought = jest.fn();
-  const mockOnClose = jest.fn();
+  let mockCreateThought;
+  let mockOnClose;
+  
+  beforeEach(() => {
+    mockCreateThought = jest.fn();
+    mockOnClose = jest.fn();
+    window.alert = jest.fn();
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
