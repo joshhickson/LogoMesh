@@ -46,11 +46,52 @@ class GraphService {
 
   // Execute Cypher query on in-memory graph
   async executeCypher(query, params = {}) {
-    // Basic query parser for demonstration
     if (query.includes('MATCH (t:Thought)')) {
+      if (query.includes('WHERE')) {
+        const tagMatch = query.match(/t.properties.tags CONTAINS '(.+?)'/);
+        if (tagMatch) {
+          const targetTag = tagMatch[1];
+          return Array.from(this.thoughts.values())
+            .filter(thought => thought.properties.tags.includes(targetTag));
+        }
+      }
       return Array.from(this.thoughts.values());
     }
+    
+    if (query.includes('MATCH (s:Segment)')) {
+      const segments = [];
+      this.thoughts.forEach(thought => {
+        if (thought.segments) {
+          segments.push(...thought.segments);
+        }
+      });
+      return segments;
+    }
+
+    if (query.includes('MATCH (t:Thought)-[r:CONTAINS]->(s:Segment)')) {
+      const relationships = Array.from(this.relationships.values());
+      return relationships.map(rel => ({
+        thought: this.thoughts.get(rel.from),
+        segment: this.thoughts.get(rel.to)
+      }));
+    }
+    
     return [];
+  }
+
+  // Helper methods for common queries
+  async findThoughtsByTag(tag) {
+    return this.executeCypher(
+      "MATCH (t:Thought) WHERE t.properties.tags CONTAINS $tag RETURN t",
+      { tag }
+    );
+  }
+
+  async findConnectedSegments(thoughtId) {
+    return this.executeCypher(
+      "MATCH (t:Thought)-[r:CONTAINS]->(s:Segment) WHERE t.id = $thoughtId RETURN s",
+      { thoughtId }
+    );
   }
 
   // Add thought to graph
