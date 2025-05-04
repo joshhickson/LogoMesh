@@ -28,7 +28,7 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
     }
   }, [thoughts, activeFilters]);
 
-  const initialNodes = thoughts.map((thought) => ({
+  const initialNodes = filteredThoughts.map((thought) => ({
     id: thought.thought_bubble_id,
     type: 'default',
     data: { label: thought.title },
