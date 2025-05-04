@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alchemy, GraphCanvas } from '@alchemyalcohol/alchemy-react';
+import { Alchemy, GraphCanvas } from 'alchemy-graph-react';
 import { graphService } from '../services/graphService';
 
 function Canvas({ thoughts, setSelectedThought, activeFilters }) {
