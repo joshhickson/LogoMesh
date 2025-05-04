@@ -26,7 +26,7 @@ describe('ThoughtDetailPanel', () => {
   test('renders thought details correctly', () => {
     render(<ThoughtDetailPanel thought={mockThought} setThoughts={mockSetThoughts} />);
     
-    expect(screen.getByText('Test Thought')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Test Thought')).toBeInTheDocument();
     expect(screen.getByText('Test description')).toBeInTheDocument();
     expect(screen.getByText('Test Segment')).toBeInTheDocument();
   });
