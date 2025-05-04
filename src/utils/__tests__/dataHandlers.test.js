@@ -47,8 +47,8 @@ describe('Data Handling', () => {
       
       expect(appendChildSpy).toHaveBeenCalled();
       const anchorNode = appendChildSpy.mock.calls[0][0];
-      const exportData = decodeURIComponent(anchorNode.href).split(',')[1];
-      const parsedData = JSON.parse(exportData);
+      const exportData = decodeURIComponent(anchorNode.href.split(',')[1]);
+      const parsedData = JSON.parse(atob(exportData));
       
       expect(parsedData).toHaveProperty('export_metadata');
       expect(parsedData.export_metadata).toHaveProperty('version', '0.5.0');
