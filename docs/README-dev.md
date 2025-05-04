@@ -1,123 +1,116 @@
 # ThoughtWeb — Developer Vision & Architecture Guide
 
-Welcome to the core of **ThoughtWeb**: a schema-driven, AI-compatible, self-organizing cognitive graph engine built for local-first emergent thinking, recursive querying, and future AI self-reflection.
+**Tagline:**
 
-This document is designed for both human developers and Claude 3.5 (Replit agent) to understand the evolving structure, mission, and logic of ThoughtWeb. It defines how the system should behave, why it matters, and how we implement it step-by-step.
+> A recursive thought engine for humans and AI — designed to evolve meaning, resolve contradictions, and externalize self-reflection.
+
+---
+
+## Executive Summary
+
+ThoughtWeb is a local-first, AI-augmented cognitive framework that transforms scattered thoughts into structured insight. By using a visual graph of tagged, filterable, and recursively linked segments, it enables users — and eventually AI — to reflect, reason, and grow in clarity over time. Unlike black-box models, ThoughtWeb is explicit, traceable, and explainable by design. It acts as both an external memory system and a sandbox for emergent reasoning. Its architecture anticipates collaboration, AI-assisted introspection, and the evolution of ideas across time and context.
 
 ---
 
 ## Mission
 
-**ThoughtWeb empowers users and AI to externalize, structure, and evolve their thinking through a visual, filterable, recursive graph engine — optimized for emergence, insight, and local-first autonomy.**
+ThoughtWeb empowers humans and AI to co-evolve their thinking using a structured, filterable, and recursively queryable thought system. Built on transparent fields, visual abstraction, and dynamic emergence, it creates a long-term substrate for:
 
-Rather than simulate intelligence via token prediction, ThoughtWeb provides an explicit substrate for:
+* Human insight and pattern recognition
+* AI-assisted synthesis and contradiction discovery
+* Meta-cognitive dialogue between the system and its users
 
-- **Self-reflection** through transparent node/segment tracking
-- **Emergent pattern discovery** via color filters, tags, and abstraction layers
-- **Cognitive scaffolding** for human or AI agents using a shared substrate
-- **Error-tolerant fuzzy logic** by design (fuzzy links, contradictions, gaps)
-- **Future AI co-pilots** that evolve by querying and reasoning about their own graph state
+---
+
+## Public-Facing Pitch
+
+> What if your thoughts could talk back?
+>
+> ThoughtWeb is an emergence engine for humans and AI — a visual thinking platform that reveals patterns, contradictions, and hidden connections across your ideas. It's more than a mind map. It's a mirror. With filters, abstraction layers, and self-reflective prompts, ThoughtWeb helps you see how you think, grow how you think, and someday… build AI that thinks with you, not for you.
 
 ---
 
 ## Core Architecture
 
-### Stack (Current & Target)
-
-| Layer | Technology |
-|-------|------------|
-| Frontend | React + ReGraph (Cambridge Intelligence) |
-| Backend Data | SQLite (via `better-sqlite3` or `sql.js`) |
-| Local LLM (Future) | llama.cpp / Ollama |
-| Storage Format | JSON import/export, embedded field structure |
-| Visual Graph Engine | ReGraph (React-based) |
-| Hosting | Replit (Mac Mini compatible, local preferred) |
+| Layer           | Technology                                      |
+| --------------- | ----------------------------------------------- |
+| Frontend        | React + ReGraph (Cambridge Intelligence)        |
+| Backend Data    | SQLite (via `better-sqlite3` or `sql.js`)       |
+| Visual Engine   | ReGraph                                         |
+| Embedding Model | llama.cpp / Ollama (Future)                     |
+| Hosting         | Replit (Mac Mini–compatible)                    |
+| Format          | JSON / SQLite export with vector-ready segments |
 
 ---
 
 ## Data Model Overview
 
-### Core Objects:
-- **Thought Bubble**: A parent node containing multiple thought segments. Visualized as a ReGraph node.
-- **Segment**: A discrete atomic unit of thought, with associated metadata.
-
-### Fields Per Segment:
-- `segment_id`: Unique identifier
-- `content`: The core text or idea
-- `tags`: List of descriptive labels
-- `color`: Visual color assigned by user
-- `abstraction_level`: One of: `fact`, `hypothesis`, `emerging_pattern`
-- `fuzzy_links[]`: Optional array of weak or speculative relations
-- `embedding_vector`: *(optional placeholder for LLM integration)*
-
----
-
-## Milestone-Based Development Plan
-
-### PHASE 1: Scaffold & Realignment (Weeks 1–2)
-- [ ] Replace current visual canvas with ReGraph
-- [ ] Migrate thought bubbles to ReGraph node/edge model
-- [ ] Set up local SQLite DB schema
-- [ ] Move all existing JSON bubbles/segments into SQLite
-- [ ] Enable full data load/save cycle between SQLite and React state
-
-### PHASE 2: Interaction & Filters (Weeks 2–4)
-- [ ] Add filter controls for tags, colors, abstraction levels
-- [ ] Add “fuzzy link” style to visually represent uncertainty
-- [ ] Add toggle to hide/show lower-abstraction bubbles
-- [ ] Begin capturing user inputs into structured segments (no free-floating text)
-
-### PHASE 3: AI Hooks (Month 2–3)
-- [ ] Add embedding vector placeholder field to each segment
-- [ ] Enable basic LLM-assisted queries over SQLite (Claude or local model)
-- [ ] Implement “Summarize Thought Map” prototype (via rule-based logic first)
-- [ ] Allow users (or LLM) to generate new connections or spot contradictions
-
-### PHASE 4: Emergence Engine (Month 3+)
-- [ ] Add heatmap layer for active segments
-- [ ] Add recursive query interface (e.g., “Which of my thoughts contradict?”)
-- [ ] Allow AI or user to see “past paths” of thought exploration
-- [ ] Prototype self-reflective prompt generator: “What ideas are missing?”
-
----
-
-## Guiding Principles (for Claude + Human Devs)
-
-1. **Everything is traceable** — Segment relationships must be inspectable, not hidden in latent space.
-2. **Data must be filterable by design** — Don’t hardcode views; build dynamic filters.
-3. **Thoughts are layered, not flat** — Abstraction levels matter.
-4. **Uncertainty is allowed** — Fuzzy links are a first-class citizen.
-5. **System must support recursive queries** — Self-reflection is the end goal.
-6. **Local-first always wins** — Prioritize performance and offline compatibility.
-7. **No black boxes** — AI should evolve via interaction, not obfuscation.
-
----
-
-## Key Concepts
-
 ### Thought Bubble
-A visual container on the canvas. Holds metadata and an array of **segments**.
+
+A visual container on the canvas. Holds metadata and an array of segments.
 
 ### Segment
-A sub-element inside a thought. Contains:
-- `title`
-- `content`
-- `fields {}` – flexible key-value pairs (e.g. “Location”: “Paris”, “Type”: “Quote”)
 
-### Fields
-The key to filtering, AI embedding, and structure. Each segment’s `fields` can be queried, colored, and exported cleanly.
+A sub-element inside a thought. Contains:
+
+* `segment_id`, `title`, `content`
+* `tags`, `color`, `abstraction_level`
+* `fields {}` – flexible key-value pairs (e.g. “Location”: “Paris”, “Type”: “Quote”)
+* `embedding_vector` – placeholder for AI search/similarity
+* `fuzzy_links[]` – optional speculative or soft connections
 
 ---
 
-## Schema Overview
+## Milestone-Based Development Plan (Full Detailed Plan [here]([url](https://github.com/joshhickson/thought-web/blob/master/docs/Merged%20Milestone-Based%20Development%20Plan%20v2.0.md)))
 
-Each file exported from ThoughtWeb follows this schema:
+### Phase 1: Foundation (Weeks 1–3)
+
+* Replace legacy canvas with ReGraph rendering
+* Initialize SQLite + create schema for segments & thoughts
+* Convert current JSON data to DB-backed state
+* Load/save cycles between DB ↔ UI ↔ JSON
+
+### Phase 2: Interaction Logic (Weeks 3–5)
+
+* Add visual styles by abstraction level (Fact, Hypothesis, Pattern)
+* Implement fuzzy links with dotted lines
+* Tag/color/field-based filters
+* Add dropdowns for abstraction tagging
+
+### Phase 3: Embedding & AI Hooks (Weeks 6–8)
+
+* Add `embedding_vector` support
+* Create basic cosine similarity search (e.g. “Find similar segments”)
+* Enable summarization prompts (rule-based or LLM-assisted)
+* Enable contradiction highlighting across segments
+* Begin building support for interpolation/diffusion between concepts
+* Prototype local conceptual model (LCM) awareness: allow AI to reflect on its own graph state
+
+### Phase 4: Emergence Engine Features (Months 2–3)
+
+* Add recursive query builder (e.g. “Find conflicting bubbles linked to hypothesis X”)
+* Add heatmap layer for high-activity and recent interactions
+* Track temporal decay and interaction weighting of segments
+* Implement prompt-based reflective nudges
+* Begin weekly consolidation reports: highlight themes, contradictions, and repeated patterns
+* Build memory resurfacing engine to reintroduce old thoughts based on decay, relevance, or similarity
+
+### Phase 5: Collaboration & Cognitive OS (Months 4–6)
+
+* Implement role-based multi-user collaboration (Editor, Synthesizer, Contradiction Finder)
+* Develop merge-conflict resolution for thought maps
+* Introduce learning paths and custom field schemas
+* Enable multimodal input (voice, OCR, PDF ingest, screenshot captioning)
+
+---
+
+## Export Schema Overview
 
 ```json
 {
   "export_metadata": {
     "version": "0.5",
-    "exported_at": "2025-05-01T01:00Z",
+    "exported_at": "2025-05-03T00:00Z",
     "author": "Josh Hickson",
     "tool": "ThoughtWeb"
   },
@@ -149,31 +142,28 @@ Each file exported from ThoughtWeb follows this schema:
 
 ---
 
-## Development Tasks (Ongoing)
-
-- Fix segment field entry (buttons work but need stable update)
-- Add vector embedding generation
-- Allow real-time field-type filtering (e.g. numeric range queries)
-- Add collaboration features (multi-user or versioned sync)
-- Add Thought Timeline view (sort by created_at)
-- Export preset filters / views for fast context switching
-
----
-
 ## Developer Philosophy
 
-- Always prefer structured flexibility over rigid constraints.
-- The system should teach itself to the user through use.
-- Everything that matters must be exportable and portable.
-- The codebase should never assume “this is how people think” — it should adapt to how people evolve their thinking.
+* Prefer traceable structure over guesswork.
+* Design for recursive insight, not just information.
+* Build tools that evolve with your cognition.
+* No black boxes. Make the system think out loud.
+* Treat AI as a partner in reflection, not just prediction.
+* Anticipate future collaboration and modularity.
 
 ---
 
-## Final Note
+## Ongoing Development Tasks
 
-If you're reading this, you’re not just coding — you’re helping build a better way to think.
+* Finalize ReGraph visual sync with SQLite
+* Add real-time filter overlays for tags/colors
+* Implement embedding field and AI search stubs
+* Refactor JSON import/export for full schema support
+* Add timeline view and interaction logs
+* Begin work on multi-user version control layer
 
-This isn’t productivity.
-This is philosophy encoded in an interface.
+---
 
+This is not just productivity software.
+This is a cognitive framework for the evolution of intelligence.
 Welcome to ThoughtWeb.
