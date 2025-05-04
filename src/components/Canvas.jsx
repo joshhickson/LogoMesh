@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactFlow, { 
   MiniMap, 
@@ -50,14 +51,27 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
     },
   }));
 
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
+  const onNodeClick = (event, node) => {
+    const thought = thoughts.find(t => t.thought_bubble_id === node.id);
+    if (thought) setSelectedThought(thought);
+  };
+
   return (
-    <div style={{ width: '100%', height: '100vh' }}>
-      <ReactFlow 
-        nodes={initialNodes}
-        onNodeClick={(_, node) => setSelectedThought(node.id)}
+    <div style={{ width: '100%', height: '100%' }}>
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onNodeClick={onNodeClick}
+        fitView
       >
-        <Controls />
         <Background />
+        <Controls />
+        <MiniMap />
       </ReactFlow>
     </div>
   );
