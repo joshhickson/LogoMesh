@@ -61,7 +61,7 @@ A sub-element inside a thought. Contains:
 
 ---
 
-## Milestone-Based Development Plan (Full Plan [here]([url](https://github.com/joshhickson/thought-web/blob/master/docs/Merged%20Milestone-Based%20Development%20Plan%20v2.0.md)))
+## Milestone-Based Development Plan ([Full Plan Here](https://github.com/joshhickson/thought-web/blob/master/docs/Merged%20Milestone-Based%20Development%20Plan%20v2.0.md))
 
 ### Phase 1: Foundation (Weeks 1–3)
 
