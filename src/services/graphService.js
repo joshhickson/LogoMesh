@@ -1,7 +1,15 @@
 class GraphService {
   constructor() {
-    this.nodes = new Map();
-    this.relationships = new Map();
+    const savedNodes = localStorage.getItem('thoughtweb-nodes');
+    const savedRelationships = localStorage.getItem('thoughtweb-relationships');
+    
+    this.nodes = new Map(savedNodes ? JSON.parse(savedNodes) : []);
+    this.relationships = new Map(savedRelationships ? JSON.parse(savedRelationships) : []);
+  }
+
+  _persistState() {
+    localStorage.setItem('thoughtweb-nodes', JSON.stringify(Array.from(this.nodes.entries())));
+    localStorage.setItem('thoughtweb-relationships', JSON.stringify(Array.from(this.relationships.entries())));
   }
 
   async initializeDb() {
@@ -45,6 +53,7 @@ class GraphService {
   async addThought(thought) {
     const node = this.thoughtToNode(thought);
     this.nodes.set(node.id, node);
+    this._persistState();
 
     if (thought.segments) {
       for (const segment of thought.segments) {
