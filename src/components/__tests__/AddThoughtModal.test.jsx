@@ -85,3 +85,16 @@ describe('AddThoughtModal', () => {
     expect(mockOnClose).toHaveBeenCalled();
   });
 });
+test('handles voice input correctly', () => {
+    const { getByTitle } = render(
+      <AddThoughtModal createThought={mockCreateThought} onClose={mockOnClose} />
+    );
+    
+    const micButton = getByTitle('Start recording');
+    fireEvent.click(micButton);
+    
+    expect(screen.getByText('Listening... Click microphone to stop')).toBeInTheDocument();
+    
+    fireEvent.click(micButton);
+    expect(screen.queryByText('Listening... Click microphone to stop')).not.toBeInTheDocument();
+  });
