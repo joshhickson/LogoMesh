@@ -51,12 +51,16 @@ function App() {
     localStorage.setItem('thought-web-data', JSON.stringify(thoughts));
     // Initialize Neo4j and sync thoughts
     const syncGraph = async () => {
-      await graphService.initializeDb();
-      for (const thought of thoughts) {
-        await graphService.addThought(thought);
+      try {
+        await graphService.initializeDb();
+        for (const thought of thoughts) {
+          await graphService.addThought(thought);
+        }
+      } catch (error) {
+        console.warn('Graph sync warning:', error);
       }
     };
-    syncGraph().catch(console.error);
+    syncGraph();
   }, [thoughts]);
 
 
