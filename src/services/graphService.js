@@ -82,6 +82,21 @@ class GraphService {
     return Promise.resolve(segments);
   }
 
+  async updateSegment(segmentId, field, value) {
+    const node = this.nodes.get(segmentId);
+    if (!node) return;
+
+    if (field.startsWith('fields.')) {
+      const fieldName = field.split('.')[1];
+      node.properties.fields[fieldName] = value;
+    } else {
+      node.properties[field] = value;
+    }
+    
+    this._persistState();
+    return Promise.resolve();
+  }
+
   async close() {
     // No-op for in-memory implementation
     return Promise.resolve();
