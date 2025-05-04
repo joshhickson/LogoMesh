@@ -1,15 +1,50 @@
 class GraphService {
   constructor() {
-    const savedNodes = localStorage.getItem('thoughtweb-nodes');
-    const savedRelationships = localStorage.getItem('thoughtweb-relationships');
-    
-    this.nodes = new Map(savedNodes ? JSON.parse(savedNodes) : []);
-    this.relationships = new Map(savedRelationships ? JSON.parse(savedRelationships) : []);
+    this.loadState();
+    this.fieldTypes = new Map(); // Cache field types
+  }
+
+  loadState() {
+    const savedState = localStorage.getItem('thoughtweb-state');
+    if (savedState) {
+      const state = JSON.parse(savedState);
+      this.nodes = new Map(state.nodes);
+      this.relationships = new Map(state.relationships);
+      this.fieldTypes = new Map(state.fieldTypes);
+    } else {
+      this.nodes = new Map();
+      this.relationships = new Map();
+      this.fieldTypes = new Map();
+    }
   }
 
   _persistState() {
-    localStorage.setItem('thoughtweb-nodes', JSON.stringify(Array.from(this.nodes.entries())));
-    localStorage.setItem('thoughtweb-relationships', JSON.stringify(Array.from(this.relationships.entries())));
+    const state = {
+      nodes: Array.from(this.nodes.entries()),
+      relationships: Array.from(this.relationships.entries()),
+      fieldTypes: Array.from(this.fieldTypes.entries())
+    };
+    localStorage.setItem('thoughtweb-state', JSON.stringify(state));
+  }
+
+  inferFieldType(value) {
+    if (!isNaN(Date.parse(value))) return 'date';
+    if (!isNaN(value)) return 'numeric';
+    if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(value)) {
+      return 'location';
+    }
+    return 'text';
+  }
+
+  updateFieldType(fieldName, value) {
+    const type = this.inferFieldType(value);
+    this.fieldTypes.set(fieldName, type);
+    this._persistState();
+    return type;
+  }
+
+  getFieldType(fieldName) {
+    return this.fieldTypes.get(fieldName) || 'text';
   }
 
   async initializeDb() {

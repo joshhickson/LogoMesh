@@ -14,6 +14,11 @@ function ThoughtDetailPanel({ thought, setThoughts }) {
   };
 
   const handleSegmentEdit = (segmentId, field, value) => {
+    // Update field type if it's a field value
+    if (field.startsWith('fields.')) {
+      const fieldName = field.split('.')[1];
+      graphService.updateFieldType(fieldName, value);
+    }
     setThoughts(prevThoughts => 
       prevThoughts.map(t => {
         if (t.thought_bubble_id === thought.thought_bubble_id) {
