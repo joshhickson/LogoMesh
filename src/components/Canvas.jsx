@@ -16,11 +16,20 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   React.useEffect(() => {
     if (activeFilters?.length) {
       const filterByTags = async () => {
-        const results = await Promise.all(
-          activeFilters.map(tag => graphService.findThoughtsByTag(tag))
-        );
-        const filtered = results.flat().map(t => t.properties);
-        setFilteredThoughts(filtered);
+        try {
+          const results = await Promise.all(
+            activeFilters.map(tag => graphService.findThoughtsByTag(tag))
+          );
+          const filtered = results.flat().map(t => t.properties);
+          setFilteredThoughts(filtered);
+        } catch (error) {
+          console.warn('Graph filtering unavailable:', error);
+          // Fall back to client-side filtering
+          const filtered = thoughts.filter(thought => 
+            thought.tags?.some(tag => activeFilters.includes(tag.name))
+          );
+          setFilteredThoughts(filtered);
+        }
       };
       filterByTags();
     } else {
