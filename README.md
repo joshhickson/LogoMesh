@@ -1,4 +1,4 @@
-
+## [note: this project is in pre-alpha. for potential devs: consult docs/READme-dev.md]
 #ThoughtWeb
 
 https://discord.gg/6ydDxzMjvD
