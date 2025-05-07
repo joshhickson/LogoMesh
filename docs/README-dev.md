@@ -36,7 +36,7 @@ ThoughtWeb empowers humans and AI to co-evolve their thinking using a structured
 | --------------- | ----------------------------------------------- |
 | Frontend        | React                                           |
 | Backend Data    | SQLite (via `better-sqlite3` or `sql.js`)       |
-| Visual Engine   | ReactFlow (MIT)                                 |
+| Visual Engine   | Cytoscape.js [currently reactflow]              |
 | Embedding Model | llama.cpp / Ollama (Future)                     |
 | Hosting         | Replit (Mac Mini–compatible)                    |
 | Format          | JSON / SQLite export with vector-ready segments |
