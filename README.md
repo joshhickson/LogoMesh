@@ -38,7 +38,7 @@ LogoMesh is designed to be easy to run locally, minimizing dependencies and maxi
 ### 1. Clone the repo
 
 ```bash
-git clone [https://github.com/joshhickson/LogoMesh.git](https://github.com/joshhickson/LogoMesh.git)
+git clone https://github.com/joshhickson/LogoMesh.git
 cd LogoMesh
 ````
 
