@@ -4,11 +4,11 @@ import { graphService } from '../graphService';
 describe('graphService', () => {
   const mockThoughts = [
     {
-      thought_bubble_id: 'test-1',
+      thought_bubble_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YV',
       tags: [{ name: 'tag1', color: '#000' }]
     },
     {
-      thought_bubble_id: 'test-2',
+      thought_bubble_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YW',
       tags: [{ name: 'tag2', color: '#fff' }]
     }
   ];

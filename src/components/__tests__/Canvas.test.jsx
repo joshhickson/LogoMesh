@@ -5,13 +5,13 @@ import Canvas from '../Canvas';
 describe('Canvas', () => {
   const mockThoughts = [
     {
-      thought_bubble_id: 'test-1',
+      thought_bubble_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YT',
       title: 'Test Thought 1',
       position: { x: 100, y: 100 },
       color: '#10b981'
     },
     {
-      thought_bubble_id: 'test-2',
+      thought_bubble_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YU',
       title: 'Test Thought 2',
       position: { x: 200, y: 200 },
       color: '#3b82f6'
