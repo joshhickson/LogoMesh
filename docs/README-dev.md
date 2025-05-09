@@ -150,7 +150,7 @@ This section outlines the immediate, high-priority tasks for LogoMesh's **Tier \
 
 -----
 
-## [Execution History](https://www.google.com/search?q=https://github.com/joshhickson/thought-web/blob/master/docs/Claude-Log.md)
+## [Execution History](https://github.com/joshhickson/thought-web/blob/master/docs/Claude-log.md)
 
 -----
 
