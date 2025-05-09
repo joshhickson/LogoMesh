@@ -24,8 +24,8 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
 
       const segmentNodes = (thought.segments || []).map(segment => ({
         data: {
-          id: segment.segment_id,
-          label: segment.title,
+          id: `seg_${segment.segment_id}`,
+          label: segment.content || segment.title || 'Untitled Segment',
           type: 'segment'
         },
         classes: ['segment-node']
@@ -38,10 +38,10 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
     const edges = thoughts.flatMap(thought => 
       (thought.segments || []).map(segment => ({
         data: {
-          id: `${thought.thought_bubble_id}-${segment.segment_id}`,
+          id: `edge_${thought.thought_bubble_id}_${segment.segment_id}`,
           source: thought.thought_bubble_id,
-          target: segment.segment_id,
-          relationship: segment.relationship || 'default',
+          target: `seg_${segment.segment_id}`,
+          label: segment.relationship || 'relates to',
           type: 'segment'
         },
         classes: ['segment-edge']
