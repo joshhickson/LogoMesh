@@ -1,8 +1,7 @@
-
 import React from 'react';
 import '@testing-library/jest-dom';
 
-// Mock modules
+// Mock react-cytoscapejs with proper ES module structure
 jest.mock('react-cytoscapejs', () => ({
   __esModule: true,
   default: function MockCytoscape(props) {
@@ -10,20 +9,13 @@ jest.mock('react-cytoscapejs', () => ({
   }
 }));
 
+// Mock cytoscape-cose-bilkent
 jest.mock('cytoscape-cose-bilkent', () => ({
   __esModule: true,
   default: jest.fn()
 }));
 
-
-
-// jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom';
-
-// Configure test environment
+// Mock window.matchMedia
 window.matchMedia = window.matchMedia || function() {
   return {
     matches: false,
@@ -32,7 +24,7 @@ window.matchMedia = window.matchMedia || function() {
   };
 };
 
-// Configure Jest
+// Configure Jest timeout
 jest.setTimeout(10000);
 
 // Mock localStorage
@@ -59,11 +51,3 @@ class MockSpeechRecognition {
 
 window.SpeechRecognition = MockSpeechRecognition;
 window.webkitSpeechRecognition = MockSpeechRecognition;
-
-// Configure file extensions
-jest.moduleFileExtensions = ['js', 'jsx'];
-
-// Configure transform
-jest.transform = {
-  '^.+\\.[tj]sx?$': 'babel-jest'
-};
