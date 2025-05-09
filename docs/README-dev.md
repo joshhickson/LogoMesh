@@ -1,4 +1,4 @@
-# ThoughtWeb — Developer Vision & Architecture Guide
+# LogoMesh — Developer Vision & Architecture Guide
 
 **Tagline:**
 
@@ -8,17 +8,17 @@
 
 ## Executive Summary
 
-ThoughtWeb is a **local-first, AI-augmented cognitive framework** that transforms scattered thoughts into structured insight. By using a visual graph of tagged, filterable, and recursively linked segments, it enables users — and eventually AI — to reflect, reason, and grow in clarity over time.
+LogoMesh is a **local-first, AI-augmented cognitive framework** that transforms scattered thoughts into structured insight. By using a visual graph of tagged, filterable, and recursively linked segments, it enables users — and eventually AI — to reflect, reason, and grow in clarity over time.
 
-While committed to a local-first experience, ThoughtWeb embraces a **tiered approach to AI capabilities**. Core functionalities, including thought organization and basic embedding-based search, are designed to run efficiently on modest local hardware (e.g., a Mac Mini). More advanced AI features, such as large language model (LLM) generation and concept-diffusion, will progressively leverage more powerful local hardware (e.g., GPUs) if available, or offer optional user-controlled cloud alternatives via API keys.
+While committed to a local-first experience, LogoMesh embraces a **tiered approach to AI capabilities**. Core functionalities, including thought organization and basic embedding-based search, are designed to run efficiently on modest local hardware (e.g., a Mac Mini). More advanced AI features, such as large language model (LLM) generation and concept-diffusion, will progressively leverage more powerful local hardware (e.g., GPUs) if available, or offer optional user-controlled cloud alternatives via API keys.
 
-Unlike black-box models, ThoughtWeb is explicit, traceable, and explainable by design. It acts as both an external memory system and a sandbox for emergent reasoning. Its architecture anticipates collaboration, AI-assisted introspection, and the evolution of ideas across time and context.
+Unlike black-box models, LogoMesh is explicit, traceable, and explainable by design. It acts as both an external memory system and a sandbox for emergent reasoning. Its architecture anticipates collaboration, AI-assisted introspection, and the evolution of ideas across time and context.
 
 ---
 
 ## Mission
 
-ThoughtWeb empowers humans and AI to co-evolve their thinking using a structured, filterable, and recursively queryable thought system. Built on transparent fields, visual abstraction, and dynamic emergence, it creates a long-term substrate for:
+LogoMesh empowers humans and AI to co-evolve their thinking using a structured, filterable, and recursively queryable thought system. Built on transparent fields, visual abstraction, and dynamic emergence, it creates a long-term substrate for:
 
 * Human insight and pattern recognition
 * AI-assisted synthesis and contradiction discovery
@@ -30,13 +30,13 @@ ThoughtWeb empowers humans and AI to co-evolve their thinking using a structured
 
 > What if your thoughts could talk back?
 >
-> ThoughtWeb is an emergence engine for humans and AI — a visual thinking platform that reveals patterns, contradictions, and hidden connections across your ideas. It's more than a mind map. It's a m...
+> LogoMesh is an emergence engine for humans and AI — a visual thinking platform that reveals patterns, contradictions, and hidden connections across your ideas. It's more than a mind map. It's a m...
 
 ---
 
 ## Core Architecture
 
-ThoughtWeb is designed as a federated system of microservices and a rich client-side application, emphasizing local-first data ownership and modularity.
+LogoMesh is designed as a federated system of microservices and a rich client-side application, emphasizing local-first data ownership and modularity.
 
 ### Key Components:
 
@@ -51,7 +51,7 @@ ThoughtWeb is designed as a federated system of microservices and a rich client-
 
 ### AI Strategy & Local-First Implementation:
 
-ThoughtWeb's AI integration follows a progressive enhancement model:
+LogoMesh's AI integration follows a progressive enhancement model:
 
 * **Baseline Functionality (Modest Hardware):** Core features like embedding generation and similarity search will be optimized for CPU-based execution on typical local machines (e.g., Mac Mini). We prioritize highly quantized models (e.g., GGML/GGUF formats) to minimize resource footprint.
 * **Advanced Functionality (Capable Hardware / Optional Cloud):** Features involving larger LLMs (7B-8B models for generation, recursive queries) and concept-diffusion will benefit significantly from dedicated GPU hardware. Users without GPUs may experience slower performance, or optionally provide their own API keys for cloud-based execution of these specific services, maintaining control and transparency.
@@ -69,7 +69,7 @@ ThoughtWeb's AI integration follows a progressive enhancement model:
 
 ## Data Schema (JSON Export)
 
-ThoughtWeb data is designed to be portable and inspectable. Below is a simplified example of the core JSON structure:
+LogoMesh data is designed to be portable and inspectable. Below is a simplified example of the core JSON structure:
 
 ```json
 {
@@ -77,7 +77,7 @@ ThoughtWeb data is designed to be portable and inspectable. Below is a simplifie
     "version": "1.0",
     "export_date": "2025-05-03T00:00Z",
     "author": "Josh Hickson",
-    "tool": "ThoughtWeb"
+    "tool": "LogoMesh"
   },
   "thoughts": [
     {
