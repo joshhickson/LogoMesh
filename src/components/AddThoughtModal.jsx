@@ -56,7 +56,7 @@ function AddThoughtModal({ createThought, onClose }) {
         voiceManagerRef.current.stopListening();
       }
     };
-  }, []);
+  }, [segments]);
 
   const toggleVoiceInput = () => {
     if (!voiceManagerRef.current?.isSupported()) {
