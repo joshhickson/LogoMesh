@@ -11,11 +11,11 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   const cyRef = useRef(null);
 
   const elements = React.useMemo(() => {
-    // First create all nodes from thoughts AND segments
+    // First create all nodes from thoughts AND segments using ULIDs as stable keys
     const nodes = thoughts.flatMap(thought => {
       const thoughtNode = {
         data: { 
-          id: thought.thought_bubble_id,
+          id: thought.thought_bubble_id, // Already ULID
           label: thought.title,
           type: 'thought'
         },
@@ -24,7 +24,7 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
 
       const segmentNodes = (thought.segments || []).map(segment => ({
         data: {
-          id: `seg_${segment.segment_id}`,
+          id: segment.segment_id, // Already ULID
           label: segment.content || segment.title || 'Untitled Segment',
           type: 'segment'
         },
@@ -38,9 +38,9 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
     const edges = thoughts.flatMap(thought => 
       (thought.segments || []).map(segment => ({
         data: {
-          id: `edge_${thought.thought_bubble_id}_${segment.segment_id}`,
+          id: `${thought.thought_bubble_id}_${segment.segment_id}`, // Simplified edge ID using ULIDs
           source: thought.thought_bubble_id,
-          target: `seg_${segment.segment_id}`,
+          target: segment.segment_id,
           label: segment.relationship || 'relates to',
           type: 'segment'
         },
