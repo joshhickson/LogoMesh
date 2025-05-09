@@ -7,32 +7,28 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   const cyRef = useRef(null);
 
   const elements = React.useMemo(() => {
-    // Convert thoughts to Cytoscape nodes
+    // Convert thoughts to Cytoscape nodes with enhanced styling
     const nodes = thoughts.map(thought => ({
       data: { 
         id: thought.thought_bubble_id,
         label: thought.title,
+        tags: thought.tags || [],
+        type: 'thought'
       },
-      style: {
-        backgroundColor: thought.color || '#f3f4f6',
-        opacity: activeFilters?.length ? 
-          (activeFilters.includes(thought.thought_bubble_id) ? 1 : 0.3) : 1
-      }
+      classes: ['thought-node'],
     }));
 
-    // Create edges from segments
+    // Create edges from segments with relationship data
     const edges = thoughts.flatMap(thought => 
       (thought.segments || []).map(segment => ({
         data: {
           id: `${thought.thought_bubble_id}-${segment.segment_id}`,
           source: thought.thought_bubble_id,
-          target: segment.segment_id
+          target: segment.segment_id,
+          relationship: segment.relationship || 'default',
+          type: 'segment'
         },
-        style: {
-          lineStyle: 'dotted',
-          lineColor: '#666',
-          width: 2
-        }
+        classes: ['segment-edge']
       }))
     );
 
@@ -40,9 +36,12 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   }, [thoughts, activeFilters]);
 
   const layout = {
-    name: 'cose',
-    padding: 50,
-    animate: true
+    name: 'cose-bilkent',
+    animate: true,
+    randomize: true,
+    nodeRepulsion: 8000,
+    idealEdgeLength: 200,
+    edgeElasticity: 0.45
   };
 
   const stylesheet = [
@@ -55,14 +54,29 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
         'width': 120,
         'height': 60,
         'shape': 'roundrectangle',
-        'padding': '10px'
+        'padding': '10px',
+        'background-color': '#f3f4f6',
+        'border-width': 1,
+        'border-color': '#e5e7eb',
+        'font-size': 14
       }
     },
     {
       selector: 'edge',
       style: {
-        'curve-style': 'bezier',
-        'target-arrow-shape': 'triangle'
+        'width': 2,
+        'line-color': '#64748b',
+        'target-arrow-color': '#64748b',
+        'target-arrow-shape': 'triangle',
+        'curve-style': 'bezier'
+      }
+    },
+    {
+      selector: '.thought-node',
+      style: {
+        'background-opacity': (ele) => 
+          activeFilters?.length ? 
+            (activeFilters.includes(ele.id()) ? 1 : 0.3) : 1
       }
     }
   ];
@@ -78,6 +92,7 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   useEffect(() => {
     const cy = cyRef.current;
     if (cy) {
+      // Setup event handlers
       cy.on('tap', 'node', handleNodeClick);
       cy.on('dragfree', 'node', (evt) => {
         const node = evt.target;
@@ -97,6 +112,12 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
         });
         localStorage.setItem('thought-web-data', JSON.stringify(updatedThoughts));
       });
+
+      // Cleanup
+      return () => {
+        cy.removeListener('tap');
+        cy.removeListener('dragfree');
+      };
     }
   }, [thoughts, handleNodeClick]);
 
