@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { graphService } from '../services/graphService';
 
 function ThoughtDetailPanel({ thought, setThoughts }) {
   // State management is now handled through parent component
