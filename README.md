@@ -1,48 +1,54 @@
-## [note: this project is in pre-alpha. for potential devs: consult docs/READme-dev.md]
+
+## [note: this project is in pre-alpha. for potential devs: consult docs/README-dev.md]
 
 ---
 
-#LogoMesh
+# LogoMesh
 
 https://discord.gg/6ydDxzMjvD
 
-LogoMesh is a visual thinking tool built in React that allows you to create, organize, and navigate complex thoughts through interconnected thought bubbles, nested segments, and flexible metadata filtering.
+**Tagline:**
+> A recursive thought engine for humans and AI — designed to evolve meaning, resolve contradictions, and externalize self-reflection.
 
-Designed as a **personal knowledge graph meets mind-mapping engine**, LogoMesh supports segment-level filtering, AI-ready JSON export, and deep extensibility — perfect for building your own second brain.
+LogoMesh is a visual thinking tool built in React that allows you to create, organize, and navigate complex ideas through interconnected thought bubbles, nested segments, and flexible metadata filtering.
+
+Designed as a **local-first, AI-augmented cognitive framework**, LogoMesh helps you transform scattered thoughts into structured insight. It's more than a mind map; it's a living memory graph that supports segment-level filtering, AI-ready data export, and deep extensibility — perfect for understanding your own thinking and co-evolving ideas with AI.
 
 ---
 
-##Features
+## Features
 
-- **Thought Bubbles** with customizable title, description, tags, and color
-- **Nested Segments** inside each thought, each with their own title, content, and attributes
-- **Multi-attribute Classification** per segment (field name, value, and type)
-- **Advanced Filtering** by attribute field name, field type, and field value
-- **Canvas Highlighting** of matching bubbles (non-matches fade)
-- **Light/Dark Mode Toggle**
-- **Export all or filtered thoughts** to JSON (AI-parsable structure)
-- **Import JSON backups**
-- **Batch Editing Tools** — apply tags or color to filtered results
-- **Scalable Architecture** for AI integration and custom visualizations
+* **Thought Bubbles** with customizable titles, descriptions, tags, and colors for high-level organization.
+* **Nested Segments** within each thought bubble, each with its own title, content, and unique attributes for granular detail.
+* **Multi-attribute Classification** per segment (field name, value, and type) for powerful data structuring.
+* **Advanced Filtering** by attribute field name, field type, and field value to quickly find relevant information.
+* **Canvas Highlighting** of matching bubbles (non-matches fade) for focused views.
+* **Light/Dark Mode Toggle** for personalized viewing comfort.
+* **Export all or filtered thoughts** to JSON (AI-parsable structure) for data ownership and integration.
+* **Import JSON backups** to easily restore or transfer your thought data.
+* **Batch Editing Tools** — apply tags or colors to filtered results for efficient organization.
+* **Local-First AI Foundations**: Built to run core AI features on your local machine, giving you control and privacy over your data and cognitive process.
 
 ---
 
 ## Getting Started
 
+LogoMesh is designed to be easy to run locally, minimizing dependencies and maximizing control.
+
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/joshhickson/thought-web.git
+git clone [https://github.com/joshhickson/thought-web.git](https://github.com/joshhickson/thought-web.git)
 cd thought-web
 ````
 
-### 2. Install dependencies
+### 2\. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Start local server
+### 3\. Start local server
 
 ```bash
 npm start
@@ -50,7 +56,7 @@ npm start
 
 Visit `http://localhost:3000` in your browser.
 
----
+-----
 
 ## Build for Static Export
 
@@ -61,11 +67,11 @@ npm run build
 This creates a `build/` folder you can upload or open offline.
 Perfect for iPad/iPhone use or PWA setup.
 
----
+-----
 
 ## JSON Schema Overview
 
-Thoughts are saved locally and exported as structured JSON:
+Thoughts are saved locally and exported as structured JSON. This provides transparency and allows you to interact with your data outside the application.
 
 ```json
 {
@@ -93,159 +99,35 @@ Thoughts are saved locally and exported as structured JSON:
 }
 ```
 
-
-## thought-web/ directory
-```text thought-web/ 
-
-├── public/ # Static public assets (e.g. index.html) 
-
-├── src/ # Core React application source 
-
-│ ├── components/ # Visual components and layout parts 
-
-│ │ ├── AddThoughtModal.jsx # Modal for creating new thought bubbles 
-
-│ │ ├── Canvas.jsx # Main canvas for visualizing thought web 
-
-│ │ ├── Sidebar.jsx # Sidebar with controls and filter UI 
-
-│ │ └── ThoughtDetailPanel.jsx # Expanded detail view for selected thoughts 
-
-│ ├── utils/ # Helper functions and data I/O 
-
-│ │ ├── exportHandler.js # Exports thought data to JSON 
-
-│ │ ├── importHandler.js # Parses and imports JSON files 
-
-│ │ └── import.js # Handles drag/drop import logic 
-
-│ ├── App.jsx # App entry point, layout structure 
-
-│ ├── index.js # Main render file 
-
-│ └── index.css # Global CSS and Tailwind setup 
-
-├── docs/ # Project documentation and onboarding 
-
-│ └── README-dev.md # Developer-focused intro, vision, and setup 
-
-├── schema.json # Current data schema for thought bubbles 
-
-├── tailwind.config.js # Tailwind CSS configuration 
-
-├── package.json # Project dependencies and scripts 
-
-├── package-lock.json # Dependency lock file 
-
-├── .gitattributes/.gitignore # Git-specific configuration ```
-
----
+-----
 
 ## Roadmap
 
-* [x] Filtered export
-* [x] Multi-select filtering
-* [x] Canvas visualization
-* [x] Batch editing
-* [ ] Segment editing
-* [ ] AI-assisted input
-* [ ] Timeline view
-* [ ] Filter presets
+LogoMesh is constantly evolving. Here's a glimpse of what's next:
 
----
+  * **Enhanced Visuals & Navigation:** Refinements to the interactive canvas for more intuitive thought organization and exploration.
+  * **Core AI-Powered Insights (Local-First):**
+      * **Automatic Related Thoughts:** Instantly discover connections between your ideas.
+      * **AI-Assisted Reflection:** Get prompts that encourage deeper thinking and help you identify patterns or contradictions in your knowledge.
+      * **Conceptual Blending:** Explore new ideas formed by combining existing concepts.
+  * **Seamless Data Integration:** Tools to integrate LogoMesh with other applications and services.
+  * **Future: Advanced AI Features & Collaboration:** As LogoMesh matures, we envision features like recursive AI querying, conceptual diffusion, and secure collaborative workspaces.
+
+-----
 
 ## License
 
 MIT — free to fork, remix, and evolve.
 
----
+-----
 
 ## ✨ Created by [Josh Hickson](https://github.com/joshhickson)
 
-````
+-----
 
----
+This is not just productivity software.
+This is a cognitive framework for the evolution of intelligence.
+Welcome to LogoMesh.
 
-### What to do next:
-
-1. Copy this into a new file: `/thought-web/README.md`
-2. Commit & push:
-```bash
-git add README.md
-git commit -m "Add project README"
-git push
-````
-
-
-#(Default React Readme below)
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+```
