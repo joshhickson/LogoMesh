@@ -4,12 +4,12 @@ import ThoughtDetailPanel from '../ThoughtDetailPanel';
 
 describe('ThoughtDetailPanel', () => {
   const mockThought = {
-    thought_bubble_id: 'test-123',
-    title: 'Test Thought',
+    thought_bubble_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YR',
+    title: 'Test Thought', 
     description: 'Test description',
     segments: [
       {
-        segment_id: 'segment-1',
+        segment_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YS',
         title: 'Test Segment',
         content: 'Test content',
         fields: {

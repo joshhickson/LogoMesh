@@ -1,27 +1,40 @@
-
 import React, { useCallback, useRef, useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
-import { graphService } from '../services/graphService';
+
+import cytoscape from 'cytoscape';
+import coseBilkent from 'cytoscape-cose-bilkent';
+
+cytoscape.use(coseBilkent);
 
 function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   const cyRef = useRef(null);
 
+  const ensureNodeData = (data) => {
+    const cleanData = {};
+    for (const key in data) {
+      if (data.hasOwnProperty(key) && data[key] !== null && data[key] !== undefined) {
+        cleanData[key] = data[key];
+      }
+    }
+    return cleanData;
+  };
+
   const elements = React.useMemo(() => {
-    // First create all nodes from thoughts AND segments
+    // First create all nodes from thoughts using ULIDs as stable keys
     const nodes = thoughts.flatMap(thought => {
       const thoughtNode = {
-        data: { 
+        data: ensureNodeData({ 
           id: thought.thought_bubble_id,
-          label: thought.title,
+          label: thought.title || 'Untitled',
           type: 'thought'
-        },
+        }),
         classes: ['thought-node'],
       };
 
       const segmentNodes = (thought.segments || []).map(segment => ({
         data: {
-          id: segment.segment_id,
-          label: segment.title,
+          id: segment.segment_id, // Already ULID
+          label: segment.content || segment.title || 'Untitled Segment',
           type: 'segment'
         },
         classes: ['segment-node']
@@ -34,10 +47,10 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
     const edges = thoughts.flatMap(thought => 
       (thought.segments || []).map(segment => ({
         data: {
-          id: `${thought.thought_bubble_id}-${segment.segment_id}`,
+          id: `${thought.thought_bubble_id}_${segment.segment_id}`, // Simplified edge ID using ULIDs
           source: thought.thought_bubble_id,
           target: segment.segment_id,
-          relationship: segment.relationship || 'default',
+          label: segment.relationship || 'relates to',
           type: 'segment'
         },
         classes: ['segment-edge']

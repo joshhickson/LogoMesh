@@ -5,7 +5,7 @@ import { graphService } from './services/graphService';
 import Sidebar from './components/Sidebar';
 import ThoughtDetailPanel from './components/ThoughtDetailPanel';
 import AddThoughtModal from './components/AddThoughtModal';
-import { v4 as ulid } from 'ulid'; //Import ulid
+
 
 
 function App() {
