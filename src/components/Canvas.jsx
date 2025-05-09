@@ -1,4 +1,3 @@
-
 import React, { useCallback, useRef, useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { graphService } from '../services/graphService';
@@ -10,15 +9,25 @@ cytoscape.use(coseBilkent);
 function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   const cyRef = useRef(null);
 
+  const ensureNodeData = (data) => {
+    const cleanData = {};
+    for (const key in data) {
+      if (data.hasOwnProperty(key) && data[key] !== null && data[key] !== undefined) {
+        cleanData[key] = data[key];
+      }
+    }
+    return cleanData;
+  };
+
   const elements = React.useMemo(() => {
-    // First create all nodes from thoughts AND segments using ULIDs as stable keys
+    // First create all nodes from thoughts using ULIDs as stable keys
     const nodes = thoughts.flatMap(thought => {
       const thoughtNode = {
-        data: { 
-          id: thought.thought_bubble_id, // Already ULID
-          label: thought.title,
+        data: ensureNodeData({ 
+          id: thought.thought_bubble_id,
+          label: thought.title || 'Untitled',
           type: 'thought'
-        },
+        }),
         classes: ['thought-node'],
       };
 

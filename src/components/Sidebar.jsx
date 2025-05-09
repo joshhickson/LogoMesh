@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { exportToJsonFile } from '../utils/exportHandler';
 import { importFromJsonFile } from '../utils/importHandler';
+import { graphService } from '../services/graphService';
 
 // Current schema version for display purposes
 const thoughtSchemaVersion = "0.5";
