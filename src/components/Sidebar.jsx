@@ -237,9 +237,9 @@ function Sidebar({
               {thought.title}
             </div>
             <ul className="ml-3 mt-1 text-sm">
-              {thought.filteredSegments.map(seg => (
+              {thought.filteredSegments.map((seg, index) => (
                 <li
-                  key={seg.segment_id}
+                  key={`${thought.thought_bubble_id}_${seg.segment_id}_${index}`}
                   className="text-gray-600 dark:text-gray-300"
                 >
                   - {seg.title}
