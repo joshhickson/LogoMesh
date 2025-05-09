@@ -10,9 +10,7 @@
 
 LogoMesh is a **local-first, AI-augmented cognitive framework** that transforms scattered thoughts into structured insight. By using a visual graph of tagged, filterable, and recursively linked segments, it enables users — and eventually AI — to reflect, reason, and grow in clarity over time.
 
-While committed to a local-first experience, LogoMesh embraces a **tiered approach to AI capabilities**. Core functionalities, including thought organization and basic embedding-based search, are designed to run efficiently on modest local hardware (e.g., a Mac Mini). More advanced AI features, such as large language model (LLM) generation and concept-diffusion, will progressively leverage more powerful local hardware (e.g., GPUs) if available, or offer optional user-controlled cloud alternatives via API keys.
-
-Unlike black-box models, LogoMesh is explicit, traceable, and explainable by design. It acts as both an external memory system and a sandbox for emergent reasoning. Its architecture anticipates collaboration, AI-assisted introspection, and the evolution of ideas across time and context.
+Our development follows a **tiered approach to AI capabilities**, ensuring core functionalities operate efficiently on modest local hardware while providing pathways for advanced features that can leverage more powerful local resources (e.g., GPUs) or integrate optionally with cloud services. This approach emphasizes user control and transparency, fostering a system that is explicit, traceable, and explainable by design. LogoMesh acts as both an external memory system and a sandbox for emergent reasoning, with an architecture anticipating collaboration, AI-assisted introspection, and the evolution of ideas across time and context.
 
 ---
 
@@ -41,21 +39,33 @@ LogoMesh is designed as a federated system of microservices and a rich client-si
 ### Key Components:
 
 * **Client-Side UI:** React (Next.js) application for visual graph interaction, filtering, and content editing.
-* **Visual Engine:** Currently uses **ReactFlow**. The plan is to migrate to **Cytoscape.js** (an open-source alternative) in Phase 1 for enhanced performance and features. (Note: ReGraph was previously considered but Cytoscape.js offers a more suitable open-source path.)
-* **Local Persistence:** SQLite (for graph data, segments, metadata)
-* **AI Microservices:**
-    * **Embedding Service:** For generating vector representations of text segments. Powered by highly optimized local models via `llama.cpp` / Ollama.
+* **Visual Engine:** Currently uses **ReactFlow**. The plan is to migrate to **Cytoscape.js** (an open-source alternative) in Phase 1 for enhanced performance and features.
+* **Local Persistence:** SQLite (for graph data, segments, metadata) as the primary local database.
+* **AI Microservices (Tiered):**
+    * **Embedding Service:** For generating vector representations of text segments. Primarily powered by highly optimized local models (e.g., Sentence Transformers via `llama.cpp` or Ollama).
     * **LLM Orchestration:** For recursive queries, synthesis, and Socratic dialogues. Designed to utilize quantized models for local execution, with an optional cloud-based API key fallback.
     * **Concept-Diffusion:** For emergent idea generation and blending. These features will primarily leverage local GPU capabilities for efficient processing.
 * **Data Export/Import:** Standardized JSON schema for interoperability and backup.
+* **Automation:** Utilizes `n8n` for local workflow automation, with architectural provisions for cloud extensions.
 
-### AI Strategy & Local-First Implementation:
+### AI Strategy & Tiered Implementation:
 
-LogoMesh's AI integration follows a progressive enhancement model:
+LogoMesh's AI integration follows a progressive enhancement model, guided by our tiered development approach:
 
-* **Baseline Functionality (Modest Hardware):** Core features like embedding generation and similarity search will be optimized for CPU-based execution on typical local machines (e.g., Mac Mini). We prioritize highly quantized models (e.g., GGML/GGUF formats) to minimize resource footprint.
-* **Advanced Functionality (Capable Hardware / Optional Cloud):** Features involving larger LLMs (7B-8B models for generation, recursive queries) and concept-diffusion will benefit significantly from dedicated GPU hardware. Users without GPUs may experience slower performance, or optionally provide their own API keys for cloud-based execution of these specific services, maintaining control and transparency.
-* **No Black Boxes:** Our commitment extends to AI integration by focusing on explainable outputs, providing users with control over model choices where applicable, and offering transparent feedback mechanisms (e.g., prompt logs, explicit reasoning for AI suggestions, and the ability to audit AI-generated DAGs).
+#### Tier #1: Local-First Full Immersion (Primary Focus)
+This tier ensures core LogoMesh functionalities, including essential AI features, run efficiently on common local hardware without requiring internet connectivity for core operations.
+
+* **Local Model Prioritization:** We primarily leverage highly optimized and quantized open-source models (e.g., GGML/GGUF formats for LLMs, Sentence Transformers via `llama.cpp`/Ollama for embeddings, HF Diffusers for diffusion) to minimize resource footprint and enable robust CPU-based execution where possible.
+* **Hardware Acknowledgment:** While core features run on modest hardware (e.g., Mac Mini), advanced AI capabilities (larger LLMs, diffusion models) are designed to leverage dedicated GPU hardware if available, with performance expectations clearly communicated to the user.
+* **Local Persistence for AI:** All AI-generated embeddings and vector store operations rely on local databases like `SQLite + sqlite3_vector` (with plans for `PostgreSQL + pgvector` for local scaling/server environments) to keep data ownership with the user.
+* **Automation:** Local n8n instances manage in-app workflows for auto-tagging, embedding prep, and local backups.
+
+#### Tier #2: Cloud-Enhanced Extensions (Optional/Future)
+This tier outlines how LogoMesh can extend its capabilities by optionally integrating with cloud services, providing enhanced features or alternatives for users with different needs or hardware.
+
+* **Abstraction Layers for Flexibility:** Critical API abstraction layers are designed from Phase 1 to allow seamless swapping of local AI services (embeddings, LLMs, vector databases) with cloud-based alternatives (e.g., OpenAI Embeddings, Pinecone, Weaviate, cloud LLM APIs) in later phases without major refactoring. This ensures extensibility.
+* **User Control:** Cloud integrations are designed to be optional, typically requiring user-provided API keys (e.g., for OpenAI GPT models), aligning with our "no black boxes" philosophy and ensuring users retain control over their data and service choices.
+* **Collaborative & Scalable Features:** Cloud infrastructure is anticipated for future features demanding high scalability or real-time collaboration across multiple users.
 
 ### Data Flow:
 
@@ -64,6 +74,7 @@ LogoMesh's AI integration follows a progressive enhancement model:
 3.  Optional: Text segments are sent to the local Embedding Service for vectorization.
 4.  Optional: AI Microservices process data, potentially interacting with the graph and local persistence.
 5.  Data can be imported/exported via JSON.
+6.  Local automation workflows (n8n) manage background tasks like embedding prep, auto-tagging, and local backups.
 
 ---
 
@@ -118,20 +129,28 @@ LogoMesh data is designed to be portable and inspectable. Below is a simplified 
 
 -----
 
-## Ongoing Development Tasks
+## Current Focus & Ongoing Development Tasks (Tier \#1: Local-First Full Immersion)
 
-  * **Visual Engine Migration:** Complete the migration from ReactFlow to Cytoscape.js.
-  * **Core UI/UX Enhancements:** Add real-time filter overlays for tags/colors, and refine JSON import/export for full schema support.
-  * **Embedding Service Optimization:** Benchmark local embedding generation performance on target hardware (e.g., Mac Mini) and adjust timeouts to ensure responsive UX.
-  * **AI Search & Linkage:** Implement initial embedding-based AI search and "Related Thoughts" functionality, focusing on performance for `top-k` similarity queries.
-  * **Proto-AI Hook UX:** Begin prototyping user experience for recursive queries and AI-driven explainability.
-  * **Data Management:** Add timeline view and interaction logs for better historical context.
-  * **Collaboration Foundations:** Begin work on multi-user version control layer (initial focus on underlying data structures).
-  * **LLM & Diffusion Strategy:** Research and select optimal quantized LLM and diffusion models for local execution, balancing performance and resource demands.
+This section outlines the immediate, high-priority tasks for LogoMesh's **Tier \#1: Local-First Full Immersion**, aligning with the early phases of the comprehensive development roadmap. For a full, detailed breakdown of all phases and Tier \#2 (Cloud-Enhanced Extensions) plans, please refer to the `Merged Milestone-Based Development Plan v2.0.md`.
+
+  * **Phase 1: Scaffold & Realignment**
+
+      * Complete the migration of the visual canvas from ReactFlow to **Cytoscape.js**.
+      * Finalize **SQLite** DB schema for local persistence and ensure full React ↔ SQLite load/save cycle.
+      * Set up local **n8n** instance for core automation tasks (e.g., auto-tagging, local backups, initial embedding prep).
+      * Design **API Abstraction Layers** for Embedding Services and Vector Databases to enable future cloud integration without major refactoring.
+      * Establish **Docker Compose** for front-end + SQLite for easy local deployment.
+
+  * **Phase 2: Interaction, Filters & Embedding Infrastructure**
+
+      * Develop UI for **Tag/Color/Abstraction Filters** and **Theme Clusters** (auto-cluster view, Merge/Unmerge controls).
+      * Implement the **Embed Micro-service** (FastAPI/Flask) powered by highly optimized local models (e.g., `llama.cpp`/Ollama).
+      * Integrate **SQLite + sqlite3\_vector** as the primary local vector store for efficient similarity search.
+      * **Action:** Benchmark local embedding generation times and vector similarity search performance on target hardware (e.g., Mac Mini) to ensure responsive UX.
 
 -----
 
-## [Execution History](https://github.com/joshhickson/thought-web/blob/master/docs/Claude-Log.md)
+## [Execution History](https://www.google.com/search?q=https://github.com/joshhickson/thought-web/blob/master/docs/Claude-Log.md)
 
 -----
 
