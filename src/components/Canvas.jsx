@@ -1,7 +1,4 @@
-The code is modified to ensure all nodes (including segment nodes) are created before edges, resolving the Cytoscape target node error.
-```
 
-```replit_final_file
 import React, { useCallback, useRef, useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { graphService } from '../services/graphService';
@@ -107,7 +104,6 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   useEffect(() => {
     const cy = cyRef.current;
     if (cy) {
-      // Setup event handlers
       cy.on('tap', 'node', handleNodeClick);
       cy.on('dragfree', 'node', (evt) => {
         const node = evt.target;
@@ -128,7 +124,6 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
         localStorage.setItem('thought-web-data', JSON.stringify(updatedThoughts));
       });
 
-      // Cleanup
       return () => {
         cy.removeListener('tap');
         cy.removeListener('dragfree');
