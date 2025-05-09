@@ -1,0 +1,68 @@
+Uncaught runtime errors:
+ERROR
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: /home/runner/workspace/src/components/Canvas.jsx: Identifier 'coseBilkent' has already been declared. (8:7)
+
+   6 |
+   7 | cytoscape.use(coseBilkent);
+>  8 | import coseBilkent from 'cytoscape-cose-bilkent';
+     |        ^
+   9 |
+  10 | cytoscape.use(coseBilkent);
+  11 |
+    at constructor (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:19082)
+    at FlowParserMixin.raise (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:178064)
+    at FlowScopeHandler.checkRedeclarationInScope (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:56980)
+    at FlowScopeHandler.declareName (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:56132)
+    at FlowScopeHandler.declareName (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:58321)
+    at FlowParserMixin.declareNameFromIdentifier (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:199448)
+    at FlowParserMixin.checkIdentifier (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:199347)
+    at FlowParserMixin.checkLVal (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:197749)
+    at FlowParserMixin.finishImportSpecifier (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:384943)
+    at FlowParserMixin.parseImportSpecifierLocal (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:106770)
+    at FlowParserMixin.maybeParseDefaultImportSpecifier (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:387523)
+    at FlowParserMixin.parseImportSpecifiersAndAfter (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:383963)
+    at FlowParserMixin.parseImport (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:383787)
+    at FlowParserMixin.parseStatementContent (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:345864)
+    at FlowParserMixin.parseStatementLike (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:343103)
+    at FlowParserMixin.parseStatementLike (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:93846)
+    at FlowParserMixin.parseModuleItem (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:342582)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:357657)
+    at FlowParserMixin.parseBlockBody (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:357337)
+    at FlowParserMixin.parseProgram (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:339720)
+    at FlowParserMixin.parseTopLevel (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:339383)
+    at FlowParserMixin.parseTopLevel (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:116191)
+    at FlowParserMixin.parse (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:390221)
+    at parse (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:390969)
+    at parser (/home/runner/workspace/node_modules/@babel/core/lib/parser/index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (/home/runner/workspace/node_modules/@babel/core/lib/transformation/normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (/home/runner/workspace/node_modules/@babel/core/lib/transformation/index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (/home/runner/workspace/node_modules/@babel/core/lib/transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (/home/runner/workspace/node_modules/gensync/index.js:261:32)
+    at /home/runner/workspace/node_modules/gensync/index.js:273:13
+    at async.call.result.err.err (/home/runner/workspace/node_modules/gensync/index.js:223:11)
+    at /home/runner/workspace/node_modules/gensync/index.js:189:28
+    at /home/runner/workspace/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+    at /home/runner/workspace/node_modules/gensync/index.js:113:33
+    at step (/home/runner/workspace/node_modules/gensync/index.js:287:14)
+    at /home/runner/workspace/node_modules/gensync/index.js:273:13
+    at async.call.result.err.err (/home/runner/workspace/node_modules/gensync/index.js:223:11)
+./src/components/Canvas.jsx@https://logomesh-dev.replit.app/static/js/bundle.js:38082:7
+options.factory@https://logomesh-dev.replit.app/static/js/bundle.js:40143:30
+__webpack_require__@https://logomesh-dev.replit.app/static/js/bundle.js:39564:32
+fn@https://logomesh-dev.replit.app/static/js/bundle.js:39771:21
+hotRequire@https://logomesh-dev.replit.app/static/js/bundle.js:40126:61
+./src/App.jsx@https://logomesh-dev.replit.app/static/js/bundle.js:37425:95
+options.factory@https://logomesh-dev.replit.app/static/js/bundle.js:40143:30
+__webpack_require__@https://logomesh-dev.replit.app/static/js/bundle.js:39564:32
+fn@https://logomesh-dev.replit.app/static/js/bundle.js:39771:21
+hotRequire@https://logomesh-dev.replit.app/static/js/bundle.js:40126:61
+./src/index.js@https://logomesh-dev.replit.app/static/js/bundle.js:38993:81
+options.factory@https://logomesh-dev.replit.app/static/js/bundle.js:40143:30
+__webpack_require__@https://logomesh-dev.replit.app/static/js/bundle.js:39564:32
+@https://logomesh-dev.replit.app/static/js/bundle.js:40673:56
+@https://logomesh-dev.replit.app/static/js/bundle.js:40675:12
