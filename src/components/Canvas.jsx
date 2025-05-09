@@ -2,6 +2,10 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { graphService } from '../services/graphService';
+import cytoscape from 'cytoscape';
+import coseBilkent from 'cytoscape-cose-bilkent';
+
+cytoscape.use(coseBilkent);
 
 function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   const cyRef = useRef(null);
