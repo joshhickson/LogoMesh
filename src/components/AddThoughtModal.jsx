@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { newBubbleId, newSegmentId } from '../utils/eventBus';
+import { newBubbleId } from '../utils/eventBus';
 import { VoiceInputManager } from '../utils/VoiceInputManager';
+import { ulid } from 'ulid';
 
 const defaultFieldOptions = [
   'Concept Type',
@@ -55,7 +56,7 @@ function AddThoughtModal({ createThought, onClose }) {
         voiceManagerRef.current.stopListening();
       }
     };
-  }, []);
+  }, [segments]);
 
   const toggleVoiceInput = () => {
     if (!voiceManagerRef.current?.isSupported()) {
@@ -75,7 +76,7 @@ function AddThoughtModal({ createThought, onClose }) {
     setSegments([
       ...segments,
       {
-        segment_id: newSegmentId(),
+        segment_id: ulid(),
         title: '',
         content: '',
         fields: {},

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { graphService } from '../services/graphService';
 
 function ThoughtDetailPanel({ thought, setThoughts }) {
   // State management is now handled through parent component
@@ -79,7 +80,7 @@ function ThoughtDetailPanel({ thought, setThoughts }) {
   };
 
   const handleDeleteSegment = (segmentId) => {
-    if (!confirm('Are you sure you want to delete this segment?')) return;
+    if (!window.confirm('Are you sure you want to delete this segment?')) return;
     
     setThoughts(prevThoughts => 
       prevThoughts.map(t => {

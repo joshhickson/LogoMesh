@@ -1,6 +1,6 @@
 
 // importHandler.js
-import { ulid } from 'ulid';
+
 import { newBubbleId, newSegmentId } from './eventBus';
 
 const validateThought = (thought) => {

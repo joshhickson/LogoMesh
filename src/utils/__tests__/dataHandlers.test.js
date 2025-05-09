@@ -11,12 +11,12 @@ jest.mock('../eventBus', () => ({
 
 describe('Data Handling', () => {
   const mockThoughts = [{
-    thought_bubble_id: 'test-123',
+    thought_bubble_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YX',
     title: 'Test Thought',
     description: 'Test description',
     created_at: '2023-01-01T00:00:00.000Z',
     segments: [{
-      segment_id: 'segment-123',
+      segment_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YY',
       title: 'Test Segment',
       content: 'Test content',
       fields: { type: 'note' }
