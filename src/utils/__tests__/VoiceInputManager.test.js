@@ -53,7 +53,7 @@ describe('VoiceInputManager', () => {
       resultIndex: 0
     };
     mockRecognition.onresult(mockResults);
-    expect(onTranscriptUpdate).toHaveBeenCalledWith('Hello world.', true, false);
+    expect(onTranscriptUpdate).toHaveBeenCalledWith('Hello world.', false);
 
     // Test long sentence that should trigger segmentation
     const longResults = {

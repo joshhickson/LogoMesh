@@ -1,4 +1,21 @@
 
+import React from 'react';
+import '@testing-library/jest-dom';
+
+// Mock react-cytoscapejs
+jest.mock('react-cytoscapejs', () => {
+  return function MockCytoscape(props) {
+    return <div data-testid="cytoscape-mock" {...props} />;
+  };
+});
+
+// Mock cytoscape-cose-bilkent
+jest.mock('cytoscape-cose-bilkent', () => {
+  return {};
+});
+
+
+
 // jest-dom adds custom jest matchers for asserting on DOM nodes.
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
