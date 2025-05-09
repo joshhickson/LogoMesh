@@ -2,12 +2,12 @@
 
 ---
 
-## Tiered Approach to ThoughtWeb Development
+## Tiered Approach to LogoMesh Development
 
-This development plan is structured around two distinct tiers, reflecting ThoughtWeb's commitment to a local-first philosophy while ensuring future extensibility and scalability via cloud services. The goal is to provide a robust core accessible to all users, with optional advanced features that leverage cloud resources if desired.
+This development plan is structured around two distinct tiers, reflecting LogoMesh's commitment to a local-first philosophy while ensuring future extensibility and scalability via cloud services. The goal is to provide a robust core accessible to all users, with optional advanced features that leverage cloud resources if desired.
 
 ### Tier #1: Local-First Full Immersion
-This tier prioritizes minimal internet connectivity and aims for all core ThoughtWeb functionalities, including AI features, to run efficiently on local user hardware (e.g., Mac Mini). Development in early phases will primarily focus on achieving a stable and performant experience within this tier.
+This tier prioritizes minimal internet connectivity and aims for all core LogoMesh functionalities, including AI features, to run efficiently on local user hardware (e.g., Mac Mini). Development in early phases will primarily focus on achieving a stable and performant experience within this tier.
 
 ### Tier #2: Cloud-Enhanced Extensions (Optional/Future)
 This tier outlines paths for leveraging cloud services (e.g., managed databases, powerful LLM APIs, specialized AI models) for enhanced features, scalability, or as alternatives for users without powerful local hardware. Development for this tier will focus on designing robust abstraction layers in early phases to allow seamless integration without major refactoring, with active implementation in later phases.
@@ -15,7 +15,7 @@ This tier outlines paths for leveraging cloud services (e.g., managed databases,
 ---
 
 ## PHASE 1: Scaffold & Realignment (Weeks 1–2)
-*(Pure ThoughtWeb core—no AI, with MLOps & UX foundations)*
+*(Pure LogoMesh core—no AI, with MLOps & UX foundations)*
 
 ### Tier #1: Local-First Full Immersion
 
@@ -166,13 +166,13 @@ This tier outlines paths for leveraging cloud services (e.g., managed databases,
 5.  **AI UI Stubs & Co-Writing**
     -   Buttons: “What patterns repeat?”, “Any contradictions?” → overlay modal streaming suggestions (from local LLM).
     -   Co-writing pane stub: AI proposes bubbles/edits; **Accept/Refine/Dismiss**
-    -   Explanatory footer: “Powered by ThoughtWeb AI—suggestions may vary.”
+    -   Explanatory footer: “Powered by LogoMesh AI—suggestions may vary.”
 
 6.  **Auto-reflective Loop**
     -   Store AI proposals with `abstraction_level = ai_suggestion` + glow badge
     -   On accept: animate insertion, auto-link via NN query (using local embeddings/vector DB).
 
-> **Checkpoint:** ThoughtWeb offers AI-driven ideas framed as reflective questions and transparent suggestions, primarily leveraging local LLM and embedding capabilities.
+> **Checkpoint:** LogoMesh offers AI-driven ideas framed as reflective questions and transparent suggestions, primarily leveraging local LLM and embedding capabilities.
 
 ### Tier #2: Cloud-Enhanced Extensions (Optional/Future)
 
@@ -266,7 +266,7 @@ This tier outlines paths for leveraging cloud services (e.g., managed databases,
     -   Usability test scripts for every major feature
 
 > **Ultimate Vision (Local-First Focus):**
-> A **local, inspectable, production-quality hybrid-consciousness engine**—a true cognitive partner that suggests, challenges, guides, and reinforces insights over time, all within a rich, navigable ThoughtWeb, requiring minimal external dependencies.
+> A **local, inspectable, production-quality hybrid-consciousness engine**—a true cognitive partner that suggests, challenges, guides, and reinforces insights over time, all within a rich, navigable LogoMesh, requiring minimal external dependencies.
 
 ### Tier #2: Cloud-Enhanced Extensions (Optional/Future)
 
