@@ -1,0 +1,49 @@
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: /home/runner/workspace/src/components/Canvas.jsx: Missing semicolon. (1:3)
+
+[0m[31m[1m>[22m[39m[90m 1 |[39m [33mThe[39m code is modified to ensure all nodes (including segment nodes) are created before edges[33m,[39m resolving the [33mCytoscape[39m target node error[33m.[39m
+ [90m   |[39m    [31m[1m^[22m[39m
+ [90m 2 |[39m [32m``[39m[32m`[39m
+ [90m 3 |[39m [32m[39m
+ [90m 4 |[39m [32m`[39m[32m``[39mreplit_final_file[0m
+    at constructor (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:19082)
+    at FlowParserMixin.raise (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:178064)
+    at FlowParserMixin.semicolon (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:184433)
+    at FlowParserMixin.parseExpressionStatement (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:356621)
+    at FlowParserMixin.parseExpressionStatement (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:94477)
+    at FlowParserMixin.parseStatementContent (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:346442)
+    at FlowParserMixin.parseStatementLike (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:343103)
+    at FlowParserMixin.parseStatementLike (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:93846)
+    at FlowParserMixin.parseModuleItem (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:342582)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:357657)
+    at FlowParserMixin.parseBlockBody (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:357337)
+    at FlowParserMixin.parseProgram (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:339720)
+    at FlowParserMixin.parseTopLevel (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:339383)
+    at FlowParserMixin.parseTopLevel (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:116191)
+    at FlowParserMixin.parse (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:390221)
+    at parse (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:1:390969)
+    at parser (/home/runner/workspace/node_modules/@babel/core/lib/parser/index.js:41:34)
+    at parser.next ()
+    at normalizeFile (/home/runner/workspace/node_modules/@babel/core/lib/transformation/normalize-file.js:64:37)
+    at normalizeFile.next ()
+    at run (/home/runner/workspace/node_modules/@babel/core/lib/transformation/index.js:22:50)
+    at run.next ()
+    at transform (/home/runner/workspace/node_modules/@babel/core/lib/transform.js:22:33)
+    at transform.next ()
+    at step (/home/runner/workspace/node_modules/gensync/index.js:261:32)
+    at /home/runner/workspace/node_modules/gensync/index.js:273:13
+    at async.call.result.err.err (/home/runner/workspace/node_modules/gensync/index.js:223:11)
+options.factory@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:40169:30
+__webpack_require__@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39590:32
+fn@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39797:21
+hotRequire@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:40152:61
+./src/App.jsx@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:37461:95
+options.factory@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:40169:30
+__webpack_require__@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39590:32
+fn@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39797:21
+hotRequire@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:40152:61
+./src/index.js@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39024:81
+options.factory@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:40169:30
+__webpack_require__@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39590:32
+@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:40699:56
+@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:40701:12
