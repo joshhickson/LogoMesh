@@ -1,6 +1,16 @@
 
 import { render, fireEvent } from '@testing-library/react';
 import Canvas from '../Canvas';
+import cytoscape from 'cytoscape';
+import coseBilkent from 'cytoscape-cose-bilkent';
+
+cytoscape.use(coseBilkent);
+
+jest.mock('react-cytoscapejs', () => {
+  return function MockCytoscape(props) {
+    return <div data-testid="cytoscape-mock" {...props} />;
+  };
+});
 
 describe('Canvas', () => {
   const mockThoughts = [
