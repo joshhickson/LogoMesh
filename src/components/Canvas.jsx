@@ -1,115 +1,135 @@
 
-import React from 'react';
-import ReactFlow, {
-  MiniMap,
-  Controls,
-  Background,
-  useNodesState,
-  useEdgesState
-} from 'reactflow';
-import 'reactflow/dist/style.css';
+import React, { useCallback, useRef, useEffect } from 'react';
+import CytoscapeComponent from 'react-cytoscapejs';
 import { graphService } from '../services/graphService';
 
 function Canvas({ thoughts, setSelectedThought, activeFilters }) {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const cyRef = useRef(null);
 
-  const onConnect = useCallback((params) => {
-    // Create new segment when edge is drawn
-    const sourceThought = thoughts.find(t => t.thought_bubble_id === params.source);
-    const targetThought = thoughts.find(t => t.thought_bubble_id === params.target);
-    
-    if (sourceThought && targetThought) {
-      const newSegment = {
-        segment_id: `seg_${params.source}_${params.target}`,
-        sourcePosition: sourceThought.position,
-        targetPosition: targetThought.position
-      };
-      
-      sourceThought.segments = [...(sourceThought.segments || []), newSegment];
-      localStorage.setItem('thought-web-data', JSON.stringify(thoughts));
-      
-      setEdges(eds => addEdge(params, eds));
-    }
-  }, [thoughts]);
-
-  React.useEffect(() => {
-    // Convert thoughts to ReactFlow nodes
-    const flowNodes = thoughts.map(thought => ({
-      id: thought.thought_bubble_id,
-      data: { label: thought.title },
-      position: thought.position || { x: 0, y: 0 },
-      style: {
-        background: thought.color || '#f3f4f6',
-        opacity: activeFilters?.length ? 
-          (activeFilters.includes(thought.thought_bubble_id) ? 1 : 0.3) : 1
-      }
+  const elements = React.useMemo(() => {
+    // Convert thoughts to Cytoscape nodes with enhanced styling
+    const nodes = thoughts.map(thought => ({
+      data: { 
+        id: thought.thought_bubble_id,
+        label: thought.title,
+        tags: thought.tags || [],
+        type: 'thought'
+      },
+      classes: ['thought-node'],
     }));
 
-    // Create edges from segments
-    const flowEdges = thoughts.flatMap(thought => 
+    // Create edges from segments with relationship data
+    const edges = thoughts.flatMap(thought => 
       (thought.segments || []).map(segment => ({
-        id: `${thought.thought_bubble_id}-${segment.segment_id}`,
-        source: thought.thought_bubble_id,
-        target: segment.segment_id,
-        style: { strokeDasharray: '5 5' }, // Dotted line for fuzzy connections
-        animated: true
+        data: {
+          id: `${thought.thought_bubble_id}-${segment.segment_id}`,
+          source: thought.thought_bubble_id,
+          target: segment.segment_id,
+          relationship: segment.relationship || 'default',
+          type: 'segment'
+        },
+        classes: ['segment-edge']
       }))
     );
 
-    setNodes(flowNodes);
-    setEdges(flowEdges);
+    return [...nodes, ...edges];
   }, [thoughts, activeFilters]);
 
-  const handleNodeClick = (event, node) => {
-    const thought = thoughts.find(t => t.thought_bubble_id === node.id);
+  const layout = {
+    name: 'cose-bilkent',
+    animate: true,
+    randomize: true,
+    nodeRepulsion: 8000,
+    idealEdgeLength: 200,
+    edgeElasticity: 0.45
+  };
+
+  const stylesheet = [
+    {
+      selector: 'node',
+      style: {
+        'label': 'data(label)',
+        'text-valign': 'center',
+        'text-halign': 'center',
+        'width': 120,
+        'height': 60,
+        'shape': 'roundrectangle',
+        'padding': '10px',
+        'background-color': '#f3f4f6',
+        'border-width': 1,
+        'border-color': '#e5e7eb',
+        'font-size': 14
+      }
+    },
+    {
+      selector: 'edge',
+      style: {
+        'width': 2,
+        'line-color': '#64748b',
+        'target-arrow-color': '#64748b',
+        'target-arrow-shape': 'triangle',
+        'curve-style': 'bezier'
+      }
+    },
+    {
+      selector: '.thought-node',
+      style: {
+        'background-opacity': (ele) => 
+          activeFilters?.length ? 
+            (activeFilters.includes(ele.id()) ? 1 : 0.3) : 1
+      }
+    }
+  ];
+
+  const handleNodeClick = useCallback((evt) => {
+    const node = evt.target;
+    const thought = thoughts.find(t => t.thought_bubble_id === node.id());
     if (thought) {
       setSelectedThought(thought);
     }
-  };
+  }, [thoughts, setSelectedThought]);
 
-  const handleNodeDragStop = (event, node) => {
-    const updatedThoughts = thoughts.map(thought => {
-      if (thought.thought_bubble_id === node.id) {
-        return {
-          ...thought,
-          position: node.position,
-          segments: (thought.segments || []).map(segment => ({
-            ...segment,
-            sourcePosition: node.position
-          }))
-        };
-      }
-      return thought;
-    });
-    
-    // Update edges to follow node positions
-    const newEdges = edges.map(edge => ({
-      ...edge,
-      sourcePosition: nodes.find(n => n.id === edge.source)?.position,
-      targetPosition: nodes.find(n => n.id === edge.target)?.position
-    }));
-    
-    setEdges(newEdges);
-    localStorage.setItem('thought-web-data', JSON.stringify(updatedThoughts));
-  };
+  useEffect(() => {
+    const cy = cyRef.current;
+    if (cy) {
+      // Setup event handlers
+      cy.on('tap', 'node', handleNodeClick);
+      cy.on('dragfree', 'node', (evt) => {
+        const node = evt.target;
+        const position = node.position();
+        const updatedThoughts = thoughts.map(thought => {
+          if (thought.thought_bubble_id === node.id()) {
+            return {
+              ...thought,
+              position,
+              segments: (thought.segments || []).map(segment => ({
+                ...segment,
+                sourcePosition: position
+              }))
+            };
+          }
+          return thought;
+        });
+        localStorage.setItem('thought-web-data', JSON.stringify(updatedThoughts));
+      });
+
+      // Cleanup
+      return () => {
+        cy.removeListener('tap');
+        cy.removeListener('dragfree');
+      };
+    }
+  }, [thoughts, handleNodeClick]);
 
   return (
     <div className="w-full h-full">
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        onNodeClick={handleNodeClick}
-        onNodeDragStop={handleNodeDragStop}
-        fitView
-      >
-        <Background />
-        <Controls />
-        <MiniMap />
-      </ReactFlow>
+      <CytoscapeComponent
+        elements={elements}
+        layout={layout}
+        stylesheet={stylesheet}
+        cy={(cy) => { cyRef.current = cy; }}
+        className="w-full h-full"
+      />
     </div>
   );
 }

@@ -1,98 +1,116 @@
-# ThoughtWeb — Developer Onboarding
+# ThoughtWeb — Developer Vision & Architecture Guide
 
-Tired of models forgetting essential details in past conversations? Bored with surface level context and meta-capabilities in LLMs? Want to create a scaffold for proto-awareness, with viewable and editable training parameters in LCMs? Love owning your own data? ThoughtWeb is for you!
+**Tagline:**
 
+> A recursive thought engine for humans and AI — designed to evolve meaning, resolve contradictions, and externalize self-reflection.
 
-https://discord.gg/6ydDxzMjvD
+---
 
-ThoughtWeb is: a schema-driven, AI-ready, visually organized thought engine designed for flexible knowledge structuring, deep filtering, and scalable augmentation. Think Neo4j, but for LLMs. 
+## Executive Summary
 
-This document exists to help new contributors or returning developers quickly get up to speed on what ThoughtWeb is — and how to develop inside it.
+ThoughtWeb is a local-first, AI-augmented cognitive framework that transforms scattered thoughts into structured insight. By using a visual graph of tagged, filterable, and recursively linked segments, it enables users — and eventually AI — to reflect, reason, and grow in clarity over time. Unlike black-box models, ThoughtWeb is explicit, traceable, and explainable by design. It acts as both an external memory system and a sandbox for emergent reasoning. Its architecture anticipates collaboration, AI-assisted introspection, and the evolution of ideas across time and context.
 
 ---
 
 ## Mission
 
-**To empower individuals to structure, filter, and grow their thoughts with precision.**
+ThoughtWeb empowers humans and AI to co-evolve their thinking using a structured, filterable, and recursively queryable thought system. Built on transparent fields, visual abstraction, and dynamic emergence, it creates a long-term substrate for:
 
-Modern thinking tools either:
-- Flatten information (lists, notes, blocks),
-- Overwhelm with noise (graphs without clarity),
-- Or trap users in rigid workflows.
-
-**ThoughtWeb** breaks that cycle. It’s a space where:
-- Thought bubbles are flexible containers of meaning
-- Segments hold layered context
-- Every part is extensible, filterable, and exportable
-- The system grows with your mind — and eventually, helps guide it
+* Human insight and pattern recognition
+* AI-assisted synthesis and contradiction discovery
+* Meta-cognitive dialogue between the system and its users
 
 ---
 
-## Vision
+## Public-Facing Pitch
 
-ThoughtWeb is not just a mind map. It's a **thinking OS**.
-
-- It should feel as comfortable for journaling as it is for concept modeling.
-- It should scale from one idea to ten thousand.
-- It should be easy to port, visualize, and AI-augment.
-- It should outlast note apps — and act as the long-term substrate for your evolving worldview.
+> What if your thoughts could talk back?
+>
+> ThoughtWeb is an emergence engine for humans and AI — a visual thinking platform that reveals patterns, contradictions, and hidden connections across your ideas. It's more than a mind map. It's a mirror. With filters, abstraction layers, and self-reflective prompts, ThoughtWeb helps you see how you think, grow how you think, and someday… build AI that thinks with you, not for you.
 
 ---
 
-## Why ThoughtWeb Exists
+## Core Architecture
 
-Tired of Chat-GPT forgetting essential details in past conversations? Bored with surface level context and awareness skills in LLMs? Want to create a scaffold for proto-awareness and viewable and editable training parameters in LCMs? Love owning your own data? ThoughtWeb is for you.
-
-ThoughtWeb is more than a note-taking tool—it is a cognitive interface for building, evolving, and aligning conceptual thought. Where others embed abstractions deep inside machine layers, ThoughtWeb empowers users to map and refine their own reasoning in a persistent, interpretable structure.
-
-This system prioritizes:
-
-- **Human agency** over black-box automation  
-- **Conceptual clarity** over raw token fluency  
-- **Transparency** over model opacity  
-- **Cognitive fingerprinting** over one-size-fits-all prompts  
-- **Sovereignty** over dependency
-
-Rather than tuning intelligence for benchmark performance, ThoughtWeb externalizes it—anchoring ideas in field-tagged, modular segments that can evolve, connect, and persist beyond any single interaction. It provides both the interface and infrastructure for humans to *think with structure*, organize insight, and optionally guide AI systems through grounded abstraction rather than shallow pattern-matching.
-
-ThoughtWeb is a framework for truth-driven intelligence—**a system for thinking, not just outputting.**
+| Layer           | Technology                                      |
+| --------------- | ----------------------------------------------- |
+| Frontend        | React                                           |
+| Backend Data    | SQLite (via `better-sqlite3` or `sql.js`)       |
+| Visual Engine   | ReactFlow (MIT)                                 |
+| Embedding Model | llama.cpp / Ollama (Future)                     |
+| Hosting         | Replit (Mac Mini–compatible)                    |
+| Format          | JSON / SQLite export with vector-ready segments |
 
 ---
 
-## Stack
-
-- **React + Tailwind** (lightweight, hot-reloadable UI)
-- **React Flow** (node visualization engine)
-- **LocalStorage** (simple persistence for now)
-- **JSON-first schema design** (everything exportable + parseable)
-
----
-
-## Key Concepts
+## Data Model Overview
 
 ### Thought Bubble
-A visual container on the canvas. Holds metadata and an array of **segments**.
+
+A visual container on the canvas. Holds metadata and an array of segments.
 
 ### Segment
-A sub-element inside a thought. Contains:
-- `title`
-- `content`
-- `fields {}` – flexible key-value pairs (e.g. “Location”: “Paris”, “Type”: “Quote”)
 
-### Fields
-The key to filtering, AI embedding, and structure. Each segment’s `fields` can be queried, colored, and exported cleanly.
+A sub-element inside a thought. Contains:
+
+* `segment_id`, `title`, `content`
+* `tags`, `color`, `abstraction_level`
+* `fields {}` – flexible key-value pairs (e.g. “Location”: “Paris”, “Type”: “Quote”)
+* `embedding_vector` – placeholder for AI search/similarity
+* `fuzzy_links[]` – optional speculative or soft connections
 
 ---
 
-## Schema Overview
+## Milestone-Based Development Plan ([Full Plan Here](https://github.com/joshhickson/thought-web/blob/master/docs/Merged%20Milestone-Based%20Development%20Plan%20v2.0.md))
 
-Each file exported from ThoughtWeb follows this schema:
+### Phase 1: Foundation (Weeks 1–3)
+
+* Replace legacy canvas with ReGraph rendering
+* Initialize SQLite + create schema for segments & thoughts
+* Convert current JSON data to DB-backed state
+* Load/save cycles between DB ↔ UI ↔ JSON
+
+### Phase 2: Interaction Logic (Weeks 3–5)
+
+* Add visual styles by abstraction level (Fact, Hypothesis, Pattern)
+* Implement fuzzy links with dotted lines
+* Tag/color/field-based filters
+* Add dropdowns for abstraction tagging
+
+### Phase 3: Embedding & AI Hooks (Weeks 6–8)
+
+* Add `embedding_vector` support
+* Create basic cosine similarity search (e.g. “Find similar segments”)
+* Enable summarization prompts (rule-based or LLM-assisted)
+* Enable contradiction highlighting across segments
+* Begin building support for interpolation/diffusion between concepts
+* Prototype local conceptual model (LCM) awareness: allow AI to reflect on its own graph state
+
+### Phase 4: Emergence Engine Features (Months 2–3)
+
+* Add recursive query builder (e.g. “Find conflicting bubbles linked to hypothesis X”)
+* Add heatmap layer for high-activity and recent interactions
+* Track temporal decay and interaction weighting of segments
+* Implement prompt-based reflective nudges
+* Begin weekly consolidation reports: highlight themes, contradictions, and repeated patterns
+* Build memory resurfacing engine to reintroduce old thoughts based on decay, relevance, or similarity
+
+### Phase 5: Collaboration & Cognitive OS (Months 4–6)
+
+* Implement role-based multi-user collaboration (Editor, Synthesizer, Contradiction Finder)
+* Develop merge-conflict resolution for thought maps
+* Introduce learning paths and custom field schemas
+* Enable multimodal input (voice, OCR, PDF ingest, screenshot captioning)
+
+---
+
+## Export Schema Overview
 
 ```json
 {
   "export_metadata": {
     "version": "0.5",
-    "exported_at": "2025-05-01T01:00Z",
+    "exported_at": "2025-05-03T00:00Z",
     "author": "Josh Hickson",
     "tool": "ThoughtWeb"
   },
@@ -124,31 +142,32 @@ Each file exported from ThoughtWeb follows this schema:
 
 ---
 
-## Development Tasks (Ongoing)
-
-- Fix segment field entry (buttons work but need stable update)
-- Add vector embedding generation
-- Allow real-time field-type filtering (e.g. numeric range queries)
-- Add collaboration features (multi-user or versioned sync)
-- Add Thought Timeline view (sort by created_at)
-- Export preset filters / views for fast context switching
-
----
-
 ## Developer Philosophy
 
-- Always prefer structured flexibility over rigid constraints.
-- The system should teach itself to the user through use.
-- Everything that matters must be exportable and portable.
-- The codebase should never assume “this is how people think” — it should adapt to how people evolve their thinking.
+* Prefer traceable structure over guesswork.
+* Design for recursive insight, not just information.
+* Build tools that evolve with your cognition.
+* No black boxes. Make the system think out loud.
+* Treat AI as a partner in reflection, not just prediction.
+* Anticipate future collaboration and modularity.
 
 ---
 
-## Final Note
+## Ongoing Development Tasks
 
-If you're reading this, you’re not just coding — you’re helping build a better way to think.
+* Finalize ReGraph visual sync with SQLite
+* Add real-time filter overlays for tags/colors
+* Implement embedding field and AI search stubs
+* Refactor JSON import/export for full schema support
+* Add timeline view and interaction logs
+* Begin work on multi-user version control layer
 
-This isn’t productivity.
-This is philosophy encoded in an interface.
+---
 
+## [Execution History](https://github.com/joshhickson/thought-web/blob/master/docs/Claude-Log.md)
+
+---
+
+This is not just productivity software.
+This is a cognitive framework for the evolution of intelligence.
 Welcome to ThoughtWeb.

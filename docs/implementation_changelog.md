@@ -88,9 +88,9 @@ This approach provides:
 - Reduced external dependencies
 
 ## Known Issues
-Current Error State (March 2024):
+Current Error State (April 2025):
 - Module build error in Canvas.jsx related to import syntax
-- Neo4j discovery errors indicating connectivity issues
+- Neo4j discovery errors indicating connectivity issues - Subsequently removed existing framework for implementing this, as it's a paid service. Looking into Memgraph as an alternative.
 - File system module ('fs') not found in browser context
 
 Root Cause Analysis:
