@@ -1,11 +1,14 @@
 ## [note: this project is in pre-alpha. for potential devs: consult docs/READme-dev.md]
-#ThoughtWeb
+
+---
+
+#LogoMesh
 
 https://discord.gg/6ydDxzMjvD
 
-ThoughtWeb is a visual thinking tool built in React that allows you to create, organize, and navigate complex thoughts through interconnected thought bubbles, nested segments, and flexible metadata filtering.
+LogoMesh is a visual thinking tool built in React that allows you to create, organize, and navigate complex thoughts through interconnected thought bubbles, nested segments, and flexible metadata filtering.
 
-Designed as a **personal knowledge graph meets mind-mapping engine**, ThoughtWeb supports segment-level filtering, AI-ready JSON export, and deep extensibility — perfect for building your own second brain.
+Designed as a **personal knowledge graph meets mind-mapping engine**, LogoMesh supports segment-level filtering, AI-ready JSON export, and deep extensibility — perfect for building your own second brain.
 
 ---
 
