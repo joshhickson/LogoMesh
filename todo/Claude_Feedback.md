@@ -22,3 +22,11 @@ Track observations about Claude's behavior patterns, inefficiencies, and success
    - Context: Added proper error handling for graph initialization
    - Pattern: Proactively adds error handling when implementing new features
    - Status: Ongoing
+
+### May 2024 - Cytoscape Integration
+1. **Dev Plan Context Processing**
+   - Context: Implementation of Cytoscape.js replacement for React Flow
+   - Pattern: Failed to read Dev Plan .md file for context initially
+   - Improvement: Provided plaintext instructions directly in assistant window
+   - Status: Resolved after context clarification
+   - Learning: More reliable processing of direct plaintext vs. file references
