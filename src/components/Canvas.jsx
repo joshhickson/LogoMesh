@@ -1,4 +1,7 @@
+The code is modified to ensure all nodes (including segment nodes) are created before edges, resolving the Cytoscape target node error.
+```
 
+```replit_final_file
 import React, { useCallback, useRef, useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { graphService } from '../services/graphService';
@@ -7,18 +10,30 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   const cyRef = useRef(null);
 
   const elements = React.useMemo(() => {
-    // Convert thoughts to Cytoscape nodes with enhanced styling
-    const nodes = thoughts.map(thought => ({
-      data: { 
-        id: thought.thought_bubble_id,
-        label: thought.title,
-        tags: thought.tags || [],
-        type: 'thought'
-      },
-      classes: ['thought-node'],
-    }));
+    // First create all nodes from thoughts AND segments
+    const nodes = thoughts.flatMap(thought => {
+      const thoughtNode = {
+        data: { 
+          id: thought.thought_bubble_id,
+          label: thought.title,
+          type: 'thought'
+        },
+        classes: ['thought-node'],
+      };
 
-    // Create edges from segments with relationship data
+      const segmentNodes = (thought.segments || []).map(segment => ({
+        data: {
+          id: segment.segment_id,
+          label: segment.title,
+          type: 'segment'
+        },
+        classes: ['segment-node']
+      }));
+
+      return [thoughtNode, ...segmentNodes];
+    });
+
+    // Then create edges between existing nodes
     const edges = thoughts.flatMap(thought => 
       (thought.segments || []).map(segment => ({
         data: {
