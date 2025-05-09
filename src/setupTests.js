@@ -2,17 +2,18 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 
-// Mock react-cytoscapejs
-jest.mock('react-cytoscapejs', () => {
-  return function MockCytoscape(props) {
+// Mock modules
+jest.mock('react-cytoscapejs', () => ({
+  __esModule: true,
+  default: function MockCytoscape(props) {
     return <div data-testid="cytoscape-mock" {...props} />;
-  };
-});
+  }
+}));
 
-// Mock cytoscape-cose-bilkent
-jest.mock('cytoscape-cose-bilkent', () => {
-  return {};
-});
+jest.mock('cytoscape-cose-bilkent', () => ({
+  __esModule: true,
+  default: jest.fn()
+}));
 
 
 
