@@ -5,6 +5,9 @@ import cytoscape from 'cytoscape';
 import coseBilkent from 'cytoscape-cose-bilkent';
 
 cytoscape.use(coseBilkent);
+import coseBilkent from 'cytoscape-cose-bilkent';
+
+cytoscape.use(coseBilkent);
 
 function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   const cyRef = useRef(null);
