@@ -1,0 +1,29 @@
+No such layout `cose-bilkent` found.  Did you forget to import it and `cytoscape.use()` it?
+layout@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:17975:12
+g@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39581:20
+b@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39574:33
+updateCytoscape@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39677:6
+componentDidMount@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39667:32
+commitLayoutEffectOnFiber@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:59895:34
+commitLayoutMountEffects_complete@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:61062:38
+commitLayoutEffects_begin@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:61051:44
+commitLayoutEffects@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:60997:32
+commitRootImpl@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:62906:28
+commitRoot@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:62786:23
+finishConcurrentRender@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:62183:23
+performConcurrentWorkOnRoot@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:62034:33
+workLoop@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:70011:46
+flushWork@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:69989:18
+performWorkUntilDeadline@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:70226:25
+
+The above error occurred in the <w> component:
+
+w@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:39641:5
+div
+Canvas@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:74314:16
+div
+App@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:73662:82
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
