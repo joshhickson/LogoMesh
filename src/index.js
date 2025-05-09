@@ -9,3 +9,8 @@ root.render(
     <App />
   </React.StrictMode>
 );
+
+// Enable access from all interfaces in development
+if (process.env.NODE_ENV === 'development') {
+  process.env.HOST = '0.0.0.0';
+}
