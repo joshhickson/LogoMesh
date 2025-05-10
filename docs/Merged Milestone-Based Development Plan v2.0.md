@@ -2,12 +2,12 @@
 
 ---
 
-## Tiered Approach to ThoughtWeb Development
+## Tiered Approach to LogoMesh Development
 
-This development plan is structured around two distinct tiers, reflecting ThoughtWeb's commitment to a local-first philosophy while ensuring future extensibility and scalability via cloud services. The goal is to provide a robust core accessible to all users, with optional advanced features that leverage cloud resources if desired.
+This development plan is structured around two distinct tiers, reflecting LogoMesh's commitment to a local-first philosophy while ensuring future extensibility and scalability via cloud services. The goal is to provide a robust core accessible to all users, with optional advanced features that leverage cloud resources if desired.
 
 ### Tier #1: Local-First Full Immersion
-This tier prioritizes minimal internet connectivity and aims for all core ThoughtWeb functionalities, including AI features, to run efficiently on local user hardware (e.g., Mac Mini). Development in early phases will primarily focus on achieving a stable and performant experience within this tier.
+This tier prioritizes minimal internet connectivity and aims for all core LogoMesh functionalities, including AI features, to run efficiently on local user hardware (e.g., Mac Mini). Development in early phases will primarily focus on achieving a stable and performant experience within this tier.
 
 ### Tier #2: Cloud-Enhanced Extensions (Optional/Future)
 This tier outlines paths for leveraging cloud services (e.g., managed databases, powerful LLM APIs, specialized AI models) for enhanced features, scalability, or as alternatives for users without powerful local hardware. Development for this tier will focus on designing robust abstraction layers in early phases to allow seamless integration without major refactoring, with active implementation in later phases.
@@ -15,7 +15,7 @@ This tier outlines paths for leveraging cloud services (e.g., managed databases,
 ---
 
 ## PHASE 1: Scaffold & Realignment (Weeks 1–2)
-*(Pure ThoughtWeb core—no AI, with MLOps & UX foundations)*
+*(Pure LogoMesh core—no AI, with MLOps & UX foundations)*
 
 ### Tier #1: Local-First Full Immersion
 
@@ -88,8 +88,8 @@ This tier outlines paths for leveraging cloud services (e.g., managed databases,
 -   **Automation Foundations (Local - Node-RED Implementation)**
     -   Set up a self-hosted **Node-RED** instance for local-centric automation workflows.
         -   **Action: Install and Configure Node-RED.** Install Node-RED on the local development environment (e.g., via npm or Docker). Configure its settings for a local instance.
-        -   **Action: Install Essential Node-RED Nodes.** Install necessary nodes for interacting with the local system and webhooks (e.g., `node-red-node-http` for webhooks, `node-red-node-function` for custom logic, `node-red-node-filepath` for file system access). Consider `node-red-node-sqlite` if direct DB interaction from Node-RED is deemed necessary *for specific workflows*, but prioritize API interaction with ThoughtWeb backend if possible.
-        -   **Note for Developers & LLM Agents:** Node-RED workflows run as a separate local service. Interaction with ThoughtWeb will primarily be asynchronous, triggered by events.
+        -   **Action: Install Essential Node-RED Nodes.** Install necessary nodes for interacting with the local system and webhooks (e.g., `node-red-node-http` for webhooks, `node-red-node-function` for custom logic, `node-red-node-filepath` for file system access). Consider `node-red-node-sqlite` if direct DB interaction from Node-RED is deemed necessary *for specific workflows*, but prioritize API interaction with LogoMesh backend if possible.
+        -   **Note for Developers & LLM Agents:** Node-RED workflows run as a separate local service. Interaction with LogoMesh will primarily be asynchronous, triggered by events.
     -   Define webhook triggers and potentially local API endpoints for Node-RED integration.
 
         -   Define linking/metadata tables (Normalized Approach):
@@ -138,9 +138,9 @@ This tier outlines paths for leveraging cloud services (e.g., managed databases,
         -   **Note for Future Developers:** This normalized schema, including dedicated tables for fields, relationships, context, and LLM history, aligns with best practices for relational databases and is designed to support efficient querying and complex data relationships critical for "Cluster Runtime" scalability and advanced AI features. The AI metadata fields (`local_priority`, `cluster_id`, etc.) are foundational for the Context Window Allocator and intelligent AI processing. The `content_type` and `asset_path` fields enable Universal Extensibility for multimodal data, allowing future AI pipelines to process and link various media types.
 
 
-        -   **Action: Define ThoughtWeb Event Webhooks.** Determine key events in the ThoughtWeb application (e.g., "segment created", "segment updated", "graph saved") that Node-RED workflows should react to. Implement webhook endpoints within the ThoughtWeb backend (API) that Node-RED's "HTTP In" nodes can listen to.
-        -   **Action: Design Local ThoughtWeb API Endpoints for Node-RED.** Design basic REST API endpoints in the ThoughtWeb backend that Node-RED workflows can call to perform actions (e.g., "get segment data by ID", "update segment tag", "trigger local backup"). These endpoints should interact with the SQLite database.
-        -   **Note for Developers & LLM Agents:** Designing clear API contracts for ThoughtWeb events and actions facilitates decoupled integration with Node-RED, aligning with the principles of Universal Extensibility and making workflows more robust.
+        -   **Action: Define LogoMesh Event Webhooks.** Determine key events in the LogoMesh application (e.g., "segment created", "segment updated", "graph saved") that Node-RED workflows should react to. Implement webhook endpoints within the LogoMesh backend (API) that Node-RED's "HTTP In" nodes can listen to.
+        -   **Action: Design Local LogoMesh API Endpoints for Node-RED.** Design basic REST API endpoints in the LogoMesh backend that Node-RED workflows can call to perform actions (e.g., "get segment data by ID", "update segment tag", "trigger local backup"). These endpoints should interact with the SQLite database.
+        -   **Note for Developers & LLM Agents:** Designing clear API contracts for LogoMesh events and actions facilitates decoupled integration with Node-RED, aligning with the principles of Universal Extensibility and making workflows more robust.
     -   Scaffold core logic flows for initial local automation tasks.
 
         -   **Action:** Design and implement appropriate SQLite Indexes for efficient querying, focusing on Foreign Keys (`thought_bubble_id`, `segment_id`), AI metadata fields (`local_priority`, `cluster_id`), and fields/tags (`field_name`, `field_value`, `tag_name`).
@@ -172,9 +172,9 @@ This tier outlines paths for leveraging cloud services (e.g., managed databases,
     -   Onboarding tour stub with progressive-disclosure
  
         -   **Action: Scaffold Workflow: Basic Auto-Tagging Prep.** Create a simple Node-RED flow triggered by a "segment created/updated" webhook. This flow might initially just log segment data or prepare it for future auto-tagging logic (e.g., sending text to a local text processing node if available later).
-        -   **Action: Scaffold Workflow: Local Backup Trigger.** Create a Node-RED flow triggered by a "graph saved" webhook or a timer. This flow should call a ThoughtWeb API endpoint (if designed) to trigger a local database backup, or directly copy the SQLite DB file to a safe location using Node-RED file nodes.
-        -   **Action: Scaffold Workflow: Embedding Prep Trigger.** Create a Node-RED flow triggered by a "segment created/updated" webhook. This flow should call a ThoughtWeb API endpoint to retrieve the segment content and potentially send it to the local Embedding Micro-service (once implemented in Phase 2) via its API.
-        -   **Note for Developers & LLM Agents:** These initial workflows establish the pattern for Node-RED reacting to ThoughtWeb events and interacting with its data and microservices via APIs and webhooks. Use "Function" nodes in Node-RED for custom logic within workflows.
+        -   **Action: Scaffold Workflow: Local Backup Trigger.** Create a Node-RED flow triggered by a "graph saved" webhook or a timer. This flow should call a LogoMesh API endpoint (if designed) to trigger a local database backup, or directly copy the SQLite DB file to a safe location using Node-RED file nodes.
+        -   **Action: Scaffold Workflow: Embedding Prep Trigger.** Create a Node-RED flow triggered by a "segment created/updated" webhook. This flow should call a LogoMesh API endpoint to retrieve the segment content and potentially send it to the local Embedding Micro-service (once implemented in Phase 2) via its API.
+        -   **Note for Developers & LLM Agents:** These initial workflows establish the pattern for Node-RED reacting to LogoMesh events and interacting with its data and microservices via APIs and webhooks. Use "Function" nodes in Node-RED for custom logic within workflows.
 
 > **Goal:** A solid, repeatable dev environment with clear hierarchy, automation readiness, and consistent UI patterns, underpinned by a robust, normalized SQLite schema designed for future AI processing needs, multimodal flexibility, and foundational "Cluster Runtime" considerations.
 
@@ -292,19 +292,19 @@ By tackling these together, you ensure that your new data backend (SQLite) is co
         -   Implement chunking based on token count limits (e.g., keeping chunks below 16k or 32k tokens).
         -   Incorporate the use of `cluster_id` for scoped queries.
         -   Design how `llm_pass_history` will be updated/utilized.
-    -   **Action: Implement LLM-Powered Document Parsing (Text-Only Initial Focus).** Integrate the LLaMA 3 parsing pipeline (Text extraction → LLaMA 3 segmentation → ThoughtWeb JSON formatting → DB Injection) leveraging the new Context Window Allocator and the flexible schema. Initial focus is on text documents (PDF, Markdown, TXT).
+    -   **Action: Implement LLM-Powered Document Parsing (Text-Only Initial Focus).** Integrate the LLaMA 3 parsing pipeline (Text extraction → LLaMA 3 segmentation → LogoMesh JSON formatting → DB Injection) leveraging the new Context Window Allocator and the flexible schema. Initial focus is on text documents (PDF, Markdown, TXT).
 
 5.  **AI UI Stubs & Co-Writing**
     -   Buttons: “What patterns repeat?”, “Any contradictions?” → overlay modal streaming suggestions (from local LLM).
     -   Co-writing pane stub: AI proposes bubbles/edits; **Accept/Refine/Dismiss**
-    -   Explanatory footer: “Powered by ThoughtWeb AI—suggestions may vary.”
+    -   Explanatory footer: “Powered by LogoMesh AI—suggestions may vary.”
     -   **Action:** Design UI feedback mechanisms to inform the user when the AI is processing a large graph using the chunking strategy (e.g., "Analyzing cluster 'X'", "Processing neighborhood around 'Y'").
 
 6.  **Auto-reflective Loop**
     -   Store AI proposals with `abstraction_level = ai_suggestion` + glow badge
     -   On accept: animate insertion, auto-link via NN query (using local embeddings/vector DB), ensuring new segments incorporate the necessary metadata (`local_priority`, `graph_neighbors`, `cluster_id`) based on context.
 
-> **Checkpoint:** ThoughtWeb offers AI-driven ideas framed as reflective questions and transparent suggestions, primarily leveraging local LLM and embedding capabilities, supported by an intelligent context management layer.
+> **Checkpoint:** LogoMesh offers AI-driven ideas framed as reflective questions and transparent suggestions, primarily leveraging local LLM and embedding capabilities, supported by an intelligent context management layer.
 
 ### Tier #2: Cloud-Enhanced Extensions (Optional/Future)
 
@@ -401,7 +401,7 @@ By tackling these together, you ensure that your new data backend (SQLite) is co
     -   Usability test scripts for every major feature
 
 > **Ultimate Vision (Local-First Focus):**
-> A **local, inspectable, production-quality hybrid-consciousness engine**—a true cognitive partner that suggests, challenges, guides, and reinforces insights over time, all within a rich, navigable ThoughtWeb, requiring minimal external dependencies, built on a foundation of universal extensibility and designed with "Cluster Runtime" principles for future growth.
+> A **local, inspectable, production-quality hybrid-consciousness engine**—a true cognitive partner that suggests, challenges, guides, and reinforces insights over time, all within a rich, navigable LogoMesh, requiring minimal external dependencies, built on a foundation of universal extensibility and designed with "Cluster Runtime" principles for future growth.
 
 ### Tier #2: Cloud-Enhanced Extensions (Optional/Future)
 
