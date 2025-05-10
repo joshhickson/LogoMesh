@@ -7,8 +7,9 @@ packages = ["nodejs", "npm"]
 channel = "stable-24_05"
 
 [deployment]
-run = ["sh", "-c", "npm run start"]
+run = ["sh", "-c", "serve -s build -l 3000"]
 deploymentTarget = "cloudrun"
+build = ["sh", "-c", "npm run build"]
 
 [[ports]]
 localPort = 3000

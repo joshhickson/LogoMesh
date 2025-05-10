@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "cytoscape": "^3.32.0",
     "cytoscape-cose-bilkent": "^4.1.0",
+    "http-proxy-middleware": "^3.0.5",
     "identity-obj-proxy": "^3.0.0",
     "memgraph": "^0.0.1",
     "neo4j-driver": "^5.28.1",
@@ -19,6 +20,7 @@
     "react-flow-renderer": "^10.3.17",
     "react-scripts": "5.0.1",
     "reactflow": "^11.11.4",
+    "serve": "^14.2.4",
     "tailwindcss": "^3.3.2",
     "ulid": "^3.0.0",
     "web-vitals": "^2.1.4"
