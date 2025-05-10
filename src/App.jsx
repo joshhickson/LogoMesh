@@ -112,7 +112,7 @@ function App() {
       />
 
       {selectedThought && <ThoughtDetailPanel thought={selectedThought} setThoughts={setThoughts} />}
-      {showModal && <AddThoughtModal setShowModal={setShowModal} addThought={createThought} />} {/*Updated addThought to createThought*/}
+      {showModal && <AddThoughtModal createThought={createThought} onClose={() => setShowModal(false)} />}
     </div>
   );
 }
