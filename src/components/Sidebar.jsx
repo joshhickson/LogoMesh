@@ -112,6 +112,17 @@ function Sidebar({
     }
   };
 
+  const handleViewCache = () => {
+    const cachedData = localStorage.getItem('thought-web-data');
+    if (cachedData) {
+      const formattedData = JSON.stringify(JSON.parse(cachedData), null, 2);
+      const win = window.open('', '_blank');
+      win.document.write('<pre>' + formattedData + '</pre>');
+    } else {
+      alert('No cached data found');
+    }
+  };
+
   const handleResetFilters = () => {
     setFilterFieldName([]);
     setFilterFieldValue('');
@@ -161,9 +172,15 @@ function Sidebar({
       </button>
       <button
         onClick={handleClearCache}
-        className="w-full mb-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+        className="w-full mb-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
       >
         Clear Cache
+      </button>
+      <button
+        onClick={handleViewCache}
+        className="w-full mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      >
+        View Cache
       </button>
 
       {/* Filters */}
