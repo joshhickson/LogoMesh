@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "cytoscape": "^3.32.0",
     "cytoscape-cose-bilkent": "^4.1.0",
+    "cytoscape-fcose": "^2.2.0",
     "http-proxy-middleware": "^3.0.5",
     "identity-obj-proxy": "^3.0.0",
     "memgraph": "^0.0.1",
