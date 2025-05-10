@@ -1,12 +1,10 @@
+
 import React, { useCallback, useRef, useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
-
 import cytoscape from 'cytoscape';
 import coseBilkent from 'cytoscape-cose-bilkent';
 
-cytoscape.use(coseBilkent);
-import coseBilkent from 'cytoscape-cose-bilkent';
-
+// Register the layout only once
 cytoscape.use(coseBilkent);
 
 function Canvas({ thoughts, setSelectedThought, activeFilters }) {
@@ -36,7 +34,7 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
 
       const segmentNodes = (thought.segments || []).map(segment => ({
         data: {
-          id: segment.segment_id, // Already ULID
+          id: segment.segment_id,
           label: segment.content || segment.title || 'Untitled Segment',
           type: 'segment'
         },
@@ -50,7 +48,7 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
     const edges = thoughts.flatMap(thought => 
       (thought.segments || []).map(segment => ({
         data: {
-          id: `${thought.thought_bubble_id}_${segment.segment_id}`, // Simplified edge ID using ULIDs
+          id: `${thought.thought_bubble_id}_${segment.segment_id}`,
           source: thought.thought_bubble_id,
           target: segment.segment_id,
           label: segment.relationship || 'relates to',
