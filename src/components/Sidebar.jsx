@@ -105,6 +105,13 @@ function Sidebar({
     });
   };
 
+  const handleClearCache = () => {
+    if (window.confirm('Are you sure you want to clear all thought projects? This cannot be undone.')) {
+      localStorage.removeItem('thought-web-data');
+      setThoughts([]);
+    }
+  };
+
   const handleResetFilters = () => {
     setFilterFieldName([]);
     setFilterFieldValue('');
@@ -151,6 +158,12 @@ function Sidebar({
         className="w-full mb-4 px-4 py-2 bg-indigo-500 text-white rounded"
       >
         Import from JSON
+      </button>
+      <button
+        onClick={handleClearCache}
+        className="w-full mb-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+      >
+        Clear Cache
       </button>
 
       {/* Filters */}
