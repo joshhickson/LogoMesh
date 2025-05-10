@@ -84,6 +84,14 @@ This tier outlines paths for leveraging cloud services (e.g., managed databases,
                 -   **[AI Metadata / Attention Scaffolding Fields - Foundation for Cluster Runtime]**
                     -   `local_priority` (`REAL`) - Importance for LLM chunking. Non-nullable, defaults to 0.5.
                     -   `cluster_id` (`TEXT`) - Grouping by theme/narrative. **Non-nullable**, requires a value (implement a default 'uncategorized' cluster concept).
+
+-   **Automation Foundations (Local - Node-RED Implementation)**
+    -   Set up a self-hosted **Node-RED** instance for local-centric automation workflows.
+        -   **Action: Install and Configure Node-RED.** Install Node-RED on the local development environment (e.g., via npm or Docker). Configure its settings for a local instance.
+        -   **Action: Install Essential Node-RED Nodes.** Install necessary nodes for interacting with the local system and webhooks (e.g., `node-red-node-http` for webhooks, `node-red-node-function` for custom logic, `node-red-node-filepath` for file system access). Consider `node-red-node-sqlite` if direct DB interaction from Node-RED is deemed necessary *for specific workflows*, but prioritize API interaction with ThoughtWeb backend if possible.
+        -   **Note for Developers & LLM Agents:** Node-RED workflows run as a separate local service. Interaction with ThoughtWeb will primarily be asynchronous, triggered by events.
+    -   Define webhook triggers and potentially local API endpoints for Node-RED integration.
+
         -   Define linking/metadata tables (Normalized Approach):
             -   `thought_tags`: Links thoughts to tags.
                 -   `thought_bubble_id` (`TEXT` / UUID - FK to `thoughts`)
@@ -128,6 +136,13 @@ This tier outlines paths for leveraging cloud services (e.g., managed databases,
                 -   `version` (`TEXT`, Nullable) - Version of processing logic.
 
         -   **Note for Future Developers:** This normalized schema, including dedicated tables for fields, relationships, context, and LLM history, aligns with best practices for relational databases and is designed to support efficient querying and complex data relationships critical for "Cluster Runtime" scalability and advanced AI features. The AI metadata fields (`local_priority`, `cluster_id`, etc.) are foundational for the Context Window Allocator and intelligent AI processing. The `content_type` and `asset_path` fields enable Universal Extensibility for multimodal data, allowing future AI pipelines to process and link various media types.
+
+
+        -   **Action: Define ThoughtWeb Event Webhooks.** Determine key events in the ThoughtWeb application (e.g., "segment created", "segment updated", "graph saved") that Node-RED workflows should react to. Implement webhook endpoints within the ThoughtWeb backend (API) that Node-RED's "HTTP In" nodes can listen to.
+        -   **Action: Design Local ThoughtWeb API Endpoints for Node-RED.** Design basic REST API endpoints in the ThoughtWeb backend that Node-RED workflows can call to perform actions (e.g., "get segment data by ID", "update segment tag", "trigger local backup"). These endpoints should interact with the SQLite database.
+        -   **Note for Developers & LLM Agents:** Designing clear API contracts for ThoughtWeb events and actions facilitates decoupled integration with Node-RED, aligning with the principles of Universal Extensibility and making workflows more robust.
+    -   Scaffold core logic flows for initial local automation tasks.
+
         -   **Action:** Design and implement appropriate SQLite Indexes for efficient querying, focusing on Foreign Keys (`thought_bubble_id`, `segment_id`), AI metadata fields (`local_priority`, `cluster_id`), and fields/tags (`field_name`, `field_value`, `tag_name`).
     -   Migrate JSON bubbles/segments into SQLite, ensuring data is correctly mapped to the new normalized schema. This will involve parsing the JSON `fields` array and inserting rows into the `segment_fields` table, etc.
     -   Implement full React ↔ SQLite load/save cycle via API or in-browser WebAssembly (e.g., sql.js), ensuring data is correctly read from and written to the new normalized table structure.
@@ -155,6 +170,11 @@ This tier outlines paths for leveraging cloud services (e.g., managed databases,
     -   Style guide: node shapes, WCAG palette, typography scale
     -   Basic interactions: click-select, hover-preview, drag-pan/zoom
     -   Onboarding tour stub with progressive-disclosure
+ 
+        -   **Action: Scaffold Workflow: Basic Auto-Tagging Prep.** Create a simple Node-RED flow triggered by a "segment created/updated" webhook. This flow might initially just log segment data or prepare it for future auto-tagging logic (e.g., sending text to a local text processing node if available later).
+        -   **Action: Scaffold Workflow: Local Backup Trigger.** Create a Node-RED flow triggered by a "graph saved" webhook or a timer. This flow should call a ThoughtWeb API endpoint (if designed) to trigger a local database backup, or directly copy the SQLite DB file to a safe location using Node-RED file nodes.
+        -   **Action: Scaffold Workflow: Embedding Prep Trigger.** Create a Node-RED flow triggered by a "segment created/updated" webhook. This flow should call a ThoughtWeb API endpoint to retrieve the segment content and potentially send it to the local Embedding Micro-service (once implemented in Phase 2) via its API.
+        -   **Note for Developers & LLM Agents:** These initial workflows establish the pattern for Node-RED reacting to ThoughtWeb events and interacting with its data and microservices via APIs and webhooks. Use "Function" nodes in Node-RED for custom logic within workflows.
 
 > **Goal:** A solid, repeatable dev environment with clear hierarchy, automation readiness, and consistent UI patterns, underpinned by a robust, normalized SQLite schema designed for future AI processing needs, multimodal flexibility, and foundational "Cluster Runtime" considerations.
 
