@@ -127,8 +127,8 @@ function ThoughtDetailPanel({ thought, setThoughts }) {
       {/* Segments */}
       <div>
         <h3 className="text-md font-semibold mb-2">Segments:</h3>
-        {(thought.segments || []).map((segment, index) => (
-          <div key={segment.segment_id || index} className="mb-4 border rounded-lg p-4 bg-gray-50 dark:bg-gray-800">
+        {(thought.segments || []).map((segment) => (
+          <div key={`seg_detail_${segment.segment_id}`} className="mb-4 border rounded-lg p-4 bg-gray-50 dark:bg-gray-800">
             <div className="flex justify-between items-center mb-2">
               <input
                 type="text"
