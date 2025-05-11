@@ -30,6 +30,39 @@ Designed as a **local-first, AI-augmented cognitive framework**, LogoMesh helps 
 * **Local-First AI Foundations**: Built to run core AI features on your local machine, giving you control and privacy over your data and cognitive process.
 
 ---
+   **LogoMesh is a modular framework for building applications that structure, visualize, and enhance interconnected thoughts and information.** It provides a flexible and extensible foundation for creating a variety of cognitive tools. This repository includes a demo React web application that showcases one possible implementation of the LogoMesh framework.
+
+   ## What Is LogoMesh?
+
+LogoMesh is a framework designed to help developers create applications that go beyond simple note-taking and delve into structured thought organization.  It consists of several key components:
+
+* **Core Schema:** Defines the fundamental data structures for representing thoughts, segments, and their relationships.  These are described in detail in the interface contracts.
+* **Semantic Graph:** The underlying data structure that connects thoughts and segments, allowing for rich, interconnected knowledge representation.
+* **Adapters:** A system of interchangeable modules that handle different aspects of data storage, display, and AI integration (e.g., StorageAdapters for SQLite or IndexedDB, DisplayAdapters for React Flow or other visualization libraries).
+* **Interface Contracts:** Versioned schemas (e.g., `Thought`, `Segment`, `Tag`) that define the structure of data within LogoMesh, ensuring consistency across different implementations.
+* **JSON Export System**: A standardized way to serialize and deserialize LogoMesh data, allowing for interoperability and data portability.
+
+LogoMesh can be used to build a wide range of applications, including:
+
+* Digital journals with interconnected entries
+* Knowledge management and planning tools
+* Forecasting and analysis engines
+* Personal knowledge bases
+* Collaborative thought mapping applications
+* AI-powered cognitive assistance tools
+
+ * Reorganize Sections:
+   * Move the "Demo Front-End" section further down, after the "What is LogoMesh?" section.  Rename it to "Demo React Implementation"
+ * Add Diagram (Optional):
+   +----------------------+    +-----------------------+    +-----------------------+
+|   LogoMesh Framework   |    |   Consuming App 1     |    |   Consuming App 2     |
++----------------------+    +-----------------------+    +-----------------------+
+| Core Schema          |--->|  (e.g., React UI)      |--->|  (e.g., CLI Tool)      |
+| Semantic Graph       |    |  Uses Core Logic      |    |  Uses Core Logic      |
+| Adapter System       |    |  Implements Adapters    |    |  Implements Adapters    |
+| Interface Contracts  |    |                       |    |                       |
++----------------------+    +-----------------------+    +-----------------------+
+
 
 ## Getting Started
 
