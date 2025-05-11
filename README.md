@@ -53,8 +53,8 @@ LogoMesh can be used to build a wide range of applications, including:
 
  * Reorganize Sections:
    * Move the "Demo Front-End" section further down, after the "What is LogoMesh?" section.  Rename it to "Demo React Implementation"
- * Add Diagram (Optional):
-   +----------------------+    +-----------------------+    +-----------------------+
+
++----------------------+    +-----------------------+    +-----------------------+
 |   LogoMesh Framework   |    |   Consuming App 1     |    |   Consuming App 2     |
 +----------------------+    +-----------------------+    +-----------------------+
 | Core Schema          |--->|  (e.g., React UI)      |--->|  (e.g., CLI Tool)      |
