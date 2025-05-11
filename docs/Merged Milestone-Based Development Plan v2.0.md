@@ -35,20 +35,18 @@ To use the LogoMesh framework in your own JavaScript or TypeScript project:
 
 Refer to the interface contracts in the `/contracts` directory for detailed schema definitions and the `/core` directory for the core logic.
 
- * Mark React Instructions as Optional:
-   ## Demo React Implementation Setup (Optional)
+   ## Demo React Implementation Setup
 
 The following instructions are for setting up the demo React application. You can skip this section if you are implementing your own UI or CLI.
 
- * Add Disclaimer:
    **Disclaimer:** LogoMesh is designed as a modular framework. This demo UI is one of several possible front-ends and is provided as an example.
 
 
 
 This document outlines the development plan for LogoMesh, a modular framework designed to facilitate the creation of applications for organizing, visualizing, and connecting thoughts in a structured manner.
 
- * Revise Phase Titles/Subtitles:
-   For example, change "Phase 1: Build First React App" to "Phase 1: Core Functionality and Demo React Implementation"
+ * Revise Phase Titles/Subtitles
+
  * Add Bullet Points:
    For each phase, add:
     **Framework Outcome:** (Describe the core logic deliverables)
@@ -57,7 +55,7 @@ This document outlines the development plan for LogoMesh, a modular framework de
 * Set up React Flow or ReGraph for initial graph visualization
 * Create basic UI components for displaying and editing thoughts
 
-   ### Phase 0: Framework-First Architecture Setup
+   ### Phase 0: Framework-First Architecture Setup [05.11.2025 WE ARE HERE]
 
 * Define the directory structure: `/core`, `/contracts`, `/plugins`, `/integrations`, etc.
 * Establish clear rules for decoupling core logic from UI components.
@@ -97,9 +95,6 @@ This document outlines the development plan for LogoMesh, a modular framework de
         -   Things Claude misunderstood or mis-executed
         -   Any suggested prompts that increased precision
         -   Promising follow-ups or forked ideas to revisit
-     
-        
--   **05.09.2025 WE ARE HERE:**
 
 -   **Graph Visualization & Data**
     -   Replace visual canvas with **Cytoscape.js** (open-source alternative).
