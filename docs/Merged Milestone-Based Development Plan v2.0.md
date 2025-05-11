@@ -1,4 +1,4 @@
-# Milestone-Based Development Plan (v2.0 – Unified: Core + MLOps + UX + Cognitive)
+   # LogoMesh Development Plan: A Modular Framework for Thought Organization
 
 ---
 
@@ -14,8 +14,63 @@ This tier outlines paths for leveraging cloud services (e.g., managed databases,
 
 ---
 
-## PHASE 1: Scaffold & Realignment (Weeks 1–2)
-*(Pure LogoMesh core—no AI, with MLOps & UX foundations)*
+   # Developer Instructions for the Demo React Implementation of the LogoMesh Framework
+
+This document provides instructions for organizing the demo React application that consumes the LogoMesh framework.  LogoMesh itself is a modular framework for building applications that structure and connect thoughts.
+
+ * Add Section: "Framework/Core Usage"
+   ## Framework/Core Usage
+
+To use the LogoMesh framework in your own JavaScript or TypeScript project:
+
+1.  (Installation instructions, e.g., `npm install logomesh-core` if you publish a core package, or instructions to link to the /core directory)
+2.  Import the necessary modules from the LogoMesh core:
+
+    ```typescript
+    import { Thought, Segment, IdeaManager } from 'logomesh-core'; // Example
+    ```
+
+3.  Implement the required interface contracts (Thought, Segment, etc.) in your application.
+4.  Choose or create adapters for your specific needs (e.g., a StorageAdapter for your chosen database).
+
+Refer to the interface contracts in the `/contracts` directory for detailed schema definitions and the `/core` directory for the core logic.
+
+ * Mark React Instructions as Optional:
+   ## Demo React Implementation Setup (Optional)
+
+The following instructions are for setting up the demo React application. You can skip this section if you are implementing your own UI or CLI.
+
+ * Add Disclaimer:
+   **Disclaimer:** LogoMesh is designed as a modular framework. This demo UI is one of several possible front-ends and is provided as an example.
+
+
+
+This document outlines the development plan for LogoMesh, a modular framework designed to facilitate the creation of applications for organizing, visualizing, and connecting thoughts in a structured manner.
+
+ * Revise Phase Titles/Subtitles:
+   For example, change "Phase 1: Build First React App" to "Phase 1: Core Functionality and Demo React Implementation"
+ * Add Bullet Points:
+   For each phase, add:
+    **Framework Outcome:** (Describe the core logic deliverables)
+	**Demo Implementation Outcome:** (Describe the React-specific deliverables)
+**Demo Implementation Outcome:**
+* Set up React Flow or ReGraph for initial graph visualization
+* Create basic UI components for displaying and editing thoughts
+
+   ### Phase 0: Framework-First Architecture Setup
+
+* Define the directory structure: `/core`, `/contracts`, `/plugins`, `/integrations`, etc.
+* Establish clear rules for decoupling core logic from UI components.
+* Define the interface contracts for core data structures.
+* Set up initial build process for the core framework.
+
+## PHASE 1: Core Functionality and Demo React Implementation, Scaffold & Realignment (Weeks 1–2)
+**Framework Outcome:**
+*(Pure LogoMesh core — no AI yet, with MLOps & UX foundations)*
+* Define core schema (Thought, Segment, etc.) in `/contracts`
+* Implement basic graph manipulation logic in `/core`
+* Implement SQLite integration in `/core`
+* Implement JSON import/export in `/core`
 
 ### Tier #1: Local-First Full Immersion
 
