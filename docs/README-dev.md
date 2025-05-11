@@ -46,7 +46,7 @@ LogoMesh is designed as a federated system of microservices and a rich client-si
     * **LLM Orchestration:** For recursive queries, synthesis, and Socratic dialogues. Designed to utilize quantized models for local execution, with an optional cloud-based API key fallback.
     * **Concept-Diffusion:** For emergent idea generation and blending. These features will primarily leverage local GPU capabilities for efficient processing.
 * **Data Export/Import:** Standardized JSON schema for interoperability and backup.
-* **Automation:** Utilizes `n8n` for local workflow automation, with architectural provisions for cloud extensions.
+* **Automation:** Utilizes `node-RED` for local workflow automation, with architectural provisions for cloud extensions.
 
 ### AI Strategy & Tiered Implementation:
 
@@ -58,7 +58,7 @@ This tier ensures core LogoMesh functionalities, including essential AI features
 * **Local Model Prioritization:** We primarily leverage highly optimized and quantized open-source models (e.g., GGML/GGUF formats for LLMs, Sentence Transformers via `llama.cpp`/Ollama for embeddings, HF Diffusers for diffusion) to minimize resource footprint and enable robust CPU-based execution where possible.
 * **Hardware Acknowledgment:** While core features run on modest hardware (e.g., Mac Mini), advanced AI capabilities (larger LLMs, diffusion models) are designed to leverage dedicated GPU hardware if available, with performance expectations clearly communicated to the user.
 * **Local Persistence for AI:** All AI-generated embeddings and vector store operations rely on local databases like `SQLite + sqlite3_vector` (with plans for `PostgreSQL + pgvector` for local scaling/server environments) to keep data ownership with the user.
-* **Automation:** Local n8n instances manage in-app workflows for auto-tagging, embedding prep, and local backups.
+* **Automation:** Local node-RED instances manage in-app workflows for auto-tagging, embedding prep, and local backups.
 
 #### Tier #2: Cloud-Enhanced Extensions (Optional/Future)
 This tier outlines how LogoMesh can extend its capabilities by optionally integrating with cloud services, providing enhanced features or alternatives for users with different needs or hardware.
@@ -74,7 +74,7 @@ This tier outlines how LogoMesh can extend its capabilities by optionally integr
 3.  Optional: Text segments are sent to the local Embedding Service for vectorization.
 4.  Optional: AI Microservices process data, potentially interacting with the graph and local persistence.
 5.  Data can be imported/exported via JSON.
-6.  Local automation workflows (n8n) manage background tasks like embedding prep, auto-tagging, and local backups.
+6.  Local automation workflows (node-RED) manage background tasks like embedding prep, auto-tagging, and local backups.
 
 ---
 
@@ -137,7 +137,7 @@ This section outlines the immediate, high-priority tasks for LogoMesh's **Tier \
 
       * Complete the migration of the visual canvas from ReactFlow to **Cytoscape.js**.
       * Finalize **SQLite** DB schema for local persistence and ensure full React ↔ SQLite load/save cycle.
-      * Set up local **n8n** instance for core automation tasks (e.g., auto-tagging, local backups, initial embedding prep).
+      * Set up local **node-RED** instance for core automation tasks (e.g., auto-tagging, local backups, initial embedding prep).
       * Design **API Abstraction Layers** for Embedding Services and Vector Databases to enable future cloud integration without major refactoring.
       * Establish **Docker Compose** for front-end + SQLite for easy local deployment.
 
