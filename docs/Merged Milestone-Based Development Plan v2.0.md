@@ -55,12 +55,240 @@ This document outlines the development plan for LogoMesh, a modular framework de
 * Set up React Flow or ReGraph for initial graph visualization
 * Create basic UI components for displaying and editing thoughts
 
-   ### Phase 0: Framework-First Architecture Setup [05.11.2025 WE ARE HERE]
+   ### Phase 0: Framework-First Architecture Setup & Core Logic Decoupling [05.12.2025 WE ARE HERE]
 
-* Define the directory structure: `/core`, `/contracts`, `/plugins`, `/integrations`, etc.
-* Establish clear rules for decoupling core logic from UI components.
-* Define the interface contracts for core data structures.
-* Set up initial build process for the core framework.
+**Goal:** Transition the existing React application towards a modular structure by separating core data management logic from the UI. This phase establishes the foundational directories (`/core`, `/contracts`), defines clear interfaces and responsibilities, implements basic data integrity checks and utilities, and scaffolds unit testing. This makes the codebase more maintainable and robustly prepares it for more advanced backend features in Phase 1. This revised structure is designed to be implemented with the assistance of an AI coding agent like Claude within a Replit environment.
+
+**Key Outcomes for Phase 0:**
+*   A new `/core` directory containing the application's business logic and data management abstractions, initially operating on in-memory data.
+*   A new `/contracts` directory containing TypeScript interface definitions for all primary data entities.
+*   The React application in `src/` refactored to consume logic and types from `/core` and `/contracts`, no longer managing primary data state or using `localStorage` directly for thoughts (beyond an initial load).
+*   Core utilities for ID generation and logging established within `/core`.
+*   Basic unit test stubs created for core logic in `/core`.
+*   Clearer separation of concerns, making the system easier to reason about and extend.
+*   Placeholders for future DevOps, UX, and data migration considerations noted.
+
+**Tasks:**
+
+1.  **Establish Foundational Directory Structure & Configure Path Aliases:**
+    *   **Framework Outcome:** Project structure prepared for modular development with convenient import paths.
+    *   **Demo Implementation Outcome:** The React application can resolve imports from new core directories using both relative paths and configured aliases.
+    *   **Detailed Action (for AI Agent - Claude):**
+        1.  **Create Directories:**
+            *   In the root directory of the current Replit project, create a new directory named `contracts`.
+                *   *Purpose:* This directory will store TypeScript files (`.ts`) defining the data structure interfaces.
+            *   In the root directory of the current Replit project, create a new directory named `core`.
+                *   *Purpose:* This directory will house the JavaScript/TypeScript modules containing the decoupled core application logic.
+            *   *Verification:* Confirm these directories exist at the project root.
+
+        2.  **Configure Path Aliases (Optional but Recommended for Cleaner Imports):**
+            *   Create or modify the `jsconfig.json` file in the project's root directory.
+            *   Ensure it contains the following configuration to allow imports relative to the `src` directory using `~/` and to alias `/core` and `/contracts` for easier access from `src/`:
+                ```json
+                {
+                  "compilerOptions": {
+                    "baseUrl": ".",
+                    "paths": {
+                      "~/*": ["src/*"],
+                      "@core/*": ["core/*"],
+                      "@contracts/*": ["contracts/*"]
+                    }
+                  },
+                  "include": ["src", "core", "contracts"]
+                }
+                ```
+            *   *Purpose:* This setup will allow cleaner import statements from within the `src/` directory, such as `import { Thought } from '@contracts/interfaces';` or `import { IdeaManager } from '@core/IdeaManager';`.
+            *   *Verification:* After this change, a test import in a temporary file within `src/` (e.g., `src/App.jsx`) like `import Test from '@core/someFile';` (assuming `someFile.js` exists in `core`) should ideally be resolvable by Replit's tooling without errors.
+
+        3.  **Note on Import Path Usage (for AI Agent - Claude):**
+            *   **Priority:** When refactoring code in subsequent steps to import modules from `/core` or `/contracts` into files within `src/`, **first attempt to use the configured path aliases**:
+                *   `import ... from '@contracts/your-interface-file';`
+                *   `import ... from '@core/your-module-file';`
+            *   **Fallback to Relative Paths:** If, for any reason, the path aliases do not work or cause issues during refactoring within the Replit environment, revert to using standard **relative paths** as a reliable fallback.
+
+2.  **Define Core Data Structure Interface Contracts:**
+    *   **Framework Outcome:** Clear, typed definitions for all primary data entities, promoting consistency and enabling type-safe development within the `/core` framework and for UI consumption. These interfaces will represent Data Transfer Objects (DTOs) suitable for application-layer logic.
+    *   **Demo Implementation Outcome:** React components can be refactored to expect props and manage state conforming to these well-defined interfaces.
+    *   **Detailed Actions (for AI Agent - Claude):**
+
+        a.  **Initial Interface Extraction & Creation:**
+            *   Analyze current data structures in `src/App.jsx` (`createThought` function), `src/utils/exportHandler.js` (`exportPayload.thoughts`), and `src/services/graphService.js`.
+            *   Create `/contracts/entities.ts`.
+            *   In `/contracts/entities.ts`, generate initial TypeScript `interface` definitions for `Tag`, `Segment`, and `Thought` based on the analysis.
+            *   Export these interfaces.
+
+        b.  **Refine Interfaces with Planned Schema Enhancements (DTO Focus):**
+            *   Update interfaces in `/contracts/entities.ts` referencing Phase 1 SQLite schema plans.
+            *   **Define base types for extensibility at the top of `/contracts/entities.ts`:**
+                ```typescript
+                export type PredefinedContentType = 'text' | 'image' | 'audio' | 'video' | 'link';
+                export type CustomContentType = string & { _brand?: 'CustomContentType' };
+                export type ContentType = PredefinedContentType | CustomContentType;
+
+                export type PredefinedAbstractionLevel = 'Fact' | 'Idea' | 'Theme' | 'Goal';
+                export type CustomAbstractionLevel = string & { _brand?: 'CustomAbstractionLevel' };
+                export type AbstractionLevel = PredefinedAbstractionLevel | CustomAbstractionLevel;
+
+                export type FieldValue = string | number | boolean | Date | string[] | number[]; // Expand as needed
+                ```
+            *   **Refine `Segment` interface:**
+                ```typescript
+                export interface Segment {
+                  segment_id: string;
+                  thought_bubble_id: string;
+                  title: string;
+                  content: string;
+                  content_type: ContentType; // Default 'text'
+                  asset_path?: string;
+                  fields: Record<string, FieldValue>; // DTO representation
+                  embedding_vector?: number[];
+                  created_at: string; // ISO date string
+                  updated_at: string; // ISO date string
+                  abstraction_level: AbstractionLevel; // Default 'Fact'
+                  local_priority: number; // Default 0.5
+                  cluster_id: string; // Default 'uncategorized_cluster'
+                }
+                ```
+            *   **Refine `Thought` interface:**
+                ```typescript
+                export interface Thought {
+                  thought_bubble_id: string;
+                  title: string;
+                  description?: string;
+                  created_at: string; // ISO date string
+                  updated_at: string; // ISO date string
+                  color?: string;
+                  position?: { x: number; y: number };
+                  tags?: Tag[]; // Optional DTO convenience
+                  segments?: Segment[]; // Optional DTO convenience
+                }
+                ```
+            *   *(Note for AI Agent): Other interfaces like `SegmentNeighbor` can be defined later if needed as DTOs.*
+
+        c.  **Add JSDoc Comments:**
+            *   Add brief JSDoc comments to each interface and its properties explaining their purpose.
+
+        *   **Verification Step (for AI Agent - Claude):**
+            *   Confirm `/contracts/entities.ts` exists with exported `Thought`, `Segment`, `Tag`, `ContentType`, `AbstractionLevel`.
+            *   Confirm `Segment` and `Thought` interfaces include all specified fields with correct typings.
+            *   Confirm JSDoc comments are present.
+
+3.  **Scaffold Core Logic Abstraction (`IdeaManager`) and Begin UI Decoupling:**
+    *   **Framework Outcome:** A foundational `IdeaManager` class/module in `/core` that encapsulates data management logic (initially in-memory) and uses the defined `/contracts` interfaces.
+    *   **Demo Implementation Outcome:** Key React components (`App.jsx`, `AddThoughtModal.jsx`, `ThoughtDetailPanel.jsx`) begin to delegate data operations to the `IdeaManager` instead of handling state and `localStorage` directly. The application remains functional using in-memory data management via `IdeaManager`.
+    *   **Detailed Actions (for AI Agent - Claude):**
+
+        a.  **Create Initial `IdeaManager` in `/core`:**
+            *   Create `@core/IdeaManager.ts`.
+            *   Define and export class `IdeaManager`.
+            *   Import interfaces from `@contracts/entities.ts`.
+            *   Internally manage `private thoughts: Thought[] = [];`.
+            *   Constructor attempts one-time load from `localStorage` (key 'thought-web-data') into `this.thoughts`, similar to `App.jsx`'s original `useState` logic for `thoughts`. Log errors, default to empty array on failure.
+
+        b.  **Implement Basic In-Memory CRUD Methods in `IdeaManager`:**
+            *   Add public methods: `getThoughts(): Thought[]`, `getThoughtById(id: string): Thought | undefined`, `addThought(thoughtData: ...): Thought`, `updateThought(thoughtId: string, updates: ...): Thought | undefined`, `deleteThought(thoughtId: string): boolean`, `addSegment(thoughtId: string, segmentData: ...): Segment | undefined`, `updateSegment(thoughtId: string, segmentId: string, updates: ...): Segment | undefined`, `deleteSegment(thoughtId: string, segmentId: string): boolean`.
+            *   Import and use ID generation utilities from `@core/utils/idUtils.ts` (to be created in Task 5a) for `addThought` and `addSegment`.
+            *   These methods operate on the internal `this.thoughts` array.
+            *   Ensure returned objects conform to interfaces.
+
+        c.  **Refactor `src/App.jsx` to Use `IdeaManager` (Incremental Steps):**
+
+            *   **3c-i: Instantiate `IdeaManager` and Load Initial `thoughts` State:**
+                *   In `src/App.jsx`, import `IdeaManager`. Create an instance.
+                *   Initialize `thoughts` state: `useState(() => ideaManager.getThoughts());`.
+                *   Remove old `useEffect` that loaded from `localStorage`.
+                *   *Verification:* App loads existing `localStorage` data via `IdeaManager`.
+
+            *   **3c-ii: Refactor `createThought` (and `addThought` if distinct) in `src/App.jsx`:**
+                *   Modify `createThought` to call `ideaManager.addThought(...)`.
+                *   After adding, update React `thoughts` state: `setThoughts([...ideaManager.getThoughts()]);`.
+                *   Remove direct `localStorage.setItem` calls from this function.
+                *   *Verification:* New thoughts are added to `IdeaManager`'s store; UI updates. No direct `localStorage` writes from `App.jsx`.
+
+            *   **3c-iii: Remove `localStorage` Persistence Logic from `src/App.jsx`:**
+                *   Remove the `useEffect` hook that saved `thoughts` to `localStorage`.
+                *   *(Developer Decision from previous discussion: `thought-web-dark-mode` `localStorage` handling remains in `App.jsx` for now).*
+                *   *Verification:* App functions, but thought changes don't persist across refresh (expected for Phase 0).
+
+        d.  **Refactor Data-Mutating Components to Use `IdeaManager` via Props:**
+            *   Pass `ideaManager` instance and a refresh callback (e.g., `refreshThoughts = () => setThoughts([...ideaManager.getThoughts()]);`) from `App.jsx` as props to components like `src/components/ThoughtDetailPanel.jsx`, `src/components/Canvas.jsx` (for position updates), `src/components/Sidebar.jsx` (for batch edits).
+            *   Modify these components to call methods on `props.ideaManager` and then `props.refreshThoughts()`.
+            *   Remove direct `localStorage.setItem` calls from these components.
+            *   *(Note for AI Agent): Refactor one component at a time.*
+            *   *Verification:* Components use `ideaManager` prop and refresh callback. UI updates correctly. No direct `localStorage` writes from these components.
+
+4.  **Define Abstraction Taxonomy & Initial Metadata Handling:**
+    *   **Framework Outcome:** Core data structures (`Segment` interface) include fields for `abstraction_level` and `cluster_id`, enabling foundational semantic categorization.
+    *   **Demo Implementation Outcome:** The UI for creating/editing segments can capture these new metadata fields.
+    *   **Detailed Actions (for AI Agent - Claude):**
+        a.  **Update `Segment` Interface (Confirm in `@contracts/entities.ts`):**
+            *   Ensure `abstraction_level: AbstractionLevel;` and `cluster_id: string;` are present with JSDoc.
+        b.  **Update `IdeaManager` Methods for Metadata:**
+            *   Modify `IdeaManager.addSegment` and `IdeaManager.updateSegment` to accept and store `abstraction_level` and `cluster_id`. Apply defaults in `addSegment`.
+        c.  **Update UI for Metadata (Basic Input):**
+            *   In `src/components/AddThoughtModal.jsx` and `src/components/ThoughtDetailPanel.jsx`, enable input/display for `abstraction_level` and `cluster_id`.
+        *   **Verification:** Segments can have `abstraction_level` and `cluster_id` managed.
+
+5.  **Implement Core Data Integrity & Utility Foundations:**
+    *   **Framework Outcome:** `IdeaManager` includes basic data validation. Core utilities for ID generation and logging are established.
+    *   **Demo Implementation Outcome:** Increased robustness; foundational support for debugging.
+    *   **Detailed Actions (for AI Agent - Claude):**
+        a.  **ID Generation and Uniqueness:**
+            *   **Relocate ID Utilities:** Create `@core/utils/idUtils.ts`. Move `newBubbleId` and `newSegmentId` functions from `src/utils/eventBus.js` into it. Export them. Update `IdeaManager` to use these.
+            *   **In-Memory ID Uniqueness Check:** In `IdeaManager.addThought/addSegment`, before adding, check if the generated ID already exists in its internal store. If so, log an error/regenerate (simple console log for Phase 0 is fine).
+        b.  **Basic Reference Validation:**
+            *   In `IdeaManager.addSegment`, ensure the `thoughtId` exists before adding. Log error if not.
+        c.  **Establish Basic Logging Utility:**
+            *   Create `@core/utils/logger.ts`. Implement a simple `logger` object with `log`, `warn`, `error` methods (initially wrapping `console` methods with a prefix like `[LOGOMESH-CORE]`).
+            *   Import and use this `logger` in `IdeaManager` for key operations.
+        *   **Verification:** ID utils are in `@core/utils/`. `IdeaManager` uses logger. Basic validation checks are performed.
+
+6.  **Scaffold Unit Testing for Core Logic:**
+    *   **Framework Outcome:** Basic testing infrastructure set up for `/core` modules.
+    *   **Detailed Actions (for AI Agent - Claude):**
+        a.  **Confirm Jest Configuration for `/core`:**
+            *   Ensure Jest (from `react-scripts`) can find and run tests in `/core` (e.g., `core/**/*.test.ts`).
+        b.  **Create Initial Test Stubs for `IdeaManager`:**
+            *   Create `@core/IdeaManager.test.ts`.
+            *   Add basic test stubs (as previously discussed examples) for `addThought`, `getThoughtById`, `addSegment`, and ideally `updateThought` and `deleteThought`. Ensure tests clear `localStorage` in `beforeEach` for isolation if `IdeaManager` constructor reads from it.
+        *   **Verification:** Test files can be created. Example tests pass against the in-memory `IdeaManager`.
+
+7.  **Establish Initial DevOps & UX Documentation Stubs:**
+    *   **Framework Outcome:** Basic project structure supports future, more formal DevOps and UX processes.
+    *   **Detailed Actions (for AI Agent - Claude or Developer):**
+        a.  **DevOps - Documentation Stubs:**
+            *   Create `/docs/BUILD_PROCESS.md` (Note: "Phase 0: Core logic part of React app build...").
+            *   Create `/docs/DATA_MIGRATION.md` (Note: "Phase 0 uses in-memory `IdeaManager` with initial `localStorage` load. Phase 1 will introduce SQLite. Strategy needed to migrate...").
+        b.  **UX - Documentation Stubs:**
+            *   Create `/docs/STYLE_GUIDE.md` (Note: "Basic styling inherited... Formal guide in Phase 1...").
+            *   Create `/docs/ONBOARDING_TOUR.md` (Note: "Concept to be designed later...").
+        *   **Verification:** Markdown files are created with the specified content.
+
+8.  **Phase 0 Final Cleanup & Summary:**
+    *   **Framework Outcome:** Core logic significantly decoupled, project structured for Phase 1.
+    *   **Demo Implementation Outcome:** React app functional with `IdeaManager`.
+    *   **Detailed Actions (for AI Agent - Claude and/or Developer):**
+        a.  **Review and Refactor Utility Usage:**
+            *   Identify remaining utilities in `src/utils/`. Move any general-purpose, non-DOM-specific data logic utilities (if any beyond ID gen) to `@core/utils/`. Update imports.
+        b.  **Code Cleanup and Linting:**
+            *   Run linters (ESLint, Prettier) across `src/`, `/core/`, `/contracts/`. Fix issues. Remove dead code.
+        c.  **Update Phase 0 Summary in Development Plan (This Document):**
+            *   (Developer action after AI completes tasks) Replace this task with the "Phase 0 Outcome" statement below.
+
+> **Phase 0 Outcome (Replace Task 8c with this statement upon completion):**
+> The LogoMesh React application's core data management logic has been successfully decoupled from its UI components. A new `/core` directory houses an `IdeaManager` that manages application data (initially in-memory, with a one-time load from `localStorage` for data continuity) using well-defined TypeScript interfaces from `/contracts`. Basic data integrity checks, logging utilities, and unit test stubs are established within `/core`. The React UI (`src/`) now interacts with the `IdeaManager` for all thought and segment data operations, removing direct `localStorage` persistence for these entities from the UI layer. The project structure is now robustly prepared for Phase 1, which will introduce a dedicated backend API, SQLite persistence, and further integrations. A placeholder for data migration strategy from `localStorage` to the future database has been noted.
+
+---
+(End of Revised Phase 0 Section)
+---
+
+This completes the revision for Phase 0. It's now significantly more detailed, chunked for AI prompting, and incorporates the excellent feedback you provided.
+
+Are you ready to move on to revising Phase 1 in a similar manner?
+
+
+
+
 
 ## PHASE 1: Core Functionality and Demo React Implementation, Scaffold & Realignment (Weeks 1–2)
 **Framework Outcome:**
