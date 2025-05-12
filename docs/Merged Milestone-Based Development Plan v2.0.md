@@ -290,16 +290,42 @@ This document outlines the development plan for LogoMesh, a modular framework de
             *   Add basic test stubs (as previously discussed examples) for `addThought`, `getThoughtById`, `addSegment`, and ideally `updateThought` and `deleteThought`. Ensure tests clear `localStorage` in `beforeEach` for isolation if `IdeaManager` constructor reads from it.
         *   **Verification:** Test files can be created. Example tests pass against the in-memory `IdeaManager`.
 
-7.  **Establish Initial DevOps & UX Documentation Stubs:**
-    *   **Framework Outcome:** Basic project structure supports future, more formal DevOps and UX processes.
-    *   **Detailed Actions (for AI Agent - Claude or Developer):**
-        a.  **DevOps - Documentation Stubs:**
-            *   Create `/docs/BUILD_PROCESS.md` (Note: "Phase 0: Core logic part of React app build...").
-            *   Create `/docs/DATA_MIGRATION.md` (Note: "Phase 0 uses in-memory `IdeaManager` with initial `localStorage` load. Phase 1 will introduce SQLite. Strategy needed to migrate...").
-        b.  **UX - Documentation Stubs:**
-            *   Create `/docs/STYLE_GUIDE.md` (Note: "Basic styling inherited... Formal guide in Phase 1...").
-            *   Create `/docs/ONBOARDING_TOUR.md` (Note: "Concept to be designed later...").
-        *   **Verification:** Markdown files are created with the specified content.
+7.  **Establish Initial DevOps & UX Documentation Stubs:**
+	*   **Framework Outcome:** Basic project structure supports future, more formal DevOps and UX processes.
+	*   **Detailed Actions (for AI Agent - Claude or Developer):**
+    	a.  **DevOps - Documentation Stubs:**
+        	*   Create `/docs/BUILD_PROCESS.md` (Note: "Phase 0: Core logic part of React app build. Phase 1 will introduce Docker for backend API and explore separate build/test for `/core` if it becomes a distinct package.")
+        	*   Create `/docs/DATA_MIGRATION.md`. Add the following content:
+            	```markdown
+            	# Data Migration Strategy
+
+            	## Phase 0 to Phase 1 (localStorage to SQLite)
+
+            	The `IdeaManager` in Phase 0 loads initial data from `localStorage` (key: 'thought-web-data') into its in-memory store. Phase 1 will introduce SQLite as the primary persistent storage.
+
+            	A data migration strategy will be required at the beginning of Phase 1 to ensure any data present in `localStorage` (from prior application use or data entered during Phase 0 development sessions if not persisted elsewhere) is correctly transferred to the new SQLite database structure.
+
+            	**Potential Approaches for Phase 1 Migration:**
+            	1.  **One-time Script:** A script (Node.js or directly within the application startup) that reads from `localStorage`, transforms the data to align with the new normalized SQLite schema, and inserts it into the SQLite database.
+            	2.  **Enhanced `IdeaManager` (SQLite Adapter):** The SQLite storage adapter for the `IdeaManager` (to be built in Phase 1) could include logic on its first run to check for `localStorage` data and import it.
+
+            	This migration will need to handle mapping from the potentially less structured `localStorage` format to the normalized tables defined for SQLite (e.g., `thoughts`, `segments`, `segment_fields`, `tags`, etc.).
+
+            	## Future Consideration: SQLite to Postgres (Tier 2 / Advanced Scaling)
+
+            	For future scalability, multi-user/multi-agent scenarios, and advanced features (as outlined in Tier 2 of the development plan), a transition from the local SQLite datastore to a more robust, server-based PostgreSQL database (potentially with `pgvector`) is envisioned.
+
+            	This migration would involve:
+            	*   Schema mapping from SQLite to PostgreSQL (largely similar but with RDBMS-specific optimizations).
+            	*   Data transfer mechanisms.
+            	*   Updating the backend API and `/core` persistence layer to target PostgreSQL.
+
+            	This consideration is for long-term architectural evolution and will be addressed in later phases.
+            	```
+    	b.  **UX - Documentation Stubs:**
+        	*   Create `/docs/STYLE_GUIDE.md` (Note: "Basic styling inherited... Formal guide in Phase 1...").
+        	*   Create `/docs/ONBOARDING_TOUR.md` (Note: "Concept to be designed later...").
+    	*   **Verification:** Markdown files are created with the specified content. The `DATA_MIGRATION.md` file should contain both subsections as described.
 
 8.  **Phase 0 Final Cleanup & Summary:**
     *   **Framework Outcome:** Core logic significantly decoupled, project structured for Phase 1.
@@ -312,15 +338,31 @@ This document outlines the development plan for LogoMesh, a modular framework de
         c.  **Update Phase 0 Summary in Development Plan (This Document):**
             *   (Developer action after AI completes tasks) Replace this task with the "Phase 0 Outcome" statement below.
 
-9. **Hybrid LLM Readiness & Forward Compatibility:**
+9.  **Integrate LLM Readiness & Document Hybrid Architecture Approach:**
+	*   **Framework Outcome:** Core contracts include an abstraction for LLM execution. Logging for LLM interactions is scaffolded. The overall architecture acknowledges preparation for future hybrid data/agent systems.
+	*   **Demo Implementation Outcome:** Foundational elements are in place for future AI feature integration without requiring immediate LLM functionality in the demo.
+	*   **Detailed Actions (for AI Agent - Claude):**
 
-To ensure that Phase 1 and Phase 2 can introduce multiple LLMs, self-correcting agents, and reasoning audits without structural rework, the following scaffolding is included in Phase 0:
+    	a.  **Define LLMExecutor Interface:**
+        	*   Create the file `/contracts/llmExecutor.ts`.
+        	*   Add the `LLMExecutor` interface definition as specified in the `Schema Extension for Phase 0 (more context).txt` document (including `name`, `supportsStreaming`, `executePrompt`, optional `streamPrompt`, and optional `generateMermaid`).
+        	*   Add JSDoc comments explaining the interface and its methods.
+        	*   *Purpose:* This defines a shared contract for any future LLM provider, enabling modularity.
+        	*   *Verification:* The file `/contracts/llmExecutor.ts` exists and correctly defines and exports the `LLMExecutor` interface with JSDoc.
 
-- **Pluggable LLMExecutor Interface:** Located at `/contracts/llmExecutor.ts`. This defines a shared contract for any future LLM provider (Claude, Gemini, InternVL3, Qwen, etc.), allowing hot-swapping and feature detection (e.g., streaming, diagram generation).
-  
-- **LLM Audit Logger Stub:** Located at `/core/logger/llmAuditLogger.ts`. This utility logs prompt → response → metadata chains. In Phase 2, this will be extended into persistent logging for cognition tracking and debugging.
+    	b.  **Scaffold LLM Audit Logger:**
+        	*   Create the file `/core/logger/llmAuditLogger.ts`.
+        	*   Implement the `logLLMInteraction` function as specified in the `Schema Extension for Phase 0 (more context).txt` document, which currently logs to `console.log` with a structured format.
+        	*   Add JSDoc comments explaining its purpose and future extension to persistent logging.
+        	*   *Purpose:* Establishes a centralized point for logging all LLM prompt/response cycles for future audit and debugging.
+        	*   *Verification:* The file `/core/logger/llmAuditLogger.ts` exists and correctly defines and exports the `logLLMInteraction` function.
 
-- **Diagram-Aware Reasoning Prep:** This scaffolding also prepares the system to audit Mermaid output generated by LLMs for hallucinated architecture, malformed sequences, or broken logic loops. 
+    	c.  **Document Hybrid LLM Readiness & Future Agent Architecture:**
+        	*   *(Developer Action or AI-assisted):* In a relevant section of the main project `README-dev.md` (e.g., a new subsection under "Core Architecture" or as an addendum to Phase 0's description), or in a dedicated `/docs/ARCHITECTURE_VISION.md` file, add a summary explaining these Phase 0 additions for LLM readiness.
+        	*   This summary should include:
+            	*   The purpose of the `LLMExecutor` interface (pluggable LLMs).
+            	*   The role of the `llmAuditLogger.ts` stub (traceability).
+            	*   A note that this scaffolding prepares for advanced features like AI-assisted diagramming/reasoning and future external agents (potentially Rust-based, interacting with a more complex backend like Postgres, as inspired by recent discussions).
 
 ```mermaid
 %% Mermaid: LogoMesh LLM Agent Execution Flow (Future Vision)
@@ -340,10 +382,12 @@ sequenceDiagram
     LLMExec->>Logger: logLLMInteraction()
     IdeaMgr-->>UI: return result
 ```
+        	*   *Purpose:* To clearly document the architectural intent behind these Phase 0 additions for future developers and AI agents.
+        	*   *Verification:* The chosen documentation file contains a clear explanation of the LLM readiness features added in Phase 0 and their forward-looking implications.
 
 These additions future-proof LogoMesh to become LLM-agnostic, introspective, and flexible.
-> **Phase 0 Outcome (Replace Task 8c with this statement upon completion):**
-> The LogoMesh React application's core data management logic has been successfully decoupled from its UI components. A new `/core` directory houses an `IdeaManager` that manages application data (initially in-memory, with a one-time load from `localStorage` for data continuity) using well-defined TypeScript interfaces from `/contracts`. Basic data integrity checks, logging utilities, and unit test stubs are established within `/core`. The React UI (`src/`) now interacts with the `IdeaManager` for all thought and segment data operations, removing direct `localStorage` persistence for these entities from the UI layer. The project structure is now robustly prepared for Phase 1, which will introduce a dedicated backend API, SQLite persistence, and further integrations. A placeholder for data migration strategy from `localStorage` to the future database has been noted.
+> **Phase 0 Outcome:**
+> The LogoMesh React application's core data management logic has been successfully decoupled from its UI components. A new `/core` directory houses an `IdeaManager` that manages application data (initially in-memory, with a one-time load from `localStorage` for data continuity) using well-defined TypeScript interfaces from `/contracts`. Core utilities for ID generation and application logging, basic data integrity checks, and unit test stubs are established within `/core`. **Furthermore, foundational contracts and stubs for future LLM integration (`LLMExecutor` interface, `llmAuditLogger`) have been created, preparing the architecture for LLM-agnostic operations and advanced AI agent interactions.** The React UI (`src/`) now interacts with the `IdeaManager` for all thought and segment data operations, removing direct `localStorage` persistence for these entities from the UI layer. The project structure is now robustly prepared for Phase 1, which will introduce a dedicated backend API, SQLite persistence, and further integrations. Documentation stubs, including notes on data migration and the hybrid architecture vision, have been established.
 
 ---
 (End of Revised Phase 0 Section)
