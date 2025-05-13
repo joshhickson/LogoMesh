@@ -23,20 +23,16 @@ export interface Segment {
   segment_id: string;
   thought_bubble_id: string;
   title: string;
-  content?: string;
-  content_type: ContentType;
-  abstraction_level: AbstractionLevel;
-  relationship?: string;
+  content: string;
+  content_type: ContentType; // Default 'text'
+  asset_path?: string;
   fields: Record<string, FieldValue>;
   embedding_vector?: number[];
-  sourcePosition?: {
-    x: number;
-    y: number;
-  };
-  created_at: string;
-  updated_at?: string;
-  local_priority?: number;
-  cluster_id?: string;
+  created_at: string; // ISO date string
+  updated_at: string; // ISO date string
+  abstraction_level: AbstractionLevel; // Default 'Fact'
+  local_priority: number; // Default 0.5
+  cluster_id: string; // Default 'uncategorized_cluster'
 }
 
 export interface Thought {
