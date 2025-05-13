@@ -14,35 +14,27 @@ function App() {
   const [activeFilters, setActiveFilters] = useState([]);
 
   const createThought = useCallback(({ title, description, tags, segments }) => {
-    const newThought = {
-      thought_bubble_id: newBubbleId(),
+    const thoughtData = {
       title,
       description,
-      tags: tags.map(tag => ({name: tag, color: '#10b981'})), // Default color for tags
-      created_at: new Date().toISOString(),
+      tags: tags.map(tag => ({name: tag, color: '#10b981'})),
       position: { x: Math.random() * 500, y: Math.random() * 500 },
       segments: segments.map(segment => ({
         ...segment,
-        segment_id: newSegmentId(),
-        embedding_vector: [] // Prepare for future AI features
+        embedding_vector: []
       }))
     };
 
-    const updatedThoughts = [...thoughts, newThought];
-    setThoughts(updatedThoughts);
-
-    // Persist to localStorage with metadata
-    const persistData = {
-      export_metadata: {
-        version: '0.5.0',
-        exported_at: new Date().toISOString(),
-        thought_count: updatedThoughts.length
-      },
-      thoughts: updatedThoughts
-    };
-    localStorage.setItem('thought-web-data', JSON.stringify(persistData));
+    const newThought = ideaManager.addThought(thoughtData);
+    setThoughts([...ideaManager.getThoughts()]);
     return newThought;
-  }, [thoughts]);
+  }, []);
+
+  // Simplified addThought to use ideaManager
+  const addThought = (thoughtData) => {
+    ideaManager.addThought(thoughtData);
+    setThoughts([...ideaManager.getThoughts()]);
+  };
 
   useEffect(() => {
     // Sync with in-memory graph only
@@ -81,9 +73,6 @@ function App() {
     localStorage.setItem('thought-web-dark-mode', darkMode.toString());
   }, [darkMode]);
 
-  const addThought = (newThought) => {
-    setThoughts([...thoughts, newThought]);
-  };
 
   const toggleDarkMode = () => {
     setDarkMode((prev) => !prev);
