@@ -89,4 +89,95 @@ export class IdeaManager {
       console.error('Failed to persist thoughts to storage:', error);
     }
   }
+
+  public getThoughts(): Thought[] {
+    return [...this.thoughts];
+  }
+
+  public getThoughtById(id: string): Thought | undefined {
+    return this.thoughts.find(t => t.thought_bubble_id === id);
+  }
+
+  public addThought(thoughtData: Omit<Thought, 'thought_bubble_id' | 'created_at' | 'updated_at'>): Thought {
+    const thought: Thought = {
+      ...thoughtData,
+      thought_bubble_id: generateThoughtId(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      segments: [],
+      tags: []
+    };
+    this.thoughts.push(thought);
+    this.persistToStorage();
+    return thought;
+  }
+
+  public updateThought(thoughtId: string, updates: Partial<Omit<Thought, 'thought_bubble_id' | 'created_at'>>): Thought | undefined {
+    const index = this.thoughts.findIndex(t => t.thought_bubble_id === thoughtId);
+    if (index === -1) return undefined;
+
+    const thought = this.thoughts[index];
+    this.thoughts[index] = {
+      ...thought,
+      ...updates,
+      updated_at: new Date().toISOString()
+    };
+    this.persistToStorage();
+    return this.thoughts[index];
+  }
+
+  public deleteThought(thoughtId: string): boolean {
+    const initialLength = this.thoughts.length;
+    this.thoughts = this.thoughts.filter(t => t.thought_bubble_id !== thoughtId);
+    const deleted = this.thoughts.length < initialLength;
+    if (deleted) this.persistToStorage();
+    return deleted;
+  }
+
+  public addSegment(thoughtId: string, segmentData: Omit<Segment, 'segment_id' | 'thought_bubble_id' | 'created_at' | 'updated_at'>): Segment | undefined {
+    const thought = this.getThoughtById(thoughtId);
+    if (!thought) return undefined;
+
+    const segment: Segment = {
+      ...segmentData,
+      segment_id: generateSegmentId(),
+      thought_bubble_id: thoughtId,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+
+    thought.segments = thought.segments || [];
+    thought.segments.push(segment);
+    this.persistToStorage();
+    return segment;
+  }
+
+  public updateSegment(thoughtId: string, segmentId: string, updates: Partial<Omit<Segment, 'segment_id' | 'thought_bubble_id' | 'created_at'>>): Segment | undefined {
+    const thought = this.getThoughtById(thoughtId);
+    if (!thought || !thought.segments) return undefined;
+
+    const segmentIndex = thought.segments.findIndex(s => s.segment_id === segmentId);
+    if (segmentIndex === -1) return undefined;
+
+    const segment = thought.segments[segmentIndex];
+    thought.segments[segmentIndex] = {
+      ...segment,
+      ...updates,
+      updated_at: new Date().toISOString()
+    };
+    
+    this.persistToStorage();
+    return thought.segments[segmentIndex];
+  }
+
+  public deleteSegment(thoughtId: string, segmentId: string): boolean {
+    const thought = this.getThoughtById(thoughtId);
+    if (!thought || !thought.segments) return false;
+
+    const initialLength = thought.segments.length;
+    thought.segments = thought.segments.filter(s => s.segment_id !== segmentId);
+    const deleted = thought.segments.length < initialLength;
+    if (deleted) this.persistToStorage();
+    return deleted;
+  }
 }
