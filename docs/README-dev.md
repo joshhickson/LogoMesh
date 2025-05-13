@@ -6,6 +6,12 @@
 
 ---
 
+**Note:**
+> This README is ambitious, and cluttered. It will be organized soon!
+
+---
+
+
 ## Executive Summary
 
 LogoMesh is a **local-first, AI-augmented cognitive framework** that transforms scattered thoughts into structured insight. By using a visual graph of tagged, filterable, and recursively linked segments, it enables users — and eventually AI — to reflect, reason, and grow in clarity over time.
