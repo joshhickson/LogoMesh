@@ -1,18 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Canvas from './components/Canvas';
-import { newBubbleId, newSegmentId } from './utils/eventBus';
 import { graphService } from './services/graphService';
 import Sidebar from './components/Sidebar';
 import ThoughtDetailPanel from './components/ThoughtDetailPanel';
 import AddThoughtModal from './components/AddThoughtModal';
+import { IdeaManager } from '@core/IdeaManager';
 
-
+const ideaManager = new IdeaManager();
 
 function App() {
-  const [thoughts, setThoughts] = useState(() => {
-    const saved = localStorage.getItem('thought-web-data');
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [thoughts, setThoughts] = useState(() => ideaManager.getThoughts());
   const [selectedThought, setSelectedThought] = useState(null);
   const [activeFilters, setActiveFilters] = useState([]);
 
@@ -48,8 +45,7 @@ function App() {
   }, [thoughts]);
 
   useEffect(() => {
-    localStorage.setItem('thought-web-data', JSON.stringify(thoughts));
-    // Sync with in-memory graph
+    // Sync with in-memory graph only
     thoughts.forEach(thought => graphService.addThought(thought));
   }, [thoughts]);
 
