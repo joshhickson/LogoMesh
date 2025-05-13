@@ -105,6 +105,24 @@ function Sidebar({
     });
   };
 
+  const handleClearCache = () => {
+    if (window.confirm('Are you sure you want to clear all thought projects? This cannot be undone.')) {
+      localStorage.removeItem('thought-web-data');
+      setThoughts([]);
+    }
+  };
+
+  const handleViewCache = () => {
+    const cachedData = localStorage.getItem('thought-web-data');
+    if (cachedData) {
+      const formattedData = JSON.stringify(JSON.parse(cachedData), null, 2);
+      const win = window.open('', '_blank');
+      win.document.write('<pre>' + formattedData + '</pre>');
+    } else {
+      alert('No cached data found');
+    }
+  };
+
   const handleResetFilters = () => {
     setFilterFieldName([]);
     setFilterFieldValue('');
@@ -151,6 +169,18 @@ function Sidebar({
         className="w-full mb-4 px-4 py-2 bg-indigo-500 text-white rounded"
       >
         Import from JSON
+      </button>
+      <button
+        onClick={handleClearCache}
+        className="w-full mb-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+      >
+        Clear Cache
+      </button>
+      <button
+        onClick={handleViewCache}
+        className="w-full mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      >
+        View Cache
       </button>
 
       {/* Filters */}
@@ -237,9 +267,9 @@ function Sidebar({
               {thought.title}
             </div>
             <ul className="ml-3 mt-1 text-sm">
-              {thought.filteredSegments.map((seg, index) => (
+              {thought.filteredSegments.map((seg) => (
                 <li
-                  key={`${thought.thought_bubble_id}_${seg.segment_id}_${index}`}
+                  key={`seg_list_${seg.segment_id}`}
                   className="text-gray-600 dark:text-gray-300"
                 >
                   - {seg.title}

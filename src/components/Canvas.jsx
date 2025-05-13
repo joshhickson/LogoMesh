@@ -2,10 +2,10 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
-import coseBilkent from 'cytoscape-cose-bilkent';
+import fcose from 'cytoscape-fcose';
 
 // Register the layout only once
-cytoscape.use(coseBilkent);
+cytoscape.use(fcose);
 
 function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   const cyRef = useRef(null);
@@ -62,12 +62,18 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   }, [thoughts, activeFilters]);
 
   const layout = {
-    name: 'cose-bilkent',
+    name: 'fcose',
     animate: true,
     randomize: true,
     nodeRepulsion: 8000,
     idealEdgeLength: 200,
-    edgeElasticity: 0.45
+    edgeElasticity: 0.45,
+    quality: 'proof',
+    // Enable position constraints based on saved positions
+    fixedNodeConstraint: thoughts.filter(t => t.position).map(t => ({
+      nodeId: t.thought_bubble_id,
+      position: t.position
+    }))
   };
 
   const stylesheet = [

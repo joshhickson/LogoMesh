@@ -3,7 +3,7 @@ import { graphService } from '../services/graphService';
 
 function ThoughtDetailPanel({ thought, setThoughts }) {
   // State management is now handled through parent component
-  
+
   const handleThoughtEdit = (field, value) => {
     setThoughts(prevThoughts => 
       prevThoughts.map(t => 
@@ -40,7 +40,7 @@ function ThoughtDetailPanel({ thought, setThoughts }) {
   const handleAddField = (segmentId) => {
     const fieldName = prompt('Enter field name:');
     if (!fieldName) return;
-    
+
     setThoughts(prevThoughts => 
       prevThoughts.map(t => {
         if (t.thought_bubble_id === thought.thought_bubble_id) {
@@ -81,7 +81,7 @@ function ThoughtDetailPanel({ thought, setThoughts }) {
 
   const handleDeleteSegment = (segmentId) => {
     if (!window.confirm('Are you sure you want to delete this segment?')) return;
-    
+
     setThoughts(prevThoughts => 
       prevThoughts.map(t => {
         if (t.thought_bubble_id === thought.thought_bubble_id) {
@@ -127,8 +127,8 @@ function ThoughtDetailPanel({ thought, setThoughts }) {
       {/* Segments */}
       <div>
         <h3 className="text-md font-semibold mb-2">Segments:</h3>
-        {(thought.segments || []).map((segment, index) => (
-          <div key={segment.segment_id || index} className="mb-4 border rounded-lg p-4 bg-gray-50 dark:bg-gray-800">
+        {(thought.segments || []).map((segment) => (
+          <div key={`seg_detail_${segment.segment_id}`} className="mb-4 border rounded-lg p-4 bg-gray-50 dark:bg-gray-800">
             <div className="flex justify-between items-center mb-2">
               <input
                 type="text"
@@ -145,7 +145,7 @@ function ThoughtDetailPanel({ thought, setThoughts }) {
                 ×
               </button>
             </div>
-            
+
             <textarea
               value={segment.content}
               onChange={(e) => handleSegmentEdit(segment.segment_id, 'content', e.target.value)}
@@ -164,7 +164,7 @@ function ThoughtDetailPanel({ thought, setThoughts }) {
                   + Add Field
                 </button>
               </div>
-              
+
               {segment.fields && Object.entries(segment.fields).map(([fieldName, fieldValue], i) => (
                 <div key={i} className="flex items-center gap-2 text-sm">
                   <span className="font-medium min-w-[100px]">{fieldName}:</span>
