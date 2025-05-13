@@ -68,12 +68,12 @@ export interface Thought {
   color?: string;
 }
 
-/** Metadata for export operations */
+/** Metadata defining version and timing of thought web exports */
 export interface ExportMetadata {
-  version: string;
-  exported_at: string;
-  author: string;
-  tool: string;
+  version: string;      // e.g., "1.0"
+  export_date: string;  // ISO date string, e.g., "2025-05-03T00:00Z"
+  author?: string;      // Optional author identification
+  tool?: string;        // Optional tool identification
 }
 
 /** Complete export structure */
