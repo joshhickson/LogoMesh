@@ -1,0 +1,12 @@
+
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"],
+      "@core/*": ["core/*"],
+      "@contracts/*": ["contracts/*"]
+    }
+  },
+  "include": ["src", "core", "contracts"]
+}
