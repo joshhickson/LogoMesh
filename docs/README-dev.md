@@ -11,6 +11,11 @@
 
 ---
 
+**Testing Demo:**
+> [It's buggy; not for
+long!](https://logomesh.us/demo)
+
+---
 
 ## Executive Summary
 
