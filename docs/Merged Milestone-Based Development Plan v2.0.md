@@ -393,212 +393,295 @@ These additions future-proof LogoMesh to become LLM-agnostic, introspective, and
 (End of Revised Phase 0 Section)
 ---
 
-This completes the revision for Phase 0. It's now significantly more detailed, chunked for AI prompting, and incorporates the excellent feedback you provided.
+## PHASE 1: Backend Implementation, Data Persistence, and Core Integrations (Estimated Duration: 3-4 Weeks)
 
-Are you ready to move on to revising Phase 1 in a similar manner?
+**Prerequisite:** Successful completion of all **Phase 0: Framework-First Architecture Setup & Core Logic Decoupling** tasks. This includes:
+*   Decoupled React application (`src/`) using an in-memory `IdeaManager` (`@core/IdeaManager.ts`).
+*   Defined data contracts in `@contracts/entities.ts`.
+*   Established foundational utilities (`@core/utils/`), logging (`@core/utils/logger.ts`), and unit test stubs for `/core`.
+*   Scaffolded LLM readiness contracts (`@contracts/llmExecutor.ts`) and logging stubs (`@core/logger/llmAuditLogger.ts`).
+*   Path aliases (`@core`, `@contracts`) configured in `jsconfig.json`.
 
+**Goal:**
+This phase transitions LogoMesh from an in-memory prototype to a robust, local-first application with persistent data storage using SQLite. It involves building a lightweight backend API server (Node.js/Express.js), integrating SQLite into the core data management layer (`IdeaManager`) via a `StorageAdapter` pattern, and connecting the React frontend to this new backend. This phase also includes refining the graph visualization to meet design specifications, laying the groundwork for local automation with Node-RED, and giving the LLM execution layer its initial concrete implementation.
 
+**Key Outcomes for Phase 1:**
+*   A functional backend API server (Node.js/Express.js) serving data from an SQLite database.
+*   The `/core/IdeaManager` refactored to use a persistent SQLite data store through a `StorageAdapter` pattern.
+*   The React application (`src/`) fully communicates with the backend API for all core data operations.
+*   An initial, simple implementation of the `LLMExecutor` interface (e.g., for Ollama or as a mock) and `LLMTaskRunner` integrated into the backend.
+*   Node-RED instance set up with foundational API integrations to the backend for basic automation workflows.
+*   Cytoscape.js graph visualization in the React app refined for compound nodes and `fcose` layout.
+*   JSON import/export functionality available via the backend API.
+*   The backend API and SQLite database containerized using Docker for consistent local development.
+*   A defined process for migrating data from `localStorage` (used in Phase 0 for initial data) to the new SQLite database.
 
-
-
-## PHASE 1: Core Functionality and Demo React Implementation, Scaffold & Realignment (Weeks 1–2)
-**Framework Outcome:**
-*(Pure LogoMesh core — no AI yet, with MLOps & UX foundations)*
-* Define core schema (Thought, Segment, etc.) in `/contracts`
-* Implement basic graph manipulation logic in `/core`
-* Implement SQLite integration in `/core`
-* Implement JSON import/export in `/core`
+---
 
 ### Tier #1: Local-First Full Immersion
 
--   **Start Using docs/Claude-log.md**
-    -   Purpose: Manual running log of Claude’s outputs, bugs, and resolutions.
-    -   Action: After each successful Claude task, append:
-        -   Task name
-        -   Prompt summary
-        -   Summary of changes
-        -   Observed outcome / test result
-        -   Any error messages, hallucinations, or edge-case discoveries
+**Tasks:**
 
--   **Create state_snapshots/ folder in root**
-    -   Purpose: Stores .json exports of full graph state at milestone checkpoints.
-    -   Action: At the end of each major phase (e.g. post-Cytoscape, post-filter layer), export graph data using the current JSON schema and save to:
-        -   state_snapshots/v0.1_init.json
-        -   state_snapshots/v0.2_with_filters.json
-        -   state_snapshots/v1.0_ai_ready.json
+**1. Establish Backend API Server & SQLite Database Foundation:**
+    *   **Framework Outcome:** A runnable Node.js/Express.js backend server capable of basic request handling. A defined SQLite database schema (`schema.sql`) and an initialization script (`initDb.ts`) to create the database structure.
+    *   **Demo Implementation Outcome:** Provides the server infrastructure that the React frontend and Node-RED will connect to. The database will be ready to store application data.
+    *   **Detailed Actions (for AI Agent - Claude):**
 
--   **Create todo/Claude_Feedback.md**
-    -   Purpose: Running scratchpad for user observations about Claude’s behavior.
-    -   Action: After every 2–3 Claude sessions, document:
-        -   Repeated inefficiencies
-        -   Things Claude misunderstood or mis-executed
-        -   Any suggested prompts that increased precision
-        -   Promising follow-ups or forked ideas to revisit
+        a.  **Set Up Backend Server Project Structure (`server/`):**
+            *   Create a new top-level directory named `server/` in the Replit project root.
+            *   Inside `server/`, initialize a new Node.js project (e.g., `npm init -y`).
+            *   Install necessary dependencies: `express`, `cors`, `sqlite3`.
+            *   If using TypeScript for the server (recommended):
+                *   Install dev dependencies: `typescript`, `@types/express`, `@types/cors`, `@types/node`, `ts-node`, `nodemon` (for development).
+                *   Create `server/tsconfig.json` (e.g., `"module": "commonjs"`, `"target": "es2020"`, `"outDir": "./dist"`, `"rootDir": "./src"`, `"esModuleInterop": true`, `"resolveJsonModule": true`).
+                *   Create `server/src/` directory and place server code (like `index.ts`) within it. Update `package.json` scripts for building and running.
+            *   Create the main server entry point (e.g., `server/src/index.ts`).
+            *   Implement a minimal Express application setup:
+                *   Initialize Express app, use `cors()` and `express.json()` middleware.
+                *   Define a `GET /api/v1/health` route returning `200 OK` with `{ status: "healthy", timestamp: new Date().toISOString() }`.
+                *   Start the server listening on a configurable port (e.g., `process.env.PORT || 3001`).
+            *   *Verification:* The Express server starts, and `GET /api/v1/health` returns the expected JSON response.
 
--   **Graph Visualization & Data**
-    -   Replace visual canvas with **Cytoscape.js** (open-source alternative).
-    -   Create React wrapper using `ref` integration pattern.
-    -   **Action: Implement Cytoscape.js Graph Model & Integrate `cytoscape.js-fcose` Layout.**
-        -   Configure Cytoscape.js to correctly model **Thought Bubbles as compound parent nodes** and **Segments as their child nodes**. This is crucial for leveraging fCoSE's strengths.
-        -   Integrate the `cytoscape.js-fcose` extension into the Cytoscape.js instance.
-        -   Implement **automatic layout using `cytoscape.js-fcose`** for the graph.
-        -   **Action:** Configure initial `cytoscape.js-fcose` parameters to prioritize:
-            -   Clear visual separation of segments within their parent bubbles.
-            -   Visually grouping connected bubbles.
-            -   Minimizing edge crossings for a clean view.
-            -   Aim for a balanced layout that hints at the graph's structure.
-        -   **Note for Developers & LLM Agents:** `cytoscape.js-fcose` is a force-directed layout optimized for compound graphs. Its parameters (consult `cytoscape.js-fcose` documentation) can be tuned to influence node spacing, edge lengths, and clustering. Effective configuration is key to a clear visual representation of the thought structure. This lays the foundation for visually leveraging future schema metadata like `cluster_id` and `graph_neighbors` for more semantically informed layouts (in later phases).
-    -   Migrate bubbles/segments from initial state (e.g., old JSON or dummy data) to the Cytoscape.js graph model.
-    -   Implement full React ↔ Cytoscape.js sync for visual updates based on data changes.
+        b.  **Define and Create SQLite Database Schema (`@core/db/`):**
+            *   **(Prerequisite Check for AI Agent):** Before proceeding, confirm that the `Merged Milestone-Based Development Plan v2.0.md` document (provided as context) contains a clearly defined "Phase 1 SQLite Schema" section detailing all tables, columns, SQLite-compatible data types, primary keys, foreign keys, and constraints. If this section is missing or incomplete, stop and request the complete schema definition.
+            *   Create `@core/db/schema.sql`.
+            *   Populate `@core/db/schema.sql` with the `CREATE TABLE` statements from the "Phase 1 SQLite Schema" section of the main plan.
+            *   Create `@core/db/initDb.ts`. This script will:
+                *   Import `sqlite3`.
+                *   Define the database file path (e.g., `process.env.DB_PATH || './core/db/logomesh.sqlite3'`).
+                *   Contain `initializeDatabase()` function that connects to SQLite, reads `schema.sql`, and executes `CREATE TABLE IF NOT EXISTS ...` for each table.
+                *   Include error handling and use `@core/utils/logger.ts`.
+                *   **(For AI Agent - Server Startup Logic):** Ensure the main server startup logic (e.g., in `server/src/index.ts`) calls `initializeDatabase()` *before* starting the Express server, particularly if the database file might not exist. It should check for the existence of the DB file, and if not present or empty, run the initialization. Example pseudo-logic:
+                    ```typescript
+                    // Conceptual logic for server/src/index.ts
+                    // import fs from 'fs';
+                    // const DB_PATH = process.env.DB_PATH || './core/db/logomesh.sqlite3';
+                    // if (!fs.existsSync(DB_PATH)) { // Or a more robust check if DB is empty
+                    //   logger.log(`Database not found at ${DB_PATH}, attempting to initialize...`);
+                    //   await initializeDatabase(); // Assuming initializeDatabase is async
+                    //   logger.log('Database initialized successfully.');
+                    // }
+                    ```
+            *   *Verification:* Running `initDb.ts` creates/updates `logomesh.sqlite3` with the correct schema. The server startup correctly initializes the DB if needed.
 
+        c.  **Data Migration from `localStorage` (Placeholder for Execution):**
+            *   **(No coding action for this sub-task *yet*.)**
+            *   Refer to `/docs/DATA_MIGRATION.md`. Migration will occur later in Phase 1.
 
--   **Local Persistence (SQLite - Foundation for Cluster Runtime & Universal Extensibility)**
-    -   Set up **SQLite** DB instance (primary local database).
-    -   **Action: Design and Implement Core SQLite Schema.** This schema must be robust, normalized, and incorporate foundational elements necessary for future "Cluster Runtime", efficient AI processing of large graphs, and Universal Extensibility for multiple data formats.
-    -   Migrate JSON bubbles/segments into SQLite, ensuring data is correctly mapped to the new normalized schema.
-    -   Implement full React ↔ SQLite load/save cycle via API or in-browser WebAssembly (e.g., sql.js), ensuring data is correctly read from and written to the new normalized table structure.
-        -   Define core tables:
-            -   `thoughts`: Stores thought bubble metadata (UUID PK `thought_bubble_id`, title, description, created_at, color, position_x REAL, position_y REAL, etc.).
-            -   `segments`: Stores segment metadata and content.
-                -   `segment_id` (`TEXT` / UUID - Primary Key)
-                -   `thought_bubble_id` (`TEXT` / UUID - Foreign Key referencing `thoughts.thought_bubble_id`)
-                -   `title` (`TEXT`)
-                -   `content` (`TEXT`) - Stores text content OR a text placeholder for non-text types.
-                -   `content_type` (`TEXT`) - **[Universal Extensibility]** Stores the modality type ('text', 'image', 'audio', 'video', etc.). Non-nullable, defaults to 'text'.
-                -   `asset_path` (`TEXT`, Nullable) - **[Universal Extensibility]** Stores the local file path to the media asset for non-text segment types. NULL for text segments.
-                -   `embedding_vector` (`BLOB` or `REAL` array serialized to TEXT) - Placeholder for segment embedding. Type TBD based on `sqlite3_vector` specifics, but allocate space/field.
-                -   `created_at` (`INTEGER` or `TEXT`)
-                -   `updated_at` (`INTEGER` or `TEXT`)
-                -   `abstraction_level` (`TEXT`) - ('Fact', 'Idea', 'Theme', 'Goal'). Non-nullable, defaults to 'Fact'.
-                -   **[AI Metadata / Attention Scaffolding Fields - Foundation for Cluster Runtime]**
-                    -   `local_priority` (`REAL`) - Importance for LLM chunking. Non-nullable, defaults to 0.5.
-                    -   `cluster_id` (`TEXT`) - Grouping by theme/narrative. **Non-nullable**, requires a value (implement a default 'uncategorized' cluster concept).
+        d.  **Integrate LLM Execution Layer Foundation (from Phase 0 Scaffolding):**
+            *   **Framework Outcome:** The `/core` module includes a functional (though initially simple/mocked) LLM execution pipeline.
+            *   **Demo Implementation Outcome:** A basic API endpoint can demonstrate invoking the LLM execution flow.
+            *   **Detailed Actions (for AI Agent - Claude):**
 
--   **Automation Foundations (Local - Node-RED Implementation)**
-    -   Set up a self-hosted **Node-RED** instance for local-centric automation workflows.
-        -   **Action: Install and Configure Node-RED.** Install Node-RED on the local development environment (e.g., via npm or Docker). Configure its settings for a local instance.
-        -   **Action: Install Essential Node-RED Nodes.** Install necessary nodes for interacting with the local system and webhooks (e.g., `node-red-node-http` for webhooks, `node-red-node-function` for custom logic, `node-red-node-filepath` for file system access). Consider `node-red-node-sqlite` if direct DB interaction from Node-RED is deemed necessary *for specific workflows*, but prioritize API interaction with LogoMesh backend if possible.
-        -   **Note for Developers & LLM Agents:** Node-RED workflows run as a separate local service. Interaction with LogoMesh will primarily be asynchronous, triggered by events.
-    -   Define webhook triggers and potentially local API endpoints for Node-RED integration.
+                i.  **Create LLM Adapter Directory and Core Files:**
+                    *   Create `@core/llm/`.
+                    *   Create `@core/llm/OllamaExecutor.ts` (or `MockLLMExecutor.ts`) implementing `LLMExecutor` from `@contracts/llmExecutor.ts`. For the initial version, `executePrompt` should return a mocked response (e.g., `Promise.resolve(\`Mocked response to: \${prompt}\`)`). `supportsStreaming` can be `false`.
+                    *   Create `@core/llm/LLMTaskRunner.ts` as previously defined, using an `LLMExecutor` instance and logging with `llmAuditLogger`. Include the `runPromptWithStreaming?` stub with fallback.
+                    *   Create `@core/llm/utils/mermaidAuditor.ts` with the `isValidMermaid` stub function.
+                    *   *Verification:* Files created. `OllamaExecutor` implements `LLMExecutor`. `LLMTaskRunner` defined. `mermaidAuditor` stub exists.
 
-        -   Define linking/metadata tables (Normalized Approach):
-            -   `thought_tags`: Links thoughts to tags.
-                -   `thought_bubble_id` (`TEXT` / UUID - FK to `thoughts`)
-                -   `tag_name` (`TEXT`)
-                -   Primary Key (`thought_bubble_id`, `tag_name`)
-            -   `segment_tags`: Links segments to tags.
-                -   `segment_id` (`TEXT` / UUID - FK to `segments`)
-                -   `tag_name` (`TEXT`)
-                -   Primary Key (`segment_id`, `tag_name`)
-            -   `tags`: Stores unique tag names and metadata (e.g., color).
-                -   `tag_name` (`TEXT` - Primary Key)
-                -   `color` (`TEXT`)
-            -   `segment_fields`: **[Normalized Fields]** Stores key-value field data for segments.
-                -   `segment_id` (`TEXT` / UUID - FK to `segments`)
-                -   `field_name` (`TEXT`)
-                -   `field_value` (`TEXT`)
-                -   `field_type` (`TEXT`) - ('text', 'number', 'date', 'concept', etc.)
-                -   Primary Key (`segment_id`, `field_name`) - (Assuming field names are unique per segment)
-            -   `segment_neighbors`: **[Normalized Graph Neighbors]** Stores neighbor relationships between segments.
-                -   `source_segment_id` (`TEXT` / UUID - FK to `segments`)
-                -   `target_segment_id` (`TEXT` / UUID - FK to `segments`)
-                -   `relationship_type` (`TEXT`, Nullable) - Type of link (e.g., 'semantic_similarity', 'manual', 'ai_suggested', 'potential_analogy', 'supports_claim'). Allows for 'fuzzy links' and theory representation.
-                -   Primary Key (`source_segment_id`, `target_segment_id`, `relationship_type`) - if multiple relationship types between same two segments are possible. If only one type per pair, Primary Key (`source_segment_id`, `target_segment_id`). **Decision:** Assume Primary Key (`source_segment_id`, `target_segment_id`, `relationship_type`) for max flexibility.
-            -   `segment_related_context`: **[Normalized Related Context]** Stores arbitrary context links for segments.
-                -   `segment_id` (`TEXT` / UUID - FK to `segments`)
-                -   `context_key` (`TEXT`) - Label for the context (e.g., 'source_document', 'external_url', 'related_concept_string').
-                -   `context_value` (`TEXT`) - The actual context value (e.g., '/path/to/doc.pdf', 'https://...', 'Predictive Maintenance', a segment ID).
-                -   `context_type` (`TEXT`, Nullable) - Type of value (e.g., 'filepath', 'url', 'string', 'segment_id').
-                -   Primary Key (`segment_id`, `context_key`, `context_value`) - Assuming a unique key+value pair per segment.
-            -   `segment_llm_history`: **[Structured LLM History]** Stores audit trail of AI processing.
-                -   `history_id` (`TEXT` / UUID - Primary Key)
-                -   `segment_id` (`TEXT` / UUID - FK to `segments`)
-                -   `pass_timestamp` (`INTEGER`) - Unix timestamp.
-                -   `llm_model` (`TEXT`)
-                -   `prompt_summary` (`TEXT`)
-                -   `output_summary` (`TEXT`)
-                -   `context_chunk_ids` (`TEXT`) - JSON string array of `segment_id`s in the input chunk.
-                -   `actions_taken` (`TEXT`) - JSON string array of actions/suggestions.
-                -   `temperature` (`REAL`, Nullable)
-                -   `top_p` (`REAL`, Nullable)
-                -   `random_seed` (`INTEGER`, Nullable)
-                -   `version` (`TEXT`, Nullable) - Version of processing logic.
+                ii. **Integrate `LLMTaskRunner` into Backend API (Stub Route):**
+                    *   Create `server/src/routes/llmRoutes.ts`.
+                    *   Implement an Express router with a `POST /api/v1/llm/prompt` endpoint using `LLMTaskRunner` and `OllamaExecutor` (or mock). Include basic request validation for the prompt.
+                    *   In `server/src/index.ts`, import and use this router for `/api/v1/llm`.
+                    *   *Verification:* `POST` to `/api/v1/llm/prompt` returns a mock LLM response. Interaction logged by `llmAuditLogger`.
 
-        -   **Note for Future Developers:** This normalized schema, including dedicated tables for fields, relationships, context, and LLM history, aligns with best practices for relational databases and is designed to support efficient querying and complex data relationships critical for "Cluster Runtime" scalability and advanced AI features. The AI metadata fields (`local_priority`, `cluster_id`, etc.) are foundational for the Context Window Allocator and intelligent AI processing. The `content_type` and `asset_path` fields enable Universal Extensibility for multimodal data, allowing future AI pipelines to process and link various media types.
+**2. Refactor `IdeaManager` to Use SQLite via `StorageAdapter` Pattern:**
+    *   **Framework Outcome:** `IdeaManager` is decoupled from direct data storage implementation, using a `StorageAdapter` interface. A `SQLiteStorageAdapter` implementation handles all database interactions. The system now persists data in SQLite.
+    *   **Demo Implementation Outcome:** All data operations performed by the React application (via the backend API) are now persistent.
+    *   **Detailed Actions (for AI Agent - Claude):**
 
+        a.  **Define `StorageAdapter` Interface:**
+            *   Create `@contracts/storageAdapter.ts`.
+            *   Define and export the `StorageAdapter` interface with `async` CRUD methods for `Thought`, `Segment` (including `getAllThoughts`, `getThoughtById`, `createThought`, `updateThought`, `deleteThought`, `getSegmentsForThought`, `getSegmentById`, `createSegment`, `updateSegment`, `deleteSegment`).
+            *   Define `NewThoughtData` and `NewSegmentData` input types.
+            *   *(Note for AI Agent): Methods must return `Promise`s. Align method signatures with DTOs from `@contracts/entities.ts`.)*
+            *   *Verification:* `@contracts/storageAdapter.ts` exists with the correctly defined interface.
 
-        -   **Action: Define LogoMesh Event Webhooks.** Determine key events in the LogoMesh application (e.g., "segment created", "segment updated", "graph saved") that Node-RED workflows should react to. Implement webhook endpoints within the LogoMesh backend (API) that Node-RED's "HTTP In" nodes can listen to.
-        -   **Action: Design Local LogoMesh API Endpoints for Node-RED.** Design basic REST API endpoints in the LogoMesh backend that Node-RED workflows can call to perform actions (e.g., "get segment data by ID", "update segment tag", "trigger local backup"). These endpoints should interact with the SQLite database.
-        -   **Note for Developers & LLM Agents:** Designing clear API contracts for LogoMesh events and actions facilitates decoupled integration with Node-RED, aligning with the principles of Universal Extensibility and making workflows more robust.
-    -   Scaffold core logic flows for initial local automation tasks.
+        b.  **Implement `SQLiteStorageAdapter`:**
+            *   Create `@core/storage/sqliteAdapter.ts`.
+            *   Implement class `SQLiteStorageAdapter` implementing `StorageAdapter`.
+            *   Use `sqlite3` to connect to `logomesh.sqlite3`.
+            *   Implement all `StorageAdapter` methods with SQL queries against the normalized tables.
+                *   `createThought` handles inserts into `thoughts`, `tags`, `thought_tags`, initial `segments`, `segment_fields`.
+                *   `getAllThoughts` assembles full `Thought` DTOs including nested `segments` (with their `fields`) and `tags`.
+                *   `updateSegment` (with `updates.fields`) handles `segment_fields` table modifications.
+            *   Use parameterized queries and `@core/utils/logger.ts`.
+            *   *(Note for AI Agent): Implement method-by-method. Pay close attention to DTO <-> DB normalized schema mapping. Unit tests are crucial here.)*
+            *   *Verification:* (To be verified by unit tests in Task 8c). Manually inspect DB after operations.
 
-        -   **Action:** Design and implement appropriate SQLite Indexes for efficient querying, focusing on Foreign Keys (`thought_bubble_id`, `segment_id`), AI metadata fields (`local_priority`, `cluster_id`), and fields/tags (`field_name`, `field_value`, `tag_name`).
-    -   Migrate JSON bubbles/segments into SQLite, ensuring data is correctly mapped to the new normalized schema. This will involve parsing the JSON `fields` array and inserting rows into the `segment_fields` table, etc.
-    -   Implement full React ↔ SQLite load/save cycle via API or in-browser WebAssembly (e.g., sql.js), ensuring data is correctly read from and written to the new normalized table structure.
+        c.  **Refactor `IdeaManager` to Use `StorageAdapter`:**
+            *   Modify `@core/IdeaManager.ts`.
+            *   Constructor: `constructor(private storage: StorageAdapter) {}`.
+            *   Remove in-memory `thoughts` array and `localStorage` loading.
+            *   Rewrite public CRUD methods to be `async` and delegate to `this.storage`, ensuring ID generation for new entities (using `@core/utils/idUtils.ts`) happens before calling storage adapter create methods.
+            *   *Verification:* `IdeaManager` uses the `storage` adapter. Unit tests (with a mock adapter) pass.
 
--   **Abstraction Taxonomy Definition**
-    -   Co-design **concept hierarchy**:
-        1.  **Fact** (atomic data)
-        2.  **Idea** (interpretation)
-        3.  **Theme** (clusters of ideas)
-        4.  **Goal** (outcomes)
-    -   Tag each bubble with its level + **memory cue** (anchor/trigger)
+**3. Implement Backend API Endpoints for Core Entities:**
+    *   **Framework Outcome:** Backend API server exposes RESTful CRUD endpoints for `Thoughts` and `Segments`, using the SQLite-backed `IdeaManager`.
+    *   **Demo Implementation Outcome:** React frontend has functional API endpoints for data.
+    *   **Detailed Actions (for AI Agent - Claude):**
 
--   **Automation Foundations (Local)**
-    -   Set up self-hosted **n8n** instance for local-centric automation.
-    -   Define webhook triggers for local bubble/segment sync events.
-    -   Scaffold logic flows for local auto-tagging, backup to local storage, and initial embedding prep, evaluating if simpler in-app mechanisms are sufficient for initial needs.
+        a.  **Instantiate `IdeaManager` with `SQLiteStorageAdapter` in Server:**
+            *   In `server/src/index.ts`, ensure `IdeaManager` is instantiated with `SQLiteStorageAdapter`.
+            *   This `ideaManager` instance will be used by route handlers.
+            *   *Verification:* Server starts, `IdeaManager` uses `SQLiteStorageAdapter`.
 
--   **DevOps Foundations**
-    -   Containerize front-end + SQLite (**Docker Compose**) for easy local deployment.
-    -   DB migration scripts (Knex/Flyway) in CI - **Action:** Ensure migration scripts correctly handle creating the new normalized tables and fields.
-    -   Unit tests for React–SQLite sync - **Action:** Update unit tests to verify data is correctly written to and read from the new normalized schema.
-    -   GitHub Actions for lint/build/test on PR
+        b.  **Create API Routes for `Thoughts` (`server/src/routes/thoughtRoutes.ts`):**
+            *   Implement `GET /api/v1/thoughts`, `POST /api/v1/thoughts`, `GET /api/v1/thoughts/:thoughtId`, `PUT /api/v1/thoughts/:thoughtId`, `DELETE /api/v1/thoughts/:thoughtId`.
+            *   Routes call corresponding `ideaManager` methods.
+            *   Include request validation, error handling, and logging.
+            *   Mount router in `server/src/index.ts` for `/api/v1/thoughts`.
+            *   *Verification:* Endpoints testable (e.g., via Postman), data reflects in SQLite.
 
--   **UX Foundations**
-    -   Style guide: node shapes, WCAG palette, typography scale
-    -   Basic interactions: click-select, hover-preview, drag-pan/zoom
-    -   Onboarding tour stub with progressive-disclosure
- 
-        -   **Action: Scaffold Workflow: Basic Auto-Tagging Prep.** Create a simple Node-RED flow triggered by a "segment created/updated" webhook. This flow might initially just log segment data or prepare it for future auto-tagging logic (e.g., sending text to a local text processing node if available later).
-        -   **Action: Scaffold Workflow: Local Backup Trigger.** Create a Node-RED flow triggered by a "graph saved" webhook or a timer. This flow should call a LogoMesh API endpoint (if designed) to trigger a local database backup, or directly copy the SQLite DB file to a safe location using Node-RED file nodes.
-        -   **Action: Scaffold Workflow: Embedding Prep Trigger.** Create a Node-RED flow triggered by a "segment created/updated" webhook. This flow should call a LogoMesh API endpoint to retrieve the segment content and potentially send it to the local Embedding Micro-service (once implemented in Phase 2) via its API.
-        -   **Note for Developers & LLM Agents:** These initial workflows establish the pattern for Node-RED reacting to LogoMesh events and interacting with its data and microservices via APIs and webhooks. Use "Function" nodes in Node-RED for custom logic within workflows.
+        c.  **Create API Routes for `Segments` (within `thoughtRoutes.ts` or new `segmentRoutes.ts`):**
+            *   Implement `POST /api/v1/thoughts/:thoughtId/segments`, `PUT /api/v1/thoughts/:thoughtId/segments/:segmentId`, `DELETE /api/v1/thoughts/:thoughtId/segments/:segmentId`.
+            *   Similar validation, error handling, logging.
+            *   *Verification:* Segment CRUD via API works, data persists.
 
-> **Goal:** A solid, repeatable dev environment with clear hierarchy, automation readiness, and consistent UI patterns, underpinned by a robust, normalized SQLite schema designed for future AI processing needs, multimodal flexibility, and foundational "Cluster Runtime" considerations.
+**4. Refactor React Frontend to Consume Backend API:**
+    *   **Framework Outcome:** `/core` layer is primarily backend. React frontend is a pure API client.
+    *   **Demo Implementation Outcome:** React app uses HTTP requests for all data operations.
+    *   **Detailed Actions (for AI Agent - Claude):**
 
-### Tier #2: Cloud-Enhanced Extensions (Optional/Future)
+        a.  **Create an API Service Layer in React App (`src/services/apiService.ts`):**
+            *   Module encapsulates `fetch`/`axios` calls to backend API (`http://localhost:3001/api/v1` or configurable).
+            *   Export functions for all needed CRUD operations (e.g., `fetchThoughts()`, `createThoughtApi(data: NewThoughtData)` etc.).
+            *   Basic error handling (check `response.ok`, parse JSON, throw generic error on 4xx/5xx).
+            *   *Verification:* `apiService.ts` created with stubs/implementations.
 
--   **API Abstraction Layer Design (Foundation for Cloud Integration & Universal Extensibility)**
-    -   Design clear API contracts and interfaces for **Embedding Services** and **Vector Databases** that allow for swapping out local implementations (e.g., `sqlite3_vector`) with cloud-based alternatives (e.g., Pinecone, Weaviate) in later phases without major refactoring.
-    -   Define base classes/interfaces for AI model interactions that support various LLM APIs (local via `llama.cpp`/Ollama, or cloud like OpenAI/GPT) for future extensibility.
-    -   **Action:** Explicitly design these abstraction layers to handle different data modalities, allowing future integration of multimodal AI services (e.g., image captioning APIs, audio transcription models) through the same generalized interfaces.
--   **Automation Foundations (Cloud Readiness)**
-    -   Consider architecture patterns for extending n8n workflows to potentially interact with cloud services for backups or integrations as complexity warrants.
+        b.  **Refactor `App.jsx` to Use `apiService`:**
+            *   Remove `IdeaManager` usage. Import from `apiService.ts`.
+            *   `useEffect` on mount calls `apiService.fetchThoughts()` to `setThoughts`.
+            *   `createThought` calls `apiService.createThoughtApi(...)`, then re-fetches all thoughts to update state (simpler initial strategy).
+            *   `refreshThoughts` callback (passed to children) now calls `apiService.fetchThoughts()`.
+            *   *Verification:* `App.jsx` loads from API. Creates thoughts via API.
 
-### Should you implement fCoSE at the same time as SQLite?
+        c.  **Refactor Child Components (`ThoughtDetailPanel`, `Canvas`, etc.) to Use `apiService` (via props/callbacks):**
+            *   Remove `ideaManager` prop. Use callbacks from `App.jsx` that internally call `apiService` methods.
+            *   Example: `ThoughtDetailPanel` gets `onUpdateSegmentApi(segmentId, updates)` prop.
+            *   `Canvas.jsx` position updates call `apiService.updateThoughtApi(...)` via prop.
+            *   *Verification:* UI interactions use `apiService`. Data persists across reloads.
 
-Yes, absolutely. Implementing the Cytoscape.js / `cytoscape.js-fcose` integration **concurrently** with the SQLite implementation (specifically the data *reading* and loading part) is highly recommended and beneficial for several reasons:
+**5. Refine Graph Visualization (Cytoscape.js - Compound Nodes & Layout):**
+    *   **Demo Implementation Outcome:** Graph canvas correctly visualizes `Thoughts` as compound parents containing `Segment` children, using `fcose` layout.
+    *   **Detailed Actions (for AI Agent - Claude):**
 
-1.  **Integrated Testing:** You need data to test your visual canvas and layout. Loading this data from the new SQLite database provides an immediate way to see if your data migration and database reading logic are working correctly *and* if the visual layer is interpreting that data as expected.
-2.  **Visual Feedback:** Seeing the graph rendered and automatically laid out based on data pulled from SQLite gives you instant visual feedback on both systems. You can quickly spot if data is missing, relationships are incorrect, or if the layout isn't behaving as anticipated with real (or realistic dummy) data from the database.
-3.  **Identifying Bottlenecks:** Implementing the data loading from SQLite to the Cytoscape.js graph model and then applying the fCoSE layout allows you to identify potential performance bottlenecks early in the data pipeline or the rendering process.
-4.  **Ensuring Compatibility:** It ensures that the data structure you're pulling from SQLite is correctly formatted and structured for the Cytoscape.js graph model, which is necessary for fCoSE (especially for compound nodes).
+        a.  **Modify `Canvas.jsx` for Compound Node Structure:**
+            *   Refactor `elements` generation in `src/components/Canvas.jsx`.
+            *   Segment nodes' `data` object must include `parent: thought.thought_bubble_id`.
+            *   Remove direct Thought-to-Segment edges if compound structure renders clearly. Edges should primarily be between Thought nodes or Segment nodes based on future `segment_neighbors` data.
+            *   *Verification:* Segments appear nested in thought bubbles.
 
-You can break this down into smaller, testable steps:
+        b.  **Integrate and Configure `cytoscape-fcose` Layout:**
+            *   Ensure `cytoscape.use(fcose);` is called.
+            *   Update `layout` config in `Canvas.jsx` to use `name: 'fcose'`.
+            *   Configure `fcose` parameters (e.g., `nodeRepulsion`, `idealEdgeLength`, `nestingFactor`, `quality`) for clear compound graph visualization.
+            *   *Verification:* Graph uses `fcose`. Compound nodes/children are clearly arranged.
 
-* Implement basic SQLite schema and data insertion.
-* Implement a function to *read* data from SQLite.
-* Implement the React wrapper for Cytoscape.js.
-* Implement the logic to convert data read from SQLite into the Cytoscape.js graph model format (nodes and edges, including parent-child relationships for compound nodes).
-* Integrate `cytoscape.js-fcose` and apply the layout to the graph model loaded from SQLite.
-* Incrementally refine both the SQLite reading logic and the Cytoscape.js/fCoSE implementation based on testing.
+        c.  **Handle Node Position Updates (Compound Nodes):**
+            *   `dragfree` event handler in `Canvas.jsx` saves positions of compound Thought nodes.
+            *   Updates sent via `apiService.updateThoughtApi(...)`.
+            *   *Verification:* Dragging thoughts updates position via API; layout re-renders correctly.
 
-By tackling these together, you ensure that your new data backend (SQLite) is correctly hooked up to your new data visualization frontend (Cytoscape.js + fCoSE), building a solid functional core for Phase 1.
+**6. Set Up Node-RED for Local Automation & Initial Integration:**
+    *   **Framework Outcome:** Node-RED configured to interact with LogoMesh backend API.
+    *   **Demo Implementation Outcome:** Basic Node-RED flows scaffolded.
+    *   **Detailed Actions (for AI Agent - Claude or Developer):**
 
+        a.  **Install and Configure Node-RED Locally:**
+            *   (Standard Node-RED install). Install `node-red-node-http`, `node-red-contrib-fs-ops` (optional).
+            *   *Verification:* Node-RED running. Nodes installed.
 
+        b.  **(Decision from prior discussion):** Node-RED will primarily *call* LogoMesh API endpoints. No webhooks from backend *to* Node-RED in Phase 1.
 
+        c.  **Confirm API Endpoints Suitability for Node-RED:**
+            *   Review existing CRUD API endpoints for clarity for Node-RED consumption.
+            *   *Verification:* Node-RED can make HTTP requests to LogoMesh API.
 
+        d.  **Implement Backend Backup API Endpoint & Scaffold Node-RED Workflow:**
+            *   Create `server/src/routes/adminRoutes.ts`. Implement `POST /api/v1/admin/backup`. This route uses Node.js `fs` to copy the database file (e.g., `logomesh.sqlite3`) to a timestamped backup file in a `server/backups/` directory (ensure this directory is writable).
+            *   In `server/src/index.ts`, mount this router for `/api/v1/admin`.
+            *   **Node-RED Workflow 1 (Backup):** Create a flow triggered by a timer (e.g., daily) that makes a `POST` request to `/api/v1/admin/backup`.
+            *   *Verification:* Calling backup API creates a DB copy. Node-RED flow triggers backup.
+
+        e.  **Scaffold Other Node-RED Workflows (Conceptual - API Calls):**
+            *   **Workflow 2 (Auto-Tagging Prep Stub):** Flow calls `GET /api/v1/thoughts`, uses a "Function" node for basic keyword logic, then (conceptually) calls `PUT /api/v1/thoughts/:thoughtId/segments/:segmentId` to update tags/fields.
+            *   **Workflow 3 (Embedding Prep Trigger Stub):** Flow fetches segments, then calls `POST /api/v1/llm/prompt` with segment content. (Mock LLM response logged).
+            *   *Verification:* Flows make API calls. Embedding prep logs via `llmAuditLogger`.
+
+**7. Implement JSON Import/Export via Backend API:**
+    *   **Framework Outcome:** Core logic for data serialization/deserialization in `/core` exposed via backend.
+    *   **Demo Implementation Outcome:** Users import/export graph via UI, mediated by backend API.
+    *   **Detailed Actions (for AI Agent - Claude):**
+
+        a.  **Create `@core/services/portabilityService.ts`:**
+            *   This service uses the `StorageAdapter` (injected or passed) to:
+                *   `exportData()`: Fetch all data, assemble into standard JSON export format (as per `README-dev.md`).
+                *   `importData(jsonData: any)`: Parse, validate (against `/contracts`), and use `StorageAdapter` methods to insert/update data in normalized tables.
+            *   *Verification:* Unit tests for `PortabilityService` pass.
+
+        b.  **Create API Endpoints for Import/Export (`server/src/routes/portabilityRoutes.ts`):**
+            *   `GET /api/v1/export/json`: Calls `portabilityService.exportData()`, streams JSON file as download.
+            *   `POST /api/v1/import/json`: Accepts JSON file upload (e.g., using `multer`), passes to `portabilityService.importData()`.
+            *   Mount router in `server/src/index.ts`.
+            *   *Verification:* Endpoints provide valid export and process valid import.
+
+        c.  **Update React UI to Use API for Import/Export:**
+            *   Refactor `handleExportAll` in `src/components/Sidebar.jsx` to `GET /api/v1/export/json`.
+            *   Refactor `handleImport` to `POST` file to `/api/v1/import/json`. Update UI on response.
+            *   Remove direct use of old client-side utils.
+            *   *Verification:* UI import/export uses backend API.
+
+**8. DevOps & UX Foundations (Continued):**
+    *   **Framework Outcome:** Backend is containerized. Basic UI/UX documented/implemented.
+    *   **Demo Implementation Outcome:** Easier local setup. React app maintains usability.
+    *   **Detailed Actions (for AI Agent - Claude or Developer):**
+
+        a.  **Containerize Backend API Server & SQLite Database (Docker):**
+            *   Create `Dockerfile` for `server/` (Node.js app, copy `/core`, `/contracts`, install deps, expose port, run server).
+            *   Create `docker-compose.yml`:
+                *   `logomesh-api` service: Uses `Dockerfile`. Map ports. Mount volume for SQLite DB (e.g., `./data:/app/core/db`) and backups (`./backups:/app/backups`).
+                *   *(Optional for dev: separate services for React dev server and Node-RED, can be added later if primary focus is on API containerization first).*
+            *   *(Note for AI Agent - Dockerfile for server): Ensure the `initializeDatabase()` logic (or equivalent) is called appropriately when the container starts, if the DB volume is empty.*
+            *   *Verification:* `docker-compose up` starts API. API accessible. Data persists in volume.
+
+        b.  **Database Migration/Initialization Documentation:**
+            *   Update `/docs/BUILD_PROCESS.md` or `/docs/DB_MIGRATIONS.md` on how `@core/db/initDb.ts` is used (e.g., in Docker startup or manually for dev). Document localStorage-to-SQLite migration script execution step (to be implemented fully in a sub-task of 1c once API is ready).
+            *   *Verification:* Initialization/migration process documented.
+
+        c.  **Update and Expand Unit/Integration Tests:**
+            *   **Backend API Tests (`server/src/routes/tests/`):** Use `supertest` for API endpoint integration tests (CRUD for thoughts, segments; LLM, admin, portability routes). Test against a test SQLite DB.
+            *   **`SQLiteStorageAdapter` Tests (`@core/storage/sqliteAdapter.test.ts`):** Unit test each method against in-memory/temp SQLite.
+            *   **`IdeaManager` Tests (`@core/IdeaManager.test.ts`):** Use mock `StorageAdapter`.
+            *   **`PortabilityService` Tests (`@core/services/portabilityService.test.ts`):** Unit test import/export logic.
+            *   *Verification:* Test coverage increased. Tests pass.
+
+        d.  **UX Foundations - Documentation & Basic Interactions (Review & Refine):**
+            *   Review `/docs/STYLE_GUIDE.md`, `/docs/ONBOARDING_TOUR.md`. Add minor updates if any.
+            *   Ensure basic UI interactions remain functional.
+            *   *Verification:* Docs reviewed. UI functional.
+
+**9. Phase 1 Final Cleanup & Goal Articulation:**
+    *   **Framework Outcome:** Core framework with SQLite persistence and API access is stable and tested.
+    *   **Demo Implementation Outcome:** React app is a functional client to the backend.
+    *   **Detailed Actions (for AI Agent - Claude and/or Developer):**
+
+        a.  **Code Cleanup and Linting:**
+            *   Run linters across all modified/new directories. Fix issues. Remove dead code.
+        b.  **Documentation Review:**
+            *   Review all Phase 0 & 1 docs for clarity, consistency, accuracy.
+        c.  **State Snapshot:**
+            *   Export graph via API: `state_snapshots/v0.1_phase1_complete.json`.
+        d.  **Update Phase 1 Summary in Development Plan (This Document):**
+            *   (Developer action) Replace this task with the "Phase 1 Outcome" statement below.
+
+---
+
+> **Phase 1 Outcome (Replace Task 9d with this statement upon completion):**
+> LogoMesh has successfully transitioned to a client-server architecture with persistent data storage. A Node.js/Express.js backend API server now manages all data operations, utilizing an `IdeaManager` powered by an `SQLiteStorageAdapter` to interact with a normalized SQLite database. The React frontend has been fully refactored to consume this API for all thought, segment, and related data management, including JSON import/export. The Cytoscape.js graph visualization now correctly implements compound nodes for thoughts/segments with an `fcose` layout. An initial LLM execution layer (`LLMTaskRunner`, `LLMExecutor` interface with a mock/simple implementation) is integrated into the backend, along with an `llmAuditLogger`. Node-RED has been set up with foundational API integrations for basic automation workflows, including a backend-triggered database backup mechanism. The backend API and core data services have improved unit and integration test coverage. The backend API and database are containerized using Docker for local development. A process for migrating initial data from `localStorage` to SQLite is established. This architecture establishes LogoMesh as a modular, AI-ready framework suitable for rapid development of future applications. Its separation of storage logic, execution layers, and automation workflows ensures high adaptability across domains and deployment targets. The system is now robustly prepared for the introduction of more advanced AI features, embedding infrastructure, and refined user interactions in Phase 2.
+
+---
 
 ---
 
