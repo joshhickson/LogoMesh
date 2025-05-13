@@ -41,33 +41,15 @@ function App() {
     thoughts.forEach(thought => graphService.addThought(thought));
   }, [thoughts]);
 
-
   const [showModal, setShowModal] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
-
-
-  // Load thoughts and theme preference
-  useEffect(() => {
-    const stored = localStorage.getItem('thought-web-data');
+  const [darkMode, setDarkMode] = useState(() => {
     const dark = localStorage.getItem('thought-web-dark-mode');
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        if (parsed.export_metadata && parsed.thoughts) {
-          setThoughts(parsed.thoughts); // v0.5+ structure
-        } else if (Array.isArray(parsed)) {
-          setThoughts(parsed); // legacy array
-        }
-      } catch {
-        console.warn('Failed to parse stored thoughts.');
-      }
-    }
-
     if (dark === 'true') {
-      setDarkMode(true);
       document.documentElement.classList.add('dark');
+      return true;
     }
-  }, []);
+    return false;
+  });
 
   useEffect(() => {
     localStorage.setItem('thought-web-dark-mode', darkMode.toString());
