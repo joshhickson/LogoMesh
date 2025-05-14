@@ -106,6 +106,27 @@ function ThoughtDetailPanel({ thought, ideaManager, refreshThoughts }) {
               placeholder="Segment Content"
             />
 
+            <div className="flex gap-2 mb-3">
+              <select
+                value={segment.abstraction_level || 'Fact'}
+                onChange={(e) => handleSegmentEdit(segment.segment_id, 'abstraction_level', e.target.value)}
+                className="w-1/2 bg-transparent border rounded p-2 text-sm"
+              >
+                <option value="Fact">Fact</option>
+                <option value="Idea">Idea</option>
+                <option value="Theme">Theme</option>
+                <option value="Goal">Goal</option>
+              </select>
+              
+              <input
+                type="text"
+                placeholder="Cluster ID"
+                value={segment.cluster_id || ''}
+                onChange={(e) => handleSegmentEdit(segment.segment_id, 'cluster_id', e.target.value)}
+                className="w-1/2 bg-transparent border rounded p-2 text-sm"
+              />
+            </div>
+
             {/* Segment Fields */}
             <div className="space-y-2">
               <div className="flex justify-between items-center">
