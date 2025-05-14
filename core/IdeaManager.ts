@@ -1,5 +1,6 @@
 
 import { Thought } from '@contracts/entities';
+import { generateThoughtId, generateSegmentId, isValidThoughtId, isValidSegmentId } from '@core/utils/idUtils';
 
 /**
  * Manages thought data and operations, providing a centralized interface
@@ -99,9 +100,15 @@ export class IdeaManager {
   }
 
   public addThought(thoughtData: Omit<Thought, 'thought_bubble_id' | 'created_at' | 'updated_at'>): Thought {
+    let thoughtId = generateThoughtId();
+    while (this.thoughts.some(t => t.thought_bubble_id === thoughtId)) {
+      console.warn(`Generated duplicate thought ID ${thoughtId}, regenerating...`);
+      thoughtId = generateThoughtId();
+    }
+    
     const thought: Thought = {
       ...thoughtData,
-      thought_bubble_id: generateThoughtId(),
+      thought_bubble_id: thoughtId,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       segments: [],
@@ -138,9 +145,15 @@ export class IdeaManager {
     const thought = this.getThoughtById(thoughtId);
     if (!thought) return undefined;
 
+    let segmentId = generateSegmentId();
+    while (thought.segments?.some(s => s.segment_id === segmentId)) {
+      console.warn(`Generated duplicate segment ID ${segmentId}, regenerating...`);
+      segmentId = generateSegmentId();
+    }
+
     const segment: Segment = {
       ...segmentData,
-      segment_id: generateSegmentId(),
+      segment_id: segmentId,
       thought_bubble_id: thoughtId,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
