@@ -1,4 +1,3 @@
-
 import React, { useCallback, useRef, useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
@@ -13,7 +12,7 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
   const ensureNodeData = (data) => {
     const cleanData = {};
     for (const key in data) {
-      if (data.hasOwnProperty(key) && data[key] !== null && data[key] !== undefined) {
+      if (Object.prototype.hasOwnProperty.call(data, key) && data[key] !== null && data[key] !== undefined) {
         cleanData[key] = data[key];
       }
     }
