@@ -3,65 +3,87 @@
  * Core entity interfaces and types for ThoughtWeb
  */
 
-/** Predefined content types supported by the system */
+/** Predefined content types natively supported by the system */
 export type PredefinedContentType = 'text' | 'image' | 'audio' | 'video' | 'link';
-/** Custom content type with branded type for type safety */
+
+/** Custom content type with type branding for safety */
 export type CustomContentType = string & { _brand?: 'CustomContentType' };
-/** Union type of all possible content types */
+
+/** Union of predefined and custom content types */
 export type ContentType = PredefinedContentType | CustomContentType;
 
-/** Predefined abstraction levels for organizing thoughts */
+/** Standard abstraction levels for organizing thoughts */
 export type PredefinedAbstractionLevel = 'Fact' | 'Idea' | 'Theme' | 'Goal';
-/** Custom abstraction level with branded type for type safety */
+
+/** Custom abstraction level with type branding for safety */
 export type CustomAbstractionLevel = string & { _brand?: 'CustomAbstractionLevel' };
-/** Union type of all possible abstraction levels */
+
+/** Union of predefined and custom abstraction levels */
 export type AbstractionLevel = PredefinedAbstractionLevel | CustomAbstractionLevel;
 
-/** Value types that can be stored in segment fields */
+/** Allowed value types for segment fields */
 export type FieldValue = string | number | boolean | Date | string[] | number[];
 
-/** Basic metadata for categorizing and displaying thoughts */
+/** Metadata for categorizing and visually identifying thoughts */
 export interface Tag {
+  /** Unique identifier for the tag */
   name: string;
+  /** Color in hex format (e.g., "#ff0000") for visual distinction */
   color: string;
 }
 
 /** 
- * A segment represents a discrete piece of content within a thought
- * Can contain different types of content and custom fields
+ * A segment represents a discrete piece of content within a thought.
+ * Can contain different types of content and custom fields.
  */
 export interface Segment {
+  /** Unique identifier for the segment */
   segment_id: string;
+  /** Reference to parent thought */
   thought_bubble_id: string;
+  /** Display name for the segment */
   title: string;
+  /** Main content of the segment */
   content: string;
+  /** The modality of the segment's content (e.g., 'text', 'image', 'link'). Defaults to 'text'. Allows for custom string types. */
   content_type: ContentType;
+  /** ISO timestamp of creation */
   created_at: string;
+  /** ISO timestamp of last update */
   updated_at: string;
   /**
    * Key-value store for custom data fields associated with the segment.
    * Assembled by the data layer from normalized storage.
    * This can also be used for analytical dimensions like "Who", "What", "When", "Where", "Why", "How".
    */
-  fields?: Record<string, string | number | boolean | Date | string[] | number[]>;
+  fields?: Record<string, FieldValue>;
 }
 
 /**
- * A thought represents a complete idea or concept
- * Contains metadata and optional segments of content
+ * A thought represents a complete idea or concept.
+ * Contains metadata and optional segments of content.
  */
 export interface Thought {
+  /** Unique identifier for the thought */
   thought_bubble_id: string;
+  /** Display name for the thought */
   title: string;
+  /** Optional longer description of the thought */
   description?: string;
+  /** ISO timestamp of creation */
   created_at: string;
+  /** ISO timestamp of last update */
   updated_at: string;
+  /** Optional categorization tags */
   tags?: Tag[];
+  /** Optional content segments */
   segments?: Segment[];
+  /** Optional position in 2D space */
   position?: {
     x: number;
     y: number;
   };
+  /** Optional display color in hex format */
   color?: string;
 }
 
@@ -81,6 +103,8 @@ export interface ExportMetadata {
 
 /** Complete export format including metadata and thoughts */
 export interface ThoughtWebExport {
+  /** Metadata about the export itself */
   export_metadata: ExportMetadata;
+  /** Array of exported thoughts */
   thoughts: Thought[];
 }
