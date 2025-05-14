@@ -51,3 +51,11 @@ class MockSpeechRecognition {
 
 window.SpeechRecognition = MockSpeechRecognition;
 window.webkitSpeechRecognition = MockSpeechRecognition;
+
+window.ResizeObserver = class ResizeObserver {
+  constructor() {
+    this.observe = jest.fn();
+    this.unobserve = jest.fn();
+    this.disconnect = jest.fn();
+  }
+};
