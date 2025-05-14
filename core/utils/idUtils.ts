@@ -9,3 +9,12 @@ export const isValidThoughtId = (id: string): boolean =>
 
 export const isValidSegmentId = (id: string): boolean =>
   typeof id === 'string' && id.startsWith('segment_');
+import { ulid } from 'ulid';
+
+export const generateId = (): string => {
+  return ulid();
+};
+
+export const isValidId = (id: string): boolean => {
+  return typeof id === 'string' && id.length > 0;
+};
