@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Canvas from './components/Canvas';
 import { graphService } from './services/graphService';
 import Sidebar from './components/Sidebar';
 import ThoughtDetailPanel from './components/ThoughtDetailPanel';
 import AddThoughtModal from './components/AddThoughtModal';
-import { IdeaManager } from '@core/IdeaManager';
+import { IdeaManager } from '../core/IdeaManager';
 
 const ideaManager = new IdeaManager();
 
