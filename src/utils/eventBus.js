@@ -1,5 +1,5 @@
-import { ulid } from 'ulid';
 import { EventEmitter } from 'events';
+import { generateThoughtId, generateSegmentId } from '@core/utils/idUtils';
 
 const eventBus = new EventEmitter();
 
@@ -10,7 +10,7 @@ export const ThoughtEvents = {
   SEGMENT_CREATED: 'segment:created'
 };
 
-export const newBubbleId = () => `tb_${ulid()}`;
-export const newSegmentId = () => `seg_${ulid()}`;
+export const newBubbleId = generateThoughtId;
+export const newSegmentId = generateSegmentId;
 
 export default eventBus;
