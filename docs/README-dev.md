@@ -45,6 +45,47 @@ LogoMesh is designed as a federated system of microservices and a rich client-si
     * **Embedding Service:** For generating vector representations of text segments. Primarily powered by highly optimized local models (e.g., Sentence Transformers via `llama.cpp` or Ollama).
     * **LLM Orchestration:** For recursive queries, synthesis, and Socratic dialogues. Designed to utilize quantized models for local execution, with an optional cloud-based API key fallback.
     * **Concept-Diffusion:** For emergent idea generation and blending. These features will primarily leverage local GPU capabilities for efficient processing.
+
+### LLM Integration Architecture
+
+LogoMesh implements a flexible and future-proof architecture for LLM integration through two key components:
+
+1. **LLMExecutor Interface** (`contracts/llmExecutor.ts`)
+   * Provides a standardized interface for different LLM providers (Claude, Gemini, Qwen, etc.)
+   * Supports both streaming and non-streaming responses
+   * Enables seamless switching between providers without modifying business logic
+   * Includes specialized capabilities like Mermaid diagram generation
+
+2. **LLM Audit Logger** (`core/logger/llmAuditLogger.ts`)
+   * Ensures traceability of all LLM interactions
+   * Records prompts, responses, and metadata
+   * Designed for future expansion to persistent storage (SQLite/Postgres in Phase 2)
+   * Enables analysis of AI decision patterns and quality metrics
+
+This foundation prepares LogoMesh for advanced features including:
+* AI-assisted diagramming and reasoning
+* External agent integration (potentially Rust-based)
+* Complex backend interactions with PostgreSQL
+* Streaming token-by-token responses
+* Hybrid local/cloud LLM deployment options
+
+```mermaid
+sequenceDiagram
+    participant UI as LogoMesh UI (React)
+    participant IdeaMgr as IdeaManager (/core)
+    participant LLMExec as LLMExecutor Interface
+    participant Agent as External Agent (Rust/Node)
+    participant LLM as LLM Provider (Claude/Gemini/Qwen)
+    participant Logger as LLM Audit Logger (core/logger)
+
+    UI->>IdeaMgr: requestLLMTask(prompt)
+    IdeaMgr->>LLMExec: executePrompt(prompt)
+    LLMExec->>LLM: Call API or local model
+    LLM-->>LLMExec: return output
+    LLMExec-->>IdeaMgr: return output
+    LLMExec->>Logger: logLLMInteraction()
+    IdeaMgr-->>UI: return result
+```
 * **Data Export/Import:** Standardized JSON schema for interoperability and backup.
 * **Automation:** Utilizes `n8n` for local workflow automation, with architectural provisions for cloud extensions.
 
