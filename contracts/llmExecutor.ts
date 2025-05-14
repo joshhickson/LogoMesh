@@ -37,5 +37,5 @@ export interface LLMExecutor {
    * @param context - Contextual data needed to generate the diagram
    * @returns A promise resolving to Mermaid-compatible markup string
    */
-  generateMermaid?(context: any): Promise<string>;
+  generateMermaid?(context: Record<string, unknown>): Promise<string>;
 }

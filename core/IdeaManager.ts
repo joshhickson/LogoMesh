@@ -1,4 +1,4 @@
-import { Thought } from '@contracts/entities';
+import { Thought, Segment } from '../contracts/entities';
 import {
   generateThoughtId,
   generateSegmentId,
