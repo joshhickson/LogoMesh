@@ -9,6 +9,7 @@
       "root": ["./"],
       "alias": {
         "@core": "./core",
+        "@contracts": "./contracts",
         "~": "./src"
       }
     }]

@@ -18,10 +18,14 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"],
-      "@core/*": ["core/*"],
-      "@contracts/*": ["contracts/*"]
+      "@core/*": ["./core/*"],
+      "@contracts/*": ["./contracts/*"],
+      "~/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*", "core/**/*", "contracts/**/*"]
+  "include": [
+    "src/**/*",
+    "core/**/*",
+    "contracts/**/*"
+  ]
 }
