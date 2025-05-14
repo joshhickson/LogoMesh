@@ -10,6 +10,16 @@ export type CustomContentType = string & { _brand?: 'CustomContentType' };
 /** Union type of all possible content types */
 export type ContentType = PredefinedContentType | CustomContentType;
 
+/** Predefined abstraction levels for organizing thoughts */
+export type PredefinedAbstractionLevel = 'Fact' | 'Idea' | 'Theme' | 'Goal';
+/** Custom abstraction level with branded type for type safety */
+export type CustomAbstractionLevel = string & { _brand?: 'CustomAbstractionLevel' };
+/** Union type of all possible abstraction levels */
+export type AbstractionLevel = PredefinedAbstractionLevel | CustomAbstractionLevel;
+
+/** Value types that can be stored in segment fields */
+export type FieldValue = string | number | boolean | Date | string[] | number[];
+
 /** Basic metadata for categorizing and displaying thoughts */
 export interface Tag {
   name: string;
