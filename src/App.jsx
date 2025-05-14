@@ -76,9 +76,17 @@ function App() {
         thoughts={thoughts}
         setSelectedThought={setSelectedThought}
         activeFilters={activeFilters}
+        ideaManager={ideaManager}
+        refreshThoughts={() => setThoughts([...ideaManager.getThoughts()])}
       />
 
-      {selectedThought && <ThoughtDetailPanel thought={selectedThought} setThoughts={setThoughts} />}
+      {selectedThought && (
+        <ThoughtDetailPanel 
+          thought={selectedThought} 
+          ideaManager={ideaManager}
+          refreshThoughts={() => setThoughts([...ideaManager.getThoughts()])}
+        />
+      )}
       {showModal && <AddThoughtModal createThought={createThought} onClose={() => setShowModal(false)} />}
     </div>
   );
