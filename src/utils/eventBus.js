@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { generateThoughtId, generateSegmentId } from '../../core/utils/idUtils';
+import { generateThoughtId, generateSegmentId } from '@core/utils/idUtils';
 
 const eventBus = new EventEmitter();
 
