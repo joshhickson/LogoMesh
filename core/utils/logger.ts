@@ -33,20 +33,28 @@ class Logger {
   }
 }
 
-export const logger = {
+export interface Logger {
+  info(message: string, ...args: unknown[]): void;
+  debug(message: string, ...args: unknown[]): void;
+  warn(message: string, ...args: unknown[]): void;
+  error(message: string, ...args: unknown[]): void;
+  trace(message: string, ...args: unknown[]): void;
+}
+
+export const logger: Logger = {
   info: (message: string, ...args: unknown[]) => {
-    console.log(`[INFO] ${message}`, ...args);
+    console.log('[INFO]', message, ...args);
   },
-  debug: (...args: unknown[]) => {
-    console.debug('[DEBUG]', ...args);
+  debug: (message: string, ...args: unknown[]) => {
+    console.debug('[DEBUG]', message, ...args);
   },
-  warn: (...args: unknown[]) => {
-    console.warn('[WARN]', ...args);
+  warn: (message: string, ...args: unknown[]) => {
+    console.warn('[WARN]', message, ...args);
   },
-  error: (...args: unknown[]) => {
-    console.error('[ERROR]', ...args);
+  error: (message: string, ...args: unknown[]) => {
+    console.error('[ERROR]', message, ...args);
   },
-  trace: (...args: unknown[]) => {
-    console.trace('[TRACE]', ...args);
+  trace: (message: string, ...args: unknown[]) => {
+    console.trace('[TRACE]', message, ...args);
   }
 };
