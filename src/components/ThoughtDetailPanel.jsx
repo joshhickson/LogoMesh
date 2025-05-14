@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { graphService } from '../services/graphService';
 
 function ThoughtDetailPanel({ thought, ideaManager, refreshThoughts }) {
