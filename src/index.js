@@ -11,6 +11,6 @@ root.render(
 );
 
 // Enable access from all interfaces in development
-if (process.env.NODE_ENV === 'development') {
-  process.env.HOST = '0.0.0.0';
+if (import.meta.env.MODE === 'development') {
+  console.log('Development mode');
 }

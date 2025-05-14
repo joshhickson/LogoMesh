@@ -6,7 +6,7 @@
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
 class Logger {
-  private prefix: string = '[LOGOMESH-CORE]';
+  private prefix = '[LOGOMESH-CORE]';
 
   private formatMessage(level: LogLevel, message: string, ...args: any[]): string {
     const timestamp = new Date().toISOString();
