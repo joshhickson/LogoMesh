@@ -1,18 +1,15 @@
-import React from 'react';
 import '@testing-library/jest-dom';
+import { vi } from 'vitest';
 
-// Mock react-cytoscapejs with proper ES module structure
-jest.mock('react-cytoscapejs', () => ({
-  __esModule: true,
-  default: function MockCytoscape(props) {
-    return <div data-testid="cytoscape-mock" {...props} />;
-  }
+// Mock React components
+vi.mock('react-cytoscapejs', () => ({
+  default: () => null
 }));
 
 // Mock cytoscape-cose-bilkent
-jest.mock('cytoscape-cose-bilkent', () => ({
+vi.mock('cytoscape-cose-bilkent', () => ({
   __esModule: true,
-  default: jest.fn()
+  default: vi.fn()
 }));
 
 // Mock window.matchMedia
@@ -24,14 +21,14 @@ window.matchMedia = window.matchMedia || function() {
   };
 };
 
-// Configure Jest timeout
-jest.setTimeout(10000);
+// Configure Jest timeout - vitest doesn't need this
+//jest.setTimeout(10000);
 
 // Mock localStorage
 const localStorageMock = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  clear: jest.fn()
+  getItem: vi.fn(),
+  setItem: vi.fn(),
+  clear: vi.fn()
 };
 global.localStorage = localStorageMock;
 
@@ -54,8 +51,8 @@ window.webkitSpeechRecognition = MockSpeechRecognition;
 
 window.ResizeObserver = class ResizeObserver {
   constructor() {
-    this.observe = jest.fn();
-    this.unobserve = jest.fn();
-    this.disconnect = jest.fn();
+    this.observe = vi.fn();
+    this.unobserve = vi.fn();
+    this.disconnect = vi.fn();
   }
 };
