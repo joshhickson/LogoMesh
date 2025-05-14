@@ -58,6 +58,10 @@ export interface Segment {
   created_at: string;
   /** ISO date string of last modification */
   updated_at: string;
+  /** The level of abstraction this segment represents (e.g., 'Fact', 'Idea', 'Theme', 'Goal') */
+  abstraction_level: AbstractionLevel;
+  /** Identifier for the cluster this segment belongs to */
+  cluster_id: string;
   /** The level of abstraction this segment represents */
   abstraction_level: AbstractionLevel;
   /** Priority score for local context (0.0 to 1.0) */
