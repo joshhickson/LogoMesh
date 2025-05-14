@@ -3,10 +3,14 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"],
-      "@core/*": ["core/*"],
-      "@contracts/*": ["contracts/*"]
-    }
+      "~/*": ["./src/*"],
+      "@core/*": ["./core/*"],
+      "@contracts/*": ["./contracts/*"]
+    },
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "checkJs": true
   },
-  "include": ["src", "core", "contracts"]
+  "include": ["src/**/*", "core/**/*", "contracts/**/*"]
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Canvas from './components/Canvas';
 import { graphService } from './services/graphService';
 import Sidebar from './components/Sidebar';
@@ -33,11 +33,7 @@ function App() {
     []
   );
 
-  // Simplified addThought to use ideaManager
-  const addThought = (thoughtData) => {
-    ideaManager.addThought(thoughtData);
-    setThoughts([...ideaManager.getThoughts()]);
-  };
+  
 
   useEffect(() => {
     // Sync with in-memory graph only

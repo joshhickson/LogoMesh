@@ -1,21 +1,17 @@
-export interface LLMMetadata {
-  temperature?: number;
-  model?: string;
-  duration?: number;
-  tokens?: number;
-  [key: string]: unknown;
-}
-
+/**
+ * Logs interaction with an LLM agent.
+ * Future-proof: this will be redirected to SQLite or Postgres in Phase 2.
+ */
 export function logLLMInteraction(
   agent: string,
   prompt: string,
   output: string,
-  metadata?: LLMMetadata
+  metadata?: Record<string, any>
 ): void {
   console.log(`[LLM ${agent}]`, {
-    prompt: prompt,
-    output: output,
-    metadata: metadata,
+    prompt,
+    output,
+    metadata,
     timestamp: new Date().toISOString(),
   });
 }
