@@ -142,8 +142,16 @@ export class IdeaManager {
   }
 
   public addSegment(thoughtId: string, segmentData: Omit<Segment, 'segment_id' | 'thought_bubble_id' | 'created_at' | 'updated_at'>): Segment | undefined {
+    if (!isValidThoughtId(thoughtId)) {
+      console.error(`Invalid thought ID format: ${thoughtId}`);
+      return undefined;
+    }
+
     const thought = this.getThoughtById(thoughtId);
-    if (!thought) return undefined;
+    if (!thought) {
+      console.error(`Thought not found with ID: ${thoughtId}`);
+      return undefined;
+    }
 
     let segmentId = generateSegmentId();
     while (thought.segments?.some(s => s.segment_id === segmentId)) {
