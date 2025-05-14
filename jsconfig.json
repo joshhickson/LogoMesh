@@ -4,13 +4,12 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
-      "@core/*": ["./core/*"],
-      "@contracts/*": ["./contracts/*"]
+      "@core/*": ["./core/*"]
     },
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "allowJs": true,
-    "checkJs": true
+    "moduleResolution": "node"
   },
-  "include": ["src/**/*", "core/**/*", "contracts/**/*"]
+  "include": ["src/**/*", "core/**/*"]
 }
