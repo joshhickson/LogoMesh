@@ -5,15 +5,12 @@
     "@babel/preset-react"
   ],
   "plugins": [
-    [
-      "module-resolver",
-      {
-        "root": ["./"],
-        "alias": {
-          "@core": "./core",
-          "~": "./src"
-        }
+    ["module-resolver", {
+      "root": ["./"],
+      "alias": {
+        "@core": "./core",
+        "~": "./src"
       }
-    ]
+    }]
   ]
 }
