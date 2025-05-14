@@ -1,4 +1,3 @@
-
 import { newBubbleId, newSegmentId } from '../eventBus';
 
 describe('eventBus', () => {

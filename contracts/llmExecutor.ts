@@ -1,11 +1,10 @@
-
 /**
  * Defines a standardized interface for integrating different Large Language Model providers.
  * This abstraction allows the application to switch between different LLM services
  * (like Claude, Gemini, Qwen, etc.) without modifying business logic.
  */
 export interface LLMExecutor {
-  /** 
+  /**
    * Unique identifier for the LLM provider implementation.
    * Used for logging, metrics, and provider-specific configuration.
    */

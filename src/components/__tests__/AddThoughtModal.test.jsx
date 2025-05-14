@@ -17,8 +17,13 @@ describe('AddThoughtModal', () => {
 
   test('renders all form elements', () => {
     const mockCreateThought = jest.fn();
-      const mockOnClose = jest.fn();
-      render(<AddThoughtModal createThought={mockCreateThought} onClose={mockOnClose} />);
+    const mockOnClose = jest.fn();
+    render(
+      <AddThoughtModal
+        createThought={mockCreateThought}
+        onClose={mockOnClose}
+      />
+    );
 
     expect(screen.getByPlaceholderText('Title')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Description')).toBeInTheDocument();
@@ -28,20 +33,32 @@ describe('AddThoughtModal', () => {
 
   test('validates title before submission', () => {
     const mockCreateThought = jest.fn();
-      const mockOnClose = jest.fn();
-      render(<AddThoughtModal createThought={mockCreateThought} onClose={mockOnClose} />);
+    const mockOnClose = jest.fn();
+    render(
+      <AddThoughtModal
+        createThought={mockCreateThought}
+        onClose={mockOnClose}
+      />
+    );
 
     const submitButton = screen.getByText('Add Thought');
     fireEvent.click(submitButton);
 
     expect(mockCreateThought).not.toHaveBeenCalled();
-    expect(window.alert).toHaveBeenCalledWith('Please enter a title for your thought.');
+    expect(window.alert).toHaveBeenCalledWith(
+      'Please enter a title for your thought.'
+    );
   });
 
   test('adds and updates segments', () => {
     const mockCreateThought = jest.fn();
-      const mockOnClose = jest.fn();
-      render(<AddThoughtModal createThought={mockCreateThought} onClose={mockOnClose} />);
+    const mockOnClose = jest.fn();
+    render(
+      <AddThoughtModal
+        createThought={mockCreateThought}
+        onClose={mockOnClose}
+      />
+    );
 
     const addSegmentButton = screen.getByText('+ Add Segment');
     fireEvent.click(addSegmentButton);
@@ -58,8 +75,13 @@ describe('AddThoughtModal', () => {
 
   test('handles tag addition', () => {
     const mockCreateThought = jest.fn();
-      const mockOnClose = jest.fn();
-      render(<AddThoughtModal createThought={mockCreateThought} onClose={mockOnClose} />);
+    const mockOnClose = jest.fn();
+    render(
+      <AddThoughtModal
+        createThought={mockCreateThought}
+        onClose={mockOnClose}
+      />
+    );
 
     const tagInput = screen.getByPlaceholderText('Add Tag');
     fireEvent.change(tagInput, { target: { value: 'test-tag' } });
@@ -70,11 +92,20 @@ describe('AddThoughtModal', () => {
 
   test('creates thought with correct data structure', () => {
     const mockCreateThought = jest.fn();
-      const mockOnClose = jest.fn();
-      render(<AddThoughtModal createThought={mockCreateThought} onClose={mockOnClose} />);
+    const mockOnClose = jest.fn();
+    render(
+      <AddThoughtModal
+        createThought={mockCreateThought}
+        onClose={mockOnClose}
+      />
+    );
 
-    fireEvent.change(screen.getByPlaceholderText('Title'), { target: { value: 'Test Title' } });
-    fireEvent.change(screen.getByPlaceholderText('Description'), { target: { value: 'Test Description' } });
+    fireEvent.change(screen.getByPlaceholderText('Title'), {
+      target: { value: 'Test Title' },
+    });
+    fireEvent.change(screen.getByPlaceholderText('Description'), {
+      target: { value: 'Test Description' },
+    });
 
     const addSegmentButton = screen.getByText('+ Add Segment');
     fireEvent.click(addSegmentButton);
@@ -92,39 +123,45 @@ describe('AddThoughtModal', () => {
             segment_id: expect.any(String),
             title: '',
             content: '',
-            fields: {}
-          })
-        ])
+            fields: {},
+          }),
+        ]),
       })
     );
     expect(mockOnClose).toHaveBeenCalled();
   });
 });
 test('handles voice input correctly', () => {
-    const mockCreateThought = jest.fn();
-      const mockOnClose = jest.fn();
-    const { getByTitle, getByPlaceholderText } = render(
-      <AddThoughtModal createThought={mockCreateThought} onClose={mockOnClose} />
-    );
+  const mockCreateThought = jest.fn();
+  const mockOnClose = jest.fn();
+  const { getByTitle, getByPlaceholderText } = render(
+    <AddThoughtModal createThought={mockCreateThought} onClose={mockOnClose} />
+  );
 
-    const micButton = getByTitle('Start recording');
-    const description = getByPlaceholderText('Description');
+  const micButton = getByTitle('Start recording');
+  const description = getByPlaceholderText('Description');
 
-    // Test start recording
-    fireEvent.click(micButton);
-    expect(screen.getByText('Listening... Click microphone to stop')).toBeInTheDocument();
+  // Test start recording
+  fireEvent.click(micButton);
+  expect(
+    screen.getByText('Listening... Click microphone to stop')
+  ).toBeInTheDocument();
 
-    // Test transcript update
-    const voiceInput = "Voice input test";
-    fireEvent.change(description, { target: { value: voiceInput } });
-    expect(description.value).toBe(voiceInput);
+  // Test transcript update
+  const voiceInput = 'Voice input test';
+  fireEvent.change(description, { target: { value: voiceInput } });
+  expect(description.value).toBe(voiceInput);
 
-    // Test stop recording
-    fireEvent.click(micButton);
-    expect(screen.queryByText('Listening... Click microphone to stop')).not.toBeInTheDocument();
+  // Test stop recording
+  fireEvent.click(micButton);
+  expect(
+    screen.queryByText('Listening... Click microphone to stop')
+  ).not.toBeInTheDocument();
 
-    // Test browser support error
-    delete window.webkitSpeechRecognition;
-    fireEvent.click(micButton);
-    expect(window.alert).toHaveBeenCalledWith('Speech recognition is not supported in your browser');
-  });
+  // Test browser support error
+  delete window.webkitSpeechRecognition;
+  fireEvent.click(micButton);
+  expect(window.alert).toHaveBeenCalledWith(
+    'Speech recognition is not supported in your browser'
+  );
+});
