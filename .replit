@@ -38,8 +38,8 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npm run lint"
+args = "npm run lint -- --fix src/ core/ contracts/"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npm run format"
+args = "npm run format -- --write src/ core/ contracts/"

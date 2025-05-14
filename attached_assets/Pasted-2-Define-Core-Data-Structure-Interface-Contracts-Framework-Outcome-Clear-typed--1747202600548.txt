@@ -1,0 +1,25 @@
+2.  **Define Core Data Structure Interface Contracts:**
+    *   **Framework Outcome:** Clear, typed definitions for all primary data entities, promoting consistency and enabling type-safe development within the `/core` framework and for UI consumption. These interfaces will represent Data Transfer Objects (DTOs) suitable for application-layer logic.
+    *   **Demo Implementation Outcome:** React components can be refactored to expect props and manage state conforming to these well-defined interfaces.
+    *   **Detailed Actions (for AI Agent - Claude):**
+
+        a.  **Initial Interface Extraction & Creation:**
+            *   Analyze current data structures in `src/App.jsx` (`createThought` function), `src/utils/exportHandler.js` (`exportPayload.thoughts`), and `src/services/graphService.js`.
+            *   Create `/contracts/entities.ts`.
+            *   In `/contracts/entities.ts`, generate initial TypeScript `interface` definitions for `Tag`, `Segment`, and `Thought` based on the analysis.
+            *   Export these interfaces.
+
+        b.  **Refine Interfaces with Planned Schema Enhancements (DTO Focus):**
+            *   Update interfaces in `/contracts/entities.ts` referencing Phase 1 SQLite schema plans.
+            *   **Define base types for extensibility at the top of `/contracts/entities.ts`:**
+                ```typescript
+                export type PredefinedContentType = 'text' | 'image' | 'audio' | 'video' | 'link';
+                export type CustomContentType = string & { _brand?: 'CustomContentType' };
+                export type ContentType = PredefinedContentType | CustomContentType;
+
+                export type PredefinedAbstractionLevel = 'Fact' | 'Idea' | 'Theme' | 'Goal';
+                export type CustomAbstractionLevel = string & { _brand?: 'CustomAbstractionLevel' };
+                export type AbstractionLevel = PredefinedAbstractionLevel | CustomAbstractionLevel;
+
+                export type FieldValue = string | number | boolean | Date | string[] | number[]; // Expand as needed
+                ```
