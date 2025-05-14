@@ -143,7 +143,9 @@ export class IdeaManager {
       segment_id: generateSegmentId(),
       thought_bubble_id: thoughtId,
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      abstraction_level: segmentData.abstraction_level || 'Fact',
+      cluster_id: segmentData.cluster_id || 'uncategorized'
     };
 
     thought.segments = thought.segments || [];
@@ -163,6 +165,8 @@ export class IdeaManager {
     thought.segments[segmentIndex] = {
       ...segment,
       ...updates,
+      abstraction_level: updates.abstraction_level || segment.abstraction_level,
+      cluster_id: updates.cluster_id || segment.cluster_id,
       updated_at: new Date().toISOString()
     };
     
