@@ -4,7 +4,7 @@ import { graphService } from './services/graphService';
 import Sidebar from './components/Sidebar';
 import ThoughtDetailPanel from './components/ThoughtDetailPanel';
 import AddThoughtModal from './components/AddThoughtModal';
-import { IdeaManager } from '../core/IdeaManager';
+import { IdeaManager } from '@core/IdeaManager';
 
 const ideaManager = new IdeaManager();
 
@@ -33,11 +33,7 @@ function App() {
     []
   );
 
-  // Simplified addThought to use ideaManager
-  const addThought = (thoughtData) => {
-    ideaManager.addThought(thoughtData);
-    setThoughts([...ideaManager.getThoughts()]);
-  };
+  
 
   useEffect(() => {
     // Sync with in-memory graph only
