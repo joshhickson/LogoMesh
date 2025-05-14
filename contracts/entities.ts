@@ -65,7 +65,13 @@ export interface Thought {
   color?: string;
 }
 
-/** Metadata about the export file itself */
+/** 
+ * Metadata about the export file itself
+ * @property version - Schema version (e.g., "1.0")
+ * @property export_date - ISO date string (e.g., "2025-05-03T00:00Z")
+ * @property author - Optional: Name of person/system exporting
+ * @property tool - Optional: Name of tool used for export
+ */
 export interface ExportMetadata {
   version: string;
   export_date: string;
