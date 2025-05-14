@@ -1,4 +1,3 @@
-
 import { render, fireEvent, screen } from '@testing-library/react';
 import Sidebar from '../Sidebar';
 
@@ -11,9 +10,9 @@ describe('Sidebar', () => {
         {
           segment_id: 'seg-1',
           title: 'Logic',
-          fields: { type: 'concept', domain: 'philosophy' }
-        }
-      ]
+          fields: { type: 'concept', domain: 'philosophy' },
+        },
+      ],
     },
     {
       thought_bubble_id: 'test-2',
@@ -22,10 +21,10 @@ describe('Sidebar', () => {
         {
           segment_id: 'seg-2',
           title: 'Neural Networks',
-          fields: { type: 'technology', domain: 'AI' }
-        }
-      ]
-    }
+          fields: { type: 'technology', domain: 'AI' },
+        },
+      ],
+    },
   ];
 
   const mockProps = {
@@ -34,7 +33,7 @@ describe('Sidebar', () => {
     setSelectedThought: jest.fn(),
     setShowModal: jest.fn(),
     toggleDarkMode: jest.fn(),
-    setActiveFilters: jest.fn()
+    setActiveFilters: jest.fn(),
   };
 
   test('renders all thoughts initially', () => {

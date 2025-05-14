@@ -1,4 +1,3 @@
-
 import { IdeaManager } from '../IdeaManager';
 import { logger } from '../utils/logger';
 

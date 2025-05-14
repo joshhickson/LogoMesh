@@ -1,7 +1,12 @@
 /**
  * Core entity interfaces and types
  */
-export type PredefinedContentType = 'text' | 'image' | 'audio' | 'video' | 'link';
+export type PredefinedContentType =
+  | 'text'
+  | 'image'
+  | 'audio'
+  | 'video'
+  | 'link';
 export type ContentType = PredefinedContentType | string;
 
 export interface Tag {
@@ -12,12 +17,15 @@ export interface Tag {
 export interface Segment {
   segment_id: string;
   thought_bubble_id: string;
-  title: string;  
+  title: string;
   content: string;
   content_type: ContentType;
   created_at: string;
   updated_at: string;
-  fields?: Record<string, string | number | boolean | Date | string[] | number[]>;
+  fields?: Record<
+    string,
+    string | number | boolean | Date | string[] | number[]
+  >;
   embedding_vector?: number[];
   abstraction_level?: string;
   cluster_id?: string;

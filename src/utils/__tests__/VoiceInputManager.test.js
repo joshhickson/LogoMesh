@@ -15,7 +15,7 @@ describe('VoiceInputManager', () => {
       continuous: false,
       interimResults: false,
       onresult: null,
-      onerror: null
+      onerror: null,
     };
 
     window.webkitSpeechRecognition = jest.fn(() => mockRecognition);
@@ -33,7 +33,10 @@ describe('VoiceInputManager', () => {
   });
 
   test('handles start/stop listening correctly', () => {
-    const manager = new VoiceInputManager(() => {}, () => {});
+    const manager = new VoiceInputManager(
+      () => {},
+      () => {}
+    );
 
     manager.startListening();
     expect(mockRecognition.start).toHaveBeenCalled();
@@ -50,18 +53,30 @@ describe('VoiceInputManager', () => {
     // Test short phrase
     const mockResults = {
       results: [[{ transcript: 'Hello world.', isFinal: true }]],
-      resultIndex: 0
+      resultIndex: 0,
     };
     mockRecognition.onresult(mockResults);
     expect(onTranscriptUpdate).toHaveBeenCalledWith('Hello world.', false);
 
     // Test long sentence that should trigger segmentation
     const longResults = {
-      results: [[{ transcript: 'This is a very long sentence that should trigger automatic segmentation because it exceeds thirty characters.', isFinal: true }]],
-      resultIndex: 0
+      results: [
+        [
+          {
+            transcript:
+              'This is a very long sentence that should trigger automatic segmentation because it exceeds thirty characters.',
+            isFinal: true,
+          },
+        ],
+      ],
+      resultIndex: 0,
     };
     mockRecognition.onresult(longResults);
-    expect(onTranscriptUpdate).toHaveBeenCalledWith('This is a very long sentence that should trigger automatic segmentation because it exceeds thirty characters.', true, true);
+    expect(onTranscriptUpdate).toHaveBeenCalledWith(
+      'This is a very long sentence that should trigger automatic segmentation because it exceeds thirty characters.',
+      true,
+      true
+    );
   });
 
   test('handles speech recognition errors', () => {
