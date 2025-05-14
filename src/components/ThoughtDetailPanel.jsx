@@ -43,7 +43,7 @@ function ThoughtDetailPanel({ thought, ideaManager, refreshThoughts }) {
 
   const handleRemoveField = (segmentId, fieldName) => {
     const segment = thought.segments.find((s) => s.segment_id === segmentId);
-    const { [fieldName]: removed, ...remainingFields } = segment.fields;
+    const { [fieldName]: _, ...remainingFields } = segment.fields;
     ideaManager.updateSegment(thought.thought_bubble_id, segmentId, {
       fields: remainingFields,
     });
