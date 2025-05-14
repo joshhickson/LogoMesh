@@ -1,6 +1,10 @@
-
 import { Thought } from '@contracts/entities';
-import { generateThoughtId, generateSegmentId, isValidThoughtId, isValidSegmentId } from '@core/utils/idUtils';
+import {
+  generateThoughtId,
+  generateSegmentId,
+  isValidThoughtId,
+  isValidSegmentId,
+} from '@core/utils/idUtils';
 import { logger } from '@core/utils/logger';
 
 /**
@@ -51,14 +55,16 @@ export class IdeaManager {
    * Returns a specific thought by ID
    */
   getThoughtById(id: string): Thought | undefined {
-    return this.thoughts.find(t => t.thought_bubble_id === id);
+    return this.thoughts.find((t) => t.thought_bubble_id === id);
   }
 
   /**
    * Updates or adds a thought
    */
   upsertThought(thought: Thought): void {
-    const index = this.thoughts.findIndex(t => t.thought_bubble_id === thought.thought_bubble_id);
+    const index = this.thoughts.findIndex(
+      (t) => t.thought_bubble_id === thought.thought_bubble_id
+    );
     if (index >= 0) {
       this.thoughts[index] = thought;
     } else {
@@ -71,7 +77,7 @@ export class IdeaManager {
    * Removes a thought by ID
    */
   removeThought(id: string): void {
-    this.thoughts = this.thoughts.filter(t => t.thought_bubble_id !== id);
+    this.thoughts = this.thoughts.filter((t) => t.thought_bubble_id !== id);
     this.persistToStorage();
   }
 
@@ -84,9 +90,9 @@ export class IdeaManager {
         export_metadata: {
           version: '0.5.0',
           exported_at: new Date().toISOString(),
-          thought_count: this.thoughts.length
+          thought_count: this.thoughts.length,
         },
-        thoughts: this.thoughts
+        thoughts: this.thoughts,
       };
       localStorage.setItem('thought-web-data', JSON.stringify(persistData));
       logger.log(`Persisted ${this.thoughts.length} thoughts to storage`);
@@ -100,38 +106,50 @@ export class IdeaManager {
   }
 
   public getThoughtById(id: string): Thought | undefined {
-    return this.thoughts.find(t => t.thought_bubble_id === id);
+    return this.thoughts.find((t) => t.thought_bubble_id === id);
   }
 
-  public addThought(thoughtData: Omit<Thought, 'thought_bubble_id' | 'created_at' | 'updated_at'>): Thought {
+  public addThought(
+    thoughtData: Omit<
+      Thought,
+      'thought_bubble_id' | 'created_at' | 'updated_at'
+    >
+  ): Thought {
     let thoughtId = generateThoughtId();
-    while (this.thoughts.some(t => t.thought_bubble_id === thoughtId)) {
-      console.warn(`Generated duplicate thought ID ${thoughtId}, regenerating...`);
+    while (this.thoughts.some((t) => t.thought_bubble_id === thoughtId)) {
+      console.warn(
+        `Generated duplicate thought ID ${thoughtId}, regenerating...`
+      );
       thoughtId = generateThoughtId();
     }
-    
+
     const thought: Thought = {
       ...thoughtData,
       thought_bubble_id: thoughtId,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       segments: [],
-      tags: []
+      tags: [],
     };
     this.thoughts.push(thought);
     this.persistToStorage();
     return thought;
   }
 
-  public updateThought(thoughtId: string, updates: Partial<Omit<Thought, 'thought_bubble_id' | 'created_at'>>): Thought | undefined {
-    const index = this.thoughts.findIndex(t => t.thought_bubble_id === thoughtId);
+  public updateThought(
+    thoughtId: string,
+    updates: Partial<Omit<Thought, 'thought_bubble_id' | 'created_at'>>
+  ): Thought | undefined {
+    const index = this.thoughts.findIndex(
+      (t) => t.thought_bubble_id === thoughtId
+    );
     if (index === -1) return undefined;
 
     const thought = this.thoughts[index];
     this.thoughts[index] = {
       ...thought,
       ...updates,
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     };
     this.persistToStorage();
     return this.thoughts[index];
@@ -139,13 +157,21 @@ export class IdeaManager {
 
   public deleteThought(thoughtId: string): boolean {
     const initialLength = this.thoughts.length;
-    this.thoughts = this.thoughts.filter(t => t.thought_bubble_id !== thoughtId);
+    this.thoughts = this.thoughts.filter(
+      (t) => t.thought_bubble_id !== thoughtId
+    );
     const deleted = this.thoughts.length < initialLength;
     if (deleted) this.persistToStorage();
     return deleted;
   }
 
-  public addSegment(thoughtId: string, segmentData: Omit<Segment, 'segment_id' | 'thought_bubble_id' | 'created_at' | 'updated_at'>): Segment | undefined {
+  public addSegment(
+    thoughtId: string,
+    segmentData: Omit<
+      Segment,
+      'segment_id' | 'thought_bubble_id' | 'created_at' | 'updated_at'
+    >
+  ): Segment | undefined {
     if (!isValidThoughtId(thoughtId)) {
       console.error(`Invalid thought ID format: ${thoughtId}`);
       return undefined;
@@ -158,8 +184,10 @@ export class IdeaManager {
     }
 
     let segmentId = generateSegmentId();
-    while (thought.segments?.some(s => s.segment_id === segmentId)) {
-      console.warn(`Generated duplicate segment ID ${segmentId}, regenerating...`);
+    while (thought.segments?.some((s) => s.segment_id === segmentId)) {
+      console.warn(
+        `Generated duplicate segment ID ${segmentId}, regenerating...`
+      );
       segmentId = generateSegmentId();
     }
 
@@ -170,7 +198,7 @@ export class IdeaManager {
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       abstraction_level: segmentData.abstraction_level || 'Fact',
-      cluster_id: segmentData.cluster_id || 'uncategorized'
+      cluster_id: segmentData.cluster_id || 'uncategorized',
     };
 
     thought.segments = thought.segments || [];
@@ -179,11 +207,19 @@ export class IdeaManager {
     return segment;
   }
 
-  public updateSegment(thoughtId: string, segmentId: string, updates: Partial<Omit<Segment, 'segment_id' | 'thought_bubble_id' | 'created_at'>>): Segment | undefined {
+  public updateSegment(
+    thoughtId: string,
+    segmentId: string,
+    updates: Partial<
+      Omit<Segment, 'segment_id' | 'thought_bubble_id' | 'created_at'>
+    >
+  ): Segment | undefined {
     const thought = this.getThoughtById(thoughtId);
     if (!thought || !thought.segments) return undefined;
 
-    const segmentIndex = thought.segments.findIndex(s => s.segment_id === segmentId);
+    const segmentIndex = thought.segments.findIndex(
+      (s) => s.segment_id === segmentId
+    );
     if (segmentIndex === -1) return undefined;
 
     const segment = thought.segments[segmentIndex];
@@ -192,9 +228,9 @@ export class IdeaManager {
       ...updates,
       abstraction_level: updates.abstraction_level || segment.abstraction_level,
       cluster_id: updates.cluster_id || segment.cluster_id,
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     };
-    
+
     this.persistToStorage();
     return thought.segments[segmentIndex];
   }
@@ -204,7 +240,9 @@ export class IdeaManager {
     if (!thought || !thought.segments) return false;
 
     const initialLength = thought.segments.length;
-    thought.segments = thought.segments.filter(s => s.segment_id !== segmentId);
+    thought.segments = thought.segments.filter(
+      (s) => s.segment_id !== segmentId
+    );
     const deleted = thought.segments.length < initialLength;
     if (deleted) this.persistToStorage();
     return deleted;

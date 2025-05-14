@@ -1,4 +1,3 @@
-
 export class VoiceInputManager {
   constructor(onTranscriptUpdate, onError) {
     this.recognition = null;
@@ -13,7 +12,7 @@ export class VoiceInputManager {
       this.recognition = new window.webkitSpeechRecognition();
       this.recognition.continuous = true;
       this.recognition.interimResults = true;
-      
+
       this.recognition.onresult = (event) => {
         let finalTranscript = '';
         let interimTranscript = '';
@@ -38,7 +37,10 @@ export class VoiceInputManager {
 
       this.recognition.onerror = (event) => {
         this.onError(event.error);
-        if (event.error === 'network' || event.error === 'service-not-allowed') {
+        if (
+          event.error === 'network' ||
+          event.error === 'service-not-allowed'
+        ) {
           setTimeout(() => {
             if (this.isListening) {
               this.startListening(); // Attempt reconnection

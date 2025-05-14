@@ -3,23 +3,25 @@ import { vi } from 'vitest';
 
 // Mock React components
 vi.mock('react-cytoscapejs', () => ({
-  default: () => null
+  default: () => null,
 }));
 
 // Mock cytoscape-cose-bilkent
 vi.mock('cytoscape-cose-bilkent', () => ({
   __esModule: true,
-  default: vi.fn()
+  default: vi.fn(),
 }));
 
 // Mock window.matchMedia
-window.matchMedia = window.matchMedia || function() {
-  return {
-    matches: false,
-    addListener: function() {},
-    removeListener: function() {}
+window.matchMedia =
+  window.matchMedia ||
+  function () {
+    return {
+      matches: false,
+      addListener: function () {},
+      removeListener: function () {},
+    };
   };
-};
 
 // Configure Jest timeout - vitest doesn't need this
 //jest.setTimeout(10000);
@@ -28,7 +30,7 @@ window.matchMedia = window.matchMedia || function() {
 const localStorageMock = {
   getItem: vi.fn(),
   setItem: vi.fn(),
-  clear: vi.fn()
+  clear: vi.fn(),
 };
 global.localStorage = localStorageMock;
 
@@ -42,8 +44,12 @@ class MockSpeechRecognition {
     this.onerror = null;
     this.onend = null;
   }
-  start() { if (this.onstart) this.onstart(); }
-  stop() { if (this.onend) this.onend(); }
+  start() {
+    if (this.onstart) this.onstart();
+  }
+  stop() {
+    if (this.onend) this.onend();
+  }
 }
 
 window.SpeechRecognition = MockSpeechRecognition;

@@ -1,13 +1,11 @@
-
 // importHandler.js
 
 import { newBubbleId, newSegmentId } from './eventBus';
 
 const validateThought = (thought) => {
   if (!thought.title || !thought.segments) return false;
-  return thought.segments.every(segment => 
-    segment.title && 
-    typeof segment.fields === 'object'
+  return thought.segments.every(
+    (segment) => segment.title && typeof segment.fields === 'object'
   );
 };
 
@@ -16,20 +14,21 @@ const normalizeThought = (thought) => ({
   title: thought.title,
   description: thought.description || '',
   created_at: thought.created_at || new Date().toISOString(),
-  tags: (thought.tags || []).map(tag => 
-    typeof tag === 'string' 
-      ? { name: tag, color: '#10b981' }
-      : tag
+  tags: (thought.tags || []).map((tag) =>
+    typeof tag === 'string' ? { name: tag, color: '#10b981' } : tag
   ),
   color: thought.color || '#10b981',
-  position: thought.position || { x: Math.random() * 500, y: Math.random() * 500 },
-  segments: thought.segments.map(segment => ({
+  position: thought.position || {
+    x: Math.random() * 500,
+    y: Math.random() * 500,
+  },
+  segments: thought.segments.map((segment) => ({
     segment_id: segment.segment_id || newSegmentId(),
     title: segment.title,
     content: segment.content || '',
     fields: segment.fields || {},
-    embedding_vector: segment.embedding_vector || []
-  }))
+    embedding_vector: segment.embedding_vector || [],
+  })),
 });
 
 export function importFromJsonFile(callback) {
@@ -50,7 +49,7 @@ export function importFromJsonFile(callback) {
         // Handle new schema with metadata
         if (parsed.thoughts && Array.isArray(parsed.thoughts)) {
           thoughts = parsed.thoughts;
-        } 
+        }
         // Handle legacy array format
         else if (Array.isArray(parsed)) {
           thoughts = parsed;

@@ -4,7 +4,7 @@ import { importFromJsonFile } from '../utils/importHandler';
 import { graphService } from '../services/graphService';
 
 // Current schema version for display purposes
-const thoughtSchemaVersion = "0.5";
+const thoughtSchemaVersion = '0.5';
 
 function Sidebar({
   thoughts,
@@ -12,7 +12,7 @@ function Sidebar({
   setSelectedThought,
   setShowModal,
   toggleDarkMode,
-  setActiveFilters
+  setActiveFilters,
 }) {
   const [filterFieldName, setFilterFieldName] = useState([]);
   const [filterFieldValue, setFilterFieldValue] = useState('');
@@ -22,55 +22,83 @@ function Sidebar({
     date: { from: '', to: '' },
     numeric: { min: '', max: '' },
     location: { radius: '', center: '' },
-    text: ''
+    text: '',
   });
 
   // Gather all field entries for dynamic filters
-  const allFields = thoughts.flatMap(thought =>
-    thought.segments?.flatMap(segment => Object.entries(segment.fields || {})) || []
+  const allFields = thoughts.flatMap(
+    (thought) =>
+      thought.segments?.flatMap((segment) =>
+        Object.entries(segment.fields || {})
+      ) || []
   );
 
-  const uniqueFieldNames = [...new Set(allFields.map(([key]) => key).filter(Boolean))];
+  const uniqueFieldNames = [
+    ...new Set(allFields.map(([key]) => key).filter(Boolean)),
+  ];
   const uniqueFieldTypes = ['text', 'location', 'date', 'numeric']; // Placeholder for future
 
   // Memoize filtered thoughts computation
   const filteredThoughts = React.useMemo(() => {
     return thoughts
-      .map(thought => {
-        const filteredSegments = (thought.segments || []).filter(segment => {
+      .map((thought) => {
+        const filteredSegments = (thought.segments || []).filter((segment) => {
           const fields = segment.fields || {};
           const matchesFieldName =
             filterFieldName.length === 0 ||
-            filterFieldName.some(name => Object.keys(fields).includes(name));
+            filterFieldName.some((name) => Object.keys(fields).includes(name));
 
-          const matchesFieldValue = !filterFieldValue || Object.entries(fields).some(([key, val]) => {
-            const fieldType = graphService.getFieldType(key);
-            
-            switch (fieldType) {
-              case 'date': {
-                const date = new Date(val);
-                const from = filterValuesByType.date.from ? new Date(filterValuesByType.date.from) : null;
-                const to = filterValuesByType.date.to ? new Date(filterValuesByType.date.to) : null;
-                return (!from || date >= from) && (!to || date <= to);
+          const matchesFieldValue =
+            !filterFieldValue ||
+            Object.entries(fields).some(([key, val]) => {
+              const fieldType = graphService.getFieldType(key);
+
+              switch (fieldType) {
+                case 'date': {
+                  const date = new Date(val);
+                  const from = filterValuesByType.date.from
+                    ? new Date(filterValuesByType.date.from)
+                    : null;
+                  const to = filterValuesByType.date.to
+                    ? new Date(filterValuesByType.date.to)
+                    : null;
+                  return (!from || date >= from) && (!to || date <= to);
+                }
+                case 'numeric': {
+                  const num = parseFloat(val);
+                  const min = filterValuesByType.numeric.min
+                    ? parseFloat(filterValuesByType.numeric.min)
+                    : null;
+                  const max = filterValuesByType.numeric.max
+                    ? parseFloat(filterValuesByType.numeric.max)
+                    : null;
+                  return (!min || num >= min) && (!max || num <= max);
+                }
+                case 'location': {
+                  if (
+                    !filterValuesByType.location.center ||
+                    !filterValuesByType.location.radius
+                  )
+                    return true;
+                  const [lat, lon] = val
+                    .split(',')
+                    .map((n) => parseFloat(n.trim()));
+                  const [centerLat, centerLon] =
+                    filterValuesByType.location.center
+                      .split(',')
+                      .map((n) => parseFloat(n.trim()));
+                  const radius = parseFloat(filterValuesByType.location.radius);
+                  const distance = Math.sqrt(
+                    Math.pow(lat - centerLat, 2) + Math.pow(lon - centerLon, 2)
+                  );
+                  return distance <= radius;
+                }
+                default:
+                  return val
+                    .toLowerCase()
+                    .includes(filterFieldValue.toLowerCase());
               }
-              case 'numeric': {
-                const num = parseFloat(val);
-                const min = filterValuesByType.numeric.min ? parseFloat(filterValuesByType.numeric.min) : null;
-                const max = filterValuesByType.numeric.max ? parseFloat(filterValuesByType.numeric.max) : null;
-                return (!min || num >= min) && (!max || num <= max);
-              }
-              case 'location': {
-                if (!filterValuesByType.location.center || !filterValuesByType.location.radius) return true;
-                const [lat, lon] = val.split(',').map(n => parseFloat(n.trim()));
-                const [centerLat, centerLon] = filterValuesByType.location.center.split(',').map(n => parseFloat(n.trim()));
-                const radius = parseFloat(filterValuesByType.location.radius);
-                const distance = Math.sqrt(Math.pow(lat - centerLat, 2) + Math.pow(lon - centerLon, 2));
-                return distance <= radius;
-              }
-              default:
-                return val.toLowerCase().includes(filterFieldValue.toLowerCase());
-            }
-          });
+            });
 
           const matchesFieldType = filterFieldType.length === 0;
           return matchesFieldName && matchesFieldValue && matchesFieldType;
@@ -79,15 +107,17 @@ function Sidebar({
         return { ...thought, filteredSegments };
       })
       .filter(
-        thought =>
+        (thought) =>
           thought.filteredSegments.length > 0 ||
-          (!filterFieldName.length && !filterFieldValue && !filterFieldType.length)
+          (!filterFieldName.length &&
+            !filterFieldValue &&
+            !filterFieldType.length)
       );
   }, [thoughts, filterFieldName, filterFieldValue, filterFieldType]);
 
   // Sync active filters to parent for canvas highlighting
   useEffect(() => {
-    const ids = filteredThoughts.map(t => t.thought_bubble_id);
+    const ids = filteredThoughts.map((t) => t.thought_bubble_id);
     setFilteredThoughtIds(ids);
     setActiveFilters(ids);
   }, [filteredThoughts, setActiveFilters]);
@@ -98,15 +128,22 @@ function Sidebar({
 
   // Import handler
   const handleImport = () => {
-    importFromJsonFile(importedThoughts => {
+    importFromJsonFile((importedThoughts) => {
       // Overwrite current thoughts (merge strategy can be added)
-      localStorage.setItem('thought-web-data', JSON.stringify(importedThoughts));
+      localStorage.setItem(
+        'thought-web-data',
+        JSON.stringify(importedThoughts)
+      );
       setThoughts(importedThoughts);
     });
   };
 
   const handleClearCache = () => {
-    if (window.confirm('Are you sure you want to clear all thought projects? This cannot be undone.')) {
+    if (
+      window.confirm(
+        'Are you sure you want to clear all thought projects? This cannot be undone.'
+      )
+    ) {
       localStorage.removeItem('thought-web-data');
       setThoughts([]);
     }
@@ -190,14 +227,14 @@ function Sidebar({
         <select
           multiple
           value={filterFieldName}
-          onChange={e =>
+          onChange={(e) =>
             setFilterFieldName(
-              Array.from(e.target.selectedOptions).map(o => o.value)
+              Array.from(e.target.selectedOptions).map((o) => o.value)
             )
           }
           className="w-full mb-2 p-2 border rounded"
         >
-          {uniqueFieldNames.map(name => (
+          {uniqueFieldNames.map((name) => (
             <option key={name} value={name}>
               {name}
             </option>
@@ -208,7 +245,7 @@ function Sidebar({
         <input
           type="text"
           value={filterFieldValue}
-          onChange={e => setFilterFieldValue(e.target.value)}
+          onChange={(e) => setFilterFieldValue(e.target.value)}
           placeholder="Enter value to match"
           className="w-full mb-2 p-2 border rounded"
         />
@@ -217,14 +254,14 @@ function Sidebar({
         <select
           multiple
           value={filterFieldType}
-          onChange={e =>
+          onChange={(e) =>
             setFilterFieldType(
-              Array.from(e.target.selectedOptions).map(o => o.value)
+              Array.from(e.target.selectedOptions).map((o) => o.value)
             )
           }
           className="w-full mb-4 p-2 border rounded"
         >
-          {uniqueFieldTypes.map(type => (
+          {uniqueFieldTypes.map((type) => (
             <option key={type} value={type}>
               {type}
             </option>
@@ -258,7 +295,7 @@ function Sidebar({
 
       {/* Thought List */}
       <ul>
-        {filteredThoughts.map(thought => (
+        {filteredThoughts.map((thought) => (
           <li key={thought.thought_bubble_id} className="mb-3">
             <div
               onClick={() => setSelectedThought(thought)}
@@ -287,18 +324,18 @@ function Sidebar({
           onClick={() => {
             const newTag = prompt('Enter new tag to apply:');
             if (!newTag) return;
-            const updated = thoughts.map(t =>
+            const updated = thoughts.map((t) =>
               filteredThoughtIds.includes(t.thought_bubble_id)
                 ? {
                     ...t,
-                    tags: [...(t.tags || []), { name: newTag, color: '#facc15' }]
+                    tags: [
+                      ...(t.tags || []),
+                      { name: newTag, color: '#facc15' },
+                    ],
                   }
                 : t
             );
-            localStorage.setItem(
-              'thought-web-data',
-              JSON.stringify(updated)
-            );
+            localStorage.setItem('thought-web-data', JSON.stringify(updated));
             setThoughts(updated);
           }}
           className="w-full mb-2 px-4 py-1 bg-purple-500 text-white rounded"
@@ -309,15 +346,12 @@ function Sidebar({
           onClick={() => {
             const newColor = prompt('Enter new hex color (e.g. #10b981):');
             if (!newColor) return;
-            const updated = thoughts.map(t =>
+            const updated = thoughts.map((t) =>
               filteredThoughtIds.includes(t.thought_bubble_id)
                 ? { ...t, color: newColor }
                 : t
             );
-            localStorage.setItem(
-              'thought-web-data',
-              JSON.stringify(updated)
-            );
+            localStorage.setItem('thought-web-data', JSON.stringify(updated));
             setThoughts(updated);
           }}
           className="w-full px-4 py-1 bg-pink-500 text-white rounded"

@@ -9,7 +9,7 @@ const defaultFieldOptions = [
   'Location',
   'Value',
   'Custom Tags',
-  'Related Concepts'
+  'Related Concepts',
 ];
 
 function AddThoughtModal({ createThought, onClose }) {
@@ -27,13 +27,15 @@ function AddThoughtModal({ createThought, onClose }) {
         if (isFinal) {
           if (isNewSegment && segments.length > 0) {
             const lastSegment = segments[segments.length - 1];
-            setSegments(prev => prev.map(seg => 
-              seg.segment_id === lastSegment.segment_id 
-                ? {...seg, content: seg.content + ' ' + transcript}
-                : seg
-            ));
+            setSegments((prev) =>
+              prev.map((seg) =>
+                seg.segment_id === lastSegment.segment_id
+                  ? { ...seg, content: seg.content + ' ' + transcript }
+                  : seg
+              )
+            );
           } else {
-            setDescription(prev => prev + ' ' + transcript);
+            setDescription((prev) => prev + ' ' + transcript);
           }
         }
       },
@@ -42,10 +44,10 @@ function AddThoughtModal({ createThought, onClose }) {
         setIsListening(false);
         // Show error in UI
         const errorMessages = {
-          'network': 'Network error occurred. Please check your connection.',
+          network: 'Network error occurred. Please check your connection.',
           'service-not-allowed': 'Speech recognition service not allowed.',
           'no-speech': 'No speech detected. Please try again.',
-          'default': 'An error occurred with speech recognition.'
+          default: 'An error occurred with speech recognition.',
         };
         alert(errorMessages[error] || errorMessages.default);
       }
@@ -80,8 +82,8 @@ function AddThoughtModal({ createThought, onClose }) {
         title: '',
         content: '',
         fields: {},
-        embedding_vector: []
-      }
+        embedding_vector: [],
+      },
     ]);
   };
 
@@ -109,9 +111,9 @@ function AddThoughtModal({ createThought, onClose }) {
       description,
       created_at: new Date().toISOString(),
       color,
-      tags: tags.map(tag => ({name: tag, color})), //Adjusted tag handling
+      tags: tags.map((tag) => ({ name: tag, color })), //Adjusted tag handling
       position: { x: Math.random() * 400, y: Math.random() * 400 },
-      segments
+      segments,
     };
 
     createThought(newThought);
@@ -122,10 +124,9 @@ function AddThoughtModal({ createThought, onClose }) {
     const newTag = e.target.value;
     if (newTag) {
       setTags([...tags, newTag]);
-      e.target.value = "";
+      e.target.value = '';
     }
-  }
-
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center overflow-y-auto">
@@ -162,7 +163,15 @@ function AddThoughtModal({ createThought, onClose }) {
             }`}
             title={isListening ? 'Stop recording' : 'Start recording'}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
               <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
               <line x1="12" y1="19" x2="12" y2="23" />
@@ -171,7 +180,12 @@ function AddThoughtModal({ createThought, onClose }) {
           </button>
         </div>
         <div>
-          <input type="text" placeholder="Add Tag" onChange={handleTagChange} className="w-full mb-2 p-2 border rounded"/>
+          <input
+            type="text"
+            placeholder="Add Tag"
+            onChange={handleTagChange}
+            className="w-full mb-2 p-2 border rounded"
+          />
           <ul>
             {tags.map((tag, index) => (
               <li key={index}>{tag}</li>
@@ -189,7 +203,10 @@ function AddThoughtModal({ createThought, onClose }) {
         <div className="mb-4">
           <h3 className="text-md font-semibold mb-2">Segments</h3>
           {segments.map((segment, segIndex) => (
-            <div key={segment.segment_id} className="border rounded p-3 mb-3 bg-gray-50 dark:bg-gray-700">
+            <div
+              key={segment.segment_id}
+              className="border rounded p-3 mb-3 bg-gray-50 dark:bg-gray-700"
+            >
               <input
                 type="text"
                 placeholder="Segment Title"
@@ -212,47 +229,51 @@ function AddThoughtModal({ createThought, onClose }) {
                 className="w-full mb-2 p-2 border rounded"
               />
 
-          <div className="flex gap-2 mb-2">
-            <select
-              value={segment.abstraction_level || 'Fact'}
-              onChange={(e) => {
-                const updated = [...segments];
-                updated[segIndex].abstraction_level = e.target.value;
-                setSegments(updated);
-              }}
-              className="w-1/2 p-2 border rounded"
-            >
-              <option value="Fact">Fact</option>
-              <option value="Idea">Idea</option>
-              <option value="Theme">Theme</option>
-              <option value="Goal">Goal</option>
-            </select>
+              <div className="flex gap-2 mb-2">
+                <select
+                  value={segment.abstraction_level || 'Fact'}
+                  onChange={(e) => {
+                    const updated = [...segments];
+                    updated[segIndex].abstraction_level = e.target.value;
+                    setSegments(updated);
+                  }}
+                  className="w-1/2 p-2 border rounded"
+                >
+                  <option value="Fact">Fact</option>
+                  <option value="Idea">Idea</option>
+                  <option value="Theme">Theme</option>
+                  <option value="Goal">Goal</option>
+                </select>
 
-            <input
-              type="text"
-              placeholder="Cluster ID"
-              value={segment.cluster_id || ''}
-              onChange={(e) => {
-                const updated = [...segments];
-                updated[segIndex].cluster_id = e.target.value;
-                setSegments(updated);
-              }}
-              className="w-1/2 p-2 border rounded"
-            />
-          </div>
+                <input
+                  type="text"
+                  placeholder="Cluster ID"
+                  value={segment.cluster_id || ''}
+                  onChange={(e) => {
+                    const updated = [...segments];
+                    updated[segIndex].cluster_id = e.target.value;
+                    setSegments(updated);
+                  }}
+                  className="w-1/2 p-2 border rounded"
+                />
+              </div>
 
               {/* Render fields */}
-              {Object.entries(segment.fields).map(([key, value], fieldIndex) => (
-                <div key={fieldIndex} className="mb-2 flex gap-2">
-                  <label className="w-1/3 text-sm">{key}</label>
-                  <input
-                    type="text"
-                    value={value}
-                    onChange={(e) => updateSegmentField(segIndex, key, e.target.value)}
-                    className="w-2/3 p-1 border rounded"
-                  />
-                </div>
-              ))}
+              {Object.entries(segment.fields).map(
+                ([key, value], fieldIndex) => (
+                  <div key={fieldIndex} className="mb-2 flex gap-2">
+                    <label className="w-1/3 text-sm">{key}</label>
+                    <input
+                      type="text"
+                      value={value}
+                      onChange={(e) =>
+                        updateSegmentField(segIndex, key, e.target.value)
+                      }
+                      className="w-2/3 p-1 border rounded"
+                    />
+                  </div>
+                )
+              )}
 
               {/* Add Field Options */}
               <div className="flex justify-between items-center mb-3">
@@ -266,7 +287,9 @@ function AddThoughtModal({ createThought, onClose }) {
                 >
                   <option value="">+ Add predefined field</option>
                   {defaultFieldOptions.map((opt) => (
-                    <option key={opt} value={opt}>{opt}</option>
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
                   ))}
                 </select>
                 <button
