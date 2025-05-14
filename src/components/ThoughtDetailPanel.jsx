@@ -1,17 +1,10 @@
 import React from 'react';
 import { graphService } from '../services/graphService';
 
-function ThoughtDetailPanel({ thought, setThoughts }) {
-  // State management is now handled through parent component
-
+function ThoughtDetailPanel({ thought, ideaManager, refreshThoughts }) {
   const handleThoughtEdit = (field, value) => {
-    setThoughts(prevThoughts => 
-      prevThoughts.map(t => 
-        t.thought_bubble_id === thought.thought_bubble_id 
-          ? { ...t, [field]: value }
-          : t
-      )
-    );
+    ideaManager.updateThought(thought.thought_bubble_id, { [field]: value });
+    refreshThoughts();
   };
 
   const handleSegmentEdit = (segmentId, field, value) => {
@@ -19,20 +12,15 @@ function ThoughtDetailPanel({ thought, setThoughts }) {
     if (field.startsWith('fields.')) {
       const fieldName = field.split('.')[1];
       graphService.updateFieldType(fieldName, value);
+      
+      const segment = thought.segments.find(s => s.segment_id === segmentId);
+      const updatedFields = { ...segment.fields, [fieldName]: value };
+      ideaManager.updateSegment(thought.thought_bubble_id, segmentId, { fields: updatedFields });
+    } else {
+      ideaManager.updateSegment(thought.thought_bubble_id, segmentId, { [field]: value });
     }
-    setThoughts(prevThoughts => 
-      prevThoughts.map(t => {
-        if (t.thought_bubble_id === thought.thought_bubble_id) {
-          return {
-            ...t,
-            segments: t.segments.map(s => 
-              s.segment_id === segmentId ? { ...s, [field]: value } : s
-            )
-          };
-        }
-        return t;
-      })
-    );
+    
+    refreshThoughts();
     // Update in graph service
     graphService.updateSegment(segmentId, field, value).catch(console.error);
   };
@@ -41,58 +29,23 @@ function ThoughtDetailPanel({ thought, setThoughts }) {
     const fieldName = prompt('Enter field name:');
     if (!fieldName) return;
 
-    setThoughts(prevThoughts => 
-      prevThoughts.map(t => {
-        if (t.thought_bubble_id === thought.thought_bubble_id) {
-          return {
-            ...t,
-            segments: t.segments.map(s => 
-              s.segment_id === segmentId ? {
-                ...s,
-                fields: { ...s.fields, [fieldName]: '' }
-              } : s
-            )
-          };
-        }
-        return t;
-      })
-    );
+    const segment = thought.segments.find(s => s.segment_id === segmentId);
+    const updatedFields = { ...segment.fields, [fieldName]: '' };
+    ideaManager.updateSegment(thought.thought_bubble_id, segmentId, { fields: updatedFields });
+    refreshThoughts();
   };
 
   const handleRemoveField = (segmentId, fieldName) => {
-    setThoughts(prevThoughts => 
-      prevThoughts.map(t => {
-        if (t.thought_bubble_id === thought.thought_bubble_id) {
-          return {
-            ...t,
-            segments: t.segments.map(s => {
-              if (s.segment_id === segmentId) {
-                const { [fieldName]: removed, ...remainingFields } = s.fields;
-                return { ...s, fields: remainingFields };
-              }
-              return s;
-            })
-          };
-        }
-        return t;
-      })
-    );
+    const segment = thought.segments.find(s => s.segment_id === segmentId);
+    const { [fieldName]: removed, ...remainingFields } = segment.fields;
+    ideaManager.updateSegment(thought.thought_bubble_id, segmentId, { fields: remainingFields });
+    refreshThoughts();
   };
 
   const handleDeleteSegment = (segmentId) => {
     if (!window.confirm('Are you sure you want to delete this segment?')) return;
-
-    setThoughts(prevThoughts => 
-      prevThoughts.map(t => {
-        if (t.thought_bubble_id === thought.thought_bubble_id) {
-          return {
-            ...t,
-            segments: t.segments.filter(s => s.segment_id !== segmentId)
-          };
-        }
-        return t;
-      })
-    );
+    ideaManager.deleteSegment(thought.thought_bubble_id, segmentId);
+    refreshThoughts();
   };
 
   return (
