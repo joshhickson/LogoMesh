@@ -1,17 +1,10 @@
 import React from 'react';
 import { graphService } from '../services/graphService';
 
-function ThoughtDetailPanel({ thought, setThoughts }) {
-  // State management is now handled through parent component
-
+function ThoughtDetailPanel({ thought, ideaManager, refreshThoughts }) {
   const handleThoughtEdit = (field, value) => {
-    setThoughts(prevThoughts => 
-      prevThoughts.map(t => 
-        t.thought_bubble_id === thought.thought_bubble_id 
-          ? { ...t, [field]: value }
-          : t
-      )
-    );
+    ideaManager.updateThought(thought.thought_bubble_id, { [field]: value });
+    refreshThoughts();
   };
 
   const handleSegmentEdit = (segmentId, field, value) => {
@@ -19,20 +12,15 @@ function ThoughtDetailPanel({ thought, setThoughts }) {
     if (field.startsWith('fields.')) {
       const fieldName = field.split('.')[1];
       graphService.updateFieldType(fieldName, value);
+      
+      const segment = thought.segments.find(s => s.segment_id === segmentId);
+      const updatedFields = { ...segment.fields, [fieldName]: value };
+      ideaManager.updateSegment(thought.thought_bubble_id, segmentId, { fields: updatedFields });
+    } else {
+      ideaManager.updateSegment(thought.thought_bubble_id, segmentId, { [field]: value });
     }
-    setThoughts(prevThoughts => 
-      prevThoughts.map(t => {
-        if (t.thought_bubble_id === thought.thought_bubble_id) {
-          return {
-            ...t,
-            segments: t.segments.map(s => 
-              s.segment_id === segmentId ? { ...s, [field]: value } : s
-            )
-          };
-        }
-        return t;
-      })
-    );
+    
+    refreshThoughts();
     // Update in graph service
     graphService.updateSegment(segmentId, field, value).catch(console.error);
   };
@@ -41,58 +29,23 @@ function ThoughtDetailPanel({ thought, setThoughts }) {
     const fieldName = prompt('Enter field name:');
     if (!fieldName) return;
 
-    setThoughts(prevThoughts => 
-      prevThoughts.map(t => {
-        if (t.thought_bubble_id === thought.thought_bubble_id) {
-          return {
-            ...t,
-            segments: t.segments.map(s => 
-              s.segment_id === segmentId ? {
-                ...s,
-                fields: { ...s.fields, [fieldName]: '' }
-              } : s
-            )
-          };
-        }
-        return t;
-      })
-    );
+    const segment = thought.segments.find(s => s.segment_id === segmentId);
+    const updatedFields = { ...segment.fields, [fieldName]: '' };
+    ideaManager.updateSegment(thought.thought_bubble_id, segmentId, { fields: updatedFields });
+    refreshThoughts();
   };
 
   const handleRemoveField = (segmentId, fieldName) => {
-    setThoughts(prevThoughts => 
-      prevThoughts.map(t => {
-        if (t.thought_bubble_id === thought.thought_bubble_id) {
-          return {
-            ...t,
-            segments: t.segments.map(s => {
-              if (s.segment_id === segmentId) {
-                const { [fieldName]: removed, ...remainingFields } = s.fields;
-                return { ...s, fields: remainingFields };
-              }
-              return s;
-            })
-          };
-        }
-        return t;
-      })
-    );
+    const segment = thought.segments.find(s => s.segment_id === segmentId);
+    const { [fieldName]: removed, ...remainingFields } = segment.fields;
+    ideaManager.updateSegment(thought.thought_bubble_id, segmentId, { fields: remainingFields });
+    refreshThoughts();
   };
 
   const handleDeleteSegment = (segmentId) => {
     if (!window.confirm('Are you sure you want to delete this segment?')) return;
-
-    setThoughts(prevThoughts => 
-      prevThoughts.map(t => {
-        if (t.thought_bubble_id === thought.thought_bubble_id) {
-          return {
-            ...t,
-            segments: t.segments.filter(s => s.segment_id !== segmentId)
-          };
-        }
-        return t;
-      })
-    );
+    ideaManager.deleteSegment(thought.thought_bubble_id, segmentId);
+    refreshThoughts();
   };
 
   return (
@@ -152,6 +105,27 @@ function ThoughtDetailPanel({ thought, setThoughts }) {
               className="text-sm mb-3 w-full bg-transparent border rounded p-2 hover:border-gray-300 focus:border-blue-500 outline-none resize-y"
               placeholder="Segment Content"
             />
+
+            <div className="flex gap-2 mb-3">
+              <select
+                value={segment.abstraction_level || 'Fact'}
+                onChange={(e) => handleSegmentEdit(segment.segment_id, 'abstraction_level', e.target.value)}
+                className="w-1/2 bg-transparent border rounded p-2 text-sm"
+              >
+                <option value="Fact">Fact</option>
+                <option value="Idea">Idea</option>
+                <option value="Theme">Theme</option>
+                <option value="Goal">Goal</option>
+              </select>
+              
+              <input
+                type="text"
+                placeholder="Cluster ID"
+                value={segment.cluster_id || ''}
+                onChange={(e) => handleSegmentEdit(segment.segment_id, 'cluster_id', e.target.value)}
+                className="w-1/2 bg-transparent border rounded p-2 text-sm"
+              />
+            </div>
 
             {/* Segment Fields */}
             <div className="space-y-2">

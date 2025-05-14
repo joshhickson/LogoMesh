@@ -50,7 +50,7 @@ function AddThoughtModal({ createThought, onClose }) {
         alert(errorMessages[error] || errorMessages.default);
       }
     );
-    
+
     return () => {
       if (voiceManagerRef.current) {
         voiceManagerRef.current.stopListening();
@@ -211,6 +211,35 @@ function AddThoughtModal({ createThought, onClose }) {
                 }}
                 className="w-full mb-2 p-2 border rounded"
               />
+
+          <div className="flex gap-2 mb-2">
+            <select
+              value={segment.abstraction_level || 'Fact'}
+              onChange={(e) => {
+                const updated = [...segments];
+                updated[segIndex].abstraction_level = e.target.value;
+                setSegments(updated);
+              }}
+              className="w-1/2 p-2 border rounded"
+            >
+              <option value="Fact">Fact</option>
+              <option value="Idea">Idea</option>
+              <option value="Theme">Theme</option>
+              <option value="Goal">Goal</option>
+            </select>
+
+            <input
+              type="text"
+              placeholder="Cluster ID"
+              value={segment.cluster_id || ''}
+              onChange={(e) => {
+                const updated = [...segments];
+                updated[segIndex].cluster_id = e.target.value;
+                setSegments(updated);
+              }}
+              className="w-1/2 p-2 border rounded"
+            />
+          </div>
 
               {/* Render fields */}
               {Object.entries(segment.fields).map(([key, value], fieldIndex) => (
