@@ -1,19 +1,25 @@
-/**
- * Core entity interfaces and types
- */
-export type PredefinedContentType =
-  | 'text'
-  | 'image'
-  | 'audio'
-  | 'video'
-  | 'link';
-export type ContentType = PredefinedContentType | string;
 
+/**
+ * Core entity interfaces and types for ThoughtWeb
+ */
+
+/** Predefined content types supported by the system */
+export type PredefinedContentType = 'text' | 'image' | 'audio' | 'video' | 'link';
+/** Custom content type with branded type for type safety */
+export type CustomContentType = string & { _brand?: 'CustomContentType' };
+/** Union type of all possible content types */
+export type ContentType = PredefinedContentType | CustomContentType;
+
+/** Basic metadata for categorizing and displaying thoughts */
 export interface Tag {
   name: string;
   color: string;
 }
 
+/** 
+ * A segment represents a discrete piece of content within a thought
+ * Can contain different types of content and custom fields
+ */
 export interface Segment {
   segment_id: string;
   thought_bubble_id: string;
@@ -22,16 +28,18 @@ export interface Segment {
   content_type: ContentType;
   created_at: string;
   updated_at: string;
-  fields?: Record<
-    string,
-    string | number | boolean | Date | string[] | number[]
-  >;
-  embedding_vector?: number[];
-  abstraction_level?: string;
-  cluster_id?: string;
-  local_priority?: number;
+  /**
+   * Key-value store for custom data fields associated with the segment.
+   * Assembled by the data layer from normalized storage.
+   * This can also be used for analytical dimensions like "Who", "What", "When", "Where", "Why", "How".
+   */
+  fields?: Record<string, string | number | boolean | Date | string[] | number[]>;
 }
 
+/**
+ * A thought represents a complete idea or concept
+ * Contains metadata and optional segments of content
+ */
 export interface Thought {
   thought_bubble_id: string;
   title: string;
@@ -47,6 +55,7 @@ export interface Thought {
   color?: string;
 }
 
+/** Metadata about the export file itself */
 export interface ExportMetadata {
   version: string;
   export_date: string;
@@ -54,6 +63,7 @@ export interface ExportMetadata {
   tool?: string;
 }
 
+/** Complete export format including metadata and thoughts */
 export interface ThoughtWebExport {
   export_metadata: ExportMetadata;
   thoughts: Thought[];
