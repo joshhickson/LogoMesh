@@ -1,4 +1,3 @@
-
 /**
  * Core logging utility for LogoMesh
  */
@@ -8,7 +7,11 @@ type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 class Logger {
   private prefix = '[LOGOMESH-CORE]';
 
-  private formatMessage(level: LogLevel, message: string, ...args: any[]): string {
+  private formatMessage(
+    level: LogLevel,
+    message: string,
+    ...args: any[]
+  ): string {
     const timestamp = new Date().toISOString();
     return `${this.prefix} [${level.toUpperCase()}] [${timestamp}] ${message}`;
   }

@@ -13,22 +13,25 @@ function App() {
   const [selectedThought, setSelectedThought] = useState(null);
   const [activeFilters, setActiveFilters] = useState([]);
 
-  const createThought = useCallback(({ title, description, tags, segments }) => {
-    const thoughtData = {
-      title,
-      description,
-      tags: tags.map(tag => ({name: tag, color: '#10b981'})),
-      position: { x: Math.random() * 500, y: Math.random() * 500 },
-      segments: segments.map(segment => ({
-        ...segment,
-        embedding_vector: []
-      }))
-    };
+  const createThought = useCallback(
+    ({ title, description, tags, segments }) => {
+      const thoughtData = {
+        title,
+        description,
+        tags: tags.map((tag) => ({ name: tag, color: '#10b981' })),
+        position: { x: Math.random() * 500, y: Math.random() * 500 },
+        segments: segments.map((segment) => ({
+          ...segment,
+          embedding_vector: [],
+        })),
+      };
 
-    const newThought = ideaManager.addThought(thoughtData);
-    setThoughts([...ideaManager.getThoughts()]);
-    return newThought;
-  }, []);
+      const newThought = ideaManager.addThought(thoughtData);
+      setThoughts([...ideaManager.getThoughts()]);
+      return newThought;
+    },
+    []
+  );
 
   // Simplified addThought to use ideaManager
   const addThought = (thoughtData) => {
@@ -38,7 +41,7 @@ function App() {
 
   useEffect(() => {
     // Sync with in-memory graph only
-    thoughts.forEach(thought => graphService.addThought(thought));
+    thoughts.forEach((thought) => graphService.addThought(thought));
   }, [thoughts]);
 
   const [showModal, setShowModal] = useState(false);
@@ -54,7 +57,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem('thought-web-dark-mode', darkMode.toString());
   }, [darkMode]);
-
 
   const toggleDarkMode = () => {
     setDarkMode((prev) => !prev);
@@ -81,13 +83,18 @@ function App() {
       />
 
       {selectedThought && (
-        <ThoughtDetailPanel 
-          thought={selectedThought} 
+        <ThoughtDetailPanel
+          thought={selectedThought}
           ideaManager={ideaManager}
           refreshThoughts={() => setThoughts([...ideaManager.getThoughts()])}
         />
       )}
-      {showModal && <AddThoughtModal createThought={createThought} onClose={() => setShowModal(false)} />}
+      {showModal && (
+        <AddThoughtModal
+          createThought={createThought}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </div>
   );
 }
