@@ -1,6 +1,7 @@
 
 import { Thought } from '@contracts/entities';
 import { generateThoughtId, generateSegmentId, isValidThoughtId, isValidSegmentId } from '@core/utils/idUtils';
+import { logger } from '@core/utils/logger';
 
 /**
  * Manages thought data and operations, providing a centralized interface
@@ -24,15 +25,17 @@ export class IdeaManager {
         // Handle both current and legacy data formats
         if (parsed.export_metadata && parsed.thoughts) {
           this.thoughts = parsed.thoughts; // v0.5+ structure
+          logger.log('Loaded thoughts from storage (v0.5+ format)');
         } else if (Array.isArray(parsed)) {
           this.thoughts = parsed; // legacy array format
+          logger.warn('Loading thoughts from legacy format');
         } else {
-          console.warn('Invalid data format in localStorage');
+          logger.warn('Invalid data format in localStorage');
           this.thoughts = [];
         }
       }
     } catch (error) {
-      console.error('Failed to load thoughts from storage:', error);
+      logger.error('Failed to load thoughts from storage:', error);
       this.thoughts = [];
     }
   }
@@ -86,8 +89,9 @@ export class IdeaManager {
         thoughts: this.thoughts
       };
       localStorage.setItem('thought-web-data', JSON.stringify(persistData));
+      logger.log(`Persisted ${this.thoughts.length} thoughts to storage`);
     } catch (error) {
-      console.error('Failed to persist thoughts to storage:', error);
+      logger.error('Failed to persist thoughts to storage:', error);
     }
   }
 
