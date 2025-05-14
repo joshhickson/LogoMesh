@@ -5,25 +5,29 @@ import { newBubbleId, newSegmentId } from '../eventBus';
 // Mock eventBus functions
 jest.mock('../eventBus', () => ({
   newBubbleId: jest.fn().mockReturnValue('test-bubble-id'),
-  newSegmentId: jest.fn().mockReturnValue('test-segment-id')
+  newSegmentId: jest.fn().mockReturnValue('test-segment-id'),
 }));
 
 describe('Data Handling', () => {
-  const mockThoughts = [{
-    thought_bubble_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YX',
-    title: 'Test Thought',
-    description: 'Test description',
-    created_at: '2023-01-01T00:00:00.000Z',
-    segments: [{
-      segment_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YY',
-      title: 'Test Segment',
-      content: 'Test content',
-      fields: { type: 'note' }
-    }],
-    tags: [{ name: 'test', color: '#10b981' }],
-    color: '#10b981',
-    position: { x: 0, y: 0 }
-  }];
+  const mockThoughts = [
+    {
+      thought_bubble_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YX',
+      title: 'Test Thought',
+      description: 'Test description',
+      created_at: '2023-01-01T00:00:00.000Z',
+      segments: [
+        {
+          segment_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YY',
+          title: 'Test Segment',
+          content: 'Test content',
+          fields: { type: 'note' },
+        },
+      ],
+      tags: [{ name: 'test', color: '#10b981' }],
+      color: '#10b981',
+      position: { x: 0, y: 0 },
+    },
+  ];
 
   beforeEach(() => {
     // Mock DOM elements
@@ -34,7 +38,7 @@ describe('Data Handling', () => {
       remove: jest.fn(),
       type: '',
       accept: '',
-      onchange: null
+      onchange: null,
     });
     document.body.appendChild = jest.fn();
   });
@@ -57,16 +61,18 @@ describe('Data Handling', () => {
     test('normalizes legacy format thoughts', () => {
       const legacyThought = {
         title: 'Legacy Thought',
-        segments: [{
-          title: 'Legacy Segment',
-          fields: {}
-        }]
+        segments: [
+          {
+            title: 'Legacy Segment',
+            fields: {},
+          },
+        ],
       };
 
       const callback = jest.fn();
       const fileReader = {
         result: JSON.stringify([legacyThought]),
-        readAsText: jest.fn()
+        readAsText: jest.fn(),
       };
 
       global.FileReader = jest.fn(() => fileReader);
@@ -78,22 +84,26 @@ describe('Data Handling', () => {
 
       fileReader.onload({ target: { result: fileReader.result } });
 
-      expect(callback).toHaveBeenCalledWith([{
-        thought_bubble_id: 'test-bubble-id',
-        title: 'Legacy Thought',
-        description: '',
-        created_at: expect.any(String),
-        tags: [],
-        color: '#10b981',
-        position: expect.any(Object),
-        segments: [{
-          segment_id: 'test-segment-id',
-          title: 'Legacy Segment',
-          content: '',
-          fields: {},
-          embedding_vector: []
-        }]
-      }]);
+      expect(callback).toHaveBeenCalledWith([
+        {
+          thought_bubble_id: 'test-bubble-id',
+          title: 'Legacy Thought',
+          description: '',
+          created_at: expect.any(String),
+          tags: [],
+          color: '#10b981',
+          position: expect.any(Object),
+          segments: [
+            {
+              segment_id: 'test-segment-id',
+              title: 'Legacy Segment',
+              content: '',
+              fields: {},
+              embedding_vector: [],
+            },
+          ],
+        },
+      ]);
     });
 
     test('handles modern format with metadata', () => {
@@ -102,15 +112,15 @@ describe('Data Handling', () => {
           version: '0.5.0',
           exported_at: new Date().toISOString(),
           author: 'Test',
-          tool: 'ThoughtWeb'
+          tool: 'ThoughtWeb',
         },
-        thoughts: mockThoughts
+        thoughts: mockThoughts,
       };
 
       const callback = jest.fn();
       const fileReader = {
         result: JSON.stringify(modernExport),
-        readAsText: jest.fn()
+        readAsText: jest.fn(),
       };
 
       global.FileReader = jest.fn(() => fileReader);
