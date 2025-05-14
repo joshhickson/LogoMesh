@@ -33,4 +33,20 @@ class Logger {
   }
 }
 
-export const logger = new Logger();
+export const logger = {
+  info: (message: string, ...args: unknown[]) => {
+    console.log(`[INFO] ${message}`, ...args);
+  },
+  debug: (...args: unknown[]) => {
+    console.debug('[DEBUG]', ...args);
+  },
+  warn: (...args: unknown[]) => {
+    console.warn('[WARN]', ...args);
+  },
+  error: (...args: unknown[]) => {
+    console.error('[ERROR]', ...args);
+  },
+  trace: (...args: unknown[]) => {
+    console.trace('[TRACE]', ...args);
+  }
+};

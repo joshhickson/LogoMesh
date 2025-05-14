@@ -18,8 +18,8 @@ window.matchMedia =
   function () {
     return {
       matches: false,
-      addListener: function () {},
-      removeListener: function () {},
+      addListener: function () { return null; },
+      removeListener: function () { return null; },
     };
   };
 

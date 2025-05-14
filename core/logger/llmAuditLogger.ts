@@ -1,13 +1,14 @@
-export function logLLMInteraction(
-  agent: string,
-  prompt: string,
-  output: string,
-  metadata?: Record<string, any>
-): void {
+export interface LLMInteractionData {
+  prompt?: string;
+  response?: string;
+  metadata?: Record<string, unknown>;
+}
+
+export function logLLMInteraction(data: LLMInteractionData): void {
   console.log(`[LLM ${agent}]`, {
-    prompt,
-    output,
-    metadata,
+    prompt: data.prompt,
+    output: data.response,
+    metadata: data.metadata,
     timestamp: new Date().toISOString(),
   });
 }
