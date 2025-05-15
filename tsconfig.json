@@ -16,12 +16,17 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@core/*": ["core/*"],
-      "@contracts/*": ["contracts/*"],
-      "~/*": ["*"]
+      "@core/*": ["src/core/*"],
+      "@contracts/*": ["src/contracts/*"],
+      "~/*": ["src/*"]
     }
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
