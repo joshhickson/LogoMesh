@@ -186,7 +186,7 @@ LogoMesh data is designed to be portable and inspectable. Below is a simplified 
 
 ## Current Focus & Ongoing Development Tasks (Tier \#1: Local-First Full Immersion)
 
-This section outlines the immediate, high-priority tasks for LogoMesh's **Tier \#1: Local-First Full Immersion**, aligning with the early phases of the comprehensive development roadmap. For a full, detailed breakdown of all phases and Tier \#2 (Cloud-Enhanced Extensions) plans, please refer to the `Merged Milestone-Based Development Plan v2.0.md`.
+This section outlines the immediate, high-priority tasks for LogoMesh's **Tier \#1: Local-First Full Immersion**, aligning with the early phases of the comprehensive development roadmap. For a full, detailed breakdown of all phases and Tier \#2 (Cloud-Enhanced Extensions) plans, please refer to the [DevPlan](https://github.com/joshhickson/LogoMesh/blob/master/docs/DevPlan%20Alpha.md).
 
   * **Phase 1: Scaffold & Realignment**
 
