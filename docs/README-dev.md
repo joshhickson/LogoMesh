@@ -16,11 +16,13 @@
 
 ---
 
-## Executive Summary
+## Vision
 
-LogoMesh is a **local-first, AI-augmented cognitive framework** that transforms scattered thoughts into structured insight. By using a visual graph of tagged, filterable, and recursively linked segments, it enables users — and eventually AI — to reflect, reason, and grow in clarity over time.
+LogoMesh-Core is a **local-first, AI-augmented cognitive framework** that transforms scattered thoughts into structured insight. By using a visual graph of tagged, filterable, and recursively linked segments, it enables users — and eventually AI — to reflect, reason, and grow in clarity over time.
 
-Our development follows a **tiered approach to AI capabilities**, ensuring core functionalities operate efficiently on modest local hardware while providing pathways for advanced features that can leverage more powerful local resources (e.g., GPUs) or integrate optionally with cloud services. This approach emphasizes user control and transparency, fostering a system that is explicit, traceable, and explainable by design. LogoMesh acts as both an external memory system and a sandbox for emergent reasoning, with an architecture anticipating collaboration, AI-assisted introspection, and the evolution of ideas across time and context.
+Development follows a **modular approach to AI capabilities**, ensuring core functionalities operate efficiently on modest local hardware while providing pathways for advanced features that can leverage more powerful local resources (e.g., GPUs) or integrate optionally with cloud services. This approach emphasizes user control and transparency, fostering a system that is explicit, traceable, and explainable by design. 
+
+LogoMesh acts as both an external memory system and a sandbox for emergent reasoning, with an architecture anticipating collaboration, AI-assisted introspection, and the evolution of ideas across time and context.
 
 ---
 
@@ -38,7 +40,7 @@ LogoMesh empowers humans and AI to co-evolve their thinking using a structured, 
 
 > What if your thoughts could talk back?
 >
-> LogoMesh is an emergence engine for humans and AI — a visual thinking platform that reveals patterns, contradictions, and hidden connections across your ideas. It's more than a mind map. It's a m...
+> LogoMesh is an emergence engine for humans and AI — a visual thinking platform that reveals patterns, contradictions, and hidden connections across your ideas. It's more than a mind map. It's as close to custom transparent high-dimensional vectorspace as one can get!
 
 ---
 ## [Dev Plan (currently being revised)](https://github.com/joshhickson/LogoMesh/blob/master/docs/DevPlan%20Alpha.md)
