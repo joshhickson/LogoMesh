@@ -1,25 +1,18 @@
    # LogoMesh Development Plan: A Modular Framework for Thought Organization
-
+---
+## 05.15.2025: Phase 0 has been completed! Phases 1-5 are being revised before I start. -Josh.
 ---
 
-## Tiered Approach to LogoMesh Development
+## Modular Approach to LogoMesh Development
 
-This development plan is structured around two distinct tiers, reflecting LogoMesh's commitment to a local-first philosophy while ensuring future extensibility and scalability via cloud services. The goal is to provide a robust core accessible to all users, with optional advanced features that leverage cloud resources if desired.
-
-### Tier #1: Local-First Full Immersion
-This tier prioritizes minimal internet connectivity and aims for all core LogoMesh functionalities, including AI features, to run efficiently on local user hardware (e.g., Mac Mini). Development in early phases will primarily focus on achieving a stable and performant experience within this tier.
-
-### Tier #2: Cloud-Enhanced Extensions (Optional/Future)
-This tier outlines paths for leveraging cloud services (e.g., managed databases, powerful LLM APIs, specialized AI models) for enhanced features, scalability, or as alternatives for users without powerful local hardware. Development for this tier will focus on designing robust abstraction layers in early phases to allow seamless integration without major refactoring, with active implementation in later phases.
-
+This development plan is structured to reflect LogoMesh's commitment to a local-first open-source philosophy, while ensuring future extensibility and scalability via cloud services. The goal is to provide a robust core accessible to all users, with optional advanced features that leverage cloud resources if one desires to scale the framework for commercial use.
 ---
 
-   # Developer Instructions for the Demo React Implementation of the LogoMesh Framework
+#Demo React Implementation of the LogoMesh Framework:
 
-This document provides instructions for organizing the demo React application that consumes the LogoMesh framework.  LogoMesh itself is a modular framework for building applications that structure and connect thoughts.
+This document provides instructions for organizing the demo React application that consumes the LogoMesh framework.  LogoMesh itself is a modular framework for building applications that structure and connect thoughts. Soon enough, the demo will have its own repository once the LogoMesh-Core framework is refined enough.
 
- * Add Section: "Framework/Core Usage"
-   ## Framework/Core Usage
+## Framework/Core Usage: (these instructions don't work yet.)
 
 To use the LogoMesh framework in your own JavaScript or TypeScript project:
 
@@ -34,28 +27,13 @@ To use the LogoMesh framework in your own JavaScript or TypeScript project:
 4.  Choose or create adapters for your specific needs (e.g., a StorageAdapter for your chosen database).
 
 Refer to the interface contracts in the `/contracts` directory for detailed schema definitions and the `/core` directory for the core logic.
+---
+   ## Demo React Implementation Setup:
 
-   ## Demo React Implementation Setup
-
-The following instructions are for setting up the demo React application. You can skip this section if you are implementing your own UI or CLI.
-
-   **Disclaimer:** LogoMesh is designed as a modular framework. This demo UI is one of several possible front-ends and is provided as an example.
+>Coming soon.
 
 
-
-This document outlines the development plan for LogoMesh, a modular framework designed to facilitate the creation of applications for organizing, visualizing, and connecting thoughts in a structured manner.
-
- * Revise Phase Titles/Subtitles
-
- * Add Bullet Points:
-   For each phase, add:
-    **Framework Outcome:** (Describe the core logic deliverables)
-	**Demo Implementation Outcome:** (Describe the React-specific deliverables)
-**Demo Implementation Outcome:**
-* Set up React Flow or ReGraph for initial graph visualization
-* Create basic UI components for displaying and editing thoughts
-
-   ### Phase 0: Framework-First Architecture Setup & Core Logic Decoupling [05.12.2025 WE ARE HERE]
+   ### Phase 0: Framework-First Architecture Setup & Core Logic Decoupling [Completed as of 05.15.2025]
 
 **Goal:** Transition the existing React application towards a modular structure by separating core data management logic from the UI. This phase establishes the foundational directories (`/core`, `/contracts`), defines clear interfaces and responsibilities, implements basic data integrity checks and utilities, and scaffolds unit testing. This makes the codebase more maintainable and robustly prepares it for more advanced backend features in Phase 1. This revised structure is designed to be implemented with the assistance of an AI coding agent like Claude within a Replit environment.
 
