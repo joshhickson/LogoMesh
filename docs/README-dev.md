@@ -42,7 +42,7 @@ LogoMesh empowers humans and AI to co-evolve their thinking using a structured, 
 > LogoMesh is an emergence engine for humans and AI — a visual thinking platform that reveals patterns, contradictions, and hidden connections across your ideas. It's more than a mind map. It's a m...
 
 ---
-## [Dev Plan (currently being revised)](https://github.com/joshhickson/LogoMesh/blob/master/docs/Merged%20Milestone-Based%20Development%20Plan%20v2.0.md)
+## [Dev Plan (currently being revised)](https://github.com/joshhickson/LogoMesh/blob/master/docs/DevPlan%20Alpha%20(Phase%200-5))
 
 
 ## Core Architecture (not updated yet)
