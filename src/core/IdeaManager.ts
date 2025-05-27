@@ -1,4 +1,4 @@
-import { Thought, Segment } from '../contracts/entities';
+import { Thought, Segment } from '@contracts/entities';
 import {
   generateThoughtId,
   generateSegmentId,
@@ -47,8 +47,11 @@ export class IdeaManager {
   /**
    * Returns all thoughts
    */
+  /**
+   * Returns all thoughts
+   */
   getThoughts(): Thought[] {
-    return this.thoughts;
+    return [...this.thoughts];
   }
 
   /**
@@ -99,14 +102,6 @@ export class IdeaManager {
     } catch (error) {
       logger.error('Failed to persist thoughts to storage:', error);
     }
-  }
-
-  public getThoughts(): Thought[] {
-    return [...this.thoughts];
-  }
-
-  public getThoughtById(id: string): Thought | undefined {
-    return this.thoughts.find((t) => t.thought_bubble_id === id);
   }
 
   public addThought(

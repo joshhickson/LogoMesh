@@ -1,4 +1,3 @@
-
 /**
  * Core entity interfaces and types for ThoughtWeb
  */
@@ -47,16 +46,26 @@ export interface Segment {
   content: string;
   /** The modality of the segment's content (e.g., 'text', 'image', 'link'). Defaults to 'text'. Allows for custom string types. */
   content_type: ContentType;
-  /** ISO timestamp of creation */
-  created_at: string;
-  /** ISO timestamp of last update */
-  updated_at: string;
+  /** Optional path to a local asset for non-text content types */
+  asset_path?: string;
   /**
    * Key-value store for custom data fields associated with the segment.
    * Assembled by the data layer from normalized storage.
    * This can also be used for analytical dimensions like "Who", "What", "When", "Where", "Why", "How".
    */
-  fields?: Record<string, FieldValue>;
+  fields: Record<string, FieldValue>;
+  /** Optional vector representation of the segment's content */
+  embedding_vector?: number[];
+  /** ISO timestamp of creation */
+  created_at: string;
+  /** ISO timestamp of last update */
+  updated_at: string;
+  /** The defined abstraction level of the segment (e.g., 'Fact', 'Idea'). Defaults to 'Fact'. */
+  abstraction_level: AbstractionLevel;
+  /** Importance score for LLM chunking and attention. Defaults to 0.5. */
+  local_priority: number;
+  /** ID for grouping by theme/narrative. Defaults to 'uncategorized_cluster'. */
+  cluster_id: string;
 }
 
 /**
