@@ -1,0 +1,31 @@
+Here are the clarifications for your Replit agent regarding the Phase 1 v3.0 plan, aligning with the LogoMesh System Architecture v2.8:
+Clarifications for Phase 1 v3.0 Execution:
+ * Directory Structure & Naming
+   * The new server/ directory should be at the project root level, alongside src/, docs/, core/, and contracts/. This aligns with the ARCHITECTURE.MD v2.8 and PHASE 1 v3.0 (Task 2.a) which establishes server/ as a top-level directory.
+   * For the VTC interfaces, the correct path is contracts/embeddings/ (e.g., contracts/embeddings/embeddingInterface.ts). The src/ prefix is removed for contracts/ and core/ because these are now top-level directories, as indicated by the updated tsconfig.json paths and the overall ARCHITECTURE.MD v2.8 structure.
+ * Environment Configuration
+   * For environment differences, maintain a single .env.example file that lists all configurable variables. For local development, developers will create a local .env file based on .env.example. For Replit, Replit's built-in secrets or environment variable settings should be used to configure the variables specified in .env.example. This avoids multiple .env files.
+   * For Replit, DB_PATH should point to Replit's persistent storage mechanisms (e.g., /mnt/data/logomesh.sqlite3). Ephemeral storage (/tmp/) would result in data loss on container restarts, which is undesirable for a demo or development instance.
+ * SQLite Schema & Migration
+   * The "Phase 1 SQLite Schema" in the milestone document (which is now implicitly integrated into PHASE 1 v3.0) should be created based on the existing TypeScript interfaces defined in contracts/entities.ts. This is the source of truth for the data structures. The schema in core/db/schema.sql (Task 2.b) should reflect these interfaces, mapping the DTOs to a normalized relational schema.
+   * Yes, the localStorage migration script (Task 10.b) should explicitly handle both the current data format (from the IdeaManager in Phase 0) and any legacy formats that might exist from older "ThoughtWeb" eras. Robust transformation logic is required to map these into the new normalized SQLite tables.
+ * API Architecture
+   * Yes, the backend API should strictly use RESTful conventions. The plan explicitly defines endpoints like /api/v1/thoughts/ and /api/v1/thoughts/:thoughtId/segments, which follow RESTful patterns.
+   * For error handling, the preferred strategy is to return appropriate HTTP status codes (e.g., 400 Bad Request, 404 Not Found, 500 Internal Server Error) and provide a consistent JSON error response format (e.g., {"error": "message", "details": "..."}). This allows for predictable error handling on the frontend.
+ * VTC & CCE Scaffolding
+   * The VTC interfaces (Task 2.d) should be minimal stubs focused purely on the interface contracts. They should not include substantive placeholder logic for Phase 1. The goal is to define the "seams" for future integration, not to implement the VTC's complex translation logic in this phase.
+   * The "ephemeral embedding policy" (Task 2.d) should be enforced through a combination of:
+     * TypeScript types: By clearly marking fields or function return types that should not be persistently stored.
+     * Runtime checks: For critical paths where raw embeddings might inadvertently be saved.
+     * Strong documentation guidelines: To inform future developers about this policy and its security implications.
+ * Testing Strategy
+   * Yes, the new tests should primarily use the existing Jest setup. Phase 1 focuses on expanding test coverage for new backend components, and Jest is already confirmed to be configured for core modules. No additional testing frameworks are required for the backend in Phase 1.
+   * For testing the SQLite adapter (Task 10.c), the preferred approach is to use test-specific database instances (e.g., a temporary SQLite file for each test run). This ensures test isolation and avoids conflicts between tests. Using in-memory databases for unit tests can also be considered for faster execution, provided they accurately simulate the disk-based behavior where necessary.
+Bare Minimum Name Changes Required:
+Confirming the required name changes to fully transition from "ThoughtWeb" to "LogoMesh":
+ * package.json: change "name": "thought-web" to "name": "logomesh".
+ * localStorage keys: Update existing code from 'thought-web-data' to 'logomesh-data' (Task 10.b).
+ * Documentation references: Update README.md, docs/README-dev.md, and all milestone documents (including PHASE 1 v3.0 itself).
+ * Code references: Update any remaining "ThoughtWeb" references in comments, variable names, and code logic.
+ * Export format: Change "tool": "ThoughtWeb" to "tool": "LogoMesh" in JSON exports (Task 9.a).
+These changes should be minimal and focused on the remaining "thought-web" references, as the codebase already uses "LogoMesh" in most places.
