@@ -10,9 +10,9 @@ https://discord.gg/6ydDxzMjvD
 **Tagline:**
 > A recursive thought engine for humans and AI — designed to evolve meaning, resolve contradictions, and externalize self-reflection.
 
-LogoMesh is a visual thinking tool built in React that allows you to create, organize, and navigate complex ideas through interconnected thought bubbles, nested segments, and flexible metadata filtering.
+LogoMesh is a powerful, intuitive, and versatile framework that allows you to create, organize, and navigate complex ideas through interconnected nodes (thought bubbles), nested segments, and flexible metadata filtering.
 
-Designed as a **local-first, AI-augmented cognitive framework**, LogoMesh helps you transform scattered thoughts into structured insight. It's more than a mind map; it's a living memory graph that supports segment-level filtering, AI-ready data export, and deep extensibility — perfect for understanding your own thinking and co-evolving ideas with AI.
+Designed as a **local-first, AI-augmented cognitive framework**, LogoMesh helps you transform scattered concepts into structured insight. It's more than a mind map; it's a living memory graph that supports segment-level filtering, AI-ready data export, and deep extensibility — perfect for understanding your own thinking and co-evolving ideas with AI.
 
 ---
 
@@ -23,13 +23,33 @@ Designed as a **local-first, AI-augmented cognitive framework**, LogoMesh helps 
 * **Multi-attribute Classification** per segment (field name, value, and type) for powerful data structuring.
 * **Advanced Filtering** by attribute field name, field type, and field value to quickly find relevant information.
 * **Canvas Highlighting** of matching bubbles (non-matches fade) for focused views.
-* **Light/Dark Mode Toggle** for personalized viewing comfort.
 * **Export all or filtered thoughts** to JSON (AI-parsable structure) for data ownership and integration.
-* **Import JSON backups** to easily restore or transfer your thought data.
+* **Import JSON backups** to easily restore or transfer your thought data. (soon to be streamlined into something better)
 * **Batch Editing Tools** — apply tags or colors to filtered results for efficient organization.
 * **Local-First AI Foundations**: Built to run core AI features on your local machine, giving you control and privacy over your data and cognitive process.
 
 ---
+   **LogoMesh is a modular framework for building applications that structure, visualize, and enhance interconnected thoughts and information.** It provides a flexible and extensible foundation for creating a variety of cognitive tools. This repository includes a demo React web application that showcases one possible implementation of the LogoMesh framework.
+
+   ## What Is LogoMesh?
+
+LogoMesh is a framework designed to help developers create applications that go beyond simple note-taking and delve into structured thought organization.  It consists of several key components:
+
+* **Core Schema:** Defines the fundamental data structures for representing thoughts, segments, and their relationships.  These are described in detail in the interface contracts.
+* **Semantic Graph:** The underlying data structure that connects thoughts and segments, allowing for rich, interconnected knowledge representation.
+* **Adapters:** A system of interchangeable modules that handle different aspects of data storage, display, and AI integration (e.g., StorageAdapters for SQLite or IndexedDB, DisplayAdapters for React Flow or other visualization libraries).
+* **Interface Contracts:** Versioned schemas (e.g., `Thought`, `Segment`, `Tag`) that define the structure of data within LogoMesh, ensuring consistency across different implementations.
+* **JSON Export System**: A standardized way to serialize and deserialize LogoMesh data, allowing for interoperability and data portability.
+
+LogoMesh can be used to build a wide range of applications, including:
+
+* Digital journals with interconnected entries
+* Knowledge management and planning tools
+* Forecasting and analysis engines
+* Personal knowledge bases
+* Collaborative thought mapping applications
+* AI-powered cognitive assistance tools
+
 
 ## Getting Started
 

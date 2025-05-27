@@ -1,18 +1,18 @@
 
 import { ulid } from 'ulid';
 
-export const generateThoughtId = (): string => {
-  return `thought_${ulid()}`;
-};
+export const newBubbleId = (): string => `tb_${ulid()}`;
+export const newSegmentId = (): string => `seg_${ulid()}`;
 
-export const generateSegmentId = (): string => {
-  return `segment_${ulid()}`;
-};
+export const generateThoughtId = newBubbleId; // Alias for consistency if used elsewhere
+export const generateSegmentId = newSegmentId; // Alias
 
 export const isValidThoughtId = (id: string): boolean => {
-  return typeof id === 'string' && id.startsWith('thought_');
+  // Basic check, can be improved later
+  return typeof id === 'string' && id.startsWith('tb_');
 };
 
 export const isValidSegmentId = (id: string): boolean => {
-  return typeof id === 'string' && id.startsWith('segment_');
+  // Basic check, can be improved later
+  return typeof id === 'string' && id.startsWith('seg_');
 };
