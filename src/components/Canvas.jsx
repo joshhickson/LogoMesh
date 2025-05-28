@@ -6,7 +6,7 @@ import fcose from 'cytoscape-fcose';
 // Register the layout only once
 cytoscape.use(fcose);
 
-function Canvas({ thoughts, setSelectedThought, activeFilters }) {
+function Canvas({ thoughts, setSelectedThought, onRefreshThoughts, activeFilters }) {
   const cyRef = useRef(null);
 
   const ensureNodeData = (data) => {
