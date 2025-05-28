@@ -1,35 +1,37 @@
 
-import { LLMExecutor } from '../contracts/llmExecutor';
-import { logger } from '../utils/logger';
+import { LLMExecutor } from '../../contracts/llmExecutor';
 
 export class OllamaExecutor implements LLMExecutor {
   private modelName: string;
 
-  constructor(modelName: string = 'llama2') {
+  constructor(modelName: string = 'ollama-mock') {
     this.modelName = modelName;
   }
 
-  async executePrompt(prompt: string): Promise<string> {
-    // Mock response for Phase 1 - future implementation will call actual Ollama API
-    const mockResponse = `Mocked response for: ${prompt}`;
-    
-    logger.log(`[OllamaExecutor] Mock execution for model: ${this.modelName}`);
-    logger.log(`[OllamaExecutor] Prompt: ${prompt.substring(0, 100)}${prompt.length > 100 ? '...' : ''}`);
-    
-    // Simulate async operation
+  async executePrompt(prompt: string, metadata?: Record<string, any>): Promise<string> {
+    // Simulate processing delay
     await new Promise(resolve => setTimeout(resolve, 100));
     
-    return mockResponse;
+    // Return mocked response
+    return `Mocked response for: ${prompt}`;
   }
 
   get supportsStreaming(): boolean {
-    return false; // Will be true in future implementation
+    return false;
   }
 
-  getModelInfo(): { name: string; version?: string } {
-    return {
-      name: this.modelName,
-      version: 'mock-1.0'
-    };
+  getModelName(): string {
+    return this.modelName;
+  }
+
+  // Future VTC compatibility - ensure no hardcoded embedding assumptions
+  async executeWithContext(prompt: string, context?: any[], metadata?: Record<string, any>): Promise<string> {
+    // This method is designed to accept context that could originate from VTC
+    let contextPrefix = '';
+    if (context && context.length > 0) {
+      contextPrefix = `[Context: ${context.length} items] `;
+    }
+    
+    return this.executePrompt(`${contextPrefix}${prompt}`, metadata);
   }
 }
