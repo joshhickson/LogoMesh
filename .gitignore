@@ -24,3 +24,6 @@ yarn-error.log*
 src/App.js
 src/App.js
 src/App.js
+.env
+server/node_modules
+server/dist/

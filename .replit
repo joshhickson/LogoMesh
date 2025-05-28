@@ -1,45 +1,21 @@
-run = "npm run start"
-language = "nodejs"
-modules = ["nodejs-20", "web", "nix"]
+language = "bash"
+run = "cd server && npm run start"
+# Attempt to use Replit's PORT environment variable if available
+# If not, the server's default (e.g., 3001) will be used as fallback
+# For environment variables from .env to be available to `run` command,
+# they might need to be loaded explicitly if not using `replit.nix` `env` block for all,
+# or if the `run` command itself doesn't source them.
+# However, for backend server, Replit typically injects secrets and env vars.
 
-[nix]
-packages = ["nodejs", "npm"]
-channel = "stable-24_05"
+# Example for a Node.js specific configuration if preferred over bash:
+# language = "nix"
+# channel = "stable-23_05" # or a more recent channel
+# entrypoint = "server/src/index.ts" # or your main server file
+# [packager]
+#   # Add any packages needed by the Replit environment itself
+#   [packager.features]
+#   nodeTSSupport = true # Enables direct TS running if supported
 
-[deployment]
-run = ["sh", "-c", "serve -s build -l 3000"]
-deploymentTarget = "cloudrun"
-build = ["sh", "-c", "npm run build"]
-
-[[ports]]
-localPort = 3000
-externalPort = 80
-
-[[ports]]
-localPort = 3001
-externalPort = 3001
-
-[workflows]
-runButton = "Run"
-
-[[workflows.workflow]]
-name = "Run"
-author = 42214058
-mode = "sequential"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm run start"
-
-[[workflows.workflow]]
-name = "Lint"
-author = 42214058
-mode = "sequential"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm run lint"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm run format"
+# [[ports]]
+# localPort = 3001 # Assuming server defaults to 3001
+# externalPort = 80
