@@ -12,16 +12,17 @@
 ---
 
 **Testing Demo:**
-> [It's buggy; not for
-long!](https://logomesh.us/demo)
+> [Just a foundation!](https://logomesh.us/demo)
 
 ---
 
-## Executive Summary
+## Vision
 
-LogoMesh is a **local-first, AI-augmented cognitive framework** that transforms scattered thoughts into structured insight. By using a visual graph of tagged, filterable, and recursively linked segments, it enables users — and eventually AI — to reflect, reason, and grow in clarity over time.
+LogoMesh-Core is a **local-first, AI-augmented cognitive framework** that transforms scattered thoughts into structured insight. By using a visual graph of tagged, filterable, and recursively linked segments, it enables users — and eventually AI — to reflect, reason, and grow in clarity over time.
 
-Our development follows a **tiered approach to AI capabilities**, ensuring core functionalities operate efficiently on modest local hardware while providing pathways for advanced features that can leverage more powerful local resources (e.g., GPUs) or integrate optionally with cloud services. This approach emphasizes user control and transparency, fostering a system that is explicit, traceable, and explainable by design. LogoMesh acts as both an external memory system and a sandbox for emergent reasoning, with an architecture anticipating collaboration, AI-assisted introspection, and the evolution of ideas across time and context.
+Development follows a **modular approach to AI capabilities**, ensuring core functionalities operate efficiently on modest local hardware while providing pathways for advanced features that can leverage more powerful local resources (e.g., GPUs) or integrate optionally with cloud services. This approach emphasizes user control and transparency, fostering a system that is explicit, traceable, and explainable by design. 
+
+LogoMesh acts as both an external memory system and a sandbox for emergent reasoning, with an architecture anticipating collaboration, AI-assisted introspection, and the evolution of ideas across time and context.
 
 ---
 
@@ -39,10 +40,10 @@ LogoMesh empowers humans and AI to co-evolve their thinking using a structured, 
 
 > What if your thoughts could talk back?
 >
-> LogoMesh is an emergence engine for humans and AI — a visual thinking platform that reveals patterns, contradictions, and hidden connections across your ideas. It's more than a mind map. It's a m...
+> LogoMesh is an emergence engine for humans and AI — a visual thinking platform that reveals patterns, contradictions, and hidden connections across your ideas. It's more than a mind map. It's as close to custom transparent high-dimensional vectorspace as one can get!
 
 ---
-## [Dev Plan (currently being revised)](https://github.com/joshhickson/LogoMesh/blob/master/docs/Merged%20Milestone-Based%20Development%20Plan%20v2.0.md)
+## [Dev Plan (currently being revised)](https://github.com/joshhickson/LogoMesh/blob/master/docs/DevPlan%20Alpha.md)
 
 
 ## Core Architecture (not updated yet)
@@ -185,7 +186,7 @@ LogoMesh data is designed to be portable and inspectable. Below is a simplified 
 
 ## Current Focus & Ongoing Development Tasks (Tier \#1: Local-First Full Immersion)
 
-This section outlines the immediate, high-priority tasks for LogoMesh's **Tier \#1: Local-First Full Immersion**, aligning with the early phases of the comprehensive development roadmap. For a full, detailed breakdown of all phases and Tier \#2 (Cloud-Enhanced Extensions) plans, please refer to the `Merged Milestone-Based Development Plan v2.0.md`.
+This section outlines the immediate, high-priority tasks for LogoMesh's **Tier \#1: Local-First Full Immersion**, aligning with the early phases of the comprehensive development roadmap. For a full, detailed breakdown of all phases and Tier \#2 (Cloud-Enhanced Extensions) plans, please refer to the [DevPlan](https://github.com/joshhickson/LogoMesh/blob/master/docs/DevPlan%20Alpha.md).
 
   * **Phase 1: Scaffold & Realignment**
 
