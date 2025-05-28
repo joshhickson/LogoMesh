@@ -1,245 +1,154 @@
-import { Thought, Segment } from '@contracts/entities';
+import { Thought, Segment, Tag } from '../../contracts/entities';
+import { StorageAdapter, NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
 import {
-  generateThoughtId,
+  // generateThoughtId, // Adapter handles thought ID generation
   generateSegmentId,
   isValidThoughtId,
-  isValidSegmentId,
-} from '@core/utils/idUtils';
-import { logger } from '@core/utils/logger';
+  // isValidSegmentId, // Not currently used, but can be kept for future use
+} from '../utils/idUtils'; // Corrected path assuming idUtils is in core/utils
+import { logger as defaultLogger } from '../utils/logger'; // Corrected path for logger
 
 /**
  * Manages thought data and operations, providing a centralized interface
- * for data manipulation while abstracting storage details.
+ * for data manipulation while abstracting storage details via a StorageAdapter.
  */
 export class IdeaManager {
-  private thoughts: Thought[] = [];
-
-  constructor() {
-    this.loadFromStorage();
-  }
-
-  /**
-   * Attempts to load thoughts from localStorage on initialization
-   */
-  private loadFromStorage(): void {
-    try {
-      const savedData = localStorage.getItem('thought-web-data');
-      if (savedData) {
-        const parsed = JSON.parse(savedData);
-        // Handle both current and legacy data formats
-        if (parsed.export_metadata && parsed.thoughts) {
-          this.thoughts = parsed.thoughts; // v0.5+ structure
-          logger.log('Loaded thoughts from storage (v0.5+ format)');
-        } else if (Array.isArray(parsed)) {
-          this.thoughts = parsed; // legacy array format
-          logger.warn('Loading thoughts from legacy format');
-        } else {
-          logger.warn('Invalid data format in localStorage');
-          this.thoughts = [];
-        }
-      }
-    } catch (error) {
-      logger.error('Failed to load thoughts from storage:', error);
-      this.thoughts = [];
-    }
-  }
+  constructor(private storage: StorageAdapter, private loggerService: typeof defaultLogger = defaultLogger) {}
 
   /**
    * Returns all thoughts
    */
-  /**
-   * Returns all thoughts
-   */
-  getThoughts(): Thought[] {
-    return [...this.thoughts];
+  async getThoughts(): Promise<Thought[]> {
+    this.loggerService.info('IdeaManager: Getting all thoughts.');
+    return this.storage.getAllThoughts();
   }
 
   /**
    * Returns a specific thought by ID
    */
-  getThoughtById(id: string): Thought | undefined {
-    return this.thoughts.find((t) => t.thought_bubble_id === id);
+  async getThoughtById(id: string): Promise<Thought | undefined> {
+    this.loggerService.info(`IdeaManager: Getting thought by ID: ${id}`);
+    return this.storage.getThoughtById(id);
   }
 
   /**
-   * Updates or adds a thought
+   * Creates a new thought.
+   * ID generation is handled by the storage adapter.
    */
-  upsertThought(thought: Thought): void {
-    const index = this.thoughts.findIndex(
-      (t) => t.thought_bubble_id === thought.thought_bubble_id
-    );
-    if (index >= 0) {
-      this.thoughts[index] = thought;
-    } else {
-      this.thoughts.push(thought);
-    }
-    this.persistToStorage();
+  async addThought(data: NewThoughtData): Promise<Thought> {
+    this.loggerService.info('IdeaManager: Adding new thought.', data);
+    // ID generation for thoughts is handled by the adapter's createThought method.
+    return this.storage.createThought(data);
   }
 
   /**
-   * Removes a thought by ID
+   * Updates an existing thought.
    */
-  removeThought(id: string): void {
-    this.thoughts = this.thoughts.filter((t) => t.thought_bubble_id !== id);
-    this.persistToStorage();
-  }
-
-  /**
-   * Persists current state to localStorage
-   */
-  private persistToStorage(): void {
-    try {
-      const persistData = {
-        export_metadata: {
-          version: '0.5.0',
-          exported_at: new Date().toISOString(),
-          thought_count: this.thoughts.length,
-        },
-        thoughts: this.thoughts,
-      };
-      localStorage.setItem('thought-web-data', JSON.stringify(persistData));
-      logger.log(`Persisted ${this.thoughts.length} thoughts to storage`);
-    } catch (error) {
-      logger.error('Failed to persist thoughts to storage:', error);
-    }
-  }
-
-  public addThought(
-    thoughtData: Omit<
-      Thought,
-      'thought_bubble_id' | 'created_at' | 'updated_at'
-    >
-  ): Thought {
-    let thoughtId = generateThoughtId();
-    while (this.thoughts.some((t) => t.thought_bubble_id === thoughtId)) {
-      console.warn(
-        `Generated duplicate thought ID ${thoughtId}, regenerating...`
-      );
-      thoughtId = generateThoughtId();
-    }
-
-    const thought: Thought = {
-      ...thoughtData,
-      thought_bubble_id: thoughtId,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      segments: [],
-      tags: [],
-    };
-    this.thoughts.push(thought);
-    this.persistToStorage();
-    return thought;
-  }
-
-  public updateThought(
+  async updateThought(
     thoughtId: string,
-    updates: Partial<Omit<Thought, 'thought_bubble_id' | 'created_at'>>
-  ): Thought | undefined {
-    const index = this.thoughts.findIndex(
-      (t) => t.thought_bubble_id === thoughtId
-    );
-    if (index === -1) return undefined;
-
-    const thought = this.thoughts[index];
-    this.thoughts[index] = {
-      ...thought,
-      ...updates,
-      updated_at: new Date().toISOString(),
-    };
-    this.persistToStorage();
-    return this.thoughts[index];
+    updates: Partial<Omit<Thought, 'thought_bubble_id' | 'created_at' | 'segments' | 'tags'>>
+  ): Promise<Thought | undefined> {
+    this.loggerService.info(`IdeaManager: Updating thought ID: ${thoughtId}`, updates);
+    return this.storage.updateThought(thoughtId, updates);
   }
 
-  public deleteThought(thoughtId: string): boolean {
-    const initialLength = this.thoughts.length;
-    this.thoughts = this.thoughts.filter(
-      (t) => t.thought_bubble_id !== thoughtId
-    );
-    const deleted = this.thoughts.length < initialLength;
-    if (deleted) this.persistToStorage();
-    return deleted;
+  /**
+   * Removes a thought by ID.
+   */
+  async deleteThought(thoughtId: string): Promise<boolean> {
+    this.loggerService.info(`IdeaManager: Deleting thought ID: ${thoughtId}`);
+    return this.storage.deleteThought(thoughtId);
   }
 
-  public addSegment(
+  /**
+   * Creates a new segment for a given thought.
+   * Segment ID is generated by IdeaManager.
+   */
+  async addSegment(
     thoughtId: string,
-    segmentData: Omit<
-      Segment,
-      'segment_id' | 'thought_bubble_id' | 'created_at' | 'updated_at'
-    >
-  ): Segment | undefined {
+    // The input data for a new segment, excluding IDs and timestamps that IdeaManager or adapter will handle.
+    data: Omit<NewSegmentData, 'segment_id' | 'thought_bubble_id' > 
+  ): Promise<Segment | undefined> {
+    this.loggerService.info(`IdeaManager: Adding segment to thought ID: ${thoughtId}`, data);
     if (!isValidThoughtId(thoughtId)) {
-      console.error(`Invalid thought ID format: ${thoughtId}`);
+      this.loggerService.error(`IdeaManager: Invalid thought ID format: ${thoughtId}`);
       return undefined;
     }
 
-    const thought = this.getThoughtById(thoughtId);
-    if (!thought) {
-      console.error(`Thought not found with ID: ${thoughtId}`);
-      return undefined;
-    }
-
-    let segmentId = generateSegmentId();
-    while (thought.segments?.some((s) => s.segment_id === segmentId)) {
-      console.warn(
-        `Generated duplicate segment ID ${segmentId}, regenerating...`
-      );
-      segmentId = generateSegmentId();
-    }
-
-    const segment: Segment = {
-      ...segmentData,
+    // IdeaManager generates the segment_id
+    const segmentId = generateSegmentId();
+    
+    const newSegmentDataWithIds: NewSegmentData = {
+      ...data,
       segment_id: segmentId,
-      thought_bubble_id: thoughtId,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      abstraction_level: segmentData.abstraction_level || 'Fact',
-      cluster_id: segmentData.cluster_id || 'uncategorized',
+      thought_bubble_id: thoughtId, // This is part of NewSegmentData as per previous update
+      // Ensure required fields like title, content, content_type are present in 'data'
+      // Defaulting for abstraction_level and cluster_id can be done here or in adapter
+      abstraction_level: data.abstraction_level || 'Fact',
+      cluster_id: data.cluster_id || 'uncategorized_cluster', // or let adapter handle defaults
     };
 
-    thought.segments = thought.segments || [];
-    thought.segments.push(segment);
-    this.persistToStorage();
-    return segment;
+    return this.storage.createSegment(thoughtId, newSegmentDataWithIds);
   }
 
-  public updateSegment(
-    thoughtId: string,
+  /**
+   * Updates an existing segment.
+   * The storage adapter's updateSegment method only requires segmentId and updates.
+   */
+  async updateSegment(
+    thoughtId: string, // thoughtId might be useful for context or logging but not directly for adapter
     segmentId: string,
-    updates: Partial<
-      Omit<Segment, 'segment_id' | 'thought_bubble_id' | 'created_at'>
-    >
-  ): Segment | undefined {
-    const thought = this.getThoughtById(thoughtId);
-    if (!thought || !thought.segments) return undefined;
-
-    const segmentIndex = thought.segments.findIndex(
-      (s) => s.segment_id === segmentId
-    );
-    if (segmentIndex === -1) return undefined;
-
-    const segment = thought.segments[segmentIndex];
-    thought.segments[segmentIndex] = {
-      ...segment,
-      ...updates,
-      abstraction_level: updates.abstraction_level || segment.abstraction_level,
-      cluster_id: updates.cluster_id || segment.cluster_id,
-      updated_at: new Date().toISOString(),
-    };
-
-    this.persistToStorage();
-    return thought.segments[segmentIndex];
+    updates: Partial<Omit<Segment, 'segment_id' | 'thought_bubble_id' | 'created_at'>>
+  ): Promise<Segment | undefined> {
+    this.loggerService.info(`IdeaManager: Updating segment ID: ${segmentId} for thought ID: ${thoughtId}`, updates);
+    // The adapter's updateSegment only needs segmentId and the updates.
+    return this.storage.updateSegment(segmentId, updates);
   }
 
-  public deleteSegment(thoughtId: string, segmentId: string): boolean {
-    const thought = this.getThoughtById(thoughtId);
-    if (!thought || !thought.segments) return false;
+  /**
+   * Deletes a segment.
+   * The storage adapter's deleteSegment method only requires segmentId.
+   */
+  async deleteSegment(thoughtId: string, segmentId: string): Promise<boolean> {
+    this.loggerService.info(`IdeaManager: Deleting segment ID: ${segmentId} from thought ID: ${thoughtId}`);
+    // The adapter's deleteSegment only needs segmentId.
+    return this.storage.deleteSegment(segmentId);
+  }
 
-    const initialLength = thought.segments.length;
-    thought.segments = thought.segments.filter(
-      (s) => s.segment_id !== segmentId
-    );
-    const deleted = thought.segments.length < initialLength;
-    if (deleted) this.persistToStorage();
-    return deleted;
+  // --- Tagging Methods ---
+
+  async addTagToThought(thoughtId: string, tag: Tag): Promise<Thought | undefined> {
+    this.loggerService.info(`IdeaManager: Adding tag "${tag.name}" to thought ID: ${thoughtId}`);
+    return this.storage.addTagToThought(thoughtId, tag);
+  }
+
+  async removeTagFromThought(thoughtId: string, tagName: string): Promise<Thought | undefined> {
+    this.loggerService.info(`IdeaManager: Removing tag "${tagName}" from thought ID: ${thoughtId}`);
+    return this.storage.removeTagFromThought(thoughtId, tagName);
+  }
+
+  async getThoughtsByTag(tagName: string): Promise<Thought[]> {
+    this.loggerService.info(`IdeaManager: Getting thoughts by tag "${tagName}"`);
+    return this.storage.getThoughtsByTag(tagName);
+  }
+
+  async addTagToSegment(segmentId: string, tag: Tag): Promise<Segment | undefined> {
+    this.loggerService.info(`IdeaManager: Adding tag "${tag.name}" to segment ID: ${segmentId}`);
+    return this.storage.addTagToSegment(segmentId, tag);
+  }
+
+  async removeTagFromSegment(segmentId: string, tagName: string): Promise<Segment | undefined> {
+    this.loggerService.info(`IdeaManager: Removing tag "${tagName}" from segment ID: ${segmentId}`);
+    return this.storage.removeTagFromSegment(segmentId, tagName);
+  }
+
+  async getSegmentsByTag(tagName: string): Promise<Segment[]> {
+    this.loggerService.info(`IdeaManager: Getting segments by tag "${tagName}"`);
+    return this.storage.getSegmentsByTag(tagName);
+  }
+
+  async getAllTags(): Promise<Tag[]> {
+    this.loggerService.info('IdeaManager: Getting all tags.');
+    return this.storage.getAllTags();
   }
 }
