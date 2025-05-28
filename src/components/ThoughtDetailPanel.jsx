@@ -1,7 +1,6 @@
-
 import { graphService } from '../services/graphService';
 
-function ThoughtDetailPanel({ thought, ideaManager, refreshThoughts }) {
+function ThoughtDetailPanel({ thought, isOpen, onClose, onUpdate, onDelete, onRefreshThoughts }) {
   const handleThoughtEdit = (field, value) => {
     ideaManager.updateThought(thought.thought_bubble_id, { [field]: value });
     refreshThoughts();

@@ -1,45 +1,15 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Canvas from './components/Canvas';
 import { graphService } from './services/graphService';
 import Sidebar from './components/Sidebar';
 import ThoughtDetailPanel from './components/ThoughtDetailPanel';
 import AddThoughtModal from './components/AddThoughtModal';
-import { IdeaManager } from '@core/IdeaManager';
-
-const ideaManager = new IdeaManager();
+import { apiService } from './services/apiService';
 
 function App() {
-  const [thoughts, setThoughts] = useState(() => ideaManager.getThoughts());
+  const [thoughts, setThoughts] = useState([]);
   const [selectedThought, setSelectedThought] = useState(null);
   const [activeFilters, setActiveFilters] = useState([]);
-
-  const createThought = useCallback(
-    ({ title, description, tags, segments }) => {
-      const thoughtData = {
-        title,
-        description,
-        tags: tags.map((tag) => ({ name: tag, color: '#10b981' })),
-        position: { x: Math.random() * 500, y: Math.random() * 500 },
-        segments: segments.map((segment) => ({
-          ...segment,
-          embedding_vector: [],
-        })),
-      };
-
-      const newThought = ideaManager.addThought(thoughtData);
-      setThoughts([...ideaManager.getThoughts()]);
-      return newThought;
-    },
-    []
-  );
-
-  
-
-  useEffect(() => {
-    // Sync with in-memory graph only
-    thoughts.forEach((thought) => graphService.addThought(thought));
-  }, [thoughts]);
-
   const [showModal, setShowModal] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
     const dark = localStorage.getItem('thought-web-dark-mode');
@@ -49,6 +19,88 @@ function App() {
     }
     return false;
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchThoughts = useCallback(async () => {
+    try {
+      setLoading(true);
+      const fetchedThoughts = await apiService.fetchThoughts();
+      setThoughts(fetchedThoughts);
+      setError(null);
+    } catch (err) {
+      setError('Failed to load thoughts');
+      console.error('Error fetching thoughts:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const createThought = useCallback(
+    async ({ title, description, tags, segments }) => {
+      try {
+        const thoughtData = {
+          title,
+          description,
+          tags: tags.map((tag) => ({ name: tag, color: '#10b981' })),
+          position: { x: Math.random() * 500, y: Math.random() * 500 },
+          segments: segments.map((segment) => ({
+            ...segment,
+            embedding_vector: [],
+          })),
+        };
+        const newThought = await apiService.createThoughtApi(thoughtData);
+        await fetchThoughts(); // Re-fetch all thoughts to ensure consistency
+        return newThought;
+      } catch (err) {
+        setError('Failed to create thought');
+        console.error('Error creating thought:', err);
+        throw err;
+      }
+    },
+    [fetchThoughts]
+  );
+
+  const refreshThoughts = useCallback(() => {
+    fetchThoughts();
+  }, [fetchThoughts]);
+
+  const handleUpdateThought = useCallback(
+    async (thoughtId, updatedData) => {
+      try {
+        const updatedThought = await apiService.updateThoughtApi(
+          thoughtId,
+          updatedData
+        );
+        await fetchThoughts(); // Re-fetch to ensure consistency
+        setSelectedThought(updatedThought);
+      } catch (err) {
+        setError('Failed to update thought');
+        console.error('Error updating thought:', err);
+      }
+    },
+    [fetchThoughts]
+  );
+
+  const handleDeleteThought = useCallback(
+    async (thoughtId) => {
+      try {
+        await apiService.deleteThoughtApi(thoughtId);
+        await fetchThoughts(); // Re-fetch to ensure consistency
+        if (selectedThought && selectedThought.thought_bubble_id === thoughtId) {
+          setSelectedThought(null);
+        }
+      } catch (err) {
+        setError('Failed to delete thought');
+        console.error('Error deleting thought:', err);
+      }
+    },
+    [selectedThought, fetchThoughts]
+  );
+
+  useEffect(() => {
+    fetchThoughts();
+  }, [fetchThoughts]);
 
   useEffect(() => {
     localStorage.setItem('thought-web-dark-mode', darkMode.toString());
@@ -69,20 +121,47 @@ function App() {
         toggleDarkMode={toggleDarkMode}
         setActiveFilters={setActiveFilters}
       />
-
+      {error && (
+        <div
+          className="error-banner"
+          style={{
+            background: '#fee',
+            color: '#c00',
+            padding: '10px',
+            margin: '10px 0',
+            borderRadius: '4px',
+          }}
+        >
+          {error}
+        </div>
+      )}
+      {loading && (
+        <div
+          className="loading-banner"
+          style={{
+            background: '#eef',
+            color: '#666',
+            padding: '10px',
+            margin: '10px 0',
+            borderRadius: '4px',
+          }}
+        >
+          Loading thoughts...
+        </div>
+      )}
       <Canvas
         thoughts={thoughts}
         setSelectedThought={setSelectedThought}
         activeFilters={activeFilters}
-        ideaManager={ideaManager}
-        refreshThoughts={() => setThoughts([...ideaManager.getThoughts()])}
+        refreshThoughts={refreshThoughts}
       />
 
       {selectedThought && (
         <ThoughtDetailPanel
           thought={selectedThought}
-          ideaManager={ideaManager}
-          refreshThoughts={() => setThoughts([...ideaManager.getThoughts()])}
+          refreshThoughts={refreshThoughts}
+          onUpdate={handleUpdateThought}
+          onDelete={handleDeleteThought}
         />
       )}
       {showModal && (
