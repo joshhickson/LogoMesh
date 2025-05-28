@@ -1,6 +1,5 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Canvas from './components/Canvas';
-import { graphService } from './services/graphService';
 import Sidebar from './components/Sidebar';
 import ThoughtDetailPanel from './components/ThoughtDetailPanel';
 import AddThoughtModal from './components/AddThoughtModal';
