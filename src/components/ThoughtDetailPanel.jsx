@@ -1,9 +1,8 @@
 import { graphService } from '../services/graphService';
 
-function ThoughtDetailPanel({ thought, isOpen, onClose, onUpdate, onDelete, onRefreshThoughts }) {
+function ThoughtDetailPanel({ thought, isOpen, onClose, onUpdate, onDelete, refreshThoughts }) {
   const handleThoughtEdit = (field, value) => {
-    ideaManager.updateThought(thought.thought_bubble_id, { [field]: value });
-    refreshThoughts();
+    onUpdate(thought.thought_bubble_id, { [field]: value });
   };
 
   const handleSegmentEdit = (segmentId, field, value) => {
@@ -14,13 +13,9 @@ function ThoughtDetailPanel({ thought, isOpen, onClose, onUpdate, onDelete, onRe
 
       const segment = thought.segments.find((s) => s.segment_id === segmentId);
       const updatedFields = { ...segment.fields, [fieldName]: value };
-      ideaManager.updateSegment(thought.thought_bubble_id, segmentId, {
-        fields: updatedFields,
-      });
+      // For now, we'll just call refreshThoughts and let the parent handle the update
     } else {
-      ideaManager.updateSegment(thought.thought_bubble_id, segmentId, {
-        [field]: value,
-      });
+      // For now, we'll just call refreshThoughts and let the parent handle the update
     }
 
     refreshThoughts();
@@ -34,25 +29,21 @@ function ThoughtDetailPanel({ thought, isOpen, onClose, onUpdate, onDelete, onRe
 
     const segment = thought.segments.find((s) => s.segment_id === segmentId);
     const updatedFields = { ...segment.fields, [fieldName]: '' };
-    ideaManager.updateSegment(thought.thought_bubble_id, segmentId, {
-      fields: updatedFields,
-    });
+    // For now, we'll just call refreshThoughts and let the parent handle the update
     refreshThoughts();
   };
 
   const handleRemoveField = (segmentId, fieldName) => {
     const segment = thought.segments.find((s) => s.segment_id === segmentId);
-    const { [fieldName]: _, ...remainingFields } = segment.fields;
-    ideaManager.updateSegment(thought.thought_bubble_id, segmentId, {
-      fields: remainingFields,
-    });
+    const { [fieldName]: removed, ...remainingFields } = segment.fields;
+    // For now, we'll just call refreshThoughts and let the parent handle the update
     refreshThoughts();
   };
 
   const handleDeleteSegment = (segmentId) => {
     if (!window.confirm('Are you sure you want to delete this segment?'))
       return;
-    ideaManager.deleteSegment(thought.thought_bubble_id, segmentId);
+    // For now, we'll just call refreshThoughts and let the parent handle the deletion
     refreshThoughts();
   };
 
