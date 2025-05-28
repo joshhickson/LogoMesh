@@ -1,4 +1,4 @@
-   ### Phase 0: Framework-First Architecture Setup & Core Logic Decoupling [05.12.2025 WE ARE HERE]
+   ### Phase 0: Framework-First Architecture Setup & Core Logic Decoupling [05.18.2025 This phase is assumed to have been 100% completed.]
 
 **Goal:** Transition the existing React application towards a modular structure by separating core data management logic from the UI. This phase establishes the foundational directories (`/core`, `/contracts`), defines clear interfaces and responsibilities, implements basic data integrity checks and utilities, and scaffolds unit testing. This makes the codebase more maintainable and robustly prepares it for more advanced backend features in Phase 1. This revised structure is designed to be implemented with the assistance of an AI coding agent like Claude within a Replit environment.
 

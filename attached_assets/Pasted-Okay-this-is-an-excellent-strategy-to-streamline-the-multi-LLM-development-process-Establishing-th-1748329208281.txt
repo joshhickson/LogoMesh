@@ -1,0 +1,43 @@
+Okay, this is an excellent strategy to streamline the multi-LLM development process! Establishing this communication channel and structured documentation from the start will be incredibly valuable.
+Here is the prompt drafted for the Replit Claude agent:
+Prompt for Replit Claude Agent:
+Subject: Establish Local Development Guidance for Devstral LLM in docs/ & Initiate Multi-LLM Communication Protocol
+Hi Claude,
+We're evolving our development workflow for LogoMesh Phase 1 (v3.0) to optimize for both robust local development and a smooth Replit-hosted demo. Your role as the Replit agent remains crucial for implementing chunks of Phase 1, maintaining the Replit environment, and ensuring the demo is functional.
+Our new workflow involves a dynamic back-and-forth between local development and Replit:
+ * Local Development: A local LLM (Devstral, integrated with VS Code via Roo Code) will primarily handle coding tasks on a phase1-dev branch.
+ * Replit Integration & Demo: Periodically, sections (e.g., a "quarter") of Phase 1 will be implemented on the replit-staging branch (where you operate). This branch will then be pulled locally, reconfigured by Devstral, tested, and a new quarter of Phase 1 will be implemented locally. This cycle of local development -> Replit integration -> local reconfig -> local development will repeat.
+To enable this highly collaborative and efficient workflow, we need your assistance in creating a foundational document for Devstral:
+Action: Please create a new Markdown file at docs/LOCAL_DEV_GUIDE_FOR_LLM.md.
+This file should serve as a primary guide for the local Devstral LLM, providing essential information to reconfigure LogoMesh for local execution and understand the testing process.
+Content Requirements for docs/LOCAL_DEV_GUIDE_FOR_LLM.md:
+ * Project Root & Structure Overview:
+   * Briefly explain that the project root is . and introduce the top-level directories: src/, core/, contracts/, server/, docs/, scripts/, state_snapshots/.
+   * Emphasize that core/ and contracts/ are now at the root, not within src/.
+ * Local Environment Configuration Guide:
+   * Goal: Make the project compilable and runnable locally.
+   * Instructions:
+     * Explain that jsconfig.json (or tsconfig.json) at the root defines path aliases (@core, @contracts, @server, ~/src). Devstral must respect these aliases.
+     * Provide clear steps for setting up a local .env file based on .env.example.
+     * Detail typical local development commands (npm install or pnpm install at root, npm start / pnpm --filter ./server start for backend, npm start / pnpm --filter ./src start for frontend React app).
+     * Note any common local dependencies (Node.js, sqlite3 CLI).
+ * Local Testing Procedures:
+   * Goal: Ensure Devstral can run and understand local tests.
+   * Instructions:
+     * Explain that Jest is the primary testing framework.
+     * Provide commands for running tests (npm test or pnpm test).
+     * Detail the structure for tests: core/**/*.test.ts, server/src/routes/tests/*.test.ts.
+     * Explain the approach for testing the SQLite adapter: using test-specific database instances (temporary files) for isolation, or potentially in-memory databases if appropriate.
+     * Emphasize the importance of robust unit and integration tests as outlined in Phase 1 v3.0 Task 10.c.
+ * Key Architectural Concepts for Local LLM:
+   * Decoupling: Remind Devstral that the React UI (src/) communicates with the server/ backend via HTTP.
+   * Data Persistence: Data is now persisted in SQLite via IdeaManager and SQLiteStorageAdapter.
+   * AI Foundations: Briefly explain the stubbed nature of VTC (in core/embeddings/) and CCE (in core/context/), emphasizing their future roles but current Phase 1 status. Highlight the need for ephemeral handling of raw embeddings and adherence to the EmbeddingInterface (contracts/embeddings/).
+   * Plugins: Explain the newly introduced PluginRuntimeInterface (core/plugins/) and the extended PluginManifest schema (contracts/plugins/).
+ * LLM-to-LLM Communication Protocol:
+   * Purpose: This document (docs/LOCAL_DEV_GUIDE_FOR_LLM.md) is the initial communication channel from Claude to Devstral.
+   * Request: For future commits made by Devstral (the local LLM), if there are any questions, clarifications, or updates regarding the project state or local configuration/testing, Devstral should commit a markdown file to the docs/ folder (e.g., docs/DEVSTRAL_STATUS_REPORT_<timestamp>.md) detailing its observations, questions, or proposed changes. This allows Claude (and the human developer) to review and respond.
+   * Format: Keep these communication documents in markdown, concise, and clearly structured.
+ * Architectural Insights (for Claude from human developer, to pass to Devstral):
+   * For Devstral: Prioritize clear and explicit handling of environment variables and paths to ensure seamless transitions between Replit and local setups. When generating code, always consider the defined interfaces (@contracts/) as the source of truth for types and interactions, especially the VTC and CCE interfaces. Remember the ultimate goal of easy reconfiguration for all environments, including low-compute devices like Raspberry Pi.
+Thank you for your cooperation in establishing this enhanced workflow!

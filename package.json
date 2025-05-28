@@ -33,6 +33,7 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
+    "generate:docs": "node scripts/generate-docs.js",
     "eject": "react-scripts eject",
     "typecheck": "tsc --noEmit"
   },
