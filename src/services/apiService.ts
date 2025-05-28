@@ -2,11 +2,13 @@
 import { Thought, Segment } from '../contracts/entities';
 import { NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
 
-// Define RequestInit type for environments where it's not available
-interface RequestInit {
-  method?: string;
-  headers?: Record<string, string>;
-  body?: string;
+// Use the built-in RequestInit type
+declare global {
+  interface RequestInit {
+    method?: string;
+    headers?: Record<string, string>;
+    body?: string;
+  }
 }
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1';
