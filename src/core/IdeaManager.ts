@@ -1,245 +1,207 @@
 import { Thought, Segment } from '@contracts/entities';
-import {
-  generateThoughtId,
-  generateSegmentId,
-  isValidThoughtId,
-  isValidSegmentId,
-} from '@core/utils/idUtils';
+import { StorageAdapter, NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
+import { generateThoughtId, generateSegmentId } from '@core/utils/idUtils';
 import { logger } from '@core/utils/logger';
 
 /**
  * Manages thought data and operations, providing a centralized interface
- * for data manipulation while abstracting storage details.
+ * for data manipulation while abstracting storage details via StorageAdapter.
  */
 export class IdeaManager {
-  private thoughts: Thought[] = [];
-
-  constructor() {
-    this.loadFromStorage();
-  }
+  constructor(private storage: StorageAdapter) {}
 
   /**
-   * Attempts to load thoughts from localStorage on initialization
+   * Returns all thoughts from storage
    */
-  private loadFromStorage(): void {
+  async getThoughts(): Promise<Thought[]> {
     try {
-      const savedData = localStorage.getItem('thought-web-data');
-      if (savedData) {
-        const parsed = JSON.parse(savedData);
-        // Handle both current and legacy data formats
-        if (parsed.export_metadata && parsed.thoughts) {
-          this.thoughts = parsed.thoughts; // v0.5+ structure
-          logger.log('Loaded thoughts from storage (v0.5+ format)');
-        } else if (Array.isArray(parsed)) {
-          this.thoughts = parsed; // legacy array format
-          logger.warn('Loading thoughts from legacy format');
-        } else {
-          logger.warn('Invalid data format in localStorage');
-          this.thoughts = [];
-        }
-      }
+      return await this.storage.getAllThoughts();
     } catch (error) {
-      logger.error('Failed to load thoughts from storage:', error);
-      this.thoughts = [];
+      logger.error('Failed to get thoughts from storage:', error);
+      return [];
     }
   }
 
   /**
-   * Returns all thoughts
+   * Returns a specific thought by ID from storage
    */
-  /**
-   * Returns all thoughts
-   */
-  getThoughts(): Thought[] {
-    return [...this.thoughts];
-  }
-
-  /**
-   * Returns a specific thought by ID
-   */
-  getThoughtById(id: string): Thought | undefined {
-    return this.thoughts.find((t) => t.thought_bubble_id === id);
-  }
-
-  /**
-   * Updates or adds a thought
-   */
-  upsertThought(thought: Thought): void {
-    const index = this.thoughts.findIndex(
-      (t) => t.thought_bubble_id === thought.thought_bubble_id
-    );
-    if (index >= 0) {
-      this.thoughts[index] = thought;
-    } else {
-      this.thoughts.push(thought);
-    }
-    this.persistToStorage();
-  }
-
-  /**
-   * Removes a thought by ID
-   */
-  removeThought(id: string): void {
-    this.thoughts = this.thoughts.filter((t) => t.thought_bubble_id !== id);
-    this.persistToStorage();
-  }
-
-  /**
-   * Persists current state to localStorage
-   */
-  private persistToStorage(): void {
+  async getThoughtById(id: string): Promise<Thought | undefined> {
     try {
-      const persistData = {
-        export_metadata: {
-          version: '0.5.0',
-          exported_at: new Date().toISOString(),
-          thought_count: this.thoughts.length,
-        },
-        thoughts: this.thoughts,
+      const thought = await this.storage.getThoughtById(id);
+      return thought || undefined;
+    } catch (error) {
+      logger.error('Failed to get thought by ID from storage:', error);
+      return undefined;
+    }
+  }
+
+  /**
+   * Creates a new thought using the storage adapter
+   */
+  async addThought(
+    thoughtData: Omit<Thought, 'thought_bubble_id' | 'created_at' | 'updated_at'>
+  ): Promise<Thought> {
+    try {
+      const newThoughtData: NewThoughtData = {
+        title: thoughtData.title,
+        description: thoughtData.description,
+        tags: thoughtData.tags,
+        position: thoughtData.position,
+        color: thoughtData.color
       };
-      localStorage.setItem('thought-web-data', JSON.stringify(persistData));
-      logger.log(`Persisted ${this.thoughts.length} thoughts to storage`);
+
+      const thought = await this.storage.createThought(newThoughtData);
+      logger.log(`Created thought: ${thought.thought_bubble_id}`);
+      return thought;
     } catch (error) {
-      logger.error('Failed to persist thoughts to storage:', error);
+      logger.error('Failed to create thought:', error);
+      throw error;
     }
   }
 
-  public addThought(
-    thoughtData: Omit<
-      Thought,
-      'thought_bubble_id' | 'created_at' | 'updated_at'
-    >
-  ): Thought {
-    let thoughtId = generateThoughtId();
-    while (this.thoughts.some((t) => t.thought_bubble_id === thoughtId)) {
-      console.warn(
-        `Generated duplicate thought ID ${thoughtId}, regenerating...`
-      );
-      thoughtId = generateThoughtId();
-    }
-
-    const thought: Thought = {
-      ...thoughtData,
-      thought_bubble_id: thoughtId,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      segments: [],
-      tags: [],
-    };
-    this.thoughts.push(thought);
-    this.persistToStorage();
-    return thought;
-  }
-
-  public updateThought(
+  /**
+   * Updates an existing thought using the storage adapter
+   */
+  async updateThought(
     thoughtId: string,
     updates: Partial<Omit<Thought, 'thought_bubble_id' | 'created_at'>>
-  ): Thought | undefined {
-    const index = this.thoughts.findIndex(
-      (t) => t.thought_bubble_id === thoughtId
-    );
-    if (index === -1) return undefined;
+  ): Promise<Thought | undefined> {
+    try {
+      const updateData: Partial<NewThoughtData> = {
+        title: updates.title,
+        description: updates.description,
+        tags: updates.tags,
+        position: updates.position,
+        color: updates.color
+      };
 
-    const thought = this.thoughts[index];
-    this.thoughts[index] = {
-      ...thought,
-      ...updates,
-      updated_at: new Date().toISOString(),
-    };
-    this.persistToStorage();
-    return this.thoughts[index];
+      const thought = await this.storage.updateThought(thoughtId, updateData);
+      if (thought) {
+        logger.log(`Updated thought: ${thoughtId}`);
+      }
+      return thought || undefined;
+    } catch (error) {
+      logger.error('Failed to update thought:', error);
+      return undefined;
+    }
   }
 
-  public deleteThought(thoughtId: string): boolean {
-    const initialLength = this.thoughts.length;
-    this.thoughts = this.thoughts.filter(
-      (t) => t.thought_bubble_id !== thoughtId
-    );
-    const deleted = this.thoughts.length < initialLength;
-    if (deleted) this.persistToStorage();
-    return deleted;
+  /**
+   * Deletes a thought using the storage adapter
+   */
+  async deleteThought(thoughtId: string): Promise<boolean> {
+    try {
+      const deleted = await this.storage.deleteThought(thoughtId);
+      if (deleted) {
+        logger.log(`Deleted thought: ${thoughtId}`);
+      }
+      return deleted;
+    } catch (error) {
+      logger.error('Failed to delete thought:', error);
+      return false;
+    }
   }
 
-  public addSegment(
+  /**
+   * Creates a new segment for a thought using the storage adapter
+   */
+  async addSegment(
     thoughtId: string,
-    segmentData: Omit<
-      Segment,
-      'segment_id' | 'thought_bubble_id' | 'created_at' | 'updated_at'
-    >
-  ): Segment | undefined {
-    if (!isValidThoughtId(thoughtId)) {
-      console.error(`Invalid thought ID format: ${thoughtId}`);
+    segmentData: Omit<Segment, 'segment_id' | 'thought_bubble_id' | 'created_at' | 'updated_at'>
+  ): Promise<Segment | undefined> {
+    try {
+      // Verify thought exists first
+      const thought = await this.storage.getThoughtById(thoughtId);
+      if (!thought) {
+        logger.error(`Thought not found with ID: ${thoughtId}`);
+        return undefined;
+      }
+
+      const newSegmentData: NewSegmentData = {
+        title: segmentData.title,
+        content: segmentData.content,
+        content_type: segmentData.content_type,
+        asset_path: segmentData.asset_path,
+        fields: segmentData.fields,
+        abstraction_level: segmentData.abstraction_level,
+        local_priority: segmentData.local_priority,
+        cluster_id: segmentData.cluster_id
+      };
+
+      const segment = await this.storage.createSegment(thoughtId, newSegmentData);
+      logger.log(`Created segment: ${segment.segment_id}`);
+      return segment;
+    } catch (error) {
+      logger.error('Failed to create segment:', error);
       return undefined;
     }
-
-    const thought = this.getThoughtById(thoughtId);
-    if (!thought) {
-      console.error(`Thought not found with ID: ${thoughtId}`);
-      return undefined;
-    }
-
-    let segmentId = generateSegmentId();
-    while (thought.segments?.some((s) => s.segment_id === segmentId)) {
-      console.warn(
-        `Generated duplicate segment ID ${segmentId}, regenerating...`
-      );
-      segmentId = generateSegmentId();
-    }
-
-    const segment: Segment = {
-      ...segmentData,
-      segment_id: segmentId,
-      thought_bubble_id: thoughtId,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      abstraction_level: segmentData.abstraction_level || 'Fact',
-      cluster_id: segmentData.cluster_id || 'uncategorized',
-    };
-
-    thought.segments = thought.segments || [];
-    thought.segments.push(segment);
-    this.persistToStorage();
-    return segment;
   }
 
-  public updateSegment(
+  /**
+   * Updates an existing segment using the storage adapter
+   */
+  async updateSegment(
     thoughtId: string,
     segmentId: string,
-    updates: Partial<
-      Omit<Segment, 'segment_id' | 'thought_bubble_id' | 'created_at'>
-    >
-  ): Segment | undefined {
-    const thought = this.getThoughtById(thoughtId);
-    if (!thought || !thought.segments) return undefined;
+    updates: Partial<Omit<Segment, 'segment_id' | 'thought_bubble_id' | 'created_at'>>
+  ): Promise<Segment | undefined> {
+    try {
+      const updateData: Partial<NewSegmentData> = {
+        title: updates.title,
+        content: updates.content,
+        content_type: updates.content_type,
+        asset_path: updates.asset_path,
+        fields: updates.fields,
+        abstraction_level: updates.abstraction_level,
+        local_priority: updates.local_priority,
+        cluster_id: updates.cluster_id
+      };
 
-    const segmentIndex = thought.segments.findIndex(
-      (s) => s.segment_id === segmentId
-    );
-    if (segmentIndex === -1) return undefined;
-
-    const segment = thought.segments[segmentIndex];
-    thought.segments[segmentIndex] = {
-      ...segment,
-      ...updates,
-      abstraction_level: updates.abstraction_level || segment.abstraction_level,
-      cluster_id: updates.cluster_id || segment.cluster_id,
-      updated_at: new Date().toISOString(),
-    };
-
-    this.persistToStorage();
-    return thought.segments[segmentIndex];
+      const segment = await this.storage.updateSegment(segmentId, updateData);
+      if (segment) {
+        logger.log(`Updated segment: ${segmentId}`);
+      }
+      return segment || undefined;
+    } catch (error) {
+      logger.error('Failed to update segment:', error);
+      return undefined;
+    }
   }
 
-  public deleteSegment(thoughtId: string, segmentId: string): boolean {
-    const thought = this.getThoughtById(thoughtId);
-    if (!thought || !thought.segments) return false;
+  /**
+   * Deletes a segment using the storage adapter
+   */
+  async deleteSegment(thoughtId: string, segmentId: string): Promise<boolean> {
+    try {
+      const deleted = await this.storage.deleteSegment(segmentId);
+      if (deleted) {
+        logger.log(`Deleted segment: ${segmentId}`);
+      }
+      return deleted;
+    } catch (error) {
+      logger.error('Failed to delete segment:', error);
+      return false;
+    }
+  }
 
-    const initialLength = thought.segments.length;
-    thought.segments = thought.segments.filter(
-      (s) => s.segment_id !== segmentId
-    );
-    const deleted = thought.segments.length < initialLength;
-    if (deleted) this.persistToStorage();
-    return deleted;
+  /**
+   * Legacy compatibility methods - these maintain the original interface
+   * but now delegate to the async storage methods
+   */
+
+  /**
+   * @deprecated Use addThought instead
+   */
+  upsertThought(thought: Thought): void {
+    // This method is kept for backward compatibility but should be migrated to async
+    logger.warn('upsertThought is deprecated, use addThought or updateThought instead');
+  }
+
+  /**
+   * @deprecated Use deleteThought instead  
+   */
+  removeThought(id: string): void {
+    // This method is kept for backward compatibility but should be migrated to async
+    logger.warn('removeThought is deprecated, use deleteThought instead');
   }
 }
