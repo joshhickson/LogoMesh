@@ -1,0 +1,279 @@
+
+[
+    {
+        "id": "backup-workflow",
+        "type": "tab",
+        "label": "LogoMesh Backup",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "backup-timer",
+        "type": "inject",
+        "z": "backup-workflow",
+        "name": "Daily Backup Timer",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "86400",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 100,
+        "wires": [
+            [
+                "backup-request"
+            ]
+        ]
+    },
+    {
+        "id": "backup-request",
+        "type": "http request",
+        "z": "backup-workflow",
+        "name": "Create Backup",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:3001/api/v1/admin/backup",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 400,
+        "y": 100,
+        "wires": [
+            [
+                "backup-debug"
+            ]
+        ]
+    },
+    {
+        "id": "backup-debug",
+        "type": "debug",
+        "z": "backup-workflow",
+        "name": "Backup Result",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "auto-tagging-workflow",
+        "type": "tab",
+        "label": "Auto-Tagging Prep",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "tagging-timer",
+        "type": "inject",
+        "z": "auto-tagging-workflow",
+        "name": "Hourly Tag Check",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 200,
+        "wires": [
+            [
+                "fetch-thoughts"
+            ]
+        ]
+    },
+    {
+        "id": "fetch-thoughts",
+        "type": "http request",
+        "z": "auto-tagging-workflow",
+        "name": "Get Thoughts",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:3001/api/v1/thoughts",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 350,
+        "y": 200,
+        "wires": [
+            [
+                "keyword-analysis"
+            ]
+        ]
+    },
+    {
+        "id": "keyword-analysis",
+        "type": "function",
+        "z": "auto-tagging-workflow",
+        "name": "Basic Keyword Logic",
+        "func": "// Basic keyword tagging logic\nconst thoughts = msg.payload;\nconst keywordMap = {\n    'urgent': ['urgent', 'asap', 'immediately', 'critical'],\n    'project': ['project', 'task', 'milestone', 'deliverable'],\n    'idea': ['idea', 'concept', 'brainstorm', 'innovation'],\n    'meeting': ['meeting', 'call', 'discussion', 'conference']\n};\n\nif (Array.isArray(thoughts)) {\n    const taggedThoughts = thoughts.map(thought => {\n        const content = (thought.content || '').toLowerCase();\n        const suggestedTags = [];\n        \n        Object.keys(keywordMap).forEach(tag => {\n            if (keywordMap[tag].some(keyword => content.includes(keyword))) {\n                suggestedTags.push(tag);\n            }\n        });\n        \n        return {\n            ...thought,\n            suggestedTags\n        };\n    }).filter(thought => thought.suggestedTags.length > 0);\n    \n    msg.payload = taggedThoughts;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 200,
+        "wires": [
+            [
+                "tagging-debug"
+            ]
+        ]
+    },
+    {
+        "id": "tagging-debug",
+        "type": "debug",
+        "z": "auto-tagging-workflow",
+        "name": "Tag Suggestions",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 810,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "embedding-workflow",
+        "type": "tab",
+        "label": "Embedding Prep",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "embedding-timer",
+        "type": "inject",
+        "z": "embedding-workflow",
+        "name": "Embedding Timer",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "7200",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 300,
+        "wires": [
+            [
+                "get-segments"
+            ]
+        ]
+    },
+    {
+        "id": "get-segments",
+        "type": "http request",
+        "z": "embedding-workflow",
+        "name": "Get All Thoughts",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:3001/api/v1/thoughts",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 370,
+        "y": 300,
+        "wires": [
+            [
+                "extract-segments"
+            ]
+        ]
+    },
+    {
+        "id": "extract-segments",
+        "type": "function",
+        "z": "embedding-workflow",
+        "name": "Extract Segments",
+        "func": "// Extract segments from thoughts for embedding processing\nconst thoughts = msg.payload;\nconst segments = [];\n\nif (Array.isArray(thoughts)) {\n    thoughts.forEach(thought => {\n        if (thought.segments && Array.isArray(thought.segments)) {\n            thought.segments.forEach(segment => {\n                segments.push({\n                    segmentId: segment.id,\n                    thoughtId: thought.id,\n                    content: segment.content,\n                    type: segment.type\n                });\n            });\n        }\n    });\n}\n\nmsg.payload = segments;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 300,
+        "wires": [
+            [
+                "llm-prompt"
+            ]
+        ]
+    },
+    {
+        "id": "llm-prompt",
+        "type": "http request",
+        "z": "embedding-workflow",
+        "name": "Send to LLM",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:3001/api/v1/llm/prompt",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 780,
+        "y": 300,
+        "wires": [
+            [
+                "embedding-debug"
+            ]
+        ]
+    },
+    {
+        "id": "embedding-debug",
+        "type": "debug",
+        "z": "embedding-workflow",
+        "name": "LLM Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 300,
+        "wires": []
+    }
+]
