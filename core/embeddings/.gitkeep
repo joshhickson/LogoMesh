@@ -1,0 +1,6 @@
+
+# This directory is reserved for Vector Translation Core (VTC) implementation
+# Will be populated in Phase 2 with:
+# - VTC training/inference logic
+# - Model adapters
+# - Embedding translation utilities
