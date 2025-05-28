@@ -1,37 +1,63 @@
 
-import { LLMExecutor } from '../contracts/llmExecutor';
-import { logLLMInteraction } from '../logger/llmAuditLogger';
-import { logger } from '../utils/logger';
+import { LLMExecutor } from '../../contracts/llmExecutor';
+import { logLLMInteraction } from '../../src/core/logger/llmAuditLogger';
 
 export class LLMTaskRunner {
   constructor(private executor: LLMExecutor) {}
 
   async run(prompt: string, metadata?: Record<string, any>): Promise<string> {
+    const startTime = Date.now();
+    
     try {
-      logger.log(`[LLMTaskRunner] Executing prompt with ${this.executor.getModelInfo().name}`);
+      // Execute the prompt
+      const response = await this.executor.executePrompt(prompt, metadata);
       
-      const startTime = Date.now();
-      const response = await this.executor.executePrompt(prompt);
-      const duration = Date.now() - startTime;
-
       // Log the interaction
-      logLLMInteraction(
+      await logLLMInteraction({
         prompt,
         response,
-        this.executor.getModelInfo().name,
-        duration,
-        metadata
-      );
+        model: this.executor.getModelName(),
+        metadata,
+        duration: Date.now() - startTime,
+        success: true
+      });
 
       return response;
     } catch (error) {
-      logger.error(`[LLMTaskRunner] Error executing prompt: ${error}`);
+      // Log the failed interaction
+      await logLLMInteraction({
+        prompt,
+        response: null,
+        model: this.executor.getModelName(),
+        metadata,
+        duration: Date.now() - startTime,
+        success: false,
+        error: error instanceof Error ? error.message : String(error)
+      });
+
       throw error;
     }
   }
 
-  async runPromptWithStreaming?(prompt: string, metadata?: Record<string, any>): Promise<AsyncIterable<string>> {
-    // Stub for future streaming implementation
-    throw new Error('Streaming not yet implemented');
+  // Stub for future streaming support
+  async runPromptWithStreaming?(
+    prompt: string, 
+    onChunk: (chunk: string) => void, 
+    metadata?: Record<string, any>
+  ): Promise<string> {
+    // For now, just call the regular run method and simulate streaming
+    const response = await this.run(prompt, metadata);
+    
+    // Simulate streaming by sending chunks
+    const chunks = response.split(' ');
+    let fullResponse = '';
+    
+    for (const chunk of chunks) {
+      onChunk(chunk + ' ');
+      fullResponse += chunk + ' ';
+      await new Promise(resolve => setTimeout(resolve, 50)); // Simulate delay
+    }
+    
+    return fullResponse.trim();
   }
 }
