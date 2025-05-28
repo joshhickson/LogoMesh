@@ -6,6 +6,7 @@ import { IdeaManager } from '../../src/core/IdeaManager';
 import { logger } from '../../src/core/utils/logger';
 import llmRoutes from './routes/llmRoutes';
 import thoughtRoutes from './routes/thoughtRoutes';
+import adminRoutes from './routes/adminRoutes';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -29,6 +30,7 @@ app.locals.logger = logger;
 // Routes
 app.use('/api/v1/llm', llmRoutes);
 app.use('/api/v1/thoughts', thoughtRoutes);
+app.use('/api/v1/admin', adminRoutes);
 
 app.get('/', (req, res) => {
   res.json({ message: 'ThoughtWeb API Server', version: '1.0.0' });
