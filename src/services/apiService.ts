@@ -2,29 +2,28 @@
 import { Thought, Segment } from '../contracts/entities';
 import { NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
 
-// Use the built-in RequestInit type
-declare global {
-  interface RequestInit {
-    method?: string;
-    headers?: Record<string, string>;
-    body?: string;
-  }
+// Custom interface for API requests to avoid conflicts with built-in RequestInit
+interface ApiRequestInit {
+  method?: string;
+  headers?: Record<string, string>;
+  body?: string;
 }
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1';
 
 class ApiService {
-  private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  private async request<T>(endpoint: string, options?: ApiRequestInit): Promise<T> {
     const url = `${API_BASE_URL}${endpoint}`;
     
     try {
       const response = await fetch(url, {
+        method: options?.method || 'GET',
         headers: {
           'Content-Type': 'application/json',
           ...options?.headers,
         },
-        ...options,
-      });
+        body: options?.body,
+      } as RequestInit);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
