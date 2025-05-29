@@ -15,17 +15,29 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Initialize database
-initializeDatabase().catch(console.error);
+// Initialize core services
+const dbPath = process.env.DB_PATH || './server/data/logomesh.sqlite3';
 
-// Instantiate core services
-const dbPath = process.env.DB_PATH || './data/logomesh.sqlite3';
-const sqliteAdapter = new SQLiteStorageAdapter(dbPath);
-const ideaManager = new IdeaManager(sqliteAdapter);
+// Initialize database and services
+async function initializeServer() {
+  try {
+    await initializeDatabase();
+    logger.info('Database initialized successfully');
+    
+    const sqliteAdapter = new SQLiteStorageAdapter(dbPath);
+    await sqliteAdapter.initialize();
+    logger.info('Storage adapter initialized');
+    
+    const ideaManager = new IdeaManager(sqliteAdapter);
+    return { ideaManager, sqliteAdapter };
+  } catch (error) {
+    logger.error('Failed to initialize server:', error);
+    process.exit(1);
+  }
+}
 
-// Make services available to routes
-app.locals.ideaManager = ideaManager;
-app.locals.logger = logger;
+// Initialize services (will be awaited before starting server)
+const services = initializeServer();
 
 // Routes
 app.use('/api/v1/llm', llmRoutes);
@@ -44,6 +56,19 @@ app.get('/api/v1/health', (req, res) => {
   });
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-  logger.info(`Server running on port ${PORT}`);
+// Start server after initialization
+services.then(({ ideaManager }) => {
+  // Make services available to routes
+  app.locals.ideaManager = ideaManager;
+  app.locals.logger = logger;
+
+  app.listen(PORT, '0.0.0.0', () => {
+    logger.info(`Server running on port ${PORT}`);
+    logger.info(`Database path: ${dbPath}`);
+    logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    logger.info(`Plugin directory: ${process.env.PLUGIN_DIR || 'N/A'}`);
+  });
+}).catch(error => {
+  logger.error('Failed to start server:', error);
+  process.exit(1);
 });
