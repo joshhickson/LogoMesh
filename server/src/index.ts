@@ -36,6 +36,14 @@ app.get('/', (req, res) => {
   res.json({ message: 'ThoughtWeb API Server', version: '1.0.0' });
 });
 
+// Health check endpoint
+app.get('/api/v1/health', (req, res) => {
+  res.json({ 
+    status: 'healthy', 
+    timestamp: new Date().toISOString() 
+  });
+});
+
 app.listen(PORT, '0.0.0.0', () => {
   logger.info(`Server running on port ${PORT}`);
 });
