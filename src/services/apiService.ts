@@ -2,14 +2,7 @@
 import { Thought, Segment } from '../contracts/entities';
 import { NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
 
-// Use the built-in RequestInit type
-declare global {
-  interface RequestInit {
-    method?: string;
-    headers?: Record<string, string>;
-    body?: string;
-  }
-}
+// Use the built-in RequestInit type from the DOM lib
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1';
 
@@ -21,7 +14,7 @@ class ApiService {
       const response = await fetch(url, {
         headers: {
           'Content-Type': 'application/json',
-          ...options?.headers,
+          ...(options?.headers as Record<string, string>),
         },
         ...options,
       });
