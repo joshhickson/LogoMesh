@@ -11,7 +11,7 @@ interface ApiRequestOptions {
 const API_BASE_URL = process.env.REACT_APP_API_URL || (
   // In Replit, check if we're in development and use the same origin with port 3001
   window.location.hostname.includes('replit.dev') 
-    ? `${window.location.protocol}//${window.location.hostname.replace('-00-', '-01-')}`
+    ? `${window.location.protocol}//${window.location.hostname.replace('-00-', '-01-')}/api/v1`
     : 'http://localhost:3001/api/v1'
 );
 
@@ -44,8 +44,8 @@ class ApiService {
     } catch (error) {
       console.error('API request failed for', endpoint + ':', error);
       console.error('Full error details:', {
-        message: error.message,
-        stack: error.stack,
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
         url: `${API_BASE_URL}${endpoint}`,
         options
       });
