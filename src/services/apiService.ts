@@ -2,8 +2,8 @@
 import { Thought, Segment } from '../contracts/entities';
 import { NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
 
-// Custom interface for API requests to avoid conflicts with built-in RequestInit
-interface ApiRequestInit {
+// Use a custom interface to avoid conflicts
+interface ApiRequestOptions {
   method?: string;
   headers?: Record<string, string>;
   body?: string;
@@ -12,7 +12,7 @@ interface ApiRequestInit {
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1';
 
 class ApiService {
-  private async request<T>(endpoint: string, options?: ApiRequestInit): Promise<T> {
+  private async request<T>(endpoint: string, options?: ApiRequestOptions): Promise<T> {
     const url = `${API_BASE_URL}${endpoint}`;
     
     try {
