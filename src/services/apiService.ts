@@ -9,9 +9,9 @@ interface ApiRequestOptions {
 }
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || (
-  // In Replit, check if we're in development and use the same origin with port 3001
+  // In Replit, use the same hostname with port 3001
   window.location.hostname.includes('replit.dev') 
-    ? `${window.location.protocol}//${window.location.hostname.replace('-00-', '-01-')}/api/v1`
+    ? `${window.location.protocol}//${window.location.hostname}:3001/api/v1`
     : 'http://localhost:3001/api/v1'
 );
 
