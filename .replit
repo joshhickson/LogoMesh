@@ -52,12 +52,3 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd server && npm run dev"
-
-[[workflows.workflow]]
-name = "Node-RED"
-author = 42214058
-mode = "sequential"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "./start-nodered.sh"

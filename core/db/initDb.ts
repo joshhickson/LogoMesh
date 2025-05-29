@@ -27,7 +27,10 @@ export async function initializeDatabase(): Promise<void> {
   return new Promise((resolve, reject) => {
     try {
       // Determine database path based on environment
-      const dbPath = process.env.DB_PATH || path.resolve(__dirname, '../data/logomesh.sqlite3');
+      const defaultPath = process.cwd().includes('/server') ? 
+        './data/logomesh.sqlite3' : 
+        './server/data/logomesh.sqlite3';
+      const dbPath = process.env.DB_PATH || path.resolve(defaultPath);
       
       // Ensure data directory exists
       const dataDir = path.dirname(dbPath);

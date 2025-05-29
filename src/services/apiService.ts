@@ -1,4 +1,3 @@
-
 import { Thought, Segment } from '../contracts/entities';
 import { NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
 
@@ -14,7 +13,7 @@ const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api
 class ApiService {
   private async request<T>(endpoint: string, options?: ApiRequestOptions): Promise<T> {
     const url = `${API_BASE_URL}${endpoint}`;
-    
+
     try {
       const response = await fetch(url, {
         method: options?.method || 'GET',
@@ -23,7 +22,7 @@ class ApiService {
           ...options?.headers,
         },
         body: options?.body,
-      } as RequestInit);
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
