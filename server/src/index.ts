@@ -23,11 +23,11 @@ async function initializeServer() {
   try {
     await initializeDatabase();
     logger.info('Database initialized successfully');
-    
+
     const sqliteAdapter = new SQLiteStorageAdapter(dbPath);
     await sqliteAdapter.initialize();
     logger.info('Storage adapter initialized');
-    
+
     const ideaManager = new IdeaManager(sqliteAdapter);
     return { ideaManager, sqliteAdapter };
   } catch (error) {

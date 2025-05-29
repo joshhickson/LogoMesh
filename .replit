@@ -31,6 +31,10 @@ mode = "sequential"
 task = "shell.exec"
 args = "npm run start"
 
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd server && npm run dev"
+
 [[workflows.workflow]]
 name = "Lint"
 author = 42214058
@@ -43,12 +47,3 @@ args = "npm run lint"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run format"
-
-[[workflows.workflow]]
-name = "Backend Server"
-author = 42214058
-mode = "sequential"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd server && npm run dev"
