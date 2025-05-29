@@ -8,7 +8,14 @@ interface ApiRequestOptions {
   body?: string;
 }
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1';
+const API_BASE_URL = process.env.REACT_APP_API_URL || (
+  // In Replit, check if we're in development and use the same origin with port 3001
+  window.location.hostname.includes('replit.dev') 
+    ? `${window.location.protocol}//${window.location.hostname.replace('-00-', '-01-')}`
+    : 'http://localhost:3001/api/v1'
+);
+
+console.log('[API Service] Using API base URL:', API_BASE_URL);
 
 class ApiService {
   private async request<T>(endpoint: string, options?: ApiRequestOptions): Promise<T> {
@@ -35,7 +42,13 @@ class ApiService {
 
       return await response.json();
     } catch (error) {
-      console.error(`API request failed for ${endpoint}:`, error);
+      console.error('API request failed for', endpoint + ':', error);
+      console.error('Full error details:', {
+        message: error.message,
+        stack: error.stack,
+        url: `${API_BASE_URL}${endpoint}`,
+        options
+      });
       throw error;
     }
   }
