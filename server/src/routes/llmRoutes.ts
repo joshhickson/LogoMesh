@@ -1,135 +1,157 @@
 
-import express from 'express';
+import { Router, Request, Response } from 'express';
 import { LLMTaskRunner } from '../../../core/llm/LLMTaskRunner';
 import { OllamaExecutor } from '../../../core/llm/OllamaExecutor';
-
-const router = express.Router();
-
-// Initialize LLM components
-const defaultExecutor = new OllamaExecutor('ollama-mock-v1');
-const taskRunner = new LLMTaskRunner(defaultExecutor);
-
-// POST /api/v1/llm/prompt - Execute a prompt
-router.post('/llm/prompt', async (req, res) => {
-  try {
-    const { prompt, metadata } = req.body;
-
-    if (!prompt || typeof prompt !== 'string') {
-      return res.status(400).json({
-        error: 'Prompt is required and must be a string'
-      });
-    }
-
-    const response = await taskRunner.run(prompt, metadata);
-
-    res.json({
-      success: true,
-      response,
-      model: defaultExecutor.getModelName(),
-      timestamp: new Date().toISOString()
-    });
-  } catch (error) {
-    console.error('Error executing LLM prompt:', error);
-    res.status(500).json({
-      error: 'Failed to execute prompt',
-      message: error instanceof Error ? error.message : String(error)
-    });
-  }
-});
-
-// GET /api/v1/llm/models - List available models
-router.get('/llm/models', (req, res) => {
-  res.json({
-    models: [
-      {
-        name: defaultExecutor.getModelName(),
-        type: 'mock',
-        supportsStreaming: defaultExecutor.supportsStreaming
-      }
-    ]
-  });
-});
-
-// POST /api/v1/llm/stream - Streaming prompt execution (stub)
-router.post('/llm/stream', async (req, res) => {
-  try {
-    const { prompt, metadata } = req.body;
-
-    if (!prompt || typeof prompt !== 'string') {
-      return res.status(400).json({
-        error: 'Prompt is required and must be a string'
-      });
-    }
-
-    // Set headers for streaming
-    res.setHeader('Content-Type', 'text/event-stream');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Connection', 'keep-alive');
-
-    // Use streaming method if available
-    if (taskRunner.runPromptWithStreaming) {
-      let fullResponse = '';
-      
-      await taskRunner.runPromptWithStreaming(
-        prompt,
-        (chunk: string) => {
-          fullResponse += chunk;
-          res.write(`data: ${JSON.stringify({ chunk, type: 'chunk' })}\n\n`);
-        },
-        metadata
-      );
-
-      res.write(`data: ${JSON.stringify({ type: 'done', fullResponse })}\n\n`);
-    } else {
-      // Fallback to regular execution
-      const response = await taskRunner.run(prompt, metadata);
-      res.write(`data: ${JSON.stringify({ chunk: response, type: 'complete' })}\n\n`);
-    }
-
-    res.end();
-  } catch (error) {
-    console.error('Error in streaming LLM prompt:', error);
-    res.write(`data: ${JSON.stringify({ 
-      type: 'error', 
-      error: error instanceof Error ? error.message : String(error) 
-    })}\n\n`);
-    res.end();
-  }
-});
-
-export default router;
-import { Router, Request, Response } from 'express';
 import { logger } from '../../../src/core/utils/logger';
+import { llmAuditLogger } from '../../../src/core/logger/llmAuditLogger';
 
 const router = Router();
 
-// Placeholder for LLM routes
-router.get('/health', (req: Request, res: Response) => {
-  res.json({ service: 'llm', status: 'healthy' });
+// Initialize LLM Task Runner with Ollama executor
+const ollamaExecutor = new OllamaExecutor({
+  baseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
+  defaultModel: process.env.OLLAMA_DEFAULT_MODEL || 'llama2'
 });
 
-// POST /api/v1/llm/prompt - Execute LLM prompt (stub)
+const llmTaskRunner = new LLMTaskRunner(ollamaExecutor);
+
+/**
+ * POST /api/v1/llm/prompt
+ * Execute a prompt using the LLM
+ */
 router.post('/prompt', async (req: Request, res: Response) => {
   try {
-    const { prompt, model } = req.body;
+    const { prompt, metadata = {} } = req.body;
     
-    if (!prompt) {
-      return res.status(400).json({ error: 'Prompt is required' });
+    if (!prompt || typeof prompt !== 'string') {
+      return res.status(400).json({ 
+        error: 'Prompt is required and must be a string' 
+      });
     }
 
-    // Stub implementation - will be enhanced in future phases
-    const response = {
-      prompt,
-      model: model || 'default',
-      response: 'LLM functionality coming soon',
-      timestamp: new Date().toISOString()
-    };
+    logger.info('[LLM Routes] Processing prompt request', { 
+      promptLength: prompt.length,
+      metadata 
+    });
 
-    logger.info(`LLM prompt executed: ${prompt.substring(0, 50)}...`);
-    res.json(response);
-  } catch (error) {
-    logger.error('Error executing LLM prompt:', error);
-    res.status(500).json({ error: 'Failed to execute LLM prompt' });
+    // Log the request for auditing
+    await llmAuditLogger.logPromptRequest({
+      prompt,
+      metadata,
+      timestamp: new Date().toISOString(),
+      requestId: `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    });
+
+    // Execute the prompt
+    const result = await llmTaskRunner.executePrompt(prompt, metadata);
+    
+    // Log the response for auditing
+    await llmAuditLogger.logPromptResponse({
+      result,
+      timestamp: new Date().toISOString(),
+      executionTimeMs: result.executionTimeMs || 0
+    });
+
+    res.json({
+      success: true,
+      result: result.response,
+      metadata: {
+        model: result.model,
+        executionTimeMs: result.executionTimeMs,
+        tokensUsed: result.tokensUsed || 0
+      }
+    });
+
+  } catch (error: any) {
+    logger.error('[LLM Routes] Error processing prompt:', error);
+    
+    // Log the error for auditing
+    await llmAuditLogger.logError({
+      error: error.message,
+      stack: error.stack,
+      timestamp: new Date().toISOString()
+    });
+
+    res.status(500).json({ 
+      error: 'Failed to process prompt',
+      details: error.message 
+    });
+  }
+});
+
+/**
+ * GET /api/v1/llm/status
+ * Get LLM service status
+ */
+router.get('/status', async (req: Request, res: Response) => {
+  try {
+    const status = await llmTaskRunner.getStatus();
+    res.json({
+      success: true,
+      status: {
+        isConnected: status.isConnected,
+        model: status.currentModel,
+        lastCheck: status.lastHealthCheck,
+        totalRequests: status.totalRequests || 0
+      }
+    });
+  } catch (error: any) {
+    logger.error('[LLM Routes] Error getting status:', error);
+    res.status(500).json({ 
+      error: 'Failed to get LLM status',
+      details: error.message 
+    });
+  }
+});
+
+/**
+ * POST /api/v1/llm/analyze-segment
+ * Analyze a thought segment for insights
+ */
+router.post('/analyze-segment', async (req: Request, res: Response) => {
+  try {
+    const { segmentContent, analysisType = 'general' } = req.body;
+    
+    if (!segmentContent) {
+      return res.status(400).json({ 
+        error: 'Segment content is required' 
+      });
+    }
+
+    const analysisPrompt = `Analyze the following text segment for insights and potential connections:
+
+Content: ${segmentContent}
+
+Analysis Type: ${analysisType}
+
+Please provide:
+1. Key themes and concepts
+2. Potential connections to other ideas
+3. Suggested tags
+4. Summary in one sentence
+
+Respond in JSON format with keys: themes, connections, suggestedTags, summary`;
+
+    const result = await llmTaskRunner.executePrompt(analysisPrompt, {
+      analysisType,
+      segmentLength: segmentContent.length
+    });
+
+    res.json({
+      success: true,
+      analysis: result.response,
+      metadata: {
+        model: result.model,
+        executionTimeMs: result.executionTimeMs
+      }
+    });
+
+  } catch (error: any) {
+    logger.error('[LLM Routes] Error analyzing segment:', error);
+    res.status(500).json({ 
+      error: 'Failed to analyze segment',
+      details: error.message 
+    });
   }
 });
 
