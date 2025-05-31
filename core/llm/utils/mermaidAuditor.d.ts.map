@@ -1,0 +1,1 @@
+{"version":3,"file":"mermaidAuditor.d.ts","sourceRoot":"","sources":["mermaidAuditor.ts"],"names":[],"mappings":"AACA;;;GAGG;AAEH,wBAAgB,cAAc,CAAC,WAAW,EAAE,MAAM,GAAG,OAAO,CA2B3D;AAED,wBAAgB,qBAAqB,CAAC,WAAW,EAAE,MAAM,GAAG;IAAE,KAAK,EAAE,OAAO,CAAC;IAAC,MAAM,EAAE,MAAM,EAAE,CAAA;CAAE,CAW/F"}

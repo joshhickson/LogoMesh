@@ -7,19 +7,25 @@ import path from 'path';
 let logger: any;
 try {
   // Try from server context
-  logger = require('../../src/core/utils/logger');
+  logger = require('../../src/core/utils/logger').logger;
 } catch {
   try {
-    // Try from core context
-    logger = require('../utils/logger');
+    // Try from core context  
+    logger = require('../utils/logger').logger;
   } catch {
-    // Fallback console logging
-    logger = {
-      info: console.log,
-      warn: console.warn,
-      error: console.error,
-      debug: console.log
-    };
+    try {
+      // Try direct path from server
+      logger = require('../../core/utils/logger').logger;
+    } catch {
+      // Fallback console logging
+      logger = {
+        info: console.log,
+        warn: console.warn,
+        error: console.error,
+        debug: console.log,
+        log: console.log
+      };
+    }
   }
 }
 

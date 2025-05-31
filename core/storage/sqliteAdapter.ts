@@ -3,8 +3,8 @@ import * as sqlite3 from 'sqlite3';
 import { Database } from 'sqlite3';
 import { StorageAdapter, NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
 import { Thought, Segment, Tag } from '../../contracts/entities';
-import { generateThoughtId, generateSegmentId } from '../utils/idUtils';
-import { logger } from '../utils/logger';
+import { generateThoughtId, generateSegmentId } from '../../src/core/utils/idUtils';
+import { logger } from '../../src/core/utils/logger';
 
 /**
  * SQLite implementation of the StorageAdapter interface

@@ -20,7 +20,7 @@ localPort = 3001
 externalPort = 3001
 
 [workflows]
-runButton = "Run"
+runButton = "Run Frontend & Backend"
 
 [[workflows.workflow]]
 name = "Run"
@@ -47,3 +47,16 @@ args = "npm run lint"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run format"
+
+[[workflows.workflow]]
+name = "Run Frontend & Backend"
+author = 42214058
+mode = "parallel"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run start"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd server && npm run dev"

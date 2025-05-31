@@ -98,3 +98,39 @@ router.post('/llm/stream', async (req, res) => {
 });
 
 export default router;
+import { Router, Request, Response } from 'express';
+import { logger } from '../../../src/core/utils/logger';
+
+const router = Router();
+
+// Placeholder for LLM routes
+router.get('/health', (req: Request, res: Response) => {
+  res.json({ service: 'llm', status: 'healthy' });
+});
+
+// POST /api/v1/llm/prompt - Execute LLM prompt (stub)
+router.post('/prompt', async (req: Request, res: Response) => {
+  try {
+    const { prompt, model } = req.body;
+    
+    if (!prompt) {
+      return res.status(400).json({ error: 'Prompt is required' });
+    }
+
+    // Stub implementation - will be enhanced in future phases
+    const response = {
+      prompt,
+      model: model || 'default',
+      response: 'LLM functionality coming soon',
+      timestamp: new Date().toISOString()
+    };
+
+    logger.info(`LLM prompt executed: ${prompt.substring(0, 50)}...`);
+    res.json(response);
+  } catch (error) {
+    logger.error('Error executing LLM prompt:', error);
+    res.status(500).json({ error: 'Failed to execute LLM prompt' });
+  }
+});
+
+export default router;
