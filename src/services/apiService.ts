@@ -1,88 +1,69 @@
-Fixing TypeScript issues, default exports, and named exports in apiService.ts.
-```
-
-```typescript
+// API Service for LogoMesh Backend Communication
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1';
 
 console.log('[API Service] Using API base URL:', API_BASE_URL);
 
-// Type definitions for API requests
-interface NewThoughtData {
-  title: string;
-  description?: string;
-  tags?: string[];
-  position?: { x: number; y: number };
+if (process.env.NODE_ENV === 'development') {
+  console.log('Development mode');
 }
 
-interface NewSegmentData {
-  title: string;
-  content: string;
-  fields?: Record<string, any>;
-}
-
-interface UpdateThoughtData {
-  title?: string;
-  description?: string;
-  tags?: string[];
-  position?: { x: number; y: number };
-}
-
-interface UpdateSegmentData {
-  title?: string;
-  content?: string;
-  fields?: Record<string, any>;
-}
-
-// Helper function for API requests
-const apiRequest = async (endpoint: string, options: RequestInit = {}): Promise<any> => {
+// Generic API request function
+async function apiRequest(endpoint: string, options: RequestInit = {}): Promise<any> {
   const url = `${API_BASE_URL}${endpoint}`;
 
+  const defaultOptions: RequestInit = {
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+    ...options,
+  };
+
   try {
-    const response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-      ...options,
-    });
+    const response = await fetch(url, defaultOptions);
 
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(`HTTP ${response.status}: ${errorText}`);
     }
 
-    return await response.json();
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      return await response.json();
+    } else {
+      return await response.text();
+    }
   } catch (error: any) {
-    console.error('API request failed for', endpoint, error);
-    console.error('Full error details:', {
-      message: error?.message || 'Unknown error',
-      stack: error?.stack || 'No stack trace',
+    console.log('API request failed for', endpoint + ':', error);
+    console.log('Full error details:', {
+      message: error.message,
+      stack: error.stack,
       url: url
     });
     throw error;
   }
 }
 
-// Thoughts API
+// Thought API functions
 export async function fetchThoughts() {
   return apiRequest('/thoughts');
-}
-
-export async function createThoughtApi(data: NewThoughtData) {
-  return apiRequest('/thoughts', {
-    method: 'POST',
-    body: JSON.stringify(data),
-  });
 }
 
 export async function getThoughtById(thoughtId: string) {
   return apiRequest(`/thoughts/${thoughtId}`);
 }
 
-export async function updateThoughtApi(thoughtId: string, updates: UpdateThoughtData) {
+export async function createThoughtApi(thoughtData: any) {
+  return apiRequest('/thoughts', {
+    method: 'POST',
+    body: JSON.stringify(thoughtData),
+  });
+}
+
+export async function updateThoughtApi(thoughtId: string, thoughtData: any) {
   return apiRequest(`/thoughts/${thoughtId}`, {
     method: 'PUT',
-    body: JSON.stringify(updates),
+    body: JSON.stringify(thoughtData),
   });
 }
 
@@ -92,18 +73,18 @@ export async function deleteThoughtApi(thoughtId: string) {
   });
 }
 
-// Segments API
-export async function createSegmentApi(thoughtId: string, data: NewSegmentData) {
+// Segment API functions
+export async function createSegmentApi(thoughtId: string, segmentData: any) {
   return apiRequest(`/thoughts/${thoughtId}/segments`, {
     method: 'POST',
-    body: JSON.stringify(data),
+    body: JSON.stringify(segmentData),
   });
 }
 
-export async function updateSegmentApi(thoughtId: string, segmentId: string, updates: UpdateSegmentData) {
+export async function updateSegmentApi(thoughtId: string, segmentId: string, segmentData: any) {
   return apiRequest(`/thoughts/${thoughtId}/segments/${segmentId}`, {
     method: 'PUT',
-    body: JSON.stringify(updates),
+    body: JSON.stringify(segmentData),
   });
 }
 
@@ -113,50 +94,43 @@ export async function deleteSegmentApi(thoughtId: string, segmentId: string) {
   });
 }
 
-// LLM API
-export const callLLMApi = async (prompt: string, metadata?: Record<string, any>): Promise<any> => {
-  return apiRequest('/llm/prompt', {
+// Import/Export API functions
+export async function exportDataApi() {
+  return apiRequest('/export/json');
+}
+
+export async function importDataApi(file: File) {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  return fetch(`${API_BASE_URL}/import/json`, {
     method: 'POST',
-    body: JSON.stringify({ prompt, metadata }),
+    body: formData,
+  }).then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    return response.json();
   });
 }
 
-// Admin API
+// Admin API functions
 export async function triggerBackupApi() {
   return apiRequest('/admin/backup', {
     method: 'POST',
   });
 }
 
-// Export/Import API
-export async function exportDataApi() {
-  const response = await fetch(`${API_BASE_URL}/export/json`);
-  if (!response.ok) {
-    throw new Error(`Export failed: ${response.statusText}`);
-  }
-  return await response.blob();
-}
-
-export const importDataApi = async (jsonData: Record<string, any>): Promise<void> => {
-  const formData = new FormData();
-  formData.append('file', jsonData as unknown as File);
-
-  const response = await fetch(`${API_BASE_URL}/import/json`, {
-    method: 'POST',
-    body: formData,
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Import failed: ${errorText}`);
-  }
-
-  return await response.json();
-}
-
-// LLM Status API
+// LLM API functions
 export async function getLLMStatus() {
   return apiRequest('/llm/status');
+}
+
+export async function callLLMApi(prompt: string, metadata?: Record<string, any>) {
+  return apiRequest('/llm/prompt', {
+    method: 'POST',
+    body: JSON.stringify({ prompt, metadata }),
+  });
 }
 
 export const analyzeSegment = async (segmentId: string, analysisType = 'general'): Promise<any> => {
@@ -164,28 +138,10 @@ export const analyzeSegment = async (segmentId: string, analysisType = 'general'
     method: 'POST',
     body: JSON.stringify({ segmentId, analysisType }),
   });
-}
-
-// Create apiService object
-const apiService = {
-  fetchThoughts,
-  getThoughtById,
-  createThoughtApi,
-  updateThoughtApi,
-  deleteThoughtApi,
-  createSegmentApi,
-  updateSegmentApi,
-  deleteSegmentApi,
-  exportDataApi,
-  importDataApi,
-  triggerBackupApi,
-  getLLMStatus,
-  callLLMApi,
-  analyzeSegment
 };
 
-// Export individual functions and the main apiService object
-export {
+// Export the main apiService object with all functions
+export const apiService = {
   fetchThoughts,
   getThoughtById,
   createThoughtApi,
@@ -200,8 +156,4 @@ export {
   getLLMStatus,
   callLLMApi,
   analyzeSegment,
-  apiService
 };
-
-// Default export
-export default apiService;
