@@ -1,8 +1,44 @@
 
-import express from 'express';
+import { Router, Request, Response } from 'express';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { logger } from '../../../src/core/utils/logger';
+
+const router = Router();
+
+// Health check for admin services
+router.get('/health', (req: Request, res: Response) => {
+  res.json({ service: 'admin', status: 'healthy' });
+});
+
+// POST /api/v1/admin/backup - Create database backup
+router.post('/backup', async (req: Request, res: Response) => {
+  try {
+    const dbPath = process.env.DB_PATH || './server/data/logomesh.sqlite3';
+    const backupDir = path.resolve('./server/backups');
+    
+    // Ensure backup directory exists
+    await fs.mkdir(backupDir, { recursive: true });
+    
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const backupPath = path.join(backupDir, `logomesh-backup-${timestamp}.sqlite3`);
+    
+    // Copy database file
+    await fs.copyFile(dbPath, backupPath);
+    
+    logger.info(`Database backup created: ${backupPath}`);
+    res.json({ 
+      message: 'Backup created successfully',
+      backupPath,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    logger.error('Error creating backup:', error);
+    res.status(500).json({ error: 'Failed to create backup' });
+  }
+});
+
+export default router;
 
 const router = express.Router();
 
