@@ -49,11 +49,11 @@ async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promi
     }
 
     return await response.json();
-  } catch (error) {
+  } catch (error: any) {
     console.error('API request failed for', endpoint, error);
     console.error('Full error details:', {
-      message: error.message,
-      stack: error.stack,
+      message: error?.message || 'Unknown error',
+      stack: error?.stack || 'No stack trace',
       url: url
     });
     throw error;
@@ -150,3 +150,35 @@ export async function importDataApi(file: File) {
   
   return await response.json();
 }
+
+// LLM Status API
+export async function getLLMStatus() {
+  return apiRequest('/llm/status');
+}
+
+export async function analyzeSegment(segmentContent: string, analysisType: string = 'general') {
+  return apiRequest('/llm/analyze-segment', {
+    method: 'POST',
+    body: JSON.stringify({ segmentContent, analysisType }),
+  });
+}
+
+// Export all functions as named exports and create default export
+const apiService = {
+  fetchThoughts,
+  createThoughtApi,
+  getThoughtById,
+  updateThoughtApi,
+  deleteThoughtApi,
+  createSegmentApi,
+  updateSegmentApi,
+  deleteSegmentApi,
+  callLLMApi,
+  getLLMStatus,
+  analyzeSegment,
+  triggerBackupApi,
+  exportDataApi,
+  importDataApi
+};
+
+export default apiService;
