@@ -29,14 +29,14 @@ router.get('/', async (req: Request, res: Response) => {
 router.post('/', async (req: Request, res: Response) => {
   try {
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
-    const thoughtData: NewThoughtData = req.body;
+    const thoughtData = req.body;
     
     // Basic validation
-    if (!thoughtData.title || !thoughtData.description) {
-      return res.status(400).json({ error: 'Title and description are required' });
+    if (!thoughtData.title) {
+      return res.status(400).json({ error: 'Title is required' });
     }
 
-    const newThought = await ideaManager.createThought(thoughtData);
+    const newThought = await ideaManager.addThought(thoughtData);
     res.status(201).json(newThought);
   } catch (error) {
     logger.error('Error creating thought:', error);
@@ -111,7 +111,10 @@ router.post('/:thoughtId/segments', async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Title and content are required' });
     }
 
-    const newSegment = await ideaManager.createSegment(thoughtId, segmentData);
+    const newSegment = await ideaManager.addSegment(thoughtId, segmentData);
+    if (!newSegment) {
+      return res.status(404).json({ error: 'Thought not found' });
+    }
     res.status(201).json(newSegment);
   } catch (error) {
     logger.error('Error creating segment:', error);

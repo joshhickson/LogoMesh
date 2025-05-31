@@ -1,50 +1,21 @@
+import * as sqlite3 from 'sqlite3';
+import * as fs from 'fs';
+import * as path from 'path';
+import { logger } from '../../src/core/utils/logger';
 
-import sqlite3 from 'sqlite3';
-import fs from 'fs';
-import path from 'path';
-
-// Import logger - try multiple paths to handle different execution contexts
-let logger: any;
-try {
-  // Try from server context
-  logger = require('../../src/core/utils/logger').logger;
-} catch {
-  try {
-    // Try from core context  
-    logger = require('../utils/logger').logger;
-  } catch {
-    try {
-      // Try direct path from server
-      logger = require('../../core/utils/logger').logger;
-    } catch {
-      // Fallback console logging
-      logger = {
-        info: console.log,
-        warn: console.warn,
-        error: console.error,
-        debug: console.log,
-        log: console.log
-      };
-    }
+/**
+ * Initialize the SQLite database with the required schema
+ */
+export async function initializeDatabase(dbPath: string = './server/data/logomesh.sqlite3'): Promise<void> {
+  // Ensure the directory exists
+  const dbDir = path.dirname(dbPath);
+  if (!fs.existsSync(dbDir)) {
+    fs.mkdirSync(dbDir, { recursive: true });
+    logger.info(`Created database directory: ${dbDir}`);
   }
-}
 
-export async function initializeDatabase(): Promise<void> {
   return new Promise((resolve, reject) => {
     try {
-      // Determine database path based on environment
-      const defaultPath = process.cwd().includes('/server') ? 
-        './data/logomesh.sqlite3' : 
-        './server/data/logomesh.sqlite3';
-      const dbPath = process.env.DB_PATH || path.resolve(defaultPath);
-      
-      // Ensure data directory exists
-      const dataDir = path.dirname(dbPath);
-      if (!fs.existsSync(dataDir)) {
-        fs.mkdirSync(dataDir, { recursive: true });
-        logger.info(`Created data directory: ${dataDir}`);
-      }
-
       logger.info(`Connecting to database at: ${dbPath}`);
 
       // Connect to SQLite database
