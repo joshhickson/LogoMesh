@@ -133,3 +133,95 @@ router.get('/backups', async (req, res) => {
 });
 
 export default router;
+import { Router, Request, Response } from 'express';
+import * as fs from 'fs';
+import * as path from 'path';
+import { logger } from '../../src/core/utils/logger';
+
+const router = Router();
+
+/**
+ * POST /api/v1/admin/backup
+ * Creates a timestamped backup of the SQLite database
+ */
+router.post('/backup', async (req: Request, res: Response) => {
+  try {
+    const dbPath = process.env.DB_PATH || './server/data/logomesh.sqlite3';
+    const backupDir = path.resolve('./server/backups');
+    
+    // Ensure backup directory exists
+    if (!fs.existsSync(backupDir)) {
+      fs.mkdirSync(backupDir, { recursive: true });
+      logger.info(`Created backup directory: ${backupDir}`);
+    }
+    
+    // Check if database file exists
+    if (!fs.existsSync(dbPath)) {
+      return res.status(404).json({ error: 'Database file not found' });
+    }
+    
+    // Create timestamped backup filename
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const backupFilename = `logomesh_backup_${timestamp}.sqlite3`;
+    const backupPath = path.join(backupDir, backupFilename);
+    
+    // Copy database file to backup location
+    fs.copyFileSync(dbPath, backupPath);
+    
+    logger.info(`Database backup created: ${backupPath}`);
+    
+    res.status(200).json({
+      success: true,
+      message: 'Database backup created successfully',
+      backupFile: backupFilename,
+      backupPath: backupPath,
+      timestamp: new Date().toISOString()
+    });
+    
+  } catch (error) {
+    logger.error('Error creating database backup:', error);
+    res.status(500).json({ 
+      error: 'Failed to create database backup',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+});
+
+/**
+ * GET /api/v1/admin/backups
+ * Lists all available backup files
+ */
+router.get('/backups', async (req: Request, res: Response) => {
+  try {
+    const backupDir = path.resolve('./server/backups');
+    
+    if (!fs.existsSync(backupDir)) {
+      return res.status(200).json({ backups: [] });
+    }
+    
+    const files = fs.readdirSync(backupDir)
+      .filter(file => file.endsWith('.sqlite3'))
+      .map(file => {
+        const filePath = path.join(backupDir, file);
+        const stats = fs.statSync(filePath);
+        return {
+          filename: file,
+          size: stats.size,
+          created: stats.birthtime,
+          modified: stats.mtime
+        };
+      })
+      .sort((a, b) => b.created.getTime() - a.created.getTime());
+    
+    res.status(200).json({ backups: files });
+    
+  } catch (error) {
+    logger.error('Error listing backups:', error);
+    res.status(500).json({ 
+      error: 'Failed to list backups',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+});
+
+export default router;
