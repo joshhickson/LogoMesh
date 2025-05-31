@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useEffect, useState } from 'react'; // Added useState
 import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import fcose from 'cytoscape-fcose';
@@ -6,8 +6,10 @@ import fcose from 'cytoscape-fcose';
 // Register the layout only once
 cytoscape.use(fcose);
 
-function Canvas({ thoughts, setSelectedThought, activeFilters }) {
+function Canvas({ thoughts, setSelectedThought, activeFilters, ideaManager, refreshThoughts }) {
   const cyRef = useRef(null);
+  const [isLinkingModeActive, setIsLinkingModeActive] = useState(false);
+  const [linkSourceNodeId, setLinkSourceNodeId] = useState(null);
 
   const ensureNodeData = (data) => {
     const cleanData = {};
@@ -61,7 +63,29 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
       }))
     );
 
-    return [...nodes, ...edges];
+    const linkEdges = thoughts.flatMap(thought => {
+      const relatedEdges = [];
+      if (thought.related_thought_ids) {
+        thought.related_thought_ids.forEach(related_id => {
+          const targetExists = thoughts.some(t => t.thought_bubble_id === related_id);
+          // Ensure edge is drawn only once for bidirectional links and target exists
+          if (targetExists && thought.thought_bubble_id < related_id) {
+            relatedEdges.push({
+              data: {
+                id: `link_${thought.thought_bubble_id}_${related_id}`,
+                source: thought.thought_bubble_id,
+                target: related_id,
+                label: 'related'
+              },
+              classes: 'thought-link-edge'
+            });
+          }
+        });
+      }
+      return relatedEdges;
+    });
+
+    return [...nodes, ...edges, ...linkEdges];
   }, [thoughts, activeFilters]);
 
   const layout = {
@@ -119,43 +143,65 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
             : 1,
       },
     },
+    {
+      selector: '.thought-link-edge',
+      style: {
+        'width': 1.5,
+        'line-color': '#808080',
+        'line-style': 'dashed',
+        'curve-style': 'bezier'
+      }
+    },
   ];
 
   const handleNodeClick = useCallback(
     (evt) => {
-      const node = evt.target;
-      const thought = thoughts.find((t) => t.thought_bubble_id === node.id());
-      if (thought) {
-        setSelectedThought(thought);
+      const clickedNode = evt.target;
+      const clickedNodeId = clickedNode.id();
+
+      if (isLinkingModeActive) {
+        if (!linkSourceNodeId) {
+          // First click in linking mode: set source node
+          setLinkSourceNodeId(clickedNodeId);
+          // Optional: logger.log(`Selected ${clickedNodeId} as link source. Click another thought.`);
+        } else {
+          // Second click in linking mode: try to create link
+          if (clickedNodeId !== linkSourceNodeId) {
+            ideaManager.linkThoughts(linkSourceNodeId, clickedNodeId);
+            refreshThoughts();
+          } else {
+            // Optional: logger.warn('Cannot link a thought to itself.');
+            console.warn('Cannot link a thought to itself.'); // Using console for now if logger is not set up for components
+          }
+          // Reset linking state
+          setLinkSourceNodeId(null);
+          setIsLinkingModeActive(false);
+        }
+      } else {
+        // Original logic for selecting a thought
+        const thought = thoughts.find((t) => t.thought_bubble_id === clickedNodeId);
+        if (thought) {
+          setSelectedThought(thought);
+        }
       }
     },
-    [thoughts, setSelectedThought]
+    [isLinkingModeActive, linkSourceNodeId, thoughts, setSelectedThought, ideaManager, refreshThoughts] // Updated dependencies
   );
 
   useEffect(() => {
     const cy = cyRef.current;
     if (cy) {
-      cy.on('tap', 'node', handleNodeClick);
+      cy.on('tap', 'node', handleNodeClick); // handleNodeClick now includes linking logic
       cy.on('dragfree', 'node', (evt) => {
         const node = evt.target;
         const position = node.position();
-        const updatedThoughts = thoughts.map((thought) => {
-          if (thought.thought_bubble_id === node.id()) {
-            return {
-              ...thought,
-              position,
-              segments: (thought.segments || []).map((segment) => ({
-                ...segment,
-                sourcePosition: position,
-              })),
-            };
-          }
-          return thought;
-        });
-        localStorage.setItem(
-          'thought-web-data',
-          JSON.stringify(updatedThoughts)
-        );
+
+        // Find the specific thought that was dragged to get its ID
+        const draggedThought = thoughts.find(t => t.thought_bubble_id === node.id());
+        if (draggedThought) {
+          ideaManager.updateThought(draggedThought.thought_bubble_id, { position });
+          refreshThoughts(); // Call the refresh function passed from App.jsx
+        }
       });
 
       return () => {
@@ -163,10 +209,24 @@ function Canvas({ thoughts, setSelectedThought, activeFilters }) {
         cy.removeListener('dragfree');
       };
     }
-  }, [thoughts, handleNodeClick]);
+  }, [thoughts, handleNodeClick, ideaManager, refreshThoughts]);
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full relative"> {/* Ensure parent is relative for button positioning */}
+      <button
+        onClick={() => {
+          setIsLinkingModeActive(!isLinkingModeActive);
+          if (isLinkingModeActive) { // If it WAS active, now turning off
+            setLinkSourceNodeId(null);
+          }
+        }}
+        className="absolute top-2 left-2 z-10 p-2 bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded shadow hover:bg-gray-300 dark:hover:bg-gray-600"
+        title={isLinkingModeActive ? "Cancel linking thoughts" : "Start linking thoughts"}
+      >
+        {isLinkingModeActive
+          ? (linkSourceNodeId ? `Linking from node... Cancel` : 'Cancel Linking')
+          : 'Create Link'}
+      </button>
       <CytoscapeComponent
         elements={elements}
         layout={layout}

@@ -94,6 +94,8 @@ export interface Thought {
   };
   /** Optional display color in hex format */
   color?: string;
+  /** Optional array of IDs of related thoughts */
+  related_thought_ids?: string[];
 }
 
 /** 

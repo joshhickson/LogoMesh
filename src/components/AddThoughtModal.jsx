@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { newBubbleId } from '../utils/eventBus';
 import { VoiceInputManager } from '../utils/VoiceInputManager';
-import { ulid } from 'ulid';
+import { generateThoughtId, generateSegmentId } from '../../core/utils/idUtils'; // Added new import
 
 const defaultFieldOptions = [
   'Concept Type',
@@ -78,7 +77,7 @@ function AddThoughtModal({ createThought, onClose }) {
     setSegments([
       ...segments,
       {
-        segment_id: ulid(),
+        segment_id: generateSegmentId(), // Changed from ulid()
         title: '',
         content: '',
         fields: {},
@@ -106,7 +105,7 @@ function AddThoughtModal({ createThought, onClose }) {
     }
 
     const newThought = {
-      thought_bubble_id: newBubbleId(),
+      thought_bubble_id: generateThoughtId(), // Changed from newBubbleId()
       title,
       description,
       created_at: new Date().toISOString(),

@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { exportToJsonFile } from '../utils/exportHandler';
 import { importFromJsonFile } from '../utils/importHandler';
-import { graphService } from '../services/graphService';
+import { inferFieldType } from '../core/utils/dataTypeUtils'; // Add this import
 
 // Current schema version for display purposes
 const thoughtSchemaVersion = '0.5';
 
 function Sidebar({
-  thoughts,
-  setThoughts,
+  thoughts, // Keep thoughts to find thought details for batch updates
+  // setThoughts, // No longer directly needed if refreshThoughts is used
   setSelectedThought,
   setShowModal,
   toggleDarkMode,
   setActiveFilters,
+  ideaManager, // Add ideaManager
+  refreshThoughts, // Add refreshThoughts
 }) {
   const [filterFieldName, setFilterFieldName] = useState([]);
   const [filterFieldValue, setFilterFieldValue] = useState('');
@@ -51,7 +53,7 @@ function Sidebar({
           const matchesFieldValue =
             !filterFieldValue ||
             Object.entries(fields).some(([key, val]) => {
-              const fieldType = graphService.getFieldType(key);
+              const fieldType = inferFieldType(String(val)); // Changed this line
 
               switch (fieldType) {
                 case 'date': {
@@ -129,12 +131,10 @@ function Sidebar({
   // Import handler
   const handleImport = () => {
     importFromJsonFile((importedThoughts) => {
-      // Overwrite current thoughts (merge strategy can be added)
-      localStorage.setItem(
-        'thought-web-data',
-        JSON.stringify(importedThoughts)
-      );
-      setThoughts(importedThoughts);
+      if (importedThoughts) { // Ensure importedThoughts is not null/undefined
+        ideaManager.replaceAllThoughts(importedThoughts);
+        refreshThoughts(); // Use the prop passed from App.jsx
+      }
     });
   };
 
@@ -144,8 +144,8 @@ function Sidebar({
         'Are you sure you want to clear all thought projects? This cannot be undone.'
       )
     ) {
-      localStorage.removeItem('thought-web-data');
-      setThoughts([]);
+      ideaManager.clearAllThoughts();
+      refreshThoughts(); // Use the prop passed from App.jsx
     }
   };
 
@@ -324,19 +324,18 @@ function Sidebar({
           onClick={() => {
             const newTag = prompt('Enter new tag to apply:');
             if (!newTag) return;
-            const updated = thoughts.map((t) =>
-              filteredThoughtIds.includes(t.thought_bubble_id)
-                ? {
-                    ...t,
-                    tags: [
-                      ...(t.tags || []),
-                      { name: newTag, color: '#facc15' },
-                    ],
-                  }
-                : t
-            );
-            localStorage.setItem('thought-web-data', JSON.stringify(updated));
-            setThoughts(updated);
+
+            filteredThoughtIds.forEach(id => {
+              const thoughtToUpdate = thoughts.find(t => t.thought_bubble_id === id);
+              if (thoughtToUpdate) {
+                const updatedTags = [
+                  ...(thoughtToUpdate.tags || []),
+                  { name: newTag, color: '#facc15' }, // Consider making color dynamic or default
+                ];
+                ideaManager.updateThought(id, { tags: updatedTags });
+              }
+            });
+            refreshThoughts();
           }}
           className="w-full mb-2 px-4 py-1 bg-purple-500 text-white rounded"
         >
@@ -345,14 +344,14 @@ function Sidebar({
         <button
           onClick={() => {
             const newColor = prompt('Enter new hex color (e.g. #10b981):');
-            if (!newColor) return;
-            const updated = thoughts.map((t) =>
-              filteredThoughtIds.includes(t.thought_bubble_id)
-                ? { ...t, color: newColor }
-                : t
-            );
-            localStorage.setItem('thought-web-data', JSON.stringify(updated));
-            setThoughts(updated);
+            if (!newColor || !/^#[0-9A-F]{6}$/i.test(newColor)) { // Basic hex validation
+              if (newColor) alert("Invalid color format. Please use #RRGGBB");
+              return;
+            }
+            filteredThoughtIds.forEach(id => {
+              ideaManager.updateThought(id, { color: newColor });
+            });
+            refreshThoughts();
           }}
           className="w-full px-4 py-1 bg-pink-500 text-white rounded"
         >

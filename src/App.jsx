@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import Canvas from './components/Canvas';
-import { graphService } from './services/graphService';
 import Sidebar from './components/Sidebar';
 import ThoughtDetailPanel from './components/ThoughtDetailPanel';
 import AddThoughtModal from './components/AddThoughtModal';
@@ -33,13 +32,6 @@ function App() {
     []
   );
 
-  
-
-  useEffect(() => {
-    // Sync with in-memory graph only
-    thoughts.forEach((thought) => graphService.addThought(thought));
-  }, [thoughts]);
-
   const [showModal, setShowModal] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
     const dark = localStorage.getItem('thought-web-dark-mode');
@@ -68,6 +60,8 @@ function App() {
         setShowModal={setShowModal}
         toggleDarkMode={toggleDarkMode}
         setActiveFilters={setActiveFilters}
+        ideaManager={ideaManager} // Add this prop
+        refreshThoughts={() => setThoughts([...ideaManager.getThoughts()])} // Add this prop
       />
 
       <Canvas

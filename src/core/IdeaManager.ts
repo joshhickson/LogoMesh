@@ -7,15 +7,32 @@ import {
 } from '@core/utils/idUtils';
 import { logger } from '@core/utils/logger';
 
+// Helper function for debouncing (void return for synchronous localStorage)
+function debounceVoid<F extends (...args: any[]) => void>(func: F, delay: number): (...args: Parameters<F>) => void {
+  let timeoutId: number | null = null; // Using number for browser setTimeout/clearTimeout
+  return function(this: any, ...args: Parameters<F>) {
+    const context = this;
+    if (timeoutId !== null) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => func.apply(context, args), delay) as any; // 'as any' to handle browser/Node timer type diff
+  };
+}
+
 /**
  * Manages thought data and operations, providing a centralized interface
  * for data manipulation while abstracting storage details.
  */
 export class IdeaManager {
   private thoughts: Thought[] = [];
+  public persistToStorage: () => void; // Public debounced method
 
   constructor() {
-    this.loadFromStorage();
+    this.loadFromStorage(); // loadFromStorage should not be debounced
+
+    // Initialize the debounced persistToStorage method
+    // Binding `this` to `_actualPersistToStorage` is crucial
+    this.persistToStorage = debounceVoid(this._actualPersistToStorage.bind(this), 300);
   }
 
   /**
@@ -27,12 +44,34 @@ export class IdeaManager {
       if (savedData) {
         const parsed = JSON.parse(savedData);
         // Handle both current and legacy data formats
+        const processThoughts = (thoughtsToProcess: any[], formatLabel: string) => {
+          const seenIds = new Set<string>();
+          const uniqueThoughts: Thought[] = [];
+          if (Array.isArray(thoughtsToProcess)) {
+            for (const thought of thoughtsToProcess) {
+              if (thought && typeof thought.thought_bubble_id === 'string') {
+                if (seenIds.has(thought.thought_bubble_id)) {
+                  logger.error(`Duplicate thought_bubble_id found and skipped during load (${formatLabel}): ${thought.thought_bubble_id}`);
+                } else {
+                  seenIds.add(thought.thought_bubble_id);
+                  uniqueThoughts.push(thought as Thought);
+                }
+              } else {
+                logger.warn(`Skipping invalid thought object during load (${formatLabel}):`, thought);
+              }
+            }
+            this.thoughts = uniqueThoughts;
+            logger.log(`Loaded ${uniqueThoughts.length} unique thoughts from storage (${formatLabel} format)`);
+          } else {
+            logger.error(`Loaded "${formatLabel}" thoughts data is not an array. Initializing with empty thoughts.`);
+            this.thoughts = [];
+          }
+        };
+
         if (parsed.export_metadata && parsed.thoughts) {
-          this.thoughts = parsed.thoughts; // v0.5+ structure
-          logger.log('Loaded thoughts from storage (v0.5+ format)');
+          processThoughts(parsed.thoughts, 'v0.5+');
         } else if (Array.isArray(parsed)) {
-          this.thoughts = parsed; // legacy array format
-          logger.warn('Loading thoughts from legacy format');
+          processThoughts(parsed, 'legacy');
         } else {
           logger.warn('Invalid data format in localStorage');
           this.thoughts = [];
@@ -85,9 +124,9 @@ export class IdeaManager {
   }
 
   /**
-   * Persists current state to localStorage
+   * Actual persistence logic, now private and renamed.
    */
-  private persistToStorage(): void {
+  private _actualPersistToStorage(): void {
     try {
       const persistData = {
         export_metadata: {
@@ -98,7 +137,8 @@ export class IdeaManager {
         thoughts: this.thoughts,
       };
       localStorage.setItem('thought-web-data', JSON.stringify(persistData));
-      logger.log(`Persisted ${this.thoughts.length} thoughts to storage`);
+      // Updated log message for clarity
+      logger.log(`Persisted ${this.thoughts.length} thoughts to storage (debounced)`);
     } catch (error) {
       logger.error('Failed to persist thoughts to storage:', error);
     }
@@ -109,7 +149,11 @@ export class IdeaManager {
       Thought,
       'thought_bubble_id' | 'created_at' | 'updated_at'
     >
-  ): Thought {
+  ): Thought | undefined {
+    if (!thoughtData.title || thoughtData.title.trim() === '') {
+      logger.error('Attempted to add thought with empty or missing title.');
+      return undefined;
+    }
     let thoughtId = generateThoughtId();
     while (this.thoughts.some((t) => t.thought_bubble_id === thoughtId)) {
       console.warn(
@@ -139,6 +183,11 @@ export class IdeaManager {
       (t) => t.thought_bubble_id === thoughtId
     );
     if (index === -1) return undefined;
+
+    if (updates.title !== undefined && updates.title.trim() === '') {
+      logger.warn(`Attempted to update thought ID ${thoughtId} with an empty title. Title update will be skipped.`);
+      delete updates.title; // Prevent empty title from being set
+    }
 
     const thought = this.thoughts[index];
     this.thoughts[index] = {
@@ -175,6 +224,11 @@ export class IdeaManager {
     const thought = this.getThoughtById(thoughtId);
     if (!thought) {
       console.error(`Thought not found with ID: ${thoughtId}`);
+      return undefined;
+    }
+
+    if ((!segmentData.title || segmentData.title.trim() === '') && (!segmentData.content || segmentData.content.trim() === '')) {
+      logger.error(`Attempted to add segment to thought ID ${thoughtId} with empty or missing title and content.`);
       return undefined;
     }
 
@@ -217,7 +271,34 @@ export class IdeaManager {
     );
     if (segmentIndex === -1) return undefined;
 
-    const segment = thought.segments[segmentIndex];
+    const currentSegment = thought.segments[segmentIndex];
+    const newTitle = updates.title !== undefined ? updates.title : currentSegment.title;
+    const newContent = updates.content !== undefined ? updates.content : currentSegment.content;
+
+    if ((!newTitle || newTitle.trim() === '') && (!newContent || newContent.trim() === '')) {
+      logger.warn(`Attempted to update segment ID ${segmentId} in thought ID ${thoughtId} to have empty title and content. Update skipped.`);
+      return undefined;
+    }
+
+    // Specific handling for empty title or content if the other is not empty:
+    // If trying to set title to empty string, ensure newContent (or current content if newContent is not being updated) is not empty.
+    if (updates.title !== undefined && updates.title.trim() === '') {
+        const contentToCheck = updates.content !== undefined ? (updates.content || '').trim() : (currentSegment.content || '').trim();
+        if (contentToCheck === '') {
+            logger.warn(`Attempted to update segment ID ${segmentId} to have empty title while content is also empty. Title update skipped.`);
+            delete updates.title; // Skip making title empty if content would also be empty
+        }
+    }
+    // If trying to set content to empty string, ensure newTitle (or current title if newTitle is not being updated) is not empty.
+     if (updates.content !== undefined && updates.content.trim() === '') {
+        const titleToCheck = updates.title !== undefined ? (updates.title || '').trim() : (currentSegment.title || '').trim();
+        if (titleToCheck === '') {
+            logger.warn(`Attempted to update segment ID ${segmentId} to have empty content while title is also empty. Content update skipped.`);
+            delete updates.content; // Skip making content empty if title would also be empty
+        }
+    }
+
+    const segment = thought.segments[segmentIndex]; // Re-fetch segment in case it was modified by other logic (though not in this specific flow)
     thought.segments[segmentIndex] = {
       ...segment,
       ...updates,
@@ -241,5 +322,127 @@ export class IdeaManager {
     const deleted = thought.segments.length < initialLength;
     if (deleted) this.persistToStorage();
     return deleted;
+  }
+
+  /**
+   * Replaces all thoughts with a new set of thoughts.
+   * @param newThoughts The array of thoughts to replace the current ones.
+   */
+  public replaceAllThoughts(newThoughts: Thought[]): void {
+    this.thoughts = newThoughts;
+    this.persistToStorage();
+    logger.log(`Replaced all thoughts with ${newThoughts.length} new thoughts from import.`);
+  }
+
+  /**
+   * Clears all thoughts from the manager.
+   */
+  public clearAllThoughts(): void {
+    this.thoughts = [];
+    this.persistToStorage();
+    logger.log('Cleared all thoughts from memory and storage.');
+  }
+
+  /**
+   * Links two thoughts together.
+   * @param sourceThoughtId The ID of the source thought.
+   * @param targetThoughtId The ID of the target thought.
+   * @returns True if the link was successfully created or already existed, false otherwise.
+   */
+  public linkThoughts(sourceThoughtId: string, targetThoughtId: string): boolean {
+    if (sourceThoughtId === targetThoughtId) {
+      logger.warn(`Attempted to link thought ID ${sourceThoughtId} to itself. Self-linking is not allowed.`);
+      return false;
+    }
+
+    const sourceThought = this.getThoughtById(sourceThoughtId);
+    const targetThought = this.getThoughtById(targetThoughtId);
+
+    if (!sourceThought || !targetThought) {
+      logger.error(`Attempted to link non-existent thought. Source: ${sourceThoughtId}, Target: ${targetThoughtId}`);
+      return false;
+    }
+
+    sourceThought.related_thought_ids = sourceThought.related_thought_ids || [];
+    targetThought.related_thought_ids = targetThought.related_thought_ids || [];
+
+    let changed = false;
+
+    if (!sourceThought.related_thought_ids.includes(targetThoughtId)) {
+      sourceThought.related_thought_ids.push(targetThoughtId);
+      sourceThought.updated_at = new Date().toISOString();
+      changed = true;
+    }
+
+    if (!targetThought.related_thought_ids.includes(sourceThoughtId)) {
+      targetThought.related_thought_ids.push(sourceThoughtId);
+      targetThought.updated_at = new Date().toISOString();
+      changed = true;
+    }
+
+    if (changed) {
+      this.persistToStorage();
+      logger.log(`Linked thought ID ${sourceThoughtId} and ${targetThoughtId}`);
+      return true;
+    } else {
+      logger.warn(`Link between thought ID ${sourceThoughtId} and ${targetThoughtId} already exists or no change made.`);
+      return true; // Success if link already existed
+    }
+  }
+
+  /**
+   * Unlinks two thoughts.
+   * @param sourceThoughtId The ID of the source thought.
+   * @param targetThoughtId The ID of the target thought.
+   * @returns True if the link was successfully removed, false otherwise.
+   */
+  public unlinkThoughts(sourceThoughtId: string, targetThoughtId: string): boolean {
+    const sourceThought = this.getThoughtById(sourceThoughtId);
+    const targetThought = this.getThoughtById(targetThoughtId);
+
+    if (!sourceThought || !targetThought) {
+      logger.warn(`Attempted to unlink thoughts where one or both do not exist. Source: ${sourceThoughtId}, Target: ${targetThoughtId}`);
+      return false;
+    }
+
+    let linkRemoved = false;
+
+    if (sourceThought.related_thought_ids && sourceThought.related_thought_ids.includes(targetThoughtId)) {
+      sourceThought.related_thought_ids = sourceThought.related_thought_ids.filter(id => id !== targetThoughtId);
+      sourceThought.updated_at = new Date().toISOString();
+      linkRemoved = true;
+    }
+
+    if (targetThought.related_thought_ids && targetThought.related_thought_ids.includes(sourceThoughtId)) {
+      targetThought.related_thought_ids = targetThought.related_thought_ids.filter(id => id !== sourceThoughtId);
+      targetThought.updated_at = new Date().toISOString();
+      linkRemoved = true;
+    }
+
+    if (linkRemoved) {
+      this.persistToStorage();
+      logger.log(`Unlinked thought ID ${sourceThoughtId} and ${targetThoughtId}`);
+      return true;
+    } else {
+      logger.warn(`No link found to remove between thought ID ${sourceThoughtId} and ${targetThoughtId}.`);
+      return false;
+    }
+  }
+
+  /**
+   * Retrieves all thoughts linked to a given thought.
+   * @param thoughtId The ID of the thought.
+   * @returns An array of Thought objects that are linked to the given thought. Returns empty array if none.
+   */
+  public getLinkedThoughts(thoughtId: string): Thought[] {
+    const thought = this.getThoughtById(thoughtId);
+
+    if (!thought || !thought.related_thought_ids || thought.related_thought_ids.length === 0) {
+      return [];
+    }
+
+    return thought.related_thought_ids
+      .map(relatedId => this.getThoughtById(relatedId))
+      .filter(relatedThought => relatedThought !== undefined) as Thought[];
   }
 }

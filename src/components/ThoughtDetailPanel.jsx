@@ -1,6 +1,4 @@
 
-import { graphService } from '../services/graphService';
-
 function ThoughtDetailPanel({ thought, ideaManager, refreshThoughts }) {
   const handleThoughtEdit = (field, value) => {
     ideaManager.updateThought(thought.thought_bubble_id, { [field]: value });
@@ -8,10 +6,9 @@ function ThoughtDetailPanel({ thought, ideaManager, refreshThoughts }) {
   };
 
   const handleSegmentEdit = (segmentId, field, value) => {
-    // Update field type if it's a field value
     if (field.startsWith('fields.')) {
       const fieldName = field.split('.')[1];
-      graphService.updateFieldType(fieldName, value);
+      // graphService.updateFieldType(fieldName, value); // REMOVED
 
       const segment = thought.segments.find((s) => s.segment_id === segmentId);
       const updatedFields = { ...segment.fields, [fieldName]: value };
@@ -25,8 +22,7 @@ function ThoughtDetailPanel({ thought, ideaManager, refreshThoughts }) {
     }
 
     refreshThoughts();
-    // Update in graph service
-    graphService.updateSegment(segmentId, field, value).catch(console.error);
+    // graphService.updateSegment(segmentId, field, value).catch(console.error); // REMOVED
   };
 
   const handleAddField = (segmentId) => {
@@ -201,6 +197,41 @@ function ThoughtDetailPanel({ thought, ideaManager, refreshThoughts }) {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Linked Thoughts */}
+      <div className="mt-4">
+        <h3 className="text-md font-semibold mb-2">Linked Thoughts:</h3>
+        {thought && ideaManager && (
+          (() => {
+            const linkedThoughts = ideaManager.getLinkedThoughts(thought.thought_bubble_id);
+            if (linkedThoughts.length > 0) {
+              return (
+                <ul className="list-disc list-inside space-y-1">
+                  {linkedThoughts.map(linkedItem => (
+                    <li key={linkedItem.thought_bubble_id} className="text-sm flex justify-between items-center">
+                      <span>{linkedItem.title || 'Untitled Thought'}</span>
+                      <button
+                        onClick={() => {
+                          if (window.confirm(`Are you sure you want to unlink "${linkedItem.title || 'this thought'}"?`)) {
+                            ideaManager.unlinkThoughts(thought.thought_bubble_id, linkedItem.thought_bubble_id);
+                            refreshThoughts();
+                          }
+                        }}
+                        className="ml-2 text-red-500 hover:text-red-700 text-xs"
+                        title="Unlink thought"
+                      >
+                        Unlink
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              );
+            } else {
+              return <p className="text-sm text-gray-500">No linked thoughts.</p>;
+            }
+          })()
+        )}
       </div>
     </div>
   );
