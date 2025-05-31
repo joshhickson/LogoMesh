@@ -62,16 +62,7 @@ task = "shell.exec"
 args = "cd server && npm run dev"
 
 [[workflows.workflow]]
-name = "Run Backend Only"
-author = 42214058
-mode = "sequential"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd server && npm run dev"
-
-[[workflows.workflow]]
-name = "Test Backend API"
+name = "Test Backend Startup"
 author = 42214058
 mode = "sequential"
 
