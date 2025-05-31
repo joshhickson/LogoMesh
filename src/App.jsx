@@ -150,8 +150,9 @@ function App() {
       )}
       <Canvas
         thoughts={thoughts}
-        setSelectedThought={setSelectedThought}
-        activeFilters={activeFilters}
+        segments={thoughts.flatMap(thought => thought.segments || [])}
+        selectedThought={selectedThought}
+        onThoughtSelect={setSelectedThought}
         refreshThoughts={refreshThoughts}
       />
 

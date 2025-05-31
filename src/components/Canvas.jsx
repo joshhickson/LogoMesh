@@ -1,183 +1,214 @@
-import React, { useCallback, useRef, useEffect } from 'react';
-import CytoscapeComponent from 'react-cytoscapejs';
+
+import React, { useEffect, useRef, useState } from 'react';
 import cytoscape from 'cytoscape';
 import fcose from 'cytoscape-fcose';
 
-// Register the layout only once
+// Register the fcose layout
 cytoscape.use(fcose);
 
-function Canvas({ thoughts, setSelectedThought, onRefreshThoughts, activeFilters }) {
+const Canvas = ({ thoughts, segments, selectedThought, onThoughtSelect, onRefreshThoughts }) => {
   const cyRef = useRef(null);
-
-  const ensureNodeData = (data) => {
-    const cleanData = {};
-    for (const key in data) {
-      if (
-        Object.prototype.hasOwnProperty.call(data, key) &&
-        data[key] !== null &&
-        data[key] !== undefined
-      ) {
-        cleanData[key] = data[key];
-      }
-    }
-    return cleanData;
-  };
-
-  const elements = React.useMemo(() => {
-    // First create all nodes from thoughts using ULIDs as stable keys
-    const nodes = thoughts.flatMap((thought) => {
-      const thoughtNode = {
-        data: ensureNodeData({
-          id: thought.thought_bubble_id,
-          label: thought.title || 'Untitled',
-          type: 'thought',
-        }),
-        classes: ['thought-node'],
-      };
-
-      const segmentNodes = (thought.segments || []).map((segment) => ({
-        data: {
-          id: segment.segment_id,
-          label: segment.content || segment.title || 'Untitled Segment',
-          type: 'segment',
-        },
-        classes: ['segment-node'],
-      }));
-
-      return [thoughtNode, ...segmentNodes];
-    });
-
-    // Then create edges between existing nodes
-    const edges = thoughts.flatMap((thought) =>
-      (thought.segments || []).map((segment) => ({
-        data: {
-          id: `${thought.thought_bubble_id}_${segment.segment_id}`,
-          source: thought.thought_bubble_id,
-          target: segment.segment_id,
-          label: segment.relationship || 'relates to',
-          type: 'segment',
-        },
-        classes: ['segment-edge'],
-      }))
-    );
-
-    return [...nodes, ...edges];
-  }, [thoughts, activeFilters]);
-
-  const layout = {
-    name: 'fcose',
-    animate: true,
-    randomize: true,
-    nodeRepulsion: 8000,
-    idealEdgeLength: 200,
-    edgeElasticity: 0.45,
-    quality: 'proof',
-    // Enable position constraints based on saved positions
-    fixedNodeConstraint: thoughts
-      .filter((t) => t.position)
-      .map((t) => ({
-        nodeId: t.thought_bubble_id,
-        position: t.position,
-      })),
-  };
-
-  const stylesheet = [
-    {
-      selector: 'node',
-      style: {
-        label: 'data(label)',
-        'text-valign': 'center',
-        'text-halign': 'center',
-        width: 120,
-        height: 60,
-        shape: 'roundrectangle',
-        padding: '10px',
-        'background-color': '#f3f4f6',
-        'border-width': 1,
-        'border-color': '#e5e7eb',
-        'font-size': 14,
-      },
-    },
-    {
-      selector: 'edge',
-      style: {
-        width: 2,
-        'line-color': '#64748b',
-        'target-arrow-color': '#64748b',
-        'target-arrow-shape': 'triangle',
-        'curve-style': 'bezier',
-      },
-    },
-    {
-      selector: '.thought-node',
-      style: {
-        'background-opacity': (ele) =>
-          activeFilters?.length
-            ? activeFilters.includes(ele.id())
-              ? 1
-              : 0.3
-            : 1,
-      },
-    },
-  ];
-
-  const handleNodeClick = useCallback(
-    (evt) => {
-      const node = evt.target;
-      const thought = thoughts.find((t) => t.thought_bubble_id === node.id());
-      if (thought) {
-        setSelectedThought(thought);
-      }
-    },
-    [thoughts, setSelectedThought]
-  );
+  const containerRef = useRef(null);
+  const [cy, setCy] = useState(null);
 
   useEffect(() => {
-    const cy = cyRef.current;
-    if (cy) {
-      cy.on('tap', 'node', handleNodeClick);
-      cy.on('dragfree', 'node', (evt) => {
-        const node = evt.target;
-        const position = node.position();
-        const updatedThoughts = thoughts.map((thought) => {
-          if (thought.thought_bubble_id === node.id()) {
-            return {
-              ...thought,
-              position,
-              segments: (thought.segments || []).map((segment) => ({
-                ...segment,
-                sourcePosition: position,
-              })),
-            };
-          }
-          return thought;
-        });
-        localStorage.setItem(
-          'thought-web-data',
-          JSON.stringify(updatedThoughts)
-        );
-      });
+    if (!containerRef.current) return;
 
-      return () => {
-        cy.removeListener('tap');
-        cy.removeListener('dragfree');
-      };
+    // Initialize Cytoscape
+    const cytoscapeInstance = cytoscape({
+      container: containerRef.current,
+      
+      elements: generateElements(thoughts, segments),
+      
+      style: [
+        // Thought bubble styles (parent/compound nodes)
+        {
+          selector: 'node[type="thought"]',
+          style: {
+            'background-color': '#4A90E2',
+            'border-color': '#2E5C8A',
+            'border-width': 2,
+            'label': 'data(title)',
+            'text-valign': 'top',
+            'text-halign': 'center',
+            'color': 'white',
+            'font-size': '12px',
+            'font-weight': 'bold',
+            'padding': '10px',
+            'compound-sizing-wrt-labels': 'include',
+            'min-width': '100px',
+            'min-height': '60px'
+          }
+        },
+        
+        // Segment styles (child nodes)
+        {
+          selector: 'node[type="segment"]',
+          style: {
+            'background-color': '#7ED321',
+            'border-color': '#5BA617',
+            'border-width': 1,
+            'label': 'data(title)',
+            'text-valign': 'center',
+            'text-halign': 'center',
+            'color': 'white',
+            'font-size': '10px',
+            'width': '60px',
+            'height': '40px'
+          }
+        },
+        
+        // Selected thought highlighting
+        {
+          selector: 'node[type="thought"]:selected',
+          style: {
+            'border-color': '#FF6B35',
+            'border-width': 3
+          }
+        },
+        
+        // Edge styles (if any direct edges are needed)
+        {
+          selector: 'edge',
+          style: {
+            'width': 2,
+            'line-color': '#cccccc',
+            'target-arrow-color': '#cccccc',
+            'target-arrow-shape': 'triangle',
+            'curve-style': 'bezier'
+          }
+        }
+      ],
+      
+      layout: {
+        name: 'fcose',
+        // fcose-specific options for compound nodes
+        quality: 'default',
+        randomize: false,
+        animate: true,
+        animationDuration: 1000,
+        fit: true,
+        padding: 30,
+        nodeDimensionsIncludeLabels: true,
+        uniformNodeDimensions: false,
+        packComponents: true,
+        nodeRepulsion: 4500,
+        idealEdgeLength: 50,
+        edgeElasticity: 0.45,
+        nestingFactor: 0.1,
+        gravity: 0.25,
+        numIter: 2500,
+        tile: true,
+        tilingPaddingVertical: 10,
+        tilingPaddingHorizontal: 10,
+        gravityRangeCompound: 1.5,
+        gravityCompound: 1.0,
+        gravityRange: 3.8
+      },
+      
+      // Enable compound node interactions
+      autoungrabify: false,
+      autounselectify: false
+    });
+
+    setCy(cytoscapeInstance);
+
+    // Handle node selection
+    cytoscapeInstance.on('tap', 'node[type="thought"]', (event) => {
+      const thoughtId = event.target.data('id');
+      if (onThoughtSelect) {
+        onThoughtSelect(thoughtId);
+      }
+    });
+
+    // Handle node position updates for thoughts
+    cytoscapeInstance.on('dragfree', 'node[type="thought"]', async (event) => {
+      const node = event.target;
+      const position = node.position();
+      const thoughtId = node.data('id');
+      
+      try {
+        // Find the thought to update
+        const thought = thoughts.find(t => t.thought_bubble_id === thoughtId);
+        if (thought) {
+          // Update position via API (assuming updateThoughtApi exists)
+          const updatedThought = {
+            ...thought,
+            x_coordinate: position.x,
+            y_coordinate: position.y
+          };
+          
+          // Import the API service dynamically to avoid circular deps
+          const { updateThoughtApi } = await import('../services/apiService');
+          await updateThoughtApi(thoughtId, updatedThought);
+        }
+      } catch (error) {
+        console.error('Error updating thought position:', error);
+      }
+    });
+
+    return () => {
+      if (cytoscapeInstance) {
+        cytoscapeInstance.destroy();
+      }
+    };
+  }, [thoughts, segments, onThoughtSelect]);
+
+  // Update selection when selectedThought changes
+  useEffect(() => {
+    if (cy && selectedThought) {
+      cy.nodes().unselect();
+      const thoughtNode = cy.getElementById(selectedThought);
+      if (thoughtNode.length > 0) {
+        thoughtNode.select();
+        cy.center(thoughtNode);
+      }
     }
-  }, [thoughts, handleNodeClick]);
+  }, [cy, selectedThought]);
+
+  // Helper function to generate Cytoscape elements
+  const generateElements = (thoughts, segments) => {
+    const elements = [];
+
+    // Add thought nodes (compound/parent nodes)
+    thoughts.forEach(thought => {
+      elements.push({
+        data: {
+          id: thought.thought_bubble_id,
+          title: thought.title || 'Untitled Thought',
+          type: 'thought'
+        },
+        position: {
+          x: thought.x_coordinate || 0,
+          y: thought.y_coordinate || 0
+        }
+      });
+    });
+
+    // Add segment nodes (child nodes)
+    segments.forEach(segment => {
+      elements.push({
+        data: {
+          id: segment.segment_id,
+          parent: segment.thought_bubble_id, // This makes it a child of the thought
+          title: segment.title || segment.content?.substring(0, 20) + '...' || 'Untitled Segment',
+          type: 'segment'
+        }
+      });
+    });
+
+    return elements;
+  };
 
   return (
-    <div className="w-full h-full">
-      <CytoscapeComponent
-        elements={elements}
-        layout={layout}
-        stylesheet={stylesheet}
-        cy={(cy) => {
-          cyRef.current = cy;
-        }}
-        className="w-full h-full"
+    <div className="canvas-container w-full h-full">
+      <div 
+        ref={containerRef} 
+        className="w-full h-full bg-gray-50"
+        style={{ minHeight: '400px' }}
       />
     </div>
   );
-}
+};
 
 export default Canvas;
