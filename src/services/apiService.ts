@@ -1,107 +1,184 @@
-import { Thought, Segment } from '../contracts/entities';
-import { NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
 
-// Use a custom interface to avoid conflicts
-interface ApiRequestOptions {
-  method?: string;
-  headers?: Record<string, string>;
-  body?: string;
-}
-
-const API_BASE_URL = process.env.REACT_APP_API_URL || (
-  // In Replit, use the same hostname with port 3001
-  window.location.hostname.includes('replit.dev') 
-    ? `${window.location.protocol}//${window.location.hostname}:3001/api/v1`
-    : 'http://localhost:3001/api/v1'
-);
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1';
 
 console.log('[API Service] Using API base URL:', API_BASE_URL);
 
-class ApiService {
-  private async request<T>(endpoint: string, options?: ApiRequestOptions): Promise<T> {
-    const url = `${API_BASE_URL}${endpoint}`;
+// Type definitions for API requests
+interface NewThoughtData {
+  title: string;
+  description?: string;
+  tags?: string[];
+  position?: { x: number; y: number };
+}
 
-    try {
-      const response = await fetch(url, {
-        method: options?.method || 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          ...options?.headers,
-        },
-        body: options?.body,
-      });
+interface NewSegmentData {
+  title: string;
+  content: string;
+  fields?: Record<string, any>;
+}
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+interface UpdateThoughtData {
+  title?: string;
+  description?: string;
+  tags?: string[];
+  position?: { x: number; y: number };
+}
 
-      // Handle 204 No Content responses
-      if (response.status === 204) {
-        return {} as T;
-      }
+interface UpdateSegmentData {
+  title?: string;
+  content?: string;
+  fields?: Record<string, any>;
+}
 
-      return await response.json();
-    } catch (error) {
-      console.error('API request failed for', endpoint + ':', error);
-      console.error('Full error details:', {
-        message: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : undefined,
-        url: `${API_BASE_URL}${endpoint}`,
-        options
-      });
-      throw error;
+// Helper function for API requests
+async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+  const url = `${API_BASE_URL}${endpoint}`;
+  
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+      ...options,
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`HTTP ${response.status}: ${errorText}`);
     }
-  }
 
-  // Thought operations
-  async fetchThoughts(): Promise<Thought[]> {
-    return this.request<Thought[]>('/thoughts');
-  }
-
-  async createThoughtApi(data: NewThoughtData): Promise<Thought> {
-    return this.request<Thought>('/thoughts', {
-      method: 'POST',
-      body: JSON.stringify(data),
+    return await response.json();
+  } catch (error: any) {
+    console.error('API request failed for', endpoint, error);
+    console.error('Full error details:', {
+      message: error?.message || 'Unknown error',
+      stack: error?.stack || 'No stack trace',
+      url: url
     });
-  }
-
-  async updateThoughtApi(thoughtId: string, data: Partial<Thought>): Promise<Thought> {
-    return this.request<Thought>(`/thoughts/${thoughtId}`, {
-      method: 'PUT',
-      body: JSON.stringify(data),
-    });
-  }
-
-  async deleteThoughtApi(thoughtId: string): Promise<void> {
-    return this.request<void>(`/thoughts/${thoughtId}`, {
-      method: 'DELETE',
-    });
-  }
-
-  async getThoughtById(thoughtId: string): Promise<Thought> {
-    return this.request<Thought>(`/thoughts/${thoughtId}`);
-  }
-
-  // Segment operations
-  async createSegmentApi(thoughtId: string, data: NewSegmentData): Promise<Segment> {
-    return this.request<Segment>(`/thoughts/${thoughtId}/segments`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-  }
-
-  async updateSegmentApi(thoughtId: string, segmentId: string, data: Partial<Segment>): Promise<Segment> {
-    return this.request<Segment>(`/thoughts/${thoughtId}/segments/${segmentId}`, {
-      method: 'PUT',
-      body: JSON.stringify(data),
-    });
-  }
-
-  async deleteSegmentApi(thoughtId: string, segmentId: string): Promise<void> {
-    return this.request<void>(`/thoughts/${thoughtId}/segments/${segmentId}`, {
-      method: 'DELETE',
-    });
+    throw error;
   }
 }
 
-export const apiService = new ApiService();
+// Thoughts API
+export async function fetchThoughts() {
+  return apiRequest('/thoughts');
+}
+
+export async function createThoughtApi(data: NewThoughtData) {
+  return apiRequest('/thoughts', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+export async function getThoughtById(thoughtId: string) {
+  return apiRequest(`/thoughts/${thoughtId}`);
+}
+
+export async function updateThoughtApi(thoughtId: string, updates: UpdateThoughtData) {
+  return apiRequest(`/thoughts/${thoughtId}`, {
+    method: 'PUT',
+    body: JSON.stringify(updates),
+  });
+}
+
+export async function deleteThoughtApi(thoughtId: string) {
+  return apiRequest(`/thoughts/${thoughtId}`, {
+    method: 'DELETE',
+  });
+}
+
+// Segments API
+export async function createSegmentApi(thoughtId: string, data: NewSegmentData) {
+  return apiRequest(`/thoughts/${thoughtId}/segments`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updateSegmentApi(thoughtId: string, segmentId: string, updates: UpdateSegmentData) {
+  return apiRequest(`/thoughts/${thoughtId}/segments/${segmentId}`, {
+    method: 'PUT',
+    body: JSON.stringify(updates),
+  });
+}
+
+export async function deleteSegmentApi(thoughtId: string, segmentId: string) {
+  return apiRequest(`/thoughts/${thoughtId}/segments/${segmentId}`, {
+    method: 'DELETE',
+  });
+}
+
+// LLM API
+export async function callLLMApi(prompt: string, metadata?: Record<string, any>) {
+  return apiRequest('/llm/prompt', {
+    method: 'POST',
+    body: JSON.stringify({ prompt, metadata }),
+  });
+}
+
+// Admin API
+export async function triggerBackupApi() {
+  return apiRequest('/admin/backup', {
+    method: 'POST',
+  });
+}
+
+// Export/Import API
+export async function exportDataApi() {
+  const response = await fetch(`${API_BASE_URL}/export/json`);
+  if (!response.ok) {
+    throw new Error(`Export failed: ${response.statusText}`);
+  }
+  return await response.blob();
+}
+
+export async function importDataApi(file: File) {
+  const formData = new FormData();
+  formData.append('file', file);
+  
+  const response = await fetch(`${API_BASE_URL}/import/json`, {
+    method: 'POST',
+    body: formData,
+  });
+  
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Import failed: ${errorText}`);
+  }
+  
+  return await response.json();
+}
+
+// LLM Status API
+export async function getLLMStatus() {
+  return apiRequest('/llm/status');
+}
+
+export async function analyzeSegment(segmentContent: string, analysisType: string = 'general') {
+  return apiRequest('/llm/analyze-segment', {
+    method: 'POST',
+    body: JSON.stringify({ segmentContent, analysisType }),
+  });
+}
+
+// Export all functions as named exports and create default export
+const apiService = {
+  fetchThoughts,
+  createThoughtApi,
+  getThoughtById,
+  updateThoughtApi,
+  deleteThoughtApi,
+  createSegmentApi,
+  updateSegmentApi,
+  deleteSegmentApi,
+  callLLMApi,
+  getLLMStatus,
+  analyzeSegment,
+  triggerBackupApi,
+  exportDataApi,
+  importDataApi
+};
+
+export default apiService;

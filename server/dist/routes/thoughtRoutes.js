@@ -27,10 +27,10 @@ router.post('/', async (req, res) => {
         const ideaManager = req.app.locals.ideaManager;
         const thoughtData = req.body;
         // Basic validation
-        if (!thoughtData.title || !thoughtData.description) {
-            return res.status(400).json({ error: 'Title and description are required' });
+        if (!thoughtData.title) {
+            return res.status(400).json({ error: 'Title is required' });
         }
-        const newThought = await ideaManager.createThought(thoughtData);
+        const newThought = await ideaManager.addThought(thoughtData);
         res.status(201).json(newThought);
     }
     catch (error) {
@@ -97,7 +97,10 @@ router.post('/:thoughtId/segments', async (req, res) => {
         if (!segmentData.title || !segmentData.content) {
             return res.status(400).json({ error: 'Title and content are required' });
         }
-        const newSegment = await ideaManager.createSegment(thoughtId, segmentData);
+        const newSegment = await ideaManager.addSegment(thoughtId, segmentData);
+        if (!newSegment) {
+            return res.status(404).json({ error: 'Thought not found' });
+        }
         res.status(201).json(newSegment);
     }
     catch (error) {

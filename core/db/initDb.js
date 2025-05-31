@@ -1,97 +1,88 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.initializeDatabase = void 0;
-const sqlite3_1 = __importDefault(require("sqlite3"));
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
-// Import logger - try multiple paths to handle different execution contexts
-let logger;
-try {
-    // Try from server context
-    logger = require('../../src/core/utils/logger').logger;
-}
-catch {
-    try {
-        // Try from core context  
-        logger = require('../utils/logger').logger;
+const sqlite3 = __importStar(require("sqlite3"));
+const fs = __importStar(require("fs"));
+const path = __importStar(require("path"));
+const logger_1 = require("../../src/core/utils/logger");
+/**
+ * Initialize the SQLite database with the required schema
+ */
+async function initializeDatabase(dbPath = './server/data/logomesh.sqlite3') {
+    // Ensure the directory exists
+    const dbDir = path.dirname(dbPath);
+    if (!fs.existsSync(dbDir)) {
+        fs.mkdirSync(dbDir, { recursive: true });
+        logger_1.logger.info(`Created database directory: ${dbDir}`);
     }
-    catch {
-        try {
-            // Try direct path from server
-            logger = require('../../core/utils/logger').logger;
-        }
-        catch {
-            // Fallback console logging
-            logger = {
-                info: console.log,
-                warn: console.warn,
-                error: console.error,
-                debug: console.log,
-                log: console.log
-            };
-        }
-    }
-}
-async function initializeDatabase() {
     return new Promise((resolve, reject) => {
         try {
-            // Determine database path based on environment
-            const defaultPath = process.cwd().includes('/server') ?
-                './data/logomesh.sqlite3' :
-                './server/data/logomesh.sqlite3';
-            const dbPath = process.env.DB_PATH || path_1.default.resolve(defaultPath);
-            // Ensure data directory exists
-            const dataDir = path_1.default.dirname(dbPath);
-            if (!fs_1.default.existsSync(dataDir)) {
-                fs_1.default.mkdirSync(dataDir, { recursive: true });
-                logger.info(`Created data directory: ${dataDir}`);
-            }
-            logger.info(`Connecting to database at: ${dbPath}`);
+            logger_1.logger.info(`Connecting to database at: ${dbPath}`);
             // Connect to SQLite database
-            const db = new sqlite3_1.default.Database(dbPath, (err) => {
+            const db = new sqlite3.Database(dbPath, (err) => {
                 if (err) {
-                    logger.error('Error opening database:', err);
+                    logger_1.logger.error('Error opening database:', err);
                     reject(err);
                     return;
                 }
-                logger.info('Connected to SQLite database');
+                logger_1.logger.info('Connected to SQLite database');
             });
             // Read schema file
-            const schemaPath = path_1.default.resolve(__dirname, 'schema.sql');
-            if (!fs_1.default.existsSync(schemaPath)) {
+            const schemaPath = path.resolve(__dirname, 'schema.sql');
+            if (!fs.existsSync(schemaPath)) {
                 const error = new Error(`Schema file not found at: ${schemaPath}`);
-                logger.error(error.message);
+                logger_1.logger.error(error.message);
                 reject(error);
                 return;
             }
-            const schemaSQL = fs_1.default.readFileSync(schemaPath, 'utf8');
-            logger.info('Loaded database schema');
+            const schemaSQL = fs.readFileSync(schemaPath, 'utf8');
+            logger_1.logger.info('Loaded database schema');
             // Execute schema creation
             db.exec(schemaSQL, (err) => {
                 if (err) {
-                    logger.error('Error creating database schema:', err);
+                    logger_1.logger.error('Error creating database schema:', err);
                     db.close();
                     reject(err);
                     return;
                 }
-                logger.info('Database schema created successfully');
+                logger_1.logger.info('Database schema created successfully');
                 // Close database connection
                 db.close((err) => {
                     if (err) {
-                        logger.error('Error closing database:', err);
+                        logger_1.logger.error('Error closing database:', err);
                         reject(err);
                         return;
                     }
-                    logger.info('Database initialization complete');
+                    logger_1.logger.info('Database initialization complete');
                     resolve();
                 });
             });
         }
         catch (error) {
-            logger.error('Unexpected error during database initialization:', error);
+            logger_1.logger.error('Unexpected error during database initialization:', error);
             reject(error);
         }
     });
