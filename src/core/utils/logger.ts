@@ -1,4 +1,3 @@
-
 export interface Logger {
   log: (message: string, ...args: any[]) => void;
   warn: (message: string, ...args: any[]) => void;
@@ -8,17 +7,10 @@ export interface Logger {
 
 const LOG_PREFIX = '[LOGOMESH-CORE]';
 
-export const logger: Logger = {
-  log: (message: string, ...args: any[]) => {
-    console.log(`${LOG_PREFIX} [LOG]`, message, ...args);
-  },
-  warn: (message: string, ...args: any[]) => {
-    console.warn(`${LOG_PREFIX} [WARN]`, message, ...args);
-  },
-  error: (message: string, ...args: any[]) => {
-    console.error(`${LOG_PREFIX} [ERROR]`, message, ...args);
-  },
-  debug: (message: string, ...args: any[]) => {
-    console.debug(`${LOG_PREFIX} [DEBUG]`, message, ...args);
-  },
+export const logger = {
+  info: (message: string, ...args: any[]) => console.log(`[LOGOMESH-CORE] [INFO] ${message}`, ...args),
+  warn: (message: string, ...args: any[]) => console.warn(`[LOGOMESH-CORE] [WARN] ${message}`, ...args),
+  error: (message: string, ...args: any[]) => console.error(`[LOGOMESH-CORE] [ERROR] ${message}`, ...args),
+  debug: (message: string, ...args: any[]) => console.log(`[LOGOMESH-CORE] [DEBUG] ${message}`, ...args),
+  log: (message: string, ...args: any[]) => console.log(`[LOGOMESH-CORE] [LOG] ${message}`, ...args)
 };

@@ -63,10 +63,11 @@ services.then(({ ideaManager }) => {
   app.locals.logger = logger;
 
   app.listen(PORT, '0.0.0.0', () => {
-    logger.info(`Server running on port ${PORT}`);
+    logger.info(`ThoughtWeb API Server running on 0.0.0.0:${PORT}`);
     logger.info(`Database path: ${dbPath}`);
     logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
     logger.info(`Plugin directory: ${process.env.PLUGIN_DIR || 'N/A'}`);
+    logger.info(`Health check: http://0.0.0.0:${PORT}/api/v1/health`);
   });
 }).catch(error => {
   logger.error('Failed to start server:', error);
