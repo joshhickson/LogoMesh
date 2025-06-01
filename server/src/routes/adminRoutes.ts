@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { promises as fs } from 'fs';
 import path from 'path';
+import express from 'express';
 import { logger } from '../../../src/core/utils/logger';
 
 const router = express.Router();

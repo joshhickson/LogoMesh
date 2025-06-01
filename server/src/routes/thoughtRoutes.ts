@@ -7,7 +7,7 @@ const router = Router();
 
 // Middleware to attach services to request
 router.use((req: Request, res: Response, next) => {
-  const ideaManager = req.app.locals.ideaManager;
+  const ideaManager: IdeaManager = req.app.locals.ideaManager;
   const logger = req.app.locals.logger;
   next();
 });

@@ -12,7 +12,7 @@ export interface LLMResponse {
 
 export class LLMTaskRunner {
   private executor: LLMExecutor;
-  private totalRequests: number = 0;
+  private totalRequests = 0;
   private lastHealthCheck?: Date;
 
   constructor(executor: LLMExecutor) {
@@ -101,7 +101,7 @@ export class LLMTaskRunner {
       });
 
       return result;
-    } catch (error) {
+    } catch (error: any) {
       logger.error('[LLMTaskRunner] Error executing prompt:', error);
       throw new Error(`LLM execution failed: ${error.message}`);
     }
