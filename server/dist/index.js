@@ -3,21 +3,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-Refactoring;
-the;
-server;
-setup;
-to;
-include;
-core;
-services, portability;
-routes, and;
-enhanced;
-health;
-checks.
- `` `
-` ``;
-replit_final_file;
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
@@ -29,11 +14,12 @@ const portabilityService_1 = require("../../core/services/portabilityService");
 const LLMTaskRunner_1 = require("../../core/llm/LLMTaskRunner");
 const OllamaExecutor_1 = require("../../core/llm/OllamaExecutor");
 const thoughtRoutes_1 = __importDefault(require("./routes/thoughtRoutes"));
-const adminRoutes_1 = __importDefault(require("./routes/adminRoutes"));
 const llmRoutes_1 = __importDefault(require("./routes/llmRoutes"));
 const portabilityRoutes_1 = __importDefault(require("./routes/portabilityRoutes"));
+const adminRoutes_1 = __importDefault(require("./routes/adminRoutes"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3001;
+const apiBasePath = '/api/v1'; // Define the base path
 // Middleware
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
@@ -57,14 +43,13 @@ async function setupServices() {
     logger_1.logger.info('Core services initialized successfully');
     return { ideaManager, portabilityService, llmTaskRunner, storageAdapter };
 }
-// Routes
-app.use('/api/v1/thoughts', thoughtRoutes_1.default);
-app.use('/api/v1/admin', adminRoutes_1.default);
-app.use('/api/v1/llm', llmRoutes_1.default);
-app.use('/api/v1/export', portabilityRoutes_1.default);
-app.use('/api/v1/import', portabilityRoutes_1.default);
+// Mount routes
+app.use(`${apiBasePath}/thoughts`, thoughtRoutes_1.default);
+app.use(`${apiBasePath}/llm`, llmRoutes_1.default);
+app.use(`${apiBasePath}`, portabilityRoutes_1.default);
+app.use(`${apiBasePath}/admin`, adminRoutes_1.default);
 // Health check
-app.get('/api/v1/health', (req, res) => {
+app.get(`${apiBasePath}/health`, (req, res) => {
     res.json({
         status: 'healthy',
         timestamp: new Date().toISOString(),
@@ -85,8 +70,8 @@ async function startServer() {
         await setupServices();
         app.listen(PORT, '0.0.0.0', () => {
             logger_1.logger.info(`Server running on port ${PORT}`);
-            logger_1.logger.info(`Health check available at http://localhost:${PORT}/api/v1/health`);
-            logger_1.logger.info(`API base URL: http://localhost:${PORT}/api/v1`);
+            logger_1.logger.info(`Health check available at http://localhost:${PORT}${apiBasePath}/health`);
+            logger_1.logger.info(`API base URL: http://localhost:${PORT}${apiBasePath}`);
         });
     }
     catch (error) {
@@ -95,5 +80,4 @@ async function startServer() {
     }
 }
 startServer();
-`;
 //# sourceMappingURL=index.js.map
