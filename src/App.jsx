@@ -99,8 +99,19 @@ function App() {
   );
 
   useEffect(() => {
-    fetchThoughts();
-  }, [fetchThoughts]);
+    const loadInitialData = async () => {
+      try {
+        const thoughtsResponse = await apiService.fetchThoughts();
+        setThoughts(thoughtsResponse || []);
+      } catch (error) {
+        console.warn('Backend API not available:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadInitialData();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('thought-web-dark-mode', darkMode.toString());
