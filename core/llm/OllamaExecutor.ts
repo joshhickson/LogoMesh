@@ -1,4 +1,3 @@
-
 import { LLMExecutor } from '../../contracts/llmExecutor';
 
 export class OllamaExecutor implements LLMExecutor {
@@ -11,7 +10,7 @@ export class OllamaExecutor implements LLMExecutor {
   async executePrompt(prompt: string, metadata?: Record<string, any>): Promise<string> {
     // Simulate processing delay
     await new Promise(resolve => setTimeout(resolve, 100));
-    
+
     // Return mocked response
     return `Mocked response for: ${prompt}`;
   }
@@ -31,7 +30,7 @@ export class OllamaExecutor implements LLMExecutor {
     if (context && context.length > 0) {
       contextPrefix = `[Context: ${context.length} items] `;
     }
-    
+
     return this.executePrompt(`${contextPrefix}${prompt}`, metadata);
   }
 }

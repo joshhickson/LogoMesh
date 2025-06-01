@@ -10,9 +10,9 @@ if (process.env.NODE_ENV === 'development') {
 // Generic API request function
 async function apiRequest<T>(
   endpoint: string,
-  options: Partial<Request> = {}
+  options: Partial<RequestInit> = {}
 ): Promise<T> {
-  const config: Partial<Request> = {
+  const config: Partial<RequestInit> = {
     headers: {
       'Content-Type': 'application/json',
       ...options.headers,
