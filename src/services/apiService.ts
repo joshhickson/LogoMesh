@@ -8,6 +8,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 import { NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
+import { logger } from '../core/utils/logger';
+
+interface FetchOptions extends RequestInit {
+  timeout?: number;
+}
 
 // Generic API request function
 async function apiRequest<T>(
