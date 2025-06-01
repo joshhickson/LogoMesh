@@ -322,7 +322,6 @@ function Sidebar({
           {filterFieldType.length > 0 && (
             <li>Field Type(s): {filterFieldType.join(', ')}</li>
           )}
-          )}
           {!filterFieldName.length &&
             !filterFieldValue &&
             !filterFieldType.length && <li>None</li>}
