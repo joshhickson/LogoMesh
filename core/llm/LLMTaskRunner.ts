@@ -1,5 +1,14 @@
 import { LLMExecutor } from '../../contracts/llmExecutor';
 import { logLLMInteraction } from '../../src/core/logger/llmAuditLogger';
+import { logger } from '../../src/core/utils/logger';
+
+// Define LLMResponse type
+export interface LLMResponse {
+  response: string;
+  model: string;
+  executionTimeMs: number;
+  tokensUsed?: number;
+}
 
 export class LLMTaskRunner {
   private executor: LLMExecutor;
