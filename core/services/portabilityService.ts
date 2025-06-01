@@ -90,7 +90,7 @@ export class PortabilityService implements ThoughtExportProvider {
       }
 
       // Apply semantic compression options to single thought
-      let processedThought = { ...thought };
+      const processedThought = { ...thought };
 
       if (options?.maxDepth !== undefined) {
         processedThought.segments = thought.segments?.slice(0, options.maxDepth || 10);
