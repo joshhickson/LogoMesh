@@ -277,3 +277,283 @@
         "wires": []
     }
 ]
+[
+    {
+        "id": "backup-flow",
+        "type": "tab",
+        "label": "Database Backup",
+        "disabled": false,
+        "info": "Automated database backup workflow"
+    },
+    {
+        "id": "backup-timer",
+        "type": "inject",
+        "z": "backup-flow",
+        "name": "Daily Backup Timer",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "86400",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "backup-request"
+            ]
+        ]
+    },
+    {
+        "id": "backup-request",
+        "type": "http request",
+        "z": "backup-flow",
+        "name": "Backup Database",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:3001/api/v1/admin/backup",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 380,
+        "y": 100,
+        "wires": [
+            [
+                "backup-response"
+            ]
+        ]
+    },
+    {
+        "id": "backup-response",
+        "type": "debug",
+        "z": "backup-flow",
+        "name": "Backup Result",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "embedding-prep-flow",
+        "type": "tab",
+        "label": "Embedding Prep",
+        "disabled": false,
+        "info": "Stub workflow for future embedding processing"
+    },
+    {
+        "id": "embedding-timer",
+        "type": "inject",
+        "z": "embedding-prep-flow",
+        "name": "Hourly Embedding Check",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 200,
+        "wires": [
+            [
+                "fetch-segments"
+            ]
+        ]
+    },
+    {
+        "id": "fetch-segments",
+        "type": "http request",
+        "z": "embedding-prep-flow",
+        "name": "Get All Segments",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:3001/api/v1/thoughts",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 400,
+        "y": 200,
+        "wires": [
+            [
+                "process-segments"
+            ]
+        ]
+    },
+    {
+        "id": "process-segments",
+        "type": "function",
+        "z": "embedding-prep-flow",
+        "name": "Extract Segment Content",
+        "func": "// Extract segments for embedding processing\nif (msg.payload && Array.isArray(msg.payload)) {\n    const segments = [];\n    msg.payload.forEach(thought => {\n        if (thought.segments) {\n            thought.segments.forEach(segment => {\n                segments.push({\n                    id: segment.segment_id,\n                    title: segment.title,\n                    description: segment.description,\n                    content: segment.title + ' ' + segment.description\n                });\n            });\n        }\n    });\n    msg.payload = segments;\n    node.status({fill: \"green\", shape: \"dot\", text: `Found ${segments.length} segments`});\n} else {\n    node.status({fill: \"red\", shape: \"ring\", text: \"No segments found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 200,
+        "wires": [
+            [
+                "llm-prompt"
+            ]
+        ]
+    },
+    {
+        "id": "llm-prompt",
+        "type": "http request",
+        "z": "embedding-prep-flow",
+        "name": "Send to LLM",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:3001/api/v1/llm/prompt",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 860,
+        "y": 200,
+        "wires": [
+            [
+                "llm-response"
+            ]
+        ]
+    },
+    {
+        "id": "llm-response",
+        "type": "debug",
+        "z": "embedding-prep-flow",
+        "name": "LLM Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "auto-tagging-flow",
+        "type": "tab",
+        "label": "Auto-Tagging Prep",
+        "disabled": false,
+        "info": "Stub workflow for future auto-tagging functionality"
+    },
+    {
+        "id": "tagging-timer",
+        "type": "inject",
+        "z": "auto-tagging-flow",
+        "name": "Auto-Tag Check",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "7200",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 300,
+        "wires": [
+            [
+                "fetch-thoughts"
+            ]
+        ]
+    },
+    {
+        "id": "fetch-thoughts",
+        "type": "http request",
+        "z": "auto-tagging-flow",
+        "name": "Get Thoughts",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:3001/api/v1/thoughts",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 340,
+        "y": 300,
+        "wires": [
+            [
+                "analyze-keywords"
+            ]
+        ]
+    },
+    {
+        "id": "analyze-keywords",
+        "type": "function",
+        "z": "auto-tagging-flow",
+        "name": "Basic Keyword Analysis",
+        "func": "// Simple keyword-based tagging logic (stub)\nif (msg.payload && Array.isArray(msg.payload)) {\n    const suggestions = [];\n    msg.payload.forEach(thought => {\n        const text = (thought.title + ' ' + thought.description).toLowerCase();\n        const keywords = {\n            'ui': ['interface', 'user', 'design', 'frontend'],\n            'data': ['database', 'storage', 'persistence', 'sqlite'],\n            'ai': ['llm', 'embedding', 'artificial', 'intelligence'],\n            'api': ['endpoint', 'service', 'backend', 'server']\n        };\n        \n        for (const [tag, words] of Object.entries(keywords)) {\n            if (words.some(word => text.includes(word))) {\n                suggestions.push({\n                    thoughtId: thought.thought_bubble_id,\n                    suggestedTag: tag,\n                    confidence: 0.7\n                });\n                break;\n            }\n        }\n    });\n    \n    msg.payload = suggestions;\n    node.status({fill: \"blue\", shape: \"dot\", text: `${suggestions.length} tag suggestions`});\n} else {\n    node.status({fill: \"red\", shape: \"ring\", text: \"No thoughts found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 300,
+        "wires": [
+            [
+                "tag-debug"
+            ]
+        ]
+    },
+    {
+        "id": "tag-debug",
+        "type": "debug",
+        "z": "auto-tagging-flow",
+        "name": "Tag Suggestions",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 300,
+        "wires": []
+    }
+]

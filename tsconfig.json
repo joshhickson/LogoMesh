@@ -18,8 +18,8 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@core/*": ["src/core/*"],
-      "@contracts/*": ["src/contracts/*"],
+      "@core/*": ["core/*"],
+      "@contracts/*": ["contracts/*"],
       "~/*": ["src/*"]
     }
   },
