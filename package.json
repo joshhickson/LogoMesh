@@ -40,7 +40,10 @@
     "test": "react-app-rewired test",
     "generate:docs": "node scripts/generate-docs.js",
     "eject": "react-scripts eject",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/ core/ contracts/ server/src/ --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint src/ core/ contracts/ server/src/ --ext .js,.jsx,.ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\" \"core/**/*.{js,jsx,ts,tsx,json,css,md}\" \"contracts/**/*.{js,jsx,ts,tsx,json,css,md}\" \"server/src/**/*.{js,jsx,ts,tsx,json,css,md}\""
   },
   "eslintConfig": {
     "extends": [
