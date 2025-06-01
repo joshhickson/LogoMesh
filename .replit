@@ -69,3 +69,12 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "node-red --userDir ./ --settings node-red-settings.js"
+
+[[workflows.workflow]]
+name = "Start Backend First"
+author = 42214058
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd server && npm install && npm run dev"
