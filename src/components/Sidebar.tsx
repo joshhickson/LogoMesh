@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useMemo } from 'react';
 import { graphService } from '../services/graphService';
 
@@ -45,7 +44,7 @@ function Sidebar({
   onRefreshThoughts
 }: SidebarProps) {
   const [filterFieldName, setFilterFieldName] = useState<string[]>([]);
-  const [filterFieldValue, setFilterFieldValue] = useState<string>('');
+  const [filterFieldValue, setFilterFieldValue] = useState('');
   const [filterFieldType, setFilterFieldType] = useState<string[]>([]);
   const [filteredThoughtIds, setFilteredThoughtIds] = useState<string[]>([]);
 
