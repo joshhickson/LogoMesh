@@ -1,0 +1,74 @@
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: /home/runner/workspace/src/components/Sidebar.tsx: Unexpected token, expected "," (323:64)
+
+[0m [90m 321 |[39m           {filterFieldValue [33m&&[39m [33m<[39m[33mli[39m[33m>[39m[33mField[39m [33mValue[39m[33m:[39m {filterFieldValue}[33m<[39m[33m/[39m[33mli[39m[33m>[39m}
+ [90m 322 |[39m           {filterFieldType[33m.[39mlength [33m>[39m [35m0[39m [33m&&[39m (
+[31m[1m>[22m[39m[90m 323 |[39m             [33m<[39m[33mli[39m[33m>[39m[33mField[39m [33mType[39m(s)[33m:[39m {filterFieldType[33m.[39mjoin([32m', '[39m)}[33m<[39m[33m/[39m[33mli[39m[33m>[39m}
+ [90m     |[39m                                                                 [31m[1m^[22m[39m
+ [90m 324 |[39m           )}
+ [90m 325 |[39m           {[33m![39mfilterFieldName[33m.[39mlength [33m&&[39m
+ [90m 326 |[39m             [33m![39mfilterFieldValue [33m&&[39m[0m
+    at constructor (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:360:19)
+    at TypeScriptParserMixin.raise (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:6613:19)
+    at TypeScriptParserMixin.unexpected (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:6633:16)
+    at TypeScriptParserMixin.expect (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:6914:12)
+    at TypeScriptParserMixin.parseParenAndDistinguishExpression (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:11577:14)
+    at TypeScriptParserMixin.parseExprAtom (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:11242:23)
+    at TypeScriptParserMixin.parseExprAtom (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4770:20)
+    at TypeScriptParserMixin.parseExprSubscripts (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10992:23)
+    at TypeScriptParserMixin.parseUpdate (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10977:21)
+    at TypeScriptParserMixin.parseMaybeUnary (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10957:23)
+    at TypeScriptParserMixin.parseMaybeUnary (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:9779:18)
+    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10810:61)
+    at TypeScriptParserMixin.parseExprOpBaseRightExpr (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10897:34)
+    at TypeScriptParserMixin.parseExprOpRightExpr (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10892:21)
+    at TypeScriptParserMixin.parseExprOp (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10858:27)
+    at TypeScriptParserMixin.parseExprOp (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:9320:18)
+    at TypeScriptParserMixin.parseExprOp (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10864:21)
+    at TypeScriptParserMixin.parseExprOp (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:9320:18)
+    at TypeScriptParserMixin.parseExprOps (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10819:17)
+    at TypeScriptParserMixin.parseMaybeConditional (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10792:23)
+    at TypeScriptParserMixin.parseMaybeAssign (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10745:21)
+    at TypeScriptParserMixin.parseMaybeAssign (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:9728:20)
+    at TypeScriptParserMixin.parseExpressionBase (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10698:23)
+    at /home/runner/workspace/node_modules/@babel/parser/lib/index.js:10694:39
+    at TypeScriptParserMixin.allowInAnd (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:12334:12)
+    at TypeScriptParserMixin.parseExpression (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10694:17)
+    at TypeScriptParserMixin.jsxParseExpressionContainer (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4638:31)
+    at TypeScriptParserMixin.jsxParseElementAt (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4717:36)
+    at TypeScriptParserMixin.jsxParseElementAt (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4704:32)
+    at TypeScriptParserMixin.jsxParseElementAt (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4704:32)
+    at TypeScriptParserMixin.jsxParseElement (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4755:17)
+    at TypeScriptParserMixin.parseExprAtom (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4765:19)
+    at TypeScriptParserMixin.parseExprSubscripts (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10992:23)
+    at TypeScriptParserMixin.parseUpdate (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10977:21)
+    at TypeScriptParserMixin.parseMaybeUnary (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10957:23)
+    at TypeScriptParserMixin.parseMaybeUnary (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:9779:18)
+    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10810:61)
+    at TypeScriptParserMixin.parseExprOps (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10815:23)
+    at TypeScriptParserMixin.parseMaybeConditional (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10792:23)
+    at TypeScriptParserMixin.parseMaybeAssign (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10745:21)
+    at /home/runner/workspace/node_modules/@babel/parser/lib/index.js:9717:39
+    at TypeScriptParserMixin.tryParse (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:6922:20)
+    at TypeScriptParserMixin.parseMaybeAssign (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:9717:18)
+    at /home/runner/workspace/node_modules/@babel/parser/lib/index.js:10714:39
+    at TypeScriptParserMixin.allowInAnd (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:12334:12)
+    at TypeScriptParserMixin.parseMaybeAssignAllowIn (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10714:17)
+    at TypeScriptParserMixin.parseParenAndDistinguishExpression (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:11591:28)
+    at TypeScriptParserMixin.parseExprAtom (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:11242:23)
+    at TypeScriptParserMixin.parseExprAtom (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4770:20)
+    at TypeScriptParserMixin.parseExprSubscripts (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10992:23)
+options.factory@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:90183:30
+__webpack_require__@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:89604:32
+fn@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:89811:21
+hotRequire@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:90166:61
+./src/App.jsx@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:87312:96
+options.factory@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:90183:30
+__webpack_require__@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:89604:32
+fn@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:89811:21
+hotRequire@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:90166:61
+./src/index.js@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:89107:81
+options.factory@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:90183:30
+__webpack_require__@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:89604:32
+@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:90712:56
+@https://7eb0b03c-e5c5-4566-8f8b-bba701e01cde-00-2vs0wgk7dqm9q.riker.replit.dev/static/js/bundle.js:90714:12
