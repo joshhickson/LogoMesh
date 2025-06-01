@@ -320,7 +320,8 @@ function Sidebar({
           )}
           {filterFieldValue && <li>Field Value: {filterFieldValue}</li>}
           {filterFieldType.length > 0 && (
-            <li>Field Type(s): {filterFieldType.join(', ')}</li>}
+            <li>Field Type(s): {filterFieldType.join(', ')}</li>
+          )}
           )}
           {!filterFieldName.length &&
             !filterFieldValue &&
