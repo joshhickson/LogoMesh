@@ -19,10 +19,10 @@
       "jsx": true
     },
     "ecmaVersion": "latest",
-    "sourceType": "module",
-    "project": "./tsconfig.json"
+    "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint"],
+  "ignorePatterns": ["**/*.d.ts", "**/*.js.map", "**/*.d.ts.map", "build/", "dist/", "node_modules/"],
   "rules": {
     "react/prop-types": "off",
     "no-unused-vars": "warn",
