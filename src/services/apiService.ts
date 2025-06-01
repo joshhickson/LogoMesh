@@ -10,8 +10,15 @@ if (process.env.NODE_ENV === 'development') {
 import { NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
 import { logger } from '../../core/utils/logger';
 
-interface FetchOptions extends RequestInit {
+interface FetchOptions {
   timeout?: number;
+  method?: string;
+  headers?: Record<string, string>;
+  body?: string;
+}
+
+interface FetchWithTimeoutOptions {
+
 }
 
 // Generic API request function

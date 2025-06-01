@@ -1,4 +1,4 @@
-import { VoiceInputManager } from '../VoiceInputManager';
+import VoiceInputManager from '../VoiceInputManager';
 
 describe('VoiceInputManager', () => {
   let mockRecognition;
