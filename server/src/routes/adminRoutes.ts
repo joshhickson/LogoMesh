@@ -133,10 +133,6 @@ router.get('/backups', async (req, res) => {
 });
 
 export default router;
-import express, { Router, Request, Response } from 'express';
-import * as fs from 'fs';
-import * as path from 'path';
-import { logger } from '../../src/core/utils/logger';
 
 const router = express.Router();
 

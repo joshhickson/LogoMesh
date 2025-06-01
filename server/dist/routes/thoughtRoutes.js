@@ -5,8 +5,8 @@ const logger_1 = require("../../../src/core/utils/logger");
 const router = (0, express_1.Router)();
 // Middleware to attach services to request
 router.use((req, res, next) => {
-    req.app.locals.ideaManager = req.app.locals.ideaManager;
-    req.app.locals.logger = req.app.locals.logger;
+    const ideaManager = req.app.locals.ideaManager;
+    const logger = req.app.locals.logger;
     next();
 });
 // GET /api/v1/thoughts - Get all thoughts

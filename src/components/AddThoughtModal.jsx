@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+// TODO: This variable was flagged as unused by ESLint.
+// import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { newBubbleId } from '../utils/eventBus';
 import { VoiceInputManager } from '../utils/VoiceInputManager';
 import { ulid } from 'ulid';

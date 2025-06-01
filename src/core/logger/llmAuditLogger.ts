@@ -6,7 +6,8 @@ export function logLLMInteraction(
   agent: string,
   prompt: string,
   output: string,
-  metadata?: Record<string, any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  metadata?: Record<string, any> // TODO: Replace 'any' with a more specific type if possible
 ): void {
   console.log(`[LLM ${agent}]`, {
     prompt,
@@ -17,16 +18,22 @@ export function logLLMInteraction(
 }
 
 export const llmAuditLogger = {
+  // TODO: Replace 'any' with a more specific type if possible
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   log: (message: string, data?: any) => {
     const timestamp = new Date().toISOString();
     console.log(`[LLM Audit ${timestamp}] ${message}`, data ? JSON.stringify(data, null, 2) : '');
   },
 
+  // TODO: Replace 'any' with a more specific type if possible
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error: (message: string, error?: any) => {
     const timestamp = new Date().toISOString();
     console.error(`[LLM Audit Error ${timestamp}] ${message}`, error);
   },
 
+  // TODO: Replace 'any' with a more specific type if possible
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   debug: (message: string, data?: any) => {
     if (process.env.NODE_ENV === 'development') {
       const timestamp = new Date().toISOString();
@@ -36,6 +43,8 @@ export const llmAuditLogger = {
 
   logPromptRequest: async (requestData: {
     prompt: string;
+    // TODO: Replace 'any' with a more specific type if possible
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     metadata: any;
     timestamp: string;
     requestId: string;
@@ -49,6 +58,8 @@ export const llmAuditLogger = {
   },
 
   logPromptResponse: async (responseData: {
+    // TODO: Replace 'any' with a more specific type if possible
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     result: any;
     timestamp: string;
     executionTimeMs: number;

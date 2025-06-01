@@ -1,18 +1,23 @@
 import { graphService } from '../services/graphService';
 
-function ThoughtDetailPanel({ thought, isOpen, onClose, onUpdate, onDelete, refreshThoughts }) {
+// TODO: This variable was flagged as unused by ESLint.
+// function ThoughtDetailPanel({ thought, isOpen, onClose, onUpdate, onDelete, refreshThoughts }) {
+function ThoughtDetailPanel({ thought, onUpdate, refreshThoughts }) {
   const handleThoughtEdit = (field, value) => {
     onUpdate(thought.thought_bubble_id, { [field]: value });
   };
 
-  const handleSegmentEdit = (segmentId, field, value) => {
+  // TODO: This variable was flagged as unused by ESLint.
+  // const handleSegmentEdit = (segmentId, field, value) => {
+  const handleSegmentEdit = (localSegmentId, field, value) => {
     // Update field type if it's a field value
     if (field.startsWith('fields.')) {
       const fieldName = field.split('.')[1];
       graphService.updateFieldType(fieldName, value);
 
-      const segment = thought.segments.find((s) => s.segment_id === segmentId);
-      const updatedFields = { ...segment.fields, [fieldName]: value };
+      const segment = thought.segments.find((s) => s.segment_id === localSegmentId);
+      // TODO: This variable was flagged as unused by ESLint.
+      // const updatedFields = { ...segment.fields, [fieldName]: value };
       // For now, we'll just call refreshThoughts and let the parent handle the update
     } else {
       // For now, we'll just call refreshThoughts and let the parent handle the update
@@ -20,27 +25,35 @@ function ThoughtDetailPanel({ thought, isOpen, onClose, onUpdate, onDelete, refr
 
     refreshThoughts();
     // Update in graph service
-    graphService.updateSegment(segmentId, field, value).catch(console.error);
+    graphService.updateSegment(localSegmentId, field, value).catch(console.error);
   };
 
-  const handleAddField = (segmentId) => {
+  // TODO: This variable was flagged as unused by ESLint.
+  // const handleAddField = (segmentId) => {
+  const handleAddField = (localSegmentId) => {
     const fieldName = prompt('Enter field name:');
     if (!fieldName) return;
 
-    const segment = thought.segments.find((s) => s.segment_id === segmentId);
-    const updatedFields = { ...segment.fields, [fieldName]: '' };
+    const segment = thought.segments.find((s) => s.segment_id === localSegmentId);
+    // TODO: This variable was flagged as unused by ESLint.
+    // const updatedFields = { ...segment.fields, [fieldName]: '' };
     // For now, we'll just call refreshThoughts and let the parent handle the update
     refreshThoughts();
   };
 
-  const handleRemoveField = (segmentId, fieldName) => {
-    const segment = thought.segments.find((s) => s.segment_id === segmentId);
-    const { [fieldName]: removed, ...remainingFields } = segment.fields;
+  // TODO: This variable was flagged as unused by ESLint.
+  // const handleRemoveField = (segmentId, fieldName) => {
+  const handleRemoveField = (localSegmentId, fieldName) => {
+    const segment = thought.segments.find((s) => s.segment_id === localSegmentId);
+    // TODO: This variable was flagged as unused by ESLint.
+    // const { [fieldName]: removed, ...remainingFields } = segment.fields;
     // For now, we'll just call refreshThoughts and let the parent handle the update
     refreshThoughts();
   };
 
-  const handleDeleteSegment = (segmentId) => {
+  // TODO: This variable was flagged as unused by ESLint.
+  // const handleDeleteSegment = (segmentId) => {
+  const handleDeleteSegment = (localSegmentId) => {
     if (!window.confirm('Are you sure you want to delete this segment?'))
       return;
     // For now, we'll just call refreshThoughts and let the parent handle the deletion

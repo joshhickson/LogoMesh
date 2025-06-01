@@ -1,4 +1,5 @@
-import React from 'react';
+// TODO: This variable was flagged as unused by ESLint.
+// import React from 'react';
 import { render } from '@testing-library/react';
 import Canvas from '../Canvas';
 

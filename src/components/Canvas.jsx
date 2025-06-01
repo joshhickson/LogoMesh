@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+// TODO: This variable was flagged as unused by ESLint.
+// import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import cytoscape from 'cytoscape';
 import fcose from 'cytoscape-fcose';
 import coseBilkent from 'cytoscape-cose-bilkent';
@@ -9,7 +11,8 @@ cytoscape.use(coseBilkent);
 
 const Canvas = ({ 
   thoughts = [], 
-  selectedThought, 
+  // TODO: This variable was flagged as unused by ESLint.
+  // selectedThought,
   setSelectedThought,
   filteredThoughtIds = [],
   onUpdateThought

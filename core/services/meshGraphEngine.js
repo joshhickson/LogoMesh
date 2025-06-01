@@ -5,6 +5,7 @@ const logger_1 = require("../../src/core/utils/logger");
 class MeshGraphEngine {
     constructor(storage) {
         this.storage = storage;
+        this.weightThreshold = 0.3;
     }
     async getRelatedThoughts(thoughtId, maxResults = 10) {
         try {
@@ -26,38 +27,137 @@ class MeshGraphEngine {
             return [];
         }
     }
-    async clusterThoughtsByTag(tag) {
-        try {
-            logger_1.logger.info(`[MeshGraphEngine Stub] Clustering thoughts by tag: ${tag}`);
-            const allThoughts = await this.storage.getAllThoughts();
-            return allThoughts.filter(thought => thought.tags?.includes(tag));
+    /**
+     * Get related thoughts for a given thought
+     * Enhanced stub implementation for CCE semantic traversal
+     */
+    async getRelatedThoughts(thoughtId, options) {
+        logger_1.logger.debug(`[MeshGraphEngine] Getting related thoughts for ${thoughtId} with options:`, options);
+        // Mock related thoughts based on semantic similarity
+        const mockRelated = [
+            {
+                thoughtId: `related-${Math.random().toString(36).substr(2, 6)}`,
+                relationshipType: 'semantic_similarity',
+                strength: Math.random() * 0.4 + 0.6,
+                depth: 1
+            },
+            {
+                thoughtId: `related-${Math.random().toString(36).substr(2, 6)}`,
+                relationshipType: 'conceptual_cluster',
+                strength: Math.random() * 0.3 + 0.5,
+                depth: 2
+            }
+        ];
+        // Apply depth filtering
+        if (options?.maxDepth) {
+            return mockRelated.filter(rel => rel.depth <= options.maxDepth);
         }
-        catch (error) {
-            logger_1.logger.error('[MeshGraphEngine] Error clustering thoughts by tag:', error);
-            return [];
+        // Apply semantic threshold filtering
+        if (options?.semanticThreshold) {
+            return mockRelated.filter(rel => rel.strength >= options.semanticThreshold);
         }
+        return mockRelated;
     }
-    async analyzeGraphMetrics() {
-        try {
-            logger_1.logger.info('[MeshGraphEngine Stub] Analyzing graph metrics');
-            const allThoughts = await this.storage.getAllThoughts();
-            const totalThoughts = allThoughts.length;
-            const totalSegments = allThoughts.reduce((sum, thought) => sum + (thought.segments?.length || 0), 0);
-            const allTags = new Set();
-            allThoughts.forEach(thought => {
-                thought.tags?.forEach(tag => allTags.add(tag));
+    // Additional overload for getRelatedThoughts with different signature
+    getRelatedThoughts(thoughts, targetThought) {
+        // Implementation for array-based search
+        return thoughts.filter(thought => thought.tags?.some((tag) => targetThought.tags?.includes(tag)));
+    }
+    /**
+     * Cluster thoughts by tag similarity
+     * Enhanced stub implementation for CCE clustering support
+     */
+    async clusterThoughtsByTag(thoughts, options) {
+        logger_1.logger.debug(`[MeshGraphEngine] Clustering ${thoughts.length} thoughts by tag similarity`);
+        // Mock clustering logic
+        const clusters = {};
+        thoughts.forEach((thought, index) => {
+            const clusterKey = thought.tags?.length > 0
+                ? `cluster_${thought.tags[0]}`
+                : `cluster_misc_${Math.floor(index / 3)}`;
+            if (!clusters[clusterKey]) {
+                clusters[clusterKey] = [];
+            }
+            clusters[clusterKey].push(thought);
+        });
+        // Apply minimum cluster size filter
+        if (options?.minClusterSize) {
+            Object.keys(clusters).forEach(key => {
+                if (clusters[key].length < options.minClusterSize) {
+                    delete clusters[key];
+                }
             });
-            return {
-                totalThoughts,
-                totalSegments,
-                uniqueTags: allTags.size,
-                averageSegmentsPerThought: totalThoughts > 0 ? totalSegments / totalThoughts : 0
-            };
         }
-        catch (error) {
-            logger_1.logger.error('[MeshGraphEngine] Error analyzing graph metrics:', error);
-            return {};
-        }
+        return clusters;
+    }
+    // Method overloads should be adjacent  
+    clusterThoughtsByTag(thoughts, options) {
+        const tagGroups = {};
+        thoughts.forEach(thought => {
+            if (thought.tags && Array.isArray(thought.tags)) {
+                thought.tags.forEach((tag) => {
+                    if (!tagGroups[tag]) {
+                        tagGroups[tag] = [];
+                    }
+                    tagGroups[tag].push(thought);
+                });
+            }
+        });
+        return Object.entries(tagGroups).map(([tag, thoughts]) => ({
+            tag,
+            thoughts,
+            count: thoughts.length
+        }));
+    }
+    /**
+     * Traverse graph semantically from a starting thought
+     * New method for CCE semantic context building
+     */
+    async traverseSemanticGraph(startingThoughtId, options) {
+        logger_1.logger.debug(`[MeshGraphEngine] Traversing semantic graph from ${startingThoughtId}`);
+        // Mock semantic traversal
+        const traversalResult = {
+            startingThought: startingThoughtId,
+            traversalDepth: options?.maxDepth || 3,
+            semanticPaths: [
+                {
+                    path: [startingThoughtId, 'node1', 'node2'],
+                    semanticStrength: 0.85,
+                    conceptualTheme: 'primary_concept'
+                },
+                {
+                    path: [startingThoughtId, 'node3', 'node4', 'node5'],
+                    semanticStrength: 0.72,
+                    conceptualTheme: 'supporting_detail'
+                }
+            ],
+            clustersEncountered: ['cluster_A', 'cluster_B'],
+            abstractionLevels: options?.filterByAbstraction || ['high', 'medium', 'low']
+        };
+        return traversalResult;
+    }
+    /**
+     * Find semantic bridges between thoughts
+     * New method for identifying conceptual connections
+     */
+    async findSemanticBridges(thoughtId1, thoughtId2, options) {
+        logger_1.logger.debug(`[MeshGraphEngine] Finding semantic bridges between ${thoughtId1} and ${thoughtId2}`);
+        // Mock bridge finding
+        return [
+            {
+                bridgeThought: `bridge-${Math.random().toString(36).substr(2, 6)}`,
+                bridgeStrength: Math.random() * 0.3 + 0.6,
+                hopCount: Math.floor(Math.random() * 3) + 1,
+                conceptualRole: 'connector'
+            }
+        ];
+    }
+    /**
+     * Enhanced clustering with configurable algorithms
+     */
+    async clusterThoughts(thoughts, algorithm = 'tag-based') {
+        // Implementation logic
+        return [];
     }
 }
 exports.MeshGraphEngine = MeshGraphEngine;

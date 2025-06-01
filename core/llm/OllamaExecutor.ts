@@ -1,6 +1,7 @@
 import { LLMExecutor } from '../../contracts/llmExecutor';
 
 export class OllamaExecutor implements LLMExecutor {
+  private baseUrl = 'http://localhost:11434';
   private modelName: string;
 
   constructor(modelName: string = 'ollama-mock') {

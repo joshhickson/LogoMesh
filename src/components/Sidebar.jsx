@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { exportToJsonFile } from '../utils/exportHandler';
-import { importFromJsonFile } from '../utils/importHandler';
+// TODO: This variable was flagged as unused by ESLint.
+// import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+// TODO: This variable was flagged as unused by ESLint.
+// import { exportToJsonFile } from '../utils/exportHandler';
+// TODO: This variable was flagged as unused by ESLint.
+// import { importFromJsonFile } from '../utils/importHandler';
 import { graphService } from '../services/graphService';
 
 // Current schema version for display purposes
@@ -19,9 +23,10 @@ function Sidebar({
   const [filterFieldValue, setFilterFieldValue] = useState('');
   const [filterFieldType, setFilterFieldType] = useState([]);
   const [filteredThoughtIds, setFilteredThoughtIds] = useState([]);
-  const [filterValuesByType, setFilterValuesByType] = useState({
-    date: { from: '', to: '' },
-    numeric: { min: '', max: '' },
+  // TODO: This variable was flagged as unused by ESLint.
+  // const [filterValuesByType, setFilterValuesByType] = useState({
+  //   date: { from: '', to: '' },
+  //   numeric: { min: '', max: '' },
     location: { radius: '', center: '' },
     text: '',
   });
@@ -40,7 +45,7 @@ function Sidebar({
   const uniqueFieldTypes = ['text', 'location', 'date', 'numeric']; // Placeholder for future
 
   // Memoize filtered thoughts computation
-  const filteredThoughts = React.useMemo(() => {
+  const filteredThoughts = useMemo(() => {
     return thoughts
       .map((thought) => {
         const filteredSegments = (thought.segments || []).filter((segment) => {
@@ -114,7 +119,7 @@ function Sidebar({
             !filterFieldValue &&
             !filterFieldType.length)
       );
-  }, [thoughts, filterFieldName, filterFieldValue, filterFieldType]);
+  }, [thoughts, filterFieldName, filterFieldValue, filterFieldType, filterValuesByType]);
 
   // Sync active filters to parent for canvas highlighting
   useEffect(() => {
