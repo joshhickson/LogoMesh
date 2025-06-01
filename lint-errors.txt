@@ -1,0 +1,572 @@
+
+> thought-web@0.1.0 lint
+> eslint src/ core/ contracts/ server/src/ --ext .js,.jsx,.ts,.tsx
+
+
+/home/runner/workspace/contracts/embeddings/adapterRegistry.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/contracts/embeddings/adapterRegistry.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/contracts/embeddings/adapterRegistry.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/contracts/embeddings/adapterRegistry.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/contracts/embeddings/adapterRegistry.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/contracts/embeddings/adapterRegistry.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/contracts/embeddings/embeddingInterface.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/contracts/embeddings/embeddingInterface.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/contracts/embeddings/embeddingInterface.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/contracts/embeddings/embeddingInterface.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/contracts/embeddings/embeddingInterface.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/contracts/embeddings/embeddingInterface.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/contracts/embeddings/ulsConfig.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/contracts/embeddings/ulsConfig.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/contracts/embeddings/ulsConfig.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/contracts/embeddings/ulsConfig.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/contracts/embeddings/ulsConfig.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/contracts/embeddings/ulsConfig.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/contracts/plugins/pluginApi.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/contracts/plugins/pluginApi.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/contracts/storageAdapter.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/contracts/storageAdapter.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/contracts/storageAdapter.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/contracts/storageAdapter.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/contracts/storageAdapter.ts
+  23:27  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/runner/workspace/contracts/thoughtExportProvider.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/contracts/thoughtExportProvider.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/contracts/thoughtExportProvider.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/contracts/thoughtExportProvider.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/contracts/thoughtExportProvider.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/contracts/thoughtExportProvider.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/context/cognitiveContextEngine.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/context/cognitiveContextEngine.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/context/cognitiveContextEngine.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/context/cognitiveContextEngine.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/context/cognitiveContextEngine.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/context/cognitiveContextEngine.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/db/initDb.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/db/initDb.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/db/initDb.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/db/initDb.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/db/initDb.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/db/initDb.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/llm/LLMTaskRunner.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/llm/LLMTaskRunner.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/llm/LLMTaskRunner.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/llm/LLMTaskRunner.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/llm/LLMTaskRunner.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/llm/LLMTaskRunner.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/llm/OllamaExecutor.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/llm/OllamaExecutor.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/llm/OllamaExecutor.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/llm/OllamaExecutor.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/llm/OllamaExecutor.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/llm/OllamaExecutor.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/llm/utils/mermaidAuditor.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/llm/utils/mermaidAuditor.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/llm/utils/mermaidAuditor.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/llm/utils/mermaidAuditor.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/llm/utils/mermaidAuditor.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/llm/utils/mermaidAuditor.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/plugins/pluginRuntimeInterface.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/plugins/pluginRuntimeInterface.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/services/eventBus.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/services/eventBus.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/services/meshGraphEngine.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/services/meshGraphEngine.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/services/meshGraphEngine.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/services/meshGraphEngine.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/services/meshGraphEngine.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/services/meshGraphEngine.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/services/pluginHost.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/services/pluginHost.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/services/portabilityService.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/services/portabilityService.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/services/portabilityService.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/services/portabilityService.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/services/portabilityService.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/services/portabilityService.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/storage/sqliteAdapter.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/storage/sqliteAdapter.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/storage/sqliteAdapter.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/storage/sqliteAdapter.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/core/storage/sqliteAdapter.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/storage/sqliteAdapter.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/server/src/index.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/server/src/index.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/server/src/routes/adminRoutes.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/server/src/routes/adminRoutes.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/server/src/routes/llmRoutes.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/server/src/routes/llmRoutes.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/server/src/routes/portabilityRoutes.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/server/src/routes/portabilityRoutes.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/server/src/routes/thoughtRoutes.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/server/src/routes/thoughtRoutes.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/src/App.jsx
+  11:10  warning  'activeFilters' is assigned a value but never used  no-unused-vars
+  11:10  warning  'activeFilters' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/runner/workspace/src/components/AddThoughtModal.jsx
+  1:8  warning  'React' is defined but never used  no-unused-vars
+  1:8  warning  'React' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/runner/workspace/src/components/Canvas.jsx
+   1:8  warning  'React' is defined but never used            no-unused-vars
+   1:8  warning  'React' is defined but never used            @typescript-eslint/no-unused-vars
+  12:3  warning  'selectedThought' is defined but never used  no-unused-vars
+  12:3  warning  'selectedThought' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/runner/workspace/src/components/Sidebar.jsx
+    2:10  warning  'exportToJsonFile' is defined but never used                no-unused-vars
+    2:10  warning  'exportToJsonFile' is defined but never used                @typescript-eslint/no-unused-vars
+    3:10  warning  'importFromJsonFile' is defined but never used              no-unused-vars
+    3:10  warning  'importFromJsonFile' is defined but never used              @typescript-eslint/no-unused-vars
+   22:30  warning  'setFilterValuesByType' is assigned a value but never used  no-unused-vars
+   22:30  warning  'setFilterValuesByType' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  238:18  error    'handleExportFiltered' is not defined                       no-undef
+
+/home/runner/workspace/src/components/ThoughtDetailPanel.jsx
+   3:40  warning  'isOpen' is defined but never used                    no-unused-vars
+   3:40  warning  'isOpen' is defined but never used                    @typescript-eslint/no-unused-vars
+   3:48  warning  'onClose' is defined but never used                   no-unused-vars
+   3:48  warning  'onClose' is defined but never used                   @typescript-eslint/no-unused-vars
+   3:67  warning  'onDelete' is defined but never used                  no-unused-vars
+   3:67  warning  'onDelete' is defined but never used                  @typescript-eslint/no-unused-vars
+  15:13  warning  'updatedFields' is assigned a value but never used    no-unused-vars
+  15:13  warning  'updatedFields' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  31:11  warning  'updatedFields' is assigned a value but never used    no-unused-vars
+  31:11  warning  'updatedFields' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  38:26  warning  'removed' is assigned a value but never used          no-unused-vars
+  38:26  warning  'removed' is assigned a value but never used          @typescript-eslint/no-unused-vars
+  38:38  warning  'remainingFields' is assigned a value but never used  no-unused-vars
+  38:38  warning  'remainingFields' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  43:32  warning  'segmentId' is defined but never used                 no-unused-vars
+  43:32  warning  'segmentId' is defined but never used                 @typescript-eslint/no-unused-vars
+
+/home/runner/workspace/src/components/__tests__/AddThoughtModal.test.jsx
+  5:7  warning  'mockCreateThought' is assigned a value but never used  no-unused-vars
+  5:7  warning  'mockCreateThought' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  6:7  warning  'mockOnClose' is assigned a value but never used        no-unused-vars
+  6:7  warning  'mockOnClose' is assigned a value but never used        @typescript-eslint/no-unused-vars
+
+/home/runner/workspace/src/components/__tests__/Canvas.test.jsx
+  1:8  warning  'React' is defined but never used  no-unused-vars
+  1:8  warning  'React' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/runner/workspace/src/contracts/entities.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/src/contracts/entities.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/src/contracts/entities.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/src/contracts/entities.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/src/core/IdeaManager.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/src/core/IdeaManager.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/src/core/IdeaManager.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/src/core/IdeaManager.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/src/core/IdeaManager.ts
+    3:10  warning  'generateThoughtId' is defined but never used  @typescript-eslint/no-unused-vars
+    3:29  warning  'generateSegmentId' is defined but never used  @typescript-eslint/no-unused-vars
+  195:17  warning  'thought' is defined but never used            @typescript-eslint/no-unused-vars
+  203:17  warning  'id' is defined but never used                 @typescript-eslint/no-unused-vars
+
+/home/runner/workspace/src/core/__tests__/IdeaManager.test.ts
+  2:10  warning  'logger' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/runner/workspace/src/core/logger/llmAuditLogger.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/src/core/logger/llmAuditLogger.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/src/core/logger/llmAuditLogger.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/src/core/logger/llmAuditLogger.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/src/core/logger/llmAuditLogger.ts
+   9:29  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  20:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  25:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  30:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  39:15  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  52:13  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/runner/workspace/src/core/utils/idUtils.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/src/core/utils/idUtils.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/src/core/utils/idUtils.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/src/core/utils/idUtils.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/src/core/utils/logger.d.ts
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/src/core/utils/logger.d.ts` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/src/core/utils/logger.js
+  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/src/core/utils/logger.js` using `parserOptions.project`: <tsconfigRootDir>/tsconfig.json
+However, that TSConfig does not include this file. Either:
+- Change ESLint's list of included files to not include this file
+- Change that TSConfig to include this file
+- Create a new TSConfig that includes this file and include it in your parserOptions.project
+See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
+
+/home/runner/workspace/src/core/utils/logger.ts
+   2:35  warning  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+   3:36  warning  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+   4:37  warning  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+   5:37  warning  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+   8:7   warning  'LOG_PREFIX' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  11:36  warning  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  12:36  warning  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  13:37  warning  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  14:37  warning  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  15:35  warning  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+
+/home/runner/workspace/src/services/apiService.ts
+   11:81  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   36:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   56:53  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   63:72  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   77:72  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   84:91  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  129:76  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  136:92  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/runner/workspace/src/utils/__tests__/VoiceInputManager.test.js
+  37:13  error    Unexpected empty arrow function               @typescript-eslint/no-empty-function
+  38:13  error    Unexpected empty arrow function               @typescript-eslint/no-empty-function
+  51:11  warning  'manager' is assigned a value but never used  no-unused-vars
+  51:11  warning  'manager' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  83:11  warning  'manager' is assigned a value but never used  no-unused-vars
+  83:11  warning  'manager' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/runner/workspace/src/utils/__tests__/dataHandlers.test.js
+   3:10  warning  'newBubbleId' is defined but never used        no-unused-vars
+   3:10  warning  'newBubbleId' is defined but never used        @typescript-eslint/no-unused-vars
+   3:23  warning  'newSegmentId' is defined but never used       no-unused-vars
+   3:23  warning  'newSegmentId' is defined but never used       @typescript-eslint/no-unused-vars
+  49:13  warning  'mockBlob' is assigned a value but never used  no-unused-vars
+  49:13  warning  'mockBlob' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 136 problems (60 errors, 76 warnings)
+
