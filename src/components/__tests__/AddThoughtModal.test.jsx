@@ -2,12 +2,14 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import AddThoughtModal from '../AddThoughtModal';
 
 describe('AddThoughtModal', () => {
-  let mockCreateThought;
-  let mockOnClose;
+  // TODO: This variable was flagged as unused by ESLint.
+  // let mockCreateThought;
+  // TODO: This variable was flagged as unused by ESLint.
+  // let mockOnClose;
 
   beforeEach(() => {
-    mockCreateThought = jest.fn();
-    mockOnClose = jest.fn();
+    // mockCreateThought = jest.fn();
+    // mockOnClose = jest.fn();
     window.alert = jest.fn();
   });
 
