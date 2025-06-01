@@ -1,6 +1,7 @@
 import { exportToJsonFile } from '../exportHandler';
 import { importFromJsonFile } from '../importHandler';
-import { newBubbleId, newSegmentId } from '../eventBus';
+// TODO: This variable was flagged as unused by ESLint.
+// import { newBubbleId, newSegmentId } from '../eventBus';
 
 // Mock eventBus functions
 jest.mock('../eventBus', () => ({
@@ -46,7 +47,8 @@ describe('Data Handling', () => {
   describe('Export Handler', () => {
     test('exports with correct metadata structure', () => {
       const appendChildSpy = jest.spyOn(document.body, 'appendChild');
-      const mockBlob = new Blob(['{}'], { type: 'application/json' });
+      // TODO: This variable was flagged as unused by ESLint.
+      // const mockBlob = new Blob(['{}'], { type: 'application/json' });
       const mockUrl = 'data:application/json;base64,e30=';
       global.URL.createObjectURL = jest.fn(() => mockUrl);
 

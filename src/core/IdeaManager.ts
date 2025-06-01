@@ -1,6 +1,7 @@
 import { Thought, Segment } from '@contracts/entities';
 import { StorageAdapter, NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
-import { generateThoughtId, generateSegmentId } from '@core/utils/idUtils';
+// TODO: This variable was flagged as unused by ESLint.
+// import { generateThoughtId, generateSegmentId } from '@core/utils/idUtils';
 import { logger } from '@core/utils/logger';
 
 /**

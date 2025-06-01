@@ -7,12 +7,14 @@ if (process.env.NODE_ENV === 'development') {
   console.log('Development mode');
 }
 
+import { NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
+
 // Generic API request function
 async function apiRequest<T>(
   endpoint: string,
-  options: Partial<globalThis.RequestInit> = {}
+  options: RequestInit = {}
 ): Promise<T> {
-  const config: Partial<globalThis.RequestInit> = {
+  const config: RequestInit = {
     headers: {
       'Content-Type': 'application/json',
       ...options.headers,
@@ -32,9 +34,9 @@ async function apiRequest<T>(
     if (contentType && contentType.includes('application/json')) {
       return await response.json();
     } else {
-      return await response.text();
+      return await response.text() as T;
     }
-  } catch (error: any) {
+  } catch (error: any) { // TODO: Replace 'any' with a more specific type if possible
     console.log('API request failed for', endpoint + ':', error);
     console.log('Full error details:', {
       message: error.message,
@@ -47,22 +49,22 @@ async function apiRequest<T>(
 
 // Thought API functions
 export async function fetchThoughts() {
-  return apiRequest('/thoughts');
+  return apiRequest<any[]>('/thoughts');
 }
 
 export async function getThoughtById(thoughtId: string) {
-  return apiRequest(`/thoughts/${thoughtId}`);
+  return apiRequest<any>(`/thoughts/${thoughtId}`);
 }
 
-export async function createThoughtApi(thoughtData: any) {
-  return apiRequest('/thoughts', {
+export async function createThoughtApi(thoughtData: NewThoughtData) {
+  return apiRequest<any>('/thoughts', {
     method: 'POST',
     body: JSON.stringify(thoughtData),
   });
 }
 
-export async function updateThoughtApi(thoughtId: string, thoughtData: any) {
-  return apiRequest(`/thoughts/${thoughtId}`, {
+export async function updateThoughtApi(thoughtId: string, thoughtData: Partial<NewThoughtData>) {
+  return apiRequest<any>(`/thoughts/${thoughtId}`, {
     method: 'PUT',
     body: JSON.stringify(thoughtData),
   });
@@ -75,15 +77,15 @@ export async function deleteThoughtApi(thoughtId: string) {
 }
 
 // Segment API functions
-export async function createSegmentApi(thoughtId: string, segmentData: any) {
-  return apiRequest(`/thoughts/${thoughtId}/segments`, {
+export async function createSegmentApi(thoughtId: string, segmentData: NewSegmentData) {
+  return apiRequest<any>(`/thoughts/${thoughtId}/segments`, {
     method: 'POST',
     body: JSON.stringify(segmentData),
   });
 }
 
-export async function updateSegmentApi(thoughtId: string, segmentId: string, segmentData: any) {
-  return apiRequest(`/thoughts/${thoughtId}/segments/${segmentId}`, {
+export async function updateSegmentApi(thoughtId: string, segmentId: string, segmentData: Partial<NewSegmentData>) {
+  return apiRequest<any>(`/thoughts/${thoughtId}/segments/${segmentId}`, {
     method: 'PUT',
     body: JSON.stringify(segmentData),
   });
@@ -127,15 +129,17 @@ export async function getLLMStatus() {
   return apiRequest('/llm/status');
 }
 
-export async function callLLMApi(prompt: string, metadata?: Record<string, any>) {
-  return apiRequest('/llm/prompt', {
+export async function callLLMApi(prompt: string, metadata?: Record<string, any>) { // TODO: Replace 'any' with a more specific type if possible
+  return apiRequest<any>('/llm/prompt', {
     method: 'POST',
     body: JSON.stringify({ prompt, metadata }),
   });
 }
 
+// TODO: Replace 'any' with a more specific type if possible
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const analyzeSegment = async (segmentId: string, analysisType = 'general'): Promise<any> => {
-  return apiRequest('/llm/analyze-segment', {
+  return apiRequest<any>('/llm/analyze-segment', {
     method: 'POST',
     body: JSON.stringify({ segmentId, analysisType }),
   });

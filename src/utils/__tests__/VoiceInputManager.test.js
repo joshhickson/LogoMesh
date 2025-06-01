@@ -25,30 +25,36 @@ describe('VoiceInputManager', () => {
     const onTranscript = jest.fn();
     const onError = jest.fn();
 
-    const manager = new VoiceInputManager(onTranscript, onError);
+    // TODO: This variable was flagged as unused by ESLint.
+    // const manager = new VoiceInputManager(onTranscript, onError);
+    const localManager = new VoiceInputManager(onTranscript, onError);
 
-    expect(manager.isListening).toBe(false);
+    expect(localManager.isListening).toBe(false);
     expect(mockRecognition.continuous).toBe(true);
     expect(mockRecognition.interimResults).toBe(true);
   });
 
   test('handles start/stop listening correctly', () => {
-    const manager = new VoiceInputManager(
-      () => {},
-      () => {}
+    // TODO: This variable was flagged as unused by ESLint.
+    // const manager = new VoiceInputManager(
+    const localManager = new VoiceInputManager(
+      () => { /* TODO: Implement test case */ },
+      () => { /* TODO: Implement test case */ }
     );
 
-    manager.startListening();
+    localManager.startListening();
     expect(mockRecognition.start).toHaveBeenCalled();
-    expect(manager.isListening).toBe(true);
+    expect(localManager.isListening).toBe(true);
 
-    manager.stopListening();
+    localManager.stopListening();
     expect(mockRecognition.stop).toHaveBeenCalled();
-    expect(manager.isListening).toBe(false);
+    expect(localManager.isListening).toBe(false);
   });
 
   test('handles speech recognition results', () => {
-    const manager = new VoiceInputManager(onTranscriptUpdate, onError);
+    // TODO: This variable was flagged as unused by ESLint.
+    // const manager = new VoiceInputManager(onTranscriptUpdate, onError);
+    new VoiceInputManager(onTranscriptUpdate, onError);
 
     // Test short phrase
     const mockResults = {
@@ -80,7 +86,9 @@ describe('VoiceInputManager', () => {
   });
 
   test('handles speech recognition errors', () => {
-    const manager = new VoiceInputManager(onTranscriptUpdate, onError);
+    // TODO: This variable was flagged as unused by ESLint.
+    // const manager = new VoiceInputManager(onTranscriptUpdate, onError);
+    new VoiceInputManager(onTranscriptUpdate, onError);
 
     mockRecognition.onerror({ error: 'network' });
 
@@ -88,10 +96,12 @@ describe('VoiceInputManager', () => {
   });
 
   test('checks browser support correctly', () => {
-    const manager = new VoiceInputManager(onTranscriptUpdate, onError);
-    expect(manager.isSupported()).toBe(true);
+    // TODO: This variable was flagged as unused by ESLint.
+    // const manager = new VoiceInputManager(onTranscriptUpdate, onError);
+    const localManager = new VoiceInputManager(onTranscriptUpdate, onError);
+    expect(localManager.isSupported()).toBe(true);
 
     delete window.webkitSpeechRecognition;
-    expect(manager.isSupported()).toBe(false);
+    expect(localManager.isSupported()).toBe(false);
   });
 });

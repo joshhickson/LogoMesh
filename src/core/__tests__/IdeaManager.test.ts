@@ -1,5 +1,6 @@
 import { IdeaManager } from '../IdeaManager';
-import { logger } from '../utils/logger';
+// TODO: This variable was flagged as unused by ESLint.
+// import { logger } from '../utils/logger';
 
 jest.mock('../utils/logger');
 

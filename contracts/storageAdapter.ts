@@ -20,7 +20,8 @@ export interface NewSegmentData {
   content: string;
   content_type?: string;
   asset_path?: string;
-  fields?: Record<string, any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fields?: Record<string, any>; // TODO: Replace 'any' with a more specific type if possible
   abstraction_level?: string;
   local_priority?: number;
   cluster_id?: string;
