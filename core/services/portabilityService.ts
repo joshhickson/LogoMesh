@@ -132,4 +132,73 @@ export class PortabilityService implements ThoughtExportProvider {
       throw error;
     }
   }
+
+  async importData(jsonData: any): Promise<void> {
+    logger.info('Starting data import');
+
+    try {
+      // Validate the import data structure
+      if (!jsonData || !jsonData.thoughts || !Array.isArray(jsonData.thoughts)) {
+        throw new Error('Invalid import data: missing or malformed thoughts array');
+      }
+
+      let importedThoughts = 0;
+      let importedSegments = 0;
+
+      // Import each thought
+      for (const thoughtData of jsonData.thoughts) {
+        try {
+          // Check if thought already exists
+          const existingThought = await this.storage.getThoughtById(thoughtData.thought_bubble_id);
+
+          if (existingThought) {
+            logger.warn(`Thought ${thoughtData.thought_bubble_id} already exists, skipping`);
+            continue;
+          }
+
+          // Prepare thought data for creation
+          const newThoughtData = {
+            title: thoughtData.title || 'Imported Thought',
+            description: thoughtData.description || '',
+            tags: thoughtData.tags || [],
+            position: thoughtData.position || { x: 0, y: 0 },
+            created_at: thoughtData.created_at || new Date().toISOString(),
+            updated_at: thoughtData.updated_at || new Date().toISOString()
+          };
+
+          // Create the thought
+          const createdThought = await this.storage.createThought(newThoughtData);
+          importedThoughts++;
+
+          // Import segments if they exist
+          if (thoughtData.segments && Array.isArray(thoughtData.segments)) {
+            for (const segmentData of thoughtData.segments) {
+              try {
+                const newSegmentData = {
+                  title: segmentData.title || 'Imported Segment',
+                  content: segmentData.content || '',
+                  tags: segmentData.tags || [],
+                  abstraction_level: segmentData.abstraction_level || 'detail',
+                  created_at: segmentData.created_at || new Date().toISOString(),
+                  updated_at: segmentData.updated_at || new Date().toISOString()
+                };
+
+                await this.storage.createSegment(createdThought.thought_bubble_id, newSegmentData);
+                importedSegments++;
+              } catch (segmentError) {
+                logger.warn(`Failed to import segment: ${segmentError instanceof Error ? segmentError.message : 'Unknown error'}`);
+              }
+            }
+          }
+        } catch (thoughtError) {
+          logger.warn(`Failed to import thought ${thoughtData.thought_bubble_id}: ${thoughtError instanceof Error ? thoughtError.message : 'Unknown error'}`);
+        }
+      }
+
+      logger.info(`Successfully imported ${importedThoughts} thoughts and ${importedSegments} segments`);
+    } catch (error) {
+      logger.error('Error during data import:', error);
+      throw new Error(`Import failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
 }

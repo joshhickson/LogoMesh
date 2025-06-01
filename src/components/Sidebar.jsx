@@ -13,6 +13,7 @@ function Sidebar({
   setShowModal,
   toggleDarkMode,
   setActiveFilters,
+  onRefreshThoughts
 }) {
   const [filterFieldName, setFilterFieldName] = useState([]);
   const [filterFieldValue, setFilterFieldValue] = useState('');
@@ -122,20 +123,58 @@ function Sidebar({
     setActiveFilters(ids);
   }, [filteredThoughts, setActiveFilters]);
 
-  // Export handlers
-  const handleExportAll = () => exportToJsonFile(thoughts);
-  const handleExportFiltered = () => exportToJsonFile(filteredThoughts);
+  const handleExportAll = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1'}/export/json`);
 
-  // Import handler
-  const handleImport = () => {
-    importFromJsonFile((importedThoughts) => {
-      // Overwrite current thoughts (merge strategy can be added)
-      localStorage.setItem(
-        'thought-web-data',
-        JSON.stringify(importedThoughts)
-      );
-      setThoughts(importedThoughts);
-    });
+      if (!response.ok) {
+        throw new Error(`Export failed: ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `logomesh-export-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Export failed:', error);
+      alert('Failed to export data. Please try again.');
+    }
+  };
+
+  const handleImport = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1'}/import/json`, {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Import failed');
+      }
+
+      const result = await response.json();
+      console.log('Import successful:', result);
+      onRefreshThoughts();
+      alert('Data imported successfully!');
+    } catch (error) {
+      console.error('Import failed:', error);
+      alert(`Failed to import data: ${error.message}`);
+    }
+
+    // Reset the file input
+    event.target.value = '';
   };
 
   const handleClearCache = () => {
@@ -201,12 +240,18 @@ function Sidebar({
       >
         Export Filtered
       </button>
-      <button
-        onClick={handleImport}
-        className="w-full mb-4 px-4 py-2 bg-indigo-500 text-white rounded"
+      <input
+        type="file"
+        id="importFile"
+        className="hidden"
+        onChange={handleImport}
+      />
+      <label
+        htmlFor="importFile"
+        className="w-full mb-4 px-4 py-2 bg-indigo-500 text-white rounded cursor-pointer"
       >
         Import from JSON
-      </button>
+      </label>
       <button
         onClick={handleClearCache}
         className="w-full mb-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
