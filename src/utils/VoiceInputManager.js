@@ -69,3 +69,6 @@ export class VoiceInputManager {
     return 'webkitSpeechRecognition' in window;
   }
 }
+
+export { VoiceInputManager };
+export default VoiceInputManager;
