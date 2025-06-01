@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IdeaManager = void 0;
+// TODO: This variable was flagged as unused by ESLint.
+// import { generateThoughtId, generateSegmentId } from '@core/utils/idUtils';
 const logger_1 = require("@core/utils/logger");
 /**
  * Manages thought data and operations, providing a centralized interface

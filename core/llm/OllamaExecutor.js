@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OllamaExecutor = void 0;
 class OllamaExecutor {
     constructor(modelName = 'ollama-mock') {
+        this.baseUrl = 'http://localhost:11434';
         this.modelName = modelName;
     }
     async executePrompt(prompt, metadata) {
