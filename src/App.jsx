@@ -8,8 +8,7 @@ import { apiService } from './services/apiService';
 function App() {
   const [thoughts, setThoughts] = useState([]);
   const [selectedThought, setSelectedThought] = useState(null);
-  // TODO: This variable was flagged as unused by ESLint.
-  // const [activeFilters, setActiveFilters] = useState([]);
+  const [activeFilters, setActiveFilters] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
     const dark = localStorage.getItem('thought-web-dark-mode');
