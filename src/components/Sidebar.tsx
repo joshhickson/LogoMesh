@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { graphService } from '../services/graphService';
 
 // Current schema version for display purposes
