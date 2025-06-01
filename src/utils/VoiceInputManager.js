@@ -70,5 +70,4 @@ export class VoiceInputManager {
   }
 }
 
-export { VoiceInputManager };
 export default VoiceInputManager;
