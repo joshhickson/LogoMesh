@@ -1,9 +1,18 @@
 import { LLMExecutor } from '../../contracts/llmExecutor';
 import { logLLMInteraction } from '../../src/core/logger/llmAuditLogger';
+import { logger } from '../../src/core/utils/logger';
+
+// Define LLMResponse type
+export interface LLMResponse {
+  response: string;
+  model: string;
+  executionTimeMs: number;
+  tokensUsed?: number;
+}
 
 export class LLMTaskRunner {
   private executor: LLMExecutor;
-  private totalRequests: number = 0;
+  private totalRequests = 0;
   private lastHealthCheck?: Date;
 
   constructor(executor: LLMExecutor) {
@@ -92,7 +101,7 @@ export class LLMTaskRunner {
       });
 
       return result;
-    } catch (error) {
+    } catch (error: any) {
       logger.error('[LLMTaskRunner] Error executing prompt:', error);
       throw new Error(`LLM execution failed: ${error.message}`);
     }

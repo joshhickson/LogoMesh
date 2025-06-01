@@ -8,10 +8,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Generic API request function
-async function apiRequest(endpoint: string, options: RequestInit = {}): Promise<any> {
-  const url = `${API_BASE_URL}${endpoint}`;
-
-  const defaultOptions: RequestInit = {
+async function apiRequest<T>(
+  endpoint: string,
+  options: Partial<RequestInit> = {}
+): Promise<T> {
+  const config: Partial<RequestInit> = {
     headers: {
       'Content-Type': 'application/json',
       ...options.headers,
@@ -20,7 +21,7 @@ async function apiRequest(endpoint: string, options: RequestInit = {}): Promise<
   };
 
   try {
-    const response = await fetch(url, defaultOptions);
+    const response = await fetch(API_BASE_URL + endpoint, config);
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -38,7 +39,7 @@ async function apiRequest(endpoint: string, options: RequestInit = {}): Promise<
     console.log('Full error details:', {
       message: error.message,
       stack: error.stack,
-      url: url
+      url: API_BASE_URL + endpoint
     });
     throw error;
   }

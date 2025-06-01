@@ -1,4 +1,3 @@
-
 import { Router, Request, Response } from 'express';
 import { IdeaManager } from '../../../src/core/IdeaManager';
 import { logger } from '../../../src/core/utils/logger';
@@ -8,8 +7,8 @@ const router = Router();
 
 // Middleware to attach services to request
 router.use((req: Request, res: Response, next) => {
-  req.app.locals.ideaManager = req.app.locals.ideaManager;
-  req.app.locals.logger = req.app.locals.logger;
+  const ideaManager: IdeaManager = req.app.locals.ideaManager;
+  const logger = req.app.locals.logger;
   next();
 });
 
@@ -30,7 +29,7 @@ router.post('/', async (req: Request, res: Response) => {
   try {
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const thoughtData = req.body;
-    
+
     // Basic validation
     if (!thoughtData.title) {
       return res.status(400).json({ error: 'Title is required' });
@@ -49,12 +48,12 @@ router.get('/:thoughtId', async (req: Request, res: Response) => {
   try {
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const { thoughtId } = req.params;
-    
+
     const thought = await ideaManager.getThoughtById(thoughtId);
     if (!thought) {
       return res.status(404).json({ error: 'Thought not found' });
     }
-    
+
     res.json(thought);
   } catch (error) {
     logger.error('Error fetching thought:', error);
@@ -68,12 +67,12 @@ router.put('/:thoughtId', async (req: Request, res: Response) => {
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const { thoughtId } = req.params;
     const updateData = req.body;
-    
+
     const updatedThought = await ideaManager.updateThought(thoughtId, updateData);
     if (!updatedThought) {
       return res.status(404).json({ error: 'Thought not found' });
     }
-    
+
     res.json(updatedThought);
   } catch (error) {
     logger.error('Error updating thought:', error);
@@ -86,12 +85,12 @@ router.delete('/:thoughtId', async (req: Request, res: Response) => {
   try {
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const { thoughtId } = req.params;
-    
+
     const success = await ideaManager.deleteThought(thoughtId);
     if (!success) {
       return res.status(404).json({ error: 'Thought not found' });
     }
-    
+
     res.status(204).send();
   } catch (error) {
     logger.error('Error deleting thought:', error);
@@ -105,7 +104,7 @@ router.post('/:thoughtId/segments', async (req: Request, res: Response) => {
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const { thoughtId } = req.params;
     const segmentData = req.body;
-    
+
     // Basic validation
     if (!segmentData.title || !segmentData.content) {
       return res.status(400).json({ error: 'Title and content are required' });
@@ -128,12 +127,12 @@ router.put('/:thoughtId/segments/:segmentId', async (req: Request, res: Response
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const { thoughtId, segmentId } = req.params;
     const updateData = req.body;
-    
+
     const updatedSegment = await ideaManager.updateSegment(thoughtId, segmentId, updateData);
     if (!updatedSegment) {
       return res.status(404).json({ error: 'Segment not found' });
     }
-    
+
     res.json(updatedSegment);
   } catch (error) {
     logger.error('Error updating segment:', error);
@@ -146,12 +145,12 @@ router.delete('/:thoughtId/segments/:segmentId', async (req: Request, res: Respo
   try {
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const { thoughtId, segmentId } = req.params;
-    
+
     const success = await ideaManager.deleteSegment(thoughtId, segmentId);
     if (!success) {
       return res.status(404).json({ error: 'Segment not found' });
     }
-    
+
     res.status(204).send();
   } catch (error) {
     logger.error('Error deleting segment:', error);
