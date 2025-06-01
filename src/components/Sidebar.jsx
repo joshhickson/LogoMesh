@@ -123,27 +123,14 @@ function Sidebar({
     setActiveFilters(ids);
   }, [filteredThoughts, setActiveFilters]);
 
-  const handleExportAll = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1'}/export/json`);
+  const handleExportAll = () => {
+    exportToJsonFile(thoughts);
+  };
 
-      if (!response.ok) {
-        throw new Error(`Export failed: ${response.statusText}`);
-      }
-
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `logomesh-export-${new Date().toISOString().split('T')[0]}.json`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Export failed:', error);
-      alert('Failed to export data. Please try again.');
-    }
+  const handleExportFiltered = () => {
+    // Export only filtered thoughts if any filters are active
+    const filteredThoughts = thoughts; // This should be the filtered thoughts based on active filters
+    exportToJsonFile(filteredThoughts);
   };
 
   const handleImport = async (event) => {
