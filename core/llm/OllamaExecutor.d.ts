@@ -1,5 +1,6 @@
 import { LLMExecutor } from '../../contracts/llmExecutor';
 export declare class OllamaExecutor implements LLMExecutor {
+    private baseUrl;
     private modelName;
     constructor(modelName?: string);
     executePrompt(prompt: string, metadata?: Record<string, any>): Promise<string>;
