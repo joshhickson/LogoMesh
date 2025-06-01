@@ -1,7 +1,3 @@
-The code mounts the LLM routes in the server.
-```
-
-```replit_final_file
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -13,11 +9,13 @@ import { PortabilityService } from '../../core/services/portabilityService';
 import { LLMTaskRunner } from '../../core/llm/LLMTaskRunner';
 import { OllamaExecutor } from '../../core/llm/OllamaExecutor';
 import thoughtRoutes from './routes/thoughtRoutes';
-import portabilityRoutes from './routes/portabilityRoutes';
 import llmRoutes from './routes/llmRoutes';
+import portabilityRoutes from './routes/portabilityRoutes';
+import adminRoutes from './routes/adminRoutes';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const apiBasePath = '/api/v1'; // Define the base path
 
 // Middleware
 app.use(cors());
@@ -50,14 +48,13 @@ async function setupServices() {
 }
 
 // Mount routes
-app.use('/api/v1/thoughts', thoughtRoutes);
-app.use('/api/v1', portabilityRoutes);
-app.use('/api/v1/llm', llmRoutes);
-app.use('/api/v1/export', portabilityRoutes);
-app.use('/api/v1/import', portabilityRoutes);
+app.use(`${apiBasePath}/thoughts`, thoughtRoutes);
+app.use(`${apiBasePath}/llm`, llmRoutes);
+app.use(`${apiBasePath}`, portabilityRoutes);
+app.use(`${apiBasePath}/admin`, adminRoutes);
 
 // Health check
-app.get('/api/v1/health', (req, res) => {
+app.get(`${apiBasePath}/health`, (req, res) => {
   res.json({ 
     status: 'healthy', 
     timestamp: new Date().toISOString(),
@@ -81,8 +78,8 @@ async function startServer() {
 
     app.listen(PORT, '0.0.0.0', () => {
       logger.info(`Server running on port ${PORT}`);
-      logger.info(`Health check available at http://localhost:${PORT}/api/v1/health`);
-      logger.info(`API base URL: http://localhost:${PORT}/api/v1`);
+      logger.info(`Health check available at http://localhost:${PORT}${apiBasePath}/health`);
+      logger.info(`API base URL: http://localhost:${PORT}${apiBasePath}`);
     });
   } catch (error) {
     logger.error('Failed to start server:', error);

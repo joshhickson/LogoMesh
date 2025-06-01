@@ -110,6 +110,22 @@ function App() {
     document.documentElement.classList.toggle('dark');
   };
 
+  // Handle position updates from Canvas (for drag operations)
+  const handlePositionUpdate = (updatedThought) => {
+    // Update local state immediately for smooth interaction
+    setThoughts(prev =>
+      prev.map(thought =>
+        thought.thought_bubble_id === updatedThought.thought_bubble_id ? updatedThought : thought
+      )
+    );
+
+    // Debounce API call to avoid too many requests during dragging
+    clearTimeout(window.positionUpdateTimeout);
+    window.positionUpdateTimeout = setTimeout(() => {
+      handleUpdateThought(updatedThought.thought_bubble_id, {position: updatedThought.position});
+    }, 500);
+  };
+
   return (
     <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
       <Sidebar
@@ -150,9 +166,11 @@ function App() {
       )}
       <Canvas
         thoughts={thoughts}
-        setSelectedThought={setSelectedThought}
-        activeFilters={activeFilters}
+        segments={thoughts.flatMap(thought => thought.segments || [])}
+        selectedThought={selectedThought}
+        onThoughtSelect={setSelectedThought}
         refreshThoughts={refreshThoughts}
+        onUpdateThought={handlePositionUpdate}
       />
 
       {selectedThought && (

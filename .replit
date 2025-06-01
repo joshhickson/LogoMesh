@@ -62,10 +62,10 @@ task = "shell.exec"
 args = "cd server && npm run dev"
 
 [[workflows.workflow]]
-name = "Test Backend Startup"
+name = "Run Node-RED"
 author = 42214058
 mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd server && npm run dev"
+args = "node-red --userDir ./ --settings node-red-settings.js"
