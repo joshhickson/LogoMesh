@@ -8,8 +8,6 @@ import { apiService } from './services/apiService';
 function App() {
   const [thoughts, setThoughts] = useState([]);
   const [selectedThought, setSelectedThought] = useState(null);
-  // TODO: This variable was flagged as unused by ESLint.
-  // const [activeFilters, setActiveFilters] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
     const dark = localStorage.getItem('thought-web-dark-mode');
@@ -135,7 +133,6 @@ function App() {
         setSelectedThought={setSelectedThought}
         setShowModal={setShowModal}
         toggleDarkMode={toggleDarkMode}
-        setActiveFilters={setActiveFilters}
       />
       {error && (
         <div
@@ -167,11 +164,8 @@ function App() {
       )}
       <Canvas
         thoughts={thoughts}
-        segments={thoughts.flatMap(thought => thought.segments || [])}
-        selectedThought={selectedThought}
-        onThoughtSelect={setSelectedThought}
-        refreshThoughts={refreshThoughts}
         onUpdateThought={handlePositionUpdate}
+        // selectedThought, onThoughtSelect, refreshThoughts, segments are removed
       />
 
       {selectedThought && (

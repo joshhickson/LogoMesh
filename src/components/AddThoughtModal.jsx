@@ -1,7 +1,6 @@
 // TODO: This variable was flagged as unused by ESLint.
 // import React, { useState, useEffect, useRef } from 'react';
 import { useState, useEffect, useRef } from 'react';
-import { newBubbleId } from '../utils/eventBus';
 import { VoiceInputManager } from '../utils/VoiceInputManager';
 import { ulid } from 'ulid';
 
@@ -108,7 +107,6 @@ function AddThoughtModal({ createThought, onClose }) {
     }
 
     const newThought = {
-      thought_bubble_id: newBubbleId(),
       title,
       description,
       created_at: new Date().toISOString(),

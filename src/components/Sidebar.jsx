@@ -5,7 +5,6 @@ import { useState, useEffect, useMemo } from 'react';
 // import { exportToJsonFile } from '../utils/exportHandler';
 // TODO: This variable was flagged as unused by ESLint.
 // import { importFromJsonFile } from '../utils/importHandler';
-import { graphService } from '../services/graphService';
 
 // Current schema version for display purposes
 const thoughtSchemaVersion = '0.5';
@@ -57,56 +56,15 @@ function Sidebar({
           const matchesFieldValue =
             !filterFieldValue ||
             Object.entries(fields).some(([key, val]) => {
-              const fieldType = graphService.getFieldType(key);
-
-              switch (fieldType) {
-                case 'date': {
-                  const date = new Date(val);
-                  const from = filterValuesByType.date.from
-                    ? new Date(filterValuesByType.date.from)
-                    : null;
-                  const to = filterValuesByType.date.to
-                    ? new Date(filterValuesByType.date.to)
-                    : null;
-                  return (!from || date >= from) && (!to || date <= to);
-                }
-                case 'numeric': {
-                  const num = parseFloat(val);
-                  const min = filterValuesByType.numeric.min
-                    ? parseFloat(filterValuesByType.numeric.min)
-                    : null;
-                  const max = filterValuesByType.numeric.max
-                    ? parseFloat(filterValuesByType.numeric.max)
-                    : null;
-                  return (!min || num >= min) && (!max || num <= max);
-                }
-                case 'location': {
-                  if (
-                    !filterValuesByType.location.center ||
-                    !filterValuesByType.location.radius
-                  )
-                    return true;
-                  const [lat, lon] = val
-                    .split(',')
-                    .map((n) => parseFloat(n.trim()));
-                  const [centerLat, centerLon] =
-                    filterValuesByType.location.center
-                      .split(',')
-                      .map((n) => parseFloat(n.trim()));
-                  const radius = parseFloat(filterValuesByType.location.radius);
-                  const distance = Math.sqrt(
-                    Math.pow(lat - centerLat, 2) + Math.pow(lon - centerLon, 2)
-                  );
-                  return distance <= radius;
-                }
-                default:
-                  return val
-                    .toLowerCase()
-                    .includes(filterFieldValue.toLowerCase());
-              }
+              // Simplified filtering: graphService.getFieldType removed
+              // All fields will be treated as text for filtering purposes now.
+              return val
+                .toString() // Ensure val is a string before calling toLowerCase
+                .toLowerCase()
+                .includes(filterFieldValue.toLowerCase());
             });
 
-          const matchesFieldType = filterFieldType.length === 0;
+          const matchesFieldType = filterFieldType.length === 0; // This may need further adjustment if type-specific filtering is still desired without graphService
           return matchesFieldName && matchesFieldValue && matchesFieldType;
         });
 
@@ -129,13 +87,16 @@ function Sidebar({
   }, [filteredThoughts, setActiveFilters]);
 
   const handleExportAll = () => {
-    exportToJsonFile(thoughts);
+    // TODO: Consider if any specific parameters are needed for "all"
+    window.location.href = `${process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1'}/export/json`;
   };
 
   const handleExportFiltered = () => {
-    // Export only filtered thoughts if any filters are active
-    const filteredThoughts = thoughts; // This should be the filtered thoughts based on active filters
-    exportToJsonFile(filteredThoughts);
+    // TODO: This needs to be properly implemented.
+    // For now, it calls the same generic export endpoint.
+    // If actual filtering is needed, query parameters or a POST request with a body would be required.
+    console.warn('handleExportFiltered currently exports all thoughts. Filtering not implemented for API export.');
+    window.location.href = `${process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1'}/export/json`;
   };
 
   const handleImport = async (event) => {

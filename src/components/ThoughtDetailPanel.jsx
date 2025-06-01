@@ -1,5 +1,3 @@
-import { graphService } from '../services/graphService';
-
 // TODO: This variable was flagged as unused by ESLint.
 // function ThoughtDetailPanel({ thought, isOpen, onClose, onUpdate, onDelete, refreshThoughts }) {
 function ThoughtDetailPanel({ thought, onUpdate, refreshThoughts }) {
@@ -13,7 +11,7 @@ function ThoughtDetailPanel({ thought, onUpdate, refreshThoughts }) {
     // Update field type if it's a field value
     if (field.startsWith('fields.')) {
       const fieldName = field.split('.')[1];
-      graphService.updateFieldType(fieldName, value);
+      // graphService.updateFieldType(fieldName, value); // Removed graphService call
 
       const segment = thought.segments.find((s) => s.segment_id === localSegmentId);
       // TODO: This variable was flagged as unused by ESLint.
@@ -23,9 +21,8 @@ function ThoughtDetailPanel({ thought, onUpdate, refreshThoughts }) {
       // For now, we'll just call refreshThoughts and let the parent handle the update
     }
 
-    refreshThoughts();
-    // Update in graph service
-    graphService.updateSegment(localSegmentId, field, value).catch(console.error);
+    refreshThoughts(); // This should trigger a re-fetch from App.jsx, which uses apiService
+    // graphService.updateSegment(localSegmentId, field, value).catch(console.error); // Removed graphService call
   };
 
   // TODO: This variable was flagged as unused by ESLint.

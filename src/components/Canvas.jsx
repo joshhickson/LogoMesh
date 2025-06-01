@@ -11,10 +11,7 @@ cytoscape.use(coseBilkent);
 
 const Canvas = ({ 
   thoughts = [], 
-  // TODO: This variable was flagged as unused by ESLint.
-  // selectedThought,
-  setSelectedThought,
-  filteredThoughtIds = [],
+  setSelectedThought, // selectedThought and filteredThoughtIds props removed
   onUpdateThought
 }) => {
   const cyRef = useRef(null);
@@ -262,28 +259,8 @@ const Canvas = ({
       // Add elements to cytoscape
       cy.add(elements);
 
-      // Apply filtering if filteredThoughtIds is provided
-      if (filteredThoughtIds.length > 0) {
-        cy.nodes().forEach(node => {
-          const nodeId = node.data('id');
-          const isThoughtFiltered = filteredThoughtIds.includes(nodeId);
-          const isSegmentFiltered = filteredThoughtIds.some(id => nodeId.startsWith(id));
-          const isClusterFiltered = node.data('type') === 'cluster' && 
-            cy.nodes(`[parent="${nodeId}"]`).some(child => 
-              filteredThoughtIds.includes(child.data('id'))
-            );
-
-          if (isThoughtFiltered || isSegmentFiltered || isClusterFiltered) {
-            node.addClass('highlighted');
-            node.removeClass('faded');
-          } else {
-            node.addClass('faded');
-            node.removeClass('highlighted');
-          }
-        });
-      } else {
-        cy.nodes().removeClass('highlighted faded');
-      }
+      // Removed filtering logic based on filteredThoughtIds
+      cy.nodes().removeClass('highlighted faded'); // Ensure all nodes are rendered normally
 
       // Add interaction handlers
       cy.on('tap', 'node[type="thought"]', (event) => {
@@ -378,7 +355,7 @@ const Canvas = ({
 
       cy.layout(layoutOptions[layoutMode] || layoutOptions.fcose).run();
     }
-  }, [cy, thoughts, filteredThoughtIds, setSelectedThought, onUpdateThought, layoutMode]);
+  }, [cy, thoughts, setSelectedThought, onUpdateThought, layoutMode]); // removed filteredThoughtIds from dependencies
 
   const handleLayoutChange = (newLayout) => {
     setLayoutMode(newLayout);
