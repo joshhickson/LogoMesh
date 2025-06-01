@@ -45,12 +45,6 @@
     "lint:fix": "eslint src/ core/ contracts/ server/src/ --ext .js,.jsx,.ts,.tsx --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\" \"core/**/*.{js,jsx,ts,tsx,json,css,md}\" \"contracts/**/*.{js,jsx,ts,tsx,json,css,md}\" \"server/src/**/*.{js,jsx,ts,tsx,json,css,md}\""
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
