@@ -1,4 +1,3 @@
-
 /**
  * Utility for validating Mermaid diagram syntax
  * This is a stub implementation for Phase 1
@@ -17,7 +16,7 @@ export function isValidMermaid(mermaidCode: string): boolean {
   ];
 
   const trimmed = mermaidCode.trim().toLowerCase();
-  
+
   // Must start with a mermaid diagram type
   const startsWithKeyword = mermaidKeywords.some(keyword => 
     trimmed.startsWith(keyword)
@@ -35,7 +34,7 @@ export function isValidMermaid(mermaidCode: string): boolean {
 
 export function validateMermaidSyntax(mermaidCode: string): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
-  
+
   if (!isValidMermaid(mermaidCode)) {
     errors.push('Invalid mermaid diagram structure');
   }
