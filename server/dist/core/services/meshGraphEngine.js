@@ -11,13 +11,13 @@ class MeshGraphEngine {
     async getRelatedThoughts(thoughtId: string, maxResults: number = 10): Promise<Thought[]> {
       try {
         logger.info(`[MeshGraphEngine Stub] Getting related thoughts for ${thoughtId}`);
-
+  
         // Basic implementation: find thoughts with shared tags
         const targetThought = await this.storage.getThoughtById(thoughtId);
         if (!targetThought) {
           return [];
         }
-
+  
         const allThoughts = await this.storage.getAllThoughts();
         const relatedThoughts = allThoughts
           .filter(thought =>
@@ -25,7 +25,7 @@ class MeshGraphEngine {
             thought.tags?.some(tag => targetThought.tags?.includes(tag))
           )
           .slice(0, maxResults);
-
+  
         return relatedThoughts;
       } catch (error) {
         logger.error('[MeshGraphEngine] Error getting related thoughts:', error);
@@ -109,7 +109,7 @@ class MeshGraphEngine {
     // Method overloads should be adjacent
     clusterThoughtsByTag(thoughts: any[], options?: any): any[] {
       const tagGroups: any = {};
-
+  
       thoughts.forEach(thought => {
         if (thought.tags && Array.isArray(thought.tags)) {
           thought.tags.forEach((tag: any) => {
@@ -120,7 +120,7 @@ class MeshGraphEngine {
           });
         }
       });
-
+  
       return Object.entries(tagGroups).map(([tag, thoughts]) => ({
         tag,
         thoughts,
