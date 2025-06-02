@@ -141,8 +141,33 @@ class ErrorLogger {
       JSON.stringify(exportData, null, 2)
     );
 
+    // Also save to project folder via API if backend is available
+    this.saveToProjectFolder(exportData, timestamp);
+
     // Clear exported errors
     this.clearErrors();
+  }
+
+  async saveToProjectFolder(exportData, timestamp) {
+    try {
+      const response = await fetch('/api/v1/admin/save-errors', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          filename: `error-export-${timestamp}.json`,
+          data: exportData
+        })
+      });
+
+      if (response.ok) {
+        console.log('Errors saved to project folder');
+      }
+    } catch (error) {
+      // Silently fail if backend not available
+      console.log('Backend not available for project folder saving');
+    }
   }
 
   categorizeErrors() {
