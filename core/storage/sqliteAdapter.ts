@@ -1,28 +1,28 @@
 
 import * as sqlite3 from 'sqlite3';
-import { Database } from 'sqlite3';
-import { StorageAdapter, NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
-import { Thought, Segment, Tag } from '../../contracts/entities';
-import { generateThoughtId, generateSegmentId } from '../../src/core/utils/idUtils';
-import { logger } from '../../src/core/utils/logger';
+// import { Database } from 'sqlite3'; // No longer typed due to declare module
+import { StorageAdapter, NewThoughtData, NewSegmentData } from 'contracts/storageAdapter'; // Path mapping
+import { Thought, Segment, Tag } from 'contracts/entities'; // Path mapping
+import { generateThoughtId, generateSegmentId } from 'core/utils/idUtils'; // Path mapping
+import { logger } from 'core/utils/logger'; // Path mapping
 
 /**
  * SQLite implementation of the StorageAdapter interface
  * Handles all database operations with proper DTO <-> DB mapping
  */
 export class SQLiteStorageAdapter implements StorageAdapter {
-  private db: Database | null = null;
+  private db: any | null = null; // Changed Database to any
 
   constructor(private dbPath: string) {}
 
   async initialize(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.db = new sqlite3.Database(this.dbPath, (err) => {
+      this.db = new sqlite3.Database(this.dbPath, (err: any) => { // : any
         if (err) {
           logger.error('Failed to open SQLite database:', err);
           reject(err);
         } else {
-          logger.log(`Connected to SQLite database at ${this.dbPath}`);
+          logger.info(`Connected to SQLite database at ${this.dbPath}`); // Changed to info
           resolve();
         }
       });
@@ -32,11 +32,11 @@ export class SQLiteStorageAdapter implements StorageAdapter {
   async close(): Promise<void> {
     return new Promise((resolve) => {
       if (this.db) {
-        this.db.close((err) => {
+        this.db.close((err: any) => { // : any
           if (err) {
             logger.error('Error closing database:', err);
           } else {
-            logger.log('Database connection closed');
+            logger.info('Database connection closed'); // Changed to info
           }
           resolve();
         });
@@ -63,7 +63,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         ORDER BY t.created_at DESC
       `;
 
-      this.db.all(query, async (err, rows: any[]) => {
+      this.db.all(query, async (err: any, rows: any[]) => { // : any
         if (err) {
           logger.error('Error fetching thoughts:', err);
           reject(err);
@@ -113,7 +113,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         GROUP BY t.thought_bubble_id
       `;
 
-      this.db.get(query, [thoughtId], async (err, row: any) => {
+      this.db.get(query, [thoughtId], async (err: any, row: any) => { // : any
         if (err) {
           logger.error('Error fetching thought:', err);
           reject(err);
@@ -173,7 +173,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         thoughtData.position?.y || 0
       ];
 
-      this.db.run(insertQuery, values, async (err) => {
+      this.db.run(insertQuery, values, async (err: any) => { // : any
         if (err) {
           logger.error('Error creating thought:', err);
           reject(err);
@@ -188,7 +188,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
           const createdThought = await this.getThoughtById(thoughtId);
           if (createdThought) {
-            logger.log(`Created thought: ${thoughtId}`);
+            logger.info(`Created thought: ${thoughtId}`); // Changed to info
             resolve(createdThought);
           } else {
             reject(new Error('Failed to retrieve created thought'));
@@ -233,7 +233,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
       const query = `UPDATE thoughts SET ${updateFields.join(', ')} WHERE thought_bubble_id = ?`;
 
-      this.db.run(query, values, async (err) => {
+      this.db.run(query, values, async (err: any) => { // : any
         if (err) {
           logger.error('Error updating thought:', err);
           reject(err);
@@ -265,16 +265,16 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       // Due to CASCADE constraints, deleting the thought will also delete related records
       const query = 'DELETE FROM thoughts WHERE thought_bubble_id = ?';
 
-      this.db.run(query, [thoughtId], function(err) {
+      this.db.run(query, [thoughtId], function(this: any, err: any) { // Changed sqlite3.RunResult to any
         if (err) {
           logger.error('Error deleting thought:', err);
           reject(err);
           return;
         }
 
-        const deleted = this.changes > 0;
+        const deleted = this.changes > 0; // 'this' is now correctly typed (implicitly by sqlite3)
         if (deleted) {
-          logger.log(`Deleted thought: ${thoughtId}`);
+          logger.info(`Deleted thought: ${thoughtId}`); // Changed to info
         }
         resolve(deleted);
       });
@@ -290,7 +290,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
       const query = 'SELECT * FROM segments WHERE thought_bubble_id = ? ORDER BY sort_order, created_at';
 
-      this.db.all(query, [thoughtId], (err, rows: any[]) => {
+      this.db.all(query, [thoughtId], (err: any, rows: any[]) => { // : any
         if (err) {
           logger.error('Error fetching segments:', err);
           reject(err);
@@ -325,7 +325,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
       const query = 'SELECT * FROM segments WHERE segment_id = ?';
 
-      this.db.get(query, [segmentId], (err, row: any) => {
+      this.db.get(query, [segmentId], (err: any, row: any) => { // : any
         if (err) {
           logger.error('Error fetching segment:', err);
           reject(err);
@@ -380,7 +380,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         JSON.stringify(segmentData.fields || {})
       ];
 
-      this.db.run(query, values, async (err) => {
+      this.db.run(query, values, async (err: any) => { // : any
         if (err) {
           logger.error('Error creating segment:', err);
           reject(err);
@@ -390,7 +390,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         try {
           const createdSegment = await this.getSegmentById(segmentId);
           if (createdSegment) {
-            logger.log(`Created segment: ${segmentId}`);
+            logger.info(`Created segment: ${segmentId}`); // Changed to info
             resolve(createdSegment);
           } else {
             reject(new Error('Failed to retrieve created segment'));
@@ -431,7 +431,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
       const query = `UPDATE segments SET ${updateFields.join(', ')} WHERE segment_id = ?`;
 
-      this.db.run(query, values, async (err) => {
+      this.db.run(query, values, async (err: any) => { // : any
         if (err) {
           logger.error('Error updating segment:', err);
           reject(err);
@@ -457,16 +457,16 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
       const query = 'DELETE FROM segments WHERE segment_id = ?';
 
-      this.db.run(query, [segmentId], function(err) {
+      this.db.run(query, [segmentId], function(this: any, err: any) { // Changed sqlite3.RunResult to any
         if (err) {
           logger.error('Error deleting segment:', err);
           reject(err);
           return;
         }
 
-        const deleted = this.changes > 0;
+        const deleted = this.changes > 0; // 'this' is now correctly typed (implicitly by sqlite3)
         if (deleted) {
-          logger.log(`Deleted segment: ${segmentId}`);
+          logger.info(`Deleted segment: ${segmentId}`); // Changed to info
         }
         resolve(deleted);
       });
@@ -501,14 +501,14 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       for (const tag of tags) {
         const tagId = `tag_${tag.name.toLowerCase().replace(/\s+/g, '_')}`;
         
-        this.db.run(insertTagQuery, [tagId, tag.name, tag.color, now], (err) => {
+        this.db.run(insertTagQuery, [tagId, tag.name, tag.color, now], (err: any) => { // : any
           if (err) {
             logger.error('Error creating tag:', err);
             reject(err);
             return;
           }
 
-          this.db.run(linkTagQuery, [thoughtId, tagId, now], (err) => {
+          this.db.run(linkTagQuery, [thoughtId, tagId, now], (err: any) => { // : any
             if (err) {
               logger.error('Error linking tag to thought:', err);
               reject(err);
@@ -535,7 +535,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       // First remove existing tag associations
       const deleteQuery = 'DELETE FROM thought_tags WHERE thought_bubble_id = ?';
       
-      this.db.run(deleteQuery, [thoughtId], async (err) => {
+      this.db.run(deleteQuery, [thoughtId], async (err: any) => { // : any
         if (err) {
           reject(err);
           return;

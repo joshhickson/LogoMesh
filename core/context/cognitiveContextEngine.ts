@@ -6,7 +6,7 @@
  * (Enhanced stub for Phase 1 - preparing for semantic context generation)
  */
 
-import { logger } from '../../src/core/utils/logger';
+import { logger } from '../utils/logger';
 
 export interface ContextGenerationOptions {
   abstractionLevelFilter?: string[];

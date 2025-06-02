@@ -4,7 +4,7 @@
     "target": "es2020",
     "module": "commonjs",
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "..",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -12,12 +12,16 @@
     "resolveJsonModule": true,
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "baseUrl": "..", // Changed to project root /app
+    "paths": {
+      "sqlite3": ["server/node_modules/sqlite3/lib/sqlite3.js"] // Adjusted for new baseUrl
+    }
   },
-  "include": [
-    "src/**/*",
-    "../core/**/*",
-    "../contracts/**/*"
+  "include": [ // These paths are relative to tsconfig.json (server/), but resolve from baseUrl (/app)
+    "src/**/*",         // Will resolve to /app/server/src
+    "../core/**/*",     // Will resolve to /app/core
+    "../contracts/**/*" // Will resolve to /app/contracts
   ],
   "exclude": [
     "node_modules",

@@ -1,6 +1,6 @@
 import { LLMExecutor } from '../../contracts/llmExecutor';
-import { logLLMInteraction } from '../../src/core/logger/llmAuditLogger';
-import { logger } from '../../src/core/utils/logger';
+import { logLLMInteraction } from '../logger/llmAuditLogger';
+import { logger } from '../utils/logger';
 
 // Define LLMResponse type
 export interface LLMResponse {
