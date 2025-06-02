@@ -9,16 +9,16 @@ if (process.env.NODE_ENV === 'development') {
 
 import { NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
 
-interface FetchOptions extends RequestInit {
+interface FetchOptions extends globalThis.RequestInit {
   timeout?: number;
 }
 
 // Generic API request function
 async function apiRequest<T>(
   endpoint: string,
-  options: RequestInit = {}
+  options: globalThis.RequestInit = {}
 ): Promise<T> {
-  const config: RequestInit = {
+  const config: globalThis.RequestInit = {
     headers: {
       'Content-Type': 'application/json',
       ...options.headers,
