@@ -57,9 +57,9 @@ function Sidebar({
       ) || []
   );
 
-  const uniqueFieldNames = [
-    ...new Set(allFields.map(([key]) => key).filter(Boolean)),
-  ];
+  const uniqueFieldNames = Array.from(
+    new Set(allFields.map(([key]) => key).filter(Boolean))
+  );
   const uniqueFieldTypes = ['text', 'location', 'date', 'numeric']; // Placeholder for future
 
   // Memoize filtered thoughts computation
