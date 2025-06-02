@@ -177,7 +177,7 @@ function App() {
       )}
       <Canvas
         thoughts={thoughts}
-        segments={thoughts.flatMap(thought => thought.segments || [])}, // Added comma based on error (323:44)
+        segments={thoughts.flatMap(thought => thought.segments || [])}
         selectedThought={selectedThought}
         onThoughtSelect={setSelectedThought}
         refreshThoughts={refreshThoughts}
