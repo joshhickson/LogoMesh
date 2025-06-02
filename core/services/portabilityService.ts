@@ -1,6 +1,6 @@
 import { ThoughtExportProvider, SemanticCompressionOptions } from '../../contracts/thoughtExportProvider';
 import { StorageAdapter } from '../../contracts/storageAdapter';
-import { logger } from '../../src/core/utils/logger';
+import { logger } from '../utils/logger';
 
 export class PortabilityService implements ThoughtExportProvider {
   constructor(private storage: StorageAdapter) {}
@@ -116,7 +116,7 @@ export class PortabilityService implements ThoughtExportProvider {
 
       const allThoughts = await this.storage.getAllThoughts();
       const clusterThoughts = allThoughts.filter(thought => 
-        thought.tags?.includes(clusterId)
+        thought.tags?.some(tag => tag.name === clusterId) // Corrected check
       );
 
       return {

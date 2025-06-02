@@ -45,7 +45,7 @@ function App() {
           position: { x: Math.random() * 500, y: Math.random() * 500 },
           segments: segments.map((segment) => ({
             ...segment,
-            embedding_vector: [],
+            embedding_vector: [], // Assuming a comma was missing here before an implicit next line
           })),
         };
         const newThought = await apiService.createThoughtApi(thoughtData);
@@ -177,7 +177,7 @@ function App() {
       )}
       <Canvas
         thoughts={thoughts}
-        segments={thoughts.flatMap(thought => thought.segments || [])}
+        segments={thoughts.flatMap(thought => thought.segments || [])}, // Added comma based on error (323:44)
         selectedThought={selectedThought}
         onThoughtSelect={setSelectedThought}
         refreshThoughts={refreshThoughts}
