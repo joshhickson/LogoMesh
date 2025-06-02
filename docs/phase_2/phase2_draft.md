@@ -1,7 +1,7 @@
 
 # LogoMesh Phase 2 Development Plan - Infrastructure Foundations
 
-**Version:** 2.1  
+**Version:** 2.2  
 **Date:** June 2, 2025  
 **Prerequisites:** Phase 1 complete with functional LM-Core, SQLite persistence, backend API, and basic AI integration stubs
 
@@ -9,16 +9,27 @@
 
 Phase 2 focuses on building robust, testable infrastructure foundations for cognitive systems rather than activating full autonomy. This phase scaffolds the Vector Translation Core (VTC), prepares MeshGraphEngine interfaces, establishes comprehensive audit frameworks, and creates deterministic pipeline execution systems. All major systems will be implemented with local-first stubs and mock executors, creating the architectural foundation for Phase 3's real-time cognitive activation.
 
+**Key Phase 2 Principle:** Build contracts, stubs, and local-test scaffolding. Phase 3 flips the switches (real LLM wiring, external agents, cloud fallback).
+
 ## Core Architectural Themes
 
 ### Theme 1: Foundation Stabilization & TypeScript Migration
 *Eliminating technical debt and establishing type safety*
 
 **Priority: Critical**
+
+#### Implementation Steps
 - Complete TypeScript migration for all frontend components
 - Fix remaining Express route handler type signatures  
 - Implement comprehensive type checking pipeline
 - Stabilize build process and eliminate compilation errors
+- Create `llm.config.json` + `LLMExecutorRegistry` (local & mock executors only)
+- Implement `LocalModelTestPanel.tsx` (prompt ↔ completion, tokens/sec display)
+
+#### Phase 3 Activation Plan
+- Populate LLM registry with real OpenAI/Anthropic IDs and dynamic load-balancing
+- Expose LocalModelTestPanel to end-users for model hot-swap
+- Enable real-time model switching and cloud fallback orchestration
 
 ### Theme 2: Vector Translation Core (VTC) - Infrastructure Scaffolding
 *Building embedding pipeline foundations with local-first stubs*
@@ -30,6 +41,9 @@ Phase 2 focuses on building robust, testable infrastructure foundations for cogn
 - **UniversalLatentSpaceManager Stub**: Create interface with deterministic test translator for validation
 - **Transparent Embedding Pipeline**: All segments get embeddings with full audit trail (mock LLM integration)
 - **Self-Sovereign Latent Store**: Implement storage layer with embedding-first approach
+- **Embedding Drift Detection**: Implement `EmbeddingComparator` + periodic cosine-drift log
+- **Vector Visualization**: Create `UMAPViewer` (DevShell panel) for vector space inspection
+- **Segment Provenance Chain**: Add `segment_version_log` table for version tracking
 
 #### User Toggles & Configuration (Testing Framework)
 - `[TOGGLE_STORE_RAW_FOR_EMBEDDING]`: Control raw text retention for testing
@@ -57,6 +71,16 @@ CREATE TABLE vector_translation_audit_log (
   translation_quality_score REAL DEFAULT NULL,
   FOREIGN KEY (segment_id) REFERENCES segments(id)
 );
+
+-- Version tracking for segments
+CREATE TABLE segment_version_log (
+  version_id TEXT PRIMARY KEY,
+  segment_id TEXT,
+  previous_content TEXT,
+  change_reason TEXT,
+  timestamp DATETIME,
+  FOREIGN KEY (segment_id) REFERENCES segments(id)
+);
 ```
 
 #### Phase 3 Activation Plan
@@ -64,6 +88,8 @@ CREATE TABLE vector_translation_audit_log (
 - Enable dynamic model selection based on content analysis
 - Connect to cloud embedding APIs with transparent cost tracking
 - Implement agent-driven vector space optimization
+- Activate drift detection to trigger auto-re-embed pipelines when drift > threshold
+- Enable agent-driven cluster reviews and auto-tagging via UMAPViewer
 
 ### Theme 3: MeshGraphEngine - Algorithmic Foundation Setup
 *Preparing semantic traversal interfaces without cognitive decision-making*
@@ -75,6 +101,8 @@ CREATE TABLE vector_translation_audit_log (
 - **Semantic Clustering**: Tag-based and embedding-similarity clustering with mock similarity scoring
 - **Context Scoring**: Implement scoring framework with pluggable metrics (embedding similarity, link density, recency)
 - **Summary Generation**: Auto-generated summary nodes with deterministic top-N relationships
+- **Graph Debug & Cache**: Path traversal tests, `[TOGGLE_GRAPH_DEBUG]`, SQLite cache
+- **Cognitive Context Engine (CCE)**: Build CCE request API, chunking, semantic compression → pass to `LLMTaskRunner`
 
 #### Backend Integration (Service Layer)
 - Inject `IdeaManager` and `EmbeddingService` dependencies with clear interfaces
@@ -93,6 +121,8 @@ CREATE TABLE vector_translation_audit_log (
 - Enable real-time graph restructuring based on AI insights
 - Implement agent-driven relationship discovery and validation
 - Connect to collaborative graph editing with conflict resolution
+- Activate CCE for dynamic context "onboarding" per agent with >100K token feeds
+- Enable graph-based agent search and long-horizon planning
 
 ### Theme 4: TaskEngine & Pipeline Infrastructure
 *Building execution framework with mock cognitive components*
@@ -117,6 +147,14 @@ interface Pipeline {
   // TODO: Replace with real LLM pipeline optimizer in Phase 3
   mockOptimizationHints?: string[];
 }
+
+interface ScaffoldedPipeline {
+  goal: string;
+  subgoals: string[];
+  progressChecks: string[];
+  // 🚧 Stub: Phase 3 agents will auto-generate & update scaffolds
+  isAgentGenerated: boolean;
+}
 ```
 
 #### Execution Infrastructure (Mock-Enabled)
@@ -124,18 +162,24 @@ interface Pipeline {
 - **TaskEngine**: Core execution loop with state management, retry logic, and deterministic routing
 - **MetaExecutor Stub**: Implement cognitive load simulation (local vs. cloud decision mocking)
 - **Event System**: Complete `taskStarted`, `taskCompleted`, `pipelineCompleted` event framework
+- **FakeAgentRunner**: Deterministic scripted agent for pipeline load-tests
+- **MetaExecutor Decision Log**: `meta_executor_log` table + reason strings for decision tracking
 
 #### UI & API Integration (Testing-Ready)
 - Pipeline submission form with drag-drop task builder (mock task validation)
 - Real-time execution status display with mock progress simulation
 - Pipeline history with comprehensive logging and replay capabilities
 - API route: `POST /api/pipeline/submit` with full error handling
+- **Pipeline Stack-Trace UI**: `PipelineDebugView` (per-task output, timings)
 
 #### Phase 3 Activation Plan
 - Replace mock executors with real-time LLM orchestration
 - Enable AI-generated pipeline optimization and self-modification
 - Implement dynamic task routing based on resource availability and context
 - Connect to external services with intelligent fallback strategies
+- Replace FakeAgentRunner with live LLM agents with Tool use
+- Feed MetaExecutor logs to self-evaluation agent for optimization
+- Enable self-healing pipelines (agents edit failing steps)
 
 ### Theme 5: Audit Trail & Transparency Infrastructure
 *Building comprehensive logging without cognitive analysis*
@@ -154,7 +198,9 @@ CREATE TABLE llm_execution_log (
   timestamp DATETIME,
   linked_segment_id TEXT,
   -- 🚧 Stub: Phase 3 will add AI quality assessment
-  ai_quality_score REAL DEFAULT NULL
+  ai_quality_score REAL DEFAULT NULL,
+  -- Chain-of-Thought field for self-reflection storage
+  chain_of_thought TEXT NULL
 );
 
 CREATE TABLE pipeline_execution_log (
@@ -169,6 +215,14 @@ CREATE TABLE pipeline_execution_log (
   -- TODO: Add AI-driven error categorization in Phase 3
   error_category TEXT DEFAULT 'uncategorized'
 );
+
+-- Memory snapshot tracking
+CREATE TABLE memory_snapshots (
+  snapshot_id TEXT PRIMARY KEY,
+  snapshot_data TEXT,
+  timestamp DATETIME,
+  description TEXT
+);
 ```
 
 #### Self-Inspection APIs (Query Framework)
@@ -176,18 +230,28 @@ CREATE TABLE pipeline_execution_log (
 - `GET /api/audit/pipeline/:id` with full execution trace
 - `GET /api/audit/segment/:id` (trace back to source actions)
 - `GET /api/audit/errors` with pattern analysis framework
+- `GET /api/snapshot/export` + snapshot browser for memory inspection
 
 #### Debug UI & Timeline (Visualization Layer)
 - Chronological event playback with advanced filtering and search
 - Full prompt/output inspection views with export capabilities
 - Traceability from any Thought/Segment to source chain with mock analysis
 - Self-critique mode stub for future LLM response evaluation
+- **Audit Summary Dashboard**: React dashboard showing top models, errors, latency
+- **Memory Snapshot Tool**: Time-travel diffing for regression tests
+
+#### LLM Self-Awareness Integration
+- **SyntheticFeedbackRunner**: Store LLM self-critiques into new Segments
+- **Meta-level Self-Critique Loop**: LLM prompts analyzing audit logs → "improvement Thoughts"
 
 #### Phase 3 Activation Plan
 - Implement AI-driven error pattern recognition and auto-resolution
 - Enable predictive quality scoring for LLM outputs
 - Add cognitive bias detection in decision chains
 - Implement self-improving audit strategies based on usage patterns
+- Activate agents to monitor and auto-tune configs via Audit Summary Dashboard
+- Use SyntheticFeedbackRunner corpus for fine-tuning and RLHF
+- Enable meta-level self-critique to auto-open DevShell PRs with suggested patches
 
 ### Theme 6: DevShell & Development Infrastructure
 *Creating controlled development environment without autonomous code generation*
@@ -199,6 +263,12 @@ CREATE TABLE pipeline_execution_log (
 - `CloudDevLLMExecutor` stub for high-context external model integration
 - `CodeAnalysisLLMExecutor` mock for plugin manifest and code analysis
 - Natural language pipeline builder with JSON output (template-based)
+- **Plugin Crash Containment**: `PluginExecutionLimiter` with timeout & circuit-breaker
+- **Plugin Live Inspector**: DevShell panel showing loaded plugins, permissions, memory usage
+
+#### Tool Use & Execution Framework
+- **Tool Schema + Executor**: `contracts/tools/toolSchema.ts`; `ToolExecutor` that can call plugin functions with JSON args
+- **Robust Ollama/LlamaCpp Executor**: Implement streaming, error handling, VRAM tuning
 
 #### Filesystem Access & Controlled Mutation (Safety-First)
 - Plugin-safe read/write with comprehensive review mechanism
@@ -210,12 +280,18 @@ CREATE TABLE pipeline_execution_log (
 - Embedded terminal UI (`DevShellTerminal.tsx`) with command simulation
 - Self-debugging agent mode stub for pipeline failure analysis
 - Integration with error logging for root cause analysis framework
+- **Simulation CLI**: `logomesh simulate` for dry-run pipelines
 
 #### Phase 3 Activation Plan
 - Replace template-based builders with real-time AI code generation
 - Enable autonomous debugging and self-repair capabilities
 - Implement intelligent code review and suggestion systems
 - Connect to external development tools with AI-driven workflows
+- Activate agents to restart/patch crashing plugins via Plugin Crash Containment
+- Enable real-time permission elevation requests via Plugin Live Inspector
+- Add LLM function-calling with automatic tool selection to Tool Executor
+- Add cloud fallback & multi-GPU sharding to Ollama/LlamaCpp Executor
+- Replace simulation CLI with headless CI agent executing nightly self-tests
 
 ### Theme 7: Input Templates & Structured Data Transformation
 *Building form systems without cognitive template generation*
@@ -278,11 +354,17 @@ interface TTSSpeaker {
 - API endpoint: `POST /api/tts/test` for voice testing and validation
 - Plugin selection system during installation with preference management
 
+#### UI Agent Presence (Minimal Implementation)
+- **Minimal Agent HUD**: `AgentStatusWidget` listening on EventBus
+- Basic SAPI/say/espeak plugin integration
+
 #### Phase 3 Activation Plan
 - Implement AI-driven voice selection based on content analysis
 - Enable real-time speech adaptation for different content types
 - Add emotional context awareness for voice modulation
 - Connect to cloud TTS services with quality optimization
+- Activate full avatar, voice, and live screen actions via Agent HUD
+- Enable neural TTS with voice cloning and lip-sync
 
 ## Implementation Roadmap with Verification Checkpoints
 
@@ -304,12 +386,14 @@ interface TTSSpeaker {
 1. Convert remaining .js/.jsx files to .ts/.tsx
 2. Fix all type errors in build pipeline
 3. Update imports and exports with proper typing
+4. Create `llm.config.json` + `LLMExecutorRegistry` (local & mock executors only)
 
 **🔒 VERIFICATION GATE 1.1:**
 - [ ] **VERIFY:** Zero TypeScript compilation errors: `npx tsc --noEmit`
 - [ ] **VERIFY:** ESLint passes: `npm run lint`
 - [ ] **VERIFY:** All tests still pass: `npm test`
 - [ ] **VERIFY:** Frontend builds successfully: `npm run build`
+- [ ] **VERIFY:** LLM config loads without errors: Test `LLMExecutorRegistry.loadConfig()`
 - [ ] **FAIL-SAFE:** If compilation errors exist, identify and fix before next task
 
 #### Task 1.2: Scaffold EmbeddingService with Mock Models
@@ -317,12 +401,14 @@ interface TTSSpeaker {
 1. Install and configure local embedding models (bge-small, e5-small) with fallback mocks
 2. Create EmbeddingService interface with comprehensive error handling
 3. Add model loading simulation and deterministic embedding generation for testing
+4. Implement `EmbeddingComparator` + periodic cosine-drift log
 
 **🔒 VERIFICATION GATE 1.2:**
 - [ ] **VERIFY:** Mock models load without errors: Test `EmbeddingService.loadModel()`
 - [ ] **VERIFY:** Deterministic embedding generation works: Test with sample text
 - [ ] **VERIFY:** Error handling catches all failure modes gracefully
 - [ ] **VERIFY:** Performance meets baseline: <500ms for mock operations
+- [ ] **VERIFY:** Drift detection logs are created and queryable
 - [ ] **FAIL-SAFE:** If model loading fails, implement full mock fallback
 
 #### Task 1.3: Build UniversalLatentSpaceManager Interface
@@ -330,12 +416,14 @@ interface TTSSpeaker {
 1. Design translator interface and mock implementation
 2. Create deterministic test translator for validation
 3. Add comprehensive translation audit logging framework
+4. Implement `UMAPViewer` (DevShell panel) for vector space inspection
 
 **🔒 VERIFICATION GATE 1.3:**
 - [ ] **VERIFY:** Mock translator produces consistent results
 - [ ] **VERIFY:** Translation simulation preserves test vector relationships
 - [ ] **VERIFY:** Audit logs capture all translation attempts with full metadata
 - [ ] **VERIFY:** Interface supports future real translator integration
+- [ ] **VERIFY:** UMAPViewer displays mock vector clusters correctly
 - [ ] **FAIL-SAFE:** If interface design inadequate, revise before schema updates
 
 #### Task 1.4: Update Database Schema for Embeddings
@@ -343,12 +431,14 @@ interface TTSSpeaker {
 1. Create production-ready migration scripts for embedding columns
 2. Add comprehensive audit trail tables with proper indexing
 3. Update storage adapter to handle new schema with backwards compatibility
+4. Add `segment_version_log` table for provenance chain tracking
 
 **🔒 VERIFICATION GATE 1.4:**
 - [ ] **VERIFY:** Migration runs cleanly on fresh database
 - [ ] **VERIFY:** Migration preserves all existing data integrity
 - [ ] **VERIFY:** Schema supports both mock and real embedding workflows
 - [ ] **VERIFY:** Rollback mechanism works for failed migrations
+- [ ] **VERIFY:** Segment version tracking functions correctly
 - [ ] **FAIL-SAFE:** If migration fails, implement automatic rollback
 
 #### Task 1.5: Implement Transparency Toggles and Audit Framework
@@ -356,12 +446,14 @@ interface TTSSpeaker {
 1. Add configuration toggles to UI and backend with comprehensive validation
 2. Implement conditional logging based on toggles with performance monitoring
 3. Create audit data export and analysis tools
+4. Implement `LocalModelTestPanel.tsx` (prompt ↔ completion, tokens/sec display)
 
 **🔒 VERIFICATION GATE 1.5:**
 - [ ] **VERIFY:** All toggles work correctly and affect appropriate backend behavior
 - [ ] **VERIFY:** Logging framework captures all required data points
 - [ ] **VERIFY:** Performance impact <5% when logging enabled
 - [ ] **VERIFY:** Audit data is queryable and exportable
+- [ ] **VERIFY:** LocalModelTestPanel displays model interactions correctly
 - [ ] **FAIL-SAFE:** If performance impact >10%, implement async logging
 
 **🚨 END-OF-WEEK-2 GATE:**
@@ -379,12 +471,15 @@ interface TTSSpeaker {
 1. Build deterministic relationship traversal algorithms with configurable parameters
 2. Add semantic clustering with mock similarity scoring and validation
 3. Create context scoring framework with pluggable metrics
+4. Implement path traversal tests, `[TOGGLE_GRAPH_DEBUG]`, SQLite cache
+5. Build CCE request API, chunking, semantic compression → pass to `LLMTaskRunner`
 
 **🔒 VERIFICATION GATE 3.1:**
 - [ ] **VERIFY:** Graph traversal returns predictable paths for test datasets
 - [ ] **VERIFY:** Clustering algorithms produce consistent groupings
 - [ ] **VERIFY:** Context scoring framework supports multiple metrics
 - [ ] **VERIFY:** Performance: <200ms for 100-node test graphs
+- [ ] **VERIFY:** CCE can handle >10K token context windows without errors
 - [ ] **FAIL-SAFE:** If algorithms unstable, implement simplified deterministic versions
 
 #### Task 3.2: Build TaskEngine with Mock Executor Framework
@@ -392,12 +487,15 @@ interface TTSSpeaker {
 1. Create task execution infrastructure with comprehensive state management
 2. Build executor registry system with mock implementations
 3. Add robust error handling and configurable retry logic
+4. Implement `FakeAgentRunner` for deterministic scripted agent load-tests
+5. Add `meta_executor_log` table + reason strings for decision tracking
 
 **🔒 VERIFICATION GATE 3.2:**
 - [ ] **VERIFY:** Mock tasks execute with predictable results
 - [ ] **VERIFY:** Complex pipelines with 5+ tasks complete reliably
 - [ ] **VERIFY:** Error handling manages all failure scenarios gracefully
 - [ ] **VERIFY:** Retry logic works correctly for simulated transient failures
+- [ ] **VERIFY:** FakeAgentRunner executes test scenarios consistently
 - [ ] **FAIL-SAFE:** If execution unreliable, implement simplified task runner
 
 #### Task 3.3: Create Pipeline Schema and Mock Execution System
@@ -405,12 +503,15 @@ interface TTSSpeaker {
 1. Define production-ready pipeline data structures with validation
 2. Implement pipeline execution engine with mock cognitive components
 3. Add real-time status tracking and comprehensive logging
+4. Create `PipelineDebugView` (per-task output, timings)
+5. Implement `ScaffoldedPipeline` contract with goal/subgoal JSON stub
 
 **🔒 VERIFICATION GATE 3.3:**
 - [ ] **VERIFY:** Pipeline validation catches all schema errors
 - [ ] **VERIFY:** Execution status updates accurately reflect mock progress
 - [ ] **VERIFY:** Pipeline history preserves all execution metadata
 - [ ] **VERIFY:** Concurrent pipelines execute without interference
+- [ ] **VERIFY:** PipelineDebugView displays detailed execution traces
 - [ ] **FAIL-SAFE:** If pipeline corruption occurs, implement atomic execution
 
 #### Task 3.4: Begin Cytoscape.js Migration with Mock Data
@@ -454,12 +555,15 @@ interface TTSSpeaker {
 1. Create production-grade audit database schema with proper indexing
 2. Implement audit event capture across all systems with batching
 3. Add audit data retention, cleanup, and export capabilities
+4. Create `memory_snapshots` table and snapshot browser
+5. Implement Audit Summary Dashboard (React dashboard: top models, errors, latency)
 
 **🔒 VERIFICATION GATE 5.1:**
 - [ ] **VERIFY:** All system interactions are logged with complete metadata
 - [ ] **VERIFY:** Audit trail maintains referential integrity
 - [ ] **VERIFY:** Query performance on audit logs <100ms for typical queries
 - [ ] **VERIFY:** Storage growth is predictable and manageable
+- [ ] **VERIFY:** Memory snapshots can be created and browsed
 - [ ] **FAIL-SAFE:** If audit logging impacts performance >10%, implement async batching
 
 #### Task 5.2: Create Self-Inspection APIs and Debug Framework
@@ -467,12 +571,15 @@ interface TTSSpeaker {
 1. Build comprehensive self-inspection API endpoints with proper pagination
 2. Create debug timeline UI component with advanced filtering
 3. Add mock error pattern analysis framework for testing
+4. Implement `SyntheticFeedbackRunner` to store LLM self-critiques
+5. Create meta-level self-critique loop for improvement suggestions
 
 **🔒 VERIFICATION GATE 5.2:**
 - [ ] **VERIFY:** Debug UI loads and displays interaction history correctly
 - [ ] **VERIFY:** Timeline navigation is responsive with large datasets
 - [ ] **VERIFY:** Mock error pattern detection identifies test scenarios
 - [ ] **VERIFY:** API responses handle large datasets without timeout
+- [ ] **VERIFY:** SyntheticFeedbackRunner stores critiques as queryable Segments
 - [ ] **FAIL-SAFE:** If UI performance poor, implement data virtualization
 
 #### Task 5.3: Build DevShell Plugin Infrastructure
@@ -480,12 +587,15 @@ interface TTSSpeaker {
 1. Create DevShell plugin framework with security sandboxing
 2. Implement mock CloudDevLLMExecutor with API integration simulation
 3. Add natural language command interface with template-based parsing
+4. Implement `PluginExecutionLimiter` with timeout & circuit-breaker
+5. Create Plugin Live Inspector DevShell panel
 
 **🔒 VERIFICATION GATE 5.3:**
 - [ ] **VERIFY:** DevShell executes basic developer commands safely
 - [ ] **VERIFY:** Mock cloud LLM integration handles all error scenarios
 - [ ] **VERIFY:** Natural language parsing handles common development patterns
 - [ ] **VERIFY:** Security sandbox prevents unauthorized system access
+- [ ] **VERIFY:** Plugin crash containment works reliably
 - [ ] **FAIL-SAFE:** If security compromised, disable privileged operations
 
 #### Task 5.4: Add Controlled Filesystem Access Framework
@@ -493,12 +603,15 @@ interface TTSSpeaker {
 1. Implement safe filesystem access layer with comprehensive validation
 2. Create mutation proposal and review system with rollback capability
 3. Add complete audit trail for all file operations with integrity checking
+4. Implement Tool Schema + Executor (`contracts/tools/toolSchema.ts`)
+5. Build robust Ollama/LlamaCpp Executor with streaming and error handling
 
 **🔒 VERIFICATION GATE 5.4:**
 - [ ] **VERIFY:** All file operations require explicit user confirmation
 - [ ] **VERIFY:** All file changes are reversible with full rollback capability
 - [ ] **VERIFY:** Sandbox prevents access to system and sensitive files
 - [ ] **VERIFY:** Audit trail captures all filesystem interactions with checksums
+- [ ] **VERIFY:** Tool Executor can call plugin functions with JSON args
 - [ ] **FAIL-SAFE:** If unauthorized access detected, disable filesystem features immediately
 
 #### Task 5.5: Implement Mock Natural Language Pipeline Builder
@@ -506,12 +619,14 @@ interface TTSSpeaker {
 1. Create template-based NL-to-JSON pipeline converter
 2. Add pipeline validation and preview with comprehensive error checking
 3. Implement pipeline template library with versioning
+4. Create `logomesh simulate` CLI for dry-run pipelines
 
 **🔒 VERIFICATION GATE 5.5:**
 - [ ] **VERIFY:** Template-based parsing creates valid pipeline JSON consistently
 - [ ] **VERIFY:** Pipeline preview accurately shows execution flow
 - [ ] **VERIFY:** Template library covers common development use cases
 - [ ] **VERIFY:** Generated pipelines execute successfully with mock components
+- [ ] **VERIFY:** Simulation CLI runs pipelines without side effects
 - [ ] **FAIL-SAFE:** If parsing unreliable, provide structured form builder fallback
 
 **🚨 END-OF-WEEK-6 GATE:**
@@ -542,12 +657,14 @@ interface TTSSpeaker {
 1. Create cross-platform TTS plugin interface with fallback support
 2. Implement platform-specific voice support with mock integration
 3. Add voice selection and configuration with preference management
+4. Implement Minimal Agent HUD (`AgentStatusWidget`) listening on EventBus
 
 **🔒 VERIFICATION GATE 7.2:**
 - [ ] **VERIFY:** TTS works on all target platforms (Windows, macOS, Linux)
 - [ ] **VERIFY:** Voice output latency <1s from trigger event
 - [ ] **VERIFY:** Audio quality meets basic clarity standards
 - [ ] **VERIFY:** TTS toggles work without affecting other system features
+- [ ] **VERIFY:** Agent HUD displays basic status information
 - [ ] **FAIL-SAFE:** If TTS fails on any platform, gracefully disable for that platform
 
 #### Task 7.3: Comprehensive Testing and Performance Optimization
@@ -555,12 +672,14 @@ interface TTSSpeaker {
 1. Achieve 90%+ test coverage across all new infrastructure modules
 2. Optimize performance bottlenecks identified during development
 3. Add performance monitoring and alerting for production readiness
+4. Implement inference profiling suite (tokens/sec, VRAM, latency per model)
 
 **🔒 VERIFICATION GATE 7.3:**
 - [ ] **VERIFY:** Test coverage meets 90% target for all new code
 - [ ] **VERIFY:** All performance metrics meet established success criteria
 - [ ] **VERIFY:** No memory leaks detected in 4-hour stress testing
 - [ ] **VERIFY:** Error rate <1% under simulated normal load conditions
+- [ ] **VERIFY:** Inference profiling captures comprehensive model metrics
 - [ ] **FAIL-SAFE:** If performance targets not met, identify and resolve critical bottlenecks
 
 #### Task 7.4: Documentation and Developer Experience
@@ -581,12 +700,14 @@ interface TTSSpeaker {
 1. Create comprehensive integration test suite for all systems
 2. Test all infrastructure interactions under simulated load
 3. Validate data consistency across all components with mock workflows
+4. Perform context window stress tests (CCE at 32K/128K tokens)
 
 **🔒 VERIFICATION GATE 7.5:**
 - [ ] **VERIFY:** Full infrastructure integration test passes consistently
 - [ ] **VERIFY:** Data integrity maintained under concurrent mock operations
 - [ ] **VERIFY:** All user workflows complete successfully with mock components
 - [ ] **VERIFY:** System recovers gracefully from simulated component failures
+- [ ] **VERIFY:** CCE handles large context windows without degradation
 - [ ] **FAIL-SAFE:** If integration tests fail, isolate and resolve component interactions
 
 **🚨 FINAL PHASE 2 GATE:**
@@ -608,18 +729,24 @@ interface TTSSpeaker {
 - AI-driven pipeline generation and self-modification
 - Autonomous debugging and code generation capabilities
 - Intelligent content analysis and contradiction detection
+- LLM function-calling with automatic tool selection
 
 **External Service Integration:**
 - Cloud LLM API integration for production cognitive features
 - Multi-user collaboration and real-time synchronization
 - External vector database connections and scaling infrastructure
 - Production deployment automation and monitoring
+- Cloud fallback and multi-GPU sharding for local models
 
 **Agent-Level Behaviors:**
 - Self-improving algorithms and adaptive learning systems
 - Cross-context synthesis and narrative coherence analysis
 - Autonomous relationship discovery and graph restructuring
 - Predictive user assistance and intent interpretation
+- Agent-driven cluster reviews and auto-tagging
+- Real-time permission elevation and privilege management
+
+**All external wiring (cloud LLMs, autonomous agents, real tool calls) is explicitly deferred to Phase 3.**
 
 ### Phase 2 Success Criteria
 
@@ -667,14 +794,15 @@ interface TTSSpeaker {
 
 | System Component | Phase 2 Foundation | Phase 3 Activation Goal |
 |------------------|-------------------|------------------------|
-| **Vector Translation Core** | Mock embedding pipeline with audit | Real-time multi-model orchestration with quality optimization |
-| **MeshGraphEngine** | Deterministic traversal algorithms | AI-driven semantic analysis and autonomous restructuring |
-| **TaskEngine** | Mock executor framework with logging | Real-time LLM orchestration with self-optimization |
-| **Audit Trail System** | Comprehensive logging infrastructure | AI-driven pattern recognition and predictive analysis |
-| **DevShell** | Sandboxed development environment | Autonomous code generation and intelligent debugging |
+| **Vector Translation Core** | Mock embedding pipeline with audit + drift detection | Real-time multi-model orchestration with quality optimization |
+| **MeshGraphEngine** | Deterministic traversal algorithms + CCE scaffold | AI-driven semantic analysis and autonomous restructuring |
+| **TaskEngine** | Mock executor framework with logging + FakeAgentRunner | Real-time LLM orchestration with self-optimization |
+| **Audit Trail System** | Comprehensive logging infrastructure + self-critique | AI-driven pattern recognition and predictive analysis |
+| **DevShell** | Sandboxed development environment + tool execution | Autonomous code generation and intelligent debugging |
 | **Input Templates** | Dynamic form system with validation | AI-generated templates with natural language conversion |
-| **TTS Plugin** | Cross-platform voice infrastructure | AI-driven voice selection with emotional context awareness |
-| **Database Schema** | Embedding-ready with audit tables | Vector database integration with intelligent indexing |
+| **TTS Plugin** | Cross-platform voice infrastructure + agent HUD | AI-driven voice selection with emotional context awareness |
+| **LLM Infrastructure** | Local model testing + mock executors | Cloud orchestration with dynamic load balancing |
+| **Tool Framework** | JSON-based tool execution with mock responses | Real-time function calling with automatic tool selection |
 
 ## Success Metrics
 
@@ -699,6 +827,13 @@ interface TTSSpeaker {
 - Error rate below 1% for all critical infrastructure flows
 - Mock self-debugging resolves 80% of simulated common issues
 
+### Performance & Compute Metrics
+- Inference profiling captures tokens/sec, VRAM, latency for all model types
+- CCE handles 32K+ token contexts without performance degradation
+- Memory snapshots create and restore within 5s for typical datasets
+- Plugin crash containment prevents system-wide failures
+- Agent status updates display in real-time without lag
+
 ## Risk Mitigation
 
 ### High-Risk Infrastructure Items
@@ -706,12 +841,14 @@ interface TTSSpeaker {
 2. **Performance at Scale**: Implement caching and optimization for infrastructure load
 3. **Interface Stability**: Lock down contracts between systems before Phase 3
 4. **Security Validation**: Comprehensive testing of all privileged operations
+5. **Cross-cutting Integration**: Ensure audit trail captures all system interactions
 
 ### Contingency Plans
 1. **Mock Fallback Strategy**: Full offline mode if any component integration fails
 2. **Performance Degradation**: Simplified operation modes for resource constraints
 3. **Interface Evolution**: Versioned contracts with backward compatibility
 4. **Security Breach Response**: Immediate privilege revocation and system isolation
+5. **Database Consistency**: Automated rollback procedures for failed migrations
 
 ## Conclusion
 
@@ -719,4 +856,4 @@ Phase 2 establishes LogoMesh as a robust, testable infrastructure platform ready
 
 The emphasis on local-first operations, security sandboxing, and complete auditability ensures that when cognitive systems are activated in Phase 3, they operate within a trustworthy, debuggable, and controllable environment.
 
-This phase transforms LogoMesh from a functional tool into a platform capable of supporting sophisticated AI-driven cognitive assistance while maintaining transparency, security, and user control over all system operations.
+This phase transforms LogoMesh from a functional tool into a platform capable of supporting sophisticated AI-driven cognitive assistance while maintaining transparency, security, and user control over all system operations. All contracts, stubs, and local-test scaffolding are prepared for Phase 3's real LLM wiring, external agents, and cloud fallback systems.
