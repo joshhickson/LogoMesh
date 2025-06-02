@@ -75,7 +75,7 @@ class SQLiteStorageAdapter {
                 return;
             }
             const query = `
-        SELECT t.*,
+        SELECT t.*, 
                GROUP_CONCAT(DISTINCT tg.name || '::' || tg.color) as tags
         FROM thoughts t
         LEFT JOIN thought_tags tt ON t.thought_bubble_id = tt.thought_bubble_id
@@ -121,7 +121,7 @@ class SQLiteStorageAdapter {
                 return;
             }
             const query = `
-        SELECT t.*,
+        SELECT t.*, 
                GROUP_CONCAT(DISTINCT tg.name || '::' || tg.color) as tags
         FROM thoughts t
         LEFT JOIN thought_tags tt ON t.thought_bubble_id = tt.thought_bubble_id
