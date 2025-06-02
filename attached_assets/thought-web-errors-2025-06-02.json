@@ -1,0 +1,119 @@
+{
+  "timestamp": "2025-06-02T01:13:11.004Z",
+  "session_id": "mbeebg41ji1tmfj64g",
+  "total_errors": 8,
+  "categories": {
+    "build_errors": [],
+    "runtime_errors": [],
+    "api_errors": [],
+    "network_errors": [
+      {
+        "type": "Network Error",
+        "message": "NetworkError when attempting to fetch resource.",
+        "url": "http://localhost:3001/api/v1/thoughts",
+        "stack": "",
+        "timestamp": "2025-06-02T01:07:44.965Z"
+      },
+      {
+        "type": "Unhandled Promise Rejection",
+        "message": "NetworkError when attempting to fetch resource.",
+        "stack": "",
+        "timestamp": "2025-06-02T01:07:44.978Z"
+      },
+      {
+        "type": "Network Error",
+        "message": "NetworkError when attempting to fetch resource.",
+        "url": "http://localhost:3001/api/v1/thoughts",
+        "stack": "",
+        "timestamp": "2025-06-02T01:07:49.156Z"
+      },
+      {
+        "type": "Unhandled Promise Rejection",
+        "message": "NetworkError when attempting to fetch resource.",
+        "stack": "",
+        "timestamp": "2025-06-02T01:07:49.161Z"
+      },
+      {
+        "type": "Network Error",
+        "message": "NetworkError when attempting to fetch resource.",
+        "url": "http://localhost:3001/api/v1/thoughts",
+        "stack": "",
+        "timestamp": "2025-06-02T01:08:15.533Z"
+      },
+      {
+        "type": "Network Error",
+        "message": "NetworkError when attempting to fetch resource.",
+        "url": "http://localhost:3001/api/v1/thoughts",
+        "stack": "",
+        "timestamp": "2025-06-02T01:08:15.536Z"
+      },
+      {
+        "type": "Unhandled Promise Rejection",
+        "message": "NetworkError when attempting to fetch resource.",
+        "stack": "",
+        "timestamp": "2025-06-02T01:08:15.553Z"
+      },
+      {
+        "type": "Unhandled Promise Rejection",
+        "message": "NetworkError when attempting to fetch resource.",
+        "stack": "",
+        "timestamp": "2025-06-02T01:08:15.555Z"
+      }
+    ],
+    "other_errors": []
+  },
+  "raw_errors": [
+    {
+      "type": "Network Error",
+      "message": "NetworkError when attempting to fetch resource.",
+      "url": "http://localhost:3001/api/v1/thoughts",
+      "stack": "",
+      "timestamp": "2025-06-02T01:07:44.965Z"
+    },
+    {
+      "type": "Unhandled Promise Rejection",
+      "message": "NetworkError when attempting to fetch resource.",
+      "stack": "",
+      "timestamp": "2025-06-02T01:07:44.978Z"
+    },
+    {
+      "type": "Network Error",
+      "message": "NetworkError when attempting to fetch resource.",
+      "url": "http://localhost:3001/api/v1/thoughts",
+      "stack": "",
+      "timestamp": "2025-06-02T01:07:49.156Z"
+    },
+    {
+      "type": "Unhandled Promise Rejection",
+      "message": "NetworkError when attempting to fetch resource.",
+      "stack": "",
+      "timestamp": "2025-06-02T01:07:49.161Z"
+    },
+    {
+      "type": "Network Error",
+      "message": "NetworkError when attempting to fetch resource.",
+      "url": "http://localhost:3001/api/v1/thoughts",
+      "stack": "",
+      "timestamp": "2025-06-02T01:08:15.533Z"
+    },
+    {
+      "type": "Network Error",
+      "message": "NetworkError when attempting to fetch resource.",
+      "url": "http://localhost:3001/api/v1/thoughts",
+      "stack": "",
+      "timestamp": "2025-06-02T01:08:15.536Z"
+    },
+    {
+      "type": "Unhandled Promise Rejection",
+      "message": "NetworkError when attempting to fetch resource.",
+      "stack": "",
+      "timestamp": "2025-06-02T01:08:15.553Z"
+    },
+    {
+      "type": "Unhandled Promise Rejection",
+      "message": "NetworkError when attempting to fetch resource.",
+      "stack": "",
+      "timestamp": "2025-06-02T01:08:15.555Z"
+    }
+  ]
+}
