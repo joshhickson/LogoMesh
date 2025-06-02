@@ -19,7 +19,7 @@ externalPort = 80
 localPort = 3001
 
 [workflows]
-runButton = "Run Frontend & Backend"
+runButton = "Start Backend First"
 
 [[workflows.workflow]]
 name = "Run"

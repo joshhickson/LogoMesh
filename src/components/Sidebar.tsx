@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { graphService } from '../services/graphService';
+import errorLogger from '../utils/errorLogger';
 
 // Current schema version for display purposes
 const thoughtSchemaVersion = '0.5';
@@ -250,9 +251,15 @@ function Sidebar({
       </button>
       <button
         onClick={handleViewCache}
-        className="w-full mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        className="w-full mb-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
         View Cache
+      </button>
+      <button
+        onClick={() => errorLogger.manualExport()}
+        className="w-full mb-2 px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
+      >
+        Export Errors ({errorLogger.getErrorCount()})
       </button>
 
       {/* Filters */}
