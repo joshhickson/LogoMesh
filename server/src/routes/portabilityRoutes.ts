@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import multer from 'multer';
 import { PortabilityService } from '../../../core/services/portabilityService';
-import { logger } from '../../../src/core/utils/logger';
+import { logger } from '../../../core/utils/logger';
 
 const router = express.Router();
 

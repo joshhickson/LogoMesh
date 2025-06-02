@@ -1,12 +1,13 @@
-import { Thought } from '../../src/contracts/entities';
+import { Thought } from '../../contracts/entities';
 import { StorageAdapter } from '../../contracts/storageAdapter';
-import { logger } from '../../src/core/utils/logger';
+import { logger } from '../utils/logger';
 
 export class MeshGraphEngine {
   private weightThreshold = 0.3;
 
   constructor(private storage: StorageAdapter) {}
 
+  /*
   async getRelatedThoughts(thoughtId: string, maxResults: number = 10): Promise<Thought[]> {
     try {
       logger.info(`[MeshGraphEngine Stub] Getting related thoughts for ${thoughtId}`);
@@ -31,12 +32,13 @@ export class MeshGraphEngine {
       return [];
     }
   }
+  */
 
   /**
    * Get related thoughts for a given thought
    * Enhanced stub implementation for CCE semantic traversal
    */
-  async getRelatedThoughts(
+  async getRelatedThoughts( // Keeping this version
     thoughtId: string, 
     options?: { maxDepth?: number; relationshipTypes?: string[]; semanticThreshold?: number }
   ): Promise<any[]> {
@@ -59,18 +61,21 @@ export class MeshGraphEngine {
     ];
 
     // Apply depth filtering
-    if (options?.maxDepth) {
-      return mockRelated.filter(rel => rel.depth <= options.maxDepth);
+    if (options?.maxDepth !== undefined) { // Check for undefined explicitly
+      const maxDepth = options.maxDepth;
+      return mockRelated.filter(rel => rel.depth <= maxDepth);
     }
 
     // Apply semantic threshold filtering
-    if (options?.semanticThreshold) {
-      return mockRelated.filter(rel => rel.strength >= options.semanticThreshold);
+    if (options?.semanticThreshold !== undefined) { // Check for undefined explicitly
+      const semanticThreshold = options.semanticThreshold;
+      return mockRelated.filter(rel => rel.strength >= semanticThreshold);
     }
 
     return mockRelated;
   }
 
+  /*
   // Additional overload for getRelatedThoughts with different signature
   getRelatedThoughts(thoughts: any[], targetThought: any): any[] {
     // Implementation for array-based search
@@ -78,12 +83,13 @@ export class MeshGraphEngine {
       thought.tags?.some((tag: string) => targetThought.tags?.includes(tag))
     );
   }
+  */
 
   /**
    * Cluster thoughts by tag similarity
    * Enhanced stub implementation for CCE clustering support
    */
-  async clusterThoughtsByTag(
+  async clusterThoughtsByTag( // Keeping this version
     thoughts: any[], 
     options?: { minClusterSize?: number; semanticGrouping?: boolean }
   ): Promise<Record<string, any[]>> {
@@ -104,9 +110,10 @@ export class MeshGraphEngine {
     });
 
     // Apply minimum cluster size filter
-    if (options?.minClusterSize) {
+    if (options?.minClusterSize !== undefined) { // Check for undefined explicitly
+      const minClusterSize = options.minClusterSize;
       Object.keys(clusters).forEach(key => {
-        if (clusters[key].length < options.minClusterSize) {
+        if (clusters[key].length < minClusterSize) {
           delete clusters[key];
         }
       });
@@ -115,6 +122,7 @@ export class MeshGraphEngine {
     return clusters;
   }
 
+  /*
   // Method overloads should be adjacent  
   clusterThoughtsByTag(thoughts: any[], options?: any): any[] {
     const tagGroups: any = {};
@@ -136,6 +144,7 @@ export class MeshGraphEngine {
       count: (thoughts as any[]).length
     }));
   }
+  */
 
   /**
    * Traverse graph semantically from a starting thought
@@ -155,7 +164,7 @@ export class MeshGraphEngine {
     // Mock semantic traversal
     const traversalResult = {
       startingThought: startingThoughtId,
-      traversalDepth: options?.maxDepth || 3,
+      traversalDepth: options?.maxDepth !== undefined ? options.maxDepth : 3, // Explicit check
       semanticPaths: [
         {
           path: [startingThoughtId, 'node1', 'node2'],
@@ -169,7 +178,7 @@ export class MeshGraphEngine {
         }
       ],
       clustersEncountered: ['cluster_A', 'cluster_B'],
-      abstractionLevels: options?.filterByAbstraction || ['high', 'medium', 'low']
+      abstractionLevels: options?.filterByAbstraction !== undefined ? options.filterByAbstraction : ['high', 'medium', 'low'] // Explicit check
     };
 
     return traversalResult;

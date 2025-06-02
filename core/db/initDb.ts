@@ -1,7 +1,7 @@
 import * as sqlite3 from 'sqlite3';
 import * as fs from 'fs';
 import * as path from 'path';
-import { logger } from '../../src/core/utils/logger';
+import { logger } from '../utils/logger';
 
 /**
  * Initialize the SQLite database with the required schema
@@ -19,7 +19,7 @@ export async function initializeDatabase(dbPath: string = './server/data/logomes
       logger.info(`Connecting to database at: ${dbPath}`);
 
       // Connect to SQLite database
-      const db = new sqlite3.Database(dbPath, (err) => {
+      const db = new sqlite3.Database(dbPath, (err: any) => { // Added : any
         if (err) {
           logger.error('Error opening database:', err);
           reject(err);
@@ -41,7 +41,7 @@ export async function initializeDatabase(dbPath: string = './server/data/logomes
       logger.info('Loaded database schema');
 
       // Execute schema creation
-      db.exec(schemaSQL, (err) => {
+      db.exec(schemaSQL, (err: any) => { // Added : any
         if (err) {
           logger.error('Error creating database schema:', err);
           db.close();
@@ -52,7 +52,7 @@ export async function initializeDatabase(dbPath: string = './server/data/logomes
         logger.info('Database schema created successfully');
 
         // Close database connection
-        db.close((err) => {
+        db.close((err: any) => { // Added : any
           if (err) {
             logger.error('Error closing database:', err);
             reject(err);

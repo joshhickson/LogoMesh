@@ -16,6 +16,15 @@ export class OllamaExecutor implements LLMExecutor {
     return `Mocked response for: ${prompt}`;
   }
 
+  async execute(prompt: string, options?: import('../../contracts/llmExecutor').LLMExecutionOptions): Promise<import('../../contracts/llmExecutor').LLMFullResponse> {
+    const responseString = await this.executePrompt(prompt, options?.metadata);
+    return {
+      response: responseString,
+      model: this.modelName,
+      tokensUsed: responseString.length, // Mock token usage
+    };
+  }
+
   get supportsStreaming(): boolean {
     return false;
   }

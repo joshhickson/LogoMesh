@@ -2,9 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { initializeDatabase } from '../../core/db/initDb';
-import { logger } from '../../src/core/utils/logger';
+import { logger } from '../../core/utils/logger';
 import { SQLiteStorageAdapter } from '../../core/storage/sqliteAdapter';
-import { IdeaManager } from '../../src/core/IdeaManager';
+import { IdeaManager } from '../../core/IdeaManager';
 import { PortabilityService } from '../../core/services/portabilityService';
 import { LLMTaskRunner } from '../../core/llm/LLMTaskRunner';
 import { OllamaExecutor } from '../../core/llm/OllamaExecutor';
@@ -14,7 +14,7 @@ import portabilityRoutes from './routes/portabilityRoutes';
 import adminRoutes from './routes/adminRoutes';
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = parseInt(process.env.PORT || "3001", 10); // Ensure PORT is a number
 const apiBasePath = '/api/v1'; // Define the base path
 
 // Middleware

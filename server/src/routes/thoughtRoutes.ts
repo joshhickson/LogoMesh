@@ -1,31 +1,33 @@
-import { Router, Request, Response } from 'express';
-import { IdeaManager } from '../../../src/core/IdeaManager';
-import { logger } from '../../../src/core/utils/logger';
+import { Router, Request, Response, NextFunction } from 'express'; // Added NextFunction
+import { IdeaManager } from '../../../core/IdeaManager'; // Corrected path
+import { logger } from '../../../core/utils/logger'; // Corrected path
 import { NewThoughtData } from '../../../contracts/storageAdapter';
 
 const router = Router();
 
 // Middleware to attach services to request
-router.use((req: Request, res: Response, next) => {
-  const ideaManager: IdeaManager = req.app.locals.ideaManager;
-  const logger = req.app.locals.logger;
+router.use((req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
+  // const ideaManager: IdeaManager = req.app.locals.ideaManager; // ideaManager is used below directly from req.app.locals
+  // logger is already imported and available in module scope
   next();
 });
 
 // GET /api/v1/thoughts - Get all thoughts
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
   try {
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const thoughts = await ideaManager.getThoughts();
     res.json(thoughts);
   } catch (error) {
     logger.error('Error fetching thoughts:', error);
+    // Pass error to Express error handler if available, or handle here
+    // next(error); // Example if you have an error handling middleware
     res.status(500).json({ error: 'Failed to fetch thoughts' });
   }
 });
 
 // POST /api/v1/thoughts - Create new thought
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
   try {
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const thoughtData = req.body;
@@ -39,12 +41,13 @@ router.post('/', async (req: Request, res: Response) => {
     res.status(201).json(newThought);
   } catch (error) {
     logger.error('Error creating thought:', error);
+    // next(error);
     res.status(500).json({ error: 'Failed to create thought' });
   }
 });
 
 // GET /api/v1/thoughts/:thoughtId - Get specific thought
-router.get('/:thoughtId', async (req: Request, res: Response) => {
+router.get('/:thoughtId', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
   try {
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const { thoughtId } = req.params;
@@ -57,12 +60,13 @@ router.get('/:thoughtId', async (req: Request, res: Response) => {
     res.json(thought);
   } catch (error) {
     logger.error('Error fetching thought:', error);
+    // next(error);
     res.status(500).json({ error: 'Failed to fetch thought' });
   }
 });
 
 // PUT /api/v1/thoughts/:thoughtId - Update thought
-router.put('/:thoughtId', async (req: Request, res: Response) => {
+router.put('/:thoughtId', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
   try {
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const { thoughtId } = req.params;
@@ -76,12 +80,13 @@ router.put('/:thoughtId', async (req: Request, res: Response) => {
     res.json(updatedThought);
   } catch (error) {
     logger.error('Error updating thought:', error);
+    // next(error);
     res.status(500).json({ error: 'Failed to update thought' });
   }
 });
 
 // DELETE /api/v1/thoughts/:thoughtId - Delete thought
-router.delete('/:thoughtId', async (req: Request, res: Response) => {
+router.delete('/:thoughtId', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
   try {
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const { thoughtId } = req.params;
@@ -94,12 +99,13 @@ router.delete('/:thoughtId', async (req: Request, res: Response) => {
     res.status(204).send();
   } catch (error) {
     logger.error('Error deleting thought:', error);
+    // next(error);
     res.status(500).json({ error: 'Failed to delete thought' });
   }
 });
 
 // POST /api/v1/thoughts/:thoughtId/segments - Create new segment
-router.post('/:thoughtId/segments', async (req: Request, res: Response) => {
+router.post('/:thoughtId/segments', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
   try {
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const { thoughtId } = req.params;
@@ -117,12 +123,13 @@ router.post('/:thoughtId/segments', async (req: Request, res: Response) => {
     res.status(201).json(newSegment);
   } catch (error) {
     logger.error('Error creating segment:', error);
+    // next(error);
     res.status(500).json({ error: 'Failed to create segment' });
   }
 });
 
 // PUT /api/v1/thoughts/:thoughtId/segments/:segmentId - Update segment
-router.put('/:thoughtId/segments/:segmentId', async (req: Request, res: Response) => {
+router.put('/:thoughtId/segments/:segmentId', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
   try {
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const { thoughtId, segmentId } = req.params;
@@ -136,12 +143,13 @@ router.put('/:thoughtId/segments/:segmentId', async (req: Request, res: Response
     res.json(updatedSegment);
   } catch (error) {
     logger.error('Error updating segment:', error);
+    // next(error);
     res.status(500).json({ error: 'Failed to update segment' });
   }
 });
 
 // DELETE /api/v1/thoughts/:thoughtId/segments/:segmentId - Delete segment
-router.delete('/:thoughtId/segments/:segmentId', async (req: Request, res: Response) => {
+router.delete('/:thoughtId/segments/:segmentId', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
   try {
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const { thoughtId, segmentId } = req.params;
@@ -154,6 +162,7 @@ router.delete('/:thoughtId/segments/:segmentId', async (req: Request, res: Respo
     res.status(204).send();
   } catch (error) {
     logger.error('Error deleting segment:', error);
+    // next(error);
     res.status(500).json({ error: 'Failed to delete segment' });
   }
 });

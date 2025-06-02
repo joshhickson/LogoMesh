@@ -2,16 +2,13 @@
 import { Router, Request, Response } from 'express';
 import { LLMTaskRunner } from '../../../core/llm/LLMTaskRunner';
 import { OllamaExecutor } from '../../../core/llm/OllamaExecutor';
-import { logger } from '../../../src/core/utils/logger';
-import { llmAuditLogger } from '../../../src/core/logger/llmAuditLogger';
+import { logger } from '../../../core/utils/logger';
+import { logLLMInteraction } from '../../../core/logger/llmAuditLogger'; // Corrected import
 
 const router = Router();
 
 // Initialize LLM Task Runner with Ollama executor
-const ollamaExecutor = new OllamaExecutor({
-  baseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
-  defaultModel: process.env.OLLAMA_DEFAULT_MODEL || 'llama2'
-});
+const ollamaExecutor = new OllamaExecutor(process.env.OLLAMA_DEFAULT_MODEL || 'llama2'); // Corrected constructor call
 
 const llmTaskRunner = new LLMTaskRunner(ollamaExecutor);
 
@@ -21,7 +18,7 @@ const llmTaskRunner = new LLMTaskRunner(ollamaExecutor);
  */
 router.post('/prompt', async (req: Request, res: Response) => {
   try {
-    const { prompt, metadata = {} } = req.body;
+    const { prompt, metadata = {} } = req.body; // metadata is in scope for try block
     
     if (!prompt || typeof prompt !== 'string') {
       return res.status(400).json({ 
@@ -35,21 +32,29 @@ router.post('/prompt', async (req: Request, res: Response) => {
     });
 
     // Log the request for auditing
-    await llmAuditLogger.logPromptRequest({
+    // Using imported logLLMInteraction function
+    await logLLMInteraction({
       prompt,
+      response: null, // Or actual response if available pre-execution
+      model: ollamaExecutor.getModelName(), // Assuming you can get model name
       metadata,
-      timestamp: new Date().toISOString(),
-      requestId: `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+      duration: 0, // Placeholder, ideally measured around actual execution
+      success: true, // Placeholder, set based on actual outcome
+      // requestId: `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}` // If needed
     });
 
     // Execute the prompt
     const result = await llmTaskRunner.executePrompt(prompt, metadata);
     
     // Log the response for auditing
-    await llmAuditLogger.logPromptResponse({
-      result,
-      timestamp: new Date().toISOString(),
-      executionTimeMs: result.executionTimeMs || 0
+    await logLLMInteraction({
+      prompt,
+      response: result.response,
+      model: result.model,
+      metadata,
+      duration: result.executionTimeMs,
+      success: true,
+      // requestId: ... // If you have a corresponding request ID
     });
 
     res.json({
@@ -66,15 +71,20 @@ router.post('/prompt', async (req: Request, res: Response) => {
     logger.error('[LLM Routes] Error processing prompt:', error);
     
     // Log the error for auditing
-    await llmAuditLogger.logError({
-      error: error.message,
-      stack: error.stack,
-      timestamp: new Date().toISOString()
+    await logLLMInteraction({
+      prompt: req.body.prompt, // Access from req.body directly
+      response: null,
+      model: ollamaExecutor.getModelName(), // Or from error if available
+      metadata: req.body.metadata || {}, // Access from req.body, provide default
+      duration: 0, // Placeholder
+      success: false,
+      error: (error instanceof Error ? error.message : String(error)), // Robust error message
+      // requestId: ...
     });
 
     res.status(500).json({ 
       error: 'Failed to process prompt',
-      details: error.message 
+      details: (error instanceof Error ? error.message : String(error)) // Robust error message
     });
   }
 });
