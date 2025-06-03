@@ -412,16 +412,52 @@ For each resolved gap:
 - **Description:** No distributed routing table management with automatic failover when nodes drop out due to hardware failure or interference.
 - **Phase 2 Recommendation:** Design distributed coordination framework with self-healing mesh topology
 
+### GAP-EDU-001: Multi-Language Plugin Resource Coordination
+- **Priority:** Critical
+- **Affected Systems:** Plugin System, TaskEngine
+- **Description:** No framework for coordinating resource allocation across heterogeneous plugin runtimes (JS, Python, C#, React) with different performance characteristics.
+- **Phase 2 Recommendation:** Design multi-runtime resource arbitrator with dynamic priority adjustment
+
+### GAP-EDU-002: PWA Offline-First Event Architecture
+- **Priority:** Critical
+- **Affected Systems:** API & Backend, Audit Trail System
+- **Description:** No offline-first PWA framework with local event queuing, delta synchronization, and idempotent replay capabilities for network-unreliable environments.
+- **Phase 2 Recommendation:** Build PWA offline-first framework with event queue synchronization
+
+### GAP-EDU-003: Real-Time Priority Scheduling
+- **Priority:** High
+- **Affected Systems:** TaskEngine & CCE
+- **Description:** No dynamic priority scheduler that can demote background tasks (AI analysis) when real-time workloads (help queue) require immediate attention.
+- **Phase 2 Recommendation:** Implement educational context-aware priority scheduling
+
+### GAP-EDU-004: Intelligent Auto-Suggestion Pipeline
+- **Priority:** High
+- **Affected Systems:** Plugin System, LLM Infrastructure
+- **Description:** No framework for AI-powered auto-fix generation with confidence scoring and opt-in delivery to student endpoints.
+- **Phase 2 Recommendation:** Create AI-powered code analysis with automatic fix suggestions
+
+### GAP-EDU-005: Educational Workflow Orchestration
+- **Priority:** High
+- **Affected Systems:** TaskEngine, MeshGraphEngine
+- **Description:** No classroom-specific workflow management with triage modes, queue visualization, and multi-student session coordination.
+- **Phase 2 Recommendation:** Design educational workflow patterns with triage mode support
+
+### GAP-EDU-006: Browser Extension Integration
+- **Priority:** High
+- **Affected Systems:** API & Backend, Security & Transparency
+- **Description:** No secure browser extension API for StudentBeacon telemetry collection from admin-restricted laptops.
+- **Phase 2 Recommendation:** Build browser extension security model for restricted environments
+
 ---
 
 ## Analysis Summary
 
-**Total Gaps Discovered:** 36  
-**Critical Issues:** 12  
+**Total Gaps Discovered:** 42  
+**Critical Issues:** 14  
 **Most Affected System:** Plugin System  
-**Integration Hotspots:** Multi-language coordination, Edge computing constraints, Real-time processing, Distributed coordination, Vector operations, Time-synchronized pipelines  
+**Integration Hotspots:** Multi-language coordination, Edge computing constraints, Real-time processing, Distributed coordination, Vector operations, Time-synchronized pipelines, Educational workflows, PWA offline-first architecture  
 
-**Phase 3 Readiness Status:** 🔴 MAJOR GAPS - Multi-language plugin runtime, edge computing resource management, and distributed coordination needed
+**Phase 3 Readiness Status:** 🔴 MAJOR GAPS - Multi-language plugin runtime, edge computing resource management, distributed coordination, and educational workflow orchestration needed
 
 **Next Actions:**
 1. Begin creative use case testing
