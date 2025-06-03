@@ -1,0 +1,72 @@
+### Story #7 — “EchoMesh in the Black-Sky Weekend”
+
+**Context Recap**
+*EchoMesh*—LogoMesh’s P2P layer—was conceived as a **grid-down, radio-first** comms net for a military buddy who needs resilience when fiber, cell, and GPS all go dark. The prototype uses Raspberry Pi 4 (8 GB RAM) nodes, each wired to a Meshtastic-flashed LoRa module and powered by a small solar pack + 30 Wh LiFePO₄.
+
+---
+
+#### Hardware & Plugin Load-out per Node
+
+| Component           | Role                                                     | Phase-2 Limits                     |
+| ------------------- | -------------------------------------------------------- | ---------------------------------- |
+| **Pi 4 8 GB**       | Host OS + LogoMesh core                                  | 512 MB swap cap to protect SD card |
+| **SX1262 LoRa**     | Long-haul (5–15 km LOS)                                  | 9600 bps, AES-128 pre-shared       |
+| **nRF24L01**        | Local squad chatter (≤1 km)                              | 250 kbps burst                     |
+| **32 GB SD**        | Message DB + rotating 24 h cache                         | Roll-forward snapshots; auto-prune |
+| **Plugin set**      | Purpose                                                  | RAM budget                         |
+| `LoRaDriver-C`      | Packet I/O, FEC, ACK/NAK                                 | 25 MB                              |
+| `MeshRouter-Go`     | Dynamic hop routing, TTL                                 | 40 MB                              |
+| `DeltaStore-SQLite` | WAL-mode store of last 24 h msgs                         | 60 MB                              |
+| `TinyLLM-2G-Q5`     | 2 GB quant model for “summary / sentiment / threat flag” | 2.2 GB fixed                       |
+| `Compression-Zstd`  | Shrinks payloads 60–70 %                                 | 15 MB                              |
+| `HealthBeacon`      | Sends node vitals every 10 min                           | 10 MB                              |
+
+Total steady RAM ≈ 3.1 GB, leaving 4.5 GB headroom for bursts.
+
+---
+
+#### Event Chain — *Black-Sky Weekend Drill*
+
+* **Day 0 19:43** Regional cyberattack knocks out internet. Command orders EchoMesh nodes active. Squads A, B, and C each power up three Pi rigs and scatter them on rooftops.
+
+* **20:05** `MeshRouter` discovers nine peers; builds hop map. `Compression-Zstd` negotiated; payloads shrunk before LoRa send.
+
+* **20:22** Squad B pushes a 200-char SITREP (“bridge checkpoints, estimated 30 vehicles”). `DeltaStore` stamps T-0 and stores raw + compressed. Packet hops B → C → A in 2.8 s.
+
+* **20:23** `TinyLLM` on Node A runs **threat-flag** prompt over recent 10 msgs; scores SITREP as *medium*. Automatically appends red “!” to the broadcast header before rebroadcast on the nRF local link—soldiers’ handhelds buzz.
+
+* **20:44 — Node Failure**
+
+  * Rooftop Pi in Squad C overheats (sunset fan failure). CPU temp crosses 85 °C. `HealthBeacon` on neighbor node notes missing ping × 3 ⇒ marks peer *degraded*; routing table reroutes without human input.
+
+* **21:07 — Storage Pressure**
+
+  * Squad A transmits 4 MB photo (compressed map). `DeltaStore` WAL grows; free space dips below 300 MB. Auto-prune deletes logs older than 24 h **except** those flagged by TinyLLM as “critical.” No manual cleanup needed.
+
+* **Day 1 02:15 — Jamming Attempt**
+
+  * LoRa SNR drops by 15 dB for 40 s. `LoRaDriver` switches spreading factor up (SF11 → SF12) and halves data rate. Packets delayed but delivered; router queues ACKs, stores unacked in RAM-ring until link steady, then flushes.
+
+* **Day 1 06:00 — Morning Brief**
+
+  * Node A compiles nightly digest:
+
+    * 57 msgs (6 flagged high-threat)
+    * 1 lost-peer event
+    * Avg latency 3.6 s
+  * Digest size 13 KB; broadcasts on LoRa with high priority. Squads read summary on pocket displays; no need to scroll raw traffic.
+
+---
+
+#### Phase-2 Features That Make It Work
+
+| Capability                            | Why Vital on Pi-class Hardware                                                        |
+| ------------------------------------- | ------------------------------------------------------------------------------------- |
+| **Hard per-plugin RAM ceilings**      | Prevents 2 GB LLM from page-bombing the SD card and killing I/O.                      |
+| **Isolated crash & thermal watchdog** | Overheated node falls out without tearing down routing mesh.                          |
+| **Incremental WAL + auto-prune**      | Keeps 32 GB SD from choking; critical intel pinned.                                   |
+| **Dynamic radio fallback**            | Driver upshifts SF, stores ACK backlog—no packet loss under jamming.                  |
+| **Multi-radio routing tiers**         | LoRa for backbone, nRF for squad chat—MeshRouter sees both as interfaces.             |
+| **Edge LLM summarisation**            | 2 GB model small enough for Pi GPUless inference; reduces chatter, prioritises intel. |
+
+**Result:** Even on \$70 Pi boxes, EchoMesh delivers a self-healing, low-bandwidth comm net that survives node heat death, targeted RF disruption, and storage crunch—all while giving soldiers concise AI-curated situational summaries without ever needing the public internet.
