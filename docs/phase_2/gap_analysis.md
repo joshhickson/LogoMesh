@@ -1,4 +1,3 @@
-
 # Phase 2 Gap Analysis Framework
 
 **Version:** 1.0  
@@ -149,9 +148,35 @@ For each resolved gap:
 
 ## Gap Registry
 
-*Gaps will be added below as they are discovered through use case testing*
+### GAP-ARCH-001: Plugin Isolation Framework Missing
+- **Priority:** Critical
+- **Affected Systems:** PluginHost, Plugin Runtime, EventBus
+- **Description:** No crash detection hooks, selective restart capability, or sandbox enforcement for plugins. Single plugin failure can crash entire system.
+- **Phase 2 Recommendation:** Add plugin health monitoring, basic crash detection, and restart orchestration to PluginHost
 
-<!-- GAP ENTRIES START HERE -->
+### GAP-ARCH-002: Race Condition Prevention
+- **Priority:** Critical  
+- **Affected Systems:** SQLiteAdapter, VTC, PluginAPI, EventBus
+- **Description:** No coordination between SQL writes and VTC embedding generation. Plugins can request incomplete data without proper signaling.
+- **Phase 2 Recommendation:** Implement "resource readiness" signaling and atomic transaction visibility across plugin boundaries
+
+### GAP-ARCH-003: Recovery Orchestration System
+- **Priority:** High
+- **Affected Systems:** PluginHost, Audit Logging, EventBus
+- **Description:** No audit log recovery mechanism, smart crash flagging, or fine-grained restart scheduler for plugins.
+- **Phase 2 Recommendation:** Design audit log format for state recovery and basic restart capabilities
+
+### GAP-PERF-001: Bulk Import Pipeline Coordination
+- **Priority:** High
+- **Affected Systems:** PortabilityService, VTC, SQLiteAdapter
+- **Description:** Bulk import doesn't coordinate with VTC embedding generation, lacks progress tracking and resource throttling.
+- **Phase 2 Recommendation:** Add VTC integration to import pipeline with progress tracking
+
+### GAP-UI-001: Graceful Degradation UX
+- **Priority:** Medium
+- **Affected Systems:** Frontend, Plugin Communication
+- **Description:** No degraded state indicators, recovery progress feedback, or user communication during plugin failures.
+- **Phase 2 Recommendation:** Add status communication mechanism and recovery UI patterns
 
 ---
 
