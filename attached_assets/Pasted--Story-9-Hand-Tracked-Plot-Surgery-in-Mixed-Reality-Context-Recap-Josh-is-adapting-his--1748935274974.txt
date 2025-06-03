@@ -1,0 +1,90 @@
+### Story #9  — “Hand-Tracked Plot Surgery in Mixed Reality”
+**Context Recap**
+Josh is adapting his novel _Fulfillment_ into an AI-assisted, full-length film. To catch plot holes quickly—and to preview how the story might flow as a Veo-generated movie—he’s running a custom LogoMesh build that fuses:
+
+- **MatrixCore + Meta Quest 3** for hand-tracked, mixed-reality story graphs
+    
+- **PlotDB (Postgres + pgvector)** mirrored in **Neo-style GraphIndex** for instant relationship queries
+    
+- **Multi-modal inputs** (bare-hand gestures, voice commands, EEG focus data) routed through a unified action schema
+    
+- A **7-B local LLM** that live-validates timeline logic and auto-renders Veo-ready scene cards
+    
+
+The session below shows how those components interplay—barely tapping his GPU budget—while Josh literally “grabs” narrative contradictions out of thin air and patches them on the fly.
+**Setup**
+
+|Device|Role|
+|---|---|
+|**Water-cooled 4090 tower**|Runs _MatrixCore_ (VR/AR scene graph) + GPU-heavy LLMs|
+|**Meta Quest 3**|Head-mounted console for hand-tracking & passthrough AR|
+|**MacBook Air**|_ShellNode_ 2-D overlay for quick note edits & markdown exports|
+|**OpenBCI Galea headband**|Streams EEG + eye-focus metrics to gauge cognitive load|
+
+#### Key Phase-2 Plugins
+
+|Plugin|Purpose & Input Modality|Budget / Guardrail|
+|---|---|---|
+|`GestureRouter-Meta` _(open-source Interaction SDK)_|Maps bare-hand pinches, grabs, trace-gestures → graph ops (add node, bend edge, zoom)|Realtime GPU lane; cannot exceed 3 ms frame budget|
+|`VoiceBridge-WhisperLite`|Live speech-to-text; turns “link Clara → Cronos Robot ‘causes death’” into SQL INSERT + edge|High CPU; 200 ms buffer|
+|`EEGMonitor-BCI`|Detects spikes in cognitive load; auto-flags plot areas causing confusion|50 MB RAM cap|
+|`PlotDB-Postgres`|SQL tables: `characters`, `events`, `locations`; pgvector embeds summaries|WAL-mode; atomic batch commits|
+|`GraphIndex-Neo`|Real-time property graph mirror for fast relationship queries|400 MB RAM ceiling|
+|`PlotValidator-LLM-Q8` (7-B)|Checks new edges for logical contradictions; suggests fixes|6 GB VRAM hard-cap|
+|`ScenePlanner`|Breaks validated timeline into AI-film scene cards (compatible with Google Veo prompts)|Background priority|
+|`HoloViz-React-Three`|Renders 3-D force-directed story graph in Quest & 2-D canvas on Mac|Drops gracefully to 30 fps if GPU starved|
+
+---
+
+#### Event Chain — _Saturday “Plot-Hole Hunt” Session_
+
+1. **13 : 05** – Josh slips on Quest 3; the passthrough AR shows floating orbs (characters) and rods (relationships).  
+    _Hand Input:_ He pinch-grabs _Marisol_ orb, tosses it toward _Amazon Titan_ robot node; a **magenta gesture trail** means “create conflict.”  
+    _Plugin Path:_ `GestureRouter-Meta` → SQL INSERT (`PlotDB`) → `GraphIndex` updates edge in <60 ms.
+    
+2. **13 : 11** – Josh says: “Link Abe to underground garden as benefactor.”  
+    _VoiceBridge_ transcribes, executes INSERT. _PlotValidator_ instantly flags “Abe absent in Chapters 1-8; consider foreshadowing at p. 74.”  
+    _Haptic ping_ in Quest glove lets Josh know there’s a logic warning; a red halo pulses around the new edge.
+    
+3. **13 : 18 – Cognitive-Load Spike**  
+    _EEGMonitor_ notices beta-wave surge while Josh inspects Act III. It auto-pins a **yellow “?” tag** to the _Warehouse Uprising_ event and queues a _Focus Review_ task for later. No interruptions—non-blocking annotation only.
+    
+4. **13 : 27 – Bare-Hand Multi-Select**  
+    Josh uses a two-hand lasso gesture (Meta open-source “Arcuate Selection” from Interaction SDK) to grab all _Clara_ arcs. With a thumb-twist he invokes _Cluster Collapse_—the graph condenses these edges; he sees she influences _six_ sub-plots, not three. Plot hole discovered: missing motivation for Scene 24.
+    
+5. **13 : 40 – “Generate Scene Cards” voice command**  
+    _ScenePlanner_ runs in background, chopping validated timeline into 120 scene prompts with Veo-style directives (location, emotional palette, blocking). Since this is low-priority, GPU share drops to 40 %—`HoloViz` keeps 90 fps.
+    
+6. **14 : 02 – Graph Density Warning**  
+    `GraphIndex` reaches a 1 000-edge threshold. Storage subsystem auto-switches `PlotDB` to “chunked vector” mode: large descriptions are off-loaded to compressed JSONB; indexes stay lean.
+    
+7. **14 : 15 – Brain-Aware Break**  
+    _EEGMonitor_ senses sustained theta drop (fatigue). Quest HUD glow turns blue; SentienceShell whispers, “Time for a stretch?” Josh agrees, says “Pause validation.” All non-critical plugins throttle; only EEGBus + Graph stay live.
+    
+8. **14 : 27 – MacBook Air Quick-Fix**  
+    Josh sits at the laptop, types a new back-story paragraph for Abe. _ShellNode_ textarea syncs to `PlotDB`; _PlotValidator_ green-lights the link, halo turns green in VR.
+    
+9. **15 : 00 – Export for Veo**  
+    Finished scene-card deck + story graph snapshot saved. _ScenePlanner_ emits a folder:
+    
+    - `./veo_prompts/*.json` – ready for bulk render
+        
+    - `plot_graph_2025-06-03.glb` – can be re-loaded in Quest or desktop Blender
+        
+    - `logic_report.md` – list of resolved vs. outstanding contradictions
+        
+
+---
+
+#### Phase-2 Guarantees This Relies On
+
+|Capability|Narrative-VR Impact|
+|---|---|
+|**Cross-modal router** (Gesture + Voice + EEG)|Same action schema funnels every input; contradictions caught early.|
+|**SQL ⇄ Graph dual-write**|Relational integrity (chapters, IDs) **and** instant visual queries—no drift.|
+|**Per-plugin frame & VRAM budgets**|Hand tracking never stutters even when LLM fires up; Quest remains immersive.|
+|**Polyglot manifest**|C++ Meta SDK, Python LLM, Rust EEG driver—all sandbox-isolated yet interoperable.|
+|**Priority sheds & fatigue hooks**|Brain-load detection throttles non-essential compute, preserving focus.|
+|**Scene export pipeline**|One voice command yields Veo-ready assets—bridging book → AI-film logistics.|
+
+**Result:** Josh literally _grabs_ plot holes out of thin air, patches them with a sentence, and walks away holding a full AI-movie scene deck—without ever dropping frames or untangling merge conflicts in a flat outline doc. LogoMesh turns narrative coherence into a tactile, mixed-reality craft.
