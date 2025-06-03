@@ -13,6 +13,67 @@ Phase 2 focuses on building robust, testable infrastructure foundations for cogn
 
 ## Core Architectural Themes
 
+### Theme 0: Security & Transparency Configuration Framework
+*Establishing comprehensive safety controls and audit governance*
+
+**Priority: Critical - Foundation**
+
+#### Security & Transparency Settings Panel (v0.3)
+Implement comprehensive security governance panel with Safety Mode enabled by default:
+
+| Section | Key / Toggle | Default (Safety Mode = ON) | Implementation Notes |
+|---------|--------------|---------------------------|---------------------|
+| **A. Model Governance** | `modelRegistryMode` = `"signedOnly" \| "unsignedAllowed"` | **`signedOnly`** | Requires Sigstore-signed commits for any new `llm.config.json` entry |
+| | `isolatedRunByDefault` (bool) | **true** | All new model revisions run in isolated container first |
+| **B. Chain-of-Thought** | `cotMode` = `"full" \| "summary" \| "off"` | **`summary`** | Full for local preset, summary for cloud |
+| | `cotMaxBytes` (int) | **20,000** | Hash-only fallback above this size |
+| | `cotHotDays` (int) | **30** | Moves to cold archive after |
+| **C. Audit & Logs** | `auditHotDays` (int) | **90** | Live searchable period |
+| | `auditColdGB` (int) | **5** | Compressed, encrypted, FIFO deletion |
+| | `incidentBroadcast` (bool) | **true** | Critical errors to DevShell + email webhook |
+| **D. DevShell Permissions** | `devShellWriteMode` = `"proposal" \| "direct"` | **`proposal`** | All writes produce `.patch` awaiting approval |
+| | `devShellSandboxPaths[]` | **[`/src`,`/docs`]** | Paths outside list are read-only |
+| **E. Tool Executor Firewalls** | `toolCapabilityTokens` (string[]) | **empty** | Plugin tool execution requires user-granted tokens |
+| | `maxToolCallsPerTask` (int) | **3** | Prevents runaway loops |
+| **F. Mock / Test Harness** | `mockLatencyJitterMs` (range) | **100–600** | Forces retry logic during testing |
+| | `mockErrorRatePct` (0-100) | **5** | Random timeouts/syntax errors for testing |
+| **G. Migration Safety** | `preMigrationSnapshot` (bool) | **true** | Zip + hash stored in `snapshots/` |
+| | `autoRollbackOnError` (bool) | **true** | Auto-restore DB if migration fails |
+
+#### Implementation Steps
+1. Create `user_settings.privacy_config` JSON schema with all security toggles
+2. Implement `/api/settings/privacy` endpoint for configuration management
+3. Build Security & Transparency settings UI panel with Safety Mode preset
+4. Integrate security checks into all Phase 2 infrastructure components
+5. Add security validation gates to all verification checkpoints
+
+#### Database Schema Extensions
+```sql
+-- User privacy and security settings
+CREATE TABLE user_settings (
+  setting_key TEXT PRIMARY KEY,
+  setting_value TEXT,
+  setting_type TEXT CHECK (setting_type IN ('json', 'string', 'number', 'boolean')),
+  last_modified DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Security audit events
+CREATE TABLE security_events (
+  event_id TEXT PRIMARY KEY,
+  event_type TEXT,
+  severity TEXT CHECK (severity IN ('low', 'medium', 'high', 'critical')),
+  details TEXT,
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+  resolved BOOLEAN DEFAULT FALSE
+);
+```
+
+#### Phase 3 Activation Plan
+- Extend model governance to cloud API keys and dynamic load balancing
+- Implement advanced threat detection and automated response systems
+- Add federated audit trail sharing for multi-user environments
+- Enable AI-driven security policy optimization based on usage patterns
+
 ### Theme 1: Foundation Stabilization & TypeScript Migration
 *Eliminating technical debt and establishing type safety*
 
@@ -23,7 +84,9 @@ Phase 2 focuses on building robust, testable infrastructure foundations for cogn
 - Fix remaining Express route handler type signatures  
 - Implement comprehensive type checking pipeline
 - Stabilize build process and eliminate compilation errors
-- Create `llm.config.json` + `LLMExecutorRegistry` (local & mock executors only)
+- Create signed `models/llm.config.json` as single source of truth for all LLM configurations
+- Implement `LLMExecutorRegistry` with signature validation (local & mock executors only)
+- Plugin-proposed model additions require DevShell approval workflow (configurable in Security panel)
 - Implement `LocalModelTestPanel.tsx` (prompt ↔ completion, tokens/sec display)
 
 #### Phase 3 Activation Plan
@@ -51,7 +114,8 @@ Phase 2 focuses on building robust, testable infrastructure foundations for cogn
 - `[TOGGLE_LINK_EMBEDDINGS_TO_METADATA]`: Explicit embedding-metadata linkage
 - `[TOGGLE_SEGMENT_TRANSPARENT_MODE]`: Vector-first vs. text-first storage modes
 
-#### Database Schema Extensions (Production-Ready)
+#### Database Schema Extensions (Production-Ready with Migration Safety)
+**Migration Philosophy:** In-place updates with mandatory pre-migration snapshots and auto-rollback on failure (configurable in Security panel)
 ```sql
 -- Add to segments table
 ALTER TABLE segments ADD COLUMN embedding_vector TEXT;
@@ -157,7 +221,8 @@ interface ScaffoldedPipeline {
 }
 ```
 
-#### Execution Infrastructure (Mock-Enabled)
+#### Execution Infrastructure (Mock-Enabled with Stochastic Testing)
+**Mock Fidelity Strategy:** Implement stochastic mocks with 100-600ms latency jitter and 5% error rate to validate retry logic and error handling (configurable in Security panel)
 - **ExecutorRegistry**: Dynamic registration with mock LLM, TTS, and plugin executors
 - **TaskEngine**: Core execution loop with state management, retry logic, and deterministic routing
 - **MetaExecutor Stub**: Implement cognitive load simulation (local vs. cloud decision mocking)
@@ -186,7 +251,8 @@ interface ScaffoldedPipeline {
 
 **Priority: Medium-High**
 
-#### Unified Audit Schema (Production-Grade)
+#### Unified Audit Schema (Production-Grade with Retention Management)
+**Retention Policy:** 90-day hot storage (live searchable), 5GB cold storage with FIFO deletion (configurable in Security panel)
 ```sql
 CREATE TABLE llm_execution_log (
   id TEXT PRIMARY KEY,
@@ -199,8 +265,11 @@ CREATE TABLE llm_execution_log (
   linked_segment_id TEXT,
   -- 🚧 Stub: Phase 3 will add AI quality assessment
   ai_quality_score REAL DEFAULT NULL,
-  -- Chain-of-Thought field for self-reflection storage
-  chain_of_thought TEXT NULL
+  -- Chain-of-Thought field with configurable storage policy
+  chain_of_thought TEXT NULL,
+  -- CoT storage metadata (configurable in Security panel)
+  cot_mode TEXT DEFAULT 'summary' CHECK (cot_mode IN ('full', 'summary', 'off')),
+  cot_size_bytes INTEGER DEFAULT 0
 );
 
 CREATE TABLE pipeline_execution_log (
@@ -266,14 +335,18 @@ CREATE TABLE memory_snapshots (
 - **Plugin Crash Containment**: `PluginExecutionLimiter` with timeout & circuit-breaker
 - **Plugin Live Inspector**: DevShell panel showing loaded plugins, permissions, memory usage
 
-#### Tool Use & Execution Framework
-- **Tool Schema + Executor**: `contracts/tools/toolSchema.ts`; `ToolExecutor` that can call plugin functions with JSON args
-- **Robust Ollama/LlamaCpp Executor**: Implement streaming, error handling, VRAM tuning
+#### Tool Use & Execution Framework (Security-Controlled)
+- **Tool Schema + Executor**: `contracts/tools/toolSchema.ts`; `ToolExecutor` with capability token validation
+- **Tool Execution Firewall**: Requires user-granted `toolCapabilityTokens` for plugin tool access (configurable in Security panel)
+- **Runaway Prevention**: `maxToolCallsPerTask = 3` by default to prevent infinite loops
+- **Robust Ollama/LlamaCpp Executor**: Implement streaming, error handling, VRAM tuning with security boundaries
 
 #### Filesystem Access & Controlled Mutation (Safety-First)
-- Plugin-safe read/write with comprehensive review mechanism
-- `PluginAPI.readFile()` and `PluginAPI.proposeFileChange()` with validation
-- UI confirmation system for all proposed changes with rollback capability
+- **Read-only by default** with sandboxed path restrictions (configurable in Security panel)
+- `PluginAPI.readFile()` for safe filesystem reading within sandbox paths
+- `PluginAPI.proposeFileChange()` creates `.patch` files requiring human approval
+- `devShellWriteMode = "proposal"` by default; `"direct"` mode available for advanced users
+- `devShellSandboxPaths` restricts access to `/src` and `/docs` by default
 - Full audit trail of all file operations with integrity verification
 
 #### Developer Interface (Testing Environment)
@@ -393,8 +466,10 @@ interface TTSSpeaker {
 - [ ] **VERIFY:** ESLint passes: `npm run lint`
 - [ ] **VERIFY:** All tests still pass: `npm test`
 - [ ] **VERIFY:** Frontend builds successfully: `npm run build`
-- [ ] **VERIFY:** LLM config loads without errors: Test `LLMExecutorRegistry.loadConfig()`
-- [ ] **FAIL-SAFE:** If compilation errors exist, identify and fix before next task
+- [ ] **VERIFY:** Signed LLM config loads without errors: Test `LLMExecutorRegistry.loadConfig()`
+- [ ] **VERIFY:** Security & Transparency panel renders and persists settings correctly
+- [ ] **VERIFY:** Safety Mode preset applies all default security controls
+- [ ] **FAIL-SAFE:** If security validation fails, disable affected features and continue
 
 #### Task 1.2: Scaffold EmbeddingService with Mock Models
 **Implementation Steps:**
@@ -713,10 +788,12 @@ interface TTSSpeaker {
 **🚨 FINAL PHASE 2 GATE:**
 - [ ] **COMPREHENSIVE VERIFY:** All verification gates throughout Phase 2 passed
 - [ ] **INFRASTRUCTURE READINESS:** All systems ready for Phase 3 cognitive activation
-- [ ] **MOCK VALIDATION:** All mock components produce predictable, testable results
+- [ ] **MOCK VALIDATION:** All mock components produce predictable, testable results with stochastic error injection
 - [ ] **DOCUMENTATION COMPLETE:** All infrastructure and interfaces documented
-- [ ] **SECURITY VALIDATION:** No security vulnerabilities in automated security scan
-- [ ] **FAIL-SAFE:** If any final gate fails, implement fixes before Phase 2 completion
+- [ ] **SECURITY VALIDATION:** Comprehensive security audit passes with Safety Mode enabled
+- [ ] **SECURITY CONTROLS:** All privilege escalation paths require explicit user approval
+- [ ] **AUDIT COMPLETENESS:** All system operations captured with appropriate retention policies
+- [ ] **FAIL-SAFE:** If any security gate fails, disable affected features and document risks
 
 ---
 
