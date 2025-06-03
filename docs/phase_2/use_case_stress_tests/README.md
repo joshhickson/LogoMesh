@@ -16,6 +16,8 @@ When processing a new creative use case story, follow this established methodolo
    - Expected workflow and outcomes
    - Technical requirements and constraints
 
+**⚠️ Important Note:** The provided stories often contain code jargon, system names, and technical references that may or may not correspond to existing or planned components in this repository. The story creator doesn't have access to the actual codebase and may be hallucinating assumed system names, APIs, or architectural patterns. When processing stories, focus on extracting the **functional requirements** and **use case patterns** rather than taking technical implementation details literally.
+
 ### Step 2: Phase 2 Systems Mapping
 1. **Map story requirements to Phase 2 systems** using checkboxes:
    - ✅ Systems directly involved and tested
