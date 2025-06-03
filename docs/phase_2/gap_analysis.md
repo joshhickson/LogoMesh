@@ -186,6 +186,18 @@ For each resolved gap:
 - **Description:** No performance SLA configuration or automatic enforcement. System degradation goes undetected.
 - **Phase 2 Recommendation:** Add configurable performance thresholds and automated response mechanisms
 
+### GAP-PERF-004: Offline Event Journaling
+- **Priority:** Critical
+- **Affected Systems:** EventBus, UI Layer
+- **Description:** No offline capability or event queuing. Network disruptions cause data loss and workflow interruption.
+- **Phase 2 Recommendation:** Implement offline-first architecture with idempotent event replay and conflict resolution
+
+### GAP-PERF-005: Multi-Stage Pipeline Atomicity
+- **Priority:** High
+- **Affected Systems:** VTC, PluginAPI, SQLiteAdapter
+- **Description:** No transaction coordination across processing stages. Pipeline failures can corrupt intermediate states.
+- **Phase 2 Recommendation:** Design atomic multi-stage pipelines (Upload → vectorize → cluster) with clean rollback boundaries
+
 ## Distributed Systems Gaps
 
 ### GAP-DIST-001: Cross-Device State Coordination
@@ -200,6 +212,24 @@ For each resolved gap:
 - **Description:** No mechanism for isolating local failures from affecting remote collaborators.
 - **Phase 2 Recommendation:** Implement failure isolation and graceful degradation strategies
 
+### GAP-DIST-003: EchoMesh Peer Tunneling
+- **Priority:** Critical
+- **Affected Systems:** Plugin Communication, API Backend
+- **Description:** EventBus is local-only with no peer-to-peer plugin coordination. No transparent API call routing across devices.
+- **Phase 2 Recommendation:** Design WireGuard-style peer tunneling with transparent cross-device plugin execution
+
+### GAP-DIST-004: Distributed Plugin Manifest
+- **Priority:** Critical
+- **Affected Systems:** PluginHost, Plugin System
+- **Description:** Plugins assume local execution with no capability for distributed coordination or remote execution declarations.
+- **Phase 2 Recommendation:** Add plugin capability declarations (local/remote) and distributed execution coordination framework
+
+### GAP-DIST-005: Cross-Device State Synchronization
+- **Priority:** High
+- **Affected Systems:** MeshGraphEngine, EventBus
+- **Description:** No distributed graph state management or real-time synchronization capabilities across devices.
+- **Phase 2 Recommendation:** Implement real-time graph synchronization with conflict-free replicated data types (CRDTs)
+
 ## Monitoring & Diagnostics Gaps
 
 ### GAP-MONITOR-001: Real-Time Health Dashboard
@@ -212,7 +242,13 @@ For each resolved gap:
 - **Priority:** Medium
 - **Affected Systems:** PluginHost, Logging
 - **Description:** No automated diagnostic data capture (heap dumps, performance traces) during failures.
-- **Phase 2 Recommendation:** Add automated diagnostic capture and user notification systembilities
+- **Phase 2 Recommendation:** Add automated diagnostic capture and user notification system
+
+### GAP-MONITOR-003: Rolling Snapshot System
+- **Priority:** High
+- **Affected Systems:** Storage Layer, Audit Trail
+- **Description:** No state snapshotting or delta tracking. System can't recover from power cycles or provide continuous backup.
+- **Phase 2 Recommendation:** Implement automated state snapshots, delta-based synchronization, and power-cycle recovery capabilities
 
 ### GAP-PERF-001: Bulk Import Pipeline Coordination
 - **Priority:** High
