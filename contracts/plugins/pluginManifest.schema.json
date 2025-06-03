@@ -48,7 +48,11 @@
           "requiresNetworkAccess",
           "canModifyUI",
           "canAccessFileSystem",
-          "canRunBackgroundTasks"
+          "canRunBackgroundTasks",
+          "canSpawnExternalProcesses",
+          "canGenerateCode",
+          "requiresHotReload",
+          "requiresDesktopWindow"
         ]
       },
       "description": "List of capabilities this plugin requires or provides"
