@@ -164,7 +164,55 @@ For each resolved gap:
 - **Priority:** High
 - **Affected Systems:** PluginHost, Audit Logging, EventBus
 - **Description:** No audit log recovery mechanism, smart crash flagging, or fine-grained restart scheduler for plugins.
-- **Phase 2 Recommendation:** Design audit log format for state recovery and basic restart capabilities
+- **Phase 2 Recommendation:** Design audit log format for state recovery and basic restart capability
+
+## Performance & Resource Management Gaps
+
+### GAP-PERF-001: Plugin Resource Monitoring
+- **Priority:** Critical
+- **Affected Systems:** PluginHost, PluginAPI
+- **Description:** No memory, CPU, or resource tracking for individual plugins. Memory leaks can crash entire system without detection.
+- **Phase 2 Recommendation:** Add per-plugin resource monitoring, configurable thresholds, and automatic suspension capabilities
+
+### GAP-PERF-002: Transactional Rollback System
+- **Priority:** Critical
+- **Affected Systems:** SQLiteAdapter, PluginAPI, EventBus
+- **Description:** No transaction state management across plugin boundaries. Plugin failures can corrupt database integrity.
+- **Phase 2 Recommendation:** Implement atomic operation tracking, rollback triggers, and integrity validation
+
+### GAP-PERF-003: SLA Monitoring & Enforcement
+- **Priority:** High
+- **Affected Systems:** PluginHost, PluginAPI
+- **Description:** No performance SLA configuration or automatic enforcement. System degradation goes undetected.
+- **Phase 2 Recommendation:** Add configurable performance thresholds and automated response mechanisms
+
+## Distributed Systems Gaps
+
+### GAP-DIST-001: Cross-Device State Coordination
+- **Priority:** High
+- **Affected Systems:** EventBus, Plugin Communication
+- **Description:** EventBus is local-only. No mechanism for cross-device plugin coordination or state synchronization.
+- **Phase 2 Recommendation:** Design distributed event routing and cross-device plugin coordination framework
+
+### GAP-DIST-002: Graceful Degradation Framework
+- **Priority:** Medium
+- **Affected Systems:** PluginHost, EventBus
+- **Description:** No mechanism for isolating local failures from affecting remote collaborators.
+- **Phase 2 Recommendation:** Implement failure isolation and graceful degradation strategies
+
+## Monitoring & Diagnostics Gaps
+
+### GAP-MONITOR-001: Real-Time Health Dashboard
+- **Priority:** Medium
+- **Affected Systems:** PluginHost, UI Layer
+- **Description:** No real-time visibility into plugin health, resource usage, or performance metrics.
+- **Phase 2 Recommendation:** Create plugin health monitoring dashboard with diagnostic tools
+
+### GAP-MONITOR-002: Automated Diagnostics
+- **Priority:** Medium
+- **Affected Systems:** PluginHost, Logging
+- **Description:** No automated diagnostic data capture (heap dumps, performance traces) during failures.
+- **Phase 2 Recommendation:** Add automated diagnostic capture and user notification systembilities
 
 ### GAP-PERF-001: Bulk Import Pipeline Coordination
 - **Priority:** High
