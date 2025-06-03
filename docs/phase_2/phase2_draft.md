@@ -443,11 +443,21 @@ interface TTSSpeaker {
 
 ### **MANDATORY PRE-PHASE VERIFICATION**
 **🚨 GATE 0: Foundation Readiness Check**
+
+#### Pre-Phase Cleanup
+- [ ] **CLEANUP:** Remove outdated test result files: `jest-results.json`, `test-results.log`, `lint-*-errors*.txt`
+- [ ] **CLEANUP:** Remove temporary development files: `test-backup.js`, outdated `docs/DevPlan_Phase0`, `docs/DevPlan_Phase1`
+- [ ] **CLEANUP:** Archive or remove temporary files from `attached_assets/` (retain essential references)
+- [ ] **CLEANUP:** Clean up empty/outdated error export directories
+- [ ] **CLEANUP:** Remove duplicate documentation: consolidate `docs/Claude-Log.md` and `docs/Claude-log.md`
+
+#### Foundation Verification
 - [ ] **VERIFY:** All Phase 1 tests pass: `npm test`
 - [ ] **VERIFY:** Backend starts without errors: `cd server && npm run dev`
 - [ ] **VERIFY:** Frontend builds cleanly: `npm run build`
 - [ ] **VERIFY:** API endpoints respond: `curl http://localhost:3001/api/v1/thoughts`
 - [ ] **VERIFY:** Database migrations are clean: Check SQLite schema integrity
+- [ ] **VERIFY:** Repository is clean after cleanup: no build artifacts or temporary files
 - [ ] **FAIL-SAFE:** If any verification fails, STOP and resolve before proceeding
 
 ---
