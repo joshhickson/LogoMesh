@@ -1,0 +1,54 @@
+### Story #4 — “Dice, Dragons, and a Dead-Zone LAN”
+
+**Setup**
+Dungeon Master Valerie runs her weekly campaign in a friend’s basement—no Wi-Fi, zero cell signal. She brings:
+
+* **Laptop:** Ryzen-7, 16 GB RAM, RTX 3050 4 GB VRAM
+* **Installed LogoMesh modules**
+
+  * `WhisperLite-CPU` — tiny ASR model that streams 16 kHz audio to text
+  * `NanoLLM-3.5G-Q4` — a 3.5 GB quantised LLM loaded entirely in VRAM
+  * `SceneIndexer` — vectors + tags every speaker turn for fast recall
+  * `SessionAutoscribe` — orchestrator that fuses ASR output + LLM into bullet-note summaries every ten minutes
+
+**Resource policy (Phase 2 manifest features)**
+
+| Budget           | Plugin                   | Enforcement                                         |
+| ---------------- | ------------------------ | --------------------------------------------------- |
+| **CPU priority** | WhisperLite-CPU = *High* | Real-time audio capture takes precedence            |
+| **VRAM quota**   | NanoLLM = 3.8 GB max     | Hard cap with eviction if breached                  |
+| **I/O throttle** | SceneIndexer = *Low*     | Vector writes deferred while dice roll audio is hot |
+
+---
+
+#### Event chain
+
+* **18 : 02** Valerie hits “Start Session.” `WhisperLite-CPU` begins buffering mic input; `SessionAutoscribe` opens a new *Chapter* in the local SQLite DB.
+* **18 : 05** Player banter spikes; CPU hits 90 %. Core detects sustained real-time load and **auto-pauses** SceneIndexer vector writes (non-critical) to free cycles.
+* **18 : 27** NanoLLM needs an extra 100 MB VRAM for a longer summarisation prompt. Core’s VRAM quota manager evicts the model’s **KV-cache** but keeps weights pinned—∴ no crash, just a 0.3 s re-warm latency.
+* **19 : 00** Player Julian casts *Wall of Fire*; table erupts. Noise bursts cause ASR confidence to plummet. `WhisperLite` flags the segment “low quality” and stores raw audio for later re-transcribe. No missed content.
+* **19 : 40** Laptop battery dips to 20 %. Core shifts into **Power-Save Mode**: lowers SceneIndexer thread pool, lengthens summarisation cadence to every 15 min.
+* **20 : 15** Critical hit! Valerie calls a quick break. Low-priority backlog tasks (deferred vectors + re-transcribes) flush while the mic is silent; CPU/GPU utilisation spikes briefly, then idles.
+* **21 : 05** Session ends. `SessionAutoscribe` compiles:
+
+  * Scene timeline with timestamps
+  * NPC list auto-extracted by NanoLLM
+  * Loot log & XP tallies
+  * Open plot hooks flagged with “🔔 continue next time”
+
+A single Markdown file and a lightweight vector snapshot are written to disk. No internet required.
+
+---
+
+#### Why this matters for Phase 2
+
+| Capability                      | Phase 2 must deliver                                                                                        |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **Granular resource caps**      | Per-plugin VRAM quotas & CPU priority queues so a 3.5 GB model cannot OOM a 4 GB card.                      |
+| **Dynamic quality-of-service**  | Auto-pausing or down-throttling non-critical plugins under sustained real-time load.                        |
+| **Model cache eviction**        | Ability to discard KV-cache or swap precision levels without unloading core weights, avoiding hard crashes. |
+| **Low-connectivity resilience** | Entire pipeline—audio → text → summary → vectors—runs offline with zero external calls.                     |
+| **Deferred job queue**          | Non-urgent tasks (re-transcription, vector clustering) automatically replay during idle windows.            |
+| **Power-aware mode**            | Core listens to OS battery events and adjusts plugin cadence accordingly.                                   |
+
+Get those right and LogoMesh transforms a \$900 mid-range laptop into a paperless scribe—even inside a basement Faraday cage—while the dice keep rolling.
