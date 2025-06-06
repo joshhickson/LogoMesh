@@ -78,7 +78,7 @@ Track which systems are most affected by discovered gaps:
 | Input Templates | 0 | 2 | 0 | 0 | 2 |
 | TTS Plugin Framework | 0 | 0 | 2 | 0 | 2 |
 | VTC (Vector Translation Core) | 2 | 3 | 1 | 0 | 6 |
-| DevShell Environment | 0 | 0 | 0 | 0 | 0 |
+| DevShell Environment | 2 | 3 | 2 | 0 | 7 |
 | **TOTALS** | **30** | **25** | **11** | **1** | **67** |
 
 **Most Critical System:** Plugin System (14 total gaps, 8 critical)  
