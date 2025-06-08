@@ -10,8 +10,9 @@ import { LLMTaskRunner } from '../../core/llm/LLMTaskRunner';
 import { OllamaExecutor } from '../../core/llm/OllamaExecutor';
 import thoughtRoutes from './routes/thoughtRoutes';
 import llmRoutes from './routes/llmRoutes';
-import portabilityRoutes from './routes/portabilityRoutes';
 import adminRoutes from './routes/adminRoutes';
+import portabilityRoutes from './routes/portabilityRoutes';
+import orchestratorRoutes from './routes/orchestratorRoutes';
 
 const app = express();
 const PORT = parseInt(process.env.PORT || "3001", 10); // Ensure PORT is a number
@@ -48,10 +49,11 @@ async function setupServices() {
 }
 
 // Mount routes
-app.use(`${apiBasePath}/thoughts`, thoughtRoutes);
-app.use(`${apiBasePath}/llm`, llmRoutes);
-app.use(`${apiBasePath}`, portabilityRoutes);
-app.use(`${apiBasePath}/admin`, adminRoutes);
+app.use('/api/v1/thoughts', thoughtRoutes);
+app.use('/api/v1/llm', llmRoutes);
+app.use('/api/v1/admin', adminRoutes);
+app.use('/api/v1/portability', portabilityRoutes);
+app.use('/api/v1/orchestrator', orchestratorRoutes);
 
 // Health check
 app.get(`${apiBasePath}/health`, (req, res) => {
