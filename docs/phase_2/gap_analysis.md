@@ -865,7 +865,28 @@ LogoMesh transforms from "thinking tool" to "cognitive operating system" - a uni
 - [ ] UI controls for immediate override activation
 - [ ] System-wide override respect across all AI components
 
-**Estimated Effort:** High (requires fundamental architectural changes to ensure AI subordination)
+**Estimated Effort:** High (requires fundamental architectural changes to ensure AI subordination to human will)
+
+---
+
+## 25. Homeschool Guardian Security Keys (Scenario 25)
+
+**Infrastructure Gaps:**
+- Family Security Management system with collaborative boundary setting
+- Hardware security key integration (YubiKey, biometric) for family authorization
+- Transparent audit logging with learner visibility and explanation requirements
+- Trust evolution tracking with graduated permission systems
+- Pragmatic vs. theatrical security architecture (real protection vs. bypass prevention)
+
+**Phase 2 Priorities:**
+- [ ] Family configuration management with multiple guardian/learner roles
+- [ ] Hardware security key framework and collaborative authorization flows
+- [ ] Transparent security logging with full learner access to monitoring rationale
+- [ ] Trust metric system for graduated independence based on demonstrated responsibility
+
+**Estimated Effort:** Medium-High (requires new family-oriented security paradigm but builds on existing plugin security)
+
+**Key Architectural Insight:** Security systems should enhance family relationships through collaboration rather than create adversarial dynamics through technological barriers that can be bypassed.rdination)
 
 ---
 
