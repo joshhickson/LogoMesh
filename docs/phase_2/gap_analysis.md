@@ -67,20 +67,21 @@ Track which systems are most affected by discovered gaps:
 
 | System | Critical | High | Medium | Low | Total |
 |--------|----------|------|---------|-----|-------|
-| Plugin System | 18 | 9 | 4 | 0 | 31 |
+| Plugin System | 20 | 10 | 5 | 0 | 35 |
 | Storage Layer | 8 | 2 | 1 | 0 | 11 |
-| TaskEngine & CCE | 11 | 7 | 3 | 1 | 22 |
+| TaskEngine & CCE | 12 | 7 | 3 | 1 | 23 |
 | API & Backend | 6 | 2 | 0 | 0 | 8 |
 | LLM Infrastructure | 6 | 4 | 2 | 0 | 12 |
 | MeshGraphEngine | 6 | 5 | 3 | 0 | 14 |
 | Security & Transparency | 10 | 5 | 2 | 0 | 17 |
-| Audit Trail System | 8 | 7 | 5 | 0 | 20 |
+| Audit Trail System | 9 | 7 | 5 | 0 | 21 |
 | Input Templates | 0 | 2 | 0 | 0 | 2 |
 | TTS Plugin Framework | 1 | 0 | 2 | 0 | 3 |
 | VTC (Vector Translation Core) | 3 | 3 | 1 | 0 | 7 |
 | DevShell Environment | 4 | 6 | 4 | 0 | 14 |
-| EventBus | 4 | 0 | 0 | 0 | 4 |
-| **TOTALS** | **85** | **52** | **27** | **1** | **165** |
+| EventBus | 4 | 1 | 0 | 0 | 5 |
+| Frontend | 0 | 0 | 1 | 0 | 1 |
+| **TOTALS** | **89** | **54** | **29** | **1** | **173** |
 
 **Most Critical System:** Plugin System (14 total gaps, 8 critical)  
 **Integration Hotspots:** Multi-language coordination, Real-time processing, Resource management
@@ -109,6 +110,7 @@ Track gaps that affect system boundaries:
 
 | Use Case | Systems Tested | Gaps Found | Priority Breakdown |
 |----------|----------------|------------|-------------------|
+| Code Ninja Over-Eager | Plugin System, Storage Layer, EventBus, Frontend | 9 | P0:3, P1:1, P2:2, P3:0 |
 | Library Latency Tango | Plugin System, Storage Layer, LLM Infrastructure | 5 | P0:2, P1:2, P2:1, P3:0 |
 | Dice Dragons Dead Zone | Plugin System, TaskEngine, LLM Infrastructure | 6 | P0:1, P1:2, P2:3, P3:0 |
 | Verse Velocity Sermon | TaskEngine, Plugin System, LLM Infrastructure | 7 | P0:1, P1:3, P2:2, P3:1 |
@@ -125,7 +127,7 @@ Track gaps that affect system boundaries:
 | Self-Modifying Intelligence Bootstrap | DevShell Environment, Plugin System, Audit Trail System | 5 | P0:2, P1:2, P2:1, P3:0 |
 | Polyglot Plugin Symphony | Plugin System, TaskEngine, Storage Layer, API & Backend | 5 | P0:3, P1:1, P2:1, P3:0 |
 | Murmuration Lab Birch Test | Plugin System, TaskEngine, VTC, Storage Layer, Audit Trail System, Security & Transparency | 7 | P0:3, P1:3, P2:1, P3:0 |
-| **TOTALS** | **All Systems** | **101** | **P0:37, P1:38, P2:26, P3:1** |
+| **TOTALS** | **All Systems** | **105** | **P0:38, P1:39, P2:27, P3:1** |
 
 ### Key Findings
 - **Plugin System** most affected (appears in all scenarios)
@@ -181,6 +183,18 @@ For each resolved gap:
 - **Description:** No crash detection hooks, selective restart capability, or sandbox enforcement for plugins. Single plugin failure can crash entire system.
 - **Phase 2 Recommendation:** Add plugin health monitoring, basic crash detection, and restart orchestration to PluginHost
 
+### GAP-ARCH-004: Plugin State Persistence Missing
+- **Priority:** Critical
+- **Affected Systems:** PluginHost, Plugin System, Audit Trail System
+- **Description:** Current pluginHost.ts has no mechanism to save/restore plugin state across restarts. No plugin state serialization/deserialization framework exists.
+- **Phase 2 Recommendation:** Implement plugin state persistence with audit log recovery capabilities
+
+### GAP-ARCH-005: Plugin Communication Protocol Insufficient
+- **Priority:** High
+- **Affected Systems:** EventBus, Plugin System
+- **Description:** EventBus lacks plugin-specific message routing, priority queuing, or request/response correlation for plugin APIs. No inter-plugin coordination protocols.
+- **Phase 2 Recommendation:** Design enhanced plugin communication with priority queuing and request/response patterns
+
 ### GAP-ARCH-002: Race Condition Prevention
 - **Priority:** Critical  
 - **Affected Systems:** SQLiteAdapter, VTC, PluginAPI, EventBus
@@ -201,7 +215,13 @@ For each resolved gap:
 - **Description:** No memory, CPU, or resource tracking for individual plugins. Memory leaks can crash entire system without detection.
 - **Phase 2 Recommendation:** Add per-plugin resource monitoring, configurable thresholds, and automatic suspension capabilities
 
-### GAP-PERF-002: Transactional Rollback System
+### GAP-PERF-002: Resource Throttling Framework Missing
+- **Priority:** Critical
+- **Affected Systems:** Plugin System, TaskEngine
+- **Description:** No CPU/memory limits per plugin, adaptive throttling during bulk operations, or resource contention detection between plugins. System can't prevent resource conflicts.
+- **Phase 2 Recommendation:** Implement per-plugin resource monitoring with configurable thresholds and automatic throttling
+
+### GAP-PERF-003: Transactional Rollback System
 - **Priority:** Critical
 - **Affected Systems:** SQLiteAdapter, PluginAPI, EventBus
 - **Description:** No transaction state management across plugin boundaries. Plugin failures can corrupt database integrity.
@@ -314,6 +334,12 @@ For each resolved gap:
 - **Affected Systems:** Frontend, Plugin Communication
 - **Description:** No degraded state indicators, recovery progress feedback, or user communication during plugin failures.
 - **Phase 2 Recommendation:** Add status communication mechanism and recovery UI patterns
+
+### GAP-UI-002: Plugin Status Dashboard Missing
+- **Priority:** Medium
+- **Affected Systems:** Frontend, Plugin System
+- **Description:** No visual indication of plugin health states, progress tracking for multi-plugin operations, or user controls for plugin management.
+- **Phase 2 Recommendation:** Implement plugin management dashboard with health monitoring and user controls
 
 ### GAP-RESOURCE-001: Plugin Resource Quotas
 - **Priority:** Critical
