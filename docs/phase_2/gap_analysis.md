@@ -254,9 +254,44 @@ For each resolved gap:
 - **Missing:** Idea versioning, fork management, lineage tracking
 - **Phase 2 Impact:** High - enables thought evolution auditbilities
 
+**GAP-EVOLUTION-001: Self-Diagnostic Cognitive Framework**
+- **Classification:** CCE Enhancement | P1 | Architecture
+- **Systems Affected:** CCE, VTC, MeshGraphEngine, Audit Trail
+- **Description:** System capability to analyze its own cognitive bottlenecks and limitations
+- **Missing:** Self-analysis algorithms, bottleneck detection, cognitive pattern recognition
+- **Phase 2 Impact:** Critical - enables autonomous system improvement
+
+**GAP-EVOLUTION-002: Safe Architectural Modification Protocols**
+- **Classification:** DevShell Enhancement | P1 | Security
+- **Systems Affected:** DevShell, Plugin System, Storage Layer
+- **Description:** Sandbox environment for testing self-generated architectural changes
+- **Missing:** Safe evolution boundaries, rollback mechanisms, corruption prevention
+- **Phase 2 Impact:** Critical - prevents system damage during self-modification
+
+**GAP-EVOLUTION-003: Meta-Plugin Generation System**
+- **Classification:** Plugin System | P1 | Architecture
+- **Systems Affected:** Plugin System, LLM Infrastructure, CCE
+- **Description:** Plugins that dynamically create other plugins based on cognitive needs
+- **Missing:** Meta-programming capabilities, dynamic plugin compilation, cognitive need detection
+- **Phase 2 Impact:** High - enables recursive tool creation
+
+**GAP-EVOLUTION-004: Recursive Enhancement Detection**
+- **Classification:** CCE Enhancement | P2 | Technical
+- **Systems Affected:** CCE, VTC, Audit Trail
+- **Description:** Verification that self-modifications genuinely improve capabilities
+- **Missing:** Capability measurement, improvement verification, recursive loop detection
+- **Phase 2 Impact:** High - ensures productive self-evolution
+
+**GAP-EVOLUTION-005: Cognitive Architecture Versioning**
+- **Classification:** Storage Enhancement | P1 | Technical
+- **Systems Affected:** Storage Layer, Audit Trail, Plugin System
+- **Description:** Git-like versioning for system architecture and component states
+- **Missing:** Architecture snapshots, component versioning, safe rollback protocols
+- **Phase 2 Impact:** High - enables safe experimental evolution
+
 ### Updated System Impact Analysis
 **VTC (Vector Translation Core):** 8 gaps (highest impact system)
-**CCE (Cognitive Context Engine):** 6 gaps 
+**CCE (Cognitive Context Engine):** 11 gaps (dramatically expanded for self-modification) 
 **DevShell Environment:** 11 gaps (most complex subsystem)
 **Canvas/Visual Interface:** 6 gaps
 **LLM Infrastructure:** 7 gaps
