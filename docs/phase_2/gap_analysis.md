@@ -219,6 +219,41 @@ For each resolved gap:
 - **Missing:** Query optimization, relationship indexing, performance monitoring
 - **Phase 2 Impact:** High - affects real-time analysis capabilities
 
+**GAP-SOVEREIGNTY-001: Cross-Cultural Semantic Preservation Framework**
+- **Classification:** VTC Enhancement | P1 | Technical
+- **Systems Affected:** Vector Translation Core, MeshGraphEngine
+- **Description:** Semantic abstraction preserving meaning across cognitive styles and languages
+- **Missing:** Cultural metadata integration, cognitive style adaptation, semantic fidelity validation
+- **Phase 2 Impact:** High - required for international deployment
+
+**GAP-SOVEREIGNTY-002: Mesh Network Cognitive Consensus Protocols**
+- **Classification:** MeshGraphEngine | P1 | Architecture
+- **Systems Affected:** MeshGraphEngine, Storage Layer, API
+- **Description:** Peer-to-peer graph synchronization without centralized authority
+- **Missing:** Distributed consensus, conflict resolution, peer discovery
+- **Phase 2 Impact:** High - enables true decentralized operation
+
+**GAP-SOVEREIGNTY-003: Offline-First Cognitive Infrastructure**
+- **Classification:** Storage Enhancement | P1 | Architecture
+- **Systems Affected:** Storage Layer, API Backend, Plugin System
+- **Description:** Complete system operation during internet blackouts
+- **Missing:** Local mesh protocols, offline sync, data persistence
+- **Phase 2 Impact:** Critical - required for resilient deployment
+
+**GAP-SOVEREIGNTY-004: Agent-UI Co-Evolution Framework**
+- **Classification:** DevShell Enhancement | P2 | UX
+- **Systems Affected:** DevShell Environment, Plugin System
+- **Description:** Interface adaptation based on collective cognitive patterns
+- **Missing:** Pattern detection, adaptive UI, collective intelligence metrics
+- **Phase 2 Impact:** Medium - enhances user experience evolution
+
+**GAP-SOVEREIGNTY-005: Cognitive Lineage and Fork Management**
+- **Classification:** Storage Enhancement | P1 | Technical
+- **Systems Affected:** Audit Trail System, Storage Layer
+- **Description:** Git-like versioning for ideas and thought evolution
+- **Missing:** Idea versioning, fork management, lineage tracking
+- **Phase 2 Impact:** High - enables thought evolution auditbilities
+
 ### Updated System Impact Analysis
 **VTC (Vector Translation Core):** 8 gaps (highest impact system)
 **CCE (Cognitive Context Engine):** 6 gaps 
