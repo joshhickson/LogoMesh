@@ -289,12 +289,48 @@ For each resolved gap:
 - **Missing:** Architecture snapshots, component versioning, safe rollback protocols
 - **Phase 2 Impact:** High - enables safe experimental evolution
 
+**GAP-POLYGLOT-001: Multi-Language Plugin Runtime Coordination Missing**
+- **Classification:** Plugin System | P0 | Architecture
+- **Systems Affected:** Plugin System, TaskEngine, Security & Transparency
+- **Description:** No framework for coordinating lifecycle management across heterogeneous plugin runtimes
+- **Missing:** Multi-runtime coordinator, language-specific sandbox management, cross-runtime error isolation
+- **Phase 2 Impact:** Critical - enables polyglot plugin ecosystem
+
+**GAP-POLYGLOT-002: Cross-Runtime Memory Management Missing**
+- **Classification:** Plugin System | P0 | Performance
+- **Systems Affected:** Plugin System, LLM Infrastructure, Storage Layer
+- **Description:** No coordination between different language garbage collectors and memory models
+- **Missing:** Shared memory pools, cross-runtime GC coordination, memory pressure propagation
+- **Phase 2 Impact:** Critical - prevents memory conflicts between language runtimes
+
+**GAP-POLYGLOT-003: Atomic Cross-Language Transaction Support Missing**
+- **Classification:** Storage Enhancement | P0 | Technical
+- **Systems Affected:** Storage Layer, Plugin System, Audit Trail
+- **Description:** No transaction atomicity guarantees across multiple language plugin boundaries
+- **Missing:** Distributed transaction coordinator, cross-language rollback, consistency verification
+- **Phase 2 Impact:** Critical - ensures data integrity in polyglot workflows
+
+**GAP-POLYGLOT-004: Real-Time Deadline Coordination Across Runtimes Missing**
+- **Classification:** TaskEngine Enhancement | P1 | Performance
+- **Systems Affected:** TaskEngine, Plugin System, CCE
+- **Description:** No deadline-aware scheduling that coordinates performance across different language runtimes
+- **Missing:** Cross-runtime deadline scheduler, performance monitoring, adaptive priority management
+- **Phase 2 Impact:** High - enables real-time polyglot coordination
+
+**GAP-POLYGLOT-005: Cross-Language Error Propagation and Recovery Missing**
+- **Classification:** Plugin System | P1 | Technical
+- **Systems Affected:** Plugin System, EventBus, Audit Trail
+- **Description:** No unified error handling that translates exceptions/errors between language paradigms
+- **Missing:** Error translation framework, coordinated rollback protocols, multi-runtime recovery
+- **Phase 2 Impact:** High - ensures robust polyglot error handling
+
 ### Updated System Impact Analysis
 **VTC (Vector Translation Core):** 8 gaps (highest impact system)
 **CCE (Cognitive Context Engine):** 11 gaps (dramatically expanded for self-modification) 
 **DevShell Environment:** 11 gaps (most complex subsystem)
 **Canvas/Visual Interface:** 6 gaps
 **LLM Infrastructure:** 7 gaps
+**Plugin System:** 14 gaps (now includes critical polyglot coordination)
 **Storage Layer:** 5 gaps
 **Plugin System:** 9 gaps (affects all scenarios)ed:** 47
 
