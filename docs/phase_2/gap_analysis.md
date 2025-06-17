@@ -324,15 +324,66 @@ For each resolved gap:
 - **Missing:** Error translation framework, coordinated rollback protocols, multi-runtime recovery
 - **Phase 2 Impact:** High - ensures robust polyglot error handling
 
+**GAP-MURMURATION-001: Large-Scale VR Participant Coordination Missing**
+- **Classification:** Plugin System | P0 | Architecture
+- **Systems Affected:** Plugin System, TaskEngine, EventBus, Storage Layer
+- **Description:** No framework for managing 100+ simultaneous VR participants with real-time state synchronization
+- **Missing:** Distributed participant registry, role-based coordination, graceful participant dropout handling
+- **Phase 2 Impact:** Critical - enables large-scale multiplayer cognitive environments
+
+**GAP-MURMURATION-002: Real-Time Biometric Processing Infrastructure Missing**
+- **Classification:** TaskEngine Enhancement | P0 | Performance
+- **Systems Affected:** TaskEngine, Plugin System, VTC
+- **Description:** No pipeline for processing real-time biometric streams from 100+ participants with <100ms latency
+- **Missing:** Biometric data pipelines, real-time processing guarantees, participant privacy controls
+- **Phase 2 Impact:** Critical - enables cognitive load monitoring for large groups
+
+**GAP-MURMURATION-003: Emergent Pattern Detection in High-Dimensional Spaces Missing**
+- **Classification:** VTC Enhancement | P0 | Technical
+- **Systems Affected:** VTC, MeshGraphEngine, CCE
+- **Description:** No capability to detect emergent cognitive patterns across 100+ simultaneous participants
+- **Missing:** High-dimensional pattern analysis, emergence detection algorithms, collective intelligence metrics
+- **Phase 2 Impact:** Critical - core to breakthrough cognitive research capabilities
+
+**GAP-MURMURATION-004: Distributed Security & Privacy Framework Missing**
+- **Classification:** Security Enhancement | P0 | Security
+- **Systems Affected:** Security & Transparency, Plugin System, Audit Trail
+- **Description:** No privacy-preserving analytics for sensitive biometric and cognitive data at scale
+- **Missing:** Differential privacy, encrypted computation, consent management at scale
+- **Phase 2 Impact:** Critical - required for ethical large-scale cognitive research
+
+**GAP-MURMURATION-005: Scalable Real-Time Rendering Coordination Missing**
+- **Classification:** Canvas Enhancement | P1 | Performance
+- **Systems Affected:** Canvas, Plugin System, TaskEngine
+- **Description:** No coordination of real-time rendering across 100+ VR displays with synchronized updates
+- **Missing:** Distributed rendering coordination, bandwidth adaptation, quality-of-service management
+- **Phase 2 Impact:** High - enables immersive large-scale experiences
+
+**GAP-MURMURATION-006: Intelligent Load Balancing for Cognitive Workloads Missing**
+- **Classification:** TaskEngine Enhancement | P1 | Performance
+- **Systems Affected:** TaskEngine, Plugin System, LLM Infrastructure
+- **Description:** No workload distribution optimized for cognitive analysis patterns and hardware capabilities
+- **Missing:** Cognitive workload analysis, hardware-aware scheduling, dynamic resource reallocation
+- **Phase 2 Impact:** High - ensures performance at research scale
+
+**GAP-MURMURATION-007: Ethical Research Protocol Enforcement Missing**
+- **Classification:** Audit Trail Enhancement | P1 | Ethics
+- **Systems Affected:** Audit Trail, Security & Transparency, Storage Layer
+- **Description:** No automated enforcement of research ethics protocols with audit capabilities
+- **Missing:** Ethics protocol validation, automated consent verification, research audit trails
+- **Phase 2 Impact:** High - ensures responsible cognitive research practices
+
 ### Updated System Impact Analysis
-**VTC (Vector Translation Core):** 8 gaps (highest impact system)
+**VTC (Vector Translation Core):** 9 gaps (includes emergence detection)
 **CCE (Cognitive Context Engine):** 11 gaps (dramatically expanded for self-modification) 
 **DevShell Environment:** 11 gaps (most complex subsystem)
-**Canvas/Visual Interface:** 6 gaps
+**Canvas/Visual Interface:** 7 gaps (now includes large-scale rendering)
 **LLM Infrastructure:** 7 gaps
-**Plugin System:** 14 gaps (now includes critical polyglot coordination)
-**Storage Layer:** 5 gaps
-**Plugin System:** 9 gaps (affects all scenarios)ed:** 47
+**Plugin System:** 17 gaps (now includes large-scale VR coordination)
+**Storage Layer:** 6 gaps (includes distributed privacy)
+**Security & Transparency:** 2 gaps (distributed security framework)
+**TaskEngine & CCE:** 3 gaps (biometric processing, load balancing)
+**Audit Trail:** 2 gaps (ethical research protocols)
 
 ## Gap Statistics by Priority
 - **Critical:** 21 gaps (45%)
