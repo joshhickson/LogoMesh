@@ -191,6 +191,33 @@ Based on current coverage, these areas still need dedicated scenarios:
 5. **Cross-Border Data Laws** - International compliance, data residency requirements
 6. **Disaster Recovery** - Backup/restore procedures, business continuity planning
 
+## 🆕 Strategic Priority Gaps (From ChatGPT Ideas Integration)
+
+### Sovereignty & Anti-Capture Architecture
+- **Model Plurality Framework** - Side-by-side model comparison and selection
+- **Prompt Provenance System** - SelfScope-style transparency showing AI reasoning chains
+- **Fork-Easy Architecture** - Reproducible builds immune to platform throttling
+- **Constitutional Enforcement** - Hardcoded principles that cannot be violated
+
+### Post-Transformer Readiness
+- **Memory Adapter Interface** - Tiered memory systems for next-generation models
+- **Model Capability Manifest** - Compatibility verification for future AI architectures
+- **Quantization-Aware Pipeline** - Adaptive quality scaling for edge deployment
+
+### Agent Safety Prerequisites
+- **Tool Selection Conflict Detection** - Prevent agent coordination failures
+- **Agent Handoff Protocol** - Safe transitions between autonomous components
+- **Layered Guardrail Bus** - Multiple safety systems preventing autonomous drift
+
+### Business Model Integration
+- **Adjacent Revenue Architecture** - Monetization without core platform compromise
+- **Corporate Rugpull Protection** - Resilience against platform dependency
+- **Community Governance Framework** - Distributed decision-making for platform evolution
+
+### Resilience & Manipulation Defense
+- **Rhetoric Detection Framework** - Identification of persuasion techniques and bias
+- **Synthetic Data Generation** - Training data independence from corporate providers
+
 ---
 
 ## Critical Gaps Still Requiring Coverage
