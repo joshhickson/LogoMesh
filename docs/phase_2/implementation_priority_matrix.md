@@ -2,40 +2,43 @@
 
 ## Critical Path Analysis (Top 5 Blockers)
 
-### 1. **Real-Time Processing Architecture** (29 gaps, 7+ scenarios)
+### 1. **Architectural Sovereignty Framework** (47 gaps across scenarios 16-25)
+**Why Critical:** Foundation for user autonomy and anti-capture design
+**Implementation Order:**
+- Model plurality framework with side-by-side comparison (Week 1)
+- Prompt provenance system for transparency (Week 1)
+- Fork-easy architecture with reproducible builds (Week 2)
+- Constitutional enforcement mechanisms (Week 3)
+
+### 2. **Agent Safety Prerequisites** (38 gaps, all advanced scenarios)
+**Why Critical:** Must be bulletproof before any automation
+**Implementation Order:**
+- Tool selection conflict detection (Week 2)
+- Agent handoff protocol design (Week 3)
+- Layered guardrail bus implementation (Week 4)
+- Supreme human override protocol (Week 5)
+
+### 3. **Post-Transformer Readiness** (29 gaps, future-proofing scenarios)
+**Why Critical:** Prepare for next-generation AI architectures
+**Implementation Order:**
+- Memory adapter interface for tiered memory (Week 1-2)
+- Model capability manifest system (Week 2)
+- Quantization-aware pipeline (Week 4)
+- Multi-modal graph schema preparation (Week 5)
+
+### 4. **Real-Time Processing Architecture** (35 gaps, performance scenarios)
 **Why Critical:** Blocks VR, multiplayer, TTS, and live analysis
 **Implementation Order:**
-- Deadline-aware TaskEngine (Week 3)
-- Priority queue system (Week 3)
+- Deadline-aware TaskEngine with priority queues (Week 3)
 - Frame-rate resource allocation (Week 4)
+- Cross-device coordination protocols (Week 5)
 
-### 2. **Plugin System Isolation** (35 gaps, all scenarios)
-**Why Critical:** Foundation for everything else
+### 5. **Enterprise Security Framework** (31 gaps, enterprise scenarios)
+**Why Critical:** Enables production deployment and compliance
 **Implementation Order:**
-- Crash detection and isolation (Week 1)
-- Resource monitoring (Week 2)
-- Multi-language sandboxing (Week 5)
-
-### 3. **Vector Translation Core** (12 gaps, 8 scenarios)
-**Why Critical:** Enables semantic intelligence
-**Implementation Order:**
-- Mock embedding pipeline (Week 1-2)
-- Drift detection (Week 2)
-- Universal translator interface (Week 2)
-
-### 4. **Audit Trail Infrastructure** (21 gaps, all scenarios)
-**Why Critical:** Required for debugging and compliance
-**Implementation Order:**
-- Basic audit logging (Week 1)
-- Chain-of-thought capture (Week 5)
-- Reasoning validation (Week 6)
-
-### 5. **Security & Transparency Framework** (17 gaps, enterprise scenarios)
-**Why Critical:** Enables production deployment
-**Implementation Order:**
-- Safety Mode controls (Week 1)
-- Permission system (Week 5)
-- Hardware security preparation (Week 6)
+- Zero-trust architecture foundation (Week 1)
+- Hardware security module integration (Week 4)
+- Legal fortress enterprise security (Week 6)
 
 ## Strategic Implementation Priority Matrix
 
@@ -79,29 +82,32 @@
 
 ## Weekly Implementation Strategy
 
-### Week 1-2: **Foundation Stabilization**
-- Fix TypeScript errors
-- Implement basic plugin isolation
-- Create audit logging infrastructure
-- Build VTC mock pipeline
+### Week 1-2: **Sovereignty & Safety Foundation**
+- Complete TypeScript migration with safety controls
+- Implement model plurality framework and prompt provenance
+- Create zero-trust security architecture foundation
+- Build memory adapter interface for future AI models
+- Establish constitutional enforcement mechanisms
 
-### Week 3-4: **Core Engine Development**  
-- Real-time TaskEngine with priority queues
-- MeshGraphEngine algorithmic foundation
-- Plugin resource monitoring
-- Vector drift detection
+### Week 3-4: **Agent Safety & Real-Time Systems**  
+- Implement tool selection conflict detection
+- Build deadline-aware TaskEngine with priority queues
+- Create agent handoff protocol framework
+- Develop real-time cross-device coordination
+- Add layered guardrail bus implementation
 
-### Week 5-6: **Advanced Systems**
-- Multi-language plugin sandboxing
-- DevShell security framework
-- Chain-of-thought audit capture
-- TTS cross-platform infrastructure
+### Week 5-6: **Advanced Coordination & Enterprise Security**
+- Complete multi-language plugin orchestration
+- Implement supreme human override protocol
+- Build hardware security module integration
+- Create quantization-aware pipeline
+- Develop enterprise audit and compliance systems
 
-### Week 7-8: **Integration & Polish**
-- End-to-end testing
-- Performance optimization
-- Documentation completion
-- Phase 3 readiness validation
+### Week 7-8: **Integration, Testing & Future-Proofing**
+- Complete multi-modal graph schema preparation
+- Implement comprehensive stress testing
+- Validate all sovereignty and safety mechanisms
+- Complete documentation and Phase 3 readiness assessment
 
 ## Success Metrics (Weekly Gates)
 - **Week 2:** All critical TypeScript errors resolved, basic audit trail working
