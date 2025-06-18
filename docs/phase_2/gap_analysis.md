@@ -266,5 +266,47 @@ Prevents reliable multi-language data operations and consistency guarantees.
 
 **Status:** OPEN
 
+**GAP-POSTGRES-006: Multi-Tenant Database Support**
+- **Classification:** Architecture | P2 | Strategic
+- **Systems Affected:** Storage Layer, Security Framework, Resource Management
+- **Description:** No support for multi-tenant PostgreSQL deployments
+- **Missing:** Tenant isolation, resource quotas, cross-tenant security
+- **Phase 2 Impact:** Medium - enables advanced enterprise deployment models
+
+**GAP-SCIENTIFIC-001: Large-Scale Scientific Workflow Orchestration**
+- **Classification:** Architecture | P1 | Critical
+- **Systems Affected:** TaskEngine, Plugin System, Resource Management
+- **Description:** No framework for coordinating complex scientific experiments with 100+ participants
+- **Missing:** Scientific workflow patterns, participant lifecycle management, experiment state coordination
+- **Phase 2 Impact:** High - required for research-grade deployments
+
+**GAP-SCIENTIFIC-002: Real-Time Data Pipeline Management**
+- **Classification:** Performance | P1 | Critical
+- **Systems Affected:** Storage Layer, VTC, Real-Time Processing
+- **Description:** No capability for managing high-throughput data streams from scientific instruments
+- **Missing:** Stream processing pipelines, data quality validation, real-time aggregation
+- **Phase 2 Impact:** High - essential for scientific data collection and analysis
+
+**GAP-SCIENTIFIC-003: Research Ethics and Compliance Framework**
+- **Classification:** Security | P1 | Critical
+- **Systems Affected:** Security Framework, Audit Trail, Access Control
+- **Description:** No automated enforcement of research ethics protocols and data governance
+- **Missing:** IRB compliance validation, participant consent tracking, data retention policies
+- **Phase 2 Impact:** High - required for institutional research compliance
+
+**GAP-DATABASE-007: Schema Evolution Management**
+- **Classification:** Reliability | P2 | Technical
+- **Systems Affected:** Storage Layer, Database Migration, Version Control
+- **Description:** No systematic approach to database schema evolution across versions
+- **Missing:** Migration versioning, schema diff generation, rollback procedures
+- **Phase 2 Impact:** Medium - important for long-term system maintenance
+
+**GAP-DATABASE-008: Cross-Database Query Optimization**
+- **Classification:** Performance | P2 | Technical
+- **Systems Affected:** Storage Layer, Query Engine, Performance Monitoring
+- **Description:** No optimization framework for queries that span multiple database systems
+- **Missing:** Query plan analysis, cross-DB join optimization, performance profiling
+- **Phase 2 Impact:** Medium - enhances query performance in hybrid deployments
+
 ## Use Case Stress Test Results
 `

@@ -148,3 +148,28 @@ TypeScript Migration → Plugin Isolation → Real-Time Processing
 - Meta-cognitive reflection must be bulletproof before any autonomous code generation
 - Safe code generation pipeline blocks all autonomous system modification
 - These gaps must be resolved in Week 1-2 of implementation
+
+### Critical Path Dependencies (P0)  
+*These gaps block multiple other implementations*
+
+1. **GAP-PLUGIN-001** (Multi-language coordination) → Blocks all advanced plugin scenarios
+2. **GAP-SECURITY-001** (Enterprise security model) → Blocks all enterprise deployments
+3. **GAP-REALTIME-001** (Processing guarantees) → Blocks all real-time scenarios
+4. **GAP-STORAGE-001** (Distributed synchronization) → Blocks all multi-device scenarios
+5. **GAP-COGNITIVE-001** (Reasoning chain assembly) → Blocks advanced AI features
+6. **GAP-SCIENTIFIC-001** (Scientific workflow orchestration) → Blocks research-grade deployments
+7. **GAP-POSTGRES-001** (Live data synchronization) → Blocks enterprise database migrations
+
+### Implementation Clusters
+
+**Cluster A: Plugin Runtime Foundation**
+- GAP-PLUGIN-001, GAP-PLUGIN-002, GAP-PLUGIN-003, GAP-PLUGIN-004
+- Dependencies: None (foundational)  
+- Timeline: Week 1-2 of implementation
+- Risk: High complexity in multi-language coordination
+
+**Cluster F: Scientific Workflow Infrastructure**
+- GAP-SCIENTIFIC-001, GAP-SCIENTIFIC-002, GAP-SCIENTIFIC-003, GAP-MURMURATION-001-007
+- Dependencies: Cluster A (Plugin System), Cluster C (Real-time Processing)
+- Timeline: Week 4-5 of implementation
+- Risk: Research compliance complexity and large-scale coordination challenges
