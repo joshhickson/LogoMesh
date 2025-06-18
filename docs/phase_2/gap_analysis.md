@@ -611,7 +611,7 @@ For each resolved gap:
 - **Missing:** Child-friendly decision explanations, parental AI audit access, educational reasoning transparency
 - **Phase 2 Impact:** High - enables ethical AI use in educational contexts with full parental oversight
 
-**GAP-FAMILY-005: Multi-Device Family Coordination Missing**
+**GAP-FAMILY-005:Multi-Device Family Coordination Missing**
 - **Classification:** Security | P1 | Technical
 - **Systems Affected:** Security Framework, EventBus, Storage Layer, Plugin System
 - **Description:** No secure coordination between parent devices, child devices, and shared family systems
@@ -1174,8 +1174,8 @@ For each resolved gap:
 **GAP-043: Meta-Cognitive Reflection Capabilities**
 - Priority: Critical
 - Systems affected: LLM Infrastructure, CCE, Audit Trail
-- Description: AI system explains its own thinking process and reasoning methodology
-- Missing: Self-reflective analysis, reasoning introspection, cognitive transparency
+- **Description:** AI system explains its own thinking process and reasoning methodology
+- **Missing:** Self-reflective analysis, reasoning introspection, cognitive transparency
 
 **GAP-044: Real-Time Reasoning Chain Visualization**
 - Priority: High
@@ -1209,7 +1209,36 @@ For each resolved gap:
 
 ---
 
-## Implementation Priorities
+## Strategic Implementation Priority Matrix
 
-### Critical Path Items (Must Have for Phase 2)
-<replit_final_file>
+### Phase 2 Foundation Enablers (Must Complete First)
+1. **GAP-SOVEREIGNTY-007:** Model Plurality Framework (Model slots + side-by-side comparison)
+2. **GAP-SOVEREIGNTY-008:** Prompt Provenance System (SelfScope-style transparency)
+3. **GAP-FUTURE-001:** Memory Adapter Interface (Tiered memory for next-gen models)
+4. **GAP-FUTURE-002:** Model Capability Manifest (Compatibility verification)
+5. **GAP-SOVEREIGNTY-009:** Fork-Easy Architecture (Reproducible builds)
+
+### Agent Safety Prerequisites (Before Any Multi-Agent Features)
+1. **GAP-AGENT-001:** Tool Selection Conflict Detection
+2. **GAP-AGENT-002:** Agent Handoff Protocol
+3. **GAP-AGENT-003:** Layered Guardrail Bus
+4. **GAP-SOVEREIGNTY-010:** Constitutional Enforcement
+
+### Business Model Integration Points (Phase 2/3 Bridge)
+1. **GAP-BUSINESS-001:** Adjacent Revenue Architecture
+2. **GAP-RESILIENCE-001:** Corporate Rugpull Protection
+3. **GAP-BUSINESS-003:** Community Governance Framework
+
+### Future-Proofing Investments (Can Wait Until Phase 3)
+1. **GAP-FUTURE-003:** Quantization-Aware Pipeline
+2. **GAP-FUTURE-004:** Multi-Modal Graph Schema
+3. **GAP-BUSINESS-002:** Synthetic Data Generation
+4. **GAP-RESILIENCE-002:** Rhetoric Detection Framework
+
+---
+
+**Target Completion Date:** 35 days from start  
+**Review Cycle:** Weekly progress reviews with milestone validation  
+**Success Metric:** Ready to begin Phase 2 implementation with confidence and clarity
+
+**Constitutional Commitment:** All gap resolutions must preserve the "default-OFF sensors, fork-easy architecture, no mandatory cloud" principles identified in the sovereignty gaps.
