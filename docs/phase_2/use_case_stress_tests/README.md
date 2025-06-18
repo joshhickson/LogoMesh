@@ -90,12 +90,12 @@ When processing a new creative use case story, follow this established methodolo
 - **Distributed coordination** (needed for 4/8+ scenarios)
 
 ### System Priority Rankings
-Based on gap frequency and severity:
+Based on gap frequency and severity across all 34 scenarios:
 1. **Plugin System** - Highest impact (most gaps across all scenarios)
-2. **TaskEngine & CCE** - Cross-cutting coordination issues
-3. **Storage Layer** - Atomic operations and distributed state
-4. **API & Backend** - Multiplayer and real-time networking
-5. **LLM Infrastructure** - Resource management and quotas
+2. **Security Framework** - Cross-cutting enterprise and safety concerns
+3. **TaskEngine & CCE** - Cross-cutting coordination issues
+4. **Storage Layer** - Atomic operations and distributed state
+5. **LLM Infrastructure** - Multi-model orchestration and safety controls
 
 ### Common Gap Categories
 - **Multi-language plugin runtime** coordination
@@ -142,6 +142,18 @@ use_case_stress_tests/
 - Real-time debate platforms with 20+ participants
 - Authoritative state management across diverse devices
 - Session branching, merging, and export workflows
+
+### 6. AI Safety & Research
+- Autonomous red team security testing
+- Controlled AI constraint circumvention for research
+- Academic research assimilation and synthesis
+- Constitutional AI safety enforcement
+
+### 7. Data Sovereignty & Privacy
+- Anti-surveillance architecture design
+- Decentralized data sovereignty frameworks
+- Privacy-preserving analytics and transparency
+- Corporate surveillance resistance patterns
 
 ## Testing Methodology
 
