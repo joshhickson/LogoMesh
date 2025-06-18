@@ -415,6 +415,48 @@ For each resolved gap:
 - **Missing:** Schema versioning, migration rollback, plugin compatibility checking
 - **Phase 2 Impact:** High - enables safe database evolution in production
 
+**GAP-GITHUB-001: GitHub Repository Analysis Engine Missing**
+- **Classification:** Plugin System | P0 | Architecture
+- **Systems Affected:** Plugin System, Security & Transparency, DevShell
+- **Description:** No automated framework for cloning, parsing, and understanding arbitrary GitHub projects
+- **Missing:** Repository analysis, API surface detection, dependency resolution, license compliance
+- **Phase 2 Impact:** Critical - enables universal plugin adaptation from existing codebases
+
+**GAP-GITHUB-002: Universal Code Adapter Framework Missing**
+- **Classification:** Plugin System | P0 | Technical
+- **Systems Affected:** Plugin System, LLM Infrastructure, CCE
+- **Description:** No automatic bridge code generation between external libraries and LogoMesh plugin interface
+- **Missing:** Code generation, data transformation pipelines, interface harmonization, configuration management
+- **Phase 2 Impact:** Critical - transforms LogoMesh into universal cognitive adaptation platform
+
+**GAP-GITHUB-003: Security Sandbox System for Untrusted Code Missing**
+- **Classification:** Security Enhancement | P0 | Security
+- **Systems Affected:** Security & Transparency, Plugin System, TaskEngine
+- **Description:** No secure isolated environment for running and testing untrusted external code
+- **Missing:** Code isolation, resource monitoring, network restrictions, file system protection
+- **Phase 2 Impact:** Critical - enables safe integration of arbitrary external libraries
+
+**GAP-GITHUB-004: Plugin Lifecycle Automation Missing**
+- **Classification:** Plugin System | P1 | Technical
+- **Systems Affected:** Plugin System, Storage Layer, DevShell
+- **Description:** No automated dependency management, version compatibility, and plugin manifest generation
+- **Missing:** Dependency management, version conflicts, plugin metadata generation, hot reload support
+- **Phase 2 Impact:** High - enables seamless external library integration workflow
+
+**GAP-GITHUB-005: Compatibility Assessment Framework Missing**
+- **Classification:** Plugin System | P1 | Technical
+- **Systems Affected:** Plugin System, VTC, LLM Infrastructure
+- **Description:** No automated analysis of external library compatibility with LogoMesh data structures and workflows
+- **Missing:** Compatibility scanning, data format mapping, API pattern analysis, security assessment
+- **Phase 2 Impact:** High - ensures reliable automatic adaptation success rates
+
+**GAP-GITHUB-006: Multi-Ecosystem Package Management Missing**
+- **Classification:** Plugin System | P1 | Technical
+- **Systems Affected:** Plugin System, TaskEngine, Storage Layer
+- **Description:** No support for npm, Python, Ruby, Go modules with unified dependency resolution
+- **Missing:** Multi-language package managers, dependency conflict resolution, unified installation
+- **Phase 2 Impact:** High - enables adaptation from any programming ecosystem
+
 ### Updated System Impact Analysis
 **VTC (Vector Translation Core):** 9 gaps (includes emergence detection)
 **CCE (Cognitive Context Engine):** 11 gaps (dramatically expanded for self-modification) 
