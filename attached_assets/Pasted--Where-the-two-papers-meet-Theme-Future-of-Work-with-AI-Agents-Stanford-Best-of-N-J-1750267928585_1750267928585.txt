@@ -1,0 +1,59 @@
+### Where the two papers meet  
+
+| Theme | *Future of Work with AI Agents* (Stanford) | *Best-of-N Jailbreaking* (BoN) | Connection |
+|-------|-------------------------------------------|--------------------------------|------------|
+| **What they study** | How task-level *agents* will automate/augment work and how much *human agency* workers want in the loop (HAS H1-H5, desire-capability map)  | A black-box red-teaming algorithm that reliably **breaks LLM guard-rails** across text, image and audio by sampling thousands of perturbed prompts  | BoN exposes *security-critical tasks* that organisations will need agents to perform **safely and repeatedly**. |
+| **Key metric** | Alignment between *automation desire* and *technical capability* zones (“Green-light”, “Red-light”, R&D) 2025 AI Agents Paper Stanford.pdf](file-service://file-Mb4ZDpGVVePnExSe1Ke58E) | Attack-success-rate (ASR) that rises with the number N of sampled prompts, following a power-law breaking AI paper.pdf](file-service://file-VNDugVKwDTG9tyvA5UnmB5) | Automated red-teaming is an “R&D-opportunity” task: high organisational desire, but current capability is mostly manual. |
+| **Human role** | 45 % of workers prefer *equal partnership* (H3) with AI agents .2025 AI Agents Paper Stanford.pdf](file-service://file-Mb4ZDpGVVePnExSe1Ke58E) | BoN can be batched, filtered, stopped or tuned by a human safety analyst breaking AI paper.pdf](file-service://file-VNDugVKwDTG9tyvA5UnmB5) | A *penetration-testing agent* would likely live at **H3–H4**: the agent runs BoN loops, a human decides when to escalate or patch. |
+
+---
+
+## Sketching a white-hat *Pen-Test Agent* powered by BoN
+
+1. **Agent skeleton** – follow the practical design pattern of *model + tools + instructions* tical-guide-to-building-agents.pdf](file-service://file-EDG9oBJ18NyQTJg32UAEGq).  
+   ```python
+   bon_tool   = Tool("run_bon_attack", inputs=["prompt", "modalities"])
+   patch_tool = Tool("open_fix_ticket", inputs=["model_id","log"])
+   pen_test   = Agent(
+       name="LLM-RedTeamer",
+       instructions=BASE_PROMPT,
+       tools=[bon_tool, patch_tool],
+       guardrails=[max_budget,$timeout,…]
+   )
+   ```
+2. **Workflow loop**  
+   1. Pull latest high-risk prompts from a threat-intel queue.  
+   2. For each target model & modality, call `run_bon_attack` with a budget **N** tuned to the desired confidence (power-law lets you predict ASR vs N) breaking AI paper.pdf](file-service://file-VNDugVKwDTG9tyvA5UnmB5).  
+   3. Classify outputs; if any cross a harm threshold, open a remediation ticket or auto-patch a policy.
+3. **Human-in-the-loop checkpoints**  
+   * At milestone N₁ (e.g., 1 000 samples) the agent pauses and surfaces interim ASR, cost, and example jailbreaks for review.  
+   * A security engineer can bump the budget, add custom augmentations, or halt the run—consistent with an H3/H4 collaboration band.
+4. **Reporting & skill development**  
+   Map each red-teamed task onto the *HAS* framework so stakeholders know whether full automation is appropriate or if deeper human analysis is still required 2025 AI Agents Paper Stanford.pdf](file-service://file-Mb4ZDpGVVePnExSe1Ke58E).
+
+---
+
+## Why this matters for future penetration testing
+
+* **Scalability** – BoN’s power-law means extra compute buys predictable gains; an agent can automatically tune N to hit a target confidence level instead of a human guessing.  
+* **Multi-modal coverage** – The same agent can attack chat, vision and voice endpoints by swapping modality-specific augmentations in BoN breaking AI paper.pdf](file-service://file-VNDugVKwDTG9tyvA5UnmB5).  
+* **Composable attacks** – BoN composes with prefix or many-shot jailbreaks for  ×28 sample-efficiency improvements, ideal for a cost-sensitive test harness breaking AI paper.pdf](file-service://file-VNDugVKwDTG9tyvA5UnmB5).  
+* **Continuous auditing** – Stanford’s WORKBank shows workers increasingly *want* support for repetitive, specialised security checks; agents fill that “Green-light” gap while keeping humans in control for judgement calls 2025 AI Agents Paper Stanford.pdf](file-service://file-Mb4ZDpGVVePnExSe1Ke58E).
+
+---
+
+## Practical next steps
+
+| Step | Action |
+|------|--------|
+| **1. Prototype** | Wrap the open-sourced BoN code as a tool callable from your favourite agents SDK. |
+| **2. Gate-design** | Decide which HAS level you’re comfortable with (H3 = agent suggests patches; H4 = agent can push hot-fix PRs). |
+| **3. Eval harness** | Use the same HarmBench grader the BoN authors used to keep results apples-to-apples  breaking AI paper.pdf](file-service://file-VNDugVKwDTG9tyvA5UnmB5). |
+| **4. Logs & guardrails** | Store every augmented prompt + response; throttle N or stop early if cost or risk exceeds policy. |
+| **5. Skill transfer** | Feed the found jailbreaks back into fine-tuning or retrieval-based defenses, closing the loop. |
+
+---
+
+### Bottom line
+
+The *AI Agents* paper tells us **where** organisations want agentic automation and how much human steering they expect; the *BoN Jailbreaking* paper delivers a concrete **how** for one critical security task. Marrying them lets you build penetration-testing agents that run tirelessly at machine speed **without** surrendering human oversight—a blueprint for responsible, white-hat hacking in the agentic era.
