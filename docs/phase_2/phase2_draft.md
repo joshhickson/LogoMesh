@@ -12,7 +12,34 @@ Phase 2 focuses on building robust, testable infrastructure foundations for cogn
 
 ## Core Architectural Themes
 
-### Theme 0: Device Diversity & Adaptation Framework
+### Theme 0: Cognitive Sovereignty Architecture  
+*Establishing user autonomy, anti-capture design, and constitutional enforcement*
+
+**Priority: Critical - Foundation**
+
+#### Architectural Sovereignty Framework
+Implement comprehensive user sovereignty and anti-capture mechanisms:
+
+| Sovereignty Layer | Implementation | Anti-Capture Protection |
+|------------------|----------------|------------------------|
+| **Model Plurality** | Side-by-side model comparison, hot-swapping | Prevents vendor lock-in |
+| **Prompt Provenance** | SelfScope-style transparency, audit trails | Enables bias detection |
+| **Fork-Easy Architecture** | Reproducible builds, open standards | Ensures user autonomy |
+| **Constitutional Enforcement** | Human-defined rules, override protocols | Maintains user control |
+
+#### Post-Transformer Readiness
+- **Memory Adapter Interface** for next-generation AI architectures
+- **Model Capability Manifest** system for compatibility verification
+- **Quantization-Aware Pipeline** for efficient local inference
+- **Multi-Modal Graph Schema** for advanced AI integration
+
+#### Agent Safety Prerequisites
+- **Tool Selection Conflict Detection** before any automation
+- **Agent Handoff Protocol** with human oversight
+- **Layered Guardrail Bus** for safety enforcement
+- **Supreme Human Override** for ultimate control
+
+### Theme 1: Device Diversity & Adaptation Framework
 *Establishing universal device compatibility and cross-platform coordination*
 
 **Priority: Critical - Foundation**
@@ -1015,19 +1042,26 @@ interface TTSSpeaker {
 
 ## Success Metrics
 
+### Sovereignty & Safety Metrics
+- Model plurality framework supports 3+ simultaneous models with side-by-side comparison
+- Prompt provenance system captures 100% of AI interactions with full transparency
+- Fork-easy architecture enables complete system reproduction from source
+- Constitutional enforcement prevents all unauthorized AI actions
+- Supreme human override works reliably under all test scenarios
+
 ### Technical Infrastructure Metrics
 - Zero TypeScript compilation errors across entire codebase
 - Sub-200ms response times for all graph operations with mock data
-- Sub-500ms mock semantic search results with deterministic scoring
-- 90%+ uptime for pipeline execution with mock components
+- Agent safety protocols prevent 100% of simulated harmful actions
+- Memory adapter interface supports next-generation AI model integration
 - Complete audit trail for all system operations with zero gaps
 
-### Functional Infrastructure Metrics
-- Successful mock VTC translation between test model pairs
-- Graph traversal supporting 10+ relationship hops with consistent results
-- Pipeline execution with 5+ chained mock tasks completing reliably
-- Template-to-mock-pipeline conversion with <2s latency
-- DevShell can analyze and propose mock code improvements safely
+### Post-Transformer Readiness Metrics
+- Model capability manifest accurately detects AI model capabilities
+- Quantization pipeline reduces model size by 75% with <5% quality loss
+- Multi-modal graph schema supports text, audio, visual, and sensor data
+- Cross-device coordination maintains consistency across 5+ devices
+- Enterprise security framework passes penetration testing
 
 ### User Experience Infrastructure Metrics
 - Graph visualization supports 100+ nodes smoothly with mock data
