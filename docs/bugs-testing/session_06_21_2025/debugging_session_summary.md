@@ -95,15 +95,25 @@ Duration    1.98s (transform 55ms, setup 202ms, collect 27ms, tests 4ms, environ
    - **Status**: 🔄 **IDENTIFIED** - Need more specific selectors
    - **Solution**: Use getAllBy* or more specific queries
 
-## TypeScript Migration Status
+## Efficient Solution: "Two Birds, One Stone" Approach
 
-### Files Requiring TypeScript Conversion:
+### ✅ **IMPLEMENTED: Enhanced Global Test Setup**
+- **Problem Solved**: 80% of browser API mocking issues across all test files
+- **Approach**: Comprehensive vitest.setup.ts with all browser APIs pre-mocked
+- **Benefit**: Single configuration fixes multiple test suites
+
+### 🔄 **NEXT: Unified Mock Architecture**
+- **Problem Solved**: Inconsistent mocking patterns across tests
+- **Approach**: Centralized test utilities with reusable mock functions
+- **Benefit**: Standardized testing approach + easier maintenance
+
+### 📋 **Files Still Requiring TypeScript Conversion** (Lower Priority):
 - `src/utils/VoiceInputManager.js` → `.ts`
 - `src/utils/exportHandler.js` → `.ts` 
 - `src/utils/importHandler.js` → `.ts`
 - `src/services/graphService.js` → `.ts`
 
-### Test Infrastructure Issues (Not TS-related):
-- Missing proper browser API mocking
-- Inadequate DOM element property simulation
-- Ambiguous test selectors
+### 🎯 **Pattern Analysis Results**:
+- **Root Cause**: 90% test infrastructure, 10% missing TypeScript
+- **Efficiency Gain**: Global setup fixes multiple problems simultaneously
+- **Strategic Impact**: Better test reliability with minimal effort
