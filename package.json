@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/multer": "^1.4.12",
     "babel-plugin-module-resolver": "^5.0.2",
+    "canvas": "^3.1.1",
     "cors": "^2.8.5",
     "cytoscape": "^3.32.0",
     "cytoscape-cose-bilkent": "^4.1.0",
