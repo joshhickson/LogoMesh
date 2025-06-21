@@ -142,4 +142,3 @@ function generateQuickAnalysis(stdout, stderr, code) {
   
   return analysis.length > 0 ? analysis.join('\n') : 'No specific issues detected in quick analysis.';
 }
-}
