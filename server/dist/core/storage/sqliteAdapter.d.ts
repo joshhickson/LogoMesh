@@ -1,5 +1,5 @@
-import { StorageAdapter, NewThoughtData, NewSegmentData } from 'contracts/storageAdapter';
-import { Thought, Segment } from 'contracts/entities';
+import { StorageAdapter, NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
+import { Thought, Segment } from '../../contracts/entities';
 /**
  * SQLite implementation of the StorageAdapter interface
  * Handles all database operations with proper DTO <-> DB mapping

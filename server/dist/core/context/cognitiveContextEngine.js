@@ -7,7 +7,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CognitiveContextEngine = void 0;
-const logger_1 = require("../utils/logger");
+const logger_1 = require("../../src/core/utils/logger");
 class CognitiveContextEngine {
     constructor(
     /* Dependencies like IdeaManager, MeshGraphEngine, VTC */

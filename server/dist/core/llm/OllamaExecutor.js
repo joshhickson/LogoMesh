@@ -12,14 +12,6 @@ class OllamaExecutor {
         // Return mocked response
         return `Mocked response for: ${prompt}`;
     }
-    async execute(prompt, options) {
-        const responseString = await this.executePrompt(prompt, options?.metadata);
-        return {
-            response: responseString,
-            model: this.modelName,
-            tokensUsed: responseString.length, // Mock token usage
-        };
-    }
     get supportsStreaming() {
         return false;
     }

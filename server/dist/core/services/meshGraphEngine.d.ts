@@ -1,24 +1,15 @@
+import { Thought } from '../../src/contracts/entities';
 import { StorageAdapter } from '../../contracts/storageAdapter';
 export declare class MeshGraphEngine {
     private storage;
     private weightThreshold;
     constructor(storage: StorageAdapter);
-    /**
-     * Get related thoughts for a given thought
-     * Enhanced stub implementation for CCE semantic traversal
-     */
-    getRelatedThoughts(// Keeping this version
-    thoughtId: string, options?: {
-        maxDepth?: number;
-        relationshipTypes?: string[];
-        semanticThreshold?: number;
-    }): Promise<any[]>;
+    getRelatedThoughts(thoughtId: string, maxResults?: number): Promise<Thought[]>;
     /**
      * Cluster thoughts by tag similarity
      * Enhanced stub implementation for CCE clustering support
      */
-    clusterThoughtsByTag(// Keeping this version
-    thoughts: any[], options?: {
+    clusterThoughtsByTag(thoughts: any[], options?: {
         minClusterSize?: number;
         semanticGrouping?: boolean;
     }): Promise<Record<string, any[]>>;
