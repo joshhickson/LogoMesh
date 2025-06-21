@@ -15,7 +15,7 @@ import portabilityRoutes from './routes/portabilityRoutes';
 import orchestratorRoutes from './routes/orchestratorRoutes';
 
 const app = express();
-const PORT = parseInt(process.env.PORT || "3001", 10); // Ensure PORT is a number
+const PORT = parseInt(process.env.PORT || "5000", 10); // Ensure PORT is a number
 const apiBasePath = '/api/v1'; // Define the base path
 
 // Middleware
