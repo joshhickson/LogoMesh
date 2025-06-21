@@ -1,4 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import React from 'react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 import AddThoughtModal from '../AddThoughtModal';
 
 describe('AddThoughtModal', () => {
@@ -10,16 +12,16 @@ describe('AddThoughtModal', () => {
   beforeEach(() => {
     // mockCreateThought = jest.fn();
     // mockOnClose = jest.fn();
-    window.alert = jest.fn();
+    window.alert = vi.fn();
   });
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('renders all form elements', () => {
-    const mockCreateThought = jest.fn();
-    const mockOnClose = jest.fn();
+    const mockCreateThought = vi.fn();
+    const mockOnClose = vi.fn();
     render(
       <AddThoughtModal
         createThought={mockCreateThought}
@@ -34,8 +36,8 @@ describe('AddThoughtModal', () => {
   });
 
   test('validates title before submission', () => {
-    const mockCreateThought = jest.fn();
-    const mockOnClose = jest.fn();
+    const mockCreateThought = vi.fn();
+    const mockOnClose = vi.fn();
     render(
       <AddThoughtModal
         createThought={mockCreateThought}
@@ -53,8 +55,8 @@ describe('AddThoughtModal', () => {
   });
 
   test('adds and updates segments', () => {
-    const mockCreateThought = jest.fn();
-    const mockOnClose = jest.fn();
+    const mockCreateThought = vi.fn();
+    const mockOnClose = vi.fn();
     render(
       <AddThoughtModal
         createThought={mockCreateThought}
@@ -76,8 +78,8 @@ describe('AddThoughtModal', () => {
   });
 
   test('handles tag addition', () => {
-    const mockCreateThought = jest.fn();
-    const mockOnClose = jest.fn();
+    const mockCreateThought = vi.fn();
+    const mockOnClose = vi.fn();
     render(
       <AddThoughtModal
         createThought={mockCreateThought}
@@ -93,8 +95,8 @@ describe('AddThoughtModal', () => {
   });
 
   test('creates thought with correct data structure', () => {
-    const mockCreateThought = jest.fn();
-    const mockOnClose = jest.fn();
+    const mockCreateThought = vi.fn();
+    const mockOnClose = vi.fn();
     render(
       <AddThoughtModal
         createThought={mockCreateThought}
@@ -134,8 +136,8 @@ describe('AddThoughtModal', () => {
   });
 });
 test('handles voice input correctly', () => {
-  const mockCreateThought = jest.fn();
-  const mockOnClose = jest.fn();
+  const mockCreateThought = vi.fn();
+  const mockOnClose = vi.fn();
   const { getByTitle, getByPlaceholderText } = render(
     <AddThoughtModal createThought={mockCreateThought} onClose={mockOnClose} />
   );

@@ -1,4 +1,5 @@
-import { VoiceInputManager } from '../VoiceInputManager';
+import { describe, test, expect, beforeEach, vi } from 'vitest';
+import VoiceInputManager from '../VoiceInputManager';
 
 describe('VoiceInputManager', () => {
   let mockRecognition;
@@ -6,24 +7,24 @@ describe('VoiceInputManager', () => {
   let onError;
 
   beforeEach(() => {
-    onTranscriptUpdate = jest.fn();
-    onError = jest.fn();
+    onTranscriptUpdate = vi.fn();
+    onError = vi.fn();
 
     mockRecognition = {
-      start: jest.fn(),
-      stop: jest.fn(),
+      start: vi.fn(),
+      stop: vi.fn(),
       continuous: false,
       interimResults: false,
       onresult: null,
       onerror: null,
     };
 
-    window.webkitSpeechRecognition = jest.fn(() => mockRecognition);
+    window.webkitSpeechRecognition = vi.fn(() => mockRecognition);
   });
 
   test('initializes with correct configuration', () => {
-    const onTranscript = jest.fn();
-    const onError = jest.fn();
+    const onTranscript = vi.fn();
+    const onError = vi.fn();
 
     // TODO: This variable was flagged as unused by ESLint.
     // const manager = new VoiceInputManager(onTranscript, onError);

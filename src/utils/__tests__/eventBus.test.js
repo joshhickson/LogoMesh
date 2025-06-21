@@ -18,7 +18,7 @@ describe('eventBus', () => {
   test('IDs follow expected format', () => {
     const bubbleId = newBubbleId();
     const segmentId = newSegmentId();
-    expect(bubbleId).toMatch(/^tb_[a-zA-Z0-9]+$/);
-    expect(segmentId).toMatch(/^seg_[a-zA-Z0-9]+$/);
+    expect(bubbleId).toMatch(/^thought_\d+_[a-z0-9]+$/);
+    expect(segmentId).toMatch(/^segment_\d+_[a-z0-9]+$/);
   });
 });
