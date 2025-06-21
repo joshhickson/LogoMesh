@@ -27,7 +27,7 @@ exports.initializeDatabase = void 0;
 const sqlite3 = __importStar(require("sqlite3"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
-const logger_1 = require("../../src/core/utils/logger");
+const logger_1 = require("../utils/logger");
 /**
  * Initialize the SQLite database with the required schema
  */

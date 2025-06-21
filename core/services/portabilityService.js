@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PortabilityService = void 0;
-const logger_1 = require("../../src/core/utils/logger");
+const logger_1 = require("../utils/logger");
 class PortabilityService {
     constructor(storage) {
         this.storage = storage;
@@ -93,7 +93,8 @@ class PortabilityService {
         try {
             logger_1.logger.info(`[PortabilityService] Exporting cluster ${clusterId} with options:`, options);
             const allThoughts = await this.storage.getAllThoughts();
-            const clusterThoughts = allThoughts.filter(thought => thought.tags?.includes(clusterId));
+            const clusterThoughts = allThoughts.filter(thought => thought.tags?.some(tag => tag.name === clusterId) // Corrected check
+            );
             return {
                 metadata: {
                     exportDate: new Date().toISOString(),
