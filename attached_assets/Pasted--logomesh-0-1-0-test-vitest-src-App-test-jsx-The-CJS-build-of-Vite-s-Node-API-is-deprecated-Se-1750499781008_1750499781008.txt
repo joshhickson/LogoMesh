@@ -1,0 +1,97 @@
+
+> logomesh@0.1.0 test
+> vitest src/App.test.jsx
+
+The CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.
+
+ DEV  v3.2.4 /home/runner/workspace
+
+stdout | src/App.test.jsx
+[API Service] Using API base URL: http://localhost:3001/api/v1
+
+ ❯ src/App.test.jsx (1 test | 1 failed) 107ms
+   × renders main app components 105ms
+     → Invalid Chai property: toBeInTheDocument
+stdout | ErrorLogger.logError (/home/runner/workspace/src/utils/errorLogger.js:82:13)
+Error captured: {
+  type: 'Network Error',
+  message: 'fetch failed',
+  url: 'http://localhost:3001/api/v1/thoughts',
+  stack: 'TypeError: fetch failed\n' +
+    '    at node:internal/deps/undici/undici:12618:11\n' +
+    '    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+    '    at window.fetch (/home/runner/workspace/src/utils/errorLogger.js:56:26)\n' +
+    '    at apiRequest (/home/runner/workspace/src/services/apiService.ts:30:22)\n' +
+    '    at loadInitialData (/home/runner/workspace/src/App.jsx:103:34)',
+  timestamp: '2025-06-21T09:55:54.914Z'
+}
+
+stdout | apiRequest (/home/runner/workspace/src/services/apiService.ts:44:13)
+API request failed for /thoughts: TypeError: fetch failed
+    at node:internal/deps/undici/undici:12618:11
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at window.fetch (/home/runner/workspace/src/utils/errorLogger.js:56:26)
+    at apiRequest (/home/runner/workspace/src/services/apiService.ts:30:22)
+    at loadInitialData (/home/runner/workspace/src/App.jsx:103:34) {
+  cause: Error: connect ECONNREFUSED 127.0.0.1:3001
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1605:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 3001
+  }
+}
+
+stdout | apiRequest (/home/runner/workspace/src/services/apiService.ts:45:13)
+Full error details: {
+  message: 'fetch failed',
+  stack: 'TypeError: fetch failed\n' +
+    '    at node:internal/deps/undici/undici:12618:11\n' +
+    '    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+    '    at window.fetch (/home/runner/workspace/src/utils/errorLogger.js:56:26)\n' +
+    '    at apiRequest (/home/runner/workspace/src/services/apiService.ts:30:22)\n' +
+    '    at loadInitialData (/home/runner/workspace/src/App.jsx:103:34)',
+  url: 'http://localhost:3001/api/v1/thoughts'
+}
+
+stderr | loadInitialData (/home/runner/workspace/src/App.jsx:106:17)
+Backend API not available: TypeError: fetch failed
+    at node:internal/deps/undici/undici:12618:11
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at window.fetch (/home/runner/workspace/src/utils/errorLogger.js:56:26)
+    at apiRequest (/home/runner/workspace/src/services/apiService.ts:30:22)
+    at loadInitialData (/home/runner/workspace/src/App.jsx:103:34) {
+  cause: Error: connect ECONNREFUSED 127.0.0.1:3001
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1605:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 3001
+  }
+}
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.test.jsx > renders main app components
+Error: Invalid Chai property: toBeInTheDocument
+ ❯ src/App.test.jsx:15:43
+     13| test('renders main app components', () => {
+     14|   render(<App />);
+     15|   expect(screen.getByTestId('canvas-mock')).toBeInTheDocument();
+       |                                           ^
+     16| });
+     17| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  09:55:52
+   Duration  2.43s (transform 206ms, setup 39ms, collect 509ms, tests 107ms, environment 862ms, prepare 148ms)
+
+ FAIL  Tests failed. Watching for file changes...
+       press h to show help, press q to quit
