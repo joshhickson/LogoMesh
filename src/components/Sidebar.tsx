@@ -143,7 +143,7 @@ function Sidebar({
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1'}/import/json`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api/v1'}/import/json`, {
         method: 'POST',
         body: formData
       });
