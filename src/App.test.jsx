@@ -1,9 +1,12 @@
 import { render, screen } from '@testing-library/react';
+import { vi, test, expect } from 'vitest';
 import App from './App';
 
-jest.mock('./components/Canvas', () => {
-  return function MockCanvas() {
-    return <div data-testid="canvas-mock" />;
+vi.mock('./components/Canvas', () => {
+  return {
+    default: function MockCanvas() {
+      return <div data-testid="canvas-mock" />;
+    }
   };
 });
 
