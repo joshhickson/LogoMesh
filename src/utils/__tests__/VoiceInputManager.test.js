@@ -7,19 +7,25 @@ describe('VoiceInputManager', () => {
   let onError;
 
   beforeEach(() => {
-    onTranscriptUpdate = vi.fn();
-    onError = vi.fn();
-
+    // Mock window.webkitSpeechRecognition
     mockRecognition = {
       start: vi.fn(),
       stop: vi.fn(),
-      continuous: false,
-      interimResults: false,
       onresult: null,
       onerror: null,
+      continuous: false,
+      interimResults: false,
     };
 
-    window.webkitSpeechRecognition = vi.fn(() => mockRecognition);
+    // Define webkitSpeechRecognition as a configurable property
+    Object.defineProperty(window, 'webkitSpeechRecognition', {
+      value: vi.fn(() => mockRecognition),
+      configurable: true,
+      writable: true
+    });
+
+    onTranscriptUpdate = vi.fn();
+    onError = vi.fn();
   });
 
   test('initializes with correct configuration', () => {
@@ -97,18 +103,17 @@ describe('VoiceInputManager', () => {
   });
 
   test('checks browser support correctly', () => {
-    // TODO: This variable was flagged as unused by ESLint.
-    // const manager = new VoiceInputManager(onTranscriptUpdate, onError);
-    const localManager = new VoiceInputManager(onTranscriptUpdate, onError);
-    expect(localManager.isSupported()).toBe(true);
+    const manager = new VoiceInputManager(onTranscriptUpdate, onError);
+    expect(manager.isSupported()).toBe(true);
 
-    // Mock unsupported browser
-    const originalSpeechRecognition = window.webkitSpeechRecognition;
-    window.webkitSpeechRecognition = undefined;
+    // Test when not supported
+    Object.defineProperty(window, 'webkitSpeechRecognition', {
+      value: undefined,
+      configurable: true,
+      writable: true
+    });
+
     const unsupportedManager = new VoiceInputManager(onTranscriptUpdate, onError);
     expect(unsupportedManager.isSupported()).toBe(false);
-    
-    // Restore
-    window.webkitSpeechRecognition = originalSpeechRecognition;
   });
 });

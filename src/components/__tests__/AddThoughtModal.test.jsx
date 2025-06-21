@@ -163,7 +163,11 @@ test('handles voice input correctly', () => {
   ).not.toBeInTheDocument();
 
   // Test browser support error
-  delete window.webkitSpeechRecognition;
+  Object.defineProperty(window, 'webkitSpeechRecognition', {
+    value: undefined,
+    configurable: true,
+    writable: true
+  });
   fireEvent.click(micButton);
   expect(window.alert).toHaveBeenCalledWith(
     'Speech recognition is not supported in your browser'
