@@ -1,0 +1,29 @@
+6. Content Revisions & New Files (To be done by Claude after moves):
+
+File to Revise: docs/phase_2/01_PLANNING_AND_DESIGN/ROADMAPS_AND_SCHEDULES/phase_2_PLANNING_COMPLETION_LOG.md
+
+Action: Drastically rephrase to remove ambiguity about code implementation.
+Ensure the title clearly reflects it's a planning log.
+Rewrite introductory text to state it tracks planning and specification task completion.
+Change all "✅ COMPLETED" markers to "✅ SPECIFICATION COMPLETED" or "✅ PLANNING TASK COMPLETED".
+Remove or rephrase triumphal language like "🏆 PHASE 2 COMPLETION ACHIEVED." Replace with "Phase 2 Specification Phase Concluded."
+Ensure the initial disclaimer about it being a log of planning is very prominent.
+File to Create: A new main docs/phase_2/README.md (at the root of docs/phase_2/)
+
+Content: This README should explain the new top-level directory structure:
+00_CURRENT_STATE/: Purpose (e.g., "Documents reflecting the actual implemented state of the project after Phase 1 and any subsequent minor updates. Phase 2 features will only appear here post-implementation.")
+01_PLANNING_AND_DESIGN/: Purpose (e.g., "All documents related to the planning, specification, analysis, and roadmapping of Phase 2 features. THIS IS THE PRIMARY FOLDER FOR UNDERSTANDING PHASE 2 PLANS.")
+02_EXPLORATIONS_AND_IDEAS/: Purpose (e.g., "Hypothetical scenarios, brainstorming, and suggestions not yet part of the formal Phase 2 plan.")
+ZZ_ARCHIVE/: Purpose (e.g., "Outdated or superseded planning documents for historical reference.")
+It should guide users to 01_PLANNING_AND_DESIGN/README.md for more details on the planning documents.
+File to Update: docs/phase_2/01_PLANNING_AND_DESIGN/README.md (which was the original docs/phase_2/README.md)
+
+Action: Update its content to explain the new structure within 01_PLANNING_AND_DESIGN:
+SPECIFICATIONS/: Purpose (e.g., "Core design blueprints, detailed component specifications, and architectural diagrams for planned Phase 2 features. Key document: phase2_core_specifications.md.")
+ANALYSIS_AND_REPORTS/: Purpose (e.g., "Supporting analyses, gap reviews, planning progress reports, and strategic recommendations related to Phase 2 planning.")
+ROADMAPS_AND_SCHEDULES/: Purpose (e.g., "Timelines, critical path analyses, implementation priorities, and logs tracking the completion of planning and specification tasks.")
+Important Considerations for Claude:
+
+For steps 4 and 5, Claude should dynamically list files in docs/phase_2/ to ensure all relevant Addendum and 'day_X' files are processed.
+Care should be taken with filenames containing spaces or special characters, using quotes or escapes as needed for the mv command.
+The content revisions for phase2_core_specifications.md and phase2_architecture_diagram.md that I (Jules) performed earlier will persist in their new locations. The main content revision for Claude will be for phase_2_PLANNING_COMPLETION_LOG.md and the READMEs.
