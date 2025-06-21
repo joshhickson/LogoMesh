@@ -44,7 +44,7 @@ describe('Sidebar', () => {
 
   test('filters thoughts based on field name', () => {
     render(<Sidebar {...mockProps} />);
-    const select = screen.getByRole('combobox', { multiple: true });
+    const select = screen.getByRole('listbox');
     fireEvent.change(select, { target: { value: 'domain' } });
     expect(mockProps.setActiveFilters).toHaveBeenCalled();
   });

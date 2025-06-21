@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 
@@ -15,7 +15,11 @@ const Canvas = React.lazy(() => import('../Canvas'));
 
 describe('Canvas', () => {
   it('renders without crashing', () => {
-    const { getByTestId } = render(<Canvas />);
+    const { getByTestId } = render(
+      <Suspense fallback={<div>Loading...</div>}>
+        <Canvas />
+      </Suspense>
+    );
     expect(getByTestId('cytoscape-mock')).toBeInTheDocument();
   });
 });
