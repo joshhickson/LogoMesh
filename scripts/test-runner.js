@@ -1,4 +1,3 @@
-
 #!/usr/bin/env node
 
 /**
@@ -87,58 +86,58 @@ ${generateQuickAnalysis(stdout, stderr, code)}
 
   // Write the report
   fs.writeFileSync(outputFile, report);
-  
+
   console.log(`\n📋 Test report saved to: ${outputFile}`);
   console.log(`📊 Test ${code === 0 ? 'PASSED' : 'FAILED'} with exit code: ${code}`);
-  
+
   // Also create a "latest" symlink for easy access
   const latestFile = path.join(testResultsDir, 'latest-test-run.txt');
   if (fs.existsSync(latestFile)) {
     fs.unlinkSync(latestFile);
   }
   fs.writeFileSync(latestFile, report);
-  
+
   process.exit(code);
 });
 
 function generateQuickAnalysis(stdout, stderr, code) {
   const analysis = [];
-  
+
   // Test count analysis
   const testCountMatch = stdout.match(/(\d+) passed/);
   const testFailMatch = stdout.match(/(\d+) failed/);
-  
+
   if (testCountMatch) {
     analysis.push(`✅ ${testCountMatch[1]} tests passed`);
   }
-  
+
   if (testFailMatch) {
     analysis.push(`❌ ${testFailMatch[1]} tests failed`);
   }
-  
+
   // Common error patterns
   if (stderr.includes('CJS build of Vite\'s Node API is deprecated')) {
     analysis.push('⚠️  Vite CJS deprecation warning detected');
   }
-  
+
   if (stdout.includes('webkitSpeechRecognition')) {
     analysis.push('🎤 Speech recognition test issues detected');
   }
-  
+
   if (stdout.includes('HTMLCanvasElement')) {
     analysis.push('🎨 Canvas element test issues detected');
   }
-  
+
   if (stdout.includes('multiple elements with the role')) {
     analysis.push('🔍 DOM query selector ambiguity detected');
   }
-  
+
   // Performance analysis
   const durationMatch = stdout.match(/Duration\s+(\d+\.?\d*)s/);
   if (durationMatch) {
     const duration = parseFloat(durationMatch[1]);
     analysis.push(`⏱️  Test duration: ${duration}s ${duration > 30 ? '(slow)' : '(good)'}`);
   }
-  
+
   return analysis.length > 0 ? analysis.join('\n') : 'No specific issues detected in quick analysis.';
 }
