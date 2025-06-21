@@ -1,0 +1,74 @@
+Failed to compile.
+
+[eslint] 
+src/components/AddThoughtModal.jsx
+  Line 22:27:  'useRef' is not defined  no-undef
+
+Search for the keywords to learn more about each error.
+WARNING in [eslint] 
+src/App.jsx
+  Line 1:8:    'React' is defined but never used                   no-unused-vars
+  Line 1:8:    'React' is defined but never used                   @typescript-eslint/no-unused-vars
+  Line 11:10:  'activeFilters' is assigned a value but never used  no-unused-vars
+  Line 11:10:  'activeFilters' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/components/AddThoughtModal.jsx
+  Line 1:8:  'React' is defined but never used  no-unused-vars
+  Line 1:8:  'React' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/components/Canvas.jsx
+  Line 3:8:   'React' is defined but never used        no-unused-vars
+  Line 3:8:   'React' is defined but never used        @typescript-eslint/no-unused-vars
+  Line 3:38:  'useCallback' is defined but never used  no-unused-vars
+  Line 3:38:  'useCallback' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/components/Sidebar.tsx
+  Line 16:27:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 114:11:  Forbidden non-null assertion              @typescript-eslint/no-non-null-assertion
+  Line 160:21:  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+src/components/ThoughtDetailPanel.jsx
+  Line 1:8:    'React' is defined but never used             no-unused-vars
+  Line 1:8:    'React' is defined but never used             @typescript-eslint/no-unused-vars
+  Line 1:17:   'useState' is defined but never used          no-unused-vars
+  Line 1:17:   'useState' is defined but never used          @typescript-eslint/no-unused-vars
+  Line 1:27:   'useEffect' is defined but never used         no-unused-vars
+  Line 1:27:   'useEffect' is defined but never used         @typescript-eslint/no-unused-vars
+  Line 19:13:  'segment' is assigned a value but never used  no-unused-vars
+  Line 19:13:  'segment' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  Line 38:11:  'segment' is assigned a value but never used  no-unused-vars
+  Line 38:11:  'segment' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  Line 47:46:  'fieldName' is defined but never used         no-unused-vars
+  Line 47:46:  'fieldName' is defined but never used         @typescript-eslint/no-unused-vars
+  Line 48:11:  'segment' is assigned a value but never used  no-unused-vars
+  Line 48:11:  'segment' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  Line 57:32:  'localSegmentId' is defined but never used    no-unused-vars
+  Line 57:32:  'localSegmentId' is defined but never used    @typescript-eslint/no-unused-vars
+
+src/index.js
+  Line 5:8:  'reportWebVitals' is defined but never used  no-unused-vars
+  Line 5:8:  'reportWebVitals' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 6:8:  'errorLogger' is defined but never used      no-unused-vars
+  Line 6:8:  'errorLogger' is defined but never used      @typescript-eslint/no-unused-vars
+
+src/services/apiService.ts
+  Line 12:11:   'FetchOptions' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 43:19:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 56:21:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 60:21:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 64:21:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 71:21:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 85:21:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 92:21:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 136:76:  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 137:21:  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 146:21:  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+ERROR in [eslint] 
+src/components/AddThoughtModal.jsx
+  Line 22:27:  'useRef' is not defined  no-undef
+
+Search for the keywords to learn more about each error.
+
+webpack compiled with 1 error and 1 warning
+No issues found.

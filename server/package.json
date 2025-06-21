@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "node_modules/.bin/tsc && cp -r ../core ./dist/",
-    "start": "node dist/src/index.js",
-    "dev": "tsc && node dist/src/index.js",
+    "start": "node dist/server/src/index.js",
+    "dev": "tsc && node dist/server/src/index.js",
     "watch": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
