@@ -1,6 +1,23 @@
 
 #!/usr/bin/env node
 
+/**
+ * Test Runner Script
+ * Date: 06.21.2025
+ * 
+ * This script runs the npm test command and captures comprehensive output
+ * for analysis and debugging. It saves detailed test results including:
+ * - Standard output and error streams
+ * - Test pass/fail counts and duration
+ * - Quick analysis of common issues (Canvas API, Speech Recognition, etc.)
+ * - Environment information
+ * 
+ * Output files are saved to test-results/ directory with timestamps,
+ * and a latest-test-run.txt file is maintained for easy access.
+ * 
+ * Usage: npm run test:capture
+ */
+
 const { spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
