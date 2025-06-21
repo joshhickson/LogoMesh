@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { graphService } from '../services/graphService';
 
 // TODO: This variable was flagged as unused by ESLint.

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Canvas from './components/Canvas';
 import Sidebar from './components/Sidebar';
 import ThoughtDetailPanel from './components/ThoughtDetailPanel';
