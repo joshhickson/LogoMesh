@@ -2,11 +2,12 @@ import { exportToJsonFile } from '../exportHandler';
 import { importFromJsonFile } from '../importHandler';
 // TODO: This variable was flagged as unused by ESLint.
 // import { newBubbleId, newSegmentId } from '../eventBus';
+import { describe, test, expect, beforeEach, vi } from 'vitest';
 
 // Mock eventBus functions
-jest.mock('../eventBus', () => ({
-  newBubbleId: jest.fn().mockReturnValue('test-bubble-id'),
-  newSegmentId: jest.fn().mockReturnValue('test-segment-id'),
+vi.mock('../eventBus', () => ({
+  newBubbleId: vi.fn().mockReturnValue('test-bubble-id'),
+  newSegmentId: vi.fn().mockReturnValue('test-segment-id'),
 }));
 
 describe('Data Handling', () => {
@@ -32,25 +33,25 @@ describe('Data Handling', () => {
 
   beforeEach(() => {
     // Mock DOM elements
-    global.URL.createObjectURL = jest.fn();
-    document.createElement = jest.fn().mockReturnValue({
-      setAttribute: jest.fn(),
-      click: jest.fn(),
-      remove: jest.fn(),
+    global.URL.createObjectURL = vi.fn();
+    document.createElement = vi.fn().mockReturnValue({
+      setAttribute: vi.fn(),
+      click: vi.fn(),
+      remove: vi.fn(),
       type: '',
       accept: '',
       onchange: null,
     });
-    document.body.appendChild = jest.fn();
+    document.body.appendChild = vi.fn();
   });
 
   describe('Export Handler', () => {
     test('exports with correct metadata structure', () => {
-      const appendChildSpy = jest.spyOn(document.body, 'appendChild');
+      const appendChildSpy = vi.spyOn(document.body, 'appendChild');
       // TODO: This variable was flagged as unused by ESLint.
       // const mockBlob = new Blob(['{}'], { type: 'application/json' });
       const mockUrl = 'data:application/json;base64,e30=';
-      global.URL.createObjectURL = jest.fn(() => mockUrl);
+      global.URL.createObjectURL = vi.fn(() => mockUrl);
 
       exportToJsonFile(mockThoughts);
       expect(appendChildSpy).toHaveBeenCalled();
@@ -71,13 +72,13 @@ describe('Data Handling', () => {
         ],
       };
 
-      const callback = jest.fn();
+      const callback = vi.fn();
       const fileReader = {
         result: JSON.stringify([legacyThought]),
-        readAsText: jest.fn(),
+        readAsText: vi.fn(),
       };
 
-      global.FileReader = jest.fn(() => fileReader);
+      global.FileReader = vi.fn(() => fileReader);
 
       importFromJsonFile(callback);
 
@@ -119,13 +120,13 @@ describe('Data Handling', () => {
         thoughts: mockThoughts,
       };
 
-      const callback = jest.fn();
+      const callback = vi.fn();
       const fileReader = {
         result: JSON.stringify(modernExport),
-        readAsText: jest.fn(),
+        readAsText: vi.fn(),
       };
 
-      global.FileReader = jest.fn(() => fileReader);
+      global.FileReader = vi.fn(() => fileReader);
 
       importFromJsonFile(callback);
 
