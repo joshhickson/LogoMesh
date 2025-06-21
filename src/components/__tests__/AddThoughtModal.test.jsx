@@ -136,6 +136,22 @@ describe('AddThoughtModal', () => {
   });
 });
 test('handles voice input correctly', () => {
+  // Setup speech recognition mock before render
+  const mockRecognition = {
+    start: vi.fn(),
+    stop: vi.fn(),
+    onresult: null,
+    onerror: null,
+    continuous: false,
+    interimResults: false,
+  };
+
+  Object.defineProperty(window, 'webkitSpeechRecognition', {
+    value: vi.fn(() => mockRecognition),
+    configurable: true,
+    writable: true
+  });
+
   const mockCreateThought = vi.fn();
   const mockOnClose = vi.fn();
   const { getByTitle, getByPlaceholderText } = render(
@@ -163,11 +179,7 @@ test('handles voice input correctly', () => {
   ).not.toBeInTheDocument();
 
   // Test browser support error
-  Object.defineProperty(window, 'webkitSpeechRecognition', {
-    value: undefined,
-    configurable: true,
-    writable: true
-  });
+  delete window.webkitSpeechRecognition;
   fireEvent.click(micButton);
   expect(window.alert).toHaveBeenCalledWith(
     'Speech recognition is not supported in your browser'

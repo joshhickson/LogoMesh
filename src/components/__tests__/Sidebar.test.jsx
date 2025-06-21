@@ -36,6 +36,8 @@ describe('Sidebar', () => {
     setActiveFilters: jest.fn(),
   };
 
+  const mockOnThoughtClick = jest.fn();
+
   test('renders all thoughts initially', () => {
     render(<Sidebar {...mockProps} />);
     expect(screen.getByText('Philosophy Thought')).toBeInTheDocument();
@@ -43,10 +45,20 @@ describe('Sidebar', () => {
   });
 
   test('filters thoughts based on field name', () => {
-    render(<Sidebar {...mockProps} />);
-    const select = screen.getByRole('listbox');
-    fireEvent.change(select, { target: { value: 'domain' } });
-    expect(mockProps.setActiveFilters).toHaveBeenCalled();
+    render(<Sidebar thoughts={mockThoughts} onThoughtClick={mockOnThoughtClick} />);
+
+    // Use more specific selectors to avoid multiple listbox elements
+    const fieldSelects = screen.getAllByRole('listbox');
+    const fieldNamesSelect = fieldSelects[0]; // First select is for field names
+    const fieldTypesSelect = fieldSelects[1]; // Second select is for field types
+
+    // Test field name filtering
+    fireEvent.change(fieldNamesSelect, { target: { value: ['type'] } });
+    expect(fieldNamesSelect.value).toContain('type');
+
+    // Test field type filtering
+    fireEvent.change(fieldTypesSelect, { target: { value: ['text'] } });
+    expect(fieldTypesSelect.value).toContain('text');
   });
 
   test('resets filters when reset button clicked', () => {

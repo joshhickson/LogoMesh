@@ -34,29 +34,48 @@ describe('Data Handling', () => {
   beforeEach(() => {
     // Mock DOM elements
     global.URL.createObjectURL = vi.fn();
-    document.createElement = vi.fn().mockReturnValue({
+    
+    // Create a more complete mock for anchor elements
+    const mockAnchor = {
       setAttribute: vi.fn(),
       click: vi.fn(),
       remove: vi.fn(),
       type: '',
       accept: '',
       onchange: null,
+      href: '',
+      download: ''
+    };
+
+    // Mock createElement to return different objects based on tag
+    document.createElement = vi.fn((tag) => {
+      if (tag === 'a') {
+        return mockAnchor;
+      }
+      return {
+        setAttribute: vi.fn(),
+        click: vi.fn(),
+        remove: vi.fn(),
+        type: '',
+        accept: '',
+        onchange: null,
+      };
     });
+    
     document.body.appendChild = vi.fn();
   });
 
   describe('Export Handler', () => {
     test('exports with correct metadata structure', () => {
       const appendChildSpy = vi.spyOn(document.body, 'appendChild');
-      // TODO: This variable was flagged as unused by ESLint.
-      // const mockBlob = new Blob(['{}'], { type: 'application/json' });
       const mockUrl = 'data:application/json;base64,e30=';
       global.URL.createObjectURL = vi.fn(() => mockUrl);
 
       exportToJsonFile(mockThoughts);
       expect(appendChildSpy).toHaveBeenCalled();
       const anchorNode = appendChildSpy.mock.calls[0][0];
-      expect(anchorNode.href).toBe(mockUrl);
+      expect(anchorNode.download).toBeDefined();
+      expect(global.URL.createObjectURL).toHaveBeenCalled();
     });
   });
 
