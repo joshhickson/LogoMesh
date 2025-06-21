@@ -7,30 +7,13 @@ describe('VoiceInputManager', () => {
   let onError;
 
   beforeEach(() => {
-    // Clear any existing property
-    if ('webkitSpeechRecognition' in window) {
-      delete window.webkitSpeechRecognition;
+    // Reset the mock before each test
+    vi.clearAllMocks();
+
+    // Ensure webkitSpeechRecognition is available globally
+    if (!global.webkitSpeechRecognition) {
+      global.webkitSpeechRecognition = window.webkitSpeechRecognition;
     }
-
-    // Mock window.webkitSpeechRecognition
-    mockRecognition = {
-      start: vi.fn(),
-      stop: vi.fn(),
-      onresult: null,
-      onerror: null,
-      continuous: false,
-      interimResults: false,
-    };
-
-    // Define webkitSpeechRecognition as a configurable property
-    Object.defineProperty(window, 'webkitSpeechRecognition', {
-      value: vi.fn(() => mockRecognition),
-      configurable: true,
-      writable: true
-    });
-
-    onTranscriptUpdate = vi.fn();
-    onError = vi.fn();
   });
 
   test('initializes with correct configuration', () => {
@@ -120,5 +103,11 @@ describe('VoiceInputManager', () => {
 
     const unsupportedManager = new VoiceInputManager(onTranscriptUpdate, onError);
     expect(unsupportedManager.isSupported()).toBe(false);
+  });
+
+  it('should initialize with default options', () => {
+    const manager = new VoiceInputManager();
+    expect(manager).toBeDefined();
+    expect(manager.isSupported()).toBe(true);
   });
 });

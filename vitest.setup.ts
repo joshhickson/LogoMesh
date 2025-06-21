@@ -274,3 +274,142 @@ Object.defineProperty(window, 'sessionStorage', {
   value: createStorage(),
   configurable: true
 });
+// Mock webkitSpeechRecognition with proper constructor
+class MockSpeechRecognition {
+  constructor() {
+    this.continuous = false;
+    this.interimResults = false;
+    this.lang = 'en-US';
+    this.maxAlternatives = 1;
+    this.serviceURI = '';
+    this.grammars = null;
+    this.onstart = null;
+    this.onend = null;
+    this.onerror = null;
+    this.onresult = null;
+    this.onnomatch = null;
+    this.onsoundstart = null;
+    this.onsoundend = null;
+    this.onspeechstart = null;
+    this.onspeechend = null;
+    this.onaudiostart = null;
+    this.onaudioend = null;
+  }
+
+  start() {}
+  stop() {}
+  abort() {}
+  addEventListener() {}
+  removeEventListener() {}
+}
+
+Object.defineProperty(window, 'webkitSpeechRecognition', {
+  writable: true,
+  value: MockSpeechRecognition
+});
+
+Object.defineProperty(window, 'SpeechRecognition', {
+  writable: true,
+  value: MockSpeechRecognition
+});
+// Mock HTMLCanvasElement with comprehensive 2D context
+Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+  writable: true,
+  value: vi.fn().mockImplementation((contextType) => {
+    if (contextType === '2d') {
+      return {
+        // Drawing rectangles
+        fillRect: vi.fn(),
+        clearRect: vi.fn(),
+        strokeRect: vi.fn(),
+
+        // Drawing paths
+        beginPath: vi.fn(),
+        moveTo: vi.fn(),
+        lineTo: vi.fn(),
+        closePath: vi.fn(),
+        stroke: vi.fn(),
+        fill: vi.fn(),
+        arc: vi.fn(),
+        arcTo: vi.fn(),
+        quadraticCurveTo: vi.fn(),
+        bezierCurveTo: vi.fn(),
+        rect: vi.fn(),
+        clip: vi.fn(),
+
+        // Transformations
+        translate: vi.fn(),
+        rotate: vi.fn(),
+        scale: vi.fn(),
+        transform: vi.fn(),
+        setTransform: vi.fn(),
+        resetTransform: vi.fn(),
+
+        // Image data
+        getImageData: vi.fn(() => ({
+          data: new Uint8ClampedArray(4),
+          width: 1,
+          height: 1
+        })),
+        putImageData: vi.fn(),
+        createImageData: vi.fn(() => ({ 
+          data: new Uint8ClampedArray(4),
+          width: 1,
+          height: 1 
+        })),
+
+        // Drawing images
+        drawImage: vi.fn(),
+
+        // State
+        save: vi.fn(),
+        restore: vi.fn(),
+
+        // Text
+        fillText: vi.fn(),
+        strokeText: vi.fn(),
+        measureText: vi.fn(() => ({ 
+          width: 0,
+          actualBoundingBoxLeft: 0,
+          actualBoundingBoxRight: 0,
+          actualBoundingBoxAscent: 0,
+          actualBoundingBoxDescent: 0
+        })),
+
+        // Styles
+        fillStyle: '#000000',
+        strokeStyle: '#000000',
+        lineWidth: 1,
+        lineCap: 'butt',
+        lineJoin: 'miter',
+        miterLimit: 10,
+        font: '10px sans-serif',
+        textAlign: 'start',
+        textBaseline: 'alphabetic',
+        globalAlpha: 1,
+        globalCompositeOperation: 'source-over',
+
+        // Gradients and patterns
+        createLinearGradient: vi.fn(() => ({
+          addColorStop: vi.fn()
+        })),
+        createRadialGradient: vi.fn(() => ({
+          addColorStop: vi.fn()
+        })),
+        createPattern: vi.fn()
+      };
+    }
+    return null;
+  })
+});
+
+// Mock canvas dimensions
+Object.defineProperty(HTMLCanvasElement.prototype, 'width', {
+  writable: true,
+  value: 300
+});
+
+Object.defineProperty(HTMLCanvasElement.prototype, 'height', {
+  writable: true,
+  value: 150
+});

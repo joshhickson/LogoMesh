@@ -1,4 +1,3 @@
-
 /**
  * Auto Error Logger - Captures and exports errors automatically
  */
@@ -80,7 +79,7 @@ class ErrorLogger {
   logError(errorData) {
     this.errors.push(errorData);
     console.log('Error captured:', errorData);
-    
+
     // Store in localStorage for persistence
     this.saveToLocalStorage();
   }
@@ -231,6 +230,50 @@ class ErrorLogger {
   getErrorsByType(type) {
     return this.errors.filter(error => error.type === type);
   }
+}
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001/api/v1';
+
+const saveError = async (error) => {
+  if (!shouldExportErrors()) {
+    return; // Don't save if exports are disabled
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/save-errors`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        type: error.type || 'Unknown Error',
+        message: error.message || 'No message provided',
+        stack: error.stack || 'No stack trace',
+        url: error.url || window.location.href,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent,
+        sessionId: getSessionId()
+      }),
+    });
+
+    if (!response.ok) {
+      // If the API route doesn't exist (404), disable error exports to prevent spam
+      if (response.status === 404) {
+        localStorage.setItem('logomesh_disable_error_exports', 'true');
+        console.warn('Error logging API not available, disabling automatic error exports');
+        return;
+      }
+      console.warn(`Failed to save error: ${response.status} ${response.statusText}`);
+    }
+  } catch (saveError) {
+    console.warn('Error saving error to server:', saveError);
+  }
+};
+
+function shouldExportErrors() {
+    // Check if error exports are disabled in localStorage
+    const disabled = localStorage.getItem('logomesh_disable_error_exports');
+    return disabled !== 'true'; // Only export if the value is not 'true'
 }
 
 // Initialize the error logger
