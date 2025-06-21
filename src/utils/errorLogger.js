@@ -105,19 +105,20 @@ class ErrorLogger {
   }
 
   setupPeriodicExport() {
-    // Auto-export errors every 5 minutes
-    setInterval(() => {
-      if (this.errors.length > 0) {
-        this.exportErrors();
-      }
-    }, 5 * 60 * 1000);
+    // Automatic export disabled - only manual export available
+    // Auto-export errors every 5 minutes - DISABLED
+    // setInterval(() => {
+    //   if (this.errors.length > 0) {
+    //     this.exportErrors();
+    //   }
+    // }, 5 * 60 * 1000);
 
-    // Export on page unload
-    window.addEventListener('beforeunload', () => {
-      if (this.errors.length > 0) {
-        this.exportErrors();
-      }
-    });
+    // Export on page unload - DISABLED
+    // window.addEventListener('beforeunload', () => {
+    //   if (this.errors.length > 0) {
+    //     this.exportErrors();
+    //   }
+    // });
   }
 
   exportErrors() {
@@ -149,25 +150,9 @@ class ErrorLogger {
   }
 
   async saveToProjectFolder(exportData, timestamp) {
-    try {
-      const response = await fetch('/api/v1/admin/save-errors', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          filename: `error-export-${timestamp}.json`,
-          data: exportData
-        })
-      });
-
-      if (response.ok) {
-        console.log('Errors saved to project folder');
-      }
-    } catch (error) {
-      // Silently fail if backend not available
-      console.log('Backend not available for project folder saving');
-    }
+    // Backend save disabled to prevent 404 errors
+    console.log('Project folder saving disabled - manual export only');
+    return;
   }
 
   categorizeErrors() {
