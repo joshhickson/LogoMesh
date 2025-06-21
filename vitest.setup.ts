@@ -1,159 +1,276 @@
-
+// Global test setup for Vitest
 import { vi } from 'vitest';
-import '@testing-library/jest-dom';
 
-// Make vi globally available as jest for compatibility
-global.jest = vi;
+// Mock window.alert globally
+global.alert = vi.fn();
 
-// ==============================================
-// COMPREHENSIVE BROWSER API MOCKING
-// ==============================================
-
-// Speech Recognition APIs
-const createMockSpeechRecognition = () => ({
+// Mock speech recognition with comprehensive implementation
+const mockSpeechRecognition = {
   start: vi.fn(),
   stop: vi.fn(),
-  addEventListener: vi.fn(),
-  removeEventListener: vi.fn(),
-  continuous: false,
-  interimResults: false,
   onresult: null,
   onerror: null,
+  onend: null,
   onstart: null,
-  onend: null
+  continuous: false,
+  interimResults: false,
+  lang: 'en-US',
+  maxAlternatives: 1
+};
+
+Object.defineProperty(window, 'webkitSpeechRecognition', {
+  value: vi.fn(() => mockSpeechRecognition),
+  configurable: true,
+  writable: true
 });
 
 Object.defineProperty(window, 'SpeechRecognition', {
-  writable: true,
+  value: vi.fn(() => mockSpeechRecognition),
   configurable: true,
-  value: vi.fn().mockImplementation(createMockSpeechRecognition),
+  writable: true
 });
 
-Object.defineProperty(window, 'webkitSpeechRecognition', {
-  writable: true,
+// Mock URL.createObjectURL with proper cleanup
+Object.defineProperty(global.URL, 'createObjectURL', {
+  value: vi.fn(() => 'data:application/json;base64,e30='),
   configurable: true,
-  value: vi.fn().mockImplementation(createMockSpeechRecognition),
+  writable: true
 });
 
-// File/Blob/URL APIs
-Object.defineProperty(window, 'URL', {
-  writable: true,
-  configurable: true,
-  value: {
-    createObjectURL: vi.fn().mockReturnValue('mock-url'),
-    revokeObjectURL: vi.fn(),
-  },
-});
-
-Object.defineProperty(window, 'Blob', {
-  writable: true,
-  configurable: true,
-  value: vi.fn().mockImplementation((content, options) => ({
-    size: content ? content.join('').length : 0,
-    type: options?.type || '',
-    text: vi.fn().mockResolvedValue(content ? content.join('') : ''),
-    arrayBuffer: vi.fn().mockResolvedValue(new ArrayBuffer(0)),
-  })),
-});
-
-// Canvas API
-Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
-  writable: true,
-  configurable: true,
-  value: vi.fn().mockReturnValue({
-    fillRect: vi.fn(),
-    clearRect: vi.fn(),
-    getImageData: vi.fn().mockReturnValue({
-      data: new Uint8ClampedArray(4),
-    }),
-    putImageData: vi.fn(),
-    createImageData: vi.fn().mockReturnValue({
-      data: new Uint8ClampedArray(4),
-    }),
-    setTransform: vi.fn(),
-    drawImage: vi.fn(),
-    save: vi.fn(),
-    restore: vi.fn(),
-    scale: vi.fn(),
-    rotate: vi.fn(),
-    translate: vi.fn(),
-    transform: vi.fn(),
-    resetTransform: vi.fn(),
-  }),
-});
-
-// Anchor element properties (for download functionality)
-Object.defineProperty(HTMLAnchorElement.prototype, 'href', {
-  writable: true,
-  configurable: true,
-  value: '',
-});
-
-Object.defineProperty(HTMLAnchorElement.prototype, 'download', {
-  writable: true,
-  configurable: true,
-  value: '',
-});
-
-Object.defineProperty(HTMLAnchorElement.prototype, 'click', {
-  writable: true,
-  configurable: true,
+Object.defineProperty(global.URL, 'revokeObjectURL', {
   value: vi.fn(),
+  configurable: true,
+  writable: true
 });
 
-// Alert and other dialog APIs
-window.alert = vi.fn();
-window.confirm = vi.fn();
-window.prompt = vi.fn();
+// Mock document.createElement for comprehensive DOM simulation
+const originalCreateElement = document.createElement.bind(document);
+document.createElement = vi.fn((tagName) => {
+  const element = originalCreateElement(tagName);
 
-// Cytoscape mock (for Canvas component)
-vi.mock('cytoscape', () => {
-  return {
-    default: vi.fn().mockReturnValue({
-      mount: vi.fn(),
-      unmount: vi.fn(),
-      layout: vi.fn().mockReturnValue({
-        run: vi.fn(),
-      }),
-      on: vi.fn(),
-      off: vi.fn(),
-      destroy: vi.fn(),
-      add: vi.fn(),
-      remove: vi.fn(),
-      getElementById: vi.fn(),
-      nodes: vi.fn().mockReturnValue([]),
-      edges: vi.fn().mockReturnValue([]),
-    }),
-  };
+  if (tagName === 'a') {
+    // Mock anchor element with proper property descriptors
+    let _href = '';
+    let _download = '';
+
+    Object.defineProperty(element, 'href', {
+      get: function() { return _href; },
+      set: function(value) { _href = value; },
+      configurable: true,
+      enumerable: true
+    });
+
+    Object.defineProperty(element, 'download', {
+      get: function() { return _download; },
+      set: function(value) { _download = value; },
+      configurable: true,
+      enumerable: true
+    });
+
+    // Add other anchor properties
+    element.click = vi.fn();
+    element.remove = vi.fn();
+  }
+
+  if (tagName === 'input') {
+    // Mock input element for file operations
+    Object.defineProperty(element, 'files', {
+      get: function() { return this._files || []; },
+      set: function(value) { this._files = value; },
+      configurable: true
+    });
+
+    element.click = vi.fn();
+    element.addEventListener = vi.fn();
+    element.removeEventListener = vi.fn();
+  }
+
+  if (tagName === 'canvas') {
+    // Mock canvas context with comprehensive 2D methods
+    element.getContext = vi.fn((contextType) => {
+      if (contextType === '2d') {
+        return {
+          // Drawing rectangles
+          fillRect: vi.fn(),
+          clearRect: vi.fn(),
+          strokeRect: vi.fn(),
+
+          // Drawing paths
+          beginPath: vi.fn(),
+          moveTo: vi.fn(),
+          lineTo: vi.fn(),
+          closePath: vi.fn(),
+          stroke: vi.fn(),
+          fill: vi.fn(),
+          clip: vi.fn(),
+
+          // Drawing text
+          fillText: vi.fn(),
+          strokeText: vi.fn(),
+          measureText: vi.fn(() => ({ width: 0, height: 12 })),
+
+          // Drawing images
+          drawImage: vi.fn(),
+
+          // Pixel manipulation
+          getImageData: vi.fn(() => ({ 
+            data: new Uint8ClampedArray(4), 
+            width: 1, 
+            height: 1 
+          })),
+          putImageData: vi.fn(),
+          createImageData: vi.fn(() => ({ 
+            data: new Uint8ClampedArray(4), 
+            width: 1, 
+            height: 1 
+          })),
+
+          // Transformations
+          setTransform: vi.fn(),
+          resetTransform: vi.fn(),
+          transform: vi.fn(),
+          translate: vi.fn(),
+          rotate: vi.fn(),
+          scale: vi.fn(),
+
+          // Compositing
+          save: vi.fn(),
+          restore: vi.fn(),
+
+          // Styles
+          fillStyle: '#000000',
+          strokeStyle: '#000000',
+          lineWidth: 1,
+          lineCap: 'butt',
+          lineJoin: 'miter',
+          miterLimit: 10,
+          font: '10px sans-serif',
+          textAlign: 'start',
+          textBaseline: 'alphabetic',
+          globalAlpha: 1,
+          globalCompositeOperation: 'source-over'
+        };
+      }
+      return null;
+    });
+
+    // Mock canvas dimensions
+    Object.defineProperty(element, 'width', {
+      get: function() { return this._width || 300; },
+      set: function(value) { this._width = value; },
+      configurable: true
+    });
+
+    Object.defineProperty(element, 'height', {
+      get: function() { return this._height || 150; },
+      set: function(value) { this._height = value; },
+      configurable: true
+    });
+  }
+
+  return element;
 });
 
-// React-cytoscapejs mock
-vi.mock('react-cytoscapejs', () => {
-  return {
-    default: vi.fn().mockImplementation(() => null),
-  };
+// Mock document.body.appendChild with proper return
+const originalAppendChild = document.body.appendChild;
+document.body.appendChild = vi.fn((element) => {
+  return element;
 });
 
-// ==============================================
-// GLOBAL TEST UTILITIES
-// ==============================================
+// Mock FileReader for import/export tests
+global.FileReader = vi.fn(() => ({
+  readAsText: vi.fn(),
+  readAsDataURL: vi.fn(),
+  onload: null,
+  onerror: null,
+  onabort: null,
+  onloadstart: null,
+  onloadend: null,
+  onprogress: null,
+  result: null,
+  error: null,
+  readyState: 0,
+  EMPTY: 0,
+  LOADING: 1,
+  DONE: 2
+}));
 
-// Helper function to create properly configured property mocks
-global.createConfigurableProperty = (object, property, value) => {
-  Object.defineProperty(object, property, {
-    writable: true,
-    configurable: true,
-    value,
-  });
+// Mock Blob for file operations
+global.Blob = vi.fn((content, options) => ({
+  size: content ? (Array.isArray(content) ? content.join('').length : content.length) : 0,
+  type: options?.type || 'text/plain',
+  arrayBuffer: vi.fn(() => Promise.resolve(new ArrayBuffer(0))),
+  text: vi.fn(() => Promise.resolve('')),
+  stream: vi.fn()
+}));
+
+// Mock File constructor
+global.File = vi.fn((content, name, options) => ({
+  ...new global.Blob(content, options),
+  name: name || 'test-file.txt',
+  lastModified: Date.now(),
+  webkitRelativePath: ''
+}));
+
+// Mock fetch for API tests
+global.fetch = vi.fn(() => 
+  Promise.resolve({
+    ok: true,
+    status: 200,
+    json: () => Promise.resolve({}),
+    text: () => Promise.resolve(''),
+    blob: () => Promise.resolve(new Blob())
+  })
+);
+
+// Mock IntersectionObserver for component tests
+global.IntersectionObserver = vi.fn(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn()
+}));
+
+// Mock ResizeObserver for responsive component tests
+global.ResizeObserver = vi.fn(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn()
+}));
+
+// Mock performance API
+global.performance = {
+  ...global.performance,
+  now: vi.fn(() => Date.now()),
+  mark: vi.fn(),
+  measure: vi.fn(),
+  navigation: {
+    type: 'navigate'
+  },
+  timing: {
+    navigationStart: Date.now(),
+    loadEventEnd: Date.now()
+  }
 };
 
-// Helper to reset all mocks between tests
-global.resetAllMocks = () => {
-  vi.clearAllMocks();
-  // Reset any global state that tests might have modified
+// Mock localStorage and sessionStorage
+const createStorage = () => {
+  let store = {};
+  return {
+    getItem: vi.fn((key) => store[key] || null),
+    setItem: vi.fn((key, value) => { store[key] = value; }),
+    removeItem: vi.fn((key) => { delete store[key]; }),
+    clear: vi.fn(() => { store = {}; }),
+    key: vi.fn((index) => Object.keys(store)[index] || null),
+    get length() { return Object.keys(store).length; }
+  };
 };
 
-// Auto-reset mocks after each test
-afterEach(() => {
-  global.resetAllMocks();
+Object.defineProperty(window, 'localStorage', {
+  value: createStorage(),
+  configurable: true
+});
+
+Object.defineProperty(window, 'sessionStorage', {
+  value: createStorage(),
+  configurable: true
 });
