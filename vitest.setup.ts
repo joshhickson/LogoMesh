@@ -1,5 +1,6 @@
 
 import { vi } from 'vitest';
+import '@testing-library/jest-dom';
 
 // Make vi globally available as jest for compatibility
 global.jest = vi;

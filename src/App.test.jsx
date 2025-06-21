@@ -10,6 +10,15 @@ vi.mock('./components/Canvas', () => {
   };
 });
 
+vi.mock('./services/apiService', () => {
+  return {
+    default: {
+      getThoughts: vi.fn().mockResolvedValue([]),
+      getBubbles: vi.fn().mockResolvedValue([])
+    }
+  };
+});
+
 test('renders main app components', () => {
   render(<App />);
   expect(screen.getByTestId('canvas-mock')).toBeInTheDocument();
