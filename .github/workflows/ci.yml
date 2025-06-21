@@ -1,25 +1,27 @@
+name: LogoMesh CI
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
 
-name: CI
-
-on: [push, pull_request]
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3 
-        with: 
-          node-version: '20'
-      - run: npm ci
-      - run: npm test
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
 
   deploy:
-    needs: build
-    if: github.ref == 'refs/heads/master'
+    needs: test
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
     steps:
-      - uses: actions/checkout@v3
-      - run: |
-          npm install -g replit
-          replit login --token ${{ secrets.REPLIT_TOKEN }}
-          replit deploy --app thought-web
+    - name: Deploy to Replit
+      run: echo "Deploying to logomesh.replit.app"
