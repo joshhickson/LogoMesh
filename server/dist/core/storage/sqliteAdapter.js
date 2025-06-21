@@ -25,8 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SQLiteStorageAdapter = void 0;
 const sqlite3 = __importStar(require("sqlite3"));
-const idUtils_1 = require("core/utils/idUtils"); // Path mapping
-const logger_1 = require("core/utils/logger"); // Path mapping
+const idUtils_1 = require("../../src/core/utils/idUtils");
+const logger_1 = require("../../src/core/utils/logger");
 /**
  * SQLite implementation of the StorageAdapter interface
  * Handles all database operations with proper DTO <-> DB mapping
@@ -34,7 +34,7 @@ const logger_1 = require("core/utils/logger"); // Path mapping
 class SQLiteStorageAdapter {
     constructor(dbPath) {
         this.dbPath = dbPath;
-        this.db = null; // Changed Database to any
+        this.db = null;
     }
     async initialize() {
         return new Promise((resolve, reject) => {
@@ -44,7 +44,7 @@ class SQLiteStorageAdapter {
                     reject(err);
                 }
                 else {
-                    logger_1.logger.info(`Connected to SQLite database at ${this.dbPath}`); // Changed to info
+                    logger_1.logger.log(`Connected to SQLite database at ${this.dbPath}`);
                     resolve();
                 }
             });
@@ -58,7 +58,7 @@ class SQLiteStorageAdapter {
                         logger_1.logger.error('Error closing database:', err);
                     }
                     else {
-                        logger_1.logger.info('Database connection closed'); // Changed to info
+                        logger_1.logger.log('Database connection closed');
                     }
                     resolve();
                 });
@@ -195,7 +195,7 @@ class SQLiteStorageAdapter {
                     }
                     const createdThought = await this.getThoughtById(thoughtId);
                     if (createdThought) {
-                        logger_1.logger.info(`Created thought: ${thoughtId}`); // Changed to info
+                        logger_1.logger.log(`Created thought: ${thoughtId}`);
                         resolve(createdThought);
                     }
                     else {
@@ -270,9 +270,9 @@ class SQLiteStorageAdapter {
                     reject(err);
                     return;
                 }
-                const deleted = this.changes > 0; // 'this' is now correctly typed (implicitly by sqlite3)
+                const deleted = this.changes > 0;
                 if (deleted) {
-                    logger_1.logger.info(`Deleted thought: ${thoughtId}`); // Changed to info
+                    logger_1.logger.log(`Deleted thought: ${thoughtId}`);
                 }
                 resolve(deleted);
             });
@@ -372,7 +372,7 @@ class SQLiteStorageAdapter {
                 try {
                     const createdSegment = await this.getSegmentById(segmentId);
                     if (createdSegment) {
-                        logger_1.logger.info(`Created segment: ${segmentId}`); // Changed to info
+                        logger_1.logger.log(`Created segment: ${segmentId}`);
                         resolve(createdSegment);
                     }
                     else {
@@ -438,9 +438,9 @@ class SQLiteStorageAdapter {
                     reject(err);
                     return;
                 }
-                const deleted = this.changes > 0; // 'this' is now correctly typed (implicitly by sqlite3)
+                const deleted = this.changes > 0;
                 if (deleted) {
-                    logger_1.logger.info(`Deleted segment: ${segmentId}`); // Changed to info
+                    logger_1.logger.log(`Deleted segment: ${segmentId}`);
                 }
                 resolve(deleted);
             });

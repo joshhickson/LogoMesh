@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LLMTaskRunner = void 0;
-const llmAuditLogger_1 = require("../logger/llmAuditLogger");
-const logger_1 = require("../utils/logger");
+const llmAuditLogger_1 = require("../../src/core/logger/llmAuditLogger");
+const logger_1 = require("../../src/core/utils/logger");
 class LLMTaskRunner {
     constructor(executor) {
         this.totalRequests = 0;
