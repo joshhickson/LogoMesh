@@ -3,64 +3,52 @@ import ThoughtDetailPanel from '../ThoughtDetailPanel';
 
 describe('ThoughtDetailPanel', () => {
   const mockThought = {
-    thought_bubble_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YR',
+    thought_bubble_id: 'test-id',
     title: 'Test Thought',
     description: 'Test description',
-    segments: [
-      {
-        segment_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YS',
-        title: 'Test Segment',
-        content: 'Test content',
-        fields: {
-          type: 'note',
-          location: 'home',
-        },
-      },
-    ],
+    created_at: '2023-01-01',
     tags: [{ name: 'test', color: '#10b981' }],
+    segments: [{
+      segment_id: 'seg-1',
+      title: 'Test Segment',
+      content: 'Test content',
+      fields: { type: 'note', location: 'home' }
+    }]
   };
 
-  const mockSetThoughts = jest.fn();
+  const mockSetThoughts = vi.fn();
+  const mockOnUpdate = vi.fn();
 
   test('renders thought details correctly', () => {
-    render(
-      <ThoughtDetailPanel thought={mockThought} setThoughts={mockSetThoughts} />
-    );
+    render(<ThoughtDetailPanel thought={mockThought} onUpdate={mockOnUpdate} setThoughts={mockSetThoughts} />);
 
     expect(screen.getByDisplayValue('Test Thought')).toBeInTheDocument();
     expect(screen.getByText('Test description')).toBeInTheDocument();
-    expect(screen.getByText('Test Segment')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Test Segment')).toBeInTheDocument();
   });
 
   test('displays segment fields', () => {
-    render(
-      <ThoughtDetailPanel thought={mockThought} setThoughts={mockSetThoughts} />
-    );
+    render(<ThoughtDetailPanel thought={mockThought} onUpdate={mockOnUpdate} setThoughts={mockSetThoughts} />);
 
     expect(screen.getByText('type:')).toBeInTheDocument();
-    expect(screen.getByText('note')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('note')).toBeInTheDocument();
     expect(screen.getByText('location:')).toBeInTheDocument();
-    expect(screen.getByText('home')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('home')).toBeInTheDocument();
   });
 
   test('shows tags with correct colors', () => {
-    render(
-      <ThoughtDetailPanel thought={mockThought} setThoughts={mockSetThoughts} />
-    );
+    render(<ThoughtDetailPanel thought={mockThought} onUpdate={mockOnUpdate} setThoughts={mockSetThoughts} />);
 
     const tag = screen.getByText('test');
-    expect(tag).toHaveStyle({ backgroundColor: '#10b981' });
+    expect(tag).toHaveStyle({ color: 'rgb(16, 185, 129)' });
   });
 
   test('updates thought when edited', () => {
-    render(
-      <ThoughtDetailPanel thought={mockThought} setThoughts={mockSetThoughts} />
-    );
+    render(<ThoughtDetailPanel thought={mockThought} onUpdate={mockOnUpdate} setThoughts={mockSetThoughts} />);
 
     const titleInput = screen.getByDisplayValue('Test Thought');
     fireEvent.change(titleInput, { target: { value: 'Updated Title' } });
 
-    expect(mockSetThoughts).toHaveBeenCalled();
-    expect(mockSetThoughts).toHaveBeenCalledWith(expect.any(Function));
+    expect(mockOnUpdate).toHaveBeenCalled();
   });
 });

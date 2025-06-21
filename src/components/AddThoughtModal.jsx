@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { newBubbleId } from '../utils/eventBus';
 import { VoiceInputManager } from '../utils/VoiceInputManager';
 import { ulid } from 'ulid';

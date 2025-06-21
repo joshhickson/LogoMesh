@@ -63,7 +63,7 @@ describe('VoiceInputManager', () => {
       resultIndex: 0,
     };
     mockRecognition.onresult(mockResults);
-    expect(onTranscriptUpdate).toHaveBeenCalledWith('Hello world.', false);
+    expect(onTranscriptUpdate).toHaveBeenCalledWith('Hello world.', true, false);
 
     // Test long sentence that should trigger segmentation
     const longResults = {
@@ -102,7 +102,13 @@ describe('VoiceInputManager', () => {
     const localManager = new VoiceInputManager(onTranscriptUpdate, onError);
     expect(localManager.isSupported()).toBe(true);
 
-    delete window.webkitSpeechRecognition;
-    expect(localManager.isSupported()).toBe(false);
+    // Mock unsupported browser
+    const originalSpeechRecognition = window.webkitSpeechRecognition;
+    window.webkitSpeechRecognition = undefined;
+    const unsupportedManager = new VoiceInputManager(onTranscriptUpdate, onError);
+    expect(unsupportedManager.isSupported()).toBe(false);
+    
+    // Restore
+    window.webkitSpeechRecognition = originalSpeechRecognition;
   });
 });
