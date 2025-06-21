@@ -7,6 +7,11 @@ describe('VoiceInputManager', () => {
   let onError;
 
   beforeEach(() => {
+    // Clear any existing property
+    if ('webkitSpeechRecognition' in window) {
+      delete window.webkitSpeechRecognition;
+    }
+
     // Mock window.webkitSpeechRecognition
     mockRecognition = {
       start: vi.fn(),
