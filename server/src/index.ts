@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
-import * as path from 'path';
 import * as fs from 'fs';
 
 // For now, let's create a simplified version that doesn't depend on core modules
