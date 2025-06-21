@@ -22,4 +22,15 @@ describe('Canvas', () => {
     );
     expect(getByTestId('cytoscape-mock')).toBeInTheDocument();
   });
+
+  it('should handle thought creation', async () => {
+    render(<Canvas />);
+
+    const addButton = screen.getByRole('button', { name: /add thought/i });
+    fireEvent.click(addButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog', { name: /add thought/i })).toBeInTheDocument();
+    });
+  });
 });
