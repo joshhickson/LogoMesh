@@ -1,8 +1,13 @@
 // Test setup with global mocks
 import { vi } from 'vitest';
 
-// Mock apiService
-vi.mock('./services/apiService', () => ({
+// Mock apiService with proper default export
+vi.mock('../services/apiService', () => ({
+  default: {
+    getThoughts: vi.fn().mockResolvedValue([]),
+    saveThought: vi.fn().mockResolvedValue({ id: 'test' }),
+    deleteThought: vi.fn().mockResolvedValue(true),
+  },
   apiService: {
     getThoughts: vi.fn().mockResolvedValue([]),
     saveThought: vi.fn().mockResolvedValue({ id: 'test' }),
