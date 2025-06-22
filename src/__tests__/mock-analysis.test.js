@@ -1,4 +1,5 @@
 import { vi } from 'vitest';
+import React from 'react';
 
 describe('Mock Analysis', () => {
   test('check what mocks are active', () => {
@@ -16,7 +17,6 @@ describe('Mock Analysis', () => {
     console.log('document.createElement type:', typeof document.createElement);
 
     // Check React setup
-    const React = require('react');
     console.log('React object keys:', Object.keys(React));
     console.log('React.version:', React.version);
 
