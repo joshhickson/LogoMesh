@@ -1,40 +1,32 @@
-
-import { render, screen } from '@testing-library/react';
-import { vi } from 'vitest';
+import { render, fireEvent, screen } from '@testing-library/react';
 import ThoughtDetailPanel from '../ThoughtDetailPanel';
-
-// Mock graphService
-vi.mock('../../services/graphService', () => ({
-  graphService: {
-    updateSegment: vi.fn().mockResolvedValue({}),
-    updateFieldType: vi.fn(),
-    getFieldType: vi.fn().mockReturnValue('text'),
-  },
-}));
 
 describe('ThoughtDetailPanel', () => {
   const mockThought = {
-    thought_bubble_id: 'test-id',
+    id: '1',
     title: 'Test Thought',
-    description: 'Test Description',
-    created_at: new Date().toISOString(),
-    tags: [],
-    segments: [],
+    content: 'Test content'
   };
 
   const mockProps = {
     thought: mockThought,
     onUpdate: vi.fn(),
-    refreshThoughts: vi.fn(),
+    onClose: vi.fn()
   };
 
-  test('renders thought title', () => {
+  test('renders thought details', () => {
     render(<ThoughtDetailPanel {...mockProps} />);
-    expect(screen.getByDisplayValue('Test Thought')).toBeInTheDocument();
+
+    expect(screen.getByText('Test Thought')).toBeInTheDocument();
+    expect(screen.getByText('Test content')).toBeInTheDocument();
   });
 
-  test('renders thought description', () => {
+  test('handles close action', () => {
     render(<ThoughtDetailPanel {...mockProps} />);
-    expect(screen.getByDisplayValue('Test Description')).toBeInTheDocument();
+
+    const closeButton = screen.getByRole('button', { name: /close/i });
+    fireEvent.click(closeButton);
+
+    expect(mockProps.onClose).toHaveBeenCalled();
   });
 });

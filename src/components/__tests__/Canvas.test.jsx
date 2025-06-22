@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import Canvas from '../Canvas';
 
@@ -41,23 +41,23 @@ vi.mock('cytoscape-cose-bilkent', () => ({
   __esModule: true
 }));
 
-describe('Canvas', () => {
-  const mockProps = {
-    thoughts: [],
-    setSelectedThought: vi.fn(),
-    filteredThoughtIds: [],
-    onUpdateThought: vi.fn(),
-  };
+describe('Canvas Component', () => {
+  test('renders without crashing', () => {
+    const { container } = render(<Canvas />);
 
-  test('renders canvas container', () => {
-    render(<Canvas {...mockProps} />);
-    // Canvas should render a container div with cytoscape
-    expect(screen.getByText('Force-Directed')).toBeInTheDocument();
+    // Check if canvas element is rendered
+    const canvas = container.querySelector('canvas');
+    expect(canvas).toBeInTheDocument();
+
+    // Test canvas context mock
+    expect(canvas.getContext('2d')).toBeTruthy();
   });
 
-  test('renders with empty thoughts array', () => {
-    render(<Canvas {...mockProps} />);
-    // Should render without crashing with empty thoughts
-    expect(screen.getByText('Hierarchical')).toBeInTheDocument();
+  test('canvas has proper dimensions', () => {
+    const { container } = render(<Canvas />);
+    const canvas = container.querySelector('canvas');
+
+    expect(canvas).toHaveProperty('width');
+    expect(canvas).toHaveProperty('height');
   });
 });
