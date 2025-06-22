@@ -35,6 +35,7 @@ describe('Sidebar', () => {
     setShowModal: vi.fn(),
     toggleDarkMode: vi.fn(),
     setActiveFilters: vi.fn(),
+    onRefreshThoughts: vi.fn(),
   };
 
   const mockOnThoughtClick = vi.fn();
@@ -46,7 +47,7 @@ describe('Sidebar', () => {
   });
 
   test('filters thoughts based on field name', () => {
-    render(<Sidebar thoughts={mockThoughts} onThoughtClick={mockOnThoughtClick} />);
+    render(<Sidebar {...mockProps} />);
 
     // Use more specific selectors to avoid multiple listbox elements
     const fieldSelects = screen.getAllByRole('listbox');
@@ -75,4 +76,4 @@ describe('Sidebar', () => {
     fireEvent.click(addButton);
     expect(mockProps.setShowModal).toHaveBeenCalledWith(true);
   });
-});
+})

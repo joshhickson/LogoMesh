@@ -1,24 +1,50 @@
-import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import AddThoughtModal from '../AddThoughtModal';
 
-describe('AddThoughtModal', () => {
-  // TODO: This variable was flagged as unused by ESLint.
-  // let mockCreateThought;
-  // TODO: This variable was flagged as unused by ESLint.
-  // let mockOnClose;
+// Mock VoiceInputManager
+vi.mock('../../utils/VoiceInputManager', () => ({
+  VoiceInputManager: vi.fn().mockImplementation(() => ({
+    isSupported: () => true,
+    startListening: vi.fn(),
+    stopListening: vi.fn(),
+  })),
+}));
 
-  beforeEach(() => {
-    // mockCreateThought = jest.fn();
-    // mockOnClose = jest.fn();
-    window.alert = vi.fn();
-  });
+// Mock ulid
+vi.mock('ulid', () => ({
+  ulid: () => 'test-ulid-123',
+}));
+
+describe('AddThoughtModal', () => {
+  const mockCreateThought = vi.fn();
+  const mockOnClose = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
+  test('renders modal with title input', () => {
+    render(
+      <AddThoughtModal
+        createThought={mockCreateThought}
+        onClose={mockOnClose}
+      />
+    );
+
+    expect(screen.getByPlaceholderText('Title')).toBeInTheDocument();
+  });
+
+  test('renders Add Thought button', () => {
+    render(
+      <AddThoughtModal
+        createThought={mockCreateThought}
+        onClose={mockOnClose}
+      />
+    );
+
+    expect(screen.getByText('Add Thought')).toBeInTheDocument();
+  });
   test('renders all form elements', () => {
     const mockCreateThought = vi.fn();
     const mockOnClose = vi.fn();
