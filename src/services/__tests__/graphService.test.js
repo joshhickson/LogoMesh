@@ -14,7 +14,9 @@ describe('graphService', () => {
 
   test('findThoughtsByTag returns thoughts with matching tag', async () => {
     const results = await graphService.findThoughtsByTag('tag1');
-    expect(results).toEqual([{ properties: mockThoughts[0] }]);
+    expect(results).toEqual(mockThoughts.filter(thought => 
+      thought.tags && thought.tags.some(tag => tag.name === 'tag1')
+    ));
   });
 
   test('findThoughtsByTag returns empty array for non-existent tag', async () => {
