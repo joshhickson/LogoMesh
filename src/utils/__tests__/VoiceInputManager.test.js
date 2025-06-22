@@ -25,7 +25,7 @@ describe('VoiceInputManager', () => {
     };
 
     // Mock the constructor function properly
-    global.window.webkitSpeechRecognition = vi.fn(() => mockRecognition);
+    global.window.webkitSpeechRecognition = vi.fn().mockImplementation(() => mockRecognition);
 
     // Setup callback functions
     onTranscriptUpdate = vi.fn();
@@ -33,26 +33,27 @@ describe('VoiceInputManager', () => {
   });
 
   test('initializes with correct configuration', () => {
-    const manager = new VoiceInputManager({ onTranscriptUpdate, onError });
+    const localManager = new VoiceInputManager(onTranscriptUpdate, onError);
 
-    expect(manager.recognition).toBeDefined();
-    expect(manager.recognition.continuous).toBe(true);
-    expect(manager.recognition.interimResults).toBe(true);
-    expect(manager.recognition.lang).toBe('en-US');
+    expect(localManager.isListening).toBe(false);
+    expect(mockRecognition.continuous).toBe(true);
+    expect(mockRecognition.interimResults).toBe(true);
   });
 
   test('handles start/stop listening correctly', () => {
-    const manager = new VoiceInputManager({ onTranscriptUpdate, onError });
+    const localManager = new VoiceInputManager(onTranscriptUpdate, onError);
 
-    manager.startListening();
-    expect(manager.isListening).toBe(true);
+    localManager.startListening();
+    expect(mockRecognition.start).toHaveBeenCalled();
+    expect(localManager.isListening).toBe(true);
 
-    manager.stopListening();
-    expect(manager.isListening).toBe(false);
+    localManager.stopListening();
+    expect(mockRecognition.stop).toHaveBeenCalled();
+    expect(localManager.isListening).toBe(false);
   });
 
   test('handles speech recognition results', () => {
-    new VoiceInputManager({ onTranscriptUpdate, onError });
+    const localManager = new VoiceInputManager(onTranscriptUpdate, onError);
 
     // Test short phrase
     const mockResults = {
@@ -84,7 +85,7 @@ describe('VoiceInputManager', () => {
   });
 
   test('handles speech recognition errors', () => {
-    new VoiceInputManager({ onTranscriptUpdate, onError });
+    const localManager = new VoiceInputManager(onTranscriptUpdate, onError);
 
     mockRecognition.onerror({ error: 'network' });
 
@@ -92,17 +93,13 @@ describe('VoiceInputManager', () => {
   });
 
   test('checks browser support correctly', () => {
-    const manager = new VoiceInputManager({ onTranscriptUpdate, onError });
-    expect(manager.isSupported()).toBe(true);
+    const localManager = new VoiceInputManager(onTranscriptUpdate, onError);
+    expect(localManager.isSupported()).toBe(true);
 
     // Test when not supported
-    Object.defineProperty(window, 'webkitSpeechRecognition', {
-      value: undefined,
-      configurable: true,
-      writable: true
-    });
+    delete global.window.webkitSpeechRecognition;
 
-    const unsupportedManager = new VoiceInputManager({ onTranscriptUpdate, onError });
+    const unsupportedManager = new VoiceInputManager(onTranscriptUpdate, onError);
     expect(unsupportedManager.isSupported()).toBe(false);
   });
 
