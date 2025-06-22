@@ -203,6 +203,10 @@ class ErrorLogger {
   }
 
   getSessionId() {
+    if (typeof sessionStorage === 'undefined') {
+      // Node.js/test environment fallback
+      return 'test-session-' + Date.now().toString(36);
+    }
     let sessionId = sessionStorage.getItem('thought-web-session-id');
     if (!sessionId) {
       sessionId = Date.now().toString(36) + Math.random().toString(36).substr(2);

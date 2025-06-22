@@ -139,5 +139,100 @@ function generateQuickAnalysis(stdout, stderr, code) {
     analysis.push(`⏱️  Test duration: ${duration}s ${duration > 30 ? '(slow)' : '(good)'}`);
   }
 
-  return analysis.length > 0 ? analysis.join('\n') : 'No specific issues detected in quick analysis.';
+  return analysis.length > 0 ? analysis.join('\n') : 'No specific issues detected';
+}
+
+// Enhanced test command with archival
+function runTestsWithArchive() {
+  const timestamp = new Date().toISOString();
+  const filename = `test-results/test-run-${timestamp.replace(/[:.]/g, '-')}.txt`;
+  
+  console.log('🧪 Running tests with archival...');
+  console.log(`📁 Results will be saved to: ${filename}`);
+  
+  const { spawn } = require('child_process');
+  const testProcess = spawn('npm', ['test'], { 
+    stdio: 'pipe',
+    env: { ...process.env, CI: 'true' }
+  });
+  
+  let stdout = '';
+  let stderr = '';
+  
+  testProcess.stdout.on('data', (data) => {
+    const output = data.toString();
+    stdout += output;
+    process.stdout.write(output);
+  });
+  
+  testProcess.stderr.on('data', (data) => {
+    const output = data.toString();
+    stderr += output;
+    process.stderr.write(output);
+  });
+  
+  testProcess.on('close', (code) => {
+    const report = generateDetailedReport(stdout, stderr, code, timestamp);
+    saveTestResults(filename, report);
+    
+    console.log(`\n📊 Test Results Summary:`);
+    console.log(`Exit Code: ${code}`);
+    console.log(`Status: ${code === 0 ? '✅ PASSED' : '❌ FAILED'}`);
+    console.log(`Report saved to: ${filename}`);
+    
+    // Also update latest-test-run.txt
+    saveTestResults('test-results/latest-test-run.txt', report);
+  });
+}
+
+function generateDetailedReport(stdout, stderr, exitCode, timestamp) {
+  const analysis = generateQuickAnalysis(stdout, stderr, exitCode);
+  
+  return `# Test Run Report - ${timestamp}
+
+## Summary
+- Exit Code: ${exitCode}
+- Status: ${exitCode === 0 ? '✅ PASSED' : '❌ FAILED'}
+- Timestamp: ${timestamp}
+
+## Standard Output
+\`\`\`
+${stdout}
+\`\`\`
+
+## Standard Error
+\`\`\`
+${stderr}
+\`\`\`
+
+## Environment Info
+- Node Version: ${process.version}
+- Platform: ${process.platform}
+- Working Directory: ${process.cwd()}
+
+## Quick Analysis
+${analysis}
+`;
+}
+
+function saveTestResults(filename, content) {
+  const fs = require('fs');
+  const path = require('path');
+  
+  // Ensure directory exists
+  const dir = path.dirname(filename);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  
+  fs.writeFileSync(filename, content, 'utf8');
+}
+
+// Export the enhanced function
+module.exports = {
+  runTestsWithArchive,
+  generateQuickAnalysis,
+  generateDetailedReport,
+  saveTestResults
+};es detected in quick analysis.';
 }
