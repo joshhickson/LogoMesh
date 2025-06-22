@@ -14,6 +14,8 @@ export const ThoughtEvents = {
 };
 
 export const newBubbleId = generateThoughtId;
-export const newSegmentId = generateSegmentId;
+export const newSegmentId = () => {
+  return `seg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+};
 
 export default eventBus;

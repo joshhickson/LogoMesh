@@ -17,6 +17,7 @@ describe('VoiceInputManager', () => {
       abort: vi.fn(),
       continuous: false,
       interimResults: false,
+      lang: 'en-US',
       onresult: null,
       onerror: null,
       onend: null,
@@ -106,7 +107,7 @@ describe('VoiceInputManager', () => {
   });
 
   it('should initialize with default options', () => {
-    const manager = new VoiceInputManager();
+    const manager = new VoiceInputManager(() => {}, () => {});
     expect(manager).toBeDefined();
     expect(manager.isSupported()).toBe(true);
   });

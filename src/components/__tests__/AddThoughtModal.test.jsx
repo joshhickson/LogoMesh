@@ -211,3 +211,18 @@ test('handles voice input correctly', () => {
     'Speech recognition is not supported in your browser'
   );
 });
+test('handles voice input integration', () => {
+    // Mock window.alert
+    const mockAlert = vi.fn();
+    global.window.alert = mockAlert;
+
+    const mockOnSave = vi.fn(); // Define mockOnSave
+    const mockOnClose = vi.fn();
+    render(<AddThoughtModal isOpen={true} onClose={mockOnClose} onSave={mockOnSave} />);
+
+    const voiceButton = screen.getByRole('button', { name: /voice/i });
+    fireEvent.click(voiceButton);
+
+    // Test voice input integration triggers alert
+    expect(mockAlert).toHaveBeenCalled();
+  });
