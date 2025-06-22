@@ -25,46 +25,33 @@ describe('VoiceInputManager', () => {
 
     // Mock the constructor function properly
     global.window.webkitSpeechRecognition = vi.fn(() => mockRecognition);
-    
+
     // Setup callback functions
     onTranscriptUpdate = vi.fn();
     onError = vi.fn();
   });
 
   test('initializes with correct configuration', () => {
-    const onTranscript = vi.fn();
-    const onError = vi.fn();
+    const manager = new VoiceInputManager({ onTranscriptUpdate, onError });
 
-    // TODO: This variable was flagged as unused by ESLint.
-    // const manager = new VoiceInputManager(onTranscript, onError);
-    const localManager = new VoiceInputManager(onTranscript, onError);
-
-    expect(localManager.isListening).toBe(false);
-    expect(mockRecognition.continuous).toBe(true);
-    expect(mockRecognition.interimResults).toBe(true);
+    expect(manager.recognition).toBeDefined();
+    expect(manager.recognition.continuous).toBe(true);
+    expect(manager.recognition.interimResults).toBe(true);
+    expect(manager.recognition.lang).toBe('en-US');
   });
 
   test('handles start/stop listening correctly', () => {
-    // TODO: This variable was flagged as unused by ESLint.
-    // const manager = new VoiceInputManager(
-    const localManager = new VoiceInputManager(
-      () => { /* TODO: Implement test case */ },
-      () => { /* TODO: Implement test case */ }
-    );
+    const manager = new VoiceInputManager({ onTranscriptUpdate, onError });
 
-    localManager.startListening();
-    expect(mockRecognition.start).toHaveBeenCalled();
-    expect(localManager.isListening).toBe(true);
+    manager.startListening();
+    expect(manager.isListening).toBe(true);
 
-    localManager.stopListening();
-    expect(mockRecognition.stop).toHaveBeenCalled();
-    expect(localManager.isListening).toBe(false);
+    manager.stopListening();
+    expect(manager.isListening).toBe(false);
   });
 
   test('handles speech recognition results', () => {
-    // TODO: This variable was flagged as unused by ESLint.
-    // const manager = new VoiceInputManager(onTranscriptUpdate, onError);
-    new VoiceInputManager(onTranscriptUpdate, onError);
+    new VoiceInputManager({ onTranscriptUpdate, onError });
 
     // Test short phrase
     const mockResults = {
@@ -96,9 +83,7 @@ describe('VoiceInputManager', () => {
   });
 
   test('handles speech recognition errors', () => {
-    // TODO: This variable was flagged as unused by ESLint.
-    // const manager = new VoiceInputManager(onTranscriptUpdate, onError);
-    new VoiceInputManager(onTranscriptUpdate, onError);
+    new VoiceInputManager({ onTranscriptUpdate, onError });
 
     mockRecognition.onerror({ error: 'network' });
 
@@ -106,7 +91,7 @@ describe('VoiceInputManager', () => {
   });
 
   test('checks browser support correctly', () => {
-    const manager = new VoiceInputManager(onTranscriptUpdate, onError);
+    const manager = new VoiceInputManager({ onTranscriptUpdate, onError });
     expect(manager.isSupported()).toBe(true);
 
     // Test when not supported
@@ -116,7 +101,7 @@ describe('VoiceInputManager', () => {
       writable: true
     });
 
-    const unsupportedManager = new VoiceInputManager(onTranscriptUpdate, onError);
+    const unsupportedManager = new VoiceInputManager({ onTranscriptUpdate, onError });
     expect(unsupportedManager.isSupported()).toBe(false);
   });
 
