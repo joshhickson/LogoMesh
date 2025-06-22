@@ -46,6 +46,17 @@ vi.mock('cytoscape', () => ({
   }))
 }));
 
+// Mock Cytoscape extensions
+vi.mock('cytoscape-fcose', () => ({
+  default: vi.fn(),
+  __esModule: true
+}));
+
+vi.mock('cytoscape-cose-bilkent', () => ({
+  default: vi.fn(),
+  __esModule: true
+}));
+
 // Mock webkitSpeechRecognition
 Object.defineProperty(window, 'webkitSpeechRecognition', {
   writable: true,
