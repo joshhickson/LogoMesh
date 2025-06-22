@@ -28,7 +28,10 @@ vi.mock('cytoscape', () => ({
   use: vi.fn(),
 }));
 
-vi.mock('cytoscape-fcose', () => ({}));
+vi.mock('cytoscape-fcose', () => ({
+  default: vi.fn(),
+  __esModule: true
+}));
 vi.mock('cytoscape-cose-bilkent', () => ({}));
 
 describe('Canvas', () => {
