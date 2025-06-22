@@ -216,6 +216,9 @@ test('handles voice input integration', () => {
     const mockAlert = vi.fn();
     global.window.alert = mockAlert;
 
+    // Remove speech recognition support to trigger alert
+    delete window.webkitSpeechRecognition;
+
     const mockCreateThought = vi.fn();
     const mockOnClose = vi.fn();
     render(<AddThoughtModal createThought={mockCreateThought} onClose={mockOnClose} />);
@@ -224,6 +227,6 @@ test('handles voice input integration', () => {
     const voiceButton = screen.getByTitle('Start recording');
     fireEvent.click(voiceButton);
 
-    // The button should trigger speech recognition - no alert expected in normal flow
-    expect(voiceButton).toBeInTheDocument();
+    // Should trigger alert for unsupported browser
+    expect(mockAlert).toHaveBeenCalledWith('Speech recognition is not supported in your browser');
   });
