@@ -18,6 +18,7 @@ describe('ThoughtDetailPanel', () => {
     render(<ThoughtDetailPanel {...mockProps} />);
 
     expect(screen.getByText('Test Thought')).toBeInTheDocument();
+    // Look for content in the paragraph element specifically
     expect(screen.getByText('Test content')).toBeInTheDocument();
   });
 
