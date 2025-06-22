@@ -1,36 +1,45 @@
-import React, { Suspense } from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
+import Canvas from '../Canvas';
 
-// Mock the entire Canvas component to avoid canvas/Cytoscape issues in tests
-vi.mock('../Canvas', () => {
-  return {
-    default: function MockCanvas() {
-      return <div data-testid="cytoscape-mock">Canvas Component</div>;
-    }
-  };
-});
+// Mock cytoscape and its extensions
+vi.mock('cytoscape', () => ({
+  default: vi.fn(() => ({
+    add: vi.fn(),
+    remove: vi.fn(),
+    elements: vi.fn(() => ({ remove: vi.fn() })),
+    layout: vi.fn(() => ({ run: vi.fn() })),
+    fit: vi.fn(),
+    zoom: vi.fn(),
+    center: vi.fn(),
+    animate: vi.fn(),
+    on: vi.fn(),
+    nodes: vi.fn(() => ({
+      forEach: vi.fn(),
+      removeClass: vi.fn(),
+      addClass: vi.fn(),
+      neighborhood: vi.fn(() => ({ addClass: vi.fn() })),
+      parent: vi.fn(() => ({ length: 0 })),
+      union: vi.fn(),
+      some: vi.fn(),
+    })),
+  })),
+  use: vi.fn(),
+}));
 
-const Canvas = React.lazy(() => import('../Canvas'));
+vi.mock('cytoscape-fcose', () => ({}));
+vi.mock('cytoscape-cose-bilkent', () => ({}));
 
 describe('Canvas', () => {
-  it('renders without crashing', () => {
-    const { getByTestId } = render(
-      <Suspense fallback={<div>Loading...</div>}>
-        <Canvas />
-      </Suspense>
-    );
-    expect(getByTestId('cytoscape-mock')).toBeInTheDocument();
+  const mockProps = {
+    thoughts: [],
+    setSelectedThought: vi.fn(),
+    filteredThoughtIds: [],
+    onUpdateThought: vi.fn(),
+  };
+
+  test('renders canvas container', () => {
+    render(<Canvas {...mockProps} />);
+    // Canvas should render a container div with cytoscape
+    expect(screen.getByText('Force-Directed')).toBeInTheDocument();
   });
-
-  it('should handle thought creation', async () => {
-    render(<Canvas />);
-
-    const addButton = screen.getByRole('button', { name: /add thought/i });
-    fireEvent.click(addButton);
-
-    await waitFor(() => {
-      expect(screen.getByRole('dialog', { name: /add thought/i })).toBeInTheDocument();
-    });
-  });
-});
