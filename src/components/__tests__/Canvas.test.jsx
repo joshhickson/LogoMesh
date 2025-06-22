@@ -1,3 +1,4 @@
+
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import Canvas from '../Canvas';
@@ -43,3 +44,10 @@ describe('Canvas', () => {
     // Canvas should render a container div with cytoscape
     expect(screen.getByText('Force-Directed')).toBeInTheDocument();
   });
+
+  test('renders with empty thoughts array', () => {
+    render(<Canvas {...mockProps} />);
+    // Should render without crashing with empty thoughts
+    expect(screen.getByText('Hierarchical')).toBeInTheDocument();
+  });
+});
