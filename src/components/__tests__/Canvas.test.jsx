@@ -1,38 +1,45 @@
-
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 import Canvas from '../Canvas';
 
-// Mock cytoscape and its extensions
-vi.mock('cytoscape', () => ({
-  default: vi.fn(() => ({
+// Mock Cytoscape with proper .use() method support
+vi.mock('cytoscape', () => {
+  const mockCytoscape = vi.fn(() => ({
     add: vi.fn(),
     remove: vi.fn(),
-    elements: vi.fn(() => ({ remove: vi.fn() })),
     layout: vi.fn(() => ({ run: vi.fn() })),
     fit: vi.fn(),
-    zoom: vi.fn(),
-    center: vi.fn(),
-    animate: vi.fn(),
     on: vi.fn(),
     nodes: vi.fn(() => ({
       forEach: vi.fn(),
-      removeClass: vi.fn(),
-      addClass: vi.fn(),
-      neighborhood: vi.fn(() => ({ addClass: vi.fn() })),
-      parent: vi.fn(() => ({ length: 0 })),
-      union: vi.fn(),
-      some: vi.fn(),
+      data: vi.fn(),
+      position: vi.fn()
     })),
-  })),
-  use: vi.fn(),
-}));
+    edges: vi.fn(() => ({
+      forEach: vi.fn(),
+      data: vi.fn()
+    })),
+    destroy: vi.fn()
+  }));
 
+  // Critical: Add the .use() method for extension registration
+  mockCytoscape.use = vi.fn();
+
+  return {
+    default: mockCytoscape
+  };
+});
+
+// Mock cytoscape extensions
 vi.mock('cytoscape-fcose', () => ({
   default: vi.fn(),
   __esModule: true
 }));
-vi.mock('cytoscape-cose-bilkent', () => ({}));
+
+vi.mock('cytoscape-cose-bilkent', () => ({
+  default: vi.fn(),
+  __esModule: true
+}));
 
 describe('Canvas', () => {
   const mockProps = {
