@@ -19,7 +19,7 @@ describe('ThoughtDetailPanel', () => {
 
     expect(screen.getByText('Test Thought')).toBeInTheDocument();
     // Look for content in the paragraph element specifically
-    expect(screen.getByText('Test content')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Test content')).toBeInTheDocument();
   });
 
   test('handles close action', () => {
