@@ -1,4 +1,5 @@
 import { render, fireEvent, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 import Sidebar from '../Sidebar';
 
 describe('Sidebar', () => {
@@ -29,14 +30,14 @@ describe('Sidebar', () => {
 
   const mockProps = {
     thoughts: mockThoughts,
-    setThoughts: jest.fn(),
-    setSelectedThought: jest.fn(),
-    setShowModal: jest.fn(),
-    toggleDarkMode: jest.fn(),
-    setActiveFilters: jest.fn(),
+    setThoughts: vi.fn(),
+    setSelectedThought: vi.fn(),
+    setShowModal: vi.fn(),
+    toggleDarkMode: vi.fn(),
+    setActiveFilters: vi.fn(),
   };
 
-  const mockOnThoughtClick = jest.fn();
+  const mockOnThoughtClick = vi.fn();
 
   test('renders all thoughts initially', () => {
     render(<Sidebar {...mockProps} />);
