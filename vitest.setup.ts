@@ -43,7 +43,7 @@ Object.defineProperty(global.URL, 'revokeObjectURL', {
   writable: true
 });
 
-// Mock document.createElement for comprehensive DOM simulation
+// Simplified createElement mock - only mock specific elements that need it
 const originalCreateElement = document.createElement.bind(document);
 document.createElement = vi.fn((tagName) => {
   const element = originalCreateElement(tagName);
@@ -72,17 +72,9 @@ document.createElement = vi.fn((tagName) => {
     element.remove = vi.fn();
   }
 
+  // Minimal input mocking - let jsdom handle most of it
   if (tagName === 'input') {
-    // Mock input element for file operations
-    Object.defineProperty(element, 'files', {
-      get: function() { return this._files || []; },
-      set: function(value) { this._files = value; },
-      configurable: true
-    });
-
-    element.click = vi.fn();
-    element.addEventListener = vi.fn();
-    element.removeEventListener = vi.fn();
+    element.click = element.click || vi.fn();
   }
 
   if (tagName === 'canvas') {
@@ -171,11 +163,7 @@ document.createElement = vi.fn((tagName) => {
   return element;
 });
 
-// Mock document.body.appendChild with proper return
-const originalAppendChild = document.body.appendChild;
-document.body.appendChild = vi.fn((element) => {
-  return element;
-});
+// Remove the document.body.appendChild mock - let RTL handle DOM mounting
 
 // Mock FileReader for import/export tests
 global.FileReader = vi.fn(() => ({
