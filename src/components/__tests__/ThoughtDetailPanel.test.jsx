@@ -1,3 +1,4 @@
+
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import ThoughtDetailPanel from '../ThoughtDetailPanel';
@@ -31,3 +32,9 @@ describe('ThoughtDetailPanel', () => {
     render(<ThoughtDetailPanel {...mockProps} />);
     expect(screen.getByDisplayValue('Test Thought')).toBeInTheDocument();
   });
+
+  test('renders thought description', () => {
+    render(<ThoughtDetailPanel {...mockProps} />);
+    expect(screen.getByDisplayValue('Test Description')).toBeInTheDocument();
+  });
+});
