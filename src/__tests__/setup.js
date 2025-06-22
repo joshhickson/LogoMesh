@@ -35,16 +35,36 @@ vi.mock('./components/Canvas', () => ({
   default: () => <div data-testid="canvas-mock">Canvas Mock</div>
 }));
 
-// Mock Cytoscape
-vi.mock('cytoscape', () => ({
-  default: vi.fn(() => ({
-    add: vi.fn(),
-    remove: vi.fn(),
-    layout: vi.fn(() => ({ run: vi.fn() })),
-    fit: vi.fn(),
-    on: vi.fn(),
-  }))
-}));
+// Mock Cytoscape and related libraries
+vi.mock('cytoscape', () => {
+  const mockCytoscape = vi.fn(() => ({
+    elements: vi.fn().mockReturnThis(),
+    layout: vi.fn().mockReturnThis(),
+    on: vi.fn().mockReturnThis(),
+    off: vi.fn().mockReturnThis(),
+    fit: vi.fn().mockReturnThis(),
+    center: vi.fn().mockReturnThis(),
+    zoom: vi.fn().mockReturnThis(),
+    pan: vi.fn().mockReturnThis(),
+    destroy: vi.fn(),
+    nodes: vi.fn(() => ({
+      forEach: vi.fn(),
+      data: vi.fn(),
+      position: vi.fn()
+    })),
+    edges: vi.fn(() => ({
+      forEach: vi.fn(),
+      data: vi.fn()
+    }))
+  }));
+
+  // Add the use method to register extensions
+  mockCytoscape.use = vi.fn();
+
+  return {
+    default: mockCytoscape
+  };
+});
 
 // Mock Cytoscape extensions
 vi.mock('cytoscape-fcose', () => ({
