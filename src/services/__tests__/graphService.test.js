@@ -15,7 +15,7 @@ vi.mock('../graphService', () => ({
           tags: [{ name: 'tag2', color: '#fff' }],
         },
       ];
-      
+
       return Promise.resolve(
         mockThoughts.filter(thought => 
           thought.tags && thought.tags.some(t => t.name === tag)

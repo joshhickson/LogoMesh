@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events';
+import { ulid } from 'ulid';
 
 // Simple ID generation utilities (local implementation)
 const generateThoughtId = () => `thought_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -13,7 +14,9 @@ export const ThoughtEvents = {
   SEGMENT_CREATED: 'segment:created',
 };
 
-export const newBubbleId = generateThoughtId;
+export const newBubbleId = () => {
+  return `seg_${ulid()}`;
+};
 export const newSegmentId = () => {
   return `seg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 };

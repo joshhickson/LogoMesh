@@ -23,11 +23,12 @@ describe('Mock Analysis', () => {
     expect(true).toBe(true); // Always pass, just for logging
   });
 
-  test('React import analysis', () => {
-    const React = require('react');
+  test('React import analysis', async () => {
+    const React = await import('react');
+    const ReactModule = React.default || React;
 
-    expect(React).toBeDefined();
-    expect(React.createElement).toBeInstanceOf(Function);
+    expect(ReactModule).toBeDefined();
+    expect(ReactModule.createElement).toBeInstanceOf(Function);
   });
 
   test('React import timing analysis', async () => {
