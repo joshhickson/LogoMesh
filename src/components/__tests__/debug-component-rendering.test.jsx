@@ -1,51 +1,31 @@
-
 import React from 'react';
-import { render, screen, debug } from '@testing-library/react';
-import { vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, test, expect } from 'vitest';
 import AddThoughtModal from '../AddThoughtModal';
 
-// Minimal test to understand what's happening during render
-describe('Component Rendering Debug', () => {
-  test('diagnostic: what actually renders from AddThoughtModal', () => {
-    const mockProps = {
-      isVisible: true,
-      onClose: vi.fn(),
-      onAddThought: vi.fn(),
-      existingThoughts: []
-    };
+describe('Debug Component Rendering', () => {
+  test('AddThoughtModal renders with debug output', () => {
+    const { container } = render(
+      <AddThoughtModal 
+        isOpen={true} 
+        onClose={() => {}} 
+        onSave={() => {}} 
+      />
+    );
 
-    console.log('=== BEFORE RENDER ===');
-    console.log('React version:', React.version);
-    console.log('Props:', mockProps);
+    // Output debug information to console for analysis
+    console.log('=== DEBUG: AddThoughtModal DOM Structure ===');
+    console.log(container.innerHTML);
 
-    const result = render(<AddThoughtModal {...mockProps} />);
-    
-    console.log('=== AFTER RENDER ===');
-    console.log('Container HTML:', result.container.innerHTML);
-    console.log('Document body:', document.body.innerHTML);
-    
-    // Use debug() to see what RTL thinks is rendered
-    debug();
-    
-    // Check if ANY elements exist
-    const allElements = result.container.querySelectorAll('*');
-    console.log('Total elements found:', allElements.length);
-    allElements.forEach((el, i) => {
-      console.log(`Element ${i}:`, el.tagName, el.className, el.textContent);
-    });
-
-    // This test should fail but give us useful info
-    expect(result.container.innerHTML).not.toBe('');
+    // Basic verification that component mounted
+    expect(container.firstChild).toBeTruthy();
   });
 
-  test('diagnostic: simple div rendering test', () => {
-    const TestComponent = () => <div data-testid="test-div">Hello World</div>;
-    
-    console.log('=== SIMPLE COMPONENT TEST ===');
-    const result = render(<TestComponent />);
-    console.log('Simple component HTML:', result.container.innerHTML);
-    debug();
-    
-    expect(screen.getByTestId('test-div')).toBeInTheDocument();
+  test('Component debug information collection', () => {
+    const testComponent = render(<div data-testid="debug-test">Debug Test</div>);
+
+    // Verify basic React rendering works
+    expect(screen.getByTestId('debug-test')).toBeInTheDocument();
+    expect(screen.getByText('Debug Test')).toBeInTheDocument();
   });
 });

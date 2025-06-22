@@ -10,10 +10,25 @@ describe('VoiceInputManager', () => {
     // Reset the mock before each test
     vi.clearAllMocks();
 
-    // Ensure webkitSpeechRecognition is available globally
-    if (!global.webkitSpeechRecognition) {
-      global.webkitSpeechRecognition = window.webkitSpeechRecognition;
-    }
+    // Create fresh mock recognition instance
+    mockRecognition = {
+      start: vi.fn(),
+      stop: vi.fn(),
+      abort: vi.fn(),
+      continuous: false,
+      interimResults: false,
+      onresult: null,
+      onerror: null,
+      onend: null,
+      onstart: null
+    };
+
+    // Mock the constructor function properly
+    global.window.webkitSpeechRecognition = vi.fn(() => mockRecognition);
+    
+    // Setup callback functions
+    onTranscriptUpdate = vi.fn();
+    onError = vi.fn();
   });
 
   test('initializes with correct configuration', () => {

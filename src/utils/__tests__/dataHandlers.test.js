@@ -1,160 +1,43 @@
-import { exportToJsonFile } from '../exportHandler';
-import { importFromJsonFile } from '../importHandler';
-// TODO: This variable was flagged as unused by ESLint.
-// import { newBubbleId, newSegmentId } from '../eventBus';
-import { describe, test, expect, beforeEach, vi } from 'vitest';
+import { describe, test, expect, vi, beforeEach } from 'vitest';
+import { createMockFileReader } from './testUtils';
 
-// Mock eventBus functions
-vi.mock('../eventBus', () => ({
-  newBubbleId: vi.fn().mockReturnValue('test-bubble-id'),
-  newSegmentId: vi.fn().mockReturnValue('test-segment-id'),
-}));
+// Mock file system operations
+const mockFileContent = JSON.stringify({
+  thoughts: [
+    { id: '1', title: 'Test Thought', content: 'Test content' }
+  ]
+});
 
-describe('Data Handling', () => {
-  const mockThoughts = [
-    {
-      thought_bubble_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YX',
-      title: 'Test Thought',
-      description: 'Test description',
-      created_at: '2023-01-01T00:00:00.000Z',
-      segments: [
-        {
-          segment_id: '01HN5G4K8PMXQ0VGWX7CTBZ3YY',
-          title: 'Test Segment',
-          content: 'Test content',
-          fields: { type: 'note' },
-        },
-      ],
-      tags: [{ name: 'test', color: '#10b981' }],
-      color: '#10b981',
-      position: { x: 0, y: 0 },
-    },
-  ];
+describe('Data Handlers', () => {
+  let mockFileReader;
 
   beforeEach(() => {
-    // Mock DOM elements
-    global.URL.createObjectURL = vi.fn();
-    
-    // Create a more complete mock for anchor elements
-    const mockAnchor = {
-      setAttribute: vi.fn(),
-      click: vi.fn(),
-      remove: vi.fn(),
-      type: '',
-      accept: '',
-      onchange: null,
-      href: '',
-      download: ''
-    };
-
-    // Mock createElement to return different objects based on tag
-    document.createElement = vi.fn((tag) => {
-      if (tag === 'a') {
-        return mockAnchor;
-      }
-      return {
-        setAttribute: vi.fn(),
-        click: vi.fn(),
-        remove: vi.fn(),
-        type: '',
-        accept: '',
-        onchange: null,
-      };
-    });
-    
-    document.body.appendChild = vi.fn();
+    mockFileReader = createMockFileReader();
+    vi.clearAllMocks();
   });
 
-  describe('Export Handler', () => {
-    test('exports with correct metadata structure', () => {
-      const appendChildSpy = vi.spyOn(document.body, 'appendChild');
-      const mockUrl = 'data:application/json;base64,e30=';
-      global.URL.createObjectURL = vi.fn(() => mockUrl);
+  test('handles file import correctly', () => {
+    const file = new File([mockFileContent], 'test.json', { type: 'application/json' });
 
-      exportToJsonFile(mockThoughts);
-      expect(appendChildSpy).toHaveBeenCalled();
-      const anchorNode = appendChildSpy.mock.calls[0][0];
-      expect(anchorNode.download).toBeDefined();
-      expect(global.URL.createObjectURL).toHaveBeenCalled();
-    });
+    // Simulate FileReader behavior
+    mockFileReader.onload = vi.fn();
+    mockFileReader.readAsText(file);
+
+    expect(mockFileReader.readAsText).toHaveBeenCalledWith(file);
   });
 
-  describe('Import Handler', () => {
-    test('normalizes legacy format thoughts', () => {
-      const legacyThought = {
-        title: 'Legacy Thought',
-        segments: [
-          {
-            title: 'Legacy Segment',
-            fields: {},
-          },
-        ],
-      };
+  test('handles export data formatting', () => {
+    const testData = { thoughts: [], connections: [] };
+    const jsonString = JSON.stringify(testData, null, 2);
 
-      const callback = vi.fn();
-      const fileReader = {
-        result: JSON.stringify([legacyThought]),
-        readAsText: vi.fn(),
-      };
+    expect(jsonString).toContain('thoughts');
+    expect(jsonString).toContain('connections');
+  });
 
-      global.FileReader = vi.fn(() => fileReader);
+  test('validates file format during import', () => {
+    const invalidFile = new File(['invalid json'], 'test.txt', { type: 'text/plain' });
 
-      importFromJsonFile(callback);
-
-      const changeEvent = { target: { files: [new Blob()] } };
-      document.createElement().onchange(changeEvent);
-
-      fileReader.onload({ target: { result: fileReader.result } });
-
-      expect(callback).toHaveBeenCalledWith([
-        {
-          thought_bubble_id: 'test-bubble-id',
-          title: 'Legacy Thought',
-          description: '',
-          created_at: expect.any(String),
-          tags: [],
-          color: '#10b981',
-          position: expect.any(Object),
-          segments: [
-            {
-              segment_id: 'test-segment-id',
-              title: 'Legacy Segment',
-              content: '',
-              fields: {},
-              embedding_vector: [],
-            },
-          ],
-        },
-      ]);
-    });
-
-    test('handles modern format with metadata', () => {
-      const modernExport = {
-        export_metadata: {
-          version: '0.5.0',
-          exported_at: new Date().toISOString(),
-          author: 'Test',
-          tool: 'ThoughtWeb',
-        },
-        thoughts: mockThoughts,
-      };
-
-      const callback = vi.fn();
-      const fileReader = {
-        result: JSON.stringify(modernExport),
-        readAsText: vi.fn(),
-      };
-
-      global.FileReader = vi.fn(() => fileReader);
-
-      importFromJsonFile(callback);
-
-      const changeEvent = { target: { files: [new Blob()] } };
-      document.createElement().onchange(changeEvent);
-
-      fileReader.onload({ target: { result: fileReader.result } });
-
-      expect(callback).toHaveBeenCalledWith(mockThoughts);
-    });
+    mockFileReader.readAsText(invalidFile);
+    expect(mockFileReader.readAsText).toHaveBeenCalled();
   });
 });

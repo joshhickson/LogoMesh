@@ -298,11 +298,31 @@ function MockSpeechRecognition() {
   this.onaudiostart = null;
   this.onaudioend = null;
   
-  this.start = vi.fn();
-  this.stop = vi.fn();
+  this.start = vi.fn(() => {
+    if (this.onstart) this.onstart();
+  });
+  this.stop = vi.fn(() => {
+    if (this.onend) this.onend();
+  });
   this.abort = vi.fn();
   this.addEventListener = vi.fn();
   this.removeEventListener = vi.fn();
+  
+  // Add support for triggering mock events
+  this.triggerResult = (transcript, isFinal = true) => {
+    if (this.onresult) {
+      this.onresult({
+        results: [[{ transcript, isFinal }]],
+        resultIndex: 0
+      });
+    }
+  };
+  
+  this.triggerError = (error) => {
+    if (this.onerror) {
+      this.onerror({ error });
+    }
+  };
 }
 
 // Set up constructor properties properly
@@ -418,3 +438,41 @@ Object.defineProperty(HTMLCanvasElement.prototype, 'height', {
   writable: true,
   value: 150
 });
+
+// Mock FileReader for data handler tests
+global.FileReader = vi.fn(() => ({
+  readAsText: vi.fn(function(file) {
+    // Simulate async file reading
+    setTimeout(() => {
+      this.result = file.name.includes('.json') ? '{"test": "data"}' : 'test content';
+      if (this.onload) this.onload({ target: this });
+    }, 0);
+  }),
+  readAsDataURL: vi.fn(),
+  readAsArrayBuffer: vi.fn(),
+  readAsBinaryString: vi.fn(),
+  abort: vi.fn(),
+  onload: null,
+  onerror: null,
+  onabort: null,
+  onloadstart: null,
+  onloadend: null,
+  onprogress: null,
+  result: null,
+  error: null,
+  readyState: 0,
+  EMPTY: 0,
+  LOADING: 1,
+  DONE: 2
+}));
+
+// Mock File constructor
+global.File = vi.fn((content, filename, options) => ({
+  name: filename,
+  size: content[0]?.length || 0,
+  type: options?.type || 'text/plain',
+  lastModified: Date.now(),
+  arrayBuffer: vi.fn(),
+  text: vi.fn(),
+  stream: vi.fn()
+}));
