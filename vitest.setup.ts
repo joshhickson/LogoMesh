@@ -163,7 +163,22 @@ document.createElement = vi.fn((tagName) => {
   return element;
 });
 
-// Remove the document.body.appendChild mock - let RTL handle DOM mounting
+// Ensure RTL can properly mount components to document.body
+Object.defineProperty(document.body, 'appendChild', {
+  value: function(child) {
+    return Document.prototype.appendChild.call(this, child);
+  },
+  writable: true,
+  configurable: true
+});
+
+// Fix jsdom body connection for RTL
+beforeEach(() => {
+  // Ensure document.body is properly connected
+  if (!document.body.isConnected) {
+    document.documentElement.appendChild(document.body);
+  }
+});
 
 // Mock FileReader for import/export tests
 global.FileReader = vi.fn(() => ({
@@ -262,42 +277,44 @@ Object.defineProperty(window, 'sessionStorage', {
   value: createStorage(),
   configurable: true
 });
-// Mock webkitSpeechRecognition with proper constructor
-class MockSpeechRecognition {
-  constructor() {
-    this.continuous = false;
-    this.interimResults = false;
-    this.lang = 'en-US';
-    this.maxAlternatives = 1;
-    this.serviceURI = '';
-    this.grammars = null;
-    this.onstart = null;
-    this.onend = null;
-    this.onerror = null;
-    this.onresult = null;
-    this.onnomatch = null;
-    this.onsoundstart = null;
-    this.onsoundend = null;
-    this.onspeechstart = null;
-    this.onspeechend = null;
-    this.onaudiostart = null;
-    this.onaudioend = null;
-  }
-
-  start() {}
-  stop() {}
-  abort() {}
-  addEventListener() {}
-  removeEventListener() {}
+// Mock webkitSpeechRecognition with proper constructor behavior
+function MockSpeechRecognition() {
+  // Use regular function instead of class for proper constructor behavior
+  this.continuous = false;
+  this.interimResults = false;
+  this.lang = 'en-US';
+  this.maxAlternatives = 1;
+  this.serviceURI = '';
+  this.grammars = null;
+  this.onstart = null;
+  this.onend = null;
+  this.onerror = null;
+  this.onresult = null;
+  this.onnomatch = null;
+  this.onsoundstart = null;
+  this.onsoundend = null;
+  this.onspeechstart = null;
+  this.onspeechend = null;
+  this.onaudiostart = null;
+  this.onaudioend = null;
+  
+  this.start = vi.fn();
+  this.stop = vi.fn();
+  this.abort = vi.fn();
+  this.addEventListener = vi.fn();
+  this.removeEventListener = vi.fn();
 }
 
+// Set up constructor properties properly
 Object.defineProperty(window, 'webkitSpeechRecognition', {
   writable: true,
+  configurable: true,
   value: MockSpeechRecognition
 });
 
 Object.defineProperty(window, 'SpeechRecognition', {
   writable: true,
+  configurable: true,
   value: MockSpeechRecognition
 });
 // Mock HTMLCanvasElement with comprehensive 2D context
