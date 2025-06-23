@@ -9,7 +9,7 @@
 ### Task 1: Multi-Language Plugin Runtime
 **Framework Outcome**: Plugin system loads and executes Node.js and Python plugins safely
 
-**Detailed Actions (for AI Agent):**
+**Core Goals (Essential):**
 a. **Extend Plugin Manifest Schema**:
    - Update `contracts/plugins/pluginManifest.schema.json`
    - Add `runtime` field (values: "nodejs", "python", "shell")
@@ -27,7 +27,33 @@ c. **Update PluginHost Service**:
    - Implement plugin lifecycle: load → init → execute → cleanup
    - Add plugin state tracking and health monitoring
 
-**Verification**: Load sample Node.js plugin, Python plugin, execute basic commands, verify resource isolation
+**Enhanced Goals (From Specifications):**
+d. **Plugin Discovery System** *(from architecture_day_15_plugin_system_revision.md)*:
+   - Implement plugin directory scanning
+   - Plugin versioning and dependency resolution
+   - Hot-reloading capabilities for development
+
+e. **Security Sandboxing** *(from architecture_day_18_comprehensive_security_model.md)*:
+   - Implement constitutional enforcement for plugin execution
+   - Resource quota enforcement and monitoring
+   - Plugin permission model with granular controls
+
+f. **Multi-Language Coordination** *(from phase2_core_specifications.md)*:
+   - Cross-language plugin communication protocols
+   - Shared data structures between runtimes
+   - Event bus integration for plugin coordination
+
+**Stretch Goals (Time Permitting):**
+g. **Advanced Plugin Features**:
+   - Plugin hot-swapping without system restart
+   - Plugin marketplace preparation (metadata, ratings)
+   - Plugin development toolkit and CLI
+
+**Verification**: 
+- Load sample Node.js plugin, Python plugin, execute basic commands, verify resource isolation
+- Test plugin discovery and hot-reload functionality
+- Verify security sandbox prevents unauthorized operations
+- Test cross-language plugin communication
 
 ### Task 2: TypeScript Migration Core Systems
 **Framework Outcome**: All core/ and contracts/ directories fully TypeScript with zero compilation errors
