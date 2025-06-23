@@ -22,8 +22,10 @@ This documentation was archived because:
 
 ## What Remains Active
 
-- Core specifications in `/01_PLANNING_AND_DESIGN/SPECIFICATIONS/`
-- Single implementation plan: `IMPLEMENTATION_PLAN.md`
-- Realistic 4-week plan: `phase_2_revised_realistic.md`
+- **[../PROJECT_STATUS.md](../PROJECT_STATUS.md)** - Current project status and entry point
+- **[../IMPLEMENTATION_PLAN.md](../IMPLEMENTATION_PLAN.md)** - Active 4-week implementation plan
+- Core specifications in `/01_PLANNING_AND_DESIGN/SPECIFICATIONS/` - Reference during implementation
 
-The active documentation focuses on **what to build** rather than **how we planned it**.
+## Relationship to Active Implementation
+
+The active implementation plan references some archived content for **Enhanced Goals** and **Stretch Goals** but the **Core Goals** remain focused and actionable. This archive provides rich context but should not drive day-to-day implementation decisions.
