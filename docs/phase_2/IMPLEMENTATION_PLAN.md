@@ -146,45 +146,44 @@ g. **Advanced Plugin Features**:
 **Timeline:** Days 8-9 (2 days)
 **Priority:** Critical
 
+**Reality Check:** Build TaskEngine by extending existing `LLMTaskRunner` (~40% functionality) and `LLMOrchestrator` (~30% functionality) rather than starting from scratch. Focus on the missing 30% integration layer.
+
 **Core Goals (Essential):**
-- Create `TaskEngine` core with sequential and parallel step execution
-- Implement `ExecutorRegistry` for LLM, Plugin, and System task executors
-- Build Task/Pipeline schema with JSON workflow definitions
-- Create basic task state management (pending, running, completed, failed)
-- Implement simple retry logic with configurable attempts
+- **Extend LLMTaskRunner:** Add multi-executor support (LLM, Plugin, System) using existing retry/audit infrastructure
+- **Enhance LLMOrchestrator:** Add Pipeline execution support beyond just conversation workflows  
+- **Create ExecutorRegistry:** Simple registry mapping executor IDs to existing LLMTaskRunner, PluginHost instances
+- **Build Pipeline Schema:** JSON workflow definitions using existing Task/Pipeline interfaces from specifications
+- **Integrate EventBus:** Connect existing EventBus to pipeline execution events
 
 **Enhanced Goals (From Core Specifications):**
-- Implement `MetaExecutor` stub with cognitive load simulation for complex reasoning chains
-- Build Event System integration for real-time task progress broadcasting
-- Create Task API endpoints (`/api/tasks/`) with WebSocket support for live monitoring
-- Implement task dependency resolution with directed acyclic graph validation
-- Add execution context isolation with plugin sandboxing integration
-- Create audit trail integration logging all task executions with full provenance
+- **MetaExecutor Stub:** Simple routing logic using existing `LLMOrchestrator` model selection patterns
+- **Task State Management:** Extend existing audit logging with pipeline execution tracking
+- **API Integration:** Add `/api/tasks/` endpoints using existing route patterns from `thoughtRoutes.ts`
+- **Cross-Executor Coordination:** Enable LLM → Plugin → System task chains using existing interfaces
+- **Audit Trail Extension:** Expand `llmAuditLogger` to track full pipeline provenance
 
 **Stretch Goals (Time Permitting):**
-- Build drag-drop pipeline builder UI component (`PipelineBuilder.tsx`) with visual workflow creation
-- Implement conditional execution with branching logic and dynamic routing
-- Add task result caching with intelligent invalidation strategies
-- Create workflow templates library with common development patterns
-- Implement distributed task execution preparation (mock cluster coordination)
-- Add performance metrics dashboard with execution time analysis and bottleneck detection
+- **Visual Pipeline Builder:** Simple JSON editor component using existing modal patterns
+- **Dependency Resolution:** Basic DAG validation for task ordering
+- **Resource Monitoring:** Extend existing `LLMTaskRunner.getStatus()` for pipeline health
+- **Workflow Templates:** Common development patterns (lint → test → build) as JSON configs
+- **Real-time Monitoring:** WebSocket integration using existing `LLMOrchestrator` event patterns
 
 **Implementation Steps:**
-1. **Core TaskEngine Framework:** Create task execution engine with lifecycle management
-2. **Executor Registry:** Implement pluggable executor system for different task types
-3. **Schema & Validation:** Define JSON workflow schema with comprehensive validation
-4. **State Management:** Add persistent task state with SQLite storage integration
-5. **Event Integration:** Connect to existing EventBus for real-time progress updates
-6. **API & Monitoring:** Build REST endpoints with WebSocket support for task monitoring
+1. **Audit Existing Components:** Confirm LLMTaskRunner execution/retry and LLMOrchestrator coordination patterns
+2. **Create TaskEngine Core:** Build bridge class that orchestrates existing LLMTaskRunner and PluginHost
+3. **Extend ExecutorRegistry:** Simple registry wrapping existing executor instances  
+4. **Pipeline Execution:** Add multi-step workflow support to existing LLMOrchestrator patterns
+5. **State Integration:** Extend existing SQLite audit tables for pipeline tracking
+6. **API Routes:** Add task endpoints following existing `thoughtRoutes.ts` patterns
 
 **Success Criteria:**
-- ✅ **VERIFICATION GATE 1.4:** TaskEngine executes multi-step workflows successfully
-- ✅ Sequential and parallel task execution working correctly
-- ✅ Plugin executor integration handles plugin calls safely
-- ✅ System executor performs filesystem operations within security sandbox
-- ✅ Task failure recovery and retry mechanisms functional
-- ✅ Real-time progress monitoring via WebSocket connections
-- ✅ **FAIL-SAFE:** If task execution becomes unstable, gracefully shut down with state preservation
+- ✅ **VERIFICATION GATE 1.4:** TaskEngine executes 3-step pipeline (LLM → Plugin → System) successfully
+- ✅ **Reality Check:** Uses existing LLMTaskRunner retry logic without reimplementation
+- ✅ **Reality Check:** Leverages existing LLMOrchestrator event system for progress updates
+- ✅ **Reality Check:** Extends existing audit logging rather than creating new system
+- ✅ **Reality Check:** Integrates with existing PluginHost without breaking plugin execution
+- ✅ **FAIL-SAFE:** If integration proves unstable, fall back to individual executor testing
 
 ## Week 2: LLM Infrastructure & Storage
 
