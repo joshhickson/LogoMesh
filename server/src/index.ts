@@ -12,9 +12,11 @@ const logger = {
 };
 import thoughtRoutes from './routes/thoughtRoutes';
 import llmRoutes from './routes/llmRoutes';
-import adminRoutes from './routes/adminRoutes';
-import portabilityRoutes from './routes/portabilityRoutes';
 import orchestratorRoutes from './routes/orchestratorRoutes';
+import portabilityRoutes from './routes/portabilityRoutes';
+import adminRoutes from './routes/adminRoutes';
+import taskRoutes, { initializeTaskEngine } from './routes/taskRoutes';
+import { EventBus } from '../../core/services/eventBus';
 
 const app = express();
 const PORT = parseInt(process.env.PORT || "5000", 10); // Ensure PORT is a number
@@ -31,12 +33,17 @@ async function setupServices() {
   return {};
 }
 
+// Initialize TaskEngine with EventBus
+const eventBus = new EventBus();
+initializeTaskEngine(eventBus);
+
 // Mount routes
 app.use('/api/v1/thoughts', thoughtRoutes);
 app.use('/api/v1/llm', llmRoutes);
 app.use('/api/v1/admin', adminRoutes);
 app.use('/api/v1/portability', portabilityRoutes);
 app.use('/api/v1/orchestrator', orchestratorRoutes);
+app.use('/api/v1/tasks', taskRoutes);
 
 // Health check
 app.get(`${apiBasePath}/health`, (req, res) => {
