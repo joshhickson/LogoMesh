@@ -58,26 +58,46 @@ g. **Advanced Plugin Features**:
 - Verify security sandbox prevents unauthorized operations
 - Test cross-language plugin communication
 
-### Task 2: TypeScript Migration Core Systems
-**Framework Outcome**: All core/ and contracts/ directories fully TypeScript with zero compilation errors
+#### **Week 1 Task 2: TypeScript Migration** 
+**Timeline:** Days 3-5 (3 days)
+**Priority:** Critical
 
-**Detailed Actions (for AI Agent):**
-a. **Update Core Services**:
-   - Convert `core/services/eventBus.js` → `eventBus.ts`
-   - Convert `core/services/meshGraphEngine.js` → `meshGraphEngine.ts`  
-   - Add proper type definitions for all method signatures
+**Core Goals (Essential):**
+- Complete TypeScript migration for remaining frontend components
+- Fix all TypeScript compilation errors in build pipeline
+- Update Express route handler type signatures (from Core Specifications)
+- Ensure zero compilation errors: `npx tsc --noEmit` passes
+- Stabilize build process and eliminate compilation errors
 
-b. **Fix Frontend TypeScript Issues**:
-   - Convert `src/components/Canvas.jsx` → `Canvas.tsx`
-   - Convert `src/services/apiService.js` → `apiService.ts`
-   - Update all imports to use TypeScript extensions
+**Enhanced Goals (From Core Specifications):**
+- Create signed `models/llm.config.json` as single source of truth for LLM configurations
+- Implement `LLMExecutorRegistry` with signature validation (local & mock executors only)
+- Plugin-proposed model additions require DevShell approval workflow (configurable in Security panel)
+- Implement comprehensive type checking pipeline with CI integration
+- Add TypeScript path aliases properly configured for `/core/`, `/contracts/`, `/src/`
 
-c. **Configure Strict TypeScript**:
-   - Update `tsconfig.json` with `"strict": true`
-   - Fix all type errors in existing code
-   - Ensure 100% type coverage
+**Stretch Goals (Time Permitting):**
+- Implement `LocalModelTestPanel.tsx` (prompt ↔ completion, tokens/sec display) 
+- Add TypeScript strict mode configuration with gradual enforcement
+- Create TypeScript utility types for improved developer experience
+- Add automated TypeScript migration tools for future JavaScript files
+- Implement TypeScript decorators for plugin system foundation
 
-**Verification**: `npm run build` completes with zero TypeScript errors, all tests pass
+**Implementation Steps:**
+1. **Pre-Phase Audit:** Audit remaining JS to accurately estimate migration effort (from Phase 2 analysis)
+2. **Prioritize Critical Paths:** Focus on core modules impacting other Phase 2 features first
+3. **Incremental Migration:** Convert and merge incrementally where feasible
+4. **LLM Configuration:** Create signed LLM config with local/mock executor registry
+5. **Route Handler Types:** Complete Express route handler type signatures
+6. **Build Stabilization:** Ensure build process stability across all environments
+
+**Success Criteria:**
+- ✅ **VERIFICATION GATE 1.2:** Zero TypeScript compilation errors: `npx tsc --noEmit`
+- ✅ ESLint passes: `npm run lint`
+- ✅ All tests still pass: `npm test`
+- ✅ Frontend builds successfully: `npm run build`
+- ✅ Signed LLM config loads without errors: Test `LLMExecutorRegistry.loadConfig()`
+- ✅ **FAIL-SAFE:** If migration effort exceeds timeline, prioritize core modules and defer non-critical files
 
 ## Week 2: LLM Infrastructure & Storage
 
@@ -230,3 +250,4 @@ c. **Performance Optimization**:
 - Complex reasoning chains
 - External API integrations
 - Production security hardening
+```
