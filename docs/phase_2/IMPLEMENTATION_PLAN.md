@@ -94,10 +94,53 @@ g. **Advanced Plugin Features**:
 **Success Criteria:**
 - ✅ **VERIFICATION GATE 1.2:** Zero TypeScript compilation errors: `npx tsc --noEmit`
 - ✅ ESLint passes: `npm run lint`
-- ✅ All tests still pass: `npm test`
+- ✅ All tests still pass: `npm test`  
 - ✅ Frontend builds successfully: `npm run build`
 - ✅ Signed LLM config loads without errors: Test `LLMExecutorRegistry.loadConfig()`
 - ✅ **FAIL-SAFE:** If migration effort exceeds timeline, prioritize core modules and defer non-critical files
+
+#### **Week 1 Task 3: DevShell Implementation**
+**Timeline:** Days 6-7 (2 days)
+**Priority:** Critical
+
+**Core Goals (Essential):**
+- Create privileged plugin with developer-only access and permission system
+- Implement `CloudDevLLMExecutor` stub for high-context external model integration
+- Build natural language pipeline builder with JSON output (template-based)
+- Implement safe filesystem access with sandboxed path restrictions
+- Create embedded terminal UI (`DevShellTerminal.tsx`) with command simulation
+
+**Enhanced Goals (From Core Specifications):**
+- Implement `PluginExecutionLimiter` with timeout & circuit-breaker for crash containment
+- Build Plugin Live Inspector DevShell panel showing loaded plugins, permissions, memory usage
+- Create `PluginAPI.readFile()` for safe filesystem reading within sandbox paths
+- Implement `PluginAPI.proposeFileChange()` creating `.patch` files requiring human approval
+- Add `devShellWriteMode = "proposal"` by default with `"direct"` mode for advanced users
+- Implement `devShellSandboxPaths` restricting access to `/src` and `/docs` by default
+
+**Stretch Goals (Time Permitting):**
+- Create `CodeAnalysisLLMExecutor` mock for plugin manifest and code analysis
+- Implement self-debugging agent mode stub for pipeline failure analysis
+- Build integration with error logging for root cause analysis framework
+- Add `logomesh simulate` CLI for dry-run pipelines
+- Create comprehensive audit trail of all file operations with integrity verification
+
+**Implementation Steps:**
+1. **DevShell Plugin Foundation:** Create privileged plugin framework with security sandboxing
+2. **Mock Cloud Integration:** Implement CloudDevLLMExecutor with API integration simulation
+3. **Natural Language Interface:** Add template-based command parsing with JSON output
+4. **Filesystem Controls:** Implement read-only by default with proposal-based mutations
+5. **Terminal UI:** Build embedded terminal component with command simulation
+6. **Plugin Safety:** Add execution limits, crash containment, and live monitoring
+
+**Success Criteria:**
+- ✅ **VERIFICATION GATE 1.3:** DevShell executes basic developer commands safely
+- ✅ Mock cloud LLM integration handles all error scenarios gracefully
+- ✅ Natural language parsing handles common development patterns
+- ✅ Security sandbox prevents unauthorized system access consistently
+- ✅ Plugin crash containment prevents system-wide failures
+- ✅ All file operations require explicit user confirmation
+- ✅ **FAIL-SAFE:** If security compromised, disable privileged operations immediately
 
 ## Week 2: LLM Infrastructure & Storage
 
