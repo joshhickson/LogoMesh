@@ -5,7 +5,7 @@ import { PluginHost } from './pluginHost.js';
 import { logger } from '../utils/logger.js';
 
 // TaskEngine interfaces
-interface TaskStep {
+export interface TaskStep {
   id: string;
   type: 'llm' | 'plugin' | 'system';
   executorId: string;
@@ -17,7 +17,7 @@ interface TaskStep {
   error?: string;
 }
 
-interface Pipeline {
+export interface Pipeline {
   id: string;
   name: string;
   description?: string;
@@ -30,7 +30,7 @@ interface Pipeline {
   context: Record<string, any>;
 }
 
-interface ExecutorRegistry {
+export interface ExecutorRegistry {
   llmExecutors: Map<string, LLMTaskRunner>;
   pluginExecutors: Map<string, PluginHost>;
   systemExecutors: Map<string, any>;
