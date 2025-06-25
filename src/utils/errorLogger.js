@@ -243,6 +243,19 @@ const saveError = async (error) => {
     return; // Don't save if exports are disabled
   }
 
+  // Get session ID function
+  const getSessionIdForSave = () => {
+    if (typeof sessionStorage === 'undefined') {
+      return 'test-session-' + Date.now().toString(36);
+    }
+    let sessionId = sessionStorage.getItem('thought-web-session-id');
+    if (!sessionId) {
+      sessionId = Date.now().toString(36) + Math.random().toString(36).substr(2);
+      sessionStorage.setItem('thought-web-session-id', sessionId);
+    }
+    return sessionId;
+  };
+
   try {
     const response = await fetch(`${API_BASE_URL}/admin/save-errors`, {
       method: 'POST',
@@ -256,7 +269,7 @@ const saveError = async (error) => {
         url: error.url || window.location.href,
         timestamp: new Date().toISOString(),
         userAgent: navigator.userAgent,
-        sessionId: getSessionId()
+        sessionId: getSessionIdForSave()
       }),
     });
 
