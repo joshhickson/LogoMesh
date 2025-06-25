@@ -50,7 +50,7 @@ router.post('/pipelines', async (req: Request, res: Response) => {
       });
     }
 
-    const pipeline = taskEngine.createPipeline({
+    const pipeline = await taskEngine.createPipeline({
       name,
       description,
       steps,
@@ -200,7 +200,7 @@ router.get('/status', (req: Request, res: Response) => {
 router.post('/quick-test', async (req: Request, res: Response) => {
   try {
     // Create a simple 3-step test pipeline: LLM → Plugin → System
-    const testPipeline = taskEngine.createPipeline({
+    const testPipeline = await taskEngine.createPipeline({
       name: 'Quick Test Pipeline',
       description: 'Test 3-step pipeline for verification',
       executionMode: 'sequential',
