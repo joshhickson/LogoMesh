@@ -1,18 +1,18 @@
-import { LLMTaskRunner } from '../llm/LLMTaskRunner';
-import { PluginHost } from './pluginHost';
-import { EventBus } from './eventBus';
-export interface TaskStep {
+import { EventBus } from './eventBus.js';
+import { LLMTaskRunner } from '../llm/LLMTaskRunner.js';
+import { PluginHost } from './pluginHost.js';
+interface TaskStep {
     id: string;
     type: 'llm' | 'plugin' | 'system';
     executorId: string;
     input: Record<string, any>;
     output?: Record<string, any>;
     status: 'pending' | 'running' | 'completed' | 'failed';
-    error?: string;
     startTime?: Date;
     endTime?: Date;
+    error?: string;
 }
-export interface Pipeline {
+interface Pipeline {
     id: string;
     name: string;
     description?: string;
@@ -23,11 +23,6 @@ export interface Pipeline {
     startTime?: Date;
     endTime?: Date;
     context: Record<string, any>;
-}
-export interface ExecutorRegistry {
-    llmExecutors: Map<string, LLMTaskRunner>;
-    pluginExecutors: Map<string, PluginHost>;
-    systemExecutors: Map<string, any>;
 }
 /**
  * TaskEngine orchestrates execution of multi-step workflows using existing
@@ -113,4 +108,5 @@ export declare class TaskEngine {
         };
     };
 }
+export {};
 //# sourceMappingURL=taskEngine.d.ts.map
