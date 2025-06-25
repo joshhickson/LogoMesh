@@ -114,5 +114,26 @@ router.get('/backups', async (req, res) => {
         });
     }
 });
+// Save error logs endpoint
+router.post('/save-errors', (req, res) => {
+    try {
+        const errorData = req.body;
+        const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+        const logFile = path_1.default.join(process.cwd(), 'error_exports', 'runtime_errors', `errors_${timestamp}.jsonl`);
+        // Ensure directory exists
+        const logDir = path_1.default.dirname(logFile);
+        if (!fs.existsSync(logDir)) {
+            fs.mkdirSync(logDir, { recursive: true });
+        }
+        // Append error as JSON line
+        const logLine = JSON.stringify(errorData) + '\n';
+        fs.appendFileSync(logFile, logLine);
+        res.status(200).json({ success: true, message: 'Error logged successfully' });
+    }
+    catch (error) {
+        console.error('Failed to save error:', error);
+        res.status(500).json({ success: false, message: 'Failed to save error' });
+    }
+});
 exports.default = router;
 //# sourceMappingURL=adminRoutes.js.map
