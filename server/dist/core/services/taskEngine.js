@@ -37,7 +37,7 @@ class TaskEngine {
     /**
      * Create a new pipeline from JSON definition
      */
-    createPipeline(definition) {
+    async createPipeline(definition) {
         const pipelineId = `pipeline_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
         const pipeline = {
             id: pipelineId,
