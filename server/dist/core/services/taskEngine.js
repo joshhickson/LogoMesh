@@ -1,9 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskEngine = void 0;
-const LLMOrchestrator_1 = require("../llm/LLMOrchestrator");
-const logger_1 = require("../utils/logger");
-const llmAuditLogger_1 = require("../logger/llmAuditLogger");
+const LLMOrchestrator_js_1 = require("../llm/LLMOrchestrator.js");
+const logger_js_1 = require("../utils/logger.js");
+// Audit logging function stub
+async function logPipelineEvent(event) {
+    logger_js_1.logger.info(`[Pipeline Audit] ${event.event}:`, event);
+}
 /**
  * TaskEngine orchestrates execution of multi-step workflows using existing
  * LLMTaskRunner, LLMOrchestrator, and PluginHost components
@@ -12,7 +15,7 @@ class TaskEngine {
     constructor(eventBus) {
         this.activePipelines = new Map();
         this.eventBus = eventBus;
-        this.orchestrator = new LLMOrchestrator_1.LLMOrchestrator(eventBus);
+        this.orchestrator = new LLMOrchestrator_js_1.LLMOrchestrator(eventBus);
         this.registry = {
             llmExecutors: new Map(),
             pluginExecutors: new Map(),
@@ -25,14 +28,14 @@ class TaskEngine {
      */
     registerLLMExecutor(id, executor) {
         this.registry.llmExecutors.set(id, executor);
-        logger_1.logger.info(`[TaskEngine] Registered LLM executor: ${id}`);
+        logger_js_1.logger.info(`[TaskEngine] Registered LLM executor: ${id}`);
     }
     /**
      * Register a plugin executor with the task engine
      */
     registerPluginExecutor(id, executor) {
         this.registry.pluginExecutors.set(id, executor);
-        logger_1.logger.info(`[TaskEngine] Registered plugin executor: ${id}`);
+        logger_js_1.logger.info(`[TaskEngine] Registered plugin executor: ${id}`);
     }
     /**
      * Create a new pipeline from JSON definition
@@ -54,9 +57,9 @@ class TaskEngine {
             context: definition.context || {}
         };
         this.activePipelines.set(pipelineId, pipeline);
-        logger_1.logger.info(`[TaskEngine] Created pipeline: ${pipeline.name} (${pipelineId})`);
+        logger_js_1.logger.info(`[TaskEngine] Created pipeline: ${pipeline.name} (${pipelineId})`);
         // Audit log pipeline creation
-        await (0, llmAuditLogger_1.logPipelineEvent)({
+        await logPipelineEvent({
             pipelineId,
             pipelineName: pipeline.name,
             event: 'created',
@@ -78,9 +81,9 @@ class TaskEngine {
         }
         pipeline.status = 'running';
         pipeline.startTime = new Date();
-        logger_1.logger.info(`[TaskEngine] Starting pipeline execution: ${pipeline.name}`);
+        logger_js_1.logger.info(`[TaskEngine] Starting pipeline execution: ${pipeline.name}`);
         // Audit log pipeline start
-        await (0, llmAuditLogger_1.logPipelineEvent)({
+        await logPipelineEvent({
             pipelineId,
             pipelineName: pipeline.name,
             event: 'started'
@@ -95,13 +98,13 @@ class TaskEngine {
             }
             pipeline.status = 'completed';
             pipeline.endTime = new Date();
-            logger_1.logger.info(`[TaskEngine] Pipeline completed: ${pipeline.name}`);
+            logger_js_1.logger.info(`[TaskEngine] Pipeline completed: ${pipeline.name}`);
             this.eventBus.emit('pipelineCompleted', { pipeline });
         }
         catch (error) {
             pipeline.status = 'failed';
             pipeline.endTime = new Date();
-            logger_1.logger.error(`[TaskEngine] Pipeline failed: ${pipeline.name}`, error);
+            logger_js_1.logger.error(`[TaskEngine] Pipeline failed: ${pipeline.name}`, error);
             this.eventBus.emit('pipelineFailed', { pipeline, error });
             throw error;
         }
@@ -125,7 +128,7 @@ class TaskEngine {
         const stepPromises = pipeline.steps.map(step => this.executeStep(step, pipeline.context).catch(error => {
             step.status = 'failed';
             step.error = error.message;
-            logger_1.logger.error(`[TaskEngine] Parallel step failed: ${step.id}`, error);
+            logger_js_1.logger.error(`[TaskEngine] Parallel step failed: ${step.id}`, error);
         }));
         await Promise.allSettled(stepPromises);
         // Check if any steps failed
@@ -140,7 +143,7 @@ class TaskEngine {
     async executeStep(step, context) {
         step.status = 'running';
         step.startTime = new Date();
-        logger_1.logger.info(`[TaskEngine] Executing step: ${step.id} (${step.type})`);
+        logger_js_1.logger.info(`[TaskEngine] Executing step: ${step.id} (${step.type})`);
         this.eventBus.emit('stepStarted', { step });
         try {
             switch (step.type) {
@@ -158,14 +161,14 @@ class TaskEngine {
             }
             step.status = 'completed';
             step.endTime = new Date();
-            logger_1.logger.info(`[TaskEngine] Step completed: ${step.id}`);
+            logger_js_1.logger.info(`[TaskEngine] Step completed: ${step.id}`);
             this.eventBus.emit('stepCompleted', { step });
         }
         catch (error) {
             step.status = 'failed';
             step.error = error.message;
             step.endTime = new Date();
-            logger_1.logger.error(`[TaskEngine] Step failed: ${step.id}`, error);
+            logger_js_1.logger.error(`[TaskEngine] Step failed: ${step.id}`, error);
             this.eventBus.emit('stepFailed', { step, error });
             throw error;
         }
@@ -196,7 +199,7 @@ class TaskEngine {
             throw new Error(`Plugin executor ${step.executorId} not found`);
         }
         // For now, return a mock response - will be implemented when PluginHost is enhanced
-        logger_1.logger.warn(`[TaskEngine] Plugin execution is stubbed for: ${step.executorId}`);
+        logger_js_1.logger.warn(`[TaskEngine] Plugin execution is stubbed for: ${step.executorId}`);
         return {
             result: `Plugin ${step.executorId} executed successfully`,
             input: step.input,
@@ -208,7 +211,7 @@ class TaskEngine {
      */
     async executeSystemStep(step, context) {
         // For now, return a mock response - system execution will be implemented in DevShell
-        logger_1.logger.warn(`[TaskEngine] System execution is stubbed for: ${step.executorId}`);
+        logger_js_1.logger.warn(`[TaskEngine] System execution is stubbed for: ${step.executorId}`);
         return {
             result: `System command ${step.executorId} executed successfully`,
             input: step.input,
@@ -237,7 +240,7 @@ class TaskEngine {
         }
         pipeline.status = 'failed';
         pipeline.endTime = new Date();
-        logger_1.logger.info(`[TaskEngine] Pipeline cancelled: ${pipeline.name}`);
+        logger_js_1.logger.info(`[TaskEngine] Pipeline cancelled: ${pipeline.name}`);
         this.eventBus.emit('pipelineCancelled', { pipeline });
         return true;
     }
@@ -253,7 +256,7 @@ class TaskEngine {
                     const completedTime = pipeline.endTime?.getTime() || 0;
                     if (now - completedTime > 3600000) { // 1 hour
                         this.activePipelines.delete(id);
-                        logger_1.logger.info(`[TaskEngine] Cleaned up pipeline: ${pipeline.name}`);
+                        logger_js_1.logger.info(`[TaskEngine] Cleaned up pipeline: ${pipeline.name}`);
                     }
                 }
             }
