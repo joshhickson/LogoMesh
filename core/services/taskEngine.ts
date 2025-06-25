@@ -1,24 +1,23 @@
+import { EventBus } from './eventBus.js';
+import { LLMOrchestrator } from '../llm/LLMOrchestrator.js';
+import { LLMTaskRunner } from '../llm/LLMTaskRunner.js';
+import { PluginHost } from './pluginHost.js';
+import { logger } from '../utils/logger.js';
 
-import { LLMTaskRunner } from '../llm/LLMTaskRunner';
-import { LLMOrchestrator } from '../llm/LLMOrchestrator';
-import { PluginHost } from './pluginHost';
-import { EventBus } from './eventBus';
-import { logger } from '../utils/logger';
-import { logPipelineEvent } from '../logger/llmAuditLogger';
-
-export interface TaskStep {
+// TaskEngine interfaces
+interface TaskStep {
   id: string;
   type: 'llm' | 'plugin' | 'system';
   executorId: string;
   input: Record<string, any>;
   output?: Record<string, any>;
   status: 'pending' | 'running' | 'completed' | 'failed';
-  error?: string;
   startTime?: Date;
   endTime?: Date;
+  error?: string;
 }
 
-export interface Pipeline {
+interface Pipeline {
   id: string;
   name: string;
   description?: string;
@@ -31,10 +30,20 @@ export interface Pipeline {
   context: Record<string, any>;
 }
 
-export interface ExecutorRegistry {
+interface ExecutorRegistry {
   llmExecutors: Map<string, LLMTaskRunner>;
   pluginExecutors: Map<string, PluginHost>;
-  systemExecutors: Map<string, any>; // System command executors
+  systemExecutors: Map<string, any>;
+}
+
+// Audit logging function stub
+async function logPipelineEvent(event: {
+  pipelineId: string;
+  pipelineName: string;
+  event: string;
+  details?: Record<string, any>;
+}) {
+  logger.info(`[Pipeline Audit] ${event.event}:`, event);
 }
 
 /**
@@ -86,7 +95,7 @@ export class TaskEngine {
     context?: Record<string, any>;
   }): Promise<Pipeline> {
     const pipelineId = `pipeline_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
-    
+
     const pipeline: Pipeline = {
       id: pipelineId,
       name: definition.name,
@@ -103,9 +112,9 @@ export class TaskEngine {
     };
 
     this.activePipelines.set(pipelineId, pipeline);
-    
+
     logger.info(`[TaskEngine] Created pipeline: ${pipeline.name} (${pipelineId})`);
-    
+
     // Audit log pipeline creation
     await logPipelineEvent({
       pipelineId,
@@ -116,7 +125,7 @@ export class TaskEngine {
         executionMode: pipeline.executionMode
       }
     });
-    
+
     this.eventBus.emit('pipelineCreated', { pipeline });
 
     return pipeline;
@@ -135,14 +144,14 @@ export class TaskEngine {
     pipeline.startTime = new Date();
 
     logger.info(`[TaskEngine] Starting pipeline execution: ${pipeline.name}`);
-    
+
     // Audit log pipeline start
     await logPipelineEvent({
       pipelineId,
       pipelineName: pipeline.name,
       event: 'started'
     });
-    
+
     this.eventBus.emit('pipelineStarted', { pipeline });
 
     try {
@@ -154,17 +163,17 @@ export class TaskEngine {
 
       pipeline.status = 'completed';
       pipeline.endTime = new Date();
-      
+
       logger.info(`[TaskEngine] Pipeline completed: ${pipeline.name}`);
       this.eventBus.emit('pipelineCompleted', { pipeline });
 
     } catch (error) {
       pipeline.status = 'failed';
       pipeline.endTime = new Date();
-      
+
       logger.error(`[TaskEngine] Pipeline failed: ${pipeline.name}`, error);
       this.eventBus.emit('pipelineFailed', { pipeline, error });
-      
+
       throw error;
     }
 
@@ -177,7 +186,7 @@ export class TaskEngine {
   private async executeSequentially(pipeline: Pipeline): Promise<void> {
     for (const step of pipeline.steps) {
       await this.executeStep(step, pipeline.context);
-      
+
       if (step.status === 'failed') {
         throw new Error(`Step ${step.id} failed: ${step.error}`);
       }
@@ -280,7 +289,7 @@ export class TaskEngine {
 
     // For now, return a mock response - will be implemented when PluginHost is enhanced
     logger.warn(`[TaskEngine] Plugin execution is stubbed for: ${step.executorId}`);
-    
+
     return {
       result: `Plugin ${step.executorId} executed successfully`,
       input: step.input,
@@ -294,7 +303,7 @@ export class TaskEngine {
   private async executeSystemStep(step: TaskStep, context: Record<string, any>): Promise<Record<string, any>> {
     // For now, return a mock response - system execution will be implemented in DevShell
     logger.warn(`[TaskEngine] System execution is stubbed for: ${step.executorId}`);
-    
+
     return {
       result: `System command ${step.executorId} executed successfully`,
       input: step.input,
