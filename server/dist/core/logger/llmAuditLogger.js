@@ -4,7 +4,7 @@ exports.getPipelineAuditLogs = exports.getAuditLogs = exports.logPipelineEvent =
 // Placeholder LLM Audit Logger
 // TODO: Implement a real LLM audit logging solution
 const uuid_1 = require("uuid");
-const logger_1 = require("./logger");
+const logger_1 = require("../utils/logger");
 const auditLogs = [];
 async function logLLMInteraction(entry) {
     const auditEntry = {

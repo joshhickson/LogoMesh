@@ -56,7 +56,7 @@ export declare class TaskEngine {
         steps: Omit<TaskStep, 'id' | 'status' | 'startTime' | 'endTime'>[];
         executionMode: 'sequential' | 'parallel';
         context?: Record<string, any>;
-    }): Pipeline;
+    }): Promise<Pipeline>;
     /**
      * Execute a pipeline
      */
