@@ -1,7 +1,7 @@
 // Placeholder LLM Audit Logger
 // TODO: Implement a real LLM audit logging solution
 import { v4 as generateId } from 'uuid';
-import { logger } from './logger';
+import { logger } from '../utils/logger';
 
 export interface LLMAuditEntry {
   id: string;
