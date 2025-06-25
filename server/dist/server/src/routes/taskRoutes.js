@@ -42,7 +42,7 @@ router.post('/pipelines', async (req, res) => {
                 error: 'executionMode must be either "sequential" or "parallel"'
             });
         }
-        const pipeline = taskEngine.createPipeline({
+        const pipeline = await taskEngine.createPipeline({
             name,
             description,
             steps,
@@ -177,7 +177,7 @@ router.get('/status', (req, res) => {
 router.post('/quick-test', async (req, res) => {
     try {
         // Create a simple 3-step test pipeline: LLM → Plugin → System
-        const testPipeline = taskEngine.createPipeline({
+        const testPipeline = await taskEngine.createPipeline({
             name: 'Quick Test Pipeline',
             description: 'Test 3-step pipeline for verification',
             executionMode: 'sequential',
