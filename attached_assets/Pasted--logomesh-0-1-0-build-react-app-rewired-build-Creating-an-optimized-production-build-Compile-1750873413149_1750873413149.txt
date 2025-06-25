@@ -1,0 +1,89 @@
+
+> logomesh@0.1.0 build
+> react-app-rewired build
+
+Creating an optimized production build...
+Compiled with warnings.
+
+[eslint] 
+src/App.jsx
+  Line 1:8:    'React' is defined but never used                   no-unused-vars
+  Line 1:8:    'React' is defined but never used                   @typescript-eslint/no-unused-vars
+  Line 11:10:  'activeFilters' is assigned a value but never used  no-unused-vars
+  Line 11:10:  'activeFilters' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/components/AddThoughtModal.jsx
+  Line 1:8:  'React' is defined but never used  no-unused-vars
+  Line 1:8:  'React' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/components/Canvas.jsx
+  Line 3:8:   'React' is defined but never used        no-unused-vars
+  Line 3:8:   'React' is defined but never used        @typescript-eslint/no-unused-vars
+  Line 3:38:  'useCallback' is defined but never used  no-unused-vars
+  Line 3:38:  'useCallback' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/components/Sidebar.tsx
+  Line 16:27:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 114:11:  Forbidden non-null assertion              @typescript-eslint/no-non-null-assertion
+  Line 160:21:  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+src/components/ThoughtDetailPanel.jsx
+  Line 1:8:   'React' is defined but never used     no-unused-vars
+  Line 1:8:   'React' is defined but never used     @typescript-eslint/no-unused-vars
+  Line 3:40:  'onUpdate' is defined but never used  no-unused-vars
+  Line 3:40:  'onUpdate' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/index.js
+  Line 5:8:  'reportWebVitals' is defined but never used  no-unused-vars
+  Line 5:8:  'reportWebVitals' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 6:8:  'errorLogger' is defined but never used      no-unused-vars
+  Line 6:8:  'errorLogger' is defined but never used      @typescript-eslint/no-unused-vars
+
+src/services/apiService.ts
+  Line 12:11:   'FetchOptions' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 43:19:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 56:21:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 60:21:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 64:21:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 71:21:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 85:21:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 92:21:   Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 136:76:  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 137:21:  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  Line 146:21:  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+src/utils/errorLogger.js
+  Line 151:29:  'exportData' is defined but never used          no-unused-vars
+  Line 151:29:  'exportData' is defined but never used          @typescript-eslint/no-unused-vars
+  Line 151:41:  'timestamp' is defined but never used           no-unused-vars
+  Line 151:41:  'timestamp' is defined but never used           @typescript-eslint/no-unused-vars
+  Line 241:7:   'saveError' is assigned a value but never used  no-unused-vars
+  Line 241:7:   'saveError' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/utils/eventBus.js
+  Line 5:7:  'generateThoughtId' is assigned a value but never used  no-unused-vars
+  Line 5:7:  'generateThoughtId' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  Line 6:7:  'generateSegmentId' is assigned a value but never used  no-unused-vars
+  Line 6:7:  'generateSegmentId' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+File sizes after gzip:
+
+  238.14 kB  build/static/js/main.fb3eeb39.js
+  3.19 kB    build/static/css/main.feedf6fc.css
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+
