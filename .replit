@@ -24,7 +24,7 @@ localPort = 5000
 externalPort = 5000
 
 [workflows]
-runButton = "Start Backend"
+runButton = "Start Backend First"
 
 [[workflows.workflow]]
 name = "Run"
@@ -81,7 +81,7 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd server && npm install && npm run build && npm start"
+args = "cd server && npm install && npm run build && PORT=3001 npm start"
 
 [[workflows.workflow]]
 name = "Dev Mode"
@@ -353,12 +353,3 @@ args = "console.log('Next: Wire plugin to LLMTaskRunner and start building!');"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "\""
-
-[[workflows.workflow]]
-name = "Start Backend"
-author = 42214058
-mode = "sequential"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd server && npm install && npm run build && PORT=3001 npm start"
