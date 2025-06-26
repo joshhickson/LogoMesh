@@ -74,7 +74,7 @@ async function setupServices() {
 const eventBus = new eventBus_1.EventBus();
 (0, taskRoutes_1.initializeTaskEngine)(eventBus);
 // Mount routes
-app.use('/api/v1/users', userRoutes_1.default);
+app.use('/api/v1/user', userRoutes_1.default);
 app.use('/api/v1/thoughts', thoughtRoutes_1.default);
 app.use('/api/v1/llm', llmRoutes_1.default);
 app.use('/api/v1/admin', adminRoutes_1.default);
