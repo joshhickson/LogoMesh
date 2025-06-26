@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { graphService } from '../services/graphService';
 import errorLogger from '../utils/errorLogger';
 import DevAssistantPanel from './DevAssistantPanel';
+import DatabaseConfig from './DatabaseConfig';
 
 // Current schema version for display purposes
 const thoughtSchemaVersion = '0.5';
@@ -50,6 +51,7 @@ function Sidebar({
   const [filterFieldType, setFilterFieldType] = useState<string[]>([]);
   const [filteredThoughtIds, setFilteredThoughtIds] = useState<string[]>([]);
   const [showDevAssistant, setShowDevAssistant] = useState(false);
+  const [showDatabaseConfig, setShowDatabaseConfig] = useState(false);
 
   // Gather all field entries for dynamic filters
   const allFields = thoughts.flatMap(
@@ -215,6 +217,16 @@ function Sidebar({
           title="Toggle Dev Assistant"
         >
           🤖
+        </button>
+        <button
+          onClick={() => setShowDatabaseConfig(!showDatabaseConfig)}
+          className={`px-2 py-1 rounded ${showDatabaseConfig 
+            ? 'bg-green-500 text-white' 
+            : 'text-gray-300 dark:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700'
+          }`}
+          title="Database Configuration"
+        >
+          🗄️
         </button>
         <button
           onClick={toggleDarkMode}
@@ -418,6 +430,13 @@ function Sidebar({
       {showDevAssistant && (
         <div className="mt-4 border-t pt-4">
           <DevAssistantPanel />
+        </div>
+      )}
+
+      {/* Database Configuration Panel */}
+      {showDatabaseConfig && (
+        <div className="mt-4 border-t pt-4">
+          <DatabaseConfig />
         </div>
       )}
     </div>

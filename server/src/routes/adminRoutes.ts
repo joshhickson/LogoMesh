@@ -1,13 +1,68 @@
 import express, { Request, Response } from 'express';
 import * as fs from 'fs'; // Use standard fs for sync methods used below
 import path from 'path';
+import { Client } from 'pg';
 import { logger } from '../../../core/utils/logger'; // Corrected path
 
 const router = express.Router();
 
 // Health check for admin services
-router.get('/health', (req: Request, res: Response) => {
-  res.json({ service: 'admin', status: 'healthy', timestamp: new Date().toISOString() });
+// Health check endpoint
+router.get('/health', async (req: Request, res: Response) => {
+  try {
+    // Test database connection
+    const databaseUrl = process.env.DATABASE_URL;
+    if (databaseUrl) {
+      const client = new Client({ connectionString: databaseUrl });
+      await client.connect();
+      await client.query('SELECT 1');
+      await client.end();
+    }
+
+    res.json({ 
+      status: 'healthy', 
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV || 'development',
+      database: databaseUrl ? 'connected' : 'not_configured'
+    });
+  } catch (error) {
+    logger.error('[AdminRoutes] Health check failed:', error);
+    res.status(500).json({ 
+      status: 'unhealthy', 
+      timestamp: new Date().toISOString(),
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+});
+
+// Test database connection with custom connection string
+router.post('/test-db', async (req: Request, res: Response) => {
+  try {
+    const { connectionString } = req.body;
+
+    if (!connectionString) {
+      return res.status(400).json({ error: 'Connection string is required' });
+    }
+
+    const client = new Client({ connectionString });
+    await client.connect();
+
+    // Test basic query
+    const result = await client.query('SELECT version()');
+    await client.end();
+
+    res.json({ 
+      success: true, 
+      message: 'Database connection successful',
+      version: result.rows[0]?.version
+    });
+  } catch (error) {
+    logger.error('[AdminRoutes] Database test failed:', error);
+    res.status(500).json({ 
+      error: 'Database connection failed',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
 });
 
 /**
