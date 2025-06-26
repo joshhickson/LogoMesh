@@ -3,7 +3,7 @@ import Canvas from './components/Canvas';
 import Sidebar from './components/Sidebar';
 import ThoughtDetailPanel from './components/ThoughtDetailPanel';
 import AddThoughtModal from './components/AddThoughtModal';
-import { apiService } from './services/apiService';
+import DevAssistantPanel from './components/DevAssistantPanel';
 
 function App() {
   const [thoughts, setThoughts] = useState([]);
@@ -198,8 +198,13 @@ function App() {
           onClose={() => setShowModal(false)}
         />
       )}
-    </div>
-  );
-}
+
+        {/* Dev Assistant Plugin Panel */}
+        <div className="fixed bottom-4 right-4">
+          <DevAssistantPanel />
+        </div>
+      </div>
+    );
+  }
 
 export default App;
