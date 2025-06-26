@@ -1,0 +1,8 @@
+
+> logomesh-server@0.1.0 build
+> node_modules/.bin/tsc && cp -r ../core ./dist/
+
+../core/db/initDb.ts(1,26): error TS7016: Could not find a declaration file for module 'sqlite3'. '/home/runner/workspace/server/node_modules/sqlite3/lib/sqlite3.js' implicitly has an 'any' type.
+../core/storage/sqliteAdapter.ts(1,26): error TS7016: Could not find a declaration file for module 'sqlite3'. '/home/runner/workspace/server/node_modules/sqlite3/lib/sqlite3.js' implicitly has an 'any' type.
+src/routes/thoughtRoutes.ts(152,96): error TS2554: Expected 3 arguments, but got 4.
+src/routes/thoughtRoutes.ts(171,78): error TS2554: Expected 2 arguments, but got 3.
