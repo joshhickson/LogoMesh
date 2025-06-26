@@ -1,4 +1,3 @@
-
 import { Pool, Client } from 'pg';
 import { StorageAdapter, NewThoughtData, NewSegmentData } from '../../../contracts/storageAdapter';
 
@@ -101,12 +100,12 @@ export class PostgresAdapter implements StorageAdapter {
         [id, userId]
       );
       if (result.rows.length === 0) return null;
-      
+
       const thought = result.rows[0];
       // Parse JSON fields
       thought.fields = thought.fields || {};
       thought.metadata = thought.metadata || {};
-      
+
       return thought;
     } finally {
       client.release();
@@ -198,7 +197,7 @@ export class PostgresAdapter implements StorageAdapter {
           segmentData.positionY || 0
         ]
       );
-      
+
       const segment = result.rows[0];
       segment.fields = segment.fields || {};
       segment.metadata = segment.metadata || {};
@@ -225,48 +224,50 @@ export class PostgresAdapter implements StorageAdapter {
     }
   }
 
-  async updateSegment(thoughtId: string, segmentId: string, segmentData: Partial<NewSegmentData>): Promise<any> {
+  async updateSegment(thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>): Promise<any> {
     const client = await this.pool.connect();
     try {
-      const updates = [];
+      const updateFields = [];
       const values = [];
       let paramCount = 1;
 
-      if (segmentData.content !== undefined) {
-        updates.push(`content = $${paramCount++}`);
-        values.push(segmentData.content);
+      if (updates.content !== undefined) {
+        updateFields.push(`content = $${paramCount++}`);
+        values.push(updates.content);
       }
-      if (segmentData.segmentType !== undefined) {
-        updates.push(`segment_type = $${paramCount++}`);
-        values.push(segmentData.segmentType);
+      if (updates.segmentType !== undefined) {
+        updateFields.push(`segment_type = $${paramCount++}`);
+        values.push(updates.segmentType);
       }
-      if (segmentData.fields !== undefined) {
-        updates.push(`fields = $${paramCount++}`);
-        values.push(JSON.stringify(segmentData.fields));
+      if (updates.fields !== undefined) {
+        updateFields.push(`fields = $${paramCount++}`);
+        values.push(JSON.stringify(updates.fields));
       }
-      if (segmentData.positionX !== undefined) {
-        updates.push(`position_x = $${paramCount++}`);
-        values.push(segmentData.positionX);
+      if (updates.positionX !== undefined) {
+        updateFields.push(`position_x = $${paramCount++}`);
+        values.push(updates.positionX);
       }
-      if (segmentData.positionY !== undefined) {
-        updates.push(`position_y = $${paramCount++}`);
-        values.push(segmentData.positionY);
+      if (updates.positionY !== undefined) {
+        updateFields.push(`position_y = $${paramCount++}`);
+        values.push(updates.positionY);
       }
 
-      updates.push(`updated_at = CURRENT_TIMESTAMP`);
+      updateFields.push(`updated_at = CURRENT_TIMESTAMP`);
+
+      if (updateFields.length === 1) { // Only timestamp update
+        return null;
+      }
+
       values.push(segmentId);
-      values.push(thoughtId);
+      const query = `
+        UPDATE segments 
+        SET ${updateFields.join(', ')}
+        WHERE id = $${paramCount}
+        RETURNING *
+      `;
 
-      const result = await client.query(
-        `UPDATE segments SET ${updates.join(', ')} WHERE id = $${paramCount} AND thought_id = $${paramCount + 1} RETURNING *`,
-        values
-      );
-
-      if (result.rows.length === 0) return null;
-      const segment = result.rows[0];
-      segment.fields = segment.fields || {};
-      segment.metadata = segment.metadata || {};
-      return segment;
+      const result = await client.query(query, values);
+      return result.rows[0] || null;
     } finally {
       client.release();
     }
