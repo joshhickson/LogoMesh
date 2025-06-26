@@ -1,4 +1,3 @@
-
 import * as sqlite3 from 'sqlite3';
 // import { Database } from 'sqlite3'; // No longer typed due to declare module
 import { StorageAdapter, NewThoughtData, NewSegmentData } from 'contracts/storageAdapter'; // Path mapping
@@ -75,7 +74,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
           for (const row of rows) {
             const segments = await this.getSegmentsForThought(row.thought_bubble_id);
             const tags = this.parseTagsFromRow(row.tags);
-            
+
             thoughts.push({
               thought_bubble_id: row.thought_bubble_id,
               title: row.title,
@@ -156,7 +155,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
       const thoughtId = generateThoughtId();
       const now = new Date().toISOString();
-      
+
       const insertQuery = `
         INSERT INTO thoughts (thought_bubble_id, title, description, created_at, updated_at, color, position_x, position_y)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -210,10 +209,6 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       const updateFields: string[] = [];
       const values: any[] = [];
 
-      if (updates.title !== undefined) {
-        updateFields.push('title = ?');
-        values.push(updates.title);
-      }
       if (updates.description !== undefined) {
         updateFields.push('description = ?');
         values.push(updates.description);
@@ -412,9 +407,9 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       const updateFields: string[] = [];
       const values: any[] = [];
 
-      if (updates.title !== undefined) {
-        updateFields.push('title = ?');
-        values.push(updates.title);
+      if (updates.content !== undefined) {
+        updateFields.push('content = ?');
+        values.push(updates.content);
       }
       if (updates.content !== undefined) {
         updateFields.push('content = ?');
@@ -477,7 +472,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
   private parseTagsFromRow(tagsString: string | null): Tag[] {
     if (!tagsString) return [];
-    
+
     return tagsString.split(',').map(tagStr => {
       const [name, color] = tagStr.split('::');
       return { name, color };
@@ -494,13 +489,13 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       // First, ensure all tags exist in the tags table
       const insertTagQuery = 'INSERT OR IGNORE INTO tags (tag_id, name, color, created_at) VALUES (?, ?, ?, ?)';
       const linkTagQuery = 'INSERT OR IGNORE INTO thought_tags (thought_bubble_id, tag_id, created_at) VALUES (?, ?, ?)';
-      
+
       let pending = tags.length;
       const now = new Date().toISOString();
 
       for (const tag of tags) {
         const tagId = `tag_${tag.name.toLowerCase().replace(/\s+/g, '_')}`;
-        
+
         this.db.run(insertTagQuery, [tagId, tag.name, tag.color, now], (err: any) => { // : any
           if (err) {
             logger.error('Error creating tag:', err);
@@ -534,7 +529,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
       // First remove existing tag associations
       const deleteQuery = 'DELETE FROM thought_tags WHERE thought_bubble_id = ?';
-      
+
       this.db.run(deleteQuery, [thoughtId], async (err: any) => { // : any
         if (err) {
           reject(err);
