@@ -252,3 +252,104 @@ args = "testTaskEngine().catch(console.error);"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "\""
+
+[[workflows.workflow]]
+name = "Test Dev Assistant Plugin"
+author = 42214058
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd server && npm run build"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node -e \""
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "console.log('Testing LogoMesh Development Assistant Plugin...');"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = ""
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "// Simulate plugin loading and execution"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "const pluginPath = './plugins/logomesh-dev-assistant/manifest.json';"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "console.log('Loading plugin from:', pluginPath);"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = ""
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "// Test plugin commands"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "const testCommands = ["
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "  { command: 'analyzeCode', payload: { filePath: './src/App.jsx', analysisType: 'quality' } },"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "  { command: 'suggestImprovement', payload: { filePath: './core/services/taskEngine.ts', focus: 'performance' } },"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "  { command: 'generateCode', payload: { description: 'Create a simple utility function for ID generation', fileType: 'typescript' } }"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "];"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = ""
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "testCommands.forEach((test, i) => {"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = '  console.log(\`Test \${i + 1}: \${test.command}\`);'
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "  console.log('Payload:', JSON.stringify(test.payload, null, 2));"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "  console.log('---');"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "});"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = ""
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "console.log('✅ Plugin test framework ready');"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "console.log('Next: Wire plugin to LLMTaskRunner and start building!');"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "\""
