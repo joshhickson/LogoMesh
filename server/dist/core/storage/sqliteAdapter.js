@@ -216,10 +216,6 @@ class SQLiteStorageAdapter {
             }
             const updateFields = [];
             const values = [];
-            if (updates.title !== undefined) {
-                updateFields.push('title = ?');
-                values.push(updates.title);
-            }
             if (updates.description !== undefined) {
                 updateFields.push('description = ?');
                 values.push(updates.description);
@@ -393,9 +389,9 @@ class SQLiteStorageAdapter {
             }
             const updateFields = [];
             const values = [];
-            if (updates.title !== undefined) {
-                updateFields.push('title = ?');
-                values.push(updates.title);
+            if (updates.content !== undefined) {
+                updateFields.push('content = ?');
+                values.push(updates.content);
             }
             if (updates.content !== undefined) {
                 updateFields.push('content = ?');

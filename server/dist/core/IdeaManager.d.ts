@@ -3,7 +3,7 @@ import { Thought, Segment } from '../contracts/entities';
 export declare class IdeaManager {
     private storageAdapter;
     constructor(storageAdapter?: StorageAdapter);
-    getThoughtById(userId: string, id: string): Promise<Thought | null>;
+    getThoughtById(id: string, userId: string): Promise<Thought | null>;
     createThought(thoughtData: any): Promise<Thought>;
     getThoughts(userId?: string): Promise<Thought[]>;
     addThought(userId: string, thoughtData: any): Promise<Thought>;
