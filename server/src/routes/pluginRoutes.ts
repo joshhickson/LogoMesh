@@ -63,7 +63,7 @@ router.post('/execute', async (req, res) => {
     res.json({ success: true, result });
   } catch (error) {
     logger.error('Plugin execution failed:', error);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error instanceof Error ? error.message : 'Unknown error' });
   }
 });
 
