@@ -49,9 +49,9 @@ export class IdeaManager {
     return this.storageAdapter.createSegment ? this.storageAdapter.createSegment(thoughtId, segmentData) : Promise.resolve(null);
   }
 
-  async updateSegment(userId: string, thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>): Promise<Segment | null> { // Changed to NewSegmentData
+  async updateSegment(userId: string, thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>): Promise<Segment | null> {
     logger.info(`[IdeaManager] Updating segment ID: ${segmentId} for thought ID: ${thoughtId} (Placeholder)`, updates);
-    return this.storageAdapter.updateSegment ? this.storageAdapter.updateSegment('', segmentId, updates) : Promise.resolve(null);
+    return this.storageAdapter.updateSegment ? this.storageAdapter.updateSegment(thoughtId, segmentId, updates) : Promise.resolve(null);
   }
 
   async deleteSegment(userId: string, thoughtId: string, segmentId: string): Promise<boolean> {
