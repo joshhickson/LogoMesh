@@ -9,11 +9,34 @@ export class OllamaExecutor implements LLMExecutor {
   }
 
   async executePrompt(prompt: string, metadata?: Record<string, any>): Promise<string> {
-    // Simulate processing delay
-    await new Promise(resolve => setTimeout(resolve, 100));
+    try {
+      const response = await fetch(`${this.baseUrl}/api/generate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: this.modelName,
+          prompt: prompt,
+          stream: false,
+          options: {
+            temperature: 0.7,
+            ...metadata
+          }
+        })
+      });
 
-    // Return mocked response
-    return `Mocked response for: ${prompt}`;
+      if (!response.ok) {
+        throw new Error(`Ollama API error: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data.response || 'No response received';
+    } catch (error) {
+      console.warn(`[OllamaExecutor] Failed to connect to Ollama, using fallback: ${error.message}`);
+      // Fallback to mock for development
+      return `[MOCK - Ollama not available] Response for: ${prompt}`;
+    }
   }
 
   async execute(prompt: string, options?: import('../../contracts/llmExecutor').LLMExecutionOptions): Promise<import('../../contracts/llmExecutor').LLMFullResponse> {

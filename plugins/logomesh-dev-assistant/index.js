@@ -199,9 +199,32 @@ Provide structured, actionable analysis.
   }
 
   async callLLM(prompt) {
-    // This integrates with your existing LLM infrastructure
-    // For now, return a placeholder - you'll wire this to LLMTaskRunner
-    return `[LLM Analysis] ${prompt.slice(0, 100)}...`;
+    try {
+      // Call the LLM via your server's API
+      const response = await fetch('/api/llm/execute', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt: prompt,
+          metadata: {
+            plugin: 'logomesh-dev-assistant',
+            timestamp: new Date().toISOString()
+          }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`LLM API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.response || 'No response received';
+    } catch (error) {
+      this.logger.error(`[LogoMeshDevAssistant] LLM call failed: ${error.message}`);
+      return `[ERROR] LLM unavailable: ${error.message}`;
+    }
   }
 
   async createAnalysisThought(filePath, analysis) {

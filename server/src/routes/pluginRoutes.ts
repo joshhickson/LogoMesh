@@ -9,11 +9,20 @@ const logger = new Logger();
 // This will be initialized with proper PluginAPI
 let pluginHost: PluginHost | null = null;
 
-// Initialize plugin host (you'll wire this to your main app)
+// Initialize plugin host with proper API wiring
 router.post('/init', async (req, res) => {
   try {
-    // pluginHost = new PluginHost(logger, pluginApi);
-    res.json({ success: true, message: 'Plugin host initialized' });
+    const { PluginAPI } = require('../../../contracts/plugins/pluginApi');
+    const { SQLiteAdapter } = require('../../../core/storage/sqliteAdapter');
+    const { EventBus } = require('../../../core/services/eventBus');
+    
+    // Create minimal plugin API for testing
+    const eventBus = new EventBus();
+    const storage = new SQLiteAdapter();
+    const pluginApi = new PluginAPI(logger, storage, eventBus);
+    
+    pluginHost = new PluginHost(logger, pluginApi);
+    res.json({ success: true, message: 'Plugin host initialized with API' });
   } catch (error) {
     logger.error('Plugin host initialization failed:', error);
     res.status(500).json({ error: 'Failed to initialize plugin host' });
