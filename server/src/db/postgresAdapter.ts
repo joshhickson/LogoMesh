@@ -28,6 +28,7 @@ export class PostgresAdapter implements StorageAdapter {
       await client.query(`
         CREATE TABLE IF NOT EXISTS thoughts (
           id VARCHAR(36) PRIMARY KEY,
+          user_id VARCHAR(100) NOT NULL DEFAULT 'anonymous',
           title TEXT NOT NULL,
           description TEXT,
           fields JSONB DEFAULT '{}',
@@ -39,6 +40,7 @@ export class PostgresAdapter implements StorageAdapter {
         CREATE TABLE IF NOT EXISTS segments (
           id VARCHAR(36) PRIMARY KEY,
           thought_id VARCHAR(36) REFERENCES thoughts(id) ON DELETE CASCADE,
+          user_id VARCHAR(100) NOT NULL DEFAULT 'anonymous',
           content TEXT NOT NULL,
           segment_type VARCHAR(50) DEFAULT 'text',
           fields JSONB DEFAULT '{}',
@@ -52,28 +54,33 @@ export class PostgresAdapter implements StorageAdapter {
         CREATE TABLE IF NOT EXISTS plugin_data (
           id VARCHAR(36) PRIMARY KEY,
           plugin_name VARCHAR(100) NOT NULL,
+          user_id VARCHAR(100) NOT NULL DEFAULT 'anonymous',
           data JSONB NOT NULL,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
 
         CREATE INDEX IF NOT EXISTS idx_segments_thought_id ON segments(thought_id);
+        CREATE INDEX IF NOT EXISTS idx_segments_user_id ON segments(user_id);
+        CREATE INDEX IF NOT EXISTS idx_thoughts_user_id ON thoughts(user_id);
         CREATE INDEX IF NOT EXISTS idx_thoughts_fields ON thoughts USING GIN(fields);
         CREATE INDEX IF NOT EXISTS idx_plugin_data_name ON plugin_data(plugin_name);
+        CREATE INDEX IF NOT EXISTS idx_plugin_data_user ON plugin_data(user_id);
       `);
     } finally {
       client.release();
     }
   }
 
-  async createThought(thoughtData: NewThoughtData): Promise<any> {
+  async createThought(thoughtData: NewThoughtData, userId: string = 'anonymous'): Promise<any> {
     const client = await this.pool.connect();
     try {
       const result = await client.query(
-        `INSERT INTO thoughts (id, title, description, fields, metadata) 
-         VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+        `INSERT INTO thoughts (id, user_id, title, description, fields, metadata) 
+         VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
         [
           thoughtData.id,
+          userId,
           thoughtData.title,
           thoughtData.description || '',
           JSON.stringify(thoughtData.fields || {}),
@@ -86,10 +93,13 @@ export class PostgresAdapter implements StorageAdapter {
     }
   }
 
-  async getThoughtById(id: string): Promise<any> {
+  async getThoughtById(id: string, userId: string = 'anonymous'): Promise<any> {
     const client = await this.pool.connect();
     try {
-      const result = await client.query('SELECT * FROM thoughts WHERE id = $1', [id]);
+      const result = await client.query(
+        'SELECT * FROM thoughts WHERE id = $1 AND user_id = $2', 
+        [id, userId]
+      );
       if (result.rows.length === 0) return null;
       
       const thought = result.rows[0];
@@ -103,10 +113,13 @@ export class PostgresAdapter implements StorageAdapter {
     }
   }
 
-  async getAllThoughts(): Promise<any[]> {
+  async getAllThoughts(userId: string = 'anonymous'): Promise<any[]> {
     const client = await this.pool.connect();
     try {
-      const result = await client.query('SELECT * FROM thoughts ORDER BY created_at DESC');
+      const result = await client.query(
+        'SELECT * FROM thoughts WHERE user_id = $1 ORDER BY created_at DESC',
+        [userId]
+      );
       return result.rows.map(thought => ({
         ...thought,
         fields: thought.fields || {},

@@ -17,6 +17,7 @@ import portabilityRoutes from './routes/portabilityRoutes';
 import adminRoutes from './routes/adminRoutes';
 import taskRoutes, { initializeTaskEngine } from './routes/taskRoutes';
 import { EventBus } from '../../core/services/eventBus';
+import userRoutes from './routes/userRoutes';
 
 const app = express();
 const PORT = parseInt(process.env.PORT || "5000", 10); // Ensure PORT is a number
@@ -25,6 +26,24 @@ const apiBasePath = '/api/v1'; // Define the base path
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// User authentication middleware
+app.use((req, res, next) => {
+  // Extract Replit user info from headers
+  const userId = req.headers['x-replit-user-id'] as string;
+  const userName = req.headers['x-replit-user-name'] as string;
+  const userRoles = req.headers['x-replit-user-roles'] as string;
+
+  // Add user info to request for authenticated routes
+  req.user = {
+    id: userId || 'anonymous',
+    name: userName || 'Anonymous User',
+    roles: userRoles || '',
+    isAuthenticated: !!userId
+  };
+
+  next();
+});
 
 // Core Services Setup (simplified for now)
 async function setupServices() {
@@ -38,6 +57,7 @@ const eventBus = new EventBus();
 initializeTaskEngine(eventBus);
 
 // Mount routes
+app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/thoughts', thoughtRoutes);
 app.use('/api/v1/llm', llmRoutes);
 app.use('/api/v1/admin', adminRoutes);

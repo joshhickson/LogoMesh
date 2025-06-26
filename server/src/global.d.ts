@@ -6,3 +6,17 @@ declare module 'sqlite3';
 declare module 'uuid' {
   export function v4(): string;
 }
+declare global {
+  namespace Express {
+    interface Request {
+      user?: {
+        id: string;
+        name: string;
+        roles: string;
+        isAuthenticated: boolean;
+      };
+    }
+  }
+}
+
+export {};
