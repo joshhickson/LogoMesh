@@ -13,7 +13,7 @@ export class IdeaManager {
   }
 
   async getThoughtById(id: string, userId: string): Promise<Thought | null> {
-    logger.info(`[IdeaManager] Getting thought ID: ${id} for user: ${userId} (Placeholder)`);
+    logger.info(`[IdeaManager] Getting thought by ID: ${id} for user: ${userId} (Placeholder)`);
     return this.storageAdapter.getThoughtById(id);
   }
 
@@ -51,11 +51,11 @@ export class IdeaManager {
 
   async updateSegment(userId: string, thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>): Promise<Segment | null> { // Changed to NewSegmentData
     logger.info(`[IdeaManager] Updating segment ID: ${segmentId} for thought ID: ${thoughtId} (Placeholder)`, updates);
-    return this.storageAdapter.updateSegment ? this.storageAdapter.updateSegment(thoughtId, segmentId, updates) : Promise.resolve(null);
+    return this.storageAdapter.updateSegment ? this.storageAdapter.updateSegment('', segmentId, updates) : Promise.resolve(null);
   }
 
   async deleteSegment(userId: string, thoughtId: string, segmentId: string): Promise<boolean> {
     logger.info(`[IdeaManager] Deleting segment ID: ${segmentId} for thought ID: ${thoughtId} (Placeholder)`);
-    return this.storageAdapter.deleteSegment ? this.storageAdapter.deleteSegment(thoughtId, segmentId) : Promise.resolve(false);
+    return this.storageAdapter.deleteSegment ? this.storageAdapter.deleteSegment('', segmentId) : Promise.resolve(false);
   }
 }

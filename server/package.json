@@ -1,7 +1,7 @@
 {
-  "name": "my-project",
-  "version": "1.0.0",
-  "description": "",
+  "name": "logomesh-server",
+  "version": "0.1.0",
+  "description": "LogoMesh backend server",
   "main": "index.js",
   "scripts": {
     "build": "node_modules/.bin/tsc && cp -r ../core ./dist/",
