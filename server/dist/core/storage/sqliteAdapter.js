@@ -346,13 +346,12 @@ class SQLiteStorageAdapter {
             const segmentId = (0, idUtils_1.generateSegmentId)();
             const now = new Date().toISOString();
             const query = `
-        INSERT INTO segments (segment_id, thought_bubble_id, title, content, created_at, updated_at, sort_order, metadata)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO segments (segment_id, thought_bubble_id, content, created_at, updated_at, sort_order, metadata)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
       `;
             const values = [
                 segmentId,
                 thoughtId,
-                segmentData.title,
                 segmentData.content,
                 now,
                 now,
@@ -381,7 +380,7 @@ class SQLiteStorageAdapter {
             });
         });
     }
-    async updateSegment(segmentId, updates) {
+    async updateSegment(thoughtId, segmentId, updates) {
         return new Promise((resolve, reject) => {
             if (!this.db) {
                 reject(new Error('Database not initialized'));
@@ -417,7 +416,7 @@ class SQLiteStorageAdapter {
             });
         });
     }
-    async deleteSegment(segmentId) {
+    async deleteSegment(thoughtId, segmentId) {
         return new Promise((resolve, reject) => {
             if (!this.db) {
                 reject(new Error('Database not initialized'));

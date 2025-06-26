@@ -40,13 +40,13 @@ class IdeaManager {
         logger_1.logger.info(`[IdeaManager] Adding segment to thought ID: ${thoughtId} (Placeholder)`, segmentData);
         return this.storageAdapter.createSegment ? this.storageAdapter.createSegment(thoughtId, segmentData) : Promise.resolve(null);
     }
-    async updateSegment(userId, thoughtId, segmentId, updates) {
+    async updateSegment(thoughtId, segmentId, updates) {
         logger_1.logger.info(`[IdeaManager] Updating segment ID: ${segmentId} for thought ID: ${thoughtId} (Placeholder)`, updates);
-        return this.storageAdapter.updateSegment ? this.storageAdapter.updateSegment('', segmentId, updates) : Promise.resolve(null);
+        return this.storageAdapter.updateSegment ? this.storageAdapter.updateSegment(thoughtId, segmentId, updates) : Promise.resolve(null);
     }
-    async deleteSegment(userId, thoughtId, segmentId) {
+    async deleteSegment(thoughtId, segmentId) {
         logger_1.logger.info(`[IdeaManager] Deleting segment ID: ${segmentId} for thought ID: ${thoughtId} (Placeholder)`);
-        return this.storageAdapter.deleteSegment ? this.storageAdapter.deleteSegment('', segmentId) : Promise.resolve(false);
+        return this.storageAdapter.deleteSegment ? this.storageAdapter.deleteSegment(thoughtId, segmentId) : Promise.resolve(false);
     }
 }
 exports.IdeaManager = IdeaManager;

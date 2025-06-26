@@ -10,7 +10,7 @@ export declare class IdeaManager {
     updateThought(userId: string, id: string, updates: Partial<NewThoughtData>): Promise<Thought | null>;
     deleteThought(userId: string, id: string): Promise<boolean>;
     addSegment(userId: string, thoughtId: string, segmentData: any): Promise<Segment | null>;
-    updateSegment(userId: string, thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>): Promise<Segment | null>;
-    deleteSegment(userId: string, thoughtId: string, segmentId: string): Promise<boolean>;
+    updateSegment(thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>): Promise<Segment | null>;
+    deleteSegment(thoughtId: string, segmentId: string): Promise<boolean>;
 }
 //# sourceMappingURL=IdeaManager.d.ts.map
