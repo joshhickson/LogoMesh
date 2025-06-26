@@ -51,8 +51,8 @@ export interface StorageAdapter {
   getSegmentsForThought(thoughtId: string): Promise<Segment[]>;
   getSegmentById(segmentId: string): Promise<Segment | null>;
   createSegment(thoughtId: string, segmentData: NewSegmentData): Promise<Segment>;
-  updateSegment(segmentId: string, updates: Partial<NewSegmentData>): Promise<Segment | null>;
-  deleteSegment(segmentId: string): Promise<boolean>;
+  updateSegment(thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>): Promise<Segment | null>;
+  deleteSegment(thoughtId: string, segmentId: string): Promise<boolean>;
 
   // Utility operations
   initialize(): Promise<void>;

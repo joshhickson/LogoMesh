@@ -1,5 +1,5 @@
 // API Service for LogoMesh Backend Communication
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/v1';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1';
 
 console.log('[API Service] Using API base URL:', API_BASE_URL);
 

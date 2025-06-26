@@ -171,10 +171,31 @@ export class PostgresAdapter implements StorageAdapter {
     }
   }
 
-  async deleteThought(id: string): Promise<void> {
+  async deleteThought(id: string): Promise<boolean> {
     const client = await this.pool.connect();
     try {
-      await client.query('DELETE FROM thoughts WHERE id = $1', [id]);
+      const result = await client.query('DELETE FROM thoughts WHERE id = $1', [id]);
+      return result.rowCount > 0;
+    } finally {
+      client.release();
+    }
+  }
+
+  async getSegmentsForThought(thoughtId: string): Promise<Segment[]> {
+    const client = await this.pool.connect();
+    try {
+      const result = await client.query('SELECT * FROM segments WHERE thought_id = $1', [thoughtId]);
+      return result.rows;
+    } finally {
+      client.release();
+    }
+  }
+
+  async getSegmentById(segmentId: string): Promise<Segment | null> {
+    const client = await this.pool.connect();
+    try {
+      const result = await client.query('SELECT * FROM segments WHERE id = $1', [segmentId]);
+      return result.rows[0] || null;
     } finally {
       client.release();
     }
@@ -273,10 +294,11 @@ export class PostgresAdapter implements StorageAdapter {
     }
   }
 
-  async deleteSegment(thoughtId: string, segmentId: string): Promise<void> {
+  async deleteSegment(thoughtId: string, segmentId: string): Promise<boolean> {
     const client = await this.pool.connect();
     try {
-      await client.query('DELETE FROM segments WHERE id = $1 AND thought_id = $2', [segmentId, thoughtId]);
+      const result = await client.query('DELETE FROM segments WHERE id = $1 AND thought_id = $2', [segmentId, thoughtId]);
+      return result.rowCount > 0;
     } finally {
       client.release();
     }

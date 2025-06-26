@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 
 function DatabaseConfig() {
@@ -20,7 +19,7 @@ function DatabaseConfig() {
     if (savedConfig) {
       setConfig(JSON.parse(savedConfig));
     }
-    
+
     // Check current connection status
     checkConnectionStatus();
   }, []);
@@ -51,13 +50,13 @@ function DatabaseConfig() {
   const generateConnectionString = () => {
     const { host, port, database, username, password } = config;
     if (!host || !database || !username || !password) return '';
-    
+
     return `postgresql://${username}:${password}@${host}:${port}/${database}?sslmode=require`;
   };
 
   const saveConfig = () => {
     localStorage.setItem('database_config', JSON.stringify(config));
-    
+
     // Copy connection string to clipboard
     const connectionString = generateConnectionString();
     if (connectionString) {
@@ -68,7 +67,7 @@ function DatabaseConfig() {
 
   const testConnection = async () => {
     setConnectionStatus('Testing connection...');
-    
+
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/v1/admin/test-db`, {
         method: 'POST',
@@ -79,9 +78,9 @@ function DatabaseConfig() {
           connectionString: generateConnectionString()
         })
       });
-      
+
       const result = await response.json();
-      
+
       if (response.ok) {
         setIsConnected(true);
         setConnectionStatus('✅ Connection successful!');
@@ -120,7 +119,7 @@ function DatabaseConfig() {
       <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
         Database Configuration
       </h2>
-      
+
       {/* Connection Status */}
       <div className={`p-3 rounded mb-4 ${isConnected 
         ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
@@ -157,7 +156,7 @@ function DatabaseConfig() {
               className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             />
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Database
@@ -241,7 +240,7 @@ function DatabaseConfig() {
           >
             Test Connection
           </button>
-          
+
           <button
             onClick={saveConfig}
             disabled={!generateConnectionString()}
@@ -249,14 +248,14 @@ function DatabaseConfig() {
           >
             Save & Copy Connection String
           </button>
-          
+
           <button
             onClick={loadFromEnv}
             className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
           >
             Load from Environment
           </button>
-          
+
           <button
             onClick={checkConnectionStatus}
             className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
@@ -279,6 +278,7 @@ function DatabaseConfig() {
             <li>6. Start: npm run dev (frontend) and cd server && npm run dev (backend)</li>
           </ol>
         </div>
+        <p>Note: Your connection string might contain special characters. Wrap them in &quot;quotes&quot; if needed.</p>
       </div>
     </div>
   );
