@@ -88,7 +88,7 @@ function App() {
           <p>Please log in with your Replit account to access your thoughts and ideas.</p>
           <div className="auth-button-container">
             <script
-              authed="location.reload()"
+              data-authed="location.reload()"
               src="https://auth.util.repl.co/script.js"
             ></script>
           </div>

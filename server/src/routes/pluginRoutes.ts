@@ -1,4 +1,3 @@
-
 import express from 'express';
 import { PluginHost } from '../../../core/services/pluginHost';
 import { logger } from '../../../core/utils/logger';
@@ -14,12 +13,12 @@ router.post('/init', async (req, res) => {
     const { PluginAPI } = require('../../../contracts/plugins/pluginApi');
     const { SQLiteAdapter } = require('../../../core/storage/sqliteAdapter');
     const { EventBus } = require('../../../core/services/eventBus');
-    
+
     // Create minimal plugin API for testing
     const eventBus = new EventBus();
     const storage = new SQLiteAdapter();
     const pluginApi = new PluginAPI(logger, storage, eventBus);
-    
+
     pluginHost = new PluginHost(logger, pluginApi);
     res.json({ success: true, message: 'Plugin host initialized with API' });
   } catch (error) {
@@ -31,14 +30,14 @@ router.post('/init', async (req, res) => {
 // Load a plugin
 router.post('/load', async (req, res) => {
   const { manifestPath } = req.body;
-  
+
   try {
     if (!pluginHost) {
       return res.status(400).json({ error: 'Plugin host not initialized' });
     }
-    
+
     const success = await pluginHost.loadPlugin(manifestPath);
-    
+
     if (success) {
       res.json({ success: true, message: `Plugin loaded from ${manifestPath}` });
     } else {
@@ -53,12 +52,12 @@ router.post('/load', async (req, res) => {
 // Execute plugin command
 router.post('/execute', async (req, res) => {
   const { pluginName, command, payload } = req.body;
-  
+
   try {
     if (!pluginHost) {
       return res.status(400).json({ error: 'Plugin host not initialized' });
     }
-    
+
     const result = await pluginHost.executePluginCommand(pluginName, command, payload);
     res.json({ success: true, result });
   } catch (error) {
@@ -73,7 +72,7 @@ router.get('/list', (req, res) => {
     if (!pluginHost) {
       return res.status(400).json({ error: 'Plugin host not initialized' });
     }
-    
+
     const plugins = pluginHost.getLoadedPlugins();
     res.json({ success: true, plugins });
   } catch (error) {
