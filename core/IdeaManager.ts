@@ -4,9 +4,10 @@
 import { logger } from './utils/logger'; // Assuming logger is in core/utils
 import { StorageAdapter, NewThoughtData, NewSegmentData } from '../contracts/storageAdapter'; // Import New... types
 import { Thought, Segment } from '../contracts/entities'; // Assuming entities are in contracts
+import { PostgresAdapter } from '../server/src/db/postgresAdapter';
 
 export class IdeaManager {
-  constructor(private storageAdapter: StorageAdapter) {
+  constructor(private storageAdapter: StorageAdapter = new PostgresAdapter()) {
     logger.info('[IdeaManager] Initialized (Placeholder)');
   }
 
