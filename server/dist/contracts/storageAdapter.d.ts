@@ -3,7 +3,9 @@ import { Thought, Segment } from './entities';
  * Input type for creating a new thought (excludes generated fields)
  */
 export interface NewThoughtData {
+    id?: string;
     title: string;
+    content?: string;
     description?: string;
     tags?: Array<{
         name: string;
@@ -14,12 +16,14 @@ export interface NewThoughtData {
         y: number;
     };
     color?: string;
+    fields?: Record<string, any>;
+    metadata?: Record<string, any>;
 }
 /**
  * Input type for creating a new segment (excludes generated fields)
  */
 export interface NewSegmentData {
-    title: string;
+    id?: string;
     content: string;
     content_type?: string;
     asset_path?: string;
@@ -27,6 +31,11 @@ export interface NewSegmentData {
     abstraction_level?: string;
     local_priority?: number;
     cluster_id?: string;
+    thoughtId?: string;
+    segmentType?: string;
+    metadata?: Record<string, any>;
+    positionX?: number;
+    positionY?: number;
 }
 /**
  * Storage adapter interface for persistent data operations
@@ -41,8 +50,8 @@ export interface StorageAdapter {
     getSegmentsForThought(thoughtId: string): Promise<Segment[]>;
     getSegmentById(segmentId: string): Promise<Segment | null>;
     createSegment(thoughtId: string, segmentData: NewSegmentData): Promise<Segment>;
-    updateSegment(segmentId: string, updates: Partial<NewSegmentData>): Promise<Segment | null>;
-    deleteSegment(segmentId: string): Promise<boolean>;
+    updateSegment(thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>): Promise<Segment | null>;
+    deleteSegment(thoughtId: string, segmentId: string): Promise<boolean>;
     initialize(): Promise<void>;
     close(): Promise<void>;
 }

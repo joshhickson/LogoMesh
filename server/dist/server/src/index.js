@@ -44,7 +44,7 @@ const taskRoutes_1 = __importStar(require("./routes/taskRoutes"));
 const eventBus_1 = require("../../core/services/eventBus");
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const app = (0, express_1.default)();
-const PORT = parseInt(process.env.PORT || "5000", 10); // Ensure PORT is a number
+const PORT = parseInt(process.env.PORT || "3001", 10); // Ensure PORT is a number
 const apiBasePath = '/api/v1'; // Define the base path
 // Middleware
 app.use((0, cors_1.default)());
