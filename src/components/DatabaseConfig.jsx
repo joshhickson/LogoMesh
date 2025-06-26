@@ -1,3 +1,6 @@
+The change replaces a string in the component to properly escape quotes.
+```
+```replit_final_file
 import React, { useState, useEffect } from 'react';
 
 function DatabaseConfig() {

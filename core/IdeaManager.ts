@@ -12,8 +12,8 @@ export class IdeaManager {
     logger.info('[IdeaManager] Initialized (Placeholder)');
   }
 
-  async getThoughtById(userId: string, id: string): Promise<Thought | null> {
-    logger.info(`[IdeaManager] Getting thought by ID: ${id} (Placeholder)`);
+  async getThoughtById(id: string, userId: string): Promise<Thought | null> {
+    logger.info(`[IdeaManager] Getting thought ID: ${id} for user: ${userId} (Placeholder)`);
     return this.storageAdapter.getThoughtById(id);
   }
 
