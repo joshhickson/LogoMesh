@@ -55,55 +55,131 @@ npm install --save-dev @types/sqlite3 @types/uuid
 - Review and align interface definitions with actual implementations
 - Ensure method signatures match between interface and SQLiteAdapter
 
-## Phase 2: Core Functionality Issues (P1) - Fix After P0
+## Phase 2: TypeScript Migration (P1) - Complete Migration
 
-### 2.1 Fix API Service Integration
+### 2.1 Frontend TypeScript Migration
+
+**Timeline**: 4-5 hours  
+**Priority**: HIGH - Required for compilation
+
+#### JavaScript Files Requiring Migration:
+
+##### Services Layer (`src/services/`)
+1. **`src/services/authService.js`** → **`authService.ts`**
+   - Status: ✅ **COMPLETED**
+   - Contains authentication state management
+   - User session handling
+
+2. **`src/services/graphService.js`** → **`graphService.ts`**
+   - Status: ❌ **PENDING**
+   - Graph visualization and layout logic
+   - D3.js integration
+   - Node positioning algorithms
+
+##### Utilities Layer (`src/utils/`)
+3. **`src/utils/errorLogger.js`** → **`errorLogger.ts`**
+   - Status: ❌ **PENDING**
+   - Error tracking and logging system
+   - Local storage integration
+   - Error categorization
+
+4. **`src/utils/eventBus.js`** → **`eventBus.ts`**
+   - Status: ❌ **PENDING**
+   - Application-wide event management
+   - Event subscription/unsubscription
+   - Cross-component communication
+
+5. **`src/utils/VoiceInputManager.js`** → **`VoiceInputManager.ts`**
+   - Status: ❌ **PENDING**
+   - Speech recognition interface
+   - Browser compatibility handling
+   - Audio processing
+
+6. **`src/utils/exportHandler.js`** → **`exportHandler.ts`**
+   - Status: ❌ **PENDING**
+   - Data export functionality
+   - File generation and download
+
+7. **`src/utils/importHandler.js`** → **`importHandler.ts`**
+   - Status: ❌ **PENDING**
+   - Data import and parsing
+   - File validation
+
+##### Root Level Files
+8. **`src/index.js`** → **`index.ts`**
+   - Status: ❌ **PENDING**
+   - Application entry point
+   - React DOM rendering
+   - Service worker registration
+
+9. **`src/reportWebVitals.js`** → **`reportWebVitals.ts`**
+   - Status: ❌ **PENDING**
+   - Performance monitoring
+   - Web vitals collection
+
+##### Test Support Files
+10. **`src/setupTests.js`** → **`setupTests.ts`**
+    - Status: ❌ **PENDING**
+    - Test environment configuration
+    - Jest/Vitest setup
+
+##### Mock Files (Optional - May Keep as .js)
+- **`src/services/mockApiService.js`** - Consider keeping as .js
+- **`src/services/__mocks__/apiService.js`** - Consider keeping as .js
+
+#### Migration Priority Order:
+1. **CRITICAL**: `src/index.js` → `index.ts` (Entry point)
+2. **HIGH**: `src/utils/errorLogger.js` → `errorLogger.ts` (Used by many components)
+3. **HIGH**: `src/utils/eventBus.js` → `eventBus.ts` (Core communication)
+4. **MEDIUM**: `src/services/graphService.js` → `graphService.ts` (Canvas functionality)
+5. **MEDIUM**: `src/utils/VoiceInputManager.js` → `VoiceInputManager.ts` (Feature component)
+6. **LOW**: `src/utils/exportHandler.js` → `exportHandler.ts` (Utility)
+7. **LOW**: `src/utils/importHandler.js` → `importHandler.ts` (Utility)
+8. **LOW**: `src/reportWebVitals.js` → `reportWebVitals.ts` (Monitoring)
+9. **LOW**: `src/setupTests.js` → `setupTests.ts` (Test support)
+
+### 2.2 Fix API Service Integration
 
 **Timeline**: 2-3 hours  
 **Issue**: Backend returning HTML instead of JSON
 
-#### Step 2.1.1: Debug Backend Server Response
+#### Step 2.2.1: Debug Backend Server Response
 - Check if backend server is actually running on port 3001
 - Verify routing configuration in server
 - Test API endpoints manually
 
-#### Step 2.1.2: Fix getCurrentUser Method
+#### Step 2.2.2: Fix getCurrentUser Method
 **File**: `src/services/apiService.ts`
 - Implement missing `getCurrentUser` method
 - Add proper error handling for API responses
 - Add `baseURL` property to service
 
-#### Step 2.1.3: Fix Authentication Service
-**File**: `src/services/authService.js`
-- Fix initialization failures
-- Ensure proper error handling
-
-### 2.2 Fix Component Rendering Issues
+### 2.3 Fix Component Rendering Issues
 
 **Timeline**: 1-2 hours
 
-#### Step 2.2.1: Fix App Loading State
+#### Step 2.3.1: Fix App Loading State
 **File**: `src/App.jsx`
 - Debug why app is stuck in loading state
 - Fix authentication flow
 - Ensure proper state management
 
-#### Step 2.2.2: Fix Component Mocking in Tests
+#### Step 2.3.2: Fix Component Mocking in Tests
 **Files**: Test files in `src/components/__tests__/`
 - Fix sidebar and canvas component mocks
 - Update mock implementations to match actual components
 
-### 2.3 Fix Voice Input Integration
+### 2.4 Fix Voice Input Integration
 
 **Timeline**: 1 hour
 
-#### Step 2.3.1: Fix Speech Recognition Mocks
+#### Step 2.4.1: Fix Speech Recognition Mocks
 **File**: `src/components/__tests__/AddThoughtModal.test.jsx`
 - Fix speech recognition mock setup
 - Update browser compatibility tests
 - Fix window.alert spy configuration
 
-#### Step 2.3.2: Fix Voice Input Manager Tests
+#### Step 2.4.2: Fix Voice Input Manager Tests
 **File**: `src/utils/__tests__/VoiceInputManager.test.js`
 - Fix parameter expectation mismatches
 - Fix boolean flag ordering issues
