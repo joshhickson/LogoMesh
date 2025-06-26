@@ -2,7 +2,7 @@ import { StorageAdapter, NewThoughtData, NewSegmentData } from '../contracts/sto
 import { Thought, Segment } from '../contracts/entities';
 export declare class IdeaManager {
     private storageAdapter;
-    constructor(storageAdapter: StorageAdapter);
+    constructor(storageAdapter?: StorageAdapter);
     getThoughtById(id: string): Promise<Thought | null>;
     createThought(thoughtData: any): Promise<Thought>;
     getThoughts(): Promise<Thought[]>;

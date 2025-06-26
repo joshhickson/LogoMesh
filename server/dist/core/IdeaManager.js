@@ -4,8 +4,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IdeaManager = void 0;
 const logger_1 = require("./utils/logger"); // Assuming logger is in core/utils
+const postgresAdapter_1 = require("../server/src/db/postgresAdapter");
 class IdeaManager {
-    constructor(storageAdapter) {
+    constructor(storageAdapter = new postgresAdapter_1.PostgresAdapter()) {
         this.storageAdapter = storageAdapter;
         logger_1.logger.info('[IdeaManager] Initialized (Placeholder)');
     }

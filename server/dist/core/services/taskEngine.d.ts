@@ -1,7 +1,7 @@
 import { EventBus } from './eventBus.js';
 import { LLMTaskRunner } from '../llm/LLMTaskRunner.js';
 import { PluginHost } from './pluginHost.js';
-interface TaskStep {
+export interface TaskStep {
     id: string;
     type: 'llm' | 'plugin' | 'system';
     executorId: string;
@@ -12,7 +12,7 @@ interface TaskStep {
     endTime?: Date;
     error?: string;
 }
-interface Pipeline {
+export interface Pipeline {
     id: string;
     name: string;
     description?: string;
@@ -23,6 +23,11 @@ interface Pipeline {
     startTime?: Date;
     endTime?: Date;
     context: Record<string, any>;
+}
+export interface ExecutorRegistry {
+    llmExecutors: Map<string, LLMTaskRunner>;
+    pluginExecutors: Map<string, PluginHost>;
+    systemExecutors: Map<string, any>;
 }
 /**
  * TaskEngine orchestrates execution of multi-step workflows using existing
@@ -108,5 +113,4 @@ export declare class TaskEngine {
         };
     };
 }
-export {};
 //# sourceMappingURL=taskEngine.d.ts.map
