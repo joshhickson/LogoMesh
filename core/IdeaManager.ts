@@ -56,6 +56,6 @@ export class IdeaManager {
 
   async deleteSegment(userId: string, thoughtId: string, segmentId: string): Promise<boolean> {
     logger.info(`[IdeaManager] Deleting segment ID: ${segmentId} for thought ID: ${thoughtId} (Placeholder)`);
-    return this.storageAdapter.deleteSegment ? this.storageAdapter.deleteSegment('', segmentId) : Promise.resolve(false);
+    return this.storageAdapter.deleteSegment ? this.storageAdapter.deleteSegment(thoughtId, segmentId) : Promise.resolve(false);
   }
 }
