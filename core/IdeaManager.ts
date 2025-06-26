@@ -49,12 +49,12 @@ export class IdeaManager {
     return this.storageAdapter.createSegment ? this.storageAdapter.createSegment(thoughtId, segmentData) : Promise.resolve(null);
   }
 
-  async updateSegment(userId: string, thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>): Promise<Segment | null> {
+  async updateSegment(thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>): Promise<Segment | null> {
     logger.info(`[IdeaManager] Updating segment ID: ${segmentId} for thought ID: ${thoughtId} (Placeholder)`, updates);
     return this.storageAdapter.updateSegment ? this.storageAdapter.updateSegment(thoughtId, segmentId, updates) : Promise.resolve(null);
   }
 
-  async deleteSegment(userId: string, thoughtId: string, segmentId: string): Promise<boolean> {
+  async deleteSegment(thoughtId: string, segmentId: string): Promise<boolean> {
     logger.info(`[IdeaManager] Deleting segment ID: ${segmentId} for thought ID: ${thoughtId} (Placeholder)`);
     return this.storageAdapter.deleteSegment ? this.storageAdapter.deleteSegment(thoughtId, segmentId) : Promise.resolve(false);
   }
