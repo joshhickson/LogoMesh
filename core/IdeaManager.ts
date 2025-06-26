@@ -24,7 +24,7 @@ export class IdeaManager {
   }
 
   async getThoughts(userId: string = 'anonymous'): Promise<Thought[]> {
-    logger.info(`[IdeaManager] Getting all thoughts (Placeholder)`);
+    logger.info(`[IdeaManager] Getting all thoughts for user: ${userId} (Placeholder)`);
     return this.storageAdapter.getAllThoughts ? this.storageAdapter.getAllThoughts() : Promise.resolve([]);
   }
 
