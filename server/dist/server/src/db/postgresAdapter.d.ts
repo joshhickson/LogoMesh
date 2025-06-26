@@ -1,4 +1,5 @@
 import { StorageAdapter, NewThoughtData, NewSegmentData } from '../../../contracts/storageAdapter';
+import { Segment } from '../../../contracts/entities';
 export declare class PostgresAdapter implements StorageAdapter {
     private pool;
     constructor();
@@ -7,11 +8,13 @@ export declare class PostgresAdapter implements StorageAdapter {
     getThoughtById(id: string, userId?: string): Promise<any>;
     getAllThoughts(userId?: string): Promise<any[]>;
     updateThought(id: string, thoughtData: Partial<NewThoughtData>): Promise<any>;
-    deleteThought(id: string): Promise<void>;
+    deleteThought(id: string): Promise<boolean>;
+    getSegmentsForThought(thoughtId: string): Promise<Segment[]>;
+    getSegmentById(segmentId: string): Promise<Segment | null>;
     createSegment(thoughtId: string, segmentData: NewSegmentData): Promise<any>;
     getSegmentsByThoughtId(thoughtId: string): Promise<any[]>;
-    updateSegment(thoughtId: string, segmentId: string, segmentData: Partial<NewSegmentData>): Promise<any>;
-    deleteSegment(thoughtId: string, segmentId: string): Promise<void>;
+    updateSegment(thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>): Promise<any>;
+    deleteSegment(segmentId: string): Promise<boolean>;
     savePluginData(pluginName: string, data: any): Promise<void>;
     getPluginData(pluginName: string): Promise<any>;
     close(): Promise<void>;
