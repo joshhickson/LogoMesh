@@ -1,6 +1,6 @@
 run = "npm run start"
 language = "nodejs"
-modules = ["nodejs-20", "web", "nix"]
+modules = ["nodejs-20", "web", "nix", "postgresql-16"]
 
 [nix]
 packages = ["nodejs", "npm"]
