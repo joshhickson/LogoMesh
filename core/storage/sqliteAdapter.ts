@@ -411,10 +411,6 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         updateFields.push('content = ?');
         values.push(updates.content);
       }
-      if (updates.content !== undefined) {
-        updateFields.push('content = ?');
-        values.push(updates.content);
-      }
       if (updates.fields !== undefined) {
         updateFields.push('metadata = ?');
         values.push(JSON.stringify(updates.fields));
