@@ -8,7 +8,7 @@
     "start": "node dist/server/src/index.js",
     "dev": "tsc && node dist/server/src/index.js",
     "watch": "tsc -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Server tests not yet implemented\" && exit 0"
   },
   "keywords": [],
   "author": "",
