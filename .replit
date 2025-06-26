@@ -81,7 +81,7 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd server && npm install && npm run build && PORT=3001 npm start"
+args = "cd server && npm install && npm run build && npm start"
 
 [[workflows.workflow]]
 name = "Dev Mode"

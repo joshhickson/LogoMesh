@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const pluginHost_1 = require("../../../core/services/pluginHost");
+const logger_1 = require("../../../core/utils/logger");
 const router = express_1.default.Router();
-const logger = new logger_1.Logger();
 // This will be initialized with proper PluginAPI
 let pluginHost = null;
 // Initialize plugin host with proper API wiring
@@ -18,12 +18,12 @@ router.post('/init', async (req, res) => {
         // Create minimal plugin API for testing
         const eventBus = new EventBus();
         const storage = new SQLiteAdapter();
-        const pluginApi = new PluginAPI(logger, storage, eventBus);
-        pluginHost = new pluginHost_1.PluginHost(logger, pluginApi);
+        const pluginApi = new PluginAPI(logger_1.logger, storage, eventBus);
+        pluginHost = new pluginHost_1.PluginHost(logger_1.logger, pluginApi);
         res.json({ success: true, message: 'Plugin host initialized with API' });
     }
     catch (error) {
-        logger.error('Plugin host initialization failed:', error);
+        logger_1.logger.error('Plugin host initialization failed:', error);
         res.status(500).json({ error: 'Failed to initialize plugin host' });
     }
 });
@@ -43,7 +43,7 @@ router.post('/load', async (req, res) => {
         }
     }
     catch (error) {
-        logger.error('Plugin loading failed:', error);
+        logger_1.logger.error('Plugin loading failed:', error);
         res.status(500).json({ error: 'Plugin loading failed' });
     }
 });
@@ -58,7 +58,7 @@ router.post('/execute', async (req, res) => {
         res.json({ success: true, result });
     }
     catch (error) {
-        logger.error('Plugin execution failed:', error);
+        logger_1.logger.error('Plugin execution failed:', error);
         res.status(500).json({ error: error.message });
     }
 });
@@ -72,7 +72,7 @@ router.get('/list', (req, res) => {
         res.json({ success: true, plugins });
     }
     catch (error) {
-        logger.error('Failed to list plugins:', error);
+        logger_1.logger.error('Failed to list plugins:', error);
         res.status(500).json({ error: 'Failed to list plugins' });
     }
 });
