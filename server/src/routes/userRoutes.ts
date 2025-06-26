@@ -31,6 +31,31 @@ router.get('/me', (req: Request, res: Response) => {
   }
 });
 
+// Get current user info (alternative endpoint that frontend is calling)
+router.get('/current', (req: Request, res: Response) => {
+  try {
+    if (!req.user?.isAuthenticated) {
+      return res.status(401).json({ 
+        error: 'Not authenticated',
+        message: 'Please log in to access this resource'
+      });
+    }
+
+    res.json({
+      id: req.user.id,
+      name: req.user.name,
+      roles: req.user.roles,
+      isAuthenticated: req.user.isAuthenticated
+    });
+  } catch (error) {
+    logger.error('[UserRoutes] Error getting current user:', error);
+    res.status(500).json({ 
+      error: 'Failed to get current user',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+});
+
 // Health check for user services
 router.get('/health', (req: Request, res: Response) => {
   res.json({ 

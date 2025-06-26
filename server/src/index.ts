@@ -57,7 +57,7 @@ const eventBus = new EventBus();
 initializeTaskEngine(eventBus);
 
 // Mount routes
-app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/thoughts', thoughtRoutes);
 app.use('/api/v1/llm', llmRoutes);
 app.use('/api/v1/admin', adminRoutes);
