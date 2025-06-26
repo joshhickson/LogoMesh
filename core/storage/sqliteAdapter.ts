@@ -360,14 +360,13 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       const now = new Date().toISOString();
 
       const query = `
-        INSERT INTO segments (segment_id, thought_bubble_id, title, content, created_at, updated_at, sort_order, metadata)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO segments (segment_id, thought_bubble_id, content, created_at, updated_at, sort_order, metadata)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
       `;
 
       const values = [
         segmentId,
         thoughtId,
-        segmentData.title,
         segmentData.content,
         now,
         now,
@@ -397,7 +396,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
     });
   }
 
-  async updateSegment(segmentId: string, updates: Partial<NewSegmentData>): Promise<Segment | null> {
+  async updateSegment(thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>): Promise<Segment | null> {
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
@@ -439,7 +438,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
     });
   }
 
-  async deleteSegment(segmentId: string): Promise<boolean> {
+  async deleteSegment(thoughtId: string, segmentId: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
