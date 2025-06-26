@@ -149,7 +149,7 @@ router.put('/:thoughtId/segments/:segmentId', async (req: Request, res: Response
     const { thoughtId, segmentId } = req.params;
     const updateData = req.body;
 
-    const updatedSegment = await ideaManager.updateSegment(req.user!.id, thoughtId, segmentId, updateData);
+    const updatedSegment = await ideaManager.updateSegment(thoughtId, segmentId, updateData);
     if (!updatedSegment) {
       return res.status(404).json({ error: 'Segment not found' });
     }
@@ -168,7 +168,7 @@ router.delete('/:thoughtId/segments/:segmentId', async (req: Request, res: Respo
     const ideaManager: IdeaManager = req.app.locals.ideaManager;
     const { thoughtId, segmentId } = req.params;
 
-    const success = await ideaManager.deleteSegment(req.user!.id, thoughtId, segmentId);
+    const success = await ideaManager.deleteSegment(thoughtId, segmentId);
     if (!success) {
       return res.status(404).json({ error: 'Segment not found' });
     }
