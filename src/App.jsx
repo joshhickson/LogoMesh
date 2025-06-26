@@ -3,7 +3,7 @@ import Canvas from './components/Canvas';
 import Sidebar from './components/Sidebar';
 import ThoughtDetailPanel from './components/ThoughtDetailPanel';
 import AddThoughtModal from './components/AddThoughtModal';
-import DevAssistantPanel from './components/DevAssistantPanel';
+
 
 function App() {
   const [thoughts, setThoughts] = useState([]);
@@ -199,10 +199,7 @@ function App() {
         />
       )}
 
-        {/* Dev Assistant Plugin Panel */}
-        <div className="fixed bottom-4 right-4">
-          <DevAssistantPanel />
-        </div>
+        
       </div>
     );
   }

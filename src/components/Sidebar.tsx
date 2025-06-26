@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { graphService } from '../services/graphService';
 import errorLogger from '../utils/errorLogger';
+import DevAssistantPanel from './DevAssistantPanel';
 
 // Current schema version for display purposes
 const thoughtSchemaVersion = '0.5';
@@ -48,6 +49,7 @@ function Sidebar({
   const [filterFieldValue, setFilterFieldValue] = useState('');
   const [filterFieldType, setFilterFieldType] = useState<string[]>([]);
   const [filteredThoughtIds, setFilteredThoughtIds] = useState<string[]>([]);
+  const [showDevAssistant, setShowDevAssistant] = useState(false);
 
   // Gather all field entries for dynamic filters
   const allFields = thoughts.flatMap(
@@ -204,6 +206,16 @@ function Sidebar({
           Schema v{thoughtSchemaVersion}
         </span>
         <h2 className="text-lg font-bold">Thought List</h2>
+        <button
+          onClick={() => setShowDevAssistant(!showDevAssistant)}
+          className={`px-2 py-1 rounded ${showDevAssistant 
+            ? 'bg-blue-500 text-white' 
+            : 'text-gray-300 dark:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700'
+          }`}
+          title="Toggle Dev Assistant"
+        >
+          🤖
+        </button>
         <button
           onClick={toggleDarkMode}
           className="px-2 py-1 bg-gray-300 dark:bg-gray-600 rounded"
@@ -401,6 +413,13 @@ function Sidebar({
           Change Color of Filtered
         </button>
       </div>
+
+      {/* Dev Assistant Panel */}
+      {showDevAssistant && (
+        <div className="mt-4 border-t pt-4">
+          <DevAssistantPanel />
+        </div>
+      )}
     </div>
   );
 }
