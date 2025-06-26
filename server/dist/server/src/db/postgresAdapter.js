@@ -155,7 +155,28 @@ class PostgresAdapter {
     async deleteThought(id) {
         const client = await this.pool.connect();
         try {
-            await client.query('DELETE FROM thoughts WHERE id = $1', [id]);
+            const result = await client.query('DELETE FROM thoughts WHERE id = $1', [id]);
+            return result.rowCount > 0;
+        }
+        finally {
+            client.release();
+        }
+    }
+    async getSegmentsForThought(thoughtId) {
+        const client = await this.pool.connect();
+        try {
+            const result = await client.query('SELECT * FROM segments WHERE thought_id = $1', [thoughtId]);
+            return result.rows;
+        }
+        finally {
+            client.release();
+        }
+    }
+    async getSegmentById(segmentId) {
+        const client = await this.pool.connect();
+        try {
+            const result = await client.query('SELECT * FROM segments WHERE id = $1', [segmentId]);
+            return result.rows[0] || null;
         }
         finally {
             client.release();
@@ -198,42 +219,45 @@ class PostgresAdapter {
             client.release();
         }
     }
-    async updateSegment(thoughtId, segmentId, segmentData) {
+    async updateSegment(thoughtId, segmentId, updates) {
         const client = await this.pool.connect();
         try {
-            const updates = [];
+            const updateFields = [];
             const values = [];
             let paramCount = 1;
-            if (segmentData.content !== undefined) {
-                updates.push(`content = $${paramCount++}`);
-                values.push(segmentData.content);
+            if (updates.content !== undefined) {
+                updateFields.push(`content = $${paramCount++}`);
+                values.push(updates.content);
             }
-            if (segmentData.segmentType !== undefined) {
-                updates.push(`segment_type = $${paramCount++}`);
-                values.push(segmentData.segmentType);
+            if (updates.segmentType !== undefined) {
+                updateFields.push(`segment_type = $${paramCount++}`);
+                values.push(updates.segmentType);
             }
-            if (segmentData.fields !== undefined) {
-                updates.push(`fields = $${paramCount++}`);
-                values.push(JSON.stringify(segmentData.fields));
+            if (updates.fields !== undefined) {
+                updateFields.push(`fields = $${paramCount++}`);
+                values.push(JSON.stringify(updates.fields));
             }
-            if (segmentData.positionX !== undefined) {
-                updates.push(`position_x = $${paramCount++}`);
-                values.push(segmentData.positionX);
+            if (updates.positionX !== undefined) {
+                updateFields.push(`position_x = $${paramCount++}`);
+                values.push(updates.positionX);
             }
-            if (segmentData.positionY !== undefined) {
-                updates.push(`position_y = $${paramCount++}`);
-                values.push(segmentData.positionY);
+            if (updates.positionY !== undefined) {
+                updateFields.push(`position_y = $${paramCount++}`);
+                values.push(updates.positionY);
             }
-            updates.push(`updated_at = CURRENT_TIMESTAMP`);
-            values.push(segmentId);
-            values.push(thoughtId);
-            const result = await client.query(`UPDATE segments SET ${updates.join(', ')} WHERE id = $${paramCount} AND thought_id = $${paramCount + 1} RETURNING *`, values);
-            if (result.rows.length === 0)
+            updateFields.push(`updated_at = CURRENT_TIMESTAMP`);
+            if (updateFields.length === 1) { // Only timestamp update
                 return null;
-            const segment = result.rows[0];
-            segment.fields = segment.fields || {};
-            segment.metadata = segment.metadata || {};
-            return segment;
+            }
+            values.push(segmentId);
+            const query = `
+        UPDATE segments 
+        SET ${updateFields.join(', ')}
+        WHERE id = $${paramCount}
+        RETURNING *
+      `;
+            const result = await client.query(query, values);
+            return result.rows[0] || null;
         }
         finally {
             client.release();
@@ -242,7 +266,8 @@ class PostgresAdapter {
     async deleteSegment(thoughtId, segmentId) {
         const client = await this.pool.connect();
         try {
-            await client.query('DELETE FROM segments WHERE id = $1 AND thought_id = $2', [segmentId, thoughtId]);
+            const result = await client.query('DELETE FROM segments WHERE id = $1 AND thought_id = $2', [segmentId, thoughtId]);
+            return result.rowCount > 0;
         }
         finally {
             client.release();
