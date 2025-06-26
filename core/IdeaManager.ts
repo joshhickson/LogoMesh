@@ -2,9 +2,10 @@
 // TODO: Implement full IdeaManager functionality
 
 import { logger } from './utils/logger'; // Assuming logger is in core/utils
+import { PostgresAdapter } from '../server/src/db/postgresAdapter';
 import { StorageAdapter, NewThoughtData, NewSegmentData } from '../contracts/storageAdapter'; // Import New... types
 import { Thought, Segment } from '../contracts/entities'; // Assuming entities are in contracts
-import { PostgresAdapter } from '../server/src/db/postgresAdapter';
+
 
 export class IdeaManager {
   constructor(private storageAdapter: StorageAdapter = new PostgresAdapter()) {
