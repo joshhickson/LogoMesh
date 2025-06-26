@@ -20,7 +20,7 @@ import { EventBus } from '../../core/services/eventBus';
 import userRoutes from './routes/userRoutes';
 
 const app = express();
-const PORT = parseInt(process.env.PORT || "5000", 10); // Ensure PORT is a number
+const PORT = parseInt(process.env.PORT || "3001", 10); // Ensure PORT is a number
 const apiBasePath = '/api/v1'; // Define the base path
 
 // Middleware
