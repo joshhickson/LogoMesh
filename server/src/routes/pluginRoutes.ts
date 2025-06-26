@@ -1,10 +1,9 @@
 
 import express from 'express';
 import { PluginHost } from '../../../core/services/pluginHost';
-import { Logger } from '../../../core/utils/logger';
+import { logger } from '../../../core/utils/logger';
 
 const router = express.Router();
-const logger = new Logger();
 
 // This will be initialized with proper PluginAPI
 let pluginHost: PluginHost | null = null;
