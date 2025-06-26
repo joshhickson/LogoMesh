@@ -30,7 +30,7 @@ class OllamaExecutor {
             return data.response || 'No response received';
         }
         catch (error) {
-            console.warn(`[OllamaExecutor] Failed to connect to Ollama, using fallback: ${error instanceof Error ? error.message : 'Unknown error'}`);
+            console.warn(`[OllamaExecutor] Failed to connect to Ollama, using fallback: ${error instanceof Error ? error.message : String(error)}`);
             // Fallback to mock for development
             return `[MOCK - Ollama not available] Response for: ${prompt}`;
         }

@@ -20,7 +20,7 @@ class IdeaManager {
         return this.storageAdapter.createThought(thoughtData);
     }
     async getThoughts(userId = 'anonymous') {
-        logger_1.logger.info(`[IdeaManager] Getting all thoughts (Placeholder)`);
+        logger_1.logger.info(`[IdeaManager] Getting all thoughts for user: ${userId} (Placeholder)`);
         return this.storageAdapter.getAllThoughts ? this.storageAdapter.getAllThoughts() : Promise.resolve([]);
     }
     async addThought(userId, thoughtData) {
