@@ -1,4 +1,3 @@
-
 const fs = require('fs');
 const path = require('path');
 
@@ -12,7 +11,7 @@ class LogoMeshDevAssistant {
 
   async onCommand(command, payload) {
     this.logger.info(`[LogoMeshDevAssistant] Executing command: ${command}`);
-    
+
     switch (command) {
       case 'analyzeCode':
         return await this.analyzeCode(payload);
@@ -29,117 +28,160 @@ class LogoMeshDevAssistant {
 
   async analyzeCode(payload) {
     const { filePath, analysisType = 'general' } = payload;
-    
+
     try {
-      // Read the file content
-      const fullPath = path.resolve(filePath);
-      const content = fs.readFileSync(fullPath, 'utf8');
-      
-      // Prepare analysis prompt for LLM
-      const prompt = this.buildAnalysisPrompt(content, filePath, analysisType);
-      
-      // Use LLM via API (this would integrate with your LLMTaskRunner)
-      const analysis = await this.callLLM(prompt);
-      
-      // Store analysis result as a thought
-      await this.createAnalysisThought(filePath, analysis);
-      
+      // Read the actual file content if it exists
+      const fs = require('fs');
+      let fileContent = '';
+
+      if (fs.existsSync(filePath)) {
+        fileContent = fs.readFileSync(filePath, 'utf8');
+      } else {
+        return { error: `File not found: ${filePath}` };
+      }
+
+      // Use LLM to analyze the code
+      const prompt = `Analyze this ${analysisType} code and provide specific feedback:
+
+File: ${filePath}
+Code:
+\`\`\`
+${fileContent.substring(0, 2000)} // Limit content for LLM
+\`\`\`
+
+Please provide:
+1. Specific issues found
+2. Improvement suggestions
+3. A quality score (1-10)
+
+Focus on: ${analysisType}`;
+
+      // Make LLM call via API (this should connect to your OllamaExecutor)
+      const response = await fetch('http://localhost:5000/api/v1/llm/prompt', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, metadata: { type: 'code_analysis' } })
+      });
+
+      if (!response.ok) {
+        throw new Error(`LLM API failed: ${response.status}`);
+      }
+
+      const llmResult = await response.json();
+
       return {
-        success: true,
-        filePath,
-        analysis,
-        timestamp: new Date().toISOString()
+        file: filePath,
+        analysis: {
+          type: analysisType,
+          llmResponse: llmResult.response,
+          issues: this.extractIssues(llmResult.response),
+          suggestions: this.extractSuggestions(llmResult.response),
+          score: this.extractScore(llmResult.response) || 7.0
+        }
       };
+
     } catch (error) {
-      this.logger.error(`[LogoMeshDevAssistant] Analysis failed: ${error.message}`);
-      return { success: false, error: error.message };
+      this.logger.error('Code analysis failed:', error);
+      return { error: error.message };
     }
   }
 
   async suggestImprovement(payload) {
-    const { filePath, focus = 'all' } = payload;
-    
+    const { filePath, focus = 'general' } = payload;
+
     try {
-      const content = fs.readFileSync(path.resolve(filePath), 'utf8');
-      
-      const prompt = `
-Analyze this ${path.extname(filePath)} file and suggest specific improvements:
+      const fs = require('fs');
+      let fileContent = '';
+
+      if (fs.existsSync(filePath)) {
+        fileContent = fs.readFileSync(filePath, 'utf8');
+      } else {
+        return { error: `File not found: ${filePath}` };
+      }
+
+      const prompt = `Review this code and suggest specific improvements focusing on ${focus}:
 
 File: ${filePath}
-Focus: ${focus}
-
-Content:
+Code:
 \`\`\`
-${content}
+${fileContent.substring(0, 2000)}
 \`\`\`
 
-Please provide:
-1. Code quality improvements
-2. Performance optimizations
-3. TypeScript/JavaScript best practices
-4. Architecture suggestions
-5. Specific actionable changes
+Focus area: ${focus}
+Please provide actionable improvement suggestions with priority levels.`;
 
-Format as structured suggestions with reasoning.
-`;
+      const response = await fetch('http://localhost:5000/api/v1/llm/prompt', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, metadata: { type: 'code_improvement' } })
+      });
 
-      const suggestions = await this.callLLM(prompt);
-      
+      if (!response.ok) {
+        throw new Error(`LLM API failed: ${response.status}`);
+      }
+
+      const llmResult = await response.json();
+
       return {
-        success: true,
-        filePath,
-        suggestions,
+        file: filePath,
         focus,
-        timestamp: new Date().toISOString()
+        improvements: this.extractImprovements(llmResult.response),
+        llmResponse: llmResult.response,
+        priority: 'medium'
       };
+
     } catch (error) {
-      this.logger.error(`[LogoMeshDevAssistant] Suggestion failed: ${error.message}`);
-      return { success: false, error: error.message };
+      this.logger.error('Improvement suggestion failed:', error);
+      return { error: error.message };
     }
   }
 
   async generateCode(payload) {
-    const { description, fileType = 'javascript', context = '' } = payload;
-    
-    try {
-      const prompt = `
-Generate ${fileType} code based on this description:
+    const { description, fileType = 'javascript' } = payload;
 
-Description: ${description}
-Context: ${context}
-Project: LogoMesh (React + Node.js + TypeScript knowledge management system)
+    try {
+      const prompt = `Generate ${fileType} code based on this description:
+"${description}"
 
 Requirements:
-- Follow LogoMesh patterns and architecture
-- Include proper TypeScript types if applicable
-- Add appropriate error handling
-- Include JSDoc comments
+- Write clean, readable code
+- Include appropriate comments
+- Follow best practices for ${fileType}
 - Make it production-ready
 
-Generate complete, functional code:
-`;
+Provide just the code with brief explanation.`;
 
-      const generatedCode = await this.callLLM(prompt);
-      
+      const response = await fetch('http://localhost:5000/api/v1/llm/prompt', {
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, metadata: { type: 'code_generation' } })
+      });
+
+      if (!response.ok) {
+        throw new Error(`LLM API failed: ${response.status}`);
+      }
+
+      const llmResult = await response.json();
+
       return {
-        success: true,
         description,
         fileType,
-        code: generatedCode,
-        timestamp: new Date().toISOString()
+        generatedCode: this.extractCode(llmResult.response),
+        explanation: llmResult.response
       };
+
     } catch (error) {
-      this.logger.error(`[LogoMeshDevAssistant] Code generation failed: ${error.message}`);
-      return { success: false, error: error.message };
+      this.logger.error('Code generation failed:', error);
+      return { error: error.message };
     }
   }
 
   async createDocumentation(payload) {
     const { filePath, docType = 'api' } = payload;
-    
+
     try {
       const content = fs.readFileSync(path.resolve(filePath), 'utf8');
-      
+
       const prompt = `
 Create comprehensive ${docType} documentation for this file:
 
@@ -161,7 +203,7 @@ Make it clear and developer-friendly.
 `;
 
       const documentation = await this.callLLM(prompt);
-      
+
       return {
         success: true,
         filePath,
@@ -231,10 +273,10 @@ Provide structured, actionable analysis.
     try {
       const thoughts = await this.api.getThoughts();
       const thoughtId = `analysis_${Date.now()}_${path.basename(filePath)}`;
-      
+
       // This would integrate with your thought creation system
       this.logger.info(`[LogoMeshDevAssistant] Created analysis thought for ${filePath}`);
-      
+
       return thoughtId;
     } catch (error) {
       this.logger.error(`[LogoMeshDevAssistant] Failed to create thought: ${error.message}`);
@@ -243,6 +285,50 @@ Provide structured, actionable analysis.
 
   async onShutdown() {
     this.logger.info('[LogoMeshDevAssistant] Plugin shutting down');
+  }
+
+  // Helper methods to parse LLM responses
+  extractIssues(response) {
+    const issues = [];
+    const lines = response.split('\n');
+    lines.forEach(line => {
+      if (line.includes('issue') || line.includes('problem') || line.includes('bug')) {
+        issues.push(line.trim());
+      }
+    });
+    return issues.length > 0 ? issues : ['See LLM response for details'];
+  }
+
+  extractSuggestions(response) {
+    const suggestions = [];
+    const lines = response.split('\n');
+    lines.forEach(line => {
+      if (line.includes('suggest') || line.includes('recommend') || line.includes('consider')) {
+        suggestions.push(line.trim());
+      }
+    });
+    return suggestions.length > 0 ? suggestions : ['See LLM response for details'];
+  }
+
+  extractScore(response) {
+    const match = response.match(/(\d+(?:\.\d+)?)\s*(?:\/\s*10|out of 10|score)/i);
+    return match ? parseFloat(match[1]) : null;
+  }
+
+  extractCode(response) {
+    const codeMatch = response.match(/```[\w]*\n([\s\S]*?)```/);
+    return codeMatch ? codeMatch[1].trim() : response;
+  }
+
+  extractImprovements(response) {
+    const improvements = [];
+    const lines = response.split('\n');
+    lines.forEach(line => {
+      if (line.match(/^\d+\.|\-|\•/) && line.length > 10) {
+        improvements.push(line.trim());
+      }
+    });
+    return improvements.length > 0 ? improvements : ['See LLM response for details'];
   }
 }
 
