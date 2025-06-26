@@ -1,5 +1,6 @@
 import { Pool, Client } from 'pg';
 import { StorageAdapter, NewThoughtData, NewSegmentData } from '../../../contracts/storageAdapter';
+import { Segment } from '../../../contracts/entities';
 
 export class PostgresAdapter implements StorageAdapter {
   private pool: Pool;
@@ -175,7 +176,7 @@ export class PostgresAdapter implements StorageAdapter {
     const client = await this.pool.connect();
     try {
       const result = await client.query('DELETE FROM thoughts WHERE id = $1', [id]);
-      return result.rowCount > 0;
+      return (result.rowCount || 0) > 0;
     } finally {
       client.release();
     }
@@ -294,11 +295,11 @@ export class PostgresAdapter implements StorageAdapter {
     }
   }
 
-  async deleteSegment(thoughtId: string, segmentId: string): Promise<boolean> {
+  async deleteSegment(segmentId: string): Promise<boolean> {
     const client = await this.pool.connect();
     try {
-      const result = await client.query('DELETE FROM segments WHERE id = $1 AND thought_id = $2', [segmentId, thoughtId]);
-      return result.rowCount > 0;
+      const result = await client.query('DELETE FROM segments WHERE id = $1', [segmentId]);
+      return (result.rowCount || 0) > 0;
     } finally {
       client.release();
     }
