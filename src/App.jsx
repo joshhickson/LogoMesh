@@ -4,7 +4,7 @@ import AddThoughtModal from './components/AddThoughtModal';
 import Sidebar from './components/Sidebar';
 import ThoughtDetailPanel from './components/ThoughtDetailPanel';
 import DevAssistantPanel from './components/DevAssistantPanel';
-import { apiService } from './services/apiService';
+import apiService from './services/apiService.ts';
 import { authService } from './services/authService';
 import './App.css';
 

@@ -1,7 +1,26 @@
-import { Thought, Segment, NewThoughtData, NewSegmentData, UpdateThoughtData, UpdateSegmentData } from './entities';
+import { Thought, Segment, NewThoughtData, NewSegmentData } from './entities';
+
+// Define update types inline since they're missing from entities
+export interface UpdateThoughtData {
+  id?: string;
+  title?: string;
+  content?: string;
+  tags?: string[];
+  parentId?: string | null;
+  metadata?: Record<string, any>;
+}
+
+export interface UpdateSegmentData {
+  id?: string;
+  title?: string;
+  content?: string;
+  segmentType?: string;
+  metadata?: Record<string, any>;
+}
 
 // Re-export types for API service
-export type { NewThoughtData, NewSegmentData, UpdateThoughtData, UpdateSegmentData } from './entities';
+export type { NewThoughtData, NewSegmentData } from './entities';
+export type { UpdateThoughtData, UpdateSegmentData };
 
 export interface StorageAdapter {
   // Thought operations
