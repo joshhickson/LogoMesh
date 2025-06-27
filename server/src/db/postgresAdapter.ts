@@ -1,6 +1,6 @@
 import { Pool, Client } from 'pg';
 import { StorageAdapter, NewThoughtData, NewSegmentData } from '../../../contracts/storageAdapter';
-import { Segment } from '../../../contracts/entities';
+import { Segment, Thought } from '../../../contracts/entities'; // Added Thought
 
 export class PostgresAdapter implements StorageAdapter {
   private pool: Pool;
@@ -72,14 +72,14 @@ export class PostgresAdapter implements StorageAdapter {
     }
   }
 
-  async createThought(thoughtData: NewThoughtData, userId: string = 'anonymous'): Promise<any> {
+  async createThought(thoughtData: NewThoughtData, userId = 'anonymous'): Promise<Thought> {
     const client = await this.pool.connect();
     try {
       const result = await client.query(
         `INSERT INTO thoughts (id, user_id, title, description, fields, metadata) 
          VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
         [
-          thoughtData.id,
+          thoughtData.id, // Assuming NewThoughtData might provide an ID
           userId,
           thoughtData.title,
           thoughtData.description || '',
@@ -87,13 +87,24 @@ export class PostgresAdapter implements StorageAdapter {
           JSON.stringify(thoughtData.metadata || {})
         ]
       );
-      return result.rows[0];
+      const dbRow = result.rows[0];
+      const thought: Thought = {
+        thought_bubble_id: dbRow.id,
+        title: dbRow.title,
+        description: dbRow.description,
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
+        fields: dbRow.fields || {},
+        metadata: dbRow.metadata || {}, // Added metadata
+        // color, position, tags, segments would need to be handled if they exist in thoughts table or are joined
+      };
+      return thought;
     } finally {
       client.release();
     }
   }
 
-  async getThoughtById(id: string, userId: string = 'anonymous'): Promise<any> {
+  async getThoughtById(id: string, userId = 'anonymous'): Promise<Thought | null> {
     const client = await this.pool.connect();
     try {
       const result = await client.query(
@@ -102,35 +113,50 @@ export class PostgresAdapter implements StorageAdapter {
       );
       if (result.rows.length === 0) return null;
 
-      const thought = result.rows[0];
-      // Parse JSON fields
-      thought.fields = thought.fields || {};
-      thought.metadata = thought.metadata || {};
-
+      const dbRow = result.rows[0];
+      // Parse JSON fields & map to Thought
+      const thought: Thought = {
+        thought_bubble_id: dbRow.id,
+        title: dbRow.title,
+        description: dbRow.description,
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
+        fields: dbRow.fields || {},
+        metadata: dbRow.metadata || {}, // Added metadata
+        // color, position, tags, segments would need to be handled
+      };
       return thought;
     } finally {
       client.release();
     }
   }
 
-  async getAllThoughts(userId: string = 'anonymous'): Promise<any[]> {
+  async getAllThoughts(userId = 'anonymous'): Promise<Thought[]> {
     const client = await this.pool.connect();
     try {
       const result = await client.query(
         'SELECT * FROM thoughts WHERE user_id = $1 ORDER BY created_at DESC',
         [userId]
       );
-      return result.rows.map(thought => ({
-        ...thought,
-        fields: thought.fields || {},
-        metadata: thought.metadata || {}
-      }));
+      return result.rows.map(dbRow => {
+        const thought: Thought = {
+          thought_bubble_id: dbRow.id,
+          title: dbRow.title,
+          description: dbRow.description,
+          created_at: dbRow.created_at.toISOString(),
+          updated_at: dbRow.updated_at.toISOString(),
+          fields: dbRow.fields || {},
+        metadata: dbRow.metadata || {}, // Added metadata
+          // color, position, tags, segments would need to be handled
+        };
+        return thought;
+      });
     } finally {
       client.release();
     }
   }
 
-  async updateThought(id: string, thoughtData: Partial<NewThoughtData>): Promise<any> {
+  async updateThought(id: string, thoughtData: Partial<NewThoughtData>, userId = 'anonymous'): Promise<Thought | null> {
     const client = await this.pool.connect();
     try {
       const updates = [];
@@ -155,81 +181,124 @@ export class PostgresAdapter implements StorageAdapter {
       }
 
       updates.push(`updated_at = CURRENT_TIMESTAMP`);
-      values.push(id);
+      values.push(id); // For WHERE id =
+      values.push(userId); // For WHERE user_id =
 
       const result = await client.query(
-        `UPDATE thoughts SET ${updates.join(', ')} WHERE id = $${paramCount} RETURNING *`,
+        `UPDATE thoughts SET ${updates.join(', ')} WHERE id = $${paramCount} AND user_id = $${paramCount + 1} RETURNING *`,
         values
       );
 
       if (result.rows.length === 0) return null;
-      const thought = result.rows[0];
-      thought.fields = thought.fields || {};
-      thought.metadata = thought.metadata || {};
+      const dbRow = result.rows[0];
+      const thought: Thought = {
+        thought_bubble_id: dbRow.id,
+        title: dbRow.title,
+        description: dbRow.description,
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
+        fields: dbRow.fields || {},
+        metadata: dbRow.metadata || {}, // Added metadata
+        // color, position, tags, segments would need to be handled
+      };
       return thought;
     } finally {
       client.release();
     }
   }
 
-  async deleteThought(id: string): Promise<boolean> {
+  async deleteThought(id: string, userId = 'anonymous'): Promise<boolean> {
     const client = await this.pool.connect();
     try {
-      const result = await client.query('DELETE FROM thoughts WHERE id = $1', [id]);
+      const result = await client.query('DELETE FROM thoughts WHERE id = $1 AND user_id = $2', [id, userId]);
       return (result.rowCount || 0) > 0;
     } finally {
       client.release();
     }
   }
 
-  async getSegmentsForThought(thoughtId: string): Promise<Segment[]> {
+  async getSegmentsForThought(thoughtId: string, userId = 'anonymous'): Promise<Segment[]> { // Align with interface
     const client = await this.pool.connect();
     try {
-      const result = await client.query('SELECT * FROM segments WHERE thought_id = $1', [thoughtId]);
-      return result.rows;
+      // Assuming segments are user-specific indirectly through thought_id,
+      // but if segments table has user_id, it should be used.
+      // For now, let's assume thoughts are user-specific, so segments of that thought are also.
+      // If segments have their own user_id column that needs checking, this query would change.
+      // The current schema shows segments have user_id, so we should use it.
+      const result = await client.query('SELECT * FROM segments WHERE thought_id = $1 AND user_id = $2', [thoughtId, userId]);
+      return result.rows.map(segment => ({
+        ...segment,
+        fields: segment.fields || {},
+        metadata: segment.metadata || {}
+        // Ensure all Segment interface fields are mapped
+      }));
     } finally {
       client.release();
     }
   }
 
-  async getSegmentById(segmentId: string): Promise<Segment | null> {
+  async getSegmentById(segmentId: string, userId = 'anonymous'): Promise<Segment | null> { // Align with interface
     const client = await this.pool.connect();
     try {
-      const result = await client.query('SELECT * FROM segments WHERE id = $1', [segmentId]);
-      return result.rows[0] || null;
+      const result = await client.query('SELECT * FROM segments WHERE id = $1 AND user_id = $2', [segmentId, userId]);
+      if (result.rows.length === 0) return null;
+      const segment = result.rows[0];
+      return {
+        ...segment,
+        fields: segment.fields || {},
+        metadata: segment.metadata || {}
+        // Ensure all Segment interface fields are mapped
+      };
     } finally {
       client.release();
     }
   }
 
-  async createSegment(thoughtId: string, segmentData: NewSegmentData): Promise<any> {
+  async createSegment(thoughtId: string, segmentData: NewSegmentData, userId = 'anonymous'): Promise<Segment> { // Align with interface
     const client = await this.pool.connect();
     try {
       const result = await client.query(
-        `INSERT INTO segments (id, thought_id, content, segment_type, fields, metadata, position_x, position_y) 
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
+        `INSERT INTO segments (id, thought_id, user_id, content, segment_type, fields, metadata, position_x, position_y, title)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`, // Added user_id and title
         [
           segmentData.id,
           thoughtId,
+          userId, // Add userId
           segmentData.content,
           segmentData.segmentType || 'text',
           JSON.stringify(segmentData.fields || {}),
           JSON.stringify(segmentData.metadata || {}),
           segmentData.positionX || 0,
-          segmentData.positionY || 0
+          segmentData.positionY || 0,
+          segmentData.title || null // Add title
         ]
       );
 
-      const segment = result.rows[0];
-      segment.fields = segment.fields || {};
-      segment.metadata = segment.metadata || {};
+      const dbRow = result.rows[0];
+      // Map dbRow to Segment type
+      const segment: Segment = {
+        segment_id: dbRow.id,
+        thought_bubble_id: dbRow.thought_id,
+        // user_id: dbRow.user_id, // Not in Segment interface explicitly, but good for internal use
+        title: dbRow.title,
+        content: dbRow.content,
+        content_type: dbRow.segment_type,
+        fields: dbRow.fields || {},
+        metadata: dbRow.metadata || {},
+        // position_x: dbRow.position_x, // Not in Segment interface
+        // position_y: dbRow.position_y, // Not in Segment interface
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
+        // Ensure all Segment interface fields are mapped
+        // abstraction_level, local_priority, cluster_id, sort_order might be missing from DB or need defaults
+      };
       return segment;
     } finally {
       client.release();
     }
   }
 
-  async getSegmentsByThoughtId(thoughtId: string): Promise<any[]> {
+  async getSegmentsByThoughtId(thoughtId: string, userId = 'anonymous'): Promise<any[]> { // Add userId
     const client = await this.pool.connect();
     try {
       const result = await client.query(
@@ -246,13 +315,17 @@ export class PostgresAdapter implements StorageAdapter {
     }
   }
 
-  async updateSegment(thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>): Promise<any> {
+  async updateSegment(thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>, userId = 'anonymous'): Promise<Segment | null> { // Align with interface
     const client = await this.pool.connect();
     try {
       const updateFields = [];
       const values = [];
       let paramCount = 1;
 
+      if (updates.title !== undefined) { // Add title update
+        updateFields.push(`title = $${paramCount++}`);
+        values.push(updates.title);
+      }
       if (updates.content !== undefined) {
         updateFields.push(`content = $${paramCount++}`);
         values.push(updates.content);
@@ -274,31 +347,50 @@ export class PostgresAdapter implements StorageAdapter {
         values.push(updates.positionY);
       }
 
-      updateFields.push(`updated_at = CURRENT_TIMESTAMP`);
-
-      if (updateFields.length === 1) { // Only timestamp update
-        return null;
+      if (updateFields.length === 0) { // No actual fields to update other than timestamp
+        // Optionally, still update timestamp or just return current segment data
+        // For now, let's assume if no fields are provided, no update runs
+        const currentSegment = await this.getSegmentById(segmentId, userId);
+        return currentSegment;
       }
 
-      values.push(segmentId);
+      updateFields.push(`updated_at = CURRENT_TIMESTAMP`);
+      values.push(segmentId); // For WHERE id =
+      values.push(userId); // For WHERE user_id =
+
       const query = `
         UPDATE segments 
         SET ${updateFields.join(', ')}
-        WHERE id = $${paramCount}
+        WHERE id = $${paramCount} AND user_id = $${paramCount + 1}
         RETURNING *
       `;
 
       const result = await client.query(query, values);
-      return result.rows[0] || null;
+      if (result.rows.length === 0) return null;
+
+      const dbRow = result.rows[0];
+      const segment: Segment = {
+        segment_id: dbRow.id,
+        thought_bubble_id: dbRow.thought_id,
+        title: dbRow.title,
+        content: dbRow.content,
+        content_type: dbRow.segment_type,
+        fields: dbRow.fields || {},
+        metadata: dbRow.metadata || {},
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
+      };
+      return segment;
     } finally {
       client.release();
     }
   }
 
-  async deleteSegment(segmentId: string): Promise<boolean> {
+  async deleteSegment(thoughtId: string, segmentId: string, userId = 'anonymous'): Promise<boolean> { // Align with interface
     const client = await this.pool.connect();
     try {
-      const result = await client.query('DELETE FROM segments WHERE id = $1', [segmentId]);
+      // thoughtId is not used in this query as segmentId should be unique in combination with userId
+      const result = await client.query('DELETE FROM segments WHERE id = $1 AND user_id = $2', [segmentId, userId]);
       return (result.rowCount || 0) > 0;
     } finally {
       client.release();

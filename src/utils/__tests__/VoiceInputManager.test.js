@@ -54,33 +54,39 @@ describe('VoiceInputManager', () => {
 
   test('handles speech recognition results', () => {
     const localManager = new VoiceInputManager(onTranscriptUpdate, onError);
+    localManager.recognition = mockRecognition; // Ensure the manager uses our mock
 
     // Test short phrase
-    const mockResults = {
-      results: [[{ transcript: 'Hello world.', isFinal: true }]],
-      resultIndex: 0,
+    const mockShortPhraseResults = {
+      results: [ // SpeechRecognitionResultList
+        { // SpeechRecognitionResult (event.results[0])
+          isFinal: true,
+          0: { transcript: 'Hello world.', confidence: 0.9 }
+        }
+      ],
+      resultIndex: 0
     };
-    mockRecognition.onresult(mockResults);
+    if (mockRecognition.onresult) mockRecognition.onresult(mockShortPhraseResults);
     expect(onTranscriptUpdate).toHaveBeenCalledWith('Hello world.', true, false);
 
     // Test long sentence that should trigger segmentation
-    const longResults = {
+    const mockLongSentenceResults = {
       results: [
-        [
-          {
-            transcript:
-              'This is a very long sentence that should trigger automatic segmentation because it exceeds thirty characters.',
-            isFinal: true,
-          },
-        ],
+        {
+          isFinal: true,
+          0: {
+            transcript: 'This is a very long sentence that should trigger automatic segmentation because it exceeds thirty characters.',
+            confidence: 0.9
+          }
+        }
       ],
-      resultIndex: 0,
+      resultIndex: 0
     };
-    mockRecognition.onresult(longResults);
+    if (mockRecognition.onresult) mockRecognition.onresult(mockLongSentenceResults);
     expect(onTranscriptUpdate).toHaveBeenCalledWith(
       'This is a very long sentence that should trigger automatic segmentation because it exceeds thirty characters.',
       true,
-      true
+      true // This part of the logic in VoiceInputManager might also need review for the > 30 condition
     );
   });
 
@@ -104,7 +110,8 @@ describe('VoiceInputManager', () => {
   });
 
   it('should initialize with default options', () => {
-    const manager = new VoiceInputManager(() => {}, () => {});
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const manager = new VoiceInputManager(() => { /* mock callback */ }, () => { /* mock callback */ });
     expect(manager).toBeDefined();
     expect(manager.isSupported()).toBe(true);
   });

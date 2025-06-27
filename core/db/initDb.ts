@@ -6,7 +6,7 @@ import { logger } from '../utils/logger';
 /**
  * Initialize the SQLite database with the required schema
  */
-export async function initializeDatabase(dbPath: string = './server/data/logomesh.sqlite3'): Promise<void> {
+export async function initializeDatabase(dbPath = './server/data/logomesh.sqlite3'): Promise<void> {
   // Ensure the directory exists
   const dbDir = path.dirname(dbPath);
   if (!fs.existsSync(dbDir)) {

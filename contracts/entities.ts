@@ -9,6 +9,8 @@ export interface Thought {
   updated_at: string;
   color?: string | null;
   position?: { x: number; y: number };
+  fields?: Record<string, any>; // Added
+  metadata?: Record<string, any>; // Added
   tags?: Tag[];
   segments?: Segment[];
 }
@@ -20,6 +22,7 @@ export interface Segment {
   content: string;
   content_type?: string; // e.g., 'text', 'code', 'mermaid'
   fields?: Record<string, any>; // For custom metadata
+  metadata?: Record<string, any>; // Added to match NewSegmentData and PostgresAdapter usage
   created_at: string;
   updated_at: string;
   abstraction_level?: string;

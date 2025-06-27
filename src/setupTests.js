@@ -22,8 +22,11 @@ window.matchMedia = window.matchMedia || function () {
 // Mock ResizeObserver
 window.ResizeObserver = class ResizeObserver {
   constructor() {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     this.observe = () => {};
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     this.unobserve = () => {};
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     this.disconnect = () => {};
   }
 };

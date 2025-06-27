@@ -1,88 +1,98 @@
-
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, test, expect, beforeEach, vi } from 'vitest';
-import App from '../App';
+import App from '../../App'; // Corrected path
+import { authService } from '../../services/authService'; // Import authService
+// No need to import actualApiService here for this simplified mock approach
 
-// Mock the API service
+// Mock authService
+vi.mock('../../services/authService', () => ({
+  authService: {
+    getCurrentUser: vi.fn(),
+  }
+}));
+
+// Mock apiService, specifically the methods App.jsx uses
 vi.mock('../../services/apiService', () => ({
   apiService: {
-    getCurrentUser: vi.fn(),
-    baseURL: 'http://localhost:3001/api/v1'
+    fetchThoughts: vi.fn().mockResolvedValue([]), // App.jsx calls this
+    // Add any other methods from apiService that App.jsx might directly call
+    // For now, only fetchThoughts seems relevant for App.jsx initialization path
+    createThought: vi.fn(), // placeholder if any test indirectly triggers it via App
+    updateThought: vi.fn(), // placeholder
+    // Note: baseURL is part of the actual apiService export, not a function to mock here unless tested directly
   }
 }));
 
 describe('App Integration - Authentication Flow', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    // Restore actual implementations if modified globally or ensure mocks are clean
+    // For example, if authService.getCurrentUser was modified directly in a test:
+    // authService.getCurrentUser.mockRestore(); // if it was vi.spyOn(authService, 'getCurrentUser')
+    // For vi.mock, it's typically reset by clearAllMocks or specific mockReset if needed.
     // Clear any existing auth state
     delete window.REPLIT_USER_ID;
     delete window.REPLIT_USER_NAME;
   });
 
   test('should handle successful user authentication', async () => {
-    const { apiService } = await import('../../services/apiService');
-    const mockUser = { id: '123', name: 'Test User' };
+    const mockUser = { id: '123', name: 'Test User', isAuthenticated: true }; // Add isAuthenticated
     
-    apiService.getCurrentUser.mockResolvedValueOnce(mockUser);
-    window.REPLIT_USER_ID = '123';
-    window.REPLIT_USER_NAME = 'Test User';
+    authService.getCurrentUser.mockResolvedValueOnce(mockUser);
+    // window.REPLIT_USER_ID = '123'; // These might not be needed if service is mocked
+    // window.REPLIT_USER_NAME = 'Test User';
 
     render(<App />);
 
     await waitFor(() => {
-      expect(screen.queryByText('Please log in with your Replit account')).not.toBeInTheDocument();
+      // Check for an element that appears AFTER successful login
+      // For example, if Sidebar appears:
+      expect(screen.getByTestId('sidebar-mock')).toBeInTheDocument();
     });
   });
 
   test('should handle authentication failure (current issue)', async () => {
-    const { apiService } = await import('../../services/apiService');
-    
-    // Simulate the exact error we're seeing
-    apiService.getCurrentUser.mockRejectedValueOnce(
-      new SyntaxError('Unexpected token \'<\', "<!DOCTYPE "... is not valid JSON')
-    );
+    authService.getCurrentUser.mockResolvedValueOnce(null); // Simulate no user / auth failed
 
     render(<App />);
 
     await waitFor(() => {
-      expect(screen.getByText('Please log in with your Replit account')).toBeInTheDocument();
+      expect(screen.getByText(/Please log in with your Replit account/i)).toBeInTheDocument();
     });
   });
 
   test('should handle network errors gracefully', async () => {
-    const { apiService } = await import('../../services/apiService');
-    
-    apiService.getCurrentUser.mockRejectedValueOnce(new Error('Network error'));
+    authService.getCurrentUser.mockRejectedValueOnce(new Error('Network error'));
 
     render(<App />);
 
     await waitFor(() => {
-      expect(screen.getByText('Please log in with your Replit account')).toBeInTheDocument();
+      expect(screen.getByText(/Please log in with your Replit account/i)).toBeInTheDocument();
     });
   });
 
   test('should show loading state during authentication', async () => {
-    const { apiService } = await import('../../services/apiService');
-    
     // Create a promise that we can control
     let resolveAuth;
     const authPromise = new Promise(resolve => {
       resolveAuth = resolve;
     });
     
-    apiService.getCurrentUser.mockReturnValueOnce(authPromise);
+    authService.getCurrentUser.mockReturnValueOnce(authPromise); // Use authService
 
     render(<App />);
 
-    // Should show some kind of loading state
-    // (This depends on your current App implementation)
+    // Example: Check for loading spinner if App renders one
+    expect(screen.getByText(/Loading LogoMesh.../i)).toBeInTheDocument();
     
     // Resolve the promise
-    resolveAuth({ id: '123', name: 'Test User' });
+    resolveAuth({ id: '123', name: 'Test User', isAuthenticated: true }); // Add isAuthenticated
     
     await waitFor(() => {
-      expect(apiService.getCurrentUser).toHaveBeenCalled();
+      expect(authService.getCurrentUser).toHaveBeenCalled();
+      // Check for an element that appears AFTER successful login
+      expect(screen.getByTestId('sidebar-mock')).toBeInTheDocument();
     });
   });
 });

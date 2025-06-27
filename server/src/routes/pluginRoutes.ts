@@ -8,12 +8,12 @@ const router = express.Router();
 let pluginHost: PluginHost | null = null;
 
 // Initialize plugin host with proper API wiring
+import { PluginAPI } from '../../../contracts/plugins/pluginApi';
+import { SQLiteAdapter } from '../../../core/storage/sqliteAdapter';
+import { EventBus } from '../../../core/services/eventBus';
+
 router.post('/init', async (req, res) => {
   try {
-    const { PluginAPI } = require('../../../contracts/plugins/pluginApi');
-    const { SQLiteAdapter } = require('../../../core/storage/sqliteAdapter');
-    const { EventBus } = require('../../../core/services/eventBus');
-
     // Create minimal plugin API for testing
     const eventBus = new EventBus();
     const storage = new SQLiteAdapter();

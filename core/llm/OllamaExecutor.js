@@ -7,10 +7,33 @@ class OllamaExecutor {
         this.modelName = modelName;
     }
     async executePrompt(prompt, metadata) {
-        // Simulate processing delay
-        await new Promise(resolve => setTimeout(resolve, 100));
-        // Return mocked response
-        return `Mocked response for: ${prompt}`;
+        try {
+            const response = await fetch(`${this.baseUrl}/api/generate`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    model: this.modelName,
+                    prompt: prompt,
+                    stream: false,
+                    options: {
+                        temperature: 0.7,
+                        ...metadata
+                    }
+                })
+            });
+            if (!response.ok) {
+                throw new Error(`Ollama API error: ${response.status} ${response.statusText}`);
+            }
+            const data = await response.json();
+            return data.response || 'No response received';
+        }
+        catch (error) {
+            console.warn(`[OllamaExecutor] Failed to connect to Ollama, using fallback: ${error instanceof Error ? error.message : String(error)}`);
+            // Fallback to mock for development
+            return `[MOCK - Ollama not available] Response for: ${prompt}`;
+        }
     }
     async execute(prompt, options) {
         const responseString = await this.executePrompt(prompt, options?.metadata);
