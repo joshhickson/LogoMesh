@@ -7,81 +7,113 @@
 
 > **📍 Current Focus**: Week 1, Task 1 - Multi-Language Plugin Runtime (enhanced with specification goals)
 
-## Week 1: Plugin System Foundation
+## 🚨 Critical Reality Checks (Must Address Before Phase 2)
 
-### Task 1: Multi-Language Plugin Runtime
-**Framework Outcome**: Plugin system loads and executes Node.js and Python plugins safely
+Based on architectural analysis, these issues will become major blockers if not resolved:
+
+### Priority 0: Foundation Stability
+- **56% TS / 42% JS = Maintenance Nightmare**: Complete TypeScript migration to 100% or define explicit JS sunset plan
+- **LLM Layer Monolith**: Break down LLMOrchestrator into micro-actors to prevent single-point-of-failure
+- **Security Gaps**: No JWT/session flow, no rate limiting, plugins can access filesystem - critical for any external deployment
+- **Storage Abstraction Leak**: IdeaManager directly coupled to StorageAdapter - will break when adding vector DB
+
+### Priority 1: Architectural Debt
+- **Node-RED Scope Creep**: Decide if it's core automation or remove before it becomes unkillable
+- **Testing Imbalance**: Backend needs load/fuzz tests, not just frontend mocks
+- **Observability Blind Spots**: Need tracing before cognitive engines flood the system
+
+## Week 1: Foundation Stability (Critical Path)
+
+### Task 1: Complete TypeScript Migration + Security Foundation
+**Framework Outcome**: 100% TypeScript codebase with basic security framework
+**Reality Check**: Address 56% TS / 42% JS maintenance nightmare before building new features
+
+**CRITICAL: Must complete before any new development**
 
 **Core Goals (Essential):**
-a. **Extend Plugin Manifest Schema**:
-   - Update `contracts/plugins/pluginManifest.schema.json`
-   - Add `runtime` field (values: "nodejs", "python", "shell")
-   - Add `security_level` field (values: "sandbox", "trusted", "dev-only")
-   - Add `resource_limits` object with memory/cpu constraints
+a. **Complete TypeScript Migration**:
+   - Convert all remaining JS files to TS
+   - Enable TypeScript strict mode with CI gate
+   - Fix all compilation errors and `any` types
+   - Eliminate mixed language maintenance nightmare
 
-b. **Implement Plugin Runtime Manager**:
-   - Create `core/plugins/runtimeManager.ts`
-   - Implement `NodeJSRuntime`, `PythonRuntime` classes
-   - Each runtime spawns child processes with resource limits
-   - Implement IPC communication via JSON over stdin/stdout
+b. **Implement Basic Security Framework**:
+   - Add JWT/session handling to AuthService
+   - Implement rate limiting on API routes
+   - Create plugin permission system (filesystem access controls)
+   - Add basic request validation middleware
 
-c. **Update PluginHost Service**:
-   - Modify `core/services/pluginHost.ts` to use RuntimeManager
-   - Implement plugin lifecycle: load → init → execute → cleanup
-   - Add plugin state tracking and health monitoring
+c. **Slice LLM Monolith** (Critical Architecture Fix):
+   - Break LLMOrchestrator into micro-actors:
+     - `LLMGateway` (rate limit, auth)
+     - `ConversationOrchestrator` (state machine)
+     - `RunnerPool` (per-model execution)
+     - `AuditService` (off-loaded, stateless)
+   - Prevent single prompt from blocking all model traffic
 
 **Enhanced Goals (From Specifications):**
-d. **Plugin Discovery System** *(from architecture_day_15_plugin_system_revision.md)*:
-   - Implement plugin directory scanning
-   - Plugin versioning and dependency resolution
-   - Hot-reloading capabilities for development
+d. **Add Observability Foundation**:
+   - Integrate OpenTelemetry tracing
+   - Add pino logger with structured logging
+   - Create performance monitoring for critical paths
+   - Enable visibility before cognitive engines flood system
 
-e. **Security Sandboxing** *(from architecture_day_18_comprehensive_security_model.md)*:
-   - Implement constitutional enforcement for plugin execution
-   - Resource quota enforcement and monitoring
-   - Plugin permission model with granular controls
+e. **Data Access Service Layer** (Fix Storage Abstraction Leak):
+   - Create thin `DataAccessService` between IdeaManager ↔ StorageAdapter
+   - Prevent business logic refactors when switching to vector DB
+   - Abstract database knowledge from business layer
 
-f. **Multi-Language Coordination** *(from phase2_core_specifications.md)*:
-   - Cross-language plugin communication protocols
-   - Shared data structures between runtimes
-   - Event bus integration for plugin coordination
+f. **Node-RED Decision**:
+   - Evaluate current Node-RED usage patterns
+   - Either: formalize as first-class automation core with contracts
+   - Or: remove and migrate critical flows to TaskEngine
+   - Prevent scope creep from killing the architecture
 
 **Stretch Goals (Time Permitting):**
-g. **Advanced Plugin Features**:
-   - Plugin hot-swapping without system restart
-   - Plugin marketplace preparation (metadata, ratings)
-   - Plugin development toolkit and CLI
+g. **Advanced Security Features**:
+   - Sandboxed VM for plugins (vm2 or Deno)
+   - Signed plugins only
+   - Comprehensive audit logging
 
 **Verification**: 
-- Load sample Node.js plugin, Python plugin, execute basic commands, verify resource isolation
-- Test plugin discovery and hot-reload functionality
-- Verify security sandbox prevents unauthorized operations
-- Test cross-language plugin communication
+- ✅ **GATE 1.1**: `npx tsc --noEmit` passes with 0 errors (100% TypeScript)
+- ✅ **GATE 1.2**: Basic auth flow works with JWT/session validation
+- ✅ **GATE 1.3**: Rate limiting prevents API abuse
+- ✅ **GATE 1.4**: Plugin filesystem access is restricted
+- ✅ **GATE 1.5**: LLM components can be independently tested/scaled
 
-#### **Week 1 Task 2: TypeScript Migration** 
-**Timeline:** Days 3-5 (3 days)
-**Priority:** Critical
+#### **Week 1 Task 2: Secure Plugin System Foundation** 
+**Timeline:** Days 4-6 (3 days)
+**Priority:** Critical (After TypeScript completion)
 
 **Core Goals (Essential):**
-- Complete TypeScript migration for remaining frontend components
-- Fix all TypeScript compilation errors in build pipeline
-- Update Express route handler type signatures (from Core Specifications)
-- Ensure zero compilation errors: `npx tsc --noEmit` passes
-- Stabilize build process and eliminate compilation errors
+- **Implement Secure Plugin Runtime Manager**:
+  - Create `core/plugins/runtimeManager.ts` with sandboxed execution
+  - Support Node.js and Python plugins with resource limits
+  - Implement IPC communication via JSON over stdin/stdout
+  - Add plugin permission system with filesystem restrictions
 
-**Enhanced Goals (From Core Specifications):**
-- Create signed `models/llm.config.json` as single source of truth for LLM configurations
-- Implement `LLMExecutorRegistry` with signature validation (local & mock executors only)
-- Plugin-proposed model additions require DevShell approval workflow (configurable in Security panel)
-- Implement comprehensive type checking pipeline with CI integration
-- Add TypeScript path aliases properly configured for `/core/`, `/contracts/`, `/src/`
+- **Plugin Security Framework**:
+  - Create plugin manifest schema with security levels
+  - Implement resource quotas and monitoring
+  - Add plugin state tracking and health monitoring
+  - Prevent unauthorized system access
+
+- **Plugin Discovery System**:
+  - Implement plugin directory scanning
+  - Plugin versioning and dependency resolution
+  - Hot-reloading capabilities for development
+
+**Enhanced Goals (From Specifications):**
+- **Sandboxed Execution Environment**: Use vm2 or similar for JavaScript plugins
+- **Signed Plugin System**: Only allow verified plugins to execute
+- **Cross-Language Coordination**: Enable plugins to communicate safely
+- **Plugin Development Toolkit**: CLI and testing utilities
 
 **Stretch Goals (Time Permitting):**
-- Implement `LocalModelTestPanel.tsx` (prompt ↔ completion, tokens/sec display) 
-- Add TypeScript strict mode configuration with gradual enforcement
-- Create TypeScript utility types for improved developer experience
-- Add automated TypeScript migration tools for future JavaScript files
-- Implement TypeScript decorators for plugin system foundation
+- Plugin marketplace preparation (metadata, ratings)
+- Advanced plugin debugging tools
+- Plugin performance profiling
 
 **Implementation Steps:**
 1. **Pre-Phase Audit:** Audit remaining JS to accurately estimate migration effort (from Phase 2 analysis)
@@ -92,12 +124,12 @@ g. **Advanced Plugin Features**:
 6. **Build Stabilization:** Ensure build process stability across all environments
 
 **Success Criteria:**
-- ✅ **VERIFICATION GATE 1.2:** Zero TypeScript compilation errors: `npx tsc --noEmit`
-- ✅ ESLint passes: `npm run lint`
-- ✅ All tests still pass: `npm test`  
-- ✅ Frontend builds successfully: `npm run build`
-- ✅ Signed LLM config loads without errors: Test `LLMExecutorRegistry.loadConfig()`
-- ✅ **FAIL-SAFE:** If migration effort exceeds timeline, prioritize core modules and defer non-critical files
+- ✅ **VERIFICATION GATE 1.2:** Secure plugin execution with resource limits
+- ✅ Plugin filesystem access properly sandboxed
+- ✅ Plugin crash containment prevents system-wide failures
+- ✅ Plugin discovery and hot-reload working
+- ✅ Multi-language plugin communication functional
+- ✅ **FAIL-SAFE:** If security cannot be guaranteed, disable plugin execution
 
 #### **Week 1 Task 3: DevShell Implementation**
 **Timeline:** Days 6-7 (2 days)
@@ -184,6 +216,18 @@ g. **Advanced Plugin Features**:
 - ✅ **Reality Check:** Extends existing audit logging rather than creating new system
 - ✅ **Reality Check:** Integrates with existing PluginHost without breaking plugin execution
 - ✅ **FAIL-SAFE:** If integration proves unstable, fall back to individual executor testing
+
+## 🎯 Quick Wins This Week (High ROI, Low Effort)
+
+**Complete these immediately to prevent architectural debt:**
+
+| Task | Effort | Payoff | Priority |
+|------|--------|--------|----------|
+| Add TypeScript strict mode and CI gate | 1 day | Stops future "works on my machine" JS leaks | P0 |
+| Wire up pino + OpenTelemetry exporter | ½ day | Immediate visibility on route/LLM lag | P0 |
+| Build tiny "hello-world" sandboxed plugin | 1 day | Proof that PluginHost isn't a security hole | P0 |
+| Write stress test hitting EventBus + LLM 1k req/min | 1 day | Reveals back-pressure gaps before users do | P1 |
+| Abstract StorageAdapter behind service boundary | 1 day | Prevents business logic refactors when adding vector DB | P1 |
 
 ## Week 2: LLM Infrastructure & Storage
 
@@ -317,16 +361,45 @@ c. **Performance Optimization**:
 
 **Verification**: Fresh developer can set up environment in <30 minutes, create and test plugin successfully
 
+## 🔧 Hard, Unsexy Refactors (Schedule or Suffer)
+
+**These architectural debts will compound if not addressed:**
+
+### Critical Refactors (Week 3-4)
+1. **Abstract StorageAdapter behind service boundary** - Prevents business logic coupling to specific databases
+2. **Introduce Domain Event schema** - Enables micro-services to communicate with consistent language
+3. **Replace ad-hoc Context Generation** - Use Prompt-Template registry (file-backed, version-controlled)
+4. **Data Model Versioning** - Support schema migrations (Thought v1 → v2) without breaking user graphs
+5. **Formal Plugin Security Contract** - Sandboxed VM, permissions manifest, signed plugins only
+
+### Observability Requirements
+- Drop in OpenTelemetry tracing now for cross-layer latency visibility
+- Structured logging with pino for debugging complex interactions
+- Performance monitoring for cognitive context engine readiness
+
 ## Success Criteria
 
-- [ ] Plugin system loads Node.js and Python plugins
-- [ ] Zero TypeScript compilation errors
+**Foundation Stability (Week 1):**
+- [ ] 100% TypeScript codebase with strict mode enabled
+- [ ] Basic JWT/session authentication working
+- [ ] Rate limiting preventing API abuse
+- [ ] Plugin system executes securely with filesystem restrictions
+- [ ] LLM components can be independently tested/scaled
+
+**Feature Development (Week 2-4):**
 - [ ] Local LLM integration working with audit trails
 - [ ] Vector similarity search operational
 - [ ] Task engine executes multi-step workflows
 - [ ] DevShell provides secure command interface
 - [ ] 90%+ test coverage maintained
 - [ ] New developer setup <30 minutes
+
+**Reality Check Gates:**
+- [ ] No mixed TS/JS compilation errors
+- [ ] Single LLM prompt cannot block all model traffic
+- [ ] Plugin crashes do not affect system stability
+- [ ] Storage layer changes don't require business logic refactors
+- [ ] Security audit shows no critical vulnerabilities
 
 ## What's Explicitly Deferred to Phase 3
 
