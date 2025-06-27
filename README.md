@@ -1,187 +1,281 @@
-## [note: this project is in pre-alpha. for potential devs: consult docs/README-dev.md]
-
----
 
 # LogoMesh
 
-https://discord.gg/6ydDxzMjvD
+**Discord:** https://discord.gg/6ydDxzMjvD
 
 **Tagline:**
 > A recursive thought engine for humans and AI — designed to evolve meaning, resolve contradictions, and externalize self-reflection.
 
-LogoMesh is a powerful, intuitive, and versatile framework that allows you to create, organize, and navigate complex ideas through interconnected nodes (thought bubbles), nested segments, and flexible metadata filtering.
+LogoMesh is a powerful cognitive framework that allows you to create, organize, and navigate complex ideas through interconnected nodes (thought bubbles), nested segments, and flexible metadata filtering. Built as a **local-first, AI-augmented system** with a React frontend and Node.js backend.
 
-Designed as a **local-first, AI-augmented cognitive framework**, LogoMesh helps you transform scattered concepts into structured insight. It's more than a mind map; it's a living memory graph that supports segment-level filtering, AI-ready data export, and deep extensibility — perfect for understanding your own thinking and co-evolving ideas with AI.
+---
+
+## Current Status
+
+**Phase:** Infrastructure Stabilization (Pre-Phase 2)  
+**Version:** 0.2.0  
+**Architecture:** React Frontend + Node.js/Express Backend + SQLite Database
+
+⚠️ **Development Notice:** This project is in pre-alpha with active infrastructure improvements. Some features may be unstable.
 
 ---
 
 ## Features
 
-* **Thought Bubbles** with customizable titles, descriptions, tags, and colors for high-level organization.
-* **Nested Segments** within each thought bubble, each with its own title, content, and unique attributes for granular detail.
-* **Multi-attribute Classification** per segment (field name, value, and type) for powerful data structuring.
-* **Advanced Filtering** by attribute field name, field type, and field value to quickly find relevant information.
-* **Canvas Highlighting** of matching bubbles (non-matches fade) for focused views.
-* **Export all or filtered thoughts** to JSON (AI-parsable structure) for data ownership and integration.
-* **Import JSON backups** to easily restore or transfer your thought data. (soon to be streamlined into something better)
-* **Batch Editing Tools** — apply tags or colors to filtered results for efficient organization.
-* **Local-First AI Foundations**: Built to run core AI features on your local machine, giving you control and privacy over your data and cognitive process.
+### Core Functionality (Operational)
+* **Thought Bubbles** with customizable titles, descriptions, tags, and colors
+* **Nested Segments** within each thought with detailed content and attributes
+* **Multi-attribute Classification** for powerful data structuring
+* **Advanced Filtering** by field name, type, and value with canvas highlighting
+* **JSON Export/Import** for data portability and AI integration
+* **SQLite Backend** with normalized schema for reliable data persistence
+* **Plugin System Foundation** with runtime interface scaffolding
+
+### Infrastructure (In Development)
+* **Multi-Language Plugin Runtime** - Support for Node.js and Python plugins
+* **DevShell Interface** - Secure command environment for development
+* **Task Engine** - Workflow orchestration and automation
+* **LLM Integration Layer** - Local model support with audit logging
+* **Vector Storage Foundations** - Semantic search preparation
 
 ---
-   **LogoMesh is a modular framework for building applications that structure, visualize, and enhance interconnected thoughts and information.** It provides a flexible and extensible foundation for creating a variety of cognitive tools. This repository includes a demo React web application that showcases one possible implementation of the LogoMesh framework.
 
-   ## What Is LogoMesh?
+## Quick Start
 
-LogoMesh is a framework designed to help developers create applications that go beyond simple note-taking and delve into structured thought organization.  It consists of several key components:
+### Prerequisites
+- Node.js 16+ and npm
+- Git
 
-* **Core Schema:** Defines the fundamental data structures for representing thoughts, segments, and their relationships.  These are described in detail in the interface contracts.
-* **Semantic Graph:** The underlying data structure that connects thoughts and segments, allowing for rich, interconnected knowledge representation.
-* **Adapters:** A system of interchangeable modules that handle different aspects of data storage, display, and AI integration (e.g., StorageAdapters for SQLite or IndexedDB, DisplayAdapters for React Flow or other visualization libraries).
-* **Interface Contracts:** Versioned schemas (e.g., `Thought`, `Segment`, `Tag`) that define the structure of data within LogoMesh, ensuring consistency across different implementations.
-* **JSON Export System**: A standardized way to serialize and deserialize LogoMesh data, allowing for interoperability and data portability.
+### Installation
 
-LogoMesh can be used to build a wide range of applications, including:
+1. **Clone and Install**:
+   ```bash
+   git clone https://github.com/joshhickson/LogoMesh.git
+   cd LogoMesh
+   npm install
+   cd server && npm install && cd ..
+   ```
 
-* Digital journals with interconnected entries
-* Knowledge management and planning tools
-* Forecasting and analysis engines
-* Personal knowledge bases
-* Collaborative thought mapping applications
-* AI-powered cognitive assistance tools
+2. **Start Development Servers**:
+   ```bash
+   # Terminal 1: Backend (Port 3001)
+   cd server && npm run dev
+   
+   # Terminal 2: Frontend (Port 3000) 
+   npm start
+   ```
 
+3. **Access Application**:
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:3001/api/v1
 
-## Getting Started
+### Database Configuration
 
-LogoMesh is designed to be easy to run locally, minimizing dependencies and maximizing control.
+**Default (SQLite):** No configuration needed - database file created automatically.
 
-### 1. Clone the repo
-
-```bash
-git clone https://github.com/joshhickson/LogoMesh.git
-cd LogoMesh
-````
-
-### 2\. Install dependencies
-
-```bash
-npm install
+**Custom Database:** Copy `.env.example` to `.env` and configure:
+```env
+DATABASE_URL=sqlite:./data/custom.db
+# Or PostgreSQL: postgresql://user:pass@host:5432/db
 ```
 
-### 3\. Start local server
+---
 
-```bash
-npm start
+## Architecture Overview
+
+```
+Frontend (React/Cytoscape.js) ←→ Backend API (Express) ←→ SQLite Database
+        ↓                              ↓
+   UI Components                  Core Services
+   - Canvas                       - IdeaManager
+   - Sidebar                      - EventBus  
+   - Modals                       - PluginHost
+                                  - TaskEngine (planned)
 ```
 
-Visit `http://localhost:3000` in your browser.
+### Current Components
 
------
+**Frontend Layer:**
+- React 18 with modern hooks
+- Cytoscape.js for graph visualization
+- Responsive design with Tailwind CSS
 
-## Build for Static Export
+**Backend Layer:**
+- Express.js API server with TypeScript
+- SQLite with normalized schema
+- Plugin system architecture
+- Comprehensive audit logging
 
+**Core Services:**
+- `IdeaManager`: Business logic and thought operations
+- `EventBus`: Pub/sub system for component coordination
+- `PluginHost`: Plugin runtime management (foundation)
+- `StorageAdapter`: Database abstraction layer
+
+---
+
+## Development
+
+### Project Structure
+```
+├── src/                    # React frontend
+├── server/src/            # Node.js backend
+├── core/                  # Shared business logic
+├── contracts/             # TypeScript interfaces
+├── plugins/               # Plugin ecosystem
+└── docs/                  # Documentation
+```
+
+### Testing
+```bash
+# Frontend tests
+npm test
+
+# Backend tests  
+cd server && npm test
+
+# Linting
+npm run lint
+```
+
+### Known Issues
+- Some TypeScript compilation errors in backend routes
+- Frontend test suite needs stability improvements
+- Plugin runtime execution not fully implemented
+
+---
+
+## Roadmap
+
+### Phase 1: Foundation ✅ (Complete)
+- Core thought management and visualization
+- Client-server architecture with SQLite
+- Basic plugin system scaffolding
+- JSON import/export functionality
+
+### Phase 2: Infrastructure 🔄 (In Progress)
+**Current Focus:** Stabilizing foundation before feature expansion
+
+**Priority Tasks:**
+- Fix TypeScript compilation errors
+- Complete multi-language plugin runtime
+- Implement DevShell command interface
+- Build task engine workflow system
+- Add local LLM integration (Ollama)
+
+**Infrastructure Goals:**
+- Plugin system supporting Node.js, Python execution
+- Secure development environment (DevShell)
+- Vector storage for semantic search
+- Enhanced audit and monitoring systems
+
+### Phase 3: AI Activation 📋 (Planned)
+- Real-time AI decision making
+- Advanced semantic analysis and search
+- Multi-agent coordination systems
+- Recursive AI querying capabilities
+
+---
+
+## API Documentation
+
+### Core Endpoints
+```
+GET    /api/v1/thoughts              # List all thoughts
+POST   /api/v1/thoughts              # Create thought
+GET    /api/v1/thoughts/:id          # Get specific thought
+PUT    /api/v1/thoughts/:id          # Update thought
+DELETE /api/v1/thoughts/:id          # Delete thought
+
+POST   /api/v1/portability/export    # Export data
+POST   /api/v1/portability/import    # Import data
+```
+
+### Plugin API (Development)
+```
+GET    /api/v1/plugins               # List plugins
+POST   /api/v1/plugins/:id/execute   # Execute plugin command
+```
+
+---
+
+## Contributing
+
+### Development Setup
+1. Follow installation instructions above
+2. Create feature branch: `git checkout -b feature/your-feature`
+3. Make changes and test thoroughly
+4. Submit pull request with detailed description
+
+### Code Standards
+- TypeScript for new backend code
+- ESLint + Prettier for formatting
+- Comprehensive test coverage for new features
+- Interface-first design using `/contracts/`
+
+---
+
+## Deployment
+
+### Local Production Build
 ```bash
 npm run build
+cd server && npm run build
 ```
 
-This creates a `build/` folder you can upload or open offline.
-Perfect for iPad/iPhone use or PWA setup.
+### Replit Deployment
+LogoMesh is designed to deploy seamlessly on Replit:
+1. Import repository to Replit
+2. Configure environment variables if needed
+3. Use Deployments tab for production hosting
 
------
+---
 
-## JSON Schema Overview
+## Data Format
 
-Thoughts are saved locally and exported as structured JSON. This provides transparency and allows you to interact with your data outside the application.
+Thoughts export as structured JSON for transparency and AI integration:
 
 ```json
 {
-  "id": "bubble-001",
-  "title": "Example Thought",
-  "description": "A high-level idea.",
-  "tags": [{ "name": "philosophy", "color": "#f97316" }],
-  "color": "#f97316",
-  "position": { "x": 123, "y": 456 },
+  "id": "thought-001",
+  "title": "Example Thought", 
+  "description": "High-level concept",
+  "tags": [{"name": "philosophy", "color": "#f97316"}],
   "segments": [
     {
       "id": "segment-001",
-      "title": "Key Quote",
-      "content": "We hold these truths...",
+      "title": "Key Point",
+      "content": "Detailed information...",
       "attributes": [
         {
-          "fieldName": "Segment Concept",
-          "fieldValue": "Quote",
+          "fieldName": "Category",
+          "fieldValue": "Quote", 
           "fieldType": "text"
-        },
-        ...
+        }
       ]
     }
   ]
 }
 ```
 
------
-
-## Roadmap
-
-LogoMesh is constantly evolving. Here's a glimpse of what's next:
-
-### Phase 1: Foundation Complete ✅
-- Core thought management and visualization
-- Local-first architecture with SQLite storage
-- Plugin system foundations
-- Basic AI integration (LLM executors)
-
-### Phase 2: Infrastructure Planning (Current Status)
-**Status:** Comprehensive planning and architecture design completed
-
-We've systematically analyzed Phase 2 requirements through 34 creative scenarios and completed detailed architectural planning:
-- ✅ **Scenarios 1-34 Complete:** Comprehensive analysis covering library scaling, gaming sessions, live sermons, journalism workflows, tactical mesh networks, educational environments, VR/AR applications, multiplayer coordination, and advanced enterprise scenarios
-- ✅ **Gap Analysis:** 248+ gaps identified and documented across all system components
-- ✅ **Architecture Planning:** Complete Phase 2 specifications and implementation roadmaps
-- 🎯 **Current Reality:** Codebase remains at Phase 1 level - Phase 2 infrastructure exists as detailed blueprints ready for implementation
-
-**Key Infrastructure Areas:**
-* **Multi-language Plugin Runtime:** Support for Go, Rust, Python, JavaScript coordination
-* **Real-time Processing:** Sub-second audio-to-visual pipelines with deadline guarantees
-* **Distributed Coordination:** Cross-device state synchronization and mesh networking
-* **Resource Management:** Hardware-aware quotas, thermal monitoring, graceful degradation
-* **Educational Workflows:** Classroom-specific features and offline-first PWA architecture
-* **Multiplayer Networking:** Authoritative state management and conflict resolution
-
-### Phase 3: AI Activation (Future)
-* **Core AI-Powered Insights (Local-First):**
-    * **Automatic Related Thoughts:** Instantly discover connections between your ideas
-    * **AI-Assisted Reflection:** Get prompts that encourage deeper thinking
-    * **Conceptual Blending:** Explore new ideas formed by combining existing concepts
-* **Advanced Features:** Recursive AI querying, conceptual diffusion, secure collaborative workspaces
-
-**Current Priority:** Complete Phase 2 infrastructure gaps before advancing to Phase 3 AI features.
-
-See `docs/phase_2/gap_analysis.md` for detailed technical analysis and `docs/phase_2/use_case_stress_tests/` for complete scenario documentation.
-
------
+---
 
 ## License
 
-MIT — free to fork, remix, and evolve.
+MIT — Free to fork, remix, and evolve.
 
------
+---
 
-## ✨ Created by [Josh Hickson](https://github.com/joshhickson)
+## Support
 
------
+- **Documentation:** See `/docs/` for technical details
+- **Issues:** GitHub Issues for bug reports and feature requests
+- **Discord:** https://discord.gg/6ydDxzMjvD for community discussion
 
-This is not just productivity software.
-This is a cognitive framework for the evolution of intelligence.
-Welcome to LogoMesh.
-## Development Status
+---
 
-**Current Phase:** Pre-Phase 2 Infrastructure Cleanup  
-**Version:** 0.2.0  
-**Last Updated:** January 2025
+**Created by [Josh Hickson](https://github.com/joshhickson)**
 
-**Implementation Status:**
-- **Phase 1:** ✅ Complete - Basic thought management with React frontend and Node.js backend
-- **Infrastructure Cleanup:** 🔄 In Progress - Resolving naming consistency and technical debt
-- **Phase 2:** 📋 Architectural Planning Complete - Ready for implementation after cleanup
-- **Phase 2 Implementation:** ⏳ Pending - 8-week roadmap ready after foundation stabilization
-```
+*This is not just productivity software. This is a cognitive framework for the evolution of intelligence.*
+
+**Welcome to LogoMesh.**
