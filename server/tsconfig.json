@@ -1,10 +1,9 @@
-
 {
   "compilerOptions": {
     "target": "es2020",
     "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "outDir": "./dist", // Output within server/dist
+    "rootDir": "..",   // Project root /app
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -13,6 +12,7 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true
+    // baseUrl and paths removed for simplicity
   },
   "include": [
     "src/**/*",
@@ -21,6 +21,8 @@
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "../node_modules",
+    "../src"
   ]
 }

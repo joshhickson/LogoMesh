@@ -116,3 +116,52 @@ module.exports = {
         }
     }
 }
+module.exports = {
+    // Basic Node-RED settings for LogoMesh automation
+    uiPort: process.env.NODERED_PORT || 1880,
+    mqttReconnectTime: 15000,
+    serialReconnectTime: 15000,
+    debugMaxLength: 1000,
+    
+    // Admin authentication (disabled for local development)
+    adminAuth: {
+        type: "credentials",
+        users: [{
+            username: "admin",
+            password: "$2b$08$UdOPpXQDGuLBBTzLWKzUFuWkP8uVBrJk2bgZr/Ib0YgIRJg.rnX2C", // password: "logomesh"
+            permissions: "*"
+        }]
+    },
+    
+    // HTTP settings
+    httpAdminRoot: '/admin',
+    httpNodeRoot: '/api/nodered',
+    httpStatic: './public',
+    
+    // Disable telemetry
+    telemetry: {
+        enabled: false
+    },
+    
+    // Logging
+    logging: {
+        console: {
+            level: "info",
+            metrics: false,
+            audit: false
+        }
+    },
+    
+    // Editor settings
+    editorTheme: {
+        projects: {
+            enabled: false
+        }
+    },
+    
+    // Function node settings
+    functionGlobalContext: {
+        // Global context for LogoMesh functions
+        apiBaseUrl: process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1'
+    }
+};
