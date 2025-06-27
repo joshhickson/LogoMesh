@@ -16,7 +16,7 @@ router.post('/init', async (req, res) => {
   try {
     // Create minimal plugin API for testing
     const eventBus = new EventBus();
-    const storage = new SQLiteStorageAdapter();
+    const storage = new SQLiteStorageAdapter('./data/logomesh.sqlite3');
     //const pluginApi = new PluginAPI(logger, storage, eventBus);
      const pluginApi: PluginAPI = {
         getStorageAdapter: () => storage,
