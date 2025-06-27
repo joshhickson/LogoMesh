@@ -90,6 +90,14 @@ class AuthService {
     return this.authState.user;
   }
 
+  isAuthenticated() {
+    return this.authState.isAuthenticated;
+  }
+
+  getToken() {
+    return this.authState.token;
+  }
+
   public getAuthState(): AuthState {
     return { ...this.authState };
   }
