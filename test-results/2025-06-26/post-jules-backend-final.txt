@@ -1,0 +1,7 @@
+
+> logomesh-server@0.1.0 build
+> node_modules/.bin/tsc && cp -r ../core ./dist/
+
+src/routes/pluginRoutes.ts(11,10): error TS2305: Module '"../../../core/storage/sqliteAdapter"' has no exported member 'SQLiteAdapter'.
+src/routes/pluginRoutes.ts(21,24): error TS2352: Conversion of type '{ logger: Logger; storage: any; eventBus: EventBus; }' to type 'PluginAPI' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '{ logger: Logger; storage: any; eventBus: EventBus; }' is missing the following properties from type 'PluginAPI': getStorageAdapter, getLogger, getConfig, setConfig, and 3 more.
