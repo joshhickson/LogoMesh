@@ -7,6 +7,38 @@
 
 > **📍 Current Focus**: Week 1, Task 1 - Multi-Language Plugin Runtime (enhanced with specification goals)
 
+## 🎯 Architectural Strengths to Preserve & Expand
+
+Based on code review feedback, these core design decisions are working well and must be protected:
+
+### ✅ What We Got Right (Preserve During Phase 2)
+
+| **Area** | **Why It's Good** | **Keep / Expand** |
+|----------|-------------------|-------------------|
+| **Clear Bounded Layers** (Frontend / Core / Storage / LLM) | Separation of concerns is obvious to new contributors; avoided the "god-service" trap | **CRITICAL:** As Phase 2 cognitive features land, resist urge to sneak business logic into LLM or EventBus "just this once" |
+| **Plugin Host + Manifest** | Future-proofs extensibility and community contributions | **PRIORITY:** Invest in strict sandbox now; unsafe plugins will nuke credibility later |
+| **EventBus + TaskEngine** | Async jobs + decoupling = scale insurance | **EXPAND:** Add back-pressure & at-least-once guarantees before Phase 2 load tests |
+
+### 🛡️ Architectural Preservation Rules (Non-Negotiable)
+
+**Layer Boundary Enforcement:**
+- Frontend (`src/`) NEVER imports from `core/` or `server/` directly
+- Core services (`core/services/`) communicate only via EventBus or well-defined interfaces
+- LLM layer (`core/llm/`) remains purely execution-focused, no business logic
+- Storage adapters (`core/storage/`) remain implementation details behind contracts
+
+**Plugin System Integrity:**
+- All plugin execution MUST go through PluginHost sandbox
+- Plugin capabilities MUST be declared in manifest before runtime
+- No direct filesystem or network access without explicit permission
+- Plugin crashes MUST NOT affect core system stability
+
+**Event-Driven Architecture:**
+- TaskEngine coordination MUST use EventBus for cross-service communication
+- Back-pressure handling MUST be implemented before cognitive load increases
+- At-least-once delivery guarantees for critical workflows
+- No synchronous calls between major subsystems
+
 ## 🚨 Critical Reality Checks (Must Address Before Phase 2)
 
 Based on architectural analysis, these issues will become major blockers if not resolved:
@@ -27,6 +59,7 @@ Based on architectural analysis, these issues will become major blockers if not 
 ### Task 1: Complete TypeScript Migration + Security Foundation
 **Framework Outcome**: 100% TypeScript codebase with basic security framework
 **Reality Check**: Address 56% TS / 42% JS maintenance nightmare before building new features
+**Architectural Preservation**: Maintain clear bounded layers during migration - no shortcuts that blur layer boundaries
 
 **CRITICAL: Must complete before any new development**
 
@@ -81,10 +114,14 @@ g. **Advanced Security Features**:
 - ✅ **GATE 1.3**: Rate limiting prevents API abuse
 - ✅ **GATE 1.4**: Plugin filesystem access is restricted
 - ✅ **GATE 1.5**: LLM components can be independently tested/scaled
+- ✅ **ARCHITECTURAL GATE 1.6**: Layer boundaries verified - no `core/` imports in frontend
+- ✅ **ARCHITECTURAL GATE 1.7**: EventBus remains pure pub/sub - no business logic embedded
+- ✅ **ARCHITECTURAL GATE 1.8**: Plugin sandbox functional - isolated execution verified
 
 #### **Week 1 Task 2: Secure Plugin System Foundation** 
 **Timeline:** Days 4-6 (3 days)
 **Priority:** Critical (After TypeScript completion)
+**Architectural Focus**: Strict sandbox implementation - unsafe plugins will nuke credibility later
 
 **Core Goals (Essential):**
 - **Implement Secure Plugin Runtime Manager**:
@@ -92,6 +129,7 @@ g. **Advanced Security Features**:
   - Support Node.js and Python plugins with resource limits
   - Implement IPC communication via JSON over stdin/stdout
   - Add plugin permission system with filesystem restrictions
+  - **CRITICAL**: Zero direct system access - all operations via controlled APIs
 
 - **Plugin Security Framework**:
   - Create plugin manifest schema with security levels
@@ -177,6 +215,7 @@ g. **Advanced Security Features**:
 #### **Week 1 Task 4: Basic Task Engine**
 **Timeline:** Days 8-9 (2 days)
 **Priority:** Critical
+**Architectural Focus**: Add back-pressure & at-least-once guarantees before Phase 2 load tests
 
 **Reality Check:** Build TaskEngine by extending existing `LLMTaskRunner` (~40% functionality) and `LLMOrchestrator` (~30% functionality) rather than starting from scratch. Focus on the missing 30% integration layer.
 
@@ -186,6 +225,7 @@ g. **Advanced Security Features**:
 - **Create ExecutorRegistry:** Simple registry mapping executor IDs to existing LLMTaskRunner, PluginHost instances
 - **Build Pipeline Schema:** JSON workflow definitions using existing Task/Pipeline interfaces from specifications
 - **Integrate EventBus:** Connect existing EventBus to pipeline execution events
+- **Add EventBus Reliability:** Implement back-pressure handling and at-least-once delivery for critical workflows
 
 **Enhanced Goals (From Core Specifications):**
 - **MetaExecutor Stub:** Simple routing logic using existing `LLMOrchestrator` model selection patterns
@@ -386,6 +426,13 @@ c. **Performance Optimization**:
 - [ ] Plugin system executes securely with filesystem restrictions
 - [ ] LLM components can be independently tested/scaled
 
+**Architectural Integrity (Week 1):**
+- [ ] Clear bounded layers maintained - no shortcuts that blur boundaries
+- [ ] Plugin sandbox prevents all unauthorized system access
+- [ ] EventBus remains pure coordination layer - no embedded business logic
+- [ ] Back-pressure handling implemented for EventBus message queues
+- [ ] At-least-once delivery guarantees for critical task workflows
+
 **Feature Development (Week 2-4):**
 - [ ] Local LLM integration working with audit trails
 - [ ] Vector similarity search operational
@@ -400,6 +447,13 @@ c. **Performance Optimization**:
 - [ ] Plugin crashes do not affect system stability
 - [ ] Storage layer changes don't require business logic refactors
 - [ ] Security audit shows no critical vulnerabilities
+
+**Architectural Enforcement Gates:**
+- [ ] Frontend cannot import from `core/` or `server/` directly
+- [ ] Plugin system enforces manifest-declared capabilities only
+- [ ] EventBus handles message back-pressure gracefully under load
+- [ ] LLM layer contains zero business logic - purely execution focused
+- [ ] Storage contracts prevent database implementation leakage
 
 ## What's Explicitly Deferred to Phase 3
 
