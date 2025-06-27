@@ -8,7 +8,7 @@ const router = express.Router();
 let pluginHost: PluginHost | null = null;
 
 // Initialize plugin host with proper API wiring
-import { SQLiteAdapter } from '../../../core/storage/sqliteAdapter';
+import { SQLiteStorageAdapter } from '../../../core/storage/sqliteAdapter';
 import { EventBus } from '../../../core/services/eventBus';
 import type { PluginAPI } from '../../../contracts/plugins/pluginApi';
 
@@ -16,13 +16,20 @@ router.post('/init', async (req, res) => {
   try {
     // Create minimal plugin API for testing
     const eventBus = new EventBus();
-    const storage = new SQLiteAdapter();
+    const storage = new SQLiteStorageAdapter();
     //const pluginApi = new PluginAPI(logger, storage, eventBus);
-     const pluginApi = {
-        logger,
-        storage,
-        eventBus,
-      } as PluginAPI;
+     const pluginApi: PluginAPI = {
+        getStorageAdapter: () => storage,
+        getLogger: () => logger,
+        getConfig: (key: string) => process.env[key],
+        setConfig: async (key: string, value: any) => {
+          // Basic implementation - in production this would persist config
+          process.env[key] = String(value);
+        },
+        getThoughts: async () => storage.getAllThoughts(),
+        getSegments: async (thoughtId: string) => storage.getSegmentsForThought(thoughtId),
+        hasPermission: (permission: string) => true // Basic implementation
+      };
 
     pluginHost = new PluginHost(logger, pluginApi);
     res.json({ success: true, message: 'Plugin host initialized with API' });
