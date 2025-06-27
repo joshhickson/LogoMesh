@@ -46,7 +46,7 @@
 
 **Core Goals:**
 - Create `.env.example` + `config.ts` wrapper
-- CI fails if repo contains literal "sk-" or "jwtSecret=changeme"
+- CI fails if repo contains literal "sk-", "jwtSecret=changeme", or "OPENAI_API_KEY="
 - Basic JWT session handling in AuthService
 - **NO FANCY UI** - just working backend security
 
@@ -59,8 +59,8 @@
 **FOCUS**: Basic monitoring and protection
 
 **Core Goals:**
-- Add rate limiting middleware (100 req/min per IP)
-- `GET /status` returns `{queueLag, dbConn, pluginSandboxAlive}`
+- Add rate limiting middleware (100 req/min per IP, whitelist `/status`)
+- `GET /status` returns `{queueLag, dbConn, pluginSandboxAlive, heapUsedMB}`
 - Basic request validation on critical endpoints
 
 **Verification Gates:**
@@ -70,7 +70,9 @@
 
 ## Week 2: LLM Spine + Plugin Foundation (includes half-day "bug pit" buffer)
 
-### Task 3: Slice LLM Monolith (Days 1-3)
+Half-day bug-pit = Week 2 Day 6 AM, no feature work.
+
+### Task 4: Slice LLM Monolith (Days 1-3)
 **FOCUS**: Break LLMOrchestrator death grip - no fancy audit UI yet
 
 **Core Goals:**
@@ -86,7 +88,7 @@
 - ✅ Single prompt starvation test proves RunnerPool isolation
 - ✅ LLM components can be tested independently
 
-### Task 4: Basic Plugin Sandbox (Days 4-5)
+### Task 5: Basic Plugin Sandbox (Days 4-5)
 **FOCUS**: Node.js plugins only - secure the foundation
 
 **Core Goals:**
@@ -102,7 +104,7 @@
 
 ## Week 3: EventBus Reliability + Storage Boundary
 
-### Task 5: EventBus Back-pressure (Days 1-3)
+### Task 6: EventBus Back-pressure (Days 1-3)
 **FOCUS**: Make EventBus production-ready
 
 **Core Goals:**
@@ -112,11 +114,11 @@
 - **NO COMPLEX UI** - just working coordination
 
 **Verification Gates:**
-- ✅ EventBus drains 1k messages @ ≤2× RTT baseline
+- ✅ EventBus drains 5k messages batch-test (offline), ≤2× RTT baseline
 - ✅ Critical messages don't get lost
 - ✅ System stays responsive under load
 
-### Task 6: Storage Service Boundary (Days 4-5)
+### Task 7: Storage Service Boundary (Days 4-5)
 **FOCUS**: Abstract storage coupling - no vector search yet
 
 **Core Goals:**
@@ -132,7 +134,7 @@
 
 ## Week 4: Minimal TaskEngine + Load Testing (Day 7 = scope cut or lock branch, no new code after noon)
 
-### Task 7: Basic TaskEngine (Days 1-4)
+### Task 8: Basic TaskEngine (Days 1-4)
 **FOCUS**: Prove LLM → Plugin chains work
 
 **Core Goals:**
@@ -146,13 +148,14 @@
 - ✅ Uses existing LLMTaskRunner retry logic
 - ✅ Basic pipeline JSON validation works
 
-### Task 8: Load Test & Stabilize (Days 5-6)
+### Task 9: Load Test & Stabilize (Days 5-6)
 **FOCUS**: Make it production-ready
 
 **Core Goals:**
 - Stress test EventBus + LLM under 250 req/min sustained, spike 500
 - Fix critical performance bottlenecks
 - Basic observability with pino logging
+- Profile heap with `clinic flame` during load; leak <5 MB/min
 - **Note**: Run on local Docker or paid VM for realistic load testing
 
 **Verification Gates:**
@@ -180,11 +183,12 @@
 - ✅ /api/auth login w/ JWT round-trip
 - ✅ Rate-limit 100rpm per-IP tested via artillery
 - ✅ /status returns 200 with sane metrics
-- ✅ Single prompt starvation test proves RunnerPool isolation
+- ✅ Single prompt starvation test proves RunnerPool isolation (fail if >5s queue wait with 1 busy runner)
 - ✅ Hello-world plugin cannot read '/etc/passwd'
-- ✅ EventBus drains 1k messages @ ≤2× RTT baseline
+- ✅ EventBus drains 5k messages batch-test (offline), ≤2× RTT baseline
 - ✅ TaskEngine executes LLM→Plugin workflow in <5s median
 - ✅ Artillery 250rpm 5-min run: no 5xx, ≤2% 429
+- ✅ No `any` types introduced in `src/` stretch migration PRs
 
 ## Tactical Implementation Notes
 
@@ -192,10 +196,11 @@
 2. **Write throwaway PoC plugin first**: Get sandbox right before complexity
 3. **Convert storage coupling after TypeScript**: Static types expose hidden leaks
 4. **Ollama integration**: Stub → audit trail → only then enhance
+5. **Storage sed script**: commit separately, easy revert
 
 ## Reality Check Gates
 
-- [ ] No mixed TS/JS compilation errors in core/server
+- [ ] No mixed TS/JS in core/server; src/ JS tolerated until 2b
 - [ ] Single LLM prompt cannot block all model traffic  
 - [ ] Plugin crashes do not affect system stability
 - [ ] Storage changes don't require business logic refactors
