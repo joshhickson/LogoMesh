@@ -1,0 +1,5 @@
+
+> logomesh-server@0.1.0 test
+> echo "Server tests not yet implemented" && exit 0
+
+Server tests not yet implemented

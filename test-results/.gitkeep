@@ -1,0 +1,19 @@
+
+# Test Results Directory
+
+This directory contains captured test run outputs for review and analysis.
+
+- `latest-test-run.txt` - Always contains the most recent test run
+- `test-run-YYYY-MM-DDTHH-MM-SS.txt` - Individual timestamped test runs
+
+## Usage
+
+Run tests with output capture:
+```bash
+node scripts/test-runner.js
+```
+
+Or use the npm script:
+```bash
+npm run test:capture
+```

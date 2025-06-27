@@ -1,0 +1,13 @@
+
+> logomesh-server@0.1.0 build
+> node_modules/.bin/tsc && cp -r ../core ./dist/
+
+../core/db/initDb.ts(1,26): error TS7016: Could not find a declaration file for module 'sqlite3'. '/home/runner/workspace/server/node_modules/sqlite3/lib/sqlite3.js' implicitly has an 'any' type.
+../core/logger/llmAuditLogger.ts(3,34): error TS7016: Could not find a declaration file for module 'uuid'. '/home/runner/workspace/node_modules/uuid/dist/index.js' implicitly has an 'any' type.
+  If the 'uuid' package actually exposes this module, try adding a new declaration (.d.ts) file containing `declare module 'uuid';`
+../core/storage/sqliteAdapter.ts(1,26): error TS7016: Could not find a declaration file for module 'sqlite3'. '/home/runner/workspace/server/node_modules/sqlite3/lib/sqlite3.js' implicitly has an 'any' type.
+../core/storage/sqliteAdapter.ts(370,21): error TS2339: Property 'title' does not exist on type 'NewSegmentData'.
+../core/storage/sqliteAdapter.ts(400,9): error TS2416: Property 'updateSegment' in type 'SQLiteStorageAdapter' is not assignable to the same property in base type 'StorageAdapter'.
+  Type '(segmentId: string, updates: Partial<NewSegmentData>) => Promise<Segment | null>' is not assignable to type '(thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>) => Promise<Segment | null>'.
+    Types of parameters 'updates' and 'segmentId' are incompatible.
+      Type 'string' has no properties in common with type 'Partial<NewSegmentData>'.

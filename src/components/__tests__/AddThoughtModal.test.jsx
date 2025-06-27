@@ -1,23 +1,58 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import { vi } from 'vitest';
 import AddThoughtModal from '../AddThoughtModal';
 
+// Mock VoiceInputManager
+vi.mock('../../utils/VoiceInputManager', () => {
+  // Default mock implementation
+  const mockVoiceInputManager = vi.fn().mockImplementation(function() {
+    this.isSupported = () => 'webkitSpeechRecognition' in window; // Reflect actual window state
+    this.startListening = vi.fn();
+    this.stopListening = vi.fn();
+    // Add other methods/properties if component interacts with them
+    this.recognition = { continuous: false, interimResults: false, lang: '', onresult: null, onerror: null, onend: null, onstart: null };
+    return this;
+  });
+  return { VoiceInputManager: mockVoiceInputManager };
+});
+
+// Mock ulid
+vi.mock('ulid', () => ({
+  ulid: () => 'test-ulid-123',
+}));
+
 describe('AddThoughtModal', () => {
-  let mockCreateThought;
-  let mockOnClose;
+  const mockCreateThought = vi.fn();
+  const mockOnClose = vi.fn();
 
   beforeEach(() => {
-    mockCreateThought = jest.fn();
-    mockOnClose = jest.fn();
-    window.alert = jest.fn();
+    vi.clearAllMocks();
   });
 
-  beforeEach(() => {
-    jest.clearAllMocks();
+  test('renders modal with title input', () => {
+    render(
+      <AddThoughtModal
+        createThought={mockCreateThought}
+        onClose={mockOnClose}
+      />
+    );
+
+    expect(screen.getByPlaceholderText('Title')).toBeInTheDocument();
   });
 
+  test('renders Add Thought button', () => {
+    render(
+      <AddThoughtModal
+        createThought={mockCreateThought}
+        onClose={mockOnClose}
+      />
+    );
+
+    expect(screen.getByText('Add Thought')).toBeInTheDocument();
+  });
   test('renders all form elements', () => {
-    const mockCreateThought = jest.fn();
-    const mockOnClose = jest.fn();
+    const mockCreateThought = vi.fn();
+    const mockOnClose = vi.fn();
     render(
       <AddThoughtModal
         createThought={mockCreateThought}
@@ -32,8 +67,8 @@ describe('AddThoughtModal', () => {
   });
 
   test('validates title before submission', () => {
-    const mockCreateThought = jest.fn();
-    const mockOnClose = jest.fn();
+    const mockCreateThought = vi.fn();
+    const mockOnClose = vi.fn();
     render(
       <AddThoughtModal
         createThought={mockCreateThought}
@@ -51,8 +86,8 @@ describe('AddThoughtModal', () => {
   });
 
   test('adds and updates segments', () => {
-    const mockCreateThought = jest.fn();
-    const mockOnClose = jest.fn();
+    const mockCreateThought = vi.fn();
+    const mockOnClose = vi.fn();
     render(
       <AddThoughtModal
         createThought={mockCreateThought}
@@ -74,8 +109,8 @@ describe('AddThoughtModal', () => {
   });
 
   test('handles tag addition', () => {
-    const mockCreateThought = jest.fn();
-    const mockOnClose = jest.fn();
+    const mockCreateThought = vi.fn();
+    const mockOnClose = vi.fn();
     render(
       <AddThoughtModal
         createThought={mockCreateThought}
@@ -91,8 +126,8 @@ describe('AddThoughtModal', () => {
   });
 
   test('creates thought with correct data structure', () => {
-    const mockCreateThought = jest.fn();
-    const mockOnClose = jest.fn();
+    const mockCreateThought = vi.fn();
+    const mockOnClose = vi.fn();
     render(
       <AddThoughtModal
         createThought={mockCreateThought}
@@ -132,8 +167,25 @@ describe('AddThoughtModal', () => {
   });
 });
 test('handles voice input correctly', () => {
-  const mockCreateThought = jest.fn();
-  const mockOnClose = jest.fn();
+  const mockAlert = vi.spyOn(window, 'alert').mockImplementation(() => {});
+  // Setup speech recognition mock before render
+  const mockRecognition = {
+    start: vi.fn(),
+    stop: vi.fn(),
+    onresult: null,
+    onerror: null,
+    continuous: false,
+    interimResults: false,
+  };
+
+  Object.defineProperty(window, 'webkitSpeechRecognition', {
+    value: vi.fn(() => mockRecognition),
+    configurable: true,
+    writable: true
+  });
+
+  const mockCreateThought = vi.fn();
+  const mockOnClose = vi.fn();
   const { getByTitle, getByPlaceholderText } = render(
     <AddThoughtModal createThought={mockCreateThought} onClose={mockOnClose} />
   );
@@ -165,3 +217,20 @@ test('handles voice input correctly', () => {
     'Speech recognition is not supported in your browser'
   );
 });
+test('handles voice input integration', () => {
+    // Remove speech recognition support to trigger alert *before* component renders
+    delete window.webkitSpeechRecognition;
+
+    const mockAlert = vi.spyOn(window, 'alert').mockImplementation(() => {});
+
+    const mockCreateThought = vi.fn();
+    const mockOnClose = vi.fn();
+    render(<AddThoughtModal createThought={mockCreateThought} onClose={mockOnClose} />);
+
+    // Look for the microphone button by its title attribute
+    const voiceButton = screen.getByTitle('Start recording');
+    fireEvent.click(voiceButton);
+
+    // Should trigger alert for unsupported browser
+    expect(mockAlert).toHaveBeenCalledWith('Speech recognition is not supported in your browser');
+  });

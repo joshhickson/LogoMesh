@@ -1,0 +1,68 @@
+
+> logomesh@0.1.0 test
+> vitest src/components/__tests__/fundamental-react-test.test.jsx --run
+
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v3.2.4 /home/runner/workspace
+
+stdout | src/components/__tests__/fundamental-react-test.test.jsx > Fundamental React Test > check if JSX transformation works
+=== TESTING JSX TRANSFORMATION ===
+JSX element: {
+  [32m'$$typeof'[39m: [32mSymbol(react.element)[39m,
+  type: [32m'div'[39m,
+  key: [1mnull[22m,
+  ref: [1mnull[22m,
+  props: { children: [32m'JSX Test'[39m },
+  _owner: [1mnull[22m,
+  _store: {}
+}
+createElement result: {
+  [32m'$$typeof'[39m: [32mSymbol(react.element)[39m,
+  type: [32m'div'[39m,
+  key: [1mnull[22m,
+  ref: [1mnull[22m,
+  props: { children: [32m'createElement Test'[39m },
+  _owner: [1mnull[22m,
+  _store: {}
+}
+Container after render: <div>JSX Test</div>
+Document body: 
+
+stdout | src/components/__tests__/fundamental-react-test.test.jsx > Fundamental React Test > check React Testing Library setup
+=== TESTING RTL SETUP ===
+Found element: [1mnull[22m
+Element innerHTML: NOT FOUND
+
+ ❯ src/components/__tests__/fundamental-react-test.test.jsx (2 tests | 1 failed) 38ms
+   ✓ Fundamental React Test > check if JSX transformation works 19ms
+   × Fundamental React Test > check React Testing Library setup 17ms
+     → expected null to be truthy
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/__tests__/fundamental-react-test.test.jsx > Fundamental React Test > check React Testing Library setup
+AssertionError: expected null to be truthy
+
+[32m- Expected:[39m 
+true
+
+[31m+ Received:[39m 
+null
+
+ ❯ src/components/__tests__/fundamental-react-test.test.jsx:36:21
+     34|     console.log('Element innerHTML:', element ? element.innerHTML : 'N…
+     35|     
+     36|     expect(element).toBeTruthy();
+       |                     ^
+     37|   });
+     38| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  04:05:08
+   Duration  2.13s (transform 82ms, setup 73ms, collect 257ms, tests 38ms, environment 792ms, prepare 159ms)
+

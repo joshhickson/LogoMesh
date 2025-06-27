@@ -1,64 +1,32 @@
 import '@testing-library/jest-dom';
-import { vi } from 'vitest';
+import { cleanup } from '@testing-library/react';
+import { afterEach, beforeEach } from 'vitest';
 
-// Mock React components
-vi.mock('react-cytoscapejs', () => ({
-  default: () => null,
-}));
+// Import RTL screen for global availability
+import { screen } from '@testing-library/react';
 
-// Mock cytoscape-cose-bilkent
-vi.mock('cytoscape-cose-bilkent', () => ({
-  __esModule: true,
-  default: vi.fn(),
-}));
+// Ensure proper cleanup after each test
+afterEach(() => {
+  cleanup();
+});
 
 // Mock window.matchMedia
-window.matchMedia =
-  window.matchMedia ||
-  function () {
-    return {
-      matches: false,
-      addListener: function () { return null; },
-      removeListener: function () { return null; },
-    };
+window.matchMedia = window.matchMedia || function () {
+  return {
+    matches: false,
+    addListener: function () { return null; },
+    removeListener: function () { return null; },
   };
-
-// Configure Jest timeout - vitest doesn't need this
-//jest.setTimeout(10000);
-
-// Mock localStorage
-const localStorageMock = {
-  getItem: vi.fn(),
-  setItem: vi.fn(),
-  clear: vi.fn(),
 };
-global.localStorage = localStorageMock;
 
-// Mock SpeechRecognition API
-class MockSpeechRecognition {
-  constructor() {
-    this.continuous = false;
-    this.interimResults = false;
-    this.onstart = null;
-    this.onresult = null;
-    this.onerror = null;
-    this.onend = null;
-  }
-  start() {
-    if (this.onstart) this.onstart();
-  }
-  stop() {
-    if (this.onend) this.onend();
-  }
-}
-
-window.SpeechRecognition = MockSpeechRecognition;
-window.webkitSpeechRecognition = MockSpeechRecognition;
-
+// Mock ResizeObserver
 window.ResizeObserver = class ResizeObserver {
   constructor() {
-    this.observe = vi.fn();
-    this.unobserve = vi.fn();
-    this.disconnect = vi.fn();
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    this.observe = () => {};
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    this.unobserve = () => {};
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    this.disconnect = () => {};
   }
 };

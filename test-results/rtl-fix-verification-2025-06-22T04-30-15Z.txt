@@ -1,0 +1,249 @@
+
+> logomesh@0.1.0 test
+> vitest src/components/__tests__/rtl-connection-test.test.jsx --run
+
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v3.2.4 /home/runner/workspace
+
+stdout | src/components/__tests__/rtl-connection-test.test.jsx > RTL DOM Connection Debug > diagnose RTL DOM connection
+=== RTL DOM CONNECTION TEST ===
+Container HTML: <div data-testid="connection-test">RTL Test</div>
+Document body HTML: <div><div data-testid="connection-test">RTL Test</div></div>
+Container parent: HTMLBodyElement {}
+Document.querySelector result: [36m<ref *1>[39m HTMLDivElement {
+  [32m'__reactFiber$v46evcu3i5g'[39m: [36m<ref *2>[39m FiberNode {
+    tag: [33m5[39m,
+    key: [1mnull[22m,
+    elementType: [32m'div'[39m,
+    type: [32m'div'[39m,
+    stateNode: [36m[Circular *1][39m,
+    return: FiberNode {
+      tag: [33m3[39m,
+      key: [1mnull[22m,
+      elementType: [1mnull[22m,
+      type: [1mnull[22m,
+      stateNode: [36m[FiberRootNode][39m,
+      return: [1mnull[22m,
+      child: [36m[Circular *2][39m,
+      sibling: [1mnull[22m,
+      index: [33m0[39m,
+      ref: [1mnull[22m,
+      pendingProps: [1mnull[22m,
+      memoizedProps: [1mnull[22m,
+      updateQueue: [36m[Object][39m,
+      memoizedState: [36m[Object][39m,
+      dependencies: [1mnull[22m,
+      mode: [33m1[39m,
+      flags: [33m1024[39m,
+      subtreeFlags: [33m2[39m,
+      deletions: [1mnull[22m,
+      lanes: [33m0[39m,
+      childLanes: [33m0[39m,
+      alternate: [36m[FiberNode][39m,
+      actualDuration: [33m0[39m,
+      actualStartTime: [33m-1[39m,
+      selfBaseDuration: [33m0[39m,
+      treeBaseDuration: [33m0[39m,
+      _debugSource: [1mnull[22m,
+      _debugOwner: [1mnull[22m,
+      _debugNeedsRemount: [33mfalse[39m,
+      _debugHookTypes: [1mnull[22m
+    },
+    child: [1mnull[22m,
+    sibling: [1mnull[22m,
+    index: [33m0[39m,
+    ref: [1mnull[22m,
+    pendingProps: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+    memoizedProps: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+    updateQueue: [1mnull[22m,
+    memoizedState: [1mnull[22m,
+    dependencies: [1mnull[22m,
+    mode: [33m1[39m,
+    flags: [33m0[39m,
+    subtreeFlags: [33m0[39m,
+    deletions: [1mnull[22m,
+    lanes: [33m0[39m,
+    childLanes: [33m0[39m,
+    alternate: [1mnull[22m,
+    actualDuration: [33m0[39m,
+    actualStartTime: [33m-1[39m,
+    selfBaseDuration: [33m0[39m,
+    treeBaseDuration: [33m0[39m,
+    _debugSource: {
+      fileName: [32m'/home/runner/workspace/src/components/__tests__/rtl-connection-test.test.jsx'[39m,
+      lineNumber: [33m13[39m,
+      columnNumber: [33m34[39m
+    },
+    _debugOwner: [1mnull[22m,
+    _debugNeedsRemount: [33mfalse[39m,
+    _debugHookTypes: [1mnull[22m
+  },
+  [32m'__reactProps$v46evcu3i5g'[39m: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m }
+}
+Screen debug:
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mdata-testid[39m=[32m"connection-test"[39m
+    [36m>[39m
+      [0mRTL Test[0m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+getByTestId result: [36m<ref *1>[39m HTMLDivElement {
+  [32m'__reactFiber$v46evcu3i5g'[39m: [36m<ref *2>[39m FiberNode {
+    tag: [33m5[39m,
+    key: [1mnull[22m,
+    elementType: [32m'div'[39m,
+    type: [32m'div'[39m,
+    stateNode: [36m[Circular *1][39m,
+    return: FiberNode {
+      tag: [33m3[39m,
+      key: [1mnull[22m,
+      elementType: [1mnull[22m,
+      type: [1mnull[22m,
+      stateNode: [36m[FiberRootNode][39m,
+      return: [1mnull[22m,
+      child: [36m[Circular *2][39m,
+      sibling: [1mnull[22m,
+      index: [33m0[39m,
+      ref: [1mnull[22m,
+      pendingProps: [1mnull[22m,
+      memoizedProps: [1mnull[22m,
+      updateQueue: [36m[Object][39m,
+      memoizedState: [36m[Object][39m,
+      dependencies: [1mnull[22m,
+      mode: [33m1[39m,
+      flags: [33m1024[39m,
+      subtreeFlags: [33m2[39m,
+      deletions: [1mnull[22m,
+      lanes: [33m0[39m,
+      childLanes: [33m0[39m,
+      alternate: [36m[FiberNode][39m,
+      actualDuration: [33m0[39m,
+      actualStartTime: [33m-1[39m,
+      selfBaseDuration: [33m0[39m,
+      treeBaseDuration: [33m0[39m,
+      _debugSource: [1mnull[22m,
+      _debugOwner: [1mnull[22m,
+      _debugNeedsRemount: [33mfalse[39m,
+      _debugHookTypes: [1mnull[22m
+    },
+    child: [1mnull[22m,
+    sibling: [1mnull[22m,
+    index: [33m0[39m,
+    ref: [1mnull[22m,
+    pendingProps: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+    memoizedProps: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+    updateQueue: [1mnull[22m,
+    memoizedState: [1mnull[22m,
+    dependencies: [1mnull[22m,
+    mode: [33m1[39m,
+    flags: [33m0[39m,
+    subtreeFlags: [33m0[39m,
+    deletions: [1mnull[22m,
+    lanes: [33m0[39m,
+    childLanes: [33m0[39m,
+    alternate: [1mnull[22m,
+    actualDuration: [33m0[39m,
+    actualStartTime: [33m-1[39m,
+    selfBaseDuration: [33m0[39m,
+    treeBaseDuration: [33m0[39m,
+    _debugSource: {
+      fileName: [32m'/home/runner/workspace/src/components/__tests__/rtl-connection-test.test.jsx'[39m,
+      lineNumber: [33m13[39m,
+      columnNumber: [33m34[39m
+    },
+    _debugOwner: [1mnull[22m,
+    _debugNeedsRemount: [33mfalse[39m,
+    _debugHookTypes: [1mnull[22m
+  },
+  [32m'__reactProps$v46evcu3i5g'[39m: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+  [[32mSymbol(SameObject caches)[39m]: [Object: null prototype] {
+    attributes: NamedNodeMap {},
+    childNodes: NodeList {}
+  }
+}
+container.querySelector result: [36m<ref *1>[39m HTMLDivElement {
+  [32m'__reactFiber$v46evcu3i5g'[39m: [36m<ref *2>[39m FiberNode {
+    tag: [33m5[39m,
+    key: [1mnull[22m,
+    elementType: [32m'div'[39m,
+    type: [32m'div'[39m,
+    stateNode: [36m[Circular *1][39m,
+    return: FiberNode {
+      tag: [33m3[39m,
+      key: [1mnull[22m,
+      elementType: [1mnull[22m,
+      type: [1mnull[22m,
+      stateNode: [36m[FiberRootNode][39m,
+      return: [1mnull[22m,
+      child: [36m[Circular *2][39m,
+      sibling: [1mnull[22m,
+      index: [33m0[39m,
+      ref: [1mnull[22m,
+      pendingProps: [1mnull[22m,
+      memoizedProps: [1mnull[22m,
+      updateQueue: [36m[Object][39m,
+      memoizedState: [36m[Object][39m,
+      dependencies: [1mnull[22m,
+      mode: [33m1[39m,
+      flags: [33m1024[39m,
+      subtreeFlags: [33m2[39m,
+      deletions: [1mnull[22m,
+      lanes: [33m0[39m,
+      childLanes: [33m0[39m,
+      alternate: [36m[FiberNode][39m,
+      actualDuration: [33m0[39m,
+      actualStartTime: [33m-1[39m,
+      selfBaseDuration: [33m0[39m,
+      treeBaseDuration: [33m0[39m,
+      _debugSource: [1mnull[22m,
+      _debugOwner: [1mnull[22m,
+      _debugNeedsRemount: [33mfalse[39m,
+      _debugHookTypes: [1mnull[22m
+    },
+    child: [1mnull[22m,
+    sibling: [1mnull[22m,
+    index: [33m0[39m,
+    ref: [1mnull[22m,
+    pendingProps: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+    memoizedProps: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+    updateQueue: [1mnull[22m,
+    memoizedState: [1mnull[22m,
+    dependencies: [1mnull[22m,
+    mode: [33m1[39m,
+    flags: [33m0[39m,
+    subtreeFlags: [33m0[39m,
+    deletions: [1mnull[22m,
+    lanes: [33m0[39m,
+    childLanes: [33m0[39m,
+    alternate: [1mnull[22m,
+    actualDuration: [33m0[39m,
+    actualStartTime: [33m-1[39m,
+    selfBaseDuration: [33m0[39m,
+    treeBaseDuration: [33m0[39m,
+    _debugSource: {
+      fileName: [32m'/home/runner/workspace/src/components/__tests__/rtl-connection-test.test.jsx'[39m,
+      lineNumber: [33m13[39m,
+      columnNumber: [33m34[39m
+    },
+    _debugOwner: [1mnull[22m,
+    _debugNeedsRemount: [33mfalse[39m,
+    _debugHookTypes: [1mnull[22m
+  },
+  [32m'__reactProps$v46evcu3i5g'[39m: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+  [[32mSymbol(SameObject caches)[39m]: [Object: null prototype] {
+    attributes: NamedNodeMap {},
+    childNodes: NodeList {}
+  }
+}
+
+ ✓ src/components/__tests__/rtl-connection-test.test.jsx (1 test) 46ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  04:30:17
+   Duration  3.80s (transform 130ms, setup 680ms, collect 29ms, tests 46ms, environment 1.79s, prepare 162ms)
+
