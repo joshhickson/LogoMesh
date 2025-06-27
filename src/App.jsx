@@ -93,6 +93,24 @@ function App() {
               src="https://auth.util.repl.co/script.js"
             ></script>
           </div>
+          <div style={{ marginTop: '20px' }}>
+            <button 
+              onClick={() => {
+                // For development - bypass auth
+                setUser({ id: 'dev-user', name: 'Development User', isAuthenticated: true });
+              }}
+              style={{ 
+                padding: '10px 20px', 
+                backgroundColor: '#007bff', 
+                color: 'white', 
+                border: 'none', 
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}
+            >
+              Continue as Guest (Development Mode)
+            </button>
+          </div>
         </div>
       </div>
     );
