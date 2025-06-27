@@ -1,0 +1,82 @@
+### Brutal-Mode Review v3 — Ready for Claude Ingestion
+
+You finally pruned the beast into something a single dev can *conceivably* slam out in a month.  Good.
+But there are still loose wires that will arc-flash once you flip the breaker.  Below is the “meta-diff” you should hand Claude so it tightens the bolts instead of rewriting fluff.
+
+---
+
+## 0 — Meta-Directive for Claude
+
+> **Rewrite the plan exactly once, apply the corrections below, preserve headings.**
+> **Do NOT expand scope. Do NOT prettify language.**
+> **Output must remain implementation-centric, not narrative.**
+
+---
+
+## 1 — Remove Hidden Landmines
+
+| Section                        | Problem                                                                                  | Fix                                                                                                                            |
+| ------------------------------ | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| **Week 1 Task 1**              | “Convert all remaining JS to TS” *and* “focus on critical paths first” is contradictory. | **Replace** with: “Convert only `core/` and `server/` to TS strict in Week 1; leave `src/` JS until Week 2 nights as stretch.” |
+| **Week 2 Task 3 Verification** | “Existing functionality preserved” is too fuzzy.                                         | **Replace** with explicit smoke-test list: `/api/thoughts`, `/api/plugins/list`, `/api/auth/login`.                            |
+| **EventBus Back-pressure**     | Message persistence line implies a mini-Kafka.                                           | **Scope cut**: “Use in-memory queue + exponential backoff; persistence deferred to 2b.”                                        |
+| **Load Test @ 1 k req/min**    | Replit free tier will throttle network before your code does.                            | **Swap target** → 250 req/min sustained, spike 500. Mention “run on local Docker or paid VM.”                                  |
+| **Dev setup < 45 min**         | Still a vanity metric.                                                                   | Add note: “Time measured on fresh Ubuntu VM script, not on dev’s biased laptop.”                                               |
+
+---
+
+## 2 — Add Two Missing Spine Bolts
+
+1. **Secrets Management Stub (Week 1 Day 3)**
+
+   * `.env.example` + `config.ts` wrapper.
+   * CI fails if repo contains literal “sk-” or “jwtSecret=changeme”.
+
+2. **Health-Check Endpoint (Week 2 Day 1)**
+
+   * `GET /status` returns `{queueLag, dbConn, pluginSandboxAlive}`.
+   * Used by load test & future k8s liveness probes.
+
+---
+
+## 3 — Timeline Reality Calibration
+
+* **Week 1** = 4 working days? Include buffer: slip allowed to Day 5 *only* if TS strict breaks >20% tests.
+* **Week 2**: LLM slice will surface latent race conditions—budget half-day “bug pit.”
+* **Week 3**: Storage boundary refactor *will* touch IdeaManager tests—prep sed script to update imports.
+* **Week 4**: Allocate final Day 7 exclusively to *cut scope or lock branch*; no new code after noon.
+
+---
+
+## 4 — Success Criteria Patch
+
+Replace entire block with terse bullet list:
+
+```
+✅ TS strict passes (core, server)  
+✅ /api/auth login w/ JWT round-trip  
+✅ Rate-limit 100rpm per-IP tested via artillery  
+✅ /status returns 200 with sane metrics  
+✅ Single prompt starvation test proves RunnerPool isolation  
+✅ Hello-world plugin cannot read '/etc/passwd'  
+✅ EventBus drains 1k messages @ ≤2× RTT baseline  
+✅ TaskEngine executes LLM→Plugin workflow in <5 s median  
+✅ artillery 250rpm 5-min run: no 5xx, ≤2% 429
+```
+
+---
+
+## 5 — Drop These Lines (Noise)
+
+* All references to “Node-RED decision” – not in scope, delete.
+* “New dev setup < 45 min” – keep as doc goal, *not* success gate.
+* “Observability ugly dashboards” – redundant, already implied; cut.
+
+---
+
+### Bottom Line
+
+Claude should now emit a **tighter, test-driven sprint plan** with no marketing filler, no secret scope creep, and concrete pass/fail lines.
+Copy-paste the corrections above, let it chew, then execute.  If anything still smells corporate-fluffy, kill it on sight.
+
+Ship spine. Then add organs.
