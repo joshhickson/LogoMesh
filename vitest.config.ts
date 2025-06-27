@@ -1,9 +1,26 @@
 
-import { defineConfig } from 'vitest/config';
-export default defineConfig({ 
-  test: { 
-    environment: 'jsdom', 
-    globals: true, 
-    setupFiles: './vitest.setup.ts' 
-  } 
-});
+import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./vitest.setup.ts', './src/setupTests.js'],
+    environmentOptions: {
+      jsdom: {
+        resources: 'usable'
+      }
+    }
+  },
+  esbuild: {
+    target: 'node14'
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom']
+  },
+  server: {
+    middlewareMode: true
+  }
+})

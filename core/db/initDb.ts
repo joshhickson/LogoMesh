@@ -1,45 +1,25 @@
+import * as sqlite3 from 'sqlite3';
+import * as fs from 'fs';
+import * as path from 'path';
+import { logger } from '../utils/logger';
 
-import sqlite3 from 'sqlite3';
-import fs from 'fs';
-import path from 'path';
-
-// Import logger - try multiple paths to handle different execution contexts
-let logger: any;
-try {
-  // Try from server context
-  logger = require('../../src/core/utils/logger');
-} catch {
-  try {
-    // Try from core context
-    logger = require('../utils/logger');
-  } catch {
-    // Fallback console logging
-    logger = {
-      info: console.log,
-      warn: console.warn,
-      error: console.error,
-      debug: console.log
-    };
+/**
+ * Initialize the SQLite database with the required schema
+ */
+export async function initializeDatabase(dbPath = './server/data/logomesh.sqlite3'): Promise<void> {
+  // Ensure the directory exists
+  const dbDir = path.dirname(dbPath);
+  if (!fs.existsSync(dbDir)) {
+    fs.mkdirSync(dbDir, { recursive: true });
+    logger.info(`Created database directory: ${dbDir}`);
   }
-}
 
-export async function initializeDatabase(): Promise<void> {
   return new Promise((resolve, reject) => {
     try {
-      // Determine database path based on environment
-      const dbPath = process.env.DB_PATH || path.resolve(__dirname, '../data/logomesh.sqlite3');
-      
-      // Ensure data directory exists
-      const dataDir = path.dirname(dbPath);
-      if (!fs.existsSync(dataDir)) {
-        fs.mkdirSync(dataDir, { recursive: true });
-        logger.info(`Created data directory: ${dataDir}`);
-      }
-
       logger.info(`Connecting to database at: ${dbPath}`);
 
       // Connect to SQLite database
-      const db = new sqlite3.Database(dbPath, (err) => {
+      const db = new sqlite3.Database(dbPath, (err: any) => { // Added : any
         if (err) {
           logger.error('Error opening database:', err);
           reject(err);
@@ -61,7 +41,7 @@ export async function initializeDatabase(): Promise<void> {
       logger.info('Loaded database schema');
 
       // Execute schema creation
-      db.exec(schemaSQL, (err) => {
+      db.exec(schemaSQL, (err: any) => { // Added : any
         if (err) {
           logger.error('Error creating database schema:', err);
           db.close();
@@ -72,7 +52,7 @@ export async function initializeDatabase(): Promise<void> {
         logger.info('Database schema created successfully');
 
         // Close database connection
-        db.close((err) => {
+        db.close((err: any) => { // Added : any
           if (err) {
             logger.error('Error closing database:', err);
             reject(err);

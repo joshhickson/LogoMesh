@@ -1,0 +1,709 @@
+
+> logomesh@0.1.0 test
+> vitest --run
+
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v3.2.4 /home/runner/workspace
+
+ ❯ src/utils/__tests__/VoiceInputManager.test.js (9 tests | 3 failed) 23ms
+   ✓ VoiceInputManager > initializes with correct configuration 3ms
+   ✓ VoiceInputManager > handles start/stop listening correctly 1ms
+   × VoiceInputManager > handles speech recognition results 10ms
+     → this.onTranscriptUpdate is not a function
+   × VoiceInputManager > handles speech recognition errors 2ms
+     → this.onError is not a function
+   × VoiceInputManager > checks browser support correctly 1ms
+     → window.webkitSpeechRecognition is not a constructor
+   ✓ VoiceInputManager > should initialize with default options 1ms
+   ✓ VoiceInputManager > initializes speech recognition correctly 1ms
+   ✓ VoiceInputManager > handles callback functions properly 2ms
+   ✓ VoiceInputManager > handles error scenarios correctly 1ms
+ ❯ src/utils/__tests__/eventBus.test.js (3 tests | 1 failed) 23ms
+   ✓ eventBus > newBubbleId generates unique IDs 7ms
+   ✓ eventBus > newSegmentId generates unique IDs 1ms
+   × eventBus > IDs follow expected format 12ms
+     → expected 'seg_01JYB6QYM7FTW5V44SV7X33SQ3' to match /^thought_\d+_[a-zA-Z0-9]+$/
+stdout | src/__tests__/mock-analysis.test.js > Mock Analysis > check what mocks are active
+=== ACTIVE MOCKS ANALYSIS ===
+vi.isMockFunction(React.createElement): [33mfalse[39m
+window object keys: []
+global object keys: []
+document.body: HTMLBodyElement {}
+document.createElement type: function
+React object keys: [
+  [32m'Children'[39m,
+  [32m'Component'[39m,
+  [32m'Fragment'[39m,
+  [32m'Profiler'[39m,
+  [32m'PureComponent'[39m,
+  [32m'StrictMode'[39m,
+  [32m'Suspense'[39m,
+  [32m'__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED'[39m,
+  [32m'act'[39m,
+  [32m'cloneElement'[39m,
+  [32m'createContext'[39m,
+  [32m'createElement'[39m,
+  [32m'createFactory'[39m,
+  [32m'createRef'[39m,
+  [32m'forwardRef'[39m,
+  [32m'isValidElement'[39m,
+  [32m'lazy'[39m,
+  [32m'memo'[39m,
+  [32m'startTransition'[39m,
+  [32m'unstable_act'[39m,
+  [32m'useCallback'[39m,
+  [32m'useContext'[39m,
+  [32m'useDebugValue'[39m,
+  [32m'useDeferredValue'[39m,
+  [32m'useEffect'[39m,
+  [32m'useId'[39m,
+  [32m'useImperativeHandle'[39m,
+  [32m'useInsertionEffect'[39m,
+  [32m'useLayoutEffect'[39m,
+  [32m'useMemo'[39m,
+  [32m'useReducer'[39m,
+  [32m'useRef'[39m,
+  [32m'useState'[39m,
+  [32m'useSyncExternalStore'[39m,
+  [32m'useTransition'[39m,
+  [32m'version'[39m
+]
+React.version: 18.3.1
+
+ ✓ src/__tests__/mock-analysis.test.js (3 tests) 19ms
+ ❯ src/components/__tests__/ThoughtDetailPanel.test.jsx (2 tests | 1 failed) 202ms
+   × ThoughtDetailPanel > renders thought details 77ms
+     → Found multiple elements with the text: Test content
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<p>[39m
+  [0mTest content[0m
+[36m</p>[39m
+
+Ignored nodes: comments, script, style
+[36m<textarea[39m
+  [33maria-label[39m=[32m"Thought content"[39m
+[36m>[39m
+  [0mTest content[0m
+[36m</textarea>[39m
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"thought-detail-panel"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"header"[39m
+      [36m>[39m
+        [36m<h2>[39m
+          [0mTest Thought[0m
+        [36m</h2>[39m
+        [36m<button[39m
+          [33maria-label[39m=[32m"Close"[39m
+          [33mclass[39m=[32m"close-button"[39m
+          [33mrole[39m=[32m"button"[39m
+        [36m>[39m
+          [0mClose[0m
+        [36m</button>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"content"[39m
+      [36m>[39m
+        [36m<p>[39m
+          [0mTest content[0m
+        [36m</p>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"form-section"[39m
+      [36m>[39m
+        [36m<input[39m
+          [33maria-label[39m=[32m"Thought title"[39m
+          [33mtype[39m=[32m"text"[39m
+          [33mvalue[39m=[32m"Test Thought"[39m
+        [36m/>[39m
+        [36m<textarea[39m
+          [33maria-label[39m=[32m"Thought content"[39m
+        [36m>[39m
+          [0mTest content[0m
+        [36m</textarea>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+   ✓ ThoughtDetailPanel > handles close action 121ms
+ ❯ src/components/__tests__/AddThoughtModal.test.jsx (9 tests | 1 failed) 291ms
+   ✓ AddThoughtModal > renders modal with title input 58ms
+   ✓ AddThoughtModal > renders Add Thought button 26ms
+   ✓ AddThoughtModal > renders all form elements 34ms
+   ✓ AddThoughtModal > validates title before submission 15ms
+   ✓ AddThoughtModal > adds and updates segments 48ms
+   ✓ AddThoughtModal > handles tag addition 12ms
+   ✓ AddThoughtModal > creates thought with correct data structure 24ms
+   × handles voice input correctly 62ms
+     → expected "spy" to be called with arguments: [ Array(1) ][90m
+
+Number of calls: [1m0[22m
+[39m
+   ✓ handles voice input integration 8ms
+stdout | src/components/__tests__/fundamental-react-test.test.jsx > Fundamental React Test > check if JSX transformation works
+=== TESTING JSX TRANSFORMATION ===
+JSX element: {
+  [32m'$$typeof'[39m: [32mSymbol(react.element)[39m,
+  type: [32m'div'[39m,
+  key: [1mnull[22m,
+  ref: [1mnull[22m,
+  props: { children: [32m'JSX Test'[39m },
+  _owner: [1mnull[22m,
+  _store: {}
+}
+createElement result: {
+  [32m'$$typeof'[39m: [32mSymbol(react.element)[39m,
+  type: [32m'div'[39m,
+  key: [1mnull[22m,
+  ref: [1mnull[22m,
+  props: { children: [32m'createElement Test'[39m },
+  _owner: [1mnull[22m,
+  _store: {}
+}
+Container after render: <div>JSX Test</div>
+Document body: <div><div>JSX Test</div></div>
+
+stdout | src/components/__tests__/fundamental-react-test.test.jsx > Fundamental React Test > check React Testing Library setup
+=== TESTING RTL SETUP ===
+Found element: [36m<ref *1>[39m HTMLSpanElement {
+  [32m'__reactFiber$1nexhj1ccro'[39m: [36m<ref *2>[39m FiberNode {
+    tag: [33m5[39m,
+    key: [1mnull[22m,
+    elementType: [32m'span'[39m,
+    type: [32m'span'[39m,
+    stateNode: [36m[Circular *1][39m,
+    return: FiberNode {
+      tag: [33m3[39m,
+      key: [1mnull[22m,
+      elementType: [1mnull[22m,
+      type: [1mnull[22m,
+      stateNode: [36m[FiberRootNode][39m,
+      return: [1mnull[22m,
+      child: [36m[Circular *2][39m,
+      sibling: [1mnull[22m,
+      index: [33m0[39m,
+      ref: [1mnull[22m,
+      pendingProps: [1mnull[22m,
+      memoizedProps: [1mnull[22m,
+      updateQueue: [36m[Object][39m,
+      memoizedState: [36m[Object][39m,
+      dependencies: [1mnull[22m,
+      mode: [33m1[39m,
+      flags: [33m1024[39m,
+      subtreeFlags: [33m2[39m,
+      deletions: [1mnull[22m,
+      lanes: [33m0[39m,
+      childLanes: [33m0[39m,
+      alternate: [36m[FiberNode][39m,
+      actualDuration: [33m0[39m,
+      actualStartTime: [33m-1[39m,
+      selfBaseDuration: [33m0[39m,
+      treeBaseDuration: [33m0[39m,
+      _debugSource: [1mnull[22m,
+      _debugOwner: [1mnull[22m,
+      _debugNeedsRemount: [33mfalse[39m,
+      _debugHookTypes: [1mnull[22m
+    },
+    child: [1mnull[22m,
+    sibling: [1mnull[22m,
+    index: [33m0[39m,
+    ref: [1mnull[22m,
+    pendingProps: { [32m'data-testid'[39m: [32m'test-element'[39m, children: [32m'Test Content'[39m },
+    memoizedProps: { [32m'data-testid'[39m: [32m'test-element'[39m, children: [32m'Test Content'[39m },
+    updateQueue: [1mnull[22m,
+    memoizedState: [1mnull[22m,
+    dependencies: [1mnull[22m,
+    mode: [33m1[39m,
+    flags: [33m0[39m,
+    subtreeFlags: [33m0[39m,
+    deletions: [1mnull[22m,
+    lanes: [33m0[39m,
+    childLanes: [33m0[39m,
+    alternate: [1mnull[22m,
+    actualDuration: [33m0[39m,
+    actualStartTime: [33m-1[39m,
+    selfBaseDuration: [33m0[39m,
+    treeBaseDuration: [33m0[39m,
+    _debugSource: {
+      fileName: [32m'/home/runner/workspace/src/components/__tests__/fundamental-react-test.test.jsx'[39m,
+      lineNumber: [33m29[39m,
+      columnNumber: [33m12[39m
+    },
+    _debugOwner: [1mnull[22m,
+    _debugNeedsRemount: [33mfalse[39m,
+    _debugHookTypes: [1mnull[22m
+  },
+  [32m'__reactProps$1nexhj1ccro'[39m: { [32m'data-testid'[39m: [32m'test-element'[39m, children: [32m'Test Content'[39m }
+}
+Element innerHTML: Test Content
+
+ ✓ src/components/__tests__/fundamental-react-test.test.jsx (2 tests) 108ms
+stderr | src/App.test.jsx > renders main app components
+Backend API not available: Error: [vitest] No "apiService" export is defined on the "./services/apiService" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+    at VitestMocker.createError [90m(file:///home/runner/workspace/[39mnode_modules/[4mvitest[24m/dist/chunks/execute.B7h3T_Hc.js:284:17[90m)[39m
+    at Object.get [90m(file:///home/runner/workspace/[39mnode_modules/[4mvitest[24m/dist/chunks/execute.B7h3T_Hc.js:330:16[90m)[39m
+    at loadInitialData [90m(/home/runner/workspace/[39msrc/App.jsx:103:40[90m)[39m
+    at [90m/home/runner/workspace/[39msrc/App.jsx:112:5
+    at commitHookEffectListMount [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:23189:26[90m)[39m
+    at commitPassiveMountOnFiber [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:24970:11[90m)[39m
+    at commitPassiveMountEffects_complete [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:24930:9[90m)[39m
+    at commitPassiveMountEffects_begin [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:24917:7[90m)[39m
+    at commitPassiveMountEffects [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:24905:3[90m)[39m
+    at flushPassiveEffectsImpl [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:27078:3[90m)[39m {
+  codeFrame: [32m'vi\x1B[33m.\x1B[39m\x1B[34mmock\x1B[39m(\x1B[35mimport\x1B[39m(\x1B[32m"./services/apiService"\x1B[39m)\x1B[33m,\x1B[39m \x1B[35masync\x1B[39m (importOriginal) \x1B[33m=>\x1B[39m {\n'[39m +
+    [32m'  \x1B[35mconst\x1B[39m actual \x1B[33m=\x1B[39m \x1B[35mawait\x1B[39m \x1B[34mimportOriginal\x1B[39m()\n'[39m +
+    [32m'  \x1B[35mreturn\x1B[39m {\n'[39m +
+    [32m'    \x1B[33m...\x1B[39mactual\x1B[33m,\x1B[39m\n'[39m +
+    [32m'    \x1B[90m// your mocked methods\x1B[39m\n'[39m +
+    [32m'  }\n'[39m +
+    [32m'})'[39m
+}
+
+ ✓ src/App.test.jsx (1 test) 218ms
+stdout | src/components/__tests__/rtl-connection-test.test.jsx > RTL DOM Connection Debug > diagnose RTL DOM connection
+=== RTL DOM CONNECTION TEST ===
+Container HTML: <div data-testid="connection-test">RTL Test</div>
+Document body HTML: <div><div data-testid="connection-test">RTL Test</div></div>
+Container parent: HTMLBodyElement {}
+Document.querySelector result: [36m<ref *1>[39m HTMLDivElement {
+  [32m'__reactFiber$75697o2jmil'[39m: [36m<ref *2>[39m FiberNode {
+    tag: [33m5[39m,
+    key: [1mnull[22m,
+    elementType: [32m'div'[39m,
+    type: [32m'div'[39m,
+    stateNode: [36m[Circular *1][39m,
+    return: FiberNode {
+      tag: [33m3[39m,
+      key: [1mnull[22m,
+      elementType: [1mnull[22m,
+      type: [1mnull[22m,
+      stateNode: [36m[FiberRootNode][39m,
+      return: [1mnull[22m,
+      child: [36m[Circular *2][39m,
+      sibling: [1mnull[22m,
+      index: [33m0[39m,
+      ref: [1mnull[22m,
+      pendingProps: [1mnull[22m,
+      memoizedProps: [1mnull[22m,
+      updateQueue: [36m[Object][39m,
+      memoizedState: [36m[Object][39m,
+      dependencies: [1mnull[22m,
+      mode: [33m1[39m,
+      flags: [33m1024[39m,
+      subtreeFlags: [33m2[39m,
+      deletions: [1mnull[22m,
+      lanes: [33m0[39m,
+      childLanes: [33m0[39m,
+      alternate: [36m[FiberNode][39m,
+      actualDuration: [33m0[39m,
+      actualStartTime: [33m-1[39m,
+      selfBaseDuration: [33m0[39m,
+      treeBaseDuration: [33m0[39m,
+      _debugSource: [1mnull[22m,
+      _debugOwner: [1mnull[22m,
+      _debugNeedsRemount: [33mfalse[39m,
+      _debugHookTypes: [1mnull[22m
+    },
+    child: [1mnull[22m,
+    sibling: [1mnull[22m,
+    index: [33m0[39m,
+    ref: [1mnull[22m,
+    pendingProps: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+    memoizedProps: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+    updateQueue: [1mnull[22m,
+    memoizedState: [1mnull[22m,
+    dependencies: [1mnull[22m,
+    mode: [33m1[39m,
+    flags: [33m0[39m,
+    subtreeFlags: [33m0[39m,
+    deletions: [1mnull[22m,
+    lanes: [33m0[39m,
+    childLanes: [33m0[39m,
+    alternate: [1mnull[22m,
+    actualDuration: [33m0[39m,
+    actualStartTime: [33m-1[39m,
+    selfBaseDuration: [33m0[39m,
+    treeBaseDuration: [33m0[39m,
+    _debugSource: {
+      fileName: [32m'/home/runner/workspace/src/components/__tests__/rtl-connection-test.test.jsx'[39m,
+      lineNumber: [33m13[39m,
+      columnNumber: [33m34[39m
+    },
+    _debugOwner: [1mnull[22m,
+    _debugNeedsRemount: [33mfalse[39m,
+    _debugHookTypes: [1mnull[22m
+  },
+  [32m'__reactProps$75697o2jmil'[39m: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m }
+}
+Screen debug:
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mdata-testid[39m=[32m"connection-test"[39m
+    [36m>[39m
+      [0mRTL Test[0m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+getByTestId result: [36m<ref *1>[39m HTMLDivElement {
+  [32m'__reactFiber$75697o2jmil'[39m: [36m<ref *2>[39m FiberNode {
+    tag: [33m5[39m,
+    key: [1mnull[22m,
+    elementType: [32m'div'[39m,
+    type: [32m'div'[39m,
+    stateNode: [36m[Circular *1][39m,
+    return: FiberNode {
+      tag: [33m3[39m,
+      key: [1mnull[22m,
+      elementType: [1mnull[22m,
+      type: [1mnull[22m,
+      stateNode: [36m[FiberRootNode][39m,
+      return: [1mnull[22m,
+      child: [36m[Circular *2][39m,
+      sibling: [1mnull[22m,
+      index: [33m0[39m,
+      ref: [1mnull[22m,
+      pendingProps: [1mnull[22m,
+      memoizedProps: [1mnull[22m,
+      updateQueue: [36m[Object][39m,
+      memoizedState: [36m[Object][39m,
+      dependencies: [1mnull[22m,
+      mode: [33m1[39m,
+      flags: [33m1024[39m,
+      subtreeFlags: [33m2[39m,
+      deletions: [1mnull[22m,
+      lanes: [33m0[39m,
+      childLanes: [33m0[39m,
+      alternate: [36m[FiberNode][39m,
+      actualDuration: [33m0[39m,
+      actualStartTime: [33m-1[39m,
+      selfBaseDuration: [33m0[39m,
+      treeBaseDuration: [33m0[39m,
+      _debugSource: [1mnull[22m,
+      _debugOwner: [1mnull[22m,
+      _debugNeedsRemount: [33mfalse[39m,
+      _debugHookTypes: [1mnull[22m
+    },
+    child: [1mnull[22m,
+    sibling: [1mnull[22m,
+    index: [33m0[39m,
+    ref: [1mnull[22m,
+    pendingProps: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+    memoizedProps: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+    updateQueue: [1mnull[22m,
+    memoizedState: [1mnull[22m,
+    dependencies: [1mnull[22m,
+    mode: [33m1[39m,
+    flags: [33m0[39m,
+    subtreeFlags: [33m0[39m,
+    deletions: [1mnull[22m,
+    lanes: [33m0[39m,
+    childLanes: [33m0[39m,
+    alternate: [1mnull[22m,
+    actualDuration: [33m0[39m,
+    actualStartTime: [33m-1[39m,
+    selfBaseDuration: [33m0[39m,
+    treeBaseDuration: [33m0[39m,
+    _debugSource: {
+      fileName: [32m'/home/runner/workspace/src/components/__tests__/rtl-connection-test.test.jsx'[39m,
+      lineNumber: [33m13[39m,
+      columnNumber: [33m34[39m
+    },
+    _debugOwner: [1mnull[22m,
+    _debugNeedsRemount: [33mfalse[39m,
+    _debugHookTypes: [1mnull[22m
+  },
+  [32m'__reactProps$75697o2jmil'[39m: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+  [[32mSymbol(SameObject caches)[39m]: [Object: null prototype] {
+    attributes: NamedNodeMap {},
+    childNodes: NodeList {}
+  }
+}
+container.querySelector result: [36m<ref *1>[39m HTMLDivElement {
+  [32m'__reactFiber$75697o2jmil'[39m: [36m<ref *2>[39m FiberNode {
+    tag: [33m5[39m,
+    key: [1mnull[22m,
+    elementType: [32m'div'[39m,
+    type: [32m'div'[39m,
+    stateNode: [36m[Circular *1][39m,
+    return: FiberNode {
+      tag: [33m3[39m,
+      key: [1mnull[22m,
+      elementType: [1mnull[22m,
+      type: [1mnull[22m,
+      stateNode: [36m[FiberRootNode][39m,
+      return: [1mnull[22m,
+      child: [36m[Circular *2][39m,
+      sibling: [1mnull[22m,
+      index: [33m0[39m,
+      ref: [1mnull[22m,
+      pendingProps: [1mnull[22m,
+      memoizedProps: [1mnull[22m,
+      updateQueue: [36m[Object][39m,
+      memoizedState: [36m[Object][39m,
+      dependencies: [1mnull[22m,
+      mode: [33m1[39m,
+      flags: [33m1024[39m,
+      subtreeFlags: [33m2[39m,
+      deletions: [1mnull[22m,
+      lanes: [33m0[39m,
+      childLanes: [33m0[39m,
+      alternate: [36m[FiberNode][39m,
+      actualDuration: [33m0[39m,
+      actualStartTime: [33m-1[39m,
+      selfBaseDuration: [33m0[39m,
+      treeBaseDuration: [33m0[39m,
+      _debugSource: [1mnull[22m,
+      _debugOwner: [1mnull[22m,
+      _debugNeedsRemount: [33mfalse[39m,
+      _debugHookTypes: [1mnull[22m
+    },
+    child: [1mnull[22m,
+    sibling: [1mnull[22m,
+    index: [33m0[39m,
+    ref: [1mnull[22m,
+    pendingProps: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+    memoizedProps: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+    updateQueue: [1mnull[22m,
+    memoizedState: [1mnull[22m,
+    dependencies: [1mnull[22m,
+    mode: [33m1[39m,
+    flags: [33m0[39m,
+    subtreeFlags: [33m0[39m,
+    deletions: [1mnull[22m,
+    lanes: [33m0[39m,
+    childLanes: [33m0[39m,
+    alternate: [1mnull[22m,
+    actualDuration: [33m0[39m,
+    actualStartTime: [33m-1[39m,
+    selfBaseDuration: [33m0[39m,
+    treeBaseDuration: [33m0[39m,
+    _debugSource: {
+      fileName: [32m'/home/runner/workspace/src/components/__tests__/rtl-connection-test.test.jsx'[39m,
+      lineNumber: [33m13[39m,
+      columnNumber: [33m34[39m
+    },
+    _debugOwner: [1mnull[22m,
+    _debugNeedsRemount: [33mfalse[39m,
+    _debugHookTypes: [1mnull[22m
+  },
+  [32m'__reactProps$75697o2jmil'[39m: { [32m'data-testid'[39m: [32m'connection-test'[39m, children: [32m'RTL Test'[39m },
+  [[32mSymbol(SameObject caches)[39m]: [Object: null prototype] {
+    attributes: NamedNodeMap {},
+    childNodes: NodeList {}
+  }
+}
+
+ ✓ src/components/__tests__/rtl-connection-test.test.jsx (1 test) 211ms
+ ✓ src/components/__tests__/Sidebar.test.jsx (4 tests) 657ms
+   ✓ Sidebar > filters thoughts based on field name  329ms
+stdout | src/components/__tests__/debug-component-rendering.test.jsx > Debug Component Rendering > AddThoughtModal renders with debug output
+=== DEBUG: AddThoughtModal DOM Structure ===
+<div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center overflow-y-auto"><div class="bg-white dark:bg-gray-800 p-6 rounded shadow-md w-11/12 max-w-2xl"><h2 class="text-lg font-bold mb-4">Add New Thought</h2><input type="text" placeholder="Title" class="w-full mb-2 p-2 border rounded" value=""><div class="relative w-full mb-2"><div class="relative"><textarea placeholder="Description" class="w-full p-2 border rounded"></textarea></div><button type="button" class="absolute right-2 bottom-2 p-2 rounded-full bg-gray-200" title="Start recording"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg></button></div><div><input type="text" placeholder="Add Tag" class="w-full mb-2 p-2 border rounded"><ul></ul></div><input type="color" class="w-full mb-4" value="#f97316"><div class="mb-4"><h3 class="text-md font-semibold mb-2">Segments</h3><button class="w-full mt-2 bg-green-500 text-white py-1 rounded">+ Add Segment</button></div><button class="w-full bg-blue-500 text-white py-2 rounded mb-2">Add Thought</button><button class="w-full bg-gray-300 dark:bg-gray-600 text-black dark:text-white py-2 rounded">Cancel</button></div></div>
+
+ ✓ src/components/__tests__/debug-component-rendering.test.jsx (2 tests) 82ms
+ ✓ src/services/__tests__/graphService.test.js (2 tests) 7ms
+stdout | src/components/__tests__/step-by-step-debug.test.jsx > Step by Step Component Debug > Step 1: Raw HTML rendering
+✅ Raw HTML works
+
+stdout | src/components/__tests__/step-by-step-debug.test.jsx > Step by Step Component Debug > Step 2: React.createElement direct
+createElement result HTML: <div data-testid="react-element">React Element Test</div>
+✅ React.createElement works
+
+stdout | src/components/__tests__/step-by-step-debug.test.jsx > Step by Step Component Debug > Step 3: Simple functional component
+SimpleComponent rendering...
+Simple component HTML: <div data-testid="simple-component">Simple Component Test</div>
+✅ Simple functional component works
+
+stdout | src/components/__tests__/step-by-step-debug.test.jsx > Step by Step Component Debug > Step 4: Component with JSX
+JSXComponent rendering...
+JSX component HTML: <div data-testid="jsx-component">JSX Component Test</div>
+✅ JSX component works
+
+ ✓ src/components/__tests__/step-by-step-debug.test.jsx (4 tests) 59ms
+ ✓ src/utils/__tests__/dataHandlers.test.js (3 tests) 10ms
+ ✓ src/components/__tests__/Canvas.test.jsx (2 tests) 59ms
+stdout | src/components/__tests__/minimal-render-test.test.jsx > Minimal React Rendering Test > can render a basic div element
+=== MINIMAL RENDER TEST ===
+Container innerHTML: <div data-testid="test-element">Hello World</div>
+Document body innerHTML: <div><div data-testid="test-element">Hello World</div></div>
+
+stdout | src/components/__tests__/minimal-render-test.test.jsx > Minimal React Rendering Test > can render with React.createElement directly
+=== DIRECT ELEMENT TEST ===
+Container innerHTML: <div data-testid="direct-element">Direct Element</div>
+
+ ✓ src/components/__tests__/minimal-render-test.test.jsx (2 tests) 77ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/utils/__tests__/VoiceInputManager.test.js > VoiceInputManager > handles speech recognition results
+TypeError: this.onTranscriptUpdate is not a function
+ ❯ Object.recognition.onresult src/utils/VoiceInputManager.js:33:18
+     31|           } else {
+     32|             interimTranscript += event.results[i][0].transcript;
+     33|             this.onTranscriptUpdate(interimTranscript, false);
+       |                  ^
+     34|           }
+     35|         }
+ ❯ src/utils/__tests__/VoiceInputManager.test.js:62:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  src/utils/__tests__/VoiceInputManager.test.js > VoiceInputManager > handles speech recognition errors
+TypeError: this.onError is not a function
+ ❯ Object.recognition.onerror src/utils/VoiceInputManager.js:39:14
+     37| 
+     38|       this.recognition.onerror = (event) => {
+     39|         this.onError(event.error);
+       |              ^
+     40|         if (
+     41|           event.error === 'network' ||
+ ❯ src/utils/__tests__/VoiceInputManager.test.js:89:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  src/utils/__tests__/VoiceInputManager.test.js > VoiceInputManager > checks browser support correctly
+TypeError: window.webkitSpeechRecognition is not a constructor
+ ❯ VoiceInputManager.initSpeechRecognition src/utils/VoiceInputManager.js:12:26
+     10|   initSpeechRecognition() {
+     11|     if ('webkitSpeechRecognition' in window) {
+     12|       this.recognition = new window.webkitSpeechRecognition();
+       |                          ^
+     13|       this.recognition.continuous = true;
+     14|       this.recognition.interimResults = true;
+ ❯ new VoiceInputManager src/utils/VoiceInputManager.js:7:10
+ ❯ src/utils/__tests__/VoiceInputManager.test.js:105:32
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  src/utils/__tests__/eventBus.test.js > eventBus > IDs follow expected format
+AssertionError: expected 'seg_01JYB6QYM7FTW5V44SV7X33SQ3' to match /^thought_\d+_[a-zA-Z0-9]+$/
+
+[32m- Expected:[39m 
+/^thought_\d+_[a-zA-Z0-9]+$/
+
+[31m+ Received:[39m 
+"seg_01JYB6QYM7FTW5V44SV7X33SQ3"
+
+ ❯ src/utils/__tests__/eventBus.test.js:21:22
+     19|     const bubbleId = newBubbleId();
+     20|     const segmentId = newSegmentId();
+     21|     expect(bubbleId).toMatch(/^thought_\d+_[a-zA-Z0-9]+$/);
+       |                      ^
+     22|     expect(segmentId).toMatch(/^seg_\d+_[a-zA-Z0-9]+$/);
+     23|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  src/components/__tests__/AddThoughtModal.test.jsx > handles voice input correctly
+AssertionError: expected "spy" to be called with arguments: [ Array(1) ][90m
+
+Number of calls: [1m0[22m
+[39m
+ ❯ src/components/__tests__/AddThoughtModal.test.jsx:210:24
+    208|   delete window.webkitSpeechRecognition;
+    209|   fireEvent.click(micButton);
+    210|   expect(window.alert).toHaveBeenCalledWith(
+       |                        ^
+    211|     'Speech recognition is not supported in your browser'
+    212|   );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  src/components/__tests__/ThoughtDetailPanel.test.jsx > ThoughtDetailPanel > renders thought details
+TestingLibraryElementError: Found multiple elements with the text: Test content
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<p>[39m
+  [0mTest content[0m
+[36m</p>[39m
+
+Ignored nodes: comments, script, style
+[36m<textarea[39m
+  [33maria-label[39m=[32m"Thought content"[39m
+[36m>[39m
+  [0mTest content[0m
+[36m</textarea>[39m
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"thought-detail-panel"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"header"[39m
+      [36m>[39m
+        [36m<h2>[39m
+          [0mTest Thought[0m
+        [36m</h2>[39m
+        [36m<button[39m
+          [33maria-label[39m=[32m"Close"[39m
+          [33mclass[39m=[32m"close-button"[39m
+          [33mrole[39m=[32m"button"[39m
+        [36m>[39m
+          [0mClose[0m
+        [36m</button>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"content"[39m
+      [36m>[39m
+        [36m<p>[39m
+          [0mTest content[0m
+        [36m</p>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"form-section"[39m
+      [36m>[39m
+        [36m<input[39m
+          [33maria-label[39m=[32m"Thought title"[39m
+          [33mtype[39m=[32m"text"[39m
+          [33mvalue[39m=[32m"Test Thought"[39m
+        [36m/>[39m
+        [36m<textarea[39m
+          [33maria-label[39m=[32m"Thought content"[39m
+        [36m>[39m
+          [0mTest content[0m
+        [36m</textarea>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ getElementError node_modules/@testing-library/dom/dist/query-helpers.js:20:35
+ ❯ getMultipleElementsFoundError node_modules/@testing-library/dom/dist/query-helpers.js:23:10
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:55:13
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/ThoughtDetailPanel.test.jsx:22:19
+     20|     expect(screen.getByText('Test Thought')).toBeInTheDocument();
+     21|     // Look for content in the paragraph element specifically
+     22|     expect(screen.getByText('Test content')).toBeInTheDocument();
+       |                   ^
+     23|   });
+     24| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  4 failed | 11 passed (15)
+      Tests  6 failed | 43 passed (49)
+   Start at  06:55:45
+   Duration  10.87s (transform 835ms, setup 11.47s, collect 1.56s, tests 2.05s, environment 23.22s, prepare 4.50s)
+

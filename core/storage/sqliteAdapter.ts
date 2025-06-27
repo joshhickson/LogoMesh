@@ -1,6 +1,4 @@
-
-import * as sqlite3 from 'sqlite3';
-import { Database } from 'sqlite3';
+import sqlite3, { Database } from 'sqlite3';
 import { StorageAdapter, NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
 import { Thought, Segment, Tag } from '../../contracts/entities';
 import { generateThoughtId, generateSegmentId } from '../utils/idUtils';
@@ -17,12 +15,12 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
   async initialize(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.db = new sqlite3.Database(this.dbPath, (err) => {
+      this.db = new sqlite3.Database(this.dbPath, (err: Error | null) => {
         if (err) {
           logger.error('Failed to open SQLite database:', err);
           reject(err);
         } else {
-          logger.log(`Connected to SQLite database at ${this.dbPath}`);
+          logger.info(`Connected to SQLite database at ${this.dbPath}`); // Changed to info
           resolve();
         }
       });
@@ -32,11 +30,11 @@ export class SQLiteStorageAdapter implements StorageAdapter {
   async close(): Promise<void> {
     return new Promise((resolve) => {
       if (this.db) {
-        this.db.close((err) => {
+        this.db.close((err: Error | null) => {
           if (err) {
             logger.error('Error closing database:', err);
           } else {
-            logger.log('Database connection closed');
+            logger.info('Database connection closed'); // Changed to info
           }
           resolve();
         });
@@ -46,7 +44,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
     });
   }
 
-  async getAllThoughts(): Promise<Thought[]> {
+  async getAllThoughts(userId?: string): Promise<Thought[]> { // Add userId
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
@@ -63,7 +61,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         ORDER BY t.created_at DESC
       `;
 
-      this.db.all(query, async (err, rows: any[]) => {
+      this.db.all(query, async (err: Error | null, rows: any[]) => {
         if (err) {
           logger.error('Error fetching thoughts:', err);
           reject(err);
@@ -75,7 +73,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
           for (const row of rows) {
             const segments = await this.getSegmentsForThought(row.thought_bubble_id);
             const tags = this.parseTagsFromRow(row.tags);
-            
+
             thoughts.push({
               thought_bubble_id: row.thought_bubble_id,
               title: row.title,
@@ -96,7 +94,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
     });
   }
 
-  async getThoughtById(thoughtId: string): Promise<Thought | null> {
+  async getThoughtById(thoughtId: string, userId?: string): Promise<Thought | null> { // Add userId
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
@@ -113,7 +111,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         GROUP BY t.thought_bubble_id
       `;
 
-      this.db.get(query, [thoughtId], async (err, row: any) => {
+      this.db.get(query, [thoughtId], async (err: Error | null, row: any) => {
         if (err) {
           logger.error('Error fetching thought:', err);
           reject(err);
@@ -147,7 +145,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
     });
   }
 
-  async createThought(thoughtData: NewThoughtData): Promise<Thought> {
+  async createThought(thoughtData: NewThoughtData, userId?: string): Promise<Thought> { // Add userId
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
@@ -156,7 +154,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
       const thoughtId = generateThoughtId();
       const now = new Date().toISOString();
-      
+
       const insertQuery = `
         INSERT INTO thoughts (thought_bubble_id, title, description, created_at, updated_at, color, position_x, position_y)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -172,8 +170,10 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         thoughtData.position?.x || 0,
         thoughtData.position?.y || 0
       ];
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const self = this; // Capture class instance 'this'
 
-      this.db.run(insertQuery, values, async (err) => {
+      this.db.run(insertQuery, values, async function(this: sqlite3.RunResult, err: Error | null) {
         if (err) {
           logger.error('Error creating thought:', err);
           reject(err);
@@ -183,24 +183,28 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         try {
           // Handle tags if provided
           if (thoughtData.tags && thoughtData.tags.length > 0) {
-            await this.associateTagsWithThought(thoughtId, thoughtData.tags);
+            await self.associateTagsWithThought(thoughtId, thoughtData.tags);
           }
 
-          const createdThought = await this.getThoughtById(thoughtId);
+          const createdThought = await self.getThoughtById(thoughtId, userId); // Add userId
           if (createdThought) {
-            logger.log(`Created thought: ${thoughtId}`);
+            logger.info(`Created thought: ${thoughtId}`); // Changed to info
             resolve(createdThought);
           } else {
             reject(new Error('Failed to retrieve created thought'));
           }
-        } catch (error) {
-          reject(error);
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            reject(error);
+          } else {
+            reject(new Error(`An unknown error occurred during thought creation: ${String(error)}`));
+          }
         }
       });
     });
   }
 
-  async updateThought(thoughtId: string, updates: Partial<NewThoughtData>): Promise<Thought | null> {
+  async updateThought(thoughtId: string, updates: Partial<NewThoughtData>, userId?: string): Promise<Thought | null> { // Add userId
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
@@ -210,10 +214,6 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       const updateFields: string[] = [];
       const values: any[] = [];
 
-      if (updates.title !== undefined) {
-        updateFields.push('title = ?');
-        values.push(updates.title);
-      }
       if (updates.description !== undefined) {
         updateFields.push('description = ?');
         values.push(updates.description);
@@ -232,8 +232,10 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       values.push(thoughtId);
 
       const query = `UPDATE thoughts SET ${updateFields.join(', ')} WHERE thought_bubble_id = ?`;
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const self = this; // Capture class instance 'this'
 
-      this.db.run(query, values, async (err) => {
+      this.db.run(query, values, async function(this: sqlite3.RunResult, err: Error | null) {
         if (err) {
           logger.error('Error updating thought:', err);
           reject(err);
@@ -243,19 +245,23 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         try {
           // Handle tag updates if provided
           if (updates.tags !== undefined) {
-            await this.updateThoughtTags(thoughtId, updates.tags);
+            await self.updateThoughtTags(thoughtId, updates.tags);
           }
 
-          const updatedThought = await this.getThoughtById(thoughtId);
+          const updatedThought = await self.getThoughtById(thoughtId, userId); // Use self and pass userId
           resolve(updatedThought);
-        } catch (error) {
-          reject(error);
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            reject(error);
+          } else {
+            reject(new Error(`An unknown error occurred during thought update: ${String(error)}`));
+          }
         }
       });
     });
   }
 
-  async deleteThought(thoughtId: string): Promise<boolean> {
+  async deleteThought(thoughtId: string, userId?: string): Promise<boolean> { // Add userId
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
@@ -265,23 +271,23 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       // Due to CASCADE constraints, deleting the thought will also delete related records
       const query = 'DELETE FROM thoughts WHERE thought_bubble_id = ?';
 
-      this.db.run(query, [thoughtId], function(err) {
+      this.db.run(query, [thoughtId], function(this: sqlite3.RunResult, err: Error | null) {
         if (err) {
           logger.error('Error deleting thought:', err);
           reject(err);
           return;
         }
 
-        const deleted = this.changes > 0;
+        const deleted = this.changes > 0; // 'this' is now correctly typed (implicitly by sqlite3)
         if (deleted) {
-          logger.log(`Deleted thought: ${thoughtId}`);
+          logger.info(`Deleted thought: ${thoughtId}`); // Changed to info
         }
         resolve(deleted);
       });
     });
   }
 
-  async getSegmentsForThought(thoughtId: string): Promise<Segment[]> {
+  async getSegmentsForThought(thoughtId: string, userId?: string): Promise<Segment[]> { // Add userId
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
@@ -290,7 +296,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
       const query = 'SELECT * FROM segments WHERE thought_bubble_id = ? ORDER BY sort_order, created_at';
 
-      this.db.all(query, [thoughtId], (err, rows: any[]) => {
+      this.db.all(query, [thoughtId], (err: Error | null, rows: any[]) => {
         if (err) {
           logger.error('Error fetching segments:', err);
           reject(err);
@@ -316,7 +322,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
     });
   }
 
-  async getSegmentById(segmentId: string): Promise<Segment | null> {
+  async getSegmentById(segmentId: string, userId?: string): Promise<Segment | null> { // Add userId
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
@@ -325,7 +331,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
       const query = 'SELECT * FROM segments WHERE segment_id = ?';
 
-      this.db.get(query, [segmentId], (err, row: any) => {
+      this.db.get(query, [segmentId], (err: Error | null, row: any) => {
         if (err) {
           logger.error('Error fetching segment:', err);
           reject(err);
@@ -354,7 +360,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
     });
   }
 
-  async createSegment(thoughtId: string, segmentData: NewSegmentData): Promise<Segment> {
+  async createSegment(thoughtId: string, segmentData: NewSegmentData, userId?: string): Promise<Segment> { // Add userId
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
@@ -372,15 +378,17 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       const values = [
         segmentId,
         thoughtId,
-        segmentData.title,
+        segmentData.title || null, // Add title, defaulting to null
         segmentData.content,
         now,
         now,
         0, // Default sort order
         JSON.stringify(segmentData.fields || {})
       ];
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const self = this; // Capture class instance 'this'
 
-      this.db.run(query, values, async (err) => {
+      this.db.run(query, values, async function(this: sqlite3.RunResult, err: Error | null) {
         if (err) {
           logger.error('Error creating segment:', err);
           reject(err);
@@ -388,21 +396,25 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         }
 
         try {
-          const createdSegment = await this.getSegmentById(segmentId);
+          const createdSegment = await self.getSegmentById(segmentId, userId); // Use self and pass userId
           if (createdSegment) {
-            logger.log(`Created segment: ${segmentId}`);
+            logger.info(`Created segment: ${segmentId}`); // Changed to info
             resolve(createdSegment);
           } else {
             reject(new Error('Failed to retrieve created segment'));
           }
-        } catch (error) {
-          reject(error);
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            reject(error);
+          } else {
+            reject(new Error(`An unknown error occurred during segment creation: ${String(error)}`));
+          }
         }
       });
     });
   }
 
-  async updateSegment(segmentId: string, updates: Partial<NewSegmentData>): Promise<Segment | null> {
+  async updateSegment(thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>, userId?: string): Promise<Segment | null> { // Add userId
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
@@ -430,8 +442,10 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       values.push(segmentId);
 
       const query = `UPDATE segments SET ${updateFields.join(', ')} WHERE segment_id = ?`;
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const self = this; // Capture class instance 'this'
 
-      this.db.run(query, values, async (err) => {
+      this.db.run(query, values, async function(this: sqlite3.RunResult, err: Error | null) {
         if (err) {
           logger.error('Error updating segment:', err);
           reject(err);
@@ -439,16 +453,20 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         }
 
         try {
-          const updatedSegment = await this.getSegmentById(segmentId);
+          const updatedSegment = await self.getSegmentById(segmentId, userId); // Use self and pass userId
           resolve(updatedSegment);
-        } catch (error) {
-          reject(error);
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            reject(error);
+          } else {
+            reject(new Error(`An unknown error occurred during segment update: ${String(error)}`));
+          }
         }
       });
     });
   }
 
-  async deleteSegment(segmentId: string): Promise<boolean> {
+  async deleteSegment(thoughtId: string, segmentId: string, userId?: string): Promise<boolean> { // Add userId
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
@@ -457,16 +475,16 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
       const query = 'DELETE FROM segments WHERE segment_id = ?';
 
-      this.db.run(query, [segmentId], function(err) {
+      this.db.run(query, [segmentId], function(this: sqlite3.RunResult, err: Error | null) {
         if (err) {
           logger.error('Error deleting segment:', err);
           reject(err);
           return;
         }
 
-        const deleted = this.changes > 0;
+        const deleted = this.changes > 0; // 'this' is now correctly typed (implicitly by sqlite3)
         if (deleted) {
-          logger.log(`Deleted segment: ${segmentId}`);
+          logger.info(`Deleted segment: ${segmentId}`); // Changed to info
         }
         resolve(deleted);
       });
@@ -477,7 +495,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
   private parseTagsFromRow(tagsString: string | null): Tag[] {
     if (!tagsString) return [];
-    
+
     return tagsString.split(',').map(tagStr => {
       const [name, color] = tagStr.split('::');
       return { name, color };
@@ -494,21 +512,23 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       // First, ensure all tags exist in the tags table
       const insertTagQuery = 'INSERT OR IGNORE INTO tags (tag_id, name, color, created_at) VALUES (?, ?, ?, ?)';
       const linkTagQuery = 'INSERT OR IGNORE INTO thought_tags (thought_bubble_id, tag_id, created_at) VALUES (?, ?, ?)';
-      
+
       let pending = tags.length;
       const now = new Date().toISOString();
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const self = this; // Capture class instance 'this'
 
       for (const tag of tags) {
         const tagId = `tag_${tag.name.toLowerCase().replace(/\s+/g, '_')}`;
-        
-        this.db.run(insertTagQuery, [tagId, tag.name, tag.color, now], (err) => {
+
+        self.db!.run(insertTagQuery, [tagId, tag.name, tag.color, now], function(this: sqlite3.RunResult, err: Error | null) { // Use self.db!
           if (err) {
             logger.error('Error creating tag:', err);
             reject(err);
             return;
           }
 
-          this.db.run(linkTagQuery, [thoughtId, tagId, now], (err) => {
+          self.db!.run(linkTagQuery, [thoughtId, tagId, now], function(this: sqlite3.RunResult, err: Error | null) { // Use self.db!
             if (err) {
               logger.error('Error linking tag to thought:', err);
               reject(err);
@@ -534,18 +554,24 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
       // First remove existing tag associations
       const deleteQuery = 'DELETE FROM thought_tags WHERE thought_bubble_id = ?';
-      
-      this.db.run(deleteQuery, [thoughtId], async (err) => {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const self = this; // Capture class instance 'this'
+
+      this.db.run(deleteQuery, [thoughtId], async function(this: sqlite3.RunResult, err: Error | null) {
         if (err) {
           reject(err);
           return;
         }
 
         try {
-          await this.associateTagsWithThought(thoughtId, tags);
+          await self.associateTagsWithThought(thoughtId, tags); // Use self
           resolve();
-        } catch (error) {
-          reject(error);
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            reject(error);
+          } else {
+            reject(new Error(`An unknown error occurred during thought tag update: ${String(error)}`));
+          }
         }
       });
     });

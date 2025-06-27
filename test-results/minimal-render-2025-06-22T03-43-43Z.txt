@@ -1,0 +1,75 @@
+
+> logomesh@0.1.0 test
+> vitest src/components/__tests__/minimal-render-test.test.jsx --run
+
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v3.2.4 /home/runner/workspace
+
+stdout | src/components/__tests__/minimal-render-test.test.jsx > Minimal React Rendering Test > can render a basic div element
+=== MINIMAL RENDER TEST ===
+Container innerHTML: <div data-testid="test-element">Hello World</div>
+Document body innerHTML: 
+
+stdout | src/components/__tests__/minimal-render-test.test.jsx > Minimal React Rendering Test > can render with React.createElement directly
+=== DIRECT ELEMENT TEST ===
+Container innerHTML: <div data-testid="direct-element">Direct Element</div>
+
+ ❯ src/components/__tests__/minimal-render-test.test.jsx (2 tests | 2 failed) 37ms
+   × Minimal React Rendering Test > can render a basic div element 31ms
+     → Unable to find an element by: [data-testid="test-element"]
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+   × Minimal React Rendering Test > can render with React.createElement directly 4ms
+     → Unable to find an element by: [data-testid="direct-element"]
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/__tests__/minimal-render-test.test.jsx > Minimal React Rendering Test > can render a basic div element
+TestingLibraryElementError: Unable to find an element by: [data-testid="test-element"]
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/minimal-render-test.test.jsx:16:19
+     14|     
+     15|     // This should work if React is functioning properly
+     16|     expect(screen.getByTestId('test-element')).toBeInTheDocument();
+       |                   ^
+     17|     expect(screen.getByText('Hello World')).toBeInTheDocument();
+     18|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/components/__tests__/minimal-render-test.test.jsx > Minimal React Rendering Test > can render with React.createElement directly
+TestingLibraryElementError: Unable to find an element by: [data-testid="direct-element"]
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/minimal-render-test.test.jsx:28:19
+     26|     console.log('Container innerHTML:', container.innerHTML);
+     27|     
+     28|     expect(screen.getByTestId('direct-element')).toBeInTheDocument();
+       |                   ^
+     29|   });
+     30| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  03:43:44
+   Duration  1.97s (transform 96ms, setup 82ms, collect 265ms, tests 37ms, environment 822ms, prepare 139ms)
+
