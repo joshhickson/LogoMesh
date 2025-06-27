@@ -1,0 +1,727 @@
+# Test Run Report - 2025-06-22T00:28:45.315Z
+
+## Summary
+- Exit Code: 1
+- Status: ❌ FAILED
+- Timestamp: 2025-06-22T00:28:45.315Z
+
+## Standard Output
+```
+
+> logomesh@0.1.0 test
+> vitest
+
+
+ DEV  v3.2.4 /home/runner/workspace
+
+ ❯ src/components/__tests__/ThoughtDetailPanel.test.jsx (4 tests | 4 failed) 176ms
+   × ThoughtDetailPanel > renders thought details correctly 132ms
+     → Unable to find an element with the display value: Test Thought.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+   × ThoughtDetailPanel > displays segment fields 21ms
+     → Unable to find an element with the text: type:. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+   × ThoughtDetailPanel > shows tags with correct colors 12ms
+     → Unable to find an element with the text: test. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+   × ThoughtDetailPanel > updates thought when edited 9ms
+     → Unable to find an element with the display value: Test Thought.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+stdout | src/components/__tests__/Sidebar.test.jsx > Sidebar > filters thoughts based on field name
+Error captured: {
+  type: [32m'JavaScript Error'[39m,
+  message: [32m'setActiveFilters is not a function'[39m,
+  filename: [32m'/home/runner/workspace/src/components/Sidebar.tsx'[39m,
+  lineno: [33m125[39m,
+  colno: [33m5[39m,
+  stack: [32m'TypeError: setActiveFilters is not a function\n'[39m +
+    [32m'    at /home/runner/workspace/src/components/Sidebar.tsx:125:5\n'[39m +
+    [32m'    at commitHookEffectListMount (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:23189:26)\n'[39m +
+    [32m'    at commitPassiveMountOnFiber (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:24970:11)\n'[39m +
+    [32m'    at commitPassiveMountEffects_complete (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:24930:9)\n'[39m +
+    [32m'    at commitPassiveMountEffects_begin (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:24917:7)\n'[39m +
+    [32m'    at commitPassiveMountEffects (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:24905:3)\n'[39m +
+    [32m'    at flushPassiveEffectsImpl (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27078:3)\n'[39m +
+    [32m'    at flushPassiveEffects (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27023:14)\n'[39m +
+    [32m'    at /home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:26808:9\n'[39m +
+    [32m'    at flushActQueue (/home/runner/workspace/node_modules/react/cjs/react.development.js:2667:24)'[39m,
+  timestamp: [32m'2025-06-22T00:26:47.584Z'[39m
+}
+Error captured: {
+  type: [32m'Console Error'[39m,
+  message: [32m'Error: Uncaught [TypeError: setActiveFilters is not a function]\n'[39m +
+    [32m'    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)\n'[39m +
+    [32m'    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)\n'[39m +
+    [32m'    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)\n'[39m +
+    [32m'    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)\n'[39m +
+    [32m'    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)\n'[39m +
+    [32m'    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)\n'[39m +
+    [32m'    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)\n'[39m +
+    [32m'    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)\n'[39m +
+    [32m'    at reportUncaughtErrorInDEV (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:22877:5)\n'[39m +
+    [32m'    at captureCommitPhaseError (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27165:5) TypeError: setActiveFilters is not a function'[39m,
+  timestamp: [32m'2025-06-22T00:26:47.591Z'[39m
+}
+Error captured: {
+  type: [32m'Console Error'[39m,
+  message: [32m'The above error occurred in the <Sidebar> component:\n'[39m +
+    [32m'\n'[39m +
+    [32m'    at Sidebar (/home/runner/workspace/src/components/Sidebar.tsx:8:3)\n'[39m +
+    [32m'\n'[39m +
+    [32m'Consider adding an error boundary to your tree to customize error handling behavior.\n'[39m +
+    [32m'Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.'[39m,
+  timestamp: [32m'2025-06-22T00:26:47.595Z'[39m
+}
+
+ ❯ src/components/__tests__/Sidebar.test.jsx (4 tests | 4 failed) 164ms
+   × Sidebar > renders all thoughts initially 82ms
+     → Unable to find an element with the text: Philosophy Thought. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+   × Sidebar > filters thoughts based on field name 56ms
+     → setActiveFilters is not a function
+   × Sidebar > resets filters when reset button clicked 12ms
+     → Unable to find an element with the text: Reset Filters. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+   × Sidebar > opens add thought modal when button clicked 12ms
+     → Unable to find an element with the text: Add New Thought. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ src/App.test.jsx (1 test | 1 failed) 132ms
+   × renders main app components 130ms
+     → Unable to find an element by: [data-testid="canvas-mock"]
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ src/utils/__tests__/dataHandlers.test.js (3 tests | 3 failed) 24ms
+   × Data Handling > Export Handler > exports with correct metadata structure 18ms
+     → expected "spy" to be called at least once
+   × Data Handling > Import Handler > normalizes legacy format thoughts 2ms
+     → document.createElement(...).onchange is not a function
+   × Data Handling > Import Handler > handles modern format with metadata 2ms
+     → document.createElement(...).onchange is not a function
+ ❯ src/components/__tests__/Canvas.test.jsx (2 tests | 2 failed) 46ms
+   × Canvas > renders without crashing 40ms
+     → Unable to find an element by: [data-testid="cytoscape-mock"]
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+   × Canvas > should handle thought creation 5ms
+     → screen.getByRole is not a function
+ ❯ src/components/__tests__/AddThoughtModal.test.jsx (6 tests | 6 failed) 146ms
+   × AddThoughtModal > renders all form elements 74ms
+     → Unable to find an element with the placeholder text of: Title
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+   × AddThoughtModal > validates title before submission 13ms
+     → Unable to find an element with the text: Add Thought. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+   × AddThoughtModal > adds and updates segments 10ms
+     → Unable to find an element with the text: + Add Segment. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+   × AddThoughtModal > handles tag addition 11ms
+     → Unable to find an element with the placeholder text of: Add Tag
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+   × AddThoughtModal > creates thought with correct data structure 21ms
+     → Unable to find an element with the placeholder text of: Title
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+   × handles voice input correctly 15ms
+     → Unable to find an element with the title: Start recording.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ src/services/__tests__/graphService.test.js (2 tests | 1 failed) 18ms
+   × graphService > findThoughtsByTag returns thoughts with matching tag 16ms
+     → expected [] to deeply equal [ { properties: { …(2) } } ]
+   ✓ graphService > findThoughtsByTag returns empty array for non-existent tag 1ms
+ ❯ src/utils/__tests__/VoiceInputManager.test.js (6 tests | 6 failed) 19ms
+   × VoiceInputManager > initializes with correct configuration 13ms
+     → Cannot read properties of undefined (reading 'continuous')
+   × VoiceInputManager > handles start/stop listening correctly 1ms
+     → Cannot read properties of undefined (reading 'start')
+   × VoiceInputManager > handles speech recognition results 1ms
+     → Cannot read properties of undefined (reading 'onresult')
+   × VoiceInputManager > handles speech recognition errors 0ms
+     → Cannot read properties of undefined (reading 'onerror')
+   × VoiceInputManager > checks browser support correctly 1ms
+     → window.webkitSpeechRecognition is not a constructor
+   × VoiceInputManager > should initialize with default options 1ms
+     → window.webkitSpeechRecognition is not a constructor
+ ✓ src/utils/__tests__/eventBus.test.js (3 tests) 7ms
+
+ Test Files  8 failed | 1 passed (9)
+      Tests  27 failed | 4 passed (31)
+   Start at  00:26:44
+   Duration  7.62s (transform 602ms, setup 410ms, collect 2.89s, tests 732ms, environment 11.43s, prepare 1.98s)
+
+ FAIL  Tests failed. Watching for file changes...
+       press h to show help, press q to quit
+
+```
+
+## Standard Error
+```
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+stderr | src/components/__tests__/Sidebar.test.jsx > Sidebar > filters thoughts based on field name
+Error: Uncaught [TypeError: setActiveFilters is not a function]
+    at reportException (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/home/runner/workspace/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at reportUncaughtErrorInDEV (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:22877:5)
+    at captureCommitPhaseError (/home/runner/workspace/node_modules/react-dom/cjs/react-dom.development.js:27165:5) TypeError: setActiveFilters is not a function
+    at [90m/home/runner/workspace/[39msrc/components/Sidebar.tsx:125:5
+    at commitHookEffectListMount [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:23189:26[90m)[39m
+    at commitPassiveMountOnFiber [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:24970:11[90m)[39m
+    at commitPassiveMountEffects_complete [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:24930:9[90m)[39m
+    at commitPassiveMountEffects_begin [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:24917:7[90m)[39m
+    at commitPassiveMountEffects [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:24905:3[90m)[39m
+    at flushPassiveEffectsImpl [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:27078:3[90m)[39m
+    at flushPassiveEffects [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:27023:14[90m)[39m
+    at [90m/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:26808:9
+    at flushActQueue [90m(/home/runner/workspace/[39mnode_modules/[4mreact[24m/cjs/react.development.js:2667:24[90m)[39m
+The above error occurred in the <Sidebar> component:
+
+    at Sidebar (/home/runner/workspace/src/components/Sidebar.tsx:8:3)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+stderr | src/App.test.jsx > renders main app components
+Backend API not available: Error: [vitest] No "apiService" export is defined on the "./services/apiService" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+    at VitestMocker.createError [90m(file:///home/runner/workspace/[39mnode_modules/[4mvitest[24m/dist/chunks/execute.B7h3T_Hc.js:284:17[90m)[39m
+    at Object.get [90m(file:///home/runner/workspace/[39mnode_modules/[4mvitest[24m/dist/chunks/execute.B7h3T_Hc.js:330:16[90m)[39m
+    at loadInitialData [90m(/home/runner/workspace/[39msrc/App.jsx:103:40[90m)[39m
+    at [90m/home/runner/workspace/[39msrc/App.jsx:112:5
+    at commitHookEffectListMount [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:23189:26[90m)[39m
+    at commitPassiveMountOnFiber [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:24970:11[90m)[39m
+    at commitPassiveMountEffects_complete [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:24930:9[90m)[39m
+    at commitPassiveMountEffects_begin [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:24917:7[90m)[39m
+    at commitPassiveMountEffects [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:24905:3[90m)[39m
+    at flushPassiveEffectsImpl [90m(/home/runner/workspace/[39mnode_modules/[4mreact-dom[24m/cjs/react-dom.development.js:27078:3[90m)[39m {
+  codeFrame: [32m'vi\x1B[33m.\x1B[39m\x1B[34mmock\x1B[39m(\x1B[35mimport\x1B[39m(\x1B[32m"./services/apiService"\x1B[39m)\x1B[33m,\x1B[39m \x1B[35masync\x1B[39m (importOriginal) \x1B[33m=>\x1B[39m {\n'[39m +
+    [32m'  \x1B[35mconst\x1B[39m actual \x1B[33m=\x1B[39m \x1B[35mawait\x1B[39m \x1B[34mimportOriginal\x1B[39m()\n'[39m +
+    [32m'  \x1B[35mreturn\x1B[39m {\n'[39m +
+    [32m'    \x1B[33m...\x1B[39mactual\x1B[33m,\x1B[39m\n'[39m +
+    [32m'    \x1B[90m// your mocked methods\x1B[39m\n'[39m +
+    [32m'  }\n'[39m +
+    [32m'})'[39m
+}
+
+stderr | src/components/__tests__/Canvas.test.jsx > Canvas > renders without crashing
+Warning: A suspended resource finished loading inside a test, but the event was not wrapped in act(...).
+
+When testing, code that resolves suspended data should be wrapped into act(...):
+
+act(() => {
+  /* finish loading suspended data */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 27 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/App.test.jsx > renders main app components
+TestingLibraryElementError: Unable to find an element by: [data-testid="canvas-mock"]
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/App.test.jsx:32:17
+     30| test('renders main app components', () => {
+     31|   render(<App />);
+     32|   expect(screen.getByTestId('canvas-mock')).toBeInTheDocument();
+       |                 ^
+     33| });
+     34| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/27]⎯
+
+ FAIL  src/components/__tests__/AddThoughtModal.test.jsx > AddThoughtModal > renders all form elements
+TestingLibraryElementError: Unable to find an element with the placeholder text of: Title
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/AddThoughtModal.test.jsx:32:19
+     30|     );
+     31| 
+     32|     expect(screen.getByPlaceholderText('Title')).toBeInTheDocument();
+       |                   ^
+     33|     expect(screen.getByPlaceholderText('Description')).toBeInTheDocume…
+     34|     expect(screen.getByPlaceholderText('Add Tag')).toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/27]⎯
+
+ FAIL  src/components/__tests__/AddThoughtModal.test.jsx > AddThoughtModal > validates title before submission
+TestingLibraryElementError: Unable to find an element with the text: Add Thought. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/AddThoughtModal.test.jsx:48:33
+     46|     );
+     47| 
+     48|     const submitButton = screen.getByText('Add Thought');
+       |                                 ^
+     49|     fireEvent.click(submitButton);
+     50| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/27]⎯
+
+ FAIL  src/components/__tests__/AddThoughtModal.test.jsx > AddThoughtModal > adds and updates segments
+TestingLibraryElementError: Unable to find an element with the text: + Add Segment. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/AddThoughtModal.test.jsx:67:37
+     65|     );
+     66| 
+     67|     const addSegmentButton = screen.getByText('+ Add Segment');
+       |                                     ^
+     68|     fireEvent.click(addSegmentButton);
+     69| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/27]⎯
+
+ FAIL  src/components/__tests__/AddThoughtModal.test.jsx > AddThoughtModal > handles tag addition
+TestingLibraryElementError: Unable to find an element with the placeholder text of: Add Tag
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/AddThoughtModal.test.jsx:90:29
+     88|     );
+     89| 
+     90|     const tagInput = screen.getByPlaceholderText('Add Tag');
+       |                             ^
+     91|     fireEvent.change(tagInput, { target: { value: 'test-tag' } });
+     92|     fireEvent.change(tagInput, { target: { value: '' } });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/27]⎯
+
+ FAIL  src/components/__tests__/AddThoughtModal.test.jsx > AddThoughtModal > creates thought with correct data structure
+TestingLibraryElementError: Unable to find an element with the placeholder text of: Title
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/AddThoughtModal.test.jsx:107:29
+    105|     );
+    106| 
+    107|     fireEvent.change(screen.getByPlaceholderText('Title'), {
+       |                             ^
+    108|       target: { value: 'Test Title' },
+    109|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/27]⎯
+
+ FAIL  src/components/__tests__/AddThoughtModal.test.jsx > handles voice input correctly
+TestingLibraryElementError: Unable to find an element with the title: Start recording.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/AddThoughtModal.test.jsx:161:21
+    159|   );
+    160| 
+    161|   const micButton = getByTitle('Start recording');
+       |                     ^
+    162|   const description = getByPlaceholderText('Description');
+    163| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/27]⎯
+
+ FAIL  src/components/__tests__/Canvas.test.jsx > Canvas > renders without crashing
+TestingLibraryElementError: Unable to find an element by: [data-testid="cytoscape-mock"]
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/Canvas.test.jsx:23:12
+     21|       </Suspense>
+     22|     );
+     23|     expect(getByTestId('cytoscape-mock')).toBeInTheDocument();
+       |            ^
+     24|   });
+     25| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/27]⎯
+
+ FAIL  src/components/__tests__/Canvas.test.jsx > Canvas > should handle thought creation
+TypeError: screen.getByRole is not a function
+ ❯ src/components/__tests__/Canvas.test.jsx:29:30
+     27|     render(<Canvas />);
+     28| 
+     29|     const addButton = screen.getByRole('button', { name: /add thought/…
+       |                              ^
+     30|     fireEvent.click(addButton);
+     31| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/27]⎯
+
+ FAIL  src/components/__tests__/Sidebar.test.jsx > Sidebar > renders all thoughts initially
+TestingLibraryElementError: Unable to find an element with the text: Philosophy Thought. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/Sidebar.test.jsx:44:19
+     42|   test('renders all thoughts initially', () => {
+     43|     render(<Sidebar {...mockProps} />);
+     44|     expect(screen.getByText('Philosophy Thought')).toBeInTheDocument();
+       |                   ^
+     45|     expect(screen.getByText('AI Thought')).toBeInTheDocument();
+     46|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/27]⎯
+
+ FAIL  src/components/__tests__/Sidebar.test.jsx > Sidebar > filters thoughts based on field name
+TypeError: setActiveFilters is not a function
+ ❯ src/components/Sidebar.tsx:125:5
+    123|     const ids = filteredThoughts.map((t) => t.thought_bubble_id);
+    124|     setFilteredThoughtIds(ids);
+    125|     setActiveFilters(ids);
+       |     ^
+    126|   }, [filteredThoughts, setActiveFilters]);
+    127| 
+ ❯ commitHookEffectListMount node_modules/react-dom/cjs/react-dom.development.js:23189:26
+ ❯ commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom.development.js:24970:11
+ ❯ commitPassiveMountEffects_complete node_modules/react-dom/cjs/react-dom.development.js:24930:9
+ ❯ commitPassiveMountEffects_begin node_modules/react-dom/cjs/react-dom.development.js:24917:7
+ ❯ commitPassiveMountEffects node_modules/react-dom/cjs/react-dom.development.js:24905:3
+ ❯ flushPassiveEffectsImpl node_modules/react-dom/cjs/react-dom.development.js:27078:3
+ ❯ flushPassiveEffects node_modules/react-dom/cjs/react-dom.development.js:27023:14
+ ❯ node_modules/react-dom/cjs/react-dom.development.js:26808:9
+ ❯ flushActQueue node_modules/react/cjs/react.development.js:2667:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/27]⎯
+
+ FAIL  src/components/__tests__/Sidebar.test.jsx > Sidebar > resets filters when reset button clicked
+TestingLibraryElementError: Unable to find an element with the text: Reset Filters. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/Sidebar.test.jsx:67:32
+     65|   test('resets filters when reset button clicked', () => {
+     66|     render(<Sidebar {...mockProps} />);
+     67|     const resetButton = screen.getByText('Reset Filters');
+       |                                ^
+     68|     fireEvent.click(resetButton);
+     69|     expect(mockProps.setActiveFilters).toHaveBeenCalledWith([]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/27]⎯
+
+ FAIL  src/components/__tests__/Sidebar.test.jsx > Sidebar > opens add thought modal when button clicked
+TestingLibraryElementError: Unable to find an element with the text: Add New Thought. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/Sidebar.test.jsx:74:30
+     72|   test('opens add thought modal when button clicked', () => {
+     73|     render(<Sidebar {...mockProps} />);
+     74|     const addButton = screen.getByText('Add New Thought');
+       |                              ^
+     75|     fireEvent.click(addButton);
+     76|     expect(mockProps.setShowModal).toHaveBeenCalledWith(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/27]⎯
+
+ FAIL  src/components/__tests__/ThoughtDetailPanel.test.jsx > ThoughtDetailPanel > renders thought details correctly
+TestingLibraryElementError: Unable to find an element with the display value: Test Thought.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/ThoughtDetailPanel.test.jsx:26:19
+     24|     render(<ThoughtDetailPanel thought={mockThought} onUpdate={mockOnU…
+     25| 
+     26|     expect(screen.getByDisplayValue('Test Thought')).toBeInTheDocument…
+       |                   ^
+     27|     expect(screen.getByText('Test description')).toBeInTheDocument();
+     28|     expect(screen.getByDisplayValue('Test Segment')).toBeInTheDocument…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/27]⎯
+
+ FAIL  src/components/__tests__/ThoughtDetailPanel.test.jsx > ThoughtDetailPanel > displays segment fields
+TestingLibraryElementError: Unable to find an element with the text: type:. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/ThoughtDetailPanel.test.jsx:34:19
+     32|     render(<ThoughtDetailPanel thought={mockThought} onUpdate={mockOnU…
+     33| 
+     34|     expect(screen.getByText('type:')).toBeInTheDocument();
+       |                   ^
+     35|     expect(screen.getByDisplayValue('note')).toBeInTheDocument();
+     36|     expect(screen.getByText('location:')).toBeInTheDocument();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/27]⎯
+
+ FAIL  src/components/__tests__/ThoughtDetailPanel.test.jsx > ThoughtDetailPanel > shows tags with correct colors
+TestingLibraryElementError: Unable to find an element with the text: test. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/ThoughtDetailPanel.test.jsx:43:24
+     41|     render(<ThoughtDetailPanel thought={mockThought} onUpdate={mockOnU…
+     42| 
+     43|     const tag = screen.getByText('test');
+       |                        ^
+     44|     expect(tag).toHaveStyle({ color: 'rgb(16, 185, 129)' });
+     45|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/27]⎯
+
+ FAIL  src/components/__tests__/ThoughtDetailPanel.test.jsx > ThoughtDetailPanel > updates thought when edited
+TestingLibraryElementError: Unable to find an element with the display value: Test Thought.
+
+Ignored nodes: comments, script, style
+[36m<body />[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/components/__tests__/ThoughtDetailPanel.test.jsx:50:31
+     48|     render(<ThoughtDetailPanel thought={mockThought} onUpdate={mockOnU…
+     49| 
+     50|     const titleInput = screen.getByDisplayValue('Test Thought');
+       |                               ^
+     51|     fireEvent.change(titleInput, { target: { value: 'Updated Title' } …
+     52| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/27]⎯
+
+ FAIL  src/services/__tests__/graphService.test.js > graphService > findThoughtsByTag returns thoughts with matching tag
+AssertionError: expected [] to deeply equal [ { properties: { …(2) } } ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [[39m
+[32m-   {[39m
+[32m-     "properties": {[39m
+[32m-       "tags": [[39m
+[32m-         {[39m
+[32m-           "color": "#000",[39m
+[32m-           "name": "tag1",[39m
+[32m-         },[39m
+[32m-       ],[39m
+[32m-       "thought_bubble_id": "01HN5G4K8PMXQ0VGWX7CTBZ3YV",[39m
+[32m-     },[39m
+[32m-   },[39m
+[32m- ][39m
+[31m+ [][39m
+
+ ❯ src/services/__tests__/graphService.test.js:17:21
+     15|   test('findThoughtsByTag returns thoughts with matching tag', async (…
+     16|     const results = await graphService.findThoughtsByTag('tag1');
+     17|     expect(results).toEqual([{ properties: mockThoughts[0] }]);
+       |                     ^
+     18|   });
+     19| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/27]⎯
+
+ FAIL  src/utils/__tests__/VoiceInputManager.test.js > VoiceInputManager > initializes with correct configuration
+TypeError: Cannot read properties of undefined (reading 'continuous')
+ ❯ src/utils/__tests__/VoiceInputManager.test.js:28:28
+     26| 
+     27|     expect(localManager.isListening).toBe(false);
+     28|     expect(mockRecognition.continuous).toBe(true);
+       |                            ^
+     29|     expect(mockRecognition.interimResults).toBe(true);
+     30|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/27]⎯
+
+ FAIL  src/utils/__tests__/VoiceInputManager.test.js > VoiceInputManager > handles start/stop listening correctly
+TypeError: Cannot read properties of undefined (reading 'start')
+ ❯ src/utils/__tests__/VoiceInputManager.test.js:41:28
+     39| 
+     40|     localManager.startListening();
+     41|     expect(mockRecognition.start).toHaveBeenCalled();
+       |                            ^
+     42|     expect(localManager.isListening).toBe(true);
+     43| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/27]⎯
+
+ FAIL  src/utils/__tests__/VoiceInputManager.test.js > VoiceInputManager > handles speech recognition results
+TypeError: Cannot read properties of undefined (reading 'onresult')
+ ❯ src/utils/__tests__/VoiceInputManager.test.js:59:21
+     57|       resultIndex: 0,
+     58|     };
+     59|     mockRecognition.onresult(mockResults);
+       |                     ^
+     60|     expect(onTranscriptUpdate).toHaveBeenCalledWith('Hello world.', tr…
+     61| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/27]⎯
+
+ FAIL  src/utils/__tests__/VoiceInputManager.test.js > VoiceInputManager > handles speech recognition errors
+TypeError: Cannot read properties of undefined (reading 'onerror')
+ ❯ src/utils/__tests__/VoiceInputManager.test.js:88:21
+     86|     new VoiceInputManager(onTranscriptUpdate, onError);
+     87| 
+     88|     mockRecognition.onerror({ error: 'network' });
+       |                     ^
+     89| 
+     90|     expect(onError).toHaveBeenCalledWith('network');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/27]⎯
+
+ FAIL  src/utils/__tests__/VoiceInputManager.test.js > VoiceInputManager > checks browser support correctly
+TypeError: window.webkitSpeechRecognition is not a constructor
+ ❯ VoiceInputManager.initSpeechRecognition src/utils/VoiceInputManager.js:12:26
+     10|   initSpeechRecognition() {
+     11|     if ('webkitSpeechRecognition' in window) {
+     12|       this.recognition = new window.webkitSpeechRecognition();
+       |                          ^
+     13|       this.recognition.continuous = true;
+     14|       this.recognition.interimResults = true;
+ ❯ new VoiceInputManager src/utils/VoiceInputManager.js:7:10
+ ❯ src/utils/__tests__/VoiceInputManager.test.js:104:32
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/27]⎯
+
+ FAIL  src/utils/__tests__/VoiceInputManager.test.js > VoiceInputManager > should initialize with default options
+TypeError: window.webkitSpeechRecognition is not a constructor
+ ❯ VoiceInputManager.initSpeechRecognition src/utils/VoiceInputManager.js:12:26
+     10|   initSpeechRecognition() {
+     11|     if ('webkitSpeechRecognition' in window) {
+     12|       this.recognition = new window.webkitSpeechRecognition();
+       |                          ^
+     13|       this.recognition.continuous = true;
+     14|       this.recognition.interimResults = true;
+ ❯ new VoiceInputManager src/utils/VoiceInputManager.js:7:10
+ ❯ src/utils/__tests__/VoiceInputManager.test.js:109:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/27]⎯
+
+ FAIL  src/utils/__tests__/dataHandlers.test.js > Data Handling > Export Handler > exports with correct metadata structure
+AssertionError: expected "spy" to be called at least once
+ ❯ src/utils/__tests__/dataHandlers.test.js:78:42
+     76|       const anchorNode = appendChildSpy.mock.calls[0][0];
+     77|       expect(anchorNode.download).toBeDefined();
+     78|       expect(global.URL.createObjectURL).toHaveBeenCalled();
+       |                                          ^
+     79|     });
+     80|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/27]⎯
+
+ FAIL  src/utils/__tests__/dataHandlers.test.js > Data Handling > Import Handler > normalizes legacy format thoughts
+TypeError: document.createElement(...).onchange is not a function
+ ❯ src/utils/__tests__/dataHandlers.test.js:105:32
+    103| 
+    104|       const changeEvent = { target: { files: [new Blob()] } };
+    105|       document.createElement().onchange(changeEvent);
+       |                                ^
+    106| 
+    107|       fileReader.onload({ target: { result: fileReader.result } });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/27]⎯
+
+ FAIL  src/utils/__tests__/dataHandlers.test.js > Data Handling > Import Handler > handles modern format with metadata
+TypeError: document.createElement(...).onchange is not a function
+ ❯ src/utils/__tests__/dataHandlers.test.js:153:32
+    151| 
+    152|       const changeEvent = { target: { files: [new Blob()] } };
+    153|       document.createElement().onchange(changeEvent);
+       |                                ^
+    154| 
+    155|       fileReader.onload({ target: { result: fileReader.result } });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/27]⎯
+
+
+```
+
+## Environment Info
+- Node Version: v20.12.2
+- Platform: linux
+- Working Directory: /home/runner/workspace
+
+## Quick Analysis
+✅ 1 tests passed
+❌ 4 tests failed
+⚠️  Vite CJS deprecation warning detected
+🎤 Speech recognition test issues detected
+⏱️  Test duration: 7.62s (good)

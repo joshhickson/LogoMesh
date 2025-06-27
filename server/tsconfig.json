@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "outDir": "./dist", // Output within server/dist
+    "rootDir": "..",   // Project root /app
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true
+    // baseUrl and paths removed for simplicity
+  },
+  "include": [
+    "src/**/*",
+    "../core/**/*",
+    "../contracts/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "../node_modules",
+    "../src"
+  ]
+}

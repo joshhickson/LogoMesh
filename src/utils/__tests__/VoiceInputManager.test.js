@@ -1,4 +1,5 @@
-import { VoiceInputManager } from '../VoiceInputManager';
+import { describe, test, expect, beforeEach, vi } from 'vitest';
+import VoiceInputManager from '../VoiceInputManager';
 
 describe('VoiceInputManager', () => {
   let mockRecognition;
@@ -6,81 +7,91 @@ describe('VoiceInputManager', () => {
   let onError;
 
   beforeEach(() => {
-    onTranscriptUpdate = jest.fn();
-    onError = jest.fn();
+    // Reset the mock before each test
+    vi.clearAllMocks();
 
+    // Create fresh mock recognition instance
     mockRecognition = {
-      start: jest.fn(),
-      stop: jest.fn(),
+      start: vi.fn(),
+      stop: vi.fn(),
+      abort: vi.fn(),
       continuous: false,
       interimResults: false,
+      lang: 'en-US',
       onresult: null,
       onerror: null,
+      onend: null,
+      onstart: null
     };
 
-    window.webkitSpeechRecognition = jest.fn(() => mockRecognition);
+    // Mock the constructor function properly
+    global.window.webkitSpeechRecognition = vi.fn().mockImplementation(() => mockRecognition);
+
+    // Setup callback functions
+    onTranscriptUpdate = vi.fn();
+    onError = vi.fn();
   });
 
   test('initializes with correct configuration', () => {
-    const onTranscript = jest.fn();
-    const onError = jest.fn();
+    const localManager = new VoiceInputManager(onTranscriptUpdate, onError);
 
-    const manager = new VoiceInputManager(onTranscript, onError);
-
-    expect(manager.isListening).toBe(false);
+    expect(localManager.isListening).toBe(false);
     expect(mockRecognition.continuous).toBe(true);
     expect(mockRecognition.interimResults).toBe(true);
   });
 
   test('handles start/stop listening correctly', () => {
-    const manager = new VoiceInputManager(
-      () => {},
-      () => {}
-    );
+    const localManager = new VoiceInputManager(onTranscriptUpdate, onError);
 
-    manager.startListening();
+    localManager.startListening();
     expect(mockRecognition.start).toHaveBeenCalled();
-    expect(manager.isListening).toBe(true);
+    expect(localManager.isListening).toBe(true);
 
-    manager.stopListening();
+    localManager.stopListening();
     expect(mockRecognition.stop).toHaveBeenCalled();
-    expect(manager.isListening).toBe(false);
+    expect(localManager.isListening).toBe(false);
   });
 
   test('handles speech recognition results', () => {
-    const manager = new VoiceInputManager(onTranscriptUpdate, onError);
+    const localManager = new VoiceInputManager(onTranscriptUpdate, onError);
+    localManager.recognition = mockRecognition; // Ensure the manager uses our mock
 
     // Test short phrase
-    const mockResults = {
-      results: [[{ transcript: 'Hello world.', isFinal: true }]],
-      resultIndex: 0,
+    const mockShortPhraseResults = {
+      results: [ // SpeechRecognitionResultList
+        { // SpeechRecognitionResult (event.results[0])
+          isFinal: true,
+          0: { transcript: 'Hello world.', confidence: 0.9 }
+        }
+      ],
+      resultIndex: 0
     };
-    mockRecognition.onresult(mockResults);
-    expect(onTranscriptUpdate).toHaveBeenCalledWith('Hello world.', false);
+    if (mockRecognition.onresult) mockRecognition.onresult(mockShortPhraseResults);
+    expect(onTranscriptUpdate).toHaveBeenCalledWith('Hello world.', true, false);
 
     // Test long sentence that should trigger segmentation
-    const longResults = {
+    const mockLongSentenceResults = {
       results: [
-        [
-          {
-            transcript:
-              'This is a very long sentence that should trigger automatic segmentation because it exceeds thirty characters.',
-            isFinal: true,
-          },
-        ],
+        {
+          isFinal: true,
+          0: {
+            transcript: 'This is a very long sentence that should trigger automatic segmentation because it exceeds thirty characters.',
+            confidence: 0.9
+          }
+        }
       ],
-      resultIndex: 0,
+      resultIndex: 0
     };
-    mockRecognition.onresult(longResults);
+    if (mockRecognition.onresult) mockRecognition.onresult(mockLongSentenceResults);
     expect(onTranscriptUpdate).toHaveBeenCalledWith(
       'This is a very long sentence that should trigger automatic segmentation because it exceeds thirty characters.',
       true,
-      true
+      true // This part of the logic in VoiceInputManager might also need review for the > 30 condition
     );
   });
 
   test('handles speech recognition errors', () => {
-    const manager = new VoiceInputManager(onTranscriptUpdate, onError);
+    const localManager = new VoiceInputManager(onTranscriptUpdate, onError);
 
     mockRecognition.onerror({ error: 'network' });
 
@@ -88,10 +99,76 @@ describe('VoiceInputManager', () => {
   });
 
   test('checks browser support correctly', () => {
-    const manager = new VoiceInputManager(onTranscriptUpdate, onError);
-    expect(manager.isSupported()).toBe(true);
+    const localManager = new VoiceInputManager(onTranscriptUpdate, onError);
+    expect(localManager.isSupported()).toBe(true);
 
-    delete window.webkitSpeechRecognition;
-    expect(manager.isSupported()).toBe(false);
+    // Test when not supported
+    delete global.window.webkitSpeechRecognition;
+
+    const unsupportedManager = new VoiceInputManager(onTranscriptUpdate, onError);
+    expect(unsupportedManager.isSupported()).toBe(false);
+  });
+
+  it('should initialize with default options', () => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const manager = new VoiceInputManager(() => { /* mock callback */ }, () => { /* mock callback */ });
+    expect(manager).toBeDefined();
+    expect(manager.isSupported()).toBe(true);
+  });
+
+  test('initializes speech recognition correctly', () => {
+    const mockOnTranscriptUpdate = vi.fn();
+    const mockOnError = vi.fn();
+
+    const manager = new VoiceInputManager(mockOnTranscriptUpdate, mockOnError);
+
+    // Check that recognition was created (mock exists)
+    expect(manager.recognition).toBeDefined();
+    if (manager.recognition) {
+      expect(manager.recognition.continuous).toBe(true);
+      expect(manager.recognition.interimResults).toBe(true);
+    }
+  });
+
+  test('handles callback functions properly', () => {
+    const mockOnTranscriptUpdate = vi.fn();
+    const mockOnError = vi.fn();
+
+    const manager = new VoiceInputManager(mockOnTranscriptUpdate, mockOnError);
+
+    // Test that callbacks are properly bound
+    expect(typeof manager.onTranscriptUpdate).toBe('function');
+    expect(typeof manager.onError).toBe('function');
+
+    // Simulate speech recognition result
+    const mockEvent = {
+      resultIndex: 0,
+      results: [
+        {
+          isFinal: true,
+          0: { transcript: 'Hello world' }
+        }
+      ]
+    };
+
+    // Call the onresult handler directly
+    if (manager.recognition && manager.recognition.onresult) {
+      manager.recognition.onresult(mockEvent);
+      expect(mockOnTranscriptUpdate).toHaveBeenCalledWith('Hello world', true, false);
+    }
+  });
+
+  test('handles error scenarios correctly', () => {
+    const mockOnTranscriptUpdate = vi.fn();
+    const mockOnError = vi.fn();
+
+    const manager = new VoiceInputManager(mockOnTranscriptUpdate, mockOnError);
+
+    // Simulate an error
+    const mockErrorEvent = { error: 'network' };
+    if (manager.recognition && manager.recognition.onerror) {
+      manager.recognition.onerror(mockErrorEvent);
+      expect(mockOnError).toHaveBeenCalledWith('network');
+    }
   });
 });

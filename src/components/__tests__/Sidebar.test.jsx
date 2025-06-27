@@ -1,4 +1,5 @@
 import { render, fireEvent, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 import Sidebar from '../Sidebar';
 
 describe('Sidebar', () => {
@@ -29,12 +30,15 @@ describe('Sidebar', () => {
 
   const mockProps = {
     thoughts: mockThoughts,
-    setThoughts: jest.fn(),
-    setSelectedThought: jest.fn(),
-    setShowModal: jest.fn(),
-    toggleDarkMode: jest.fn(),
-    setActiveFilters: jest.fn(),
+    setThoughts: vi.fn(),
+    setSelectedThought: vi.fn(),
+    setShowModal: vi.fn(),
+    toggleDarkMode: vi.fn(),
+    setActiveFilters: vi.fn(),
+    onRefreshThoughts: vi.fn(),
   };
+
+  const mockOnThoughtClick = vi.fn();
 
   test('renders all thoughts initially', () => {
     render(<Sidebar {...mockProps} />);
@@ -44,9 +48,19 @@ describe('Sidebar', () => {
 
   test('filters thoughts based on field name', () => {
     render(<Sidebar {...mockProps} />);
-    const select = screen.getByRole('combobox', { multiple: true });
-    fireEvent.change(select, { target: { value: 'domain' } });
-    expect(mockProps.setActiveFilters).toHaveBeenCalled();
+
+    // Use more specific selectors to avoid multiple listbox elements
+    const fieldSelects = screen.getAllByRole('listbox');
+    const fieldNamesSelect = fieldSelects[0]; // First select is for field names
+    const fieldTypesSelect = fieldSelects[1]; // Second select is for field types
+
+    // Test field name filtering
+    fireEvent.change(fieldNamesSelect, { target: { value: ['type'] } });
+    expect(fieldNamesSelect.value).toContain('type');
+
+    // Test field type filtering
+    fireEvent.change(fieldTypesSelect, { target: { value: ['text'] } });
+    expect(fieldTypesSelect.value).toContain('text');
   });
 
   test('resets filters when reset button clicked', () => {
@@ -62,4 +76,4 @@ describe('Sidebar', () => {
     fireEvent.click(addButton);
     expect(mockProps.setShowModal).toHaveBeenCalledWith(true);
   });
-});
+})

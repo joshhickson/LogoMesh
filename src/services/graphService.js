@@ -85,6 +85,16 @@ class GraphService {
     }
     return 'text';
   }
+
+  getFieldType(fieldName) {
+    // Check if we have a stored field type
+    if (this.fieldTypes.has(fieldName)) {
+      return this.fieldTypes.get(fieldName);
+    }
+    
+    // Default to text if no type information available
+    return 'text';
+  }
 }
 
 export const graphService = new GraphService();
