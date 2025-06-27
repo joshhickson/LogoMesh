@@ -1,0 +1,39 @@
+### Brutal-Honest Review v5 — *Micro-Deltas, Then Ship*
+
+You’re 95 % locked.  Below are the last rats in the walls.  Feed the **delta block** to Claude and freeze the spec.
+
+---
+
+## 0 — Meta-directive for Claude
+
+> **Apply exactly what follows. No scope creep, no re-phrasing, keep headings unchanged unless stated.**
+
+---
+
+## 1 — Pin-Prick Fixes
+
+| Location                | Issue                                                                                | Exact Patch                                                                                                   |                                |
+| ----------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| **Week-1 Task 1 Goals** | “Enable TypeScript strict *mode* with CI gate” but ESLint already failing JS quotes. | Append bullet: “Integrate `eslint-plugin-import` + `@typescript-eslint/recommended` rules; CI fails on lint.” |                                |
+| **Secrets Stub**        | You blocked API keys but not AWS creds.                                              | Add pattern: \`AWS\_(ACCESS                                                                                   | SECRET)\_KEY=\`, same CI grep. |
+| **Task 4 Verification** | Missing timeout spec on starvation test.                                             | Add: “Queue wait >5 s **with 1 busy runner** fails gate.” (mirror Success list)                               |                                |
+| **Task 6 Goals**        | “Add at-least-once delivery” → needs idempotent handler.                             | Append: “Implement message `deliveryId` + dedupe table in memory.”                                            |                                |
+| **Task 8 Goals**        | Pipeline JSON schema not versioned.                                                  | Add bullet: “Include `schemaVersion` field; reject unknown versions.”                                         |                                |
+| **Load Test Gates**     | Need baseline latency KPI.                                                           | Add: “p50 API latency ≤250 ms, p95 ≤600 ms under 250 rpm run.”                                                |                                |
+| **Success Criteria**    | Missing lint gate.                                                                   | Add: “✅ ESLint passes with zero warnings in core/server.”                                                     |                                |
+
+---
+
+## 2 — Tiny Warnings (Keep in Mind)
+
+* **vm2 + Replit** occasionally segfaults on heavy memory. Have a Docker compose fallback ready.
+* SQLite **WAL mode** might be required at 250 rpm; toggle if write locks spike.
+* Your **`clinic flame`** run needs Node ≥ 18; confirm Replit image.
+
+---
+
+### Bottom Line
+
+Apply the delta, then stop planning and start coding.  The spine is ready to pour concrete.
+
+Ship.
