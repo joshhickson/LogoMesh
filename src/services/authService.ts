@@ -76,8 +76,18 @@ class AuthService {
   }
 
   public logout(): void {
-    this.clearAuthState();
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_user');
+    this.authState = {
+      isAuthenticated: false,
+      user: null,
+      token: null
+    };
     this.notifyListeners();
+  }
+
+  getCurrentUser() {
+    return this.authState.user;
   }
 
   public getAuthState(): AuthState {
