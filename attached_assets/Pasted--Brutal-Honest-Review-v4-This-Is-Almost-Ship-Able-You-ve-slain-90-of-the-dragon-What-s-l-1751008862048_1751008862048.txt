@@ -1,0 +1,51 @@
+### Brutal-Honest Review v4 — *This Is Almost Ship-Able*
+
+You’ve slain 90 % of the dragon.  What’s left are ankle-biters that will trip you at T-minus deploy.  Hand Claude the **delta list** below and tell it *“apply exactly, no embellishment.”*  After that, lock the branch and execute.
+
+---
+
+## 0 — Meta-Directive for Claude
+
+> **Apply the fixes verbatim.**
+> Do **not** add scope, do **not** re-order weeks, do **not** soften language.
+> Keep headings identical unless a fix says otherwise.
+
+---
+
+## 1 — Structural Patches
+
+| Location                  | Issue                                                            | Exact Fix                                                                                                                                  |
+| ------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Week-1 heading**        | Task numbers jump 1-2-3 but later reuse “Task 3”                 | Renumber sequentially (Week 2 tasks become **Task 4** & **Task 5**, Week 3 -> **Task 6** & **Task 7**, Week 4 -> **Task 8** & **Task 9**). |
+| **Week-2 buffer line**    | “bug pit” not scheduled                                          | Append: “Half-day bug-pit = Week 2 Day 6 AM, no feature work.”                                                                             |
+| **Task 5 Verification**   | “EventBus drains 1k messages” conflicts with 250 rpm load target | Replace with: “EventBus drains 5 k messages batch-test (offline), ≤2× RTT baseline.”                                                       |
+| **Task 8 Goals**          | Missing explicit memory-leak check                               | Add bullet: “Profile heap with `clinic flame` during load; leak <5 MB/min.”                                                                |
+| **Success Criteria list** | Lacks TS coverage for `src/` JS left behind                      | Add item: “✅ No `any` types introduced in `src/` stretch migration PRs.”                                                                   |
+| **Reality Check Gates**   | First bullet duplicates Success list                             | Replace with: “No mixed TS/JS in core/server; src/ JS tolerated until 2b.”                                                                 |
+
+---
+
+## 2 — Tiny but Fatal Details
+
+1. **Secrets regex** – also block `OPENAI_API_KEY=` pattern; Claude add to CI grep.
+2. **Health-check metrics** – include `heapUsedMB`; cheap early-warning.
+3. **Rate-limit** – clarify “whitelist `/status`”.
+4. **RunnerPool starvation test** – specify timeout: fail if >5 s queue wait with 1 busy runner.
+5. **Storage sed script** – note “… commit separately, easy revert.”
+
+---
+
+## 3 — Risk Call-Outs (Just Awareness)
+
+* *Replit + vm2* sometimes crashes on low RAM; keep a local Docker fallback ready.
+* SQLite file locks under 250 rpm may surface; if it happens, enable WAL mode, done.
+* CI secret-scan false positives will happen; whitelist `/docs/example.env`.
+
+---
+
+### Bottom Line
+
+After Claude applies this diff, you own a **tight, test-driven, four-week spine**.
+No more rewrites—next step is keyboard noise and green checks.
+
+Go ship.
