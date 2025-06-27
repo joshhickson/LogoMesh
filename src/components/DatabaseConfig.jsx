@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 function DatabaseConfig() {
   const [config, setConfig] = useState({
@@ -278,7 +278,6 @@ function DatabaseConfig() {
             <li>6. Start: npm run dev (frontend) and cd server && npm run dev (backend)</li>
           </ol>
         </div>
-        {/* eslint-disable-next-line react/no-unescaped-entities */}
         <p>Note: Your connection string might contain special characters. Wrap them in &quot;quotes&quot; if needed.</p>
       </div>
     </div>
