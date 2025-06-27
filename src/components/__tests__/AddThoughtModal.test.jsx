@@ -3,13 +3,18 @@ import { vi } from 'vitest';
 import AddThoughtModal from '../AddThoughtModal';
 
 // Mock VoiceInputManager
-vi.mock('../../utils/VoiceInputManager', () => ({
-  VoiceInputManager: vi.fn().mockImplementation(() => ({
-    isSupported: () => true,
-    startListening: vi.fn(),
-    stopListening: vi.fn(),
-  })),
-}));
+vi.mock('../../utils/VoiceInputManager', () => {
+  // Default mock implementation
+  const mockVoiceInputManager = vi.fn().mockImplementation(function() {
+    this.isSupported = () => 'webkitSpeechRecognition' in window; // Reflect actual window state
+    this.startListening = vi.fn();
+    this.stopListening = vi.fn();
+    // Add other methods/properties if component interacts with them
+    this.recognition = { continuous: false, interimResults: false, lang: '', onresult: null, onerror: null, onend: null, onstart: null };
+    return this;
+  });
+  return { VoiceInputManager: mockVoiceInputManager };
+});
 
 // Mock ulid
 vi.mock('ulid', () => ({
@@ -162,6 +167,7 @@ describe('AddThoughtModal', () => {
   });
 });
 test('handles voice input correctly', () => {
+  const mockAlert = vi.spyOn(window, 'alert').mockImplementation(() => {});
   // Setup speech recognition mock before render
   const mockRecognition = {
     start: vi.fn(),
@@ -212,12 +218,10 @@ test('handles voice input correctly', () => {
   );
 });
 test('handles voice input integration', () => {
-    // Mock window.alert
-    const mockAlert = vi.fn();
-    global.window.alert = mockAlert;
-
-    // Remove speech recognition support to trigger alert
+    // Remove speech recognition support to trigger alert *before* component renders
     delete window.webkitSpeechRecognition;
+
+    const mockAlert = vi.spyOn(window, 'alert').mockImplementation(() => {});
 
     const mockCreateThought = vi.fn();
     const mockOnClose = vi.fn();

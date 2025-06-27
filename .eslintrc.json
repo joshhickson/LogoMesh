@@ -21,12 +21,15 @@
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint"],
-  "ignorePatterns": ["**/*.js.map", "**/*.d.ts.map", "build/", "dist/", "node_modules/", "contracts/**/*.js", "core/**/*.js"],
+  "ignorePatterns": ["**/*.js.map", "**/*.d.ts.map", "build/", "dist/", "node_modules/", "core/**/*.js", "contracts/**/*.js", "src/utils/__tests__/eventBus.test.js"],
   "rules": {
     "react/prop-types": "off",
     "no-unused-vars": "warn",
     "no-undef": "error",
     "no-prototype-builtins": "warn"
+  },
+  "globals": {
+    "vi": "readonly"
   },
   "settings": {
     "react": {

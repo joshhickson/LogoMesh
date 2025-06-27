@@ -20,6 +20,7 @@ export interface NewThoughtData {
  */
 export interface NewSegmentData {
   id?: string;
+  title?: string;
   content: string;
   content_type?: string;
   asset_path?: string;
@@ -41,18 +42,18 @@ export interface NewSegmentData {
  */
 export interface StorageAdapter {
   // Thought operations
-  getAllThoughts(): Promise<Thought[]>;
-  getThoughtById(thoughtId: string): Promise<Thought | null>;
-  createThought(thoughtData: NewThoughtData): Promise<Thought>;
-  updateThought(thoughtId: string, updates: Partial<NewThoughtData>): Promise<Thought | null>;
-  deleteThought(thoughtId: string): Promise<boolean>;
+  getAllThoughts(userId?: string): Promise<Thought[]>;
+  getThoughtById(thoughtId: string, userId?: string): Promise<Thought | null>;
+  createThought(thoughtData: NewThoughtData, userId?: string): Promise<Thought>;
+  updateThought(thoughtId: string, updates: Partial<NewThoughtData>, userId?: string): Promise<Thought | null>;
+  deleteThought(thoughtId: string, userId?: string): Promise<boolean>;
 
   // Segment operations
-  getSegmentsForThought(thoughtId: string): Promise<Segment[]>;
-  getSegmentById(segmentId: string): Promise<Segment | null>;
-  createSegment(thoughtId: string, segmentData: NewSegmentData): Promise<Segment>;
-  updateSegment(thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>): Promise<Segment | null>;
-  deleteSegment(thoughtId: string, segmentId: string): Promise<boolean>;
+  getSegmentsForThought(thoughtId: string, userId?: string): Promise<Segment[]>;
+  getSegmentById(segmentId: string, userId?: string): Promise<Segment | null>;
+  createSegment(thoughtId: string, segmentData: NewSegmentData, userId?: string): Promise<Segment>;
+  updateSegment(thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>, userId?: string): Promise<Segment | null>;
+  deleteSegment(thoughtId: string, segmentId: string, userId?: string): Promise<boolean>;
 
   // Utility operations
   initialize(): Promise<void>;

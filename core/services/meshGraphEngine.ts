@@ -209,7 +209,7 @@ export class MeshGraphEngine {
   /**
    * Enhanced clustering with configurable algorithms
    */
-  async clusterThoughts(thoughts: any[], algorithm: string = 'tag-based'): Promise<any[]> {
+  async clusterThoughts(thoughts: any[], algorithm = 'tag-based'): Promise<any[]> {
     // Implementation logic
     return [];
   }

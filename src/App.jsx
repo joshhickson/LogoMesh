@@ -15,6 +15,7 @@ function App() {
   const [showDevAssistant, setShowDevAssistant] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeFilters, setActiveFilters] = useState([]); // Add activeFilters state
 
   useEffect(() => {
     initializeApp();
@@ -103,11 +104,14 @@ function App() {
         onCreateThought={() => setIsModalOpen(true)}
         onShowDevAssistant={() => setShowDevAssistant(true)}
         user={user}
+        thoughts={thoughts} // Pass thoughts to Sidebar
+        setActiveFilters={setActiveFilters} // Pass setActiveFilters
       />
       <div className="main-content">
         <Canvas 
           thoughts={thoughts}
           onThoughtSelect={setSelectedThought}
+          activeFilters={activeFilters} // Pass activeFilters to Canvas
         />
         {selectedThought && (
           <ThoughtDetailPanel

@@ -10,9 +10,15 @@ class AuthService {
       const response = await fetch('/api/v1/users/me');
       if (response.ok) {
         const data = await response.json();
-        this.user = data.user;
-        this.isAuthenticated = data.user.isAuthenticated;
-        return data.user;
+        if (data && data.user) {
+          this.user = data.user;
+          this.isAuthenticated = data.user.isAuthenticated;
+          return data.user;
+        } else {
+          this.user = null;
+          this.isAuthenticated = false;
+          return null;
+        }
       } else {
         this.user = null;
         this.isAuthenticated = false;

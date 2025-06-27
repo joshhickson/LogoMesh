@@ -19,8 +19,8 @@ vi.mock('./components/ThoughtDetailPanel', () => ({
   default: () => <div data-testid="detail-panel-mock">Detail Panel</div>
 }));
 
-vi.mock('./services/apiService', () => {
-  const mockApiService = {
+vi.mock('./services/apiService', () => ({
+  apiService: { // The module exports an object named apiService
     fetchThoughts: vi.fn().mockResolvedValue([]),
     createThoughtApi: vi.fn().mockResolvedValue({}),
     updateThoughtApi: vi.fn().mockResolvedValue({}),
@@ -28,17 +28,21 @@ vi.mock('./services/apiService', () => {
     createSegmentApi: vi.fn().mockResolvedValue({}),
     updateSegmentApi: vi.fn().mockResolvedValue({}),
     deleteSegmentApi: vi.fn().mockResolvedValue({})
-  };
+    // Add other functions from the actual apiService object if needed by App.jsx
+  }
+}));
 
-  return {
-    default: mockApiService,
-    ...mockApiService
-  };
-});
+vi.mock('./services/authService', () => ({
+  authService: {
+    getCurrentUser: vi.fn().mockResolvedValue({ name: 'Test User', isAuthenticated: true }),
+    isUserAuthenticated: vi.fn().mockReturnValue(true) // Also mock this if App uses it directly
+  }
+}));
 
-test('renders main app components', () => {
+test('renders main app components', async () => { // Made async
   render(<App />);
-  // Check that the main app structure renders with mocked components
+  // Wait for loading to complete due to async initializeApp
+  await screen.findByTestId('sidebar-mock');
   expect(screen.getByTestId('sidebar-mock')).toBeInTheDocument();
   expect(screen.getByTestId('canvas-mock')).toBeInTheDocument();
 });

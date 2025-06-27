@@ -9,6 +9,8 @@ export interface Thought {
         x: number;
         y: number;
     };
+    fields?: Record<string, any>;
+    metadata?: Record<string, any>;
     tags?: Tag[];
     segments?: Segment[];
 }
@@ -19,6 +21,7 @@ export interface Segment {
     content: string;
     content_type?: string;
     fields?: Record<string, any>;
+    metadata?: Record<string, any>;
     created_at: string;
     updated_at: string;
     abstraction_level?: string;

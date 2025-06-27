@@ -1,30 +1,10 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SQLiteStorageAdapter = void 0;
-const sqlite3 = __importStar(require("sqlite3"));
+const sqlite3_1 = __importDefault(require("sqlite3"));
 const idUtils_1 = require("core/utils/idUtils"); // Path mapping
 const logger_1 = require("core/utils/logger"); // Path mapping
 /**
@@ -34,11 +14,11 @@ const logger_1 = require("core/utils/logger"); // Path mapping
 class SQLiteStorageAdapter {
     constructor(dbPath) {
         this.dbPath = dbPath;
-        this.db = null; // Changed Database to any
+        this.db = null;
     }
     async initialize() {
         return new Promise((resolve, reject) => {
-            this.db = new sqlite3.Database(this.dbPath, (err) => {
+            this.db = new sqlite3_1.default.Database(this.dbPath, (err) => {
                 if (err) {
                     logger_1.logger.error('Failed to open SQLite database:', err);
                     reject(err);
@@ -68,7 +48,7 @@ class SQLiteStorageAdapter {
             }
         });
     }
-    async getAllThoughts() {
+    async getAllThoughts(userId) {
         return new Promise((resolve, reject) => {
             if (!this.db) {
                 reject(new Error('Database not initialized'));
@@ -114,7 +94,7 @@ class SQLiteStorageAdapter {
             });
         });
     }
-    async getThoughtById(thoughtId) {
+    async getThoughtById(thoughtId, userId) {
         return new Promise((resolve, reject) => {
             if (!this.db) {
                 reject(new Error('Database not initialized'));
@@ -160,7 +140,7 @@ class SQLiteStorageAdapter {
             });
         });
     }
-    async createThought(thoughtData) {
+    async createThought(thoughtData, userId) {
         return new Promise((resolve, reject) => {
             if (!this.db) {
                 reject(new Error('Database not initialized'));
@@ -182,7 +162,7 @@ class SQLiteStorageAdapter {
                 thoughtData.position?.x || 0,
                 thoughtData.position?.y || 0
             ];
-            this.db.run(insertQuery, values, async (err) => {
+            this.db.run(insertQuery, values, async function (err) {
                 if (err) {
                     logger_1.logger.error('Error creating thought:', err);
                     reject(err);
@@ -203,12 +183,17 @@ class SQLiteStorageAdapter {
                     }
                 }
                 catch (error) {
-                    reject(error);
+                    if (error instanceof Error) {
+                        reject(error);
+                    }
+                    else {
+                        reject(new Error(`An unknown error occurred during thought creation: ${String(error)}`));
+                    }
                 }
             });
         });
     }
-    async updateThought(thoughtId, updates) {
+    async updateThought(thoughtId, updates, userId) {
         return new Promise((resolve, reject) => {
             if (!this.db) {
                 reject(new Error('Database not initialized'));
@@ -216,10 +201,6 @@ class SQLiteStorageAdapter {
             }
             const updateFields = [];
             const values = [];
-            if (updates.title !== undefined) {
-                updateFields.push('title = ?');
-                values.push(updates.title);
-            }
             if (updates.description !== undefined) {
                 updateFields.push('description = ?');
                 values.push(updates.description);
@@ -236,7 +217,7 @@ class SQLiteStorageAdapter {
             values.push(new Date().toISOString());
             values.push(thoughtId);
             const query = `UPDATE thoughts SET ${updateFields.join(', ')} WHERE thought_bubble_id = ?`;
-            this.db.run(query, values, async (err) => {
+            this.db.run(query, values, async function (err) {
                 if (err) {
                     logger_1.logger.error('Error updating thought:', err);
                     reject(err);
@@ -251,12 +232,17 @@ class SQLiteStorageAdapter {
                     resolve(updatedThought);
                 }
                 catch (error) {
-                    reject(error);
+                    if (error instanceof Error) {
+                        reject(error);
+                    }
+                    else {
+                        reject(new Error(`An unknown error occurred during thought update: ${String(error)}`));
+                    }
                 }
             });
         });
     }
-    async deleteThought(thoughtId) {
+    async deleteThought(thoughtId, userId) {
         return new Promise((resolve, reject) => {
             if (!this.db) {
                 reject(new Error('Database not initialized'));
@@ -278,7 +264,7 @@ class SQLiteStorageAdapter {
             });
         });
     }
-    async getSegmentsForThought(thoughtId) {
+    async getSegmentsForThought(thoughtId, userId) {
         return new Promise((resolve, reject) => {
             if (!this.db) {
                 reject(new Error('Database not initialized'));
@@ -308,7 +294,7 @@ class SQLiteStorageAdapter {
             });
         });
     }
-    async getSegmentById(segmentId) {
+    async getSegmentById(segmentId, userId) {
         return new Promise((resolve, reject) => {
             if (!this.db) {
                 reject(new Error('Database not initialized'));
@@ -341,7 +327,7 @@ class SQLiteStorageAdapter {
             });
         });
     }
-    async createSegment(thoughtId, segmentData) {
+    async createSegment(thoughtId, segmentData, userId) {
         return new Promise((resolve, reject) => {
             if (!this.db) {
                 reject(new Error('Database not initialized'));
@@ -356,14 +342,14 @@ class SQLiteStorageAdapter {
             const values = [
                 segmentId,
                 thoughtId,
-                segmentData.title,
+                segmentData.title || null,
                 segmentData.content,
                 now,
                 now,
                 0,
                 JSON.stringify(segmentData.fields || {})
             ];
-            this.db.run(query, values, async (err) => {
+            this.db.run(query, values, async function (err) {
                 if (err) {
                     logger_1.logger.error('Error creating segment:', err);
                     reject(err);
@@ -380,12 +366,17 @@ class SQLiteStorageAdapter {
                     }
                 }
                 catch (error) {
-                    reject(error);
+                    if (error instanceof Error) {
+                        reject(error);
+                    }
+                    else {
+                        reject(new Error(`An unknown error occurred during segment creation: ${String(error)}`));
+                    }
                 }
             });
         });
     }
-    async updateSegment(segmentId, updates) {
+    async updateSegment(thoughtId, segmentId, updates, userId) {
         return new Promise((resolve, reject) => {
             if (!this.db) {
                 reject(new Error('Database not initialized'));
@@ -409,7 +400,7 @@ class SQLiteStorageAdapter {
             values.push(new Date().toISOString());
             values.push(segmentId);
             const query = `UPDATE segments SET ${updateFields.join(', ')} WHERE segment_id = ?`;
-            this.db.run(query, values, async (err) => {
+            this.db.run(query, values, async function (err) {
                 if (err) {
                     logger_1.logger.error('Error updating segment:', err);
                     reject(err);
@@ -420,12 +411,17 @@ class SQLiteStorageAdapter {
                     resolve(updatedSegment);
                 }
                 catch (error) {
-                    reject(error);
+                    if (error instanceof Error) {
+                        reject(error);
+                    }
+                    else {
+                        reject(new Error(`An unknown error occurred during segment update: ${String(error)}`));
+                    }
                 }
             });
         });
     }
-    async deleteSegment(segmentId) {
+    async deleteSegment(thoughtId, segmentId, userId) {
         return new Promise((resolve, reject) => {
             if (!this.db) {
                 reject(new Error('Database not initialized'));
@@ -468,13 +464,13 @@ class SQLiteStorageAdapter {
             const now = new Date().toISOString();
             for (const tag of tags) {
                 const tagId = `tag_${tag.name.toLowerCase().replace(/\s+/g, '_')}`;
-                this.db.run(insertTagQuery, [tagId, tag.name, tag.color, now], (err) => {
+                this.db.run(insertTagQuery, [tagId, tag.name, tag.color, now], function (err) {
                     if (err) {
                         logger_1.logger.error('Error creating tag:', err);
                         reject(err);
                         return;
                     }
-                    this.db.run(linkTagQuery, [thoughtId, tagId, now], (err) => {
+                    this.db.run(linkTagQuery, [thoughtId, tagId, now], function (err) {
                         if (err) {
                             logger_1.logger.error('Error linking tag to thought:', err);
                             reject(err);
@@ -497,7 +493,7 @@ class SQLiteStorageAdapter {
             }
             // First remove existing tag associations
             const deleteQuery = 'DELETE FROM thought_tags WHERE thought_bubble_id = ?';
-            this.db.run(deleteQuery, [thoughtId], async (err) => {
+            this.db.run(deleteQuery, [thoughtId], async function (err) {
                 if (err) {
                     reject(err);
                     return;
@@ -507,7 +503,12 @@ class SQLiteStorageAdapter {
                     resolve();
                 }
                 catch (error) {
-                    reject(error);
+                    if (error instanceof Error) {
+                        reject(error);
+                    }
+                    else {
+                        reject(new Error(`An unknown error occurred during thought tag update: ${String(error)}`));
+                    }
                 }
             });
         });
