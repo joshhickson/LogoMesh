@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Canvas from './components/Canvas';
 import AddThoughtModal from './components/AddThoughtModal';
 import Sidebar from './components/Sidebar';
 import ThoughtDetailPanel from './components/ThoughtDetailPanel';
 import DevAssistantPanel from './components/DevAssistantPanel';
-import apiService from './services/apiService.ts';
+import apiService from './services/apiService';
 import { authService } from './services/authService';
 import './App.css';
 
