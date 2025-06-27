@@ -1,3 +1,4 @@
+
 # Phase 2 Implementation Plan - Survival Edition
 
 **Status**: ⏳ RESCOPED FOR REALITY  
@@ -24,56 +25,71 @@
 - TaskEngine coordination MUST use EventBus for cross-service communication
 - No synchronous calls between major subsystems
 
-## Week 1: Foundation Reality Check (Critical Path Only)
+## Week 1: Foundation Reality Check (4 working days, slip allowed to Day 5 ONLY if TS strict breaks >20% tests)
 
-### Task 1: TypeScript Migration + CI Lock (Days 1-4)
-**FOCUS**: 100% TypeScript with strict mode - nothing else matters if the codebase is brittle
+### Task 1: TypeScript Migration (Days 1-2)
+**FOCUS**: Convert only `core/` and `server/` to TS strict - leave `src/` JS until Week 2 stretch
 
-**Core Goals (Essential Only):**
-- Convert all remaining JS files to TS (focus on critical paths first)
+**Core Goals:**
+- Convert `core/` and `server/` directories to TypeScript strict mode
 - Enable TypeScript strict mode with CI gate that **fails on any `any`**
 - Fix compilation errors systematically
-- **CI LOCK**: Build fails if any JS files remain or strict mode violations exist
+- **CI LOCK**: Build fails if any JS files remain in core/server or strict mode violations exist
 
 **Verification Gates:**
-- ✅ `npx tsc --noEmit` passes with 0 errors
-- ✅ CI fails immediately on any `any` type or JS file
+- ✅ `npx tsc --noEmit` passes with 0 errors for core/ and server/
+- ✅ CI fails immediately on any `any` type or JS file in core/server
 - ✅ All imports resolve correctly
 
-### Task 2: JWT + Rate Limit (Days 5-7)
-**FOCUS**: Basic security spine - minimum viable auth
+### Task 2: Secrets Management Stub (Day 3)
+**FOCUS**: Basic security spine - prevent credential leaks
 
-**Core Goals (Essential Only):**
-- Implement JWT session handling in AuthService
-- Add rate limiting middleware to API routes
-- Basic request validation on critical endpoints
+**Core Goals:**
+- Create `.env.example` + `config.ts` wrapper
+- CI fails if repo contains literal "sk-" or "jwtSecret=changeme"
+- Basic JWT session handling in AuthService
 - **NO FANCY UI** - just working backend security
 
 **Verification Gates:**
+- ✅ CI blocks any hardcoded secrets
 - ✅ JWT tokens work for session management
-- ✅ Rate limiting prevents API abuse (basic 100req/min limit)
+- ✅ `.env.example` template exists
+
+### Task 3: Rate Limit + Health Check (Day 4)
+**FOCUS**: Basic monitoring and protection
+
+**Core Goals:**
+- Add rate limiting middleware (100 req/min per IP)
+- `GET /status` returns `{queueLag, dbConn, pluginSandboxAlive}`
+- Basic request validation on critical endpoints
+
+**Verification Gates:**
+- ✅ Rate limiting blocks abuse at 100rpm/IP
+- ✅ `/status` endpoint returns 200 with metrics
 - ✅ Invalid requests get rejected properly
 
-## Week 2: LLM Spine + Plugin Foundation
+## Week 2: LLM Spine + Plugin Foundation (includes half-day "bug pit" buffer)
 
-### Task 3: Slice LLM Monolith (Days 1-4)
+### Task 3: Slice LLM Monolith (Days 1-3)
 **FOCUS**: Break LLMOrchestrator death grip - no fancy audit UI yet
 
-**Core Goals (Essential Only):**
+**Core Goals:**
 - Create `LLMGateway` (rate limit, basic auth)
 - Split `ConversationOrchestrator` (state machine only)
 - Create `RunnerPool` (per-model execution)
 - **KEEP** existing audit logging - don't rebuild it
 
 **Verification Gates:**
-- ✅ Single prompt cannot block all model traffic
+- ✅ `/api/thoughts` smoke test passes
+- ✅ `/api/plugins/list` smoke test passes  
+- ✅ `/api/auth/login` smoke test passes
+- ✅ Single prompt starvation test proves RunnerPool isolation
 - ✅ LLM components can be tested independently
-- ✅ Existing functionality preserved
 
-### Task 4: Basic Plugin Sandbox (Days 5-7)
+### Task 4: Basic Plugin Sandbox (Days 4-5)
 **FOCUS**: Node.js plugins only - secure the foundation
 
-**Core Goals (Essential Only):**
+**Core Goals:**
 - Implement secure plugin runtime with `vm2`
 - Basic filesystem restrictions (read-only by default)
 - Plugin permission manifest validation
@@ -81,67 +97,67 @@
 
 **Verification Gates:**
 - ✅ "Hello world" plugin executes safely
+- ✅ Hello-world plugin cannot read '/etc/passwd'
 - ✅ Plugin crashes don't affect system
-- ✅ Filesystem access properly restricted
 
 ## Week 3: EventBus Reliability + Storage Boundary
 
 ### Task 5: EventBus Back-pressure (Days 1-3)
 **FOCUS**: Make EventBus production-ready
 
-**Core Goals (Essential Only):**
-- Implement back-pressure handling for message queues
+**Core Goals:**
+- Use in-memory queue + exponential backoff
 - Add at-least-once delivery for critical workflows
-- Basic message persistence for reliability
+- **SCOPE CUT**: Persistence deferred to Phase 2b
 - **NO COMPLEX UI** - just working coordination
 
 **Verification Gates:**
-- ✅ EventBus handles message floods gracefully
+- ✅ EventBus drains 1k messages @ ≤2× RTT baseline
 - ✅ Critical messages don't get lost
 - ✅ System stays responsive under load
 
-### Task 6: Storage Service Boundary (Days 4-7)
+### Task 6: Storage Service Boundary (Days 4-5)
 **FOCUS**: Abstract storage coupling - no vector search yet
 
-**Core Goals (Essential Only):**
+**Core Goals:**
 - Create thin `DataAccessService` between IdeaManager ↔ StorageAdapter
 - Remove direct StorageAdapter coupling from business logic
 - **DEFER** vector operations to Phase 2b
-- Keep existing SQLite functionality
+- Prep sed script to update IdeaManager test imports
 
 **Verification Gates:**
 - ✅ Business logic doesn't import StorageAdapter directly
 - ✅ Existing functionality preserved
 - ✅ Ready for future vector DB without business logic changes
 
-## Week 4: Minimal TaskEngine + Load Testing
+## Week 4: Minimal TaskEngine + Load Testing (Day 7 = scope cut or lock branch, no new code after noon)
 
 ### Task 7: Basic TaskEngine (Days 1-4)
 **FOCUS**: Prove LLM → Plugin chains work
 
-**Core Goals (Essential Only):**
+**Core Goals:**
 - Extend existing LLMTaskRunner for multi-executor support
 - Build simple ExecutorRegistry (LLM + Plugin only)
 - Create basic pipeline schema (JSON workflows)
 - **3-step max**: LLM → Plugin → System response
 
 **Verification Gates:**
-- ✅ TaskEngine executes LLM → Plugin → System chain
+- ✅ TaskEngine executes LLM→Plugin workflow in <5s median
 - ✅ Uses existing LLMTaskRunner retry logic
 - ✅ Basic pipeline JSON validation works
 
-### Task 8: Load Test & Stabilize (Days 5-7)
+### Task 8: Load Test & Stabilize (Days 5-6)
 **FOCUS**: Make it production-ready
 
-**Core Goals (Essential Only):**
-- Stress test EventBus + LLM under 1k req/min load
+**Core Goals:**
+- Stress test EventBus + LLM under 250 req/min sustained, spike 500
 - Fix critical performance bottlenecks
 - Basic observability with pino logging
-- Write setup doc for new contributors
+- **Note**: Run on local Docker or paid VM for realistic load testing
 
 **Verification Gates:**
+- ✅ Artillery 250rpm 5-min run: no 5xx, ≤2% 429
 - ✅ System handles sustained load without crashing
-- ✅ New developer can set up environment in <45 minutes
 - ✅ All Week 1-3 functionality still works under load
 
 ## 🚫 Explicitly Deferred to Phase 2b (Week 5-8)
@@ -150,7 +166,6 @@
 - DevShell UI and natural language interface
 - Multi-language plugin runtime (Python, Go, Rust)
 - Vector similarity search and embeddings
-- Node-RED decision (keep status quo)
 - Advanced plugin marketplace features
 - Semantic clustering and VTC implementation
 - WebSocket real-time UIs
@@ -158,40 +173,29 @@
 - Comprehensive audit dashboard
 - Plugin hot-reload and development toolkit
 
-## Success Criteria (Realistic)
+## Success Criteria (Binary Pass/Fail)
 
-**Week 1 Foundation:**
-- [ ] 100% TypeScript with strict mode enforced by CI
-- [ ] Basic JWT authentication working
-- [ ] Rate limiting preventing abuse
-
-**Week 2 Core Systems:**
-- [ ] LLM components can be independently scaled
-- [ ] Basic plugin sandbox executes Node.js safely
-- [ ] Plugin crashes contained
-
-**Week 3 Coordination:**
-- [ ] EventBus handles back-pressure gracefully
-- [ ] Storage layer abstracted behind service boundary
-- [ ] System remains responsive under message load
-
-**Week 4 Integration:**
-- [ ] TaskEngine executes LLM → Plugin workflows
-- [ ] Load test passes at 1k req/min sustained
-- [ ] **70% test coverage on critical paths** (not 90%)
-- [ ] New developer setup in <45 minutes
+**Essential Gates:**
+- ✅ TS strict passes (core, server)
+- ✅ /api/auth login w/ JWT round-trip
+- ✅ Rate-limit 100rpm per-IP tested via artillery
+- ✅ /status returns 200 with sane metrics
+- ✅ Single prompt starvation test proves RunnerPool isolation
+- ✅ Hello-world plugin cannot read '/etc/passwd'
+- ✅ EventBus drains 1k messages @ ≤2× RTT baseline
+- ✅ TaskEngine executes LLM→Plugin workflow in <5s median
+- ✅ Artillery 250rpm 5-min run: no 5xx, ≤2% 429
 
 ## Tactical Implementation Notes
 
-1. **Lock CI immediately**: Fail on any `any` types or JS files
+1. **Lock CI immediately**: Fail on any `any` types or JS files in core/server
 2. **Write throwaway PoC plugin first**: Get sandbox right before complexity
 3. **Convert storage coupling after TypeScript**: Static types expose hidden leaks
 4. **Ollama integration**: Stub → audit trail → only then enhance
-5. **Observability**: Ship traces to local Jaeger, ugly dashboards are fine
 
 ## Reality Check Gates
 
-- [ ] No mixed TS/JS compilation errors
+- [ ] No mixed TS/JS compilation errors in core/server
 - [ ] Single LLM prompt cannot block all model traffic  
 - [ ] Plugin crashes do not affect system stability
 - [ ] Storage changes don't require business logic refactors
