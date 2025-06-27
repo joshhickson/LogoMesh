@@ -1,4 +1,7 @@
-import { Thought, Segment, NewThoughtData, NewSegmentData } from './entities';
+import { Thought, Segment, NewThoughtData, NewSegmentData, UpdateThoughtData, UpdateSegmentData } from './entities';
+
+// Re-export types for API service
+export { NewThoughtData, NewSegmentData, UpdateThoughtData, UpdateSegmentData } from './entities';
 
 export interface StorageAdapter {
   // Thought operations

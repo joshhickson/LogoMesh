@@ -1,4 +1,3 @@
-
 interface User {
   id: string;
   username: string;
@@ -28,7 +27,7 @@ class AuthService {
     try {
       const token = localStorage.getItem('auth_token');
       const userStr = localStorage.getItem('auth_user');
-      
+
       if (token && userStr) {
         const user = JSON.parse(userStr) as User;
         this.authState = {
