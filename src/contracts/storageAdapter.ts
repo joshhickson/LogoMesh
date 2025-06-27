@@ -20,7 +20,6 @@ export interface UpdateSegmentData {
 
 // Re-export types for API service
 export type { NewThoughtData, NewSegmentData } from './entities';
-export type { UpdateThoughtData, UpdateSegmentData };
 
 export interface StorageAdapter {
   // Thought operations
