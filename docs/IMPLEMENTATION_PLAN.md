@@ -34,6 +34,7 @@
 - Convert `core/` and `server/` directories to TypeScript strict mode
 - Enable TypeScript strict mode with CI gate that **fails on any `any`**
 - Fix compilation errors systematically
+- Integrate `eslint-plugin-import` + `@typescript-eslint/recommended` rules; CI fails on lint
 - **CI LOCK**: Build fails if any JS files remain in core/server or strict mode violations exist
 
 **Verification Gates:**
@@ -46,7 +47,7 @@
 
 **Core Goals:**
 - Create `.env.example` + `config.ts` wrapper
-- CI fails if repo contains literal "sk-", "jwtSecret=changeme", or "OPENAI_API_KEY="
+- CI fails if repo contains literal "sk-", "jwtSecret=changeme", "OPENAI_API_KEY=", or `AWS_(ACCESS|SECRET)_KEY=`
 - Basic JWT session handling in AuthService
 - **NO FANCY UI** - just working backend security
 
@@ -86,6 +87,7 @@ Half-day bug-pit = Week 2 Day 6 AM, no feature work.
 - ✅ `/api/plugins/list` smoke test passes  
 - ✅ `/api/auth/login` smoke test passes
 - ✅ Single prompt starvation test proves RunnerPool isolation
+- ✅ Queue wait >5s **with 1 busy runner** fails gate
 - ✅ LLM components can be tested independently
 
 ### Task 5: Basic Plugin Sandbox (Days 4-5)
@@ -110,6 +112,7 @@ Half-day bug-pit = Week 2 Day 6 AM, no feature work.
 **Core Goals:**
 - Use in-memory queue + exponential backoff
 - Add at-least-once delivery for critical workflows
+- Implement message `deliveryId` + dedupe table in memory
 - **SCOPE CUT**: Persistence deferred to Phase 2b
 - **NO COMPLEX UI** - just working coordination
 
@@ -141,6 +144,7 @@ Half-day bug-pit = Week 2 Day 6 AM, no feature work.
 - Extend existing LLMTaskRunner for multi-executor support
 - Build simple ExecutorRegistry (LLM + Plugin only)
 - Create basic pipeline schema (JSON workflows)
+- Include `schemaVersion` field; reject unknown versions
 - **3-step max**: LLM → Plugin → System response
 
 **Verification Gates:**
@@ -160,6 +164,7 @@ Half-day bug-pit = Week 2 Day 6 AM, no feature work.
 
 **Verification Gates:**
 - ✅ Artillery 250rpm 5-min run: no 5xx, ≤2% 429
+- ✅ p50 API latency ≤250ms, p95 ≤600ms under 250rpm run
 - ✅ System handles sustained load without crashing
 - ✅ All Week 1-3 functionality still works under load
 
@@ -180,6 +185,7 @@ Half-day bug-pit = Week 2 Day 6 AM, no feature work.
 
 **Essential Gates:**
 - ✅ TS strict passes (core, server)
+- ✅ ESLint passes with zero warnings in core/server
 - ✅ /api/auth login w/ JWT round-trip
 - ✅ Rate-limit 100rpm per-IP tested via artillery
 - ✅ /status returns 200 with sane metrics
