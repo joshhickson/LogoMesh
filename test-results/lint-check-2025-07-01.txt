@@ -1,24 +1,4 @@
 
-/home/runner/workspace/core/IdeaManager.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/IdeaManager.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
-
-/home/runner/workspace/core/context/cognitiveContextEngine.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/context/cognitiveContextEngine.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
-
 /home/runner/workspace/core/context/cognitiveContextEngine.ts
    34:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
    35:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
@@ -36,30 +16,10 @@ See the typescript-eslint docs for more info: https://typescript-eslint.io/linti
   169:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
   176:46  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
-/home/runner/workspace/core/db/initDb.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/db/initDb.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
-
 /home/runner/workspace/core/db/initDb.ts
   22:53  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
   44:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
   55:24  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-
-/home/runner/workspace/core/llm/LLMOrchestrator.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/llm/LLMOrchestrator.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
 
 /home/runner/workspace/core/llm/LLMOrchestrator.ts
    15:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
@@ -67,29 +27,9 @@ See the typescript-eslint docs for more info: https://typescript-eslint.io/linti
   340:66  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
   401:49  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
-/home/runner/workspace/core/llm/LLMRegistry.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/llm/LLMRegistry.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
-
 /home/runner/workspace/core/llm/LLMRegistry.ts
   112:22  warning  Forbidden non-null assertion              @typescript-eslint/no-non-null-assertion
   275:35  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-
-/home/runner/workspace/core/llm/LLMTaskRunner.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/llm/LLMTaskRunner.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
 
 /home/runner/workspace/core/llm/LLMTaskRunner.ts
    22:55  error    Unexpected any. Specify a different type            @typescript-eslint/no-explicit-any
@@ -99,16 +39,6 @@ See the typescript-eslint docs for more info: https://typescript-eslint.io/linti
   106:48  error    Unsafe member access .message on an `any` value     @typescript-eslint/no-unsafe-member-access
   122:13  warning  'executionTime' is assigned a value but never used  @typescript-eslint/no-unused-vars
 
-/home/runner/workspace/core/llm/OllamaExecutor.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/llm/OllamaExecutor.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
-
 /home/runner/workspace/core/llm/OllamaExecutor.ts
   11:65  error  Unexpected any. Specify a different type          @typescript-eslint/no-explicit-any
   33:13  error  Unsafe assignment of an `any` value               @typescript-eslint/no-unsafe-assignment
@@ -117,41 +47,11 @@ See the typescript-eslint docs for more info: https://typescript-eslint.io/linti
   60:54  error  Unexpected any. Specify a different type          @typescript-eslint/no-explicit-any
   60:87  error  Unexpected any. Specify a different type          @typescript-eslint/no-explicit-any
 
-/home/runner/workspace/core/llm/utils/mermaidAuditor.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/llm/utils/mermaidAuditor.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
-
-/home/runner/workspace/core/logger/llmAuditLogger.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/logger/llmAuditLogger.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
-
 /home/runner/workspace/core/logger/llmAuditLogger.ts
    12:29  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
    27:28  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
    97:58  warning  Forbidden non-null assertion              @typescript-eslint/no-non-null-assertion
   127:58  warning  Forbidden non-null assertion              @typescript-eslint/no-non-null-assertion
-
-/home/runner/workspace/core/plugins/pluginRuntimeInterface.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/plugins/pluginRuntimeInterface.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
 
 /home/runner/workspace/core/plugins/pluginRuntimeInterface.ts
    4:10  warning  'CognitiveContextEngine' is defined but never used  @typescript-eslint/no-unused-vars
@@ -160,32 +60,12 @@ See the typescript-eslint docs for more info: https://typescript-eslint.io/linti
   41:41  error    Unexpected any. Specify a different type            @typescript-eslint/no-explicit-any
   41:55  error    Unexpected any. Specify a different type            @typescript-eslint/no-explicit-any
 
-/home/runner/workspace/core/services/eventBus.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/services/eventBus.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
-
 /home/runner/workspace/core/services/eventBus.ts
    6:48  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
   11:41  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
   15:5   warning  Forbidden non-null assertion              @typescript-eslint/no-non-null-assertion
   21:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
   34:30  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
-
-/home/runner/workspace/core/services/meshGraphEngine.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/services/meshGraphEngine.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
 
 /home/runner/workspace/core/services/meshGraphEngine.ts
     1:10  warning  'Thought' is defined but never used             @typescript-eslint/no-unused-vars
@@ -202,16 +82,6 @@ See the typescript-eslint docs for more info: https://typescript-eslint.io/linti
   212:42  warning  'algorithm' is assigned a value but never used  @typescript-eslint/no-unused-vars
   212:76  error    Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
 
-/home/runner/workspace/core/services/pluginHost.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/services/pluginHost.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
-
 /home/runner/workspace/core/services/pluginHost.ts
   13:38  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
   65:35  warning  'criteria' is defined but never used      @typescript-eslint/no-unused-vars
@@ -219,16 +89,6 @@ See the typescript-eslint docs for more info: https://typescript-eslint.io/linti
   82:77  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
   82:91  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
   85:7   error    Unsafe return of an `any` typed value     @typescript-eslint/no-unsafe-return
-
-/home/runner/workspace/core/services/portabilityService.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/services/portabilityService.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
 
 /home/runner/workspace/core/services/portabilityService.ts
    11:30  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
@@ -317,16 +177,6 @@ See the typescript-eslint docs for more info: https://typescript-eslint.io/linti
   303:75   error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
   303:105  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
 
-/home/runner/workspace/core/storage/sqliteAdapter.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/storage/sqliteAdapter.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
-
 /home/runner/workspace/core/storage/sqliteAdapter.ts
    47:24  warning  'userId' is defined but never used                         @typescript-eslint/no-unused-vars
    64:58  error    Unexpected any. Specify a different type                   @typescript-eslint/no-explicit-any
@@ -409,26 +259,6 @@ See the typescript-eslint docs for more info: https://typescript-eslint.io/linti
   469:61  warning  'userId' is defined but never used                         @typescript-eslint/no-unused-vars
   524:9   warning  Forbidden non-null assertion                               @typescript-eslint/no-non-null-assertion
   531:11  warning  Forbidden non-null assertion                               @typescript-eslint/no-non-null-assertion
-
-/home/runner/workspace/core/utils/idUtils.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/utils/idUtils.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
-
-/home/runner/workspace/core/utils/logger.d.ts
-  0:0  error  Parsing error: ESLint was configured to run on `<tsconfigRootDir>/core/utils/logger.d.ts` using `parserOptions.project`: 
-- <tsconfigRootDir>/tsconfig.json
-- <tsconfigRootDir>/server/tsconfig.json
-However, none of those TSConfigs include this file. Either:
-- Change ESLint's list of included files to not include this file
-- Change one of those TSConfigs to include this file
-- Create a new TSConfig that includes this file and include it in your parserOptions.project
-See the typescript-eslint docs for more info: https://typescript-eslint.io/linting/troubleshooting#i-get-errors-telling-me-eslint-was-configured-to-run--however-that-tsconfig-does-not--none-of-those-tsconfigs-include-this-file
 
 /home/runner/workspace/core/utils/logger.ts
   5:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
@@ -725,5 +555,5 @@ See the typescript-eslint docs for more info: https://typescript-eslint.io/linti
   166:86  warning  'next' is defined but never used                 @typescript-eslint/no-unused-vars
   168:11  error    Unsafe assignment of an `any` value              @typescript-eslint/no-unsafe-assignment
 
-✖ 525 problems (483 errors, 42 warnings)
+✖ 508 problems (466 errors, 42 warnings)
 
