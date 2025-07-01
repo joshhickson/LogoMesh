@@ -18,7 +18,8 @@
       "jsx": true
     },
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": ["./tsconfig.json", "./server/tsconfig.json"]
   },
   "plugins": ["react", "@typescript-eslint"],
   "ignorePatterns": ["**/*.js.map", "**/*.d.ts.map", "build/", "dist/", "node_modules/", "core/**/*.js", "contracts/**/*.js", "src/utils/__tests__/eventBus.test.js"],
