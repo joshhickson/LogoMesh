@@ -7,6 +7,14 @@
  */
 
 import { logger } from '../utils/logger';
+import { 
+  CognitiveContext, 
+  ContextMetadata, 
+  RelatedContext, 
+  ContextCluster, 
+  CompressionResult,
+  SemanticCompressionOptions
+} from '../../contracts/types';
 
 export interface ContextGenerationOptions {
   abstractionLevelFilter?: string[];
@@ -28,12 +36,26 @@ export interface GeneratedContext {
   timestamp: string;
 }
 
+export interface IdeaManagerInterface {
+  getThought(id: string): Promise<unknown>;
+  getRelatedThoughts(id: string): Promise<string[]>;
+}
+
+export interface MeshGraphEngineInterface {
+  traverse(startId: string, depth: number): Promise<string[]>;
+  getCluster(clusterId: string): Promise<ContextCluster>;
+}
+
+export interface VTCInterface {
+  compress(data: unknown, level: string): Promise<CompressionResult>;
+  decompress(data: unknown): Promise<unknown>;
+}
+
 export class CognitiveContextEngine {
   constructor(
-    /* Dependencies like IdeaManager, MeshGraphEngine, VTC */
-    private ideaManager?: any,
-    private meshGraphEngine?: any,
-    private vtc?: any
+    private ideaManager?: IdeaManagerInterface,
+    private meshGraphEngine?: MeshGraphEngineInterface,
+    private vtc?: VTCInterface
   ) {
     logger.info('[CCE] Cognitive Context Engine initialized (Phase 1 stub)');
   }
@@ -80,7 +102,7 @@ export class CognitiveContextEngine {
   async getRelatedContext(
     thoughtId: string, 
     options: ContextGenerationOptions = {}
-  ): Promise<any> {
+  ): Promise<RelatedContext> {
     logger.info(`[CCE Stub] Getting related context for thought: ${thoughtId}`);
     
     // Mock related context retrieval
@@ -97,37 +119,53 @@ export class CognitiveContextEngine {
    * Will integrate with VTC in future phases for advanced compression
    */
   async compressContext(
-    contextData: any, 
+    contextData: CognitiveContext, 
     compressionLevel: 'none' | 'basic' | 'semantic' | 'aggressive' = 'basic'
-  ): Promise<any> {
+  ): Promise<CompressionResult> {
     logger.info(`[CCE Stub] Applying ${compressionLevel} compression to context data`);
+    
+    const originalSize = JSON.stringify(contextData).length;
     
     switch (compressionLevel) {
       case 'none':
-        return contextData;
+        return {
+          compressed: false,
+          originalSize,
+          compressedSize: originalSize,
+          compressionRatio: 1.0
+        };
       case 'basic':
         return {
-          ...contextData,
           compressed: true,
-          originalSize: JSON.stringify(contextData).length,
-          compressedSize: Math.floor(JSON.stringify(contextData).length * 0.7)
+          originalSize,
+          compressedSize: Math.floor(originalSize * 0.7),
+          compressionRatio: 0.7
         };
       case 'semantic':
         return {
-          ...contextData,
           compressed: true,
+          originalSize,
+          compressedSize: Math.floor(originalSize * 0.4),
+          compressionRatio: 0.4,
           semanticSummary: "Semantically compressed context (mock)",
-          keyConceptsRetained: ["concept1", "concept2"],
-          compressionRatio: 0.4
+          keyConceptsRetained: ["concept1", "concept2"]
         };
       case 'aggressive':
         return {
+          compressed: true,
+          originalSize,
+          compressedSize: Math.floor(originalSize * 0.2),
+          compressionRatio: 0.2,
           essentialContext: "Aggressively compressed context essence (mock)",
-          keyInsights: ["insight1", "insight2"],
-          compressionRatio: 0.2
+          keyInsights: ["insight1", "insight2"]
         };
       default:
-        return contextData;
+        return {
+          compressed: false,
+          originalSize,
+          compressedSize: originalSize,
+          compressionRatio: 1.0
+        };
     }
   }
 
@@ -136,14 +174,14 @@ export class CognitiveContextEngine {
    * Stub for future semantic relevance scoring
    */
   async evaluateContextRelevance(
-    context: any, 
+    context: CognitiveContext, 
     query: string
   ): Promise<number> {
     logger.debug(`[CCE Stub] Evaluating context relevance for query: ${query}`);
     
     // Mock relevance scoring
     const queryWords = query.toLowerCase().split(' ');
-    const contextString = JSON.stringify(context).toLowerCase();
+    const contextString = JSON.stringify(context.data).toLowerCase();
     
     let relevanceScore = 0.5; // Base score
     queryWords.forEach(word => {
@@ -160,20 +198,20 @@ export class CognitiveContextEngine {
    * Placeholder for VTC-powered clustering in future phases
    */
   async clusterContextBySemantic(
-    contexts: any[], 
+    contexts: CognitiveContext[], 
     options: ContextGenerationOptions = {}
-  ): Promise<Record<string, any[]>> {
+  ): Promise<Record<string, CognitiveContext[]>> {
     logger.info(`[CCE Stub] Clustering ${contexts.length} contexts by semantic similarity`);
     
     // Mock clustering
-    const clusters: Record<string, any[]> = {
+    const clusters: Record<string, CognitiveContext[]> = {
       'primary-concepts': contexts.slice(0, Math.ceil(contexts.length / 2)),
       'supporting-details': contexts.slice(Math.ceil(contexts.length / 2)),
     };
     
     if (options.clusterIdFilter) {
       // Filter clusters based on provided IDs
-      const filteredClusters: Record<string, any[]> = {};
+      const filteredClusters: Record<string, CognitiveContext[]> = {};
       options.clusterIdFilter.forEach(clusterId => {
         if (clusters[clusterId]) {
           filteredClusters[clusterId] = clusters[clusterId];
