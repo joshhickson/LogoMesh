@@ -22,7 +22,7 @@
     "project": ["./tsconfig.json", "./server/tsconfig.json"]
   },
   "plugins": ["react", "@typescript-eslint"],
-  "ignorePatterns": ["**/*.js.map", "**/*.d.ts.map", "build/", "dist/", "node_modules/", "core/**/*.js", "contracts/**/*.js", "src/utils/__tests__/eventBus.test.js"],
+  "ignorePatterns": ["**/*.js.map", "**/*.d.ts.map", "**/*.d.ts", "build/", "dist/", "node_modules/", "core/**/*.js", "contracts/**/*.js", "src/utils/__tests__/eventBus.test.js"],
   "rules": {
     "react/prop-types": "off",
     "no-unused-vars": "warn",
