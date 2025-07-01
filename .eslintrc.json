@@ -1,3 +1,4 @@
+
 {
   "env": {
     "browser": true,
@@ -19,20 +20,29 @@
     },
     "ecmaVersion": "latest",
     "sourceType": "module",
-    "project": ["./tsconfig.json", "./server/tsconfig.json"]
+    "project": ["./tsconfig.json", "./server/tsconfig.json"],
+    "tsconfigRootDir": ".",
+    "warnOnUnsupportedTypeScriptVersion": false
   },
   "plugins": ["react", "@typescript-eslint"],
-  "ignorePatterns": ["**/*.js.map", "**/*.d.ts.map", "**/*.d.ts", "build/", "dist/", "node_modules/", "core/**/*.js", "contracts/**/*.js", "src/utils/__tests__/eventBus.test.js"],
+  "ignorePatterns": [
+    "**/*.js.map", 
+    "**/*.d.ts.map", 
+    "**/*.d.ts", 
+    "build/", 
+    "dist/", 
+    "node_modules/", 
+    "core/**/*.js", 
+    "contracts/**/*.js", 
+    "src/utils/__tests__/eventBus.test.js",
+    "*.config.js",
+    "*.config.ts"
+  ],
   "rules": {
     "react/prop-types": "off",
     "no-unused-vars": "warn",
     "no-undef": "error",
-    "no-prototype-builtins": "warn",
-    "@typescript-eslint/no-explicit-any": "error",
-    "@typescript-eslint/no-unsafe-assignment": "error",
-    "@typescript-eslint/no-unsafe-call": "error",
-    "@typescript-eslint/no-unsafe-member-access": "error",
-    "@typescript-eslint/no-unsafe-return": "error"
+    "no-prototype-builtins": "warn"
   },
   "globals": {
     "vi": "readonly"
@@ -57,7 +67,10 @@
         "@typescript-eslint/no-unsafe-assignment": "error",
         "@typescript-eslint/no-unsafe-call": "error",
         "@typescript-eslint/no-unsafe-member-access": "error",
-        "@typescript-eslint/no-unsafe-return": "error"
+        "@typescript-eslint/no-unsafe-return": "error",
+        "@typescript-eslint/no-inferrable-types": "error",
+        "@typescript-eslint/ban-ts-comment": "error",
+        "@typescript-eslint/no-var-requires": "error"
       }
     }
   ]
