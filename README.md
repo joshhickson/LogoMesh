@@ -1,246 +1,220 @@
-
 # LogoMesh
 
-**Discord:** https://discord.gg/6ydDxzMjvD
+**Discussion Channel:** <https://discord.gg/6ydDxzMjvD>
 
-**Tagline:**
-> A recursive thought engine for humans and AI — designed to evolve meaning, resolve contradictions, and externalize self-reflection.
+> *A recursive thought engine for humans and AI—designed to evolve meaning, resolve contradictions, and externalize self-reflection.*
 
-LogoMesh is a powerful cognitive framework that allows you to create, organize, and navigate complex ideas through interconnected nodes (thought bubbles), nested segments, and flexible metadata filtering. Built as a **local-first, AI-augmented system** with a React frontend and Node.js backend.
-
----
-
-## Current Status
-
-**Phase:** Infrastructure Stabilization (Pre-Phase 2)  
-**Version:** 0.2.0  
-**Architecture:** React Frontend + Node.js/Express Backend + SQLite Database
-
-⚠️ **Development Notice:** This project is in pre-alpha with active infrastructure improvements. Some features may be unstable.
+LogoMesh is a local-first cognitive framework that enables users to create, organise, and navigate complex ideas through interconnected “thought bubbles,” nested segments, and flexible metadata filters. The application is built on a React front-end and a Node.js/Express back-end and stores data in SQLite by default. All processing occurs on the local machine unless the user explicitly installs a cloud-aware plug-in.
 
 ---
 
-## Features
+## Project Status
 
-### Core Functionality (Operational)
-* **Thought Bubbles** with customizable titles, descriptions, tags, and colors
-* **Nested Segments** within each thought with detailed content and attributes
-* **Multi-attribute Classification** for powerful data structuring
-* **Advanced Filtering** by field name, type, and value with canvas highlighting
-* **JSON Export/Import** for data portability and AI integration
-* **SQLite Backend** with normalized schema for reliable data persistence
-* **Plugin System Foundation** with runtime interface scaffolding
+| Phase | Objective | High-level Deliverables | Status |
+|-------|-----------|-------------------------|--------|
+| 0 | Framework Skeleton | React/Node scaffold, baseline tests | Complete |
+| 1 | Core Functionality | Thought graph, JSON I/O, initial plug-in scaffold | Complete |
+| **2** | Hardened Spine | Type-safe codebase, secure plug-in sandbox, TaskEngine, LLM gateway, observability | **In progress** |
+| 2 b | Memory Layer | Vector store, summarisation and relevance routing, read-only FlowMesh CLI | Planned |
+| 3 | Working-Memory Features | Adaptive chunking, replay API, glossary reconciliation | Planned |
+| 4 | Knowledge Graph & Ontology | Contradiction detection, multi-user collaboration, conflict resolution | Vision |
 
-### Infrastructure (In Development)
-* **Multi-Language Plugin Runtime** - Support for Node.js and Python plugins
-* **DevShell Interface** - Secure command environment for development
-* **Task Engine** - Workflow orchestration and automation
-* **LLM Integration Layer** - Local model support with audit logging
-* **Vector Storage Foundations** - Semantic search preparation
+Current version: **0.2.0**  
+Target runtime: Node.js 16 or newer.
+
+---
+
+## Key Capabilities
+
+### Operational Components
+
+* Thought bubbles with titles, descriptions, tags, and colour coding.  
+* Nested segments within each thought, each with its own attributes.  
+* Attribute-based filtering with optional canvas highlighting.  
+* JSON import and export for data portability and AI integration.  
+* Normalised SQLite schema for reliable local persistence.  
+* Foundational plug-in host implemented with a vm2 sandbox.
+
+### Infrastructure Under Construction (Phase 2)
+
+* Multi-language plug-in runtime (Node.js operational; Python in progress).  
+* Secure DevShell interface for development commands.  
+* TaskEngine for workflow orchestration.  
+* LLM gateway with audit logging and runner isolation.  
+* Observability stack (structured logging, health checks, performance metrics).
 
 ---
 
 ## Quick Start
 
 ### Prerequisites
-- Node.js 16+ and npm
-- Git
+
+* Node.js 16 or newer  
+* npm  
+* Git
 
 ### Installation
 
-1. **Clone and Install**:
-   ```bash
-   git clone https://github.com/joshhickson/LogoMesh.git
-   cd LogoMesh
-   npm install
-   cd server && npm install && cd ..
-   ```
+```bash
+git clone https://github.com/joshhickson/LogoMesh.git
+cd LogoMesh
+npm install
+cd server && npm install && cd ..
+```
 
-2. **Start Development Servers**:
-   ```bash
-   # Terminal 1: Backend (Port 3001)
-   cd server && npm run dev
-   
-   # Terminal 2: Frontend (Port 3000) 
-   npm start
-   ```
+### Running in Development
 
-3. **Access Application**:
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:3001/api/v1
+```bash
+# Terminal 1 – back end (port 3001)
+cd server
+npm run dev
+
+# Terminal 2 – front end (port 3000)
+npm start
+```
+
+* Front-end: <http://localhost:3000>  
+* API root: <http://localhost:3001/api/v1>
 
 ### Database Configuration
 
-**Default (SQLite):** No configuration needed - database file created automatically.
+An SQLite database file is created automatically. To override the location or use another engine, copy `.env.example` to `.env` and edit the connection string.
 
-**Custom Database:** Copy `.env.example` to `.env` and configure:
 ```env
 DATABASE_URL=sqlite:./data/custom.db
-# Or PostgreSQL: postgresql://user:pass@host:5432/db
+# Example for PostgreSQL:
+# DATABASE_URL=postgresql://user:pass@host:5432/db
 ```
 
 ---
 
-## Architecture Overview
+## High-Level Architecture
 
 ```
-Frontend (React/Cytoscape.js) ←→ Backend API (Express) ←→ SQLite Database
-        ↓                              ↓
-   UI Components                  Core Services
-   - Canvas                       - IdeaManager
-   - Sidebar                      - EventBus  
-   - Modals                       - PluginHost
-                                  - TaskEngine (planned)
+React Front-end  →  Express API  →  SQLite (or configured RDBMS)
+        │                  │
+   UI Components       Core Services
+                       - IdeaManager
+                       - EventBus
+                       - PluginHost
+                       - TaskEngine (under development)
 ```
 
-### Current Components
-
-**Frontend Layer:**
-- React 18 with modern hooks
-- Cytoscape.js for graph visualization
-- Responsive design with Tailwind CSS
-
-**Backend Layer:**
-- Express.js API server with TypeScript
-- SQLite with normalized schema
-- Plugin system architecture
-- Comprehensive audit logging
-
-**Core Services:**
-- `IdeaManager`: Business logic and thought operations
-- `EventBus`: Pub/sub system for component coordination
-- `PluginHost`: Plugin runtime management (foundation)
-- `StorageAdapter`: Database abstraction layer
+*Front-end technologies:* React 18, Cytoscape.js for graph rendering, Tailwind CSS for layout.  
+*Back-end technologies:* Express.js with TypeScript, vm2 plug-in sandbox, structured logging with pino.
 
 ---
 
-## Development
+## Development Guide
 
-### Project Structure
+### Repository Layout
+
 ```
-├── src/                    # React frontend
-├── server/src/            # Node.js backend
-├── core/                  # Shared business logic
-├── contracts/             # TypeScript interfaces
-├── plugins/               # Plugin ecosystem
-└── docs/                  # Documentation
+/src/           React front-end
+/server/src/    Express back-end
+/core/          Shared business logic
+/contracts/     TypeScript interfaces
+/plugins/       Plug-in ecosystem
+/docs/          Architectural records and specifications
 ```
 
-### Testing
+### Routine Tasks
+
 ```bash
-# Frontend tests
+# Front-end unit tests
 npm test
 
-# Backend tests  
+# Back-end unit tests
 cd server && npm test
 
-# Linting
+# Linting (front-end and back-end)
 npm run lint
 ```
 
-### Known Issues
-- Some TypeScript compilation errors in backend routes
-- Frontend test suite needs stability improvements
-- Plugin runtime execution not fully implemented
+Known open issues are tracked in the GitHub issue queue.
 
 ---
 
-## Roadmap
+## Roadmap Extract
 
-### Phase 1: Foundation ✅ (Complete)
-- Core thought management and visualization
-- Client-server architecture with SQLite
-- Basic plugin system scaffolding
-- JSON import/export functionality
+### Immediate Objectives (Phase 2)
 
-### Phase 2: Infrastructure 🔄 (In Progress)
-**Current Focus:** Stabilizing foundation before feature expansion
+| Category | Task |
+|----------|------|
+| Type safety | Eliminate remaining JavaScript in `/core` and `/server` |
+| Security | Finalise plug-in sandbox and DevShell permissions |
+| Observability | Health-check endpoint, structured logs, back-pressure metrics |
+| Task engine | Workflow chain: LLM → plug-in → system |
+| Local LLM | Initial Ollama executor with audit logging |
 
-**Priority Tasks:**
-- Fix TypeScript compilation errors
-- Complete multi-language plugin runtime
-- Implement DevShell command interface
-- Build task engine workflow system
-- Add local LLM integration (Ollama)
+### Subsequent Milestones
 
-**Infrastructure Goals:**
-- Plugin system supporting Node.js, Python execution
-- Secure development environment (DevShell)
-- Vector storage for semantic search
-- Enhanced audit and monitoring systems
+* **Phase 2 b:** Vector store integration and summarisation plug-ins.  
+* **Phase 3:** Automatic document digestion and replay API.  
+* **Phase 4:** Multi-user knowledge graph with ontology management.
 
-### Phase 3: AI Activation 📋 (Planned)
-- Real-time AI decision making
-- Advanced semantic analysis and search
-- Multi-agent coordination systems
-- Recursive AI querying capabilities
+Detailed architectural records (ADR) and requests for comment (RFC) are maintained under `/docs/`.
 
 ---
 
-## API Documentation
+## API Overview (selected endpoints)
 
-### Core Endpoints
 ```
-GET    /api/v1/thoughts              # List all thoughts
-POST   /api/v1/thoughts              # Create thought
-GET    /api/v1/thoughts/:id          # Get specific thought
-PUT    /api/v1/thoughts/:id          # Update thought
-DELETE /api/v1/thoughts/:id          # Delete thought
+GET    /api/v1/thoughts            List thoughts
+POST   /api/v1/thoughts            Create thought
+GET    /api/v1/thoughts/:id        Retrieve thought
+PUT    /api/v1/thoughts/:id        Update thought
+DELETE /api/v1/thoughts/:id        Delete thought
 
-POST   /api/v1/portability/export    # Export data
-POST   /api/v1/portability/import    # Import data
+POST   /api/v1/portability/export  Export data
+POST   /api/v1/portability/import  Import data
+
+GET    /api/v1/plugins             List registered plug-ins
+POST   /api/v1/plugins/:id/execute Invoke plug-in command
 ```
 
-### Plugin API (Development)
-```
-GET    /api/v1/plugins               # List plugins
-POST   /api/v1/plugins/:id/execute   # Execute plugin command
-```
+Full API reference is generated from OpenAPI specifications in `/docs/specs/`.
 
 ---
 
-## Contributing
+## Contribution Guidelines
 
-### Development Setup
-1. Follow installation instructions above
-2. Create feature branch: `git checkout -b feature/your-feature`
-3. Make changes and test thoroughly
-4. Submit pull request with detailed description
+1. Fork the repository and create a feature branch.  
+2. Follow the coding standards: TypeScript in new back-end code, ESLint and Prettier formatting.  
+3. Include unit tests for new functionality and update documentation where relevant.  
+4. Submit a pull request with a clear description of the change.
 
-### Code Standards
-- TypeScript for new backend code
-- ESLint + Prettier for formatting
-- Comprehensive test coverage for new features
-- Interface-first design using `/contracts/`
+Architectural changes require an accompanying RFC in `/docs/rfc` before implementation.
 
 ---
 
-## Deployment
+## Deployment Notes
 
-### Local Production Build
-```bash
-npm run build
-cd server && npm run build
-```
+* **Local production build**
 
-### Replit Deployment
-LogoMesh is designed to deploy seamlessly on Replit:
-1. Import repository to Replit
-2. Configure environment variables if needed
-3. Use Deployments tab for production hosting
+  ```bash
+  npm run build
+  cd server && npm run build
+  ```
+
+* **Replit deployment**
+
+  1. Import the repository into Replit.  
+  2. Provide environment variables in the Replit UI.  
+  3. Use the Deployments tab to provision the back-end service.
 
 ---
 
-## Data Format
-
-Thoughts export as structured JSON for transparency and AI integration:
+## Data Exchange Format (example)
 
 ```json
 {
   "id": "thought-001",
-  "title": "Example Thought", 
+  "title": "Example Thought",
   "description": "High-level concept",
-  "tags": [{"name": "philosophy", "color": "#f97316"}],
+  "tags": [
+    { "name": "philosophy", "color": "#f97316" }
+  ],
   "segments": [
     {
       "id": "segment-001",
@@ -249,7 +223,7 @@ Thoughts export as structured JSON for transparency and AI integration:
       "attributes": [
         {
           "fieldName": "Category",
-          "fieldValue": "Quote", 
+          "fieldValue": "Quote",
           "fieldType": "text"
         }
       ]
@@ -260,22 +234,18 @@ Thoughts export as structured JSON for transparency and AI integration:
 
 ---
 
-## License
+## Licence
 
-MIT — Free to fork, remix, and evolve.
-
----
-
-## Support
-
-- **Documentation:** See `/docs/` for technical details
-- **Issues:** GitHub Issues for bug reports and feature requests
-- **Discord:** https://discord.gg/6ydDxzMjvD for community discussion
+LogoMesh is released under the MIT licence. You are free to copy, modify, and distribute the software, provided that the licence terms are respected.
 
 ---
 
-**Created by [Josh Hickson](https://github.com/joshhickson)**
+## Support and Community
 
-*This is not just productivity software. This is a cognitive framework for the evolution of intelligence.*
+* Documentation index is located in `/docs/index.md`.  
+* Bug reports and feature requests should be opened in the GitHub issue tracker.  
+* Real-time discussion is available in the Discord server linked above.
 
-**Welcome to LogoMesh.**
+---
+
+Created and maintained by [Josh Hickson](https://github.com/joshhickson).
