@@ -1,6 +1,12 @@
 import sqlite3, { Database } from 'sqlite3';
 import { StorageAdapter, NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
 import { Thought, Segment, Tag } from '../../contracts/entities';
+import { 
+  ThoughtRecord, 
+  SegmentRecord, 
+  TagRecord, 
+  SQLiteRunResult 
+} from '../../contracts/types';
 import { generateThoughtId, generateSegmentId } from '../utils/idUtils';
 import { logger } from '../utils/logger';
 
@@ -61,7 +67,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         ORDER BY t.created_at DESC
       `;
 
-      this.db.all(query, async (err: Error | null, rows: any[]) => {
+      this.db.all(query, async (err: Error | null, rows: ThoughtRecord[]) => {
         if (err) {
           logger.error('Error fetching thoughts:', err);
           reject(err);
@@ -111,7 +117,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         GROUP BY t.thought_bubble_id
       `;
 
-      this.db.get(query, [thoughtId], async (err: Error | null, row: any) => {
+      this.db.get(query, [thoughtId], async (err: Error | null, row: ThoughtRecord | undefined) => {
         if (err) {
           logger.error('Error fetching thought:', err);
           reject(err);
@@ -173,7 +179,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this; // Capture class instance 'this'
 
-      this.db.run(insertQuery, values, async function(this: sqlite3.RunResult, err: Error | null) {
+      this.db.run(insertQuery, values, async function(this: SQLiteRunResult, err: Error | null) {
         if (err) {
           logger.error('Error creating thought:', err);
           reject(err);
@@ -235,7 +241,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this; // Capture class instance 'this'
 
-      this.db.run(query, values, async function(this: sqlite3.RunResult, err: Error | null) {
+      this.db.run(query, values, async function(this: SQLiteRunResult, err: Error | null) {
         if (err) {
           logger.error('Error updating thought:', err);
           reject(err);
@@ -271,16 +277,16 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       // Due to CASCADE constraints, deleting the thought will also delete related records
       const query = 'DELETE FROM thoughts WHERE thought_bubble_id = ?';
 
-      this.db.run(query, [thoughtId], function(this: sqlite3.RunResult, err: Error | null) {
+      this.db.run(query, [thoughtId], function(this: SQLiteRunResult, err: Error | null) {
         if (err) {
           logger.error('Error deleting thought:', err);
           reject(err);
           return;
         }
 
-        const deleted = this.changes > 0; // 'this' is now correctly typed (implicitly by sqlite3)
+        const deleted = this.changes > 0;
         if (deleted) {
-          logger.info(`Deleted thought: ${thoughtId}`); // Changed to info
+          logger.info(`Deleted thought: ${thoughtId}`);
         }
         resolve(deleted);
       });
@@ -296,7 +302,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
       const query = 'SELECT * FROM segments WHERE thought_bubble_id = ? ORDER BY sort_order, created_at';
 
-      this.db.all(query, [thoughtId], (err: Error | null, rows: any[]) => {
+      this.db.all(query, [thoughtId], (err: Error | null, rows: SegmentRecord[]) => {
         if (err) {
           logger.error('Error fetching segments:', err);
           reject(err);
@@ -331,7 +337,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
       const query = 'SELECT * FROM segments WHERE segment_id = ?';
 
-      this.db.get(query, [segmentId], (err: Error | null, row: any) => {
+      this.db.get(query, [segmentId], (err: Error | null, row: SegmentRecord | undefined) => {
         if (err) {
           logger.error('Error fetching segment:', err);
           reject(err);
@@ -388,7 +394,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this; // Capture class instance 'this'
 
-      this.db.run(query, values, async function(this: sqlite3.RunResult, err: Error | null) {
+      this.db.run(query, values, async function(this: SQLiteRunResult, err: Error | null) {
         if (err) {
           logger.error('Error creating segment:', err);
           reject(err);
@@ -396,9 +402,9 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         }
 
         try {
-          const createdSegment = await self.getSegmentById(segmentId, userId); // Use self and pass userId
+          const createdSegment = await self.getSegmentById(segmentId, userId);
           if (createdSegment) {
-            logger.info(`Created segment: ${segmentId}`); // Changed to info
+            logger.info(`Created segment: ${segmentId}`);
             resolve(createdSegment);
           } else {
             reject(new Error('Failed to retrieve created segment'));
@@ -445,7 +451,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this; // Capture class instance 'this'
 
-      this.db.run(query, values, async function(this: sqlite3.RunResult, err: Error | null) {
+      this.db.run(query, values, async function(this: SQLiteRunResult, err: Error | null) {
         if (err) {
           logger.error('Error updating segment:', err);
           reject(err);
@@ -453,7 +459,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         }
 
         try {
-          const updatedSegment = await self.getSegmentById(segmentId, userId); // Use self and pass userId
+          const updatedSegment = await self.getSegmentById(segmentId, userId);
           resolve(updatedSegment);
         } catch (error: unknown) {
           if (error instanceof Error) {
@@ -475,16 +481,16 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
       const query = 'DELETE FROM segments WHERE segment_id = ?';
 
-      this.db.run(query, [segmentId], function(this: sqlite3.RunResult, err: Error | null) {
+      this.db.run(query, [segmentId], function(this: SQLiteRunResult, err: Error | null) {
         if (err) {
           logger.error('Error deleting segment:', err);
           reject(err);
           return;
         }
 
-        const deleted = this.changes > 0; // 'this' is now correctly typed (implicitly by sqlite3)
+        const deleted = this.changes > 0;
         if (deleted) {
-          logger.info(`Deleted segment: ${segmentId}`); // Changed to info
+          logger.info(`Deleted segment: ${segmentId}`);
         }
         resolve(deleted);
       });
@@ -521,14 +527,14 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       for (const tag of tags) {
         const tagId = `tag_${tag.name.toLowerCase().replace(/\s+/g, '_')}`;
 
-        self.db!.run(insertTagQuery, [tagId, tag.name, tag.color, now], function(this: sqlite3.RunResult, err: Error | null) { // Use self.db!
+        self.db!.run(insertTagQuery, [tagId, tag.name, tag.color, now], function(this: SQLiteRunResult, err: Error | null) {
           if (err) {
             logger.error('Error creating tag:', err);
             reject(err);
             return;
           }
 
-          self.db!.run(linkTagQuery, [thoughtId, tagId, now], function(this: sqlite3.RunResult, err: Error | null) { // Use self.db!
+          self.db!.run(linkTagQuery, [thoughtId, tagId, now], function(this: SQLiteRunResult, err: Error | null) {
             if (err) {
               logger.error('Error linking tag to thought:', err);
               reject(err);
@@ -557,7 +563,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this; // Capture class instance 'this'
 
-      this.db.run(deleteQuery, [thoughtId], async function(this: sqlite3.RunResult, err: Error | null) {
+      this.db.run(deleteQuery, [thoughtId], async function(this: SQLiteRunResult, err: Error | null) {
         if (err) {
           reject(err);
           return;

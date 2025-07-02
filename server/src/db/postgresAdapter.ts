@@ -1,6 +1,11 @@
-import { Pool, Client } from 'pg';
+import { Pool, Client, QueryResult } from 'pg';
 import { StorageAdapter, NewThoughtData, NewSegmentData } from '../../../contracts/storageAdapter';
-import { Segment, Thought } from '../../../contracts/entities'; // Added Thought
+import { Segment, Thought } from '../../../contracts/entities';
+import { 
+  PostgresThoughtRecord, 
+  PostgresSegmentRecord,
+  DatabaseQueryResult 
+} from '../../../contracts/types';
 
 export class PostgresAdapter implements StorageAdapter {
   private pool: Pool;
@@ -75,11 +80,11 @@ export class PostgresAdapter implements StorageAdapter {
   async createThought(thoughtData: NewThoughtData, userId = 'anonymous'): Promise<Thought> {
     const client = await this.pool.connect();
     try {
-      const result = await client.query(
+      const result: QueryResult<PostgresThoughtRecord> = await client.query(
         `INSERT INTO thoughts (id, user_id, title, description, fields, metadata) 
          VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
         [
-          thoughtData.id, // Assuming NewThoughtData might provide an ID
+          thoughtData.id || `thought_${Date.now()}`, // Generate ID if not provided
           userId,
           thoughtData.title,
           thoughtData.description || '',
@@ -107,7 +112,7 @@ export class PostgresAdapter implements StorageAdapter {
   async getThoughtById(id: string, userId = 'anonymous'): Promise<Thought | null> {
     const client = await this.pool.connect();
     try {
-      const result = await client.query(
+      const result: QueryResult<PostgresThoughtRecord> = await client.query(
         'SELECT * FROM thoughts WHERE id = $1 AND user_id = $2', 
         [id, userId]
       );
@@ -134,7 +139,7 @@ export class PostgresAdapter implements StorageAdapter {
   async getAllThoughts(userId = 'anonymous'): Promise<Thought[]> {
     const client = await this.pool.connect();
     try {
-      const result = await client.query(
+      const result: QueryResult<PostgresThoughtRecord> = await client.query(
         'SELECT * FROM thoughts WHERE user_id = $1 ORDER BY created_at DESC',
         [userId]
       );
@@ -184,7 +189,7 @@ export class PostgresAdapter implements StorageAdapter {
       values.push(id); // For WHERE id =
       values.push(userId); // For WHERE user_id =
 
-      const result = await client.query(
+      const result: QueryResult<PostgresThoughtRecord> = await client.query(
         `UPDATE thoughts SET ${updates.join(', ')} WHERE id = $${paramCount} AND user_id = $${paramCount + 1} RETURNING *`,
         values
       );
@@ -217,60 +222,69 @@ export class PostgresAdapter implements StorageAdapter {
     }
   }
 
-  async getSegmentsForThought(thoughtId: string, userId = 'anonymous'): Promise<Segment[]> { // Align with interface
+  async getSegmentsForThought(thoughtId: string, userId = 'anonymous'): Promise<Segment[]> {
     const client = await this.pool.connect();
     try {
-      // Assuming segments are user-specific indirectly through thought_id,
-      // but if segments table has user_id, it should be used.
-      // For now, let's assume thoughts are user-specific, so segments of that thought are also.
-      // If segments have their own user_id column that needs checking, this query would change.
-      // The current schema shows segments have user_id, so we should use it.
-      const result = await client.query('SELECT * FROM segments WHERE thought_id = $1 AND user_id = $2', [thoughtId, userId]);
+      const result: QueryResult<PostgresSegmentRecord> = await client.query('SELECT * FROM segments WHERE thought_id = $1 AND user_id = $2', [thoughtId, userId]);
       return result.rows.map(segment => ({
-        ...segment,
+        segment_id: segment.id,
+        thought_bubble_id: segment.thought_id,
+        title: segment.title,
+        content: segment.content,
+        content_type: segment.segment_type,
         fields: segment.fields || {},
-        metadata: segment.metadata || {}
-        // Ensure all Segment interface fields are mapped
+        created_at: segment.created_at.toISOString(),
+        updated_at: segment.updated_at.toISOString(),
+        abstraction_level: 'Fact',
+        local_priority: 0.5,
+        cluster_id: 'uncategorized'
       }));
     } finally {
       client.release();
     }
   }
 
-  async getSegmentById(segmentId: string, userId = 'anonymous'): Promise<Segment | null> { // Align with interface
+  async getSegmentById(segmentId: string, userId = 'anonymous'): Promise<Segment | null> {
     const client = await this.pool.connect();
     try {
-      const result = await client.query('SELECT * FROM segments WHERE id = $1 AND user_id = $2', [segmentId, userId]);
+      const result: QueryResult<PostgresSegmentRecord> = await client.query('SELECT * FROM segments WHERE id = $1 AND user_id = $2', [segmentId, userId]);
       if (result.rows.length === 0) return null;
       const segment = result.rows[0];
       return {
-        ...segment,
+        segment_id: segment.id,
+        thought_bubble_id: segment.thought_id,
+        title: segment.title,
+        content: segment.content,
+        content_type: segment.segment_type,
         fields: segment.fields || {},
-        metadata: segment.metadata || {}
-        // Ensure all Segment interface fields are mapped
+        created_at: segment.created_at.toISOString(),
+        updated_at: segment.updated_at.toISOString(),
+        abstraction_level: 'Fact',
+        local_priority: 0.5,
+        cluster_id: 'uncategorized'
       };
     } finally {
       client.release();
     }
   }
 
-  async createSegment(thoughtId: string, segmentData: NewSegmentData, userId = 'anonymous'): Promise<Segment> { // Align with interface
+  async createSegment(thoughtId: string, segmentData: NewSegmentData, userId = 'anonymous'): Promise<Segment> {
     const client = await this.pool.connect();
     try {
-      const result = await client.query(
+      const result: QueryResult<PostgresSegmentRecord> = await client.query(
         `INSERT INTO segments (id, thought_id, user_id, content, segment_type, fields, metadata, position_x, position_y, title)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`, // Added user_id and title
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
         [
-          segmentData.id,
+          segmentData.id || `segment_${Date.now()}`,
           thoughtId,
-          userId, // Add userId
+          userId,
           segmentData.content,
-          segmentData.segmentType || 'text',
+          'text', // Use fixed type for now
           JSON.stringify(segmentData.fields || {}),
-          JSON.stringify(segmentData.metadata || {}),
-          segmentData.positionX || 0,
-          segmentData.positionY || 0,
-          segmentData.title || null // Add title
+          JSON.stringify({}), // Fixed metadata
+          0, // Fixed position
+          0, // Fixed position
+          segmentData.title || null
         ]
       );
 
@@ -298,12 +312,12 @@ export class PostgresAdapter implements StorageAdapter {
     }
   }
 
-  async getSegmentsByThoughtId(thoughtId: string, userId = 'anonymous'): Promise<any[]> { // Add userId
+  async getSegmentsByThoughtId(thoughtId: string, userId = 'anonymous'): Promise<PostgresSegmentRecord[]> {
     const client = await this.pool.connect();
     try {
-      const result = await client.query(
-        'SELECT * FROM segments WHERE thought_id = $1 ORDER BY created_at',
-        [thoughtId]
+      const result: QueryResult<PostgresSegmentRecord> = await client.query(
+        'SELECT * FROM segments WHERE thought_id = $1 AND user_id = $2 ORDER BY created_at',
+        [thoughtId, userId]
       );
       return result.rows.map(segment => ({
         ...segment,
@@ -365,7 +379,7 @@ export class PostgresAdapter implements StorageAdapter {
         RETURNING *
       `;
 
-      const result = await client.query(query, values);
+      const result: QueryResult<PostgresSegmentRecord> = await client.query(query, values);
       if (result.rows.length === 0) return null;
 
       const dbRow = result.rows[0];
@@ -398,7 +412,7 @@ export class PostgresAdapter implements StorageAdapter {
   }
 
   // Plugin-specific methods for dev assistant
-  async savePluginData(pluginName: string, data: any): Promise<void> {
+  async savePluginData(pluginName: string, data: Record<string, unknown>): Promise<void> {
     const client = await this.pool.connect();
     try {
       await client.query(
@@ -413,10 +427,10 @@ export class PostgresAdapter implements StorageAdapter {
     }
   }
 
-  async getPluginData(pluginName: string): Promise<any> {
+  async getPluginData(pluginName: string): Promise<Record<string, unknown> | null> {
     const client = await this.pool.connect();
     try {
-      const result = await client.query(
+      const result: QueryResult<{ data: Record<string, unknown> }> = await client.query(
         'SELECT data FROM plugin_data WHERE plugin_name = $1 ORDER BY updated_at DESC LIMIT 1',
         [pluginName]
       );
