@@ -1,4 +1,3 @@
-
 /**
  * Core Type Definitions for LogoMesh System
  * Replaces `any` types throughout the codebase with proper TypeScript interfaces
@@ -182,6 +181,90 @@ export interface LLMConfig {
   baseUrl?: string;
 }
 
+// ================================
+// DATABASE TYPES
+// ================================
+
+export interface DatabaseQueryResult<T = Record<string, unknown>> {
+  rows: T[];
+  rowCount: number;
+  command?: string;
+  fields?: Array<{ name: string; dataTypeID: number }>;
+}
+
+export interface SQLiteRunResult {
+  lastID: number;
+  changes: number;
+}
+
+export interface ThoughtRecord {
+  thought_bubble_id: string;
+  title: string;
+  description: string | null;
+  created_at: string;
+  updated_at: string;
+  color: string | null;
+  position_x: number | null;
+  position_y: number | null;
+  tags?: string | null; // Concatenated tag string from JOIN
+}
+
+export interface SegmentRecord {
+  segment_id: string;
+  thought_bubble_id: string;
+  title: string | null;
+  content: string;
+  created_at: string;
+  updated_at: string;
+  sort_order?: number;
+  metadata?: string; // JSON string
+}
+
+export interface TagRecord {
+  tag_id: string;
+  name: string;
+  color: string;
+  created_at: string;
+}
+
+export interface PostgresThoughtRecord {
+  id: string;
+  user_id: string;
+  title: string;
+  description: string | null;
+  fields: Record<string, unknown>;
+  metadata: Record<string, unknown>;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface PostgresSegmentRecord {
+  id: string;
+  thought_id: string;
+  user_id: string;
+  title: string | null;
+  content: string;
+  segment_type: string;
+  fields: Record<string, unknown>;
+  metadata: Record<string, unknown>;
+  position_x: number;
+  position_y: number;
+  created_at: Date;
+  updated_at: Date;
+}
+
+// ================================
+// LLM & AI TYPES
+// ================================
+
+export interface LLMRequest {
+  prompt: string;
+  maxTokens?: number;
+  temperature?: number;
+  model?: string;
+  systemPrompt?: string;
+}
+
 export interface LLMResponse {
   content: string;
   usage?: {
@@ -189,6 +272,16 @@ export interface LLMResponse {
     completionTokens: number;
     totalTokens: number;
   };
+  model?: string;
+  finishReason?: 'stop' | 'length' | 'content_filter' | 'function_call';
+}
+
+export interface LLMExecutionContext {
+  requestId: string;
+  timestamp: Date;
   model: string;
-  finishReason: string;
+  prompt: string;
+  response?: string;
+  error?: string;
+  duration?: number;
 }
