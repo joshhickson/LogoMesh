@@ -1,0 +1,63 @@
+contracts/types.ts(116,18): error TS2430: Interface 'ThoughtRecord' incorrectly extends interface 'DatabaseRow'.
+  Types of property 'created_at' are incompatible.
+    Type 'string' is not assignable to type 'Date'.
+contracts/types.ts(122,18): error TS2430: Interface 'SegmentRecord' incorrectly extends interface 'DatabaseRow'.
+  Types of property 'created_at' are incompatible.
+    Type 'string' is not assignable to type 'Date'.
+core/services/portabilityService.ts(30,65): error TS2345: Argument of type 'Thought[]' is not assignable to parameter of type 'ThoughtData[]'.
+  Type 'Thought' is not assignable to type 'ThoughtData'.
+    Types of property 'description' are incompatible.
+      Type 'string | null | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+core/services/portabilityService.ts(42,9): error TS2322: Type 'Thought[]' is not assignable to type 'ThoughtData[]'.
+core/services/portabilityService.ts(145,13): error TS2322: Type '{ thought_bubble_id: string; title: string; description?: string | null | undefined; created_at: string; updated_at: string; color?: string | null | undefined; position?: { x: number; y: number; } | undefined; fields?: Record<...> | undefined; metadata?: Record<...> | undefined; tags?: Tag[] | undefined; segments?: ...' is not assignable to type 'ThoughtData'.
+  Types of property 'description' are incompatible.
+    Type 'string | null | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+core/services/portabilityService.ts(148,9): error TS2322: Type 'Segment[] | undefined' is not assignable to type 'SegmentData[] | undefined'.
+  Type 'Segment[]' is not assignable to type 'SegmentData[]'.
+    Type 'Segment' is not assignable to type 'SegmentData'.
+      Types of property 'title' are incompatible.
+        Type 'string | null | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+core/services/portabilityService.ts(207,11): error TS2322: Type 'Thought[]' is not assignable to type 'ThoughtData[]'.
+core/services/portabilityService.ts(228,9): error TS2416: Property 'importData' in type 'PortabilityService' is not assignable to the same property in base type 'ThoughtExportProvider'.
+  Type '(jsonData: ExportData) => Promise<ServiceResponse<{ imported: number; skipped: number; }>>' is not assignable to type '(data: any) => Promise<void>'.
+    Type 'Promise<ServiceResponse<{ imported: number; skipped: number; }>>' is not assignable to type 'Promise<void>'.
+      Type 'ServiceResponse<{ imported: number; skipped: number; }>' is not assignable to type 'void'.
+core/services/portabilityService.ts(274,67): error TS2345: Argument of type '{ title: string; description: string; tags: TagData[]; position: Position; created_at: string; updated_at: string; metadata: Record<string, unknown>; }' is not assignable to parameter of type 'NewThoughtData'.
+  Types of property 'tags' are incompatible.
+    Type 'TagData[]' is not assignable to type '{ name: string; color: string; }[]'.
+      Type 'TagData' is not assignable to type '{ name: string; color: string; }'.
+        Types of property 'color' are incompatible.
+          Type 'string | undefined' is not assignable to type 'string'.
+            Type 'undefined' is not assignable to type 'string'.
+core/storage/sqliteAdapter.ts(80,67): error TS2339: Property 'thought_bubble_id' does not exist on type 'ThoughtRecord'.
+core/storage/sqliteAdapter.ts(81,52): error TS2339: Property 'tags' does not exist on type 'ThoughtRecord'.
+core/storage/sqliteAdapter.ts(84,38): error TS2339: Property 'thought_bubble_id' does not exist on type 'ThoughtRecord'.
+core/storage/sqliteAdapter.ts(88,15): error TS2322: Type 'Date' is not assignable to type 'string'.
+core/storage/sqliteAdapter.ts(89,26): error TS2339: Property 'color' does not exist on type 'ThoughtRecord'.
+core/storage/sqliteAdapter.ts(90,29): error TS2339: Property 'position_x' does not exist on type 'ThoughtRecord'.
+core/storage/sqliteAdapter.ts(90,56): error TS2339: Property 'position_y' does not exist on type 'ThoughtRecord'.
+core/storage/sqliteAdapter.ts(90,87): error TS2339: Property 'position_x' does not exist on type 'ThoughtRecord'.
+core/storage/sqliteAdapter.ts(90,106): error TS2339: Property 'position_y' does not exist on type 'ThoughtRecord'.
+core/storage/sqliteAdapter.ts(134,50): error TS2339: Property 'tags' does not exist on type 'ThoughtRecord'.
+core/storage/sqliteAdapter.ts(137,36): error TS2339: Property 'thought_bubble_id' does not exist on type 'ThoughtRecord'.
+core/storage/sqliteAdapter.ts(141,13): error TS2322: Type 'Date' is not assignable to type 'string'.
+core/storage/sqliteAdapter.ts(142,24): error TS2339: Property 'color' does not exist on type 'ThoughtRecord'.
+core/storage/sqliteAdapter.ts(143,27): error TS2339: Property 'position_x' does not exist on type 'ThoughtRecord'.
+core/storage/sqliteAdapter.ts(143,54): error TS2339: Property 'position_y' does not exist on type 'ThoughtRecord'.
+core/storage/sqliteAdapter.ts(143,85): error TS2339: Property 'position_x' does not exist on type 'ThoughtRecord'.
+core/storage/sqliteAdapter.ts(143,104): error TS2339: Property 'position_y' does not exist on type 'ThoughtRecord'.
+core/storage/sqliteAdapter.ts(312,15): error TS2322: Type '{ segment_id: any; thought_bubble_id: any; title: string | null; content: string; content_type: string; fields: any; created_at: string; updated_at: Date; abstraction_level: string; local_priority: number; cluster_id: string; }[]' is not assignable to type 'Segment[]'.
+  Type '{ segment_id: any; thought_bubble_id: any; title: string | null; content: string; content_type: string; fields: any; created_at: string; updated_at: Date; abstraction_level: string; local_priority: number; cluster_id: string; }' is not assignable to type 'Segment'.
+    Types of property 'updated_at' are incompatible.
+      Type 'Date' is not assignable to type 'string'.
+core/storage/sqliteAdapter.ts(313,27): error TS2339: Property 'segment_id' does not exist on type 'SegmentRecord'.
+core/storage/sqliteAdapter.ts(314,34): error TS2339: Property 'thought_bubble_id' does not exist on type 'SegmentRecord'.
+core/storage/sqliteAdapter.ts(318,45): error TS2345: Argument of type 'Record<string, unknown>' is not assignable to parameter of type 'string'.
+core/storage/sqliteAdapter.ts(353,27): error TS2339: Property 'segment_id' does not exist on type 'SegmentRecord'.
+core/storage/sqliteAdapter.ts(354,34): error TS2339: Property 'thought_bubble_id' does not exist on type 'SegmentRecord'.
+core/storage/sqliteAdapter.ts(358,45): error TS2345: Argument of type 'Record<string, unknown>' is not assignable to parameter of type 'string'.
+core/storage/sqliteAdapter.ts(360,11): error TS2322: Type 'Date' is not assignable to type 'string'.
+Exit code: 2
