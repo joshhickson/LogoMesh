@@ -115,7 +115,8 @@ export interface DatabaseRow {
 
 export interface ThoughtRecord extends DatabaseRow {
   title: string;
-  description: string;
+  description: string | null;
+  created_at: string; // Override to match database format
 }
 
 export interface SegmentRecord extends DatabaseRow {
@@ -124,7 +125,8 @@ export interface SegmentRecord extends DatabaseRow {
   segment_type: string;
   position_x: number;
   position_y: number;
-  title?: string;
+  title: string | null;
+  created_at: string; // Override to match database format
 }
 
 // Compression and Filtering Types
@@ -197,7 +199,7 @@ export interface SQLiteRunResult {
   changes: number;
 }
 
-export interface ThoughtRecord {
+export interface SQLiteThoughtRecord {
   thought_bubble_id: string;
   title: string;
   description: string | null;
@@ -209,7 +211,7 @@ export interface ThoughtRecord {
   tags?: string | null; // Concatenated tag string from JOIN
 }
 
-export interface SegmentRecord {
+export interface SQLiteSegmentRecord {
   segment_id: string;
   thought_bubble_id: string;
   title: string | null;
