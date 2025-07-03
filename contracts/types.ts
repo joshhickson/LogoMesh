@@ -114,19 +114,31 @@ export interface DatabaseRow {
 }
 
 export interface ThoughtRecord extends DatabaseRow {
+  thought_bubble_id: string;
   title: string;
-  description: string | null;
-  created_at: string; // Override to match database format
+  description?: string | null;
+  color?: string | null;
+  position_x?: number | null;
+  position_y?: number | null;
+  fields?: Record<string, unknown> | null;
+  metadata?: Record<string, unknown> | null;
+  tags?: Tag[] | null;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export interface SegmentRecord extends DatabaseRow {
-  thought_id: string;
+  segment_id: string;
+  thought_bubble_id: string;
+  title?: string | null;
   content: string;
-  segment_type: string;
-  position_x: number;
-  position_y: number;
-  title: string | null;
-  created_at: string; // Override to match database format
+  content_type: string;
+  fields?: Record<string, unknown> | null;
+  abstraction_level: string;
+  local_priority: number;
+  cluster_id?: string | null;
+  created_at: Date;
+  updated_at: Date;
 }
 
 // Compression and Filtering Types
@@ -286,4 +298,11 @@ export interface LLMExecutionContext {
   response?: string;
   error?: string;
   duration?: number;
+}
+
+export interface Tag {
+    tag_id: string;
+    name: string;
+    color: string;
+    created_at: string;
 }
