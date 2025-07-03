@@ -87,7 +87,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
               created_at: row.created_at,
               updated_at: row.updated_at,
               color: row.color,
-              position: row.position_x !== null ? { x: row.position_x, y: row.position_y } : undefined,
+              position: row.position_x !== null && row.position_y !== null ? { x: row.position_x, y: row.position_y } : undefined,
               tags,
               segments
             });
@@ -140,7 +140,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
             created_at: row.created_at,
             updated_at: row.updated_at,
             color: row.color,
-            position: row.position_x !== null ? { x: row.position_x, y: row.position_y } : undefined,
+            position: row.position_x !== null && row.position_y !== null ? { x: row.position_x, y: row.position_y } : undefined,
             tags,
             segments
           });
