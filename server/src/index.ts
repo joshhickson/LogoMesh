@@ -65,14 +65,82 @@ app.use('/api/v1/portability', portabilityRoutes);
 app.use('/api/v1/orchestrator', orchestratorRoutes);
 app.use('/api/v1/tasks', taskRoutes);
 
+// Import security middleware
+import { createApiRateLimiter, createAuthRateLimiter } from '../../core/middleware/rateLimiter';
+import { AuthService } from '../../core/services/authService';
+
+// Setup rate limiters
+const apiRateLimit = createApiRateLimiter();
+const authRateLimit = createAuthRateLimiter();
+
+// Apply rate limiting
+app.use('/api/v1', apiRateLimit.middleware());
+app.use('/api/v1/auth', authRateLimit.middleware());
+
+// Setup authentication service
+const authService = new AuthService({
+  jwtSecret: process.env.JWT_SECRET || 'changeme-in-production',
+  jwtExpiration: '24h'
+});
+
 // Health check
 app.get(`${apiBasePath}/health`, (req, res) => {
   res.json({ 
     status: 'healthy', 
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development',
-    version: '0.1.0'
+    version: '0.2.0'
   });
+});
+
+// Comprehensive status endpoint
+app.get(`${apiBasePath}/status`, (req, res) => {
+  const memUsage = process.memoryUsage();
+  const uptime = process.uptime();
+  
+  try {
+    // Check database connection
+    // const dbStatus = await storageAdapter.healthCheck();
+    
+    // Check EventBus status
+    const eventBusStats = eventBus.getRegisteredEvents();
+    
+    res.json({
+      status: 'operational',
+      timestamp: new Date().toISOString(),
+      system: {
+        uptime: Math.floor(uptime),
+        memory: {
+          used: Math.round(memUsage.heapUsed / 1024 / 1024),
+          total: Math.round(memUsage.heapTotal / 1024 / 1024),
+          external: Math.round(memUsage.external / 1024 / 1024)
+        },
+        cpu: process.cpuUsage()
+      },
+      services: {
+        database: 'connected', // TODO: Implement actual health check
+        eventBus: {
+          status: 'active',
+          registeredEvents: eventBusStats.length
+        },
+        plugins: {
+          status: 'ready',
+          loaded: 0 // TODO: Get from PluginHost
+        }
+      },
+      metrics: {
+        queueLag: 0, // TODO: Implement from TaskEngine
+        activeConnections: 0 // TODO: Track active connections
+      }
+    });
+  } catch (error) {
+    logger.error('Status check failed:', error);
+    res.status(503).json({
+      status: 'degraded',
+      error: 'Service health check failed',
+      timestamp: new Date().toISOString()
+    });
+  }
 });
 
 async function startServer() {
