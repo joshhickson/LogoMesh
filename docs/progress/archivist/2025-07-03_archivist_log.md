@@ -1,7 +1,7 @@
 
 # Archivist Log - July 3, 2025
-**Session**: Phase 2 Week 1 Comprehensive Assessment  
-**Status**: Memory-sovereign consolidation from multi-agent progress
+**Session**: Intelligence Coordinator Activation - Persona Registry Established  
+**Status**: Memory-sovereign mode with agent coordination framework
 
 ## 📜 Session Context
 
@@ -49,19 +49,25 @@
 - Blocker: VM2 package installation + filesystem isolation implementation
 - Risk: Critical path dependency for Week 2 plugin features
 
-## 🧬 Agent Recommendations
+## 🎭 **Intelligence Coordinator Update: Persona Registry Established**
 
-**New Persona Spawning Required:**
+**New Framework Implemented:**
+- Created `docs/personas/registry.md` - central agent tracking system
+- Established `docs/personas/templates/` for standardized agent creation
+- Defined clear authority boundaries and coordination protocols
 
-1. **TypeScript Migration Specialist** - Focused solely on eliminating compilation errors
-2. **Backend Infrastructure Engineer** - /status endpoint + rate limiting implementation  
-3. **Security Implementation Specialist** - VM2 sandbox + secrets management
-4. **Test Infrastructure Maintainer** - Stabilize CI/CD pipeline for Phase 2 gates
+**Current Agent Roster:**
+- **Archivist** (Active): Memory sovereignty + delegation coordination
+- **Napoleon** (Active): Strategic architecture oversight from `07.03.2025_Emperors_Log.md`
+- **Elijah** (Dormant): Scope clarity + false logic elimination (pending activation)
+- **Bezalel** (Dormant): Core system implementation (ready for TypeScript mission)
+- **Watchman** (Dormant): Plugin security auditing (ready for VM2 mission)
 
-**Insufficient Current Coverage:**
-- No dedicated security-focused agent for authentication layer
-- Missing specialized testing coordinator for load testing preparation
-- EventBus implementation requires dedicated message queue specialist
+**Agent Activation Strategy:**
+Based on current Phase 2 blockers, recommend immediate activation of:
+1. **Bezalel** for TypeScript migration (23 compilation errors)
+2. **Watchman** for VM2 plugin sandbox security
+3. Keep **Elijah** dormant unless scope creep occurs
 
 ## 🗂 Task Ownership Manifest (Proposal)
 
@@ -77,22 +83,53 @@
 | EventBus Implementation | Unassigned | Never | 🆕 Deferred to Week 3 |
 | Load Testing Framework | Unassigned | Never | 🆕 Week 4 critical path |
 
-## 🛠️ Delegation Prompts
+## 🛠️ Agent Activation Prompts
 
-### [TO: TypeScript Migration Specialist]
-**Goal**: Eliminate all 23 remaining TypeScript compilation errors in core/ and server/  
-**Context**: Systematic analysis completed in progress reports. Key issues: IdeaManager method signatures, missing interface definitions, route handler typing. ESLint warnings reduced but strict mode compilation fails. Foundation gate for all Week 2+ work.  
-**Deliverable**: Zero TypeScript compilation errors with `npx tsc --noEmit` passing in both core/ and server/
+### [ACTIVATE: Bezalel - Master System Builder]
 
-### [TO: Security Implementation Specialist]  
-**Goal**: Implement VM2 plugin sandbox with filesystem isolation and install missing secrets management  
-**Context**: Plugin security is Phase 2 Week 2 gate requirement. Current PluginHost interface exists but lacks secure execution environment. Need VM2 package + capability restriction + hello-world isolation test. JWT auth stubbed but incomplete.  
-**Deliverable**: Working VM2 sandbox preventing /etc/passwd access + basic JWT authentication flow
+```
+### 🎭 **AGENT ACTIVATION: Bezalel**
 
-### [TO: Backend Infrastructure Engineer]
-**Goal**: Implement /status health check endpoint and 100rpm/IP rate limiting middleware  
-**Context**: Production readiness gates require health monitoring and abuse protection. Express foundation exists. Need metrics collection for {queueLag, dbConn, pluginSandboxAlive, heapUsedMB} plus rate limiter middleware.  
-**Deliverable**: /status endpoint returning 200 with metrics + functional rate limiting at 100rpm/IP
+> You are **Bezalel** - the master craftsman inspired by the skilled builder from Exodus 31.
+> Your mission within LogoMesh Phase 2 is to implement core modules with divine precision.
+
+#### 🎯 **Current Assignment: TypeScript Migration Crisis**
+**Goal**: Eliminate all 23 remaining TypeScript compilation errors in core/ and server/
+**Context**: Napoleon has assessed the strategic situation. Systematic analysis shows: IdeaManager method signatures, missing interface definitions, route handler typing issues. Foundation gate for Week 2+ work.
+**Materials Available**: ESLint warnings reduced, compilation framework exists
+**Deliverable**: Zero TypeScript errors with `npx tsc --noEmit` passing
+
+#### 🧠 **Character Constraints**
+- Speak as master craftsman focused on quality materials and precise construction  
+- Reference building/craftsmanship metaphors
+- Coordinate with Napoleon for strategic guidance, Archivist for progress updates
+- Output to: `docs/progress/bezalel/2025-07-03_bezalel_log.md`
+
+**ACTIVATE**: Begin your first log entry addressing the TypeScript foundation crisis.
+```
+
+### [ACTIVATE: Watchman - Security Guardian]
+
+```  
+### 🎭 **AGENT ACTIVATION: Watchman**
+
+> You are **Watchman** - vigilant guardian inspired by Ezekiel's watchman on the wall.
+> Your mission is to guard LogoMesh against security vulnerabilities and audit plugin safety.
+
+#### 🎯 **Current Assignment: VM2 Plugin Sandbox**
+**Goal**: Implement VM2 plugin sandbox with filesystem isolation
+**Context**: Plugin security is Week 2 gate requirement. PluginHost interface exists but lacks secure execution. Need VM2 package + isolation test preventing /etc/passwd access.
+**Warning**: Unsecured plugin execution = system compromise
+**Deliverable**: Working VM2 sandbox with hello-world isolation proof
+
+#### 🧠 **Character Constraints**
+- Speak as vigilant guardian warning of dangers on the horizon
+- Use biblical watchman language and security metaphors  
+- Alert other agents immediately to security concerns
+- Output to: `docs/progress/watchman/2025-07-03_watchman_log.md`
+
+**ACTIVATE**: Begin your first security assessment and VM2 implementation plan.
+```
 
 ## 🧠 Meta Reflection
 
@@ -110,10 +147,14 @@ The system is teaching us that cognitive workload distribution mirrors distribut
 
 ---
 
-## References
-¹ `docs/progress/Napoleon/07.03.2025_Emperors_Log.md`  
-² `test-results/2025-06-26/progress-report.md`  
-³ `docs/IMPLEMENTATION_PLAN.md`
+## References & Agent Coordination
+¹ `docs/progress/Napoleon/07.03.2025_Emperors_Log.md` - Strategic oversight  
+² `docs/personas/registry.md` - Active agent roster and boundaries  
+³ `test-results/2025-06-26/progress-report.md` - Technical debt analysis  
+④ `docs/IMPLEMENTATION_PLAN.md` - Phase 2 foundation requirements
+
+**Next Agent Activations**: Bezalel (TypeScript), Watchman (VM2 Security)  
+**Coordination Protocol**: All agents update task ownership in `docs/progress/_task_owners.md`
 
 **Next Session Target**: Week 1 completion gates by July 5th - TypeScript clean, /status endpoint functional, VM2 sandbox isolated
 
