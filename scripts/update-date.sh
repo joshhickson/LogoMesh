@@ -2,11 +2,14 @@
 #!/bin/bash
 
 # The Timekeeper - Updates timestamp file for LogoMesh agents
-# This script creates/overwrites docs/_timestamp.md with current UTC time
+# This script creates/overwrites docs/_timestamp.md with current Pacific Time (PT)
 
-# Get current Pacific Time date and time
-CURRENT_DATE=$(TZ="America/Los_Angeles" date +"%Y-%m-%d")
-CURRENT_TIME=$(TZ="America/Los_Angeles" date +"%H:%M:%S")
+# Force Pacific Time zone
+export TZ=America/Los_Angeles
+
+# Get current date and time in PT
+CURRENT_DATE=$(date +"%Y-%m-%d")
+CURRENT_TIME=$(date +"%H:%M:%S")
 
 # Create the timestamp file content
 cat > docs/_timestamp.md << EOF
