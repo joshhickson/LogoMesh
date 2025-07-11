@@ -19,7 +19,7 @@ export async function initializeDatabase(dbPath = './server/data/logomesh.sqlite
       logger.info(`Connecting to database at: ${dbPath}`);
 
       // Connect to SQLite database
-      const db = new sqlite3.Database(dbPath, (err: any) => { // Added : any
+      const db = new sqlite3.Database(dbPath, (err: Error | null) => { // any -> Error | null
         if (err) {
           logger.error('Error opening database:', err);
           reject(err);
@@ -41,7 +41,7 @@ export async function initializeDatabase(dbPath = './server/data/logomesh.sqlite
       logger.info('Loaded database schema');
 
       // Execute schema creation
-      db.exec(schemaSQL, (err: any) => { // Added : any
+      db.exec(schemaSQL, (err: Error | null) => { // any -> Error | null
         if (err) {
           logger.error('Error creating database schema:', err);
           db.close();
@@ -52,7 +52,7 @@ export async function initializeDatabase(dbPath = './server/data/logomesh.sqlite
         logger.info('Database schema created successfully');
 
         // Close database connection
-        db.close((err: any) => { // Added : any
+        db.close((err: Error | null) => { // any -> Error | null
           if (err) {
             logger.error('Error closing database:', err);
             reject(err);

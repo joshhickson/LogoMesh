@@ -28,6 +28,17 @@ export interface LoadedModel {
   requestCount: number;
 }
 
+export interface ModelStatistics {
+  id: string;
+  name: string;
+  loadTime: Date;
+  lastUsed: Date;
+  requestCount: number;
+  memoryUsage: number;
+  capabilities: string[];
+  uptime: number; // Milliseconds
+}
+
 /**
  * LLMRegistry manages local model loading, unloading, and hot-swapping
  * Supports multiple concurrent models with memory management
@@ -109,10 +120,14 @@ export class LLMRegistry {
    */
   async loadModel(modelId: string): Promise<LLMExecutor> {
     if (this.loadedModels.has(modelId)) {
-      const loaded = this.loadedModels.get(modelId)!;
-      loaded.lastUsed = new Date();
-      logger.info(`[LLMRegistry] Model ${modelId} already loaded, returning existing instance`);
-      return loaded.executor;
+      const loaded = this.loadedModels.get(modelId);
+      if (loaded) {
+        loaded.lastUsed = new Date();
+        logger.info(`[LLMRegistry] Model ${modelId} already loaded, returning existing instance`);
+        return loaded.executor;
+      }
+      // This case should ideally not be reached if .has(modelId) is true
+      throw new Error(`Internal error: Model ${modelId} found with .has() but not with .get()`);
     }
 
     const config = this.availableModels.get(modelId);
@@ -272,7 +287,7 @@ export class LLMRegistry {
   /**
    * Get model performance statistics
    */
-  getModelStats(modelId: string): any {
+  getModelStats(modelId: string): ModelStatistics | null {
     const loaded = this.loadedModels.get(modelId);
     if (!loaded) return null;
 

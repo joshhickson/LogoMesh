@@ -10,12 +10,12 @@ import { Logger } from '../utils/logger';
  */
 export class PluginHost {
   private loadedPlugins: Map<string, PluginRuntimeInterface> = new Map();
-  private pluginConfigs: Map<string, any> = new Map();
+  private pluginConfigs: Map<string, unknown> = new Map(); // any -> unknown
   private eventBus: EventBus = new EventBus();
 
   constructor(
     private logger: Logger,
-    private pluginApi: PluginAPI
+    private _pluginApi: PluginAPI // Prefixed
   ) {
     this.logger.info('[PluginHost] Initialized with extended manifest support');
   }
@@ -62,7 +62,7 @@ export class PluginHost {
   /**
    * Check if plugin meets activation criteria
    */
-  private checkActivationCriteria(criteria: any): boolean {
+  private _checkActivationCriteria(_criteria: unknown): boolean { // Prefixed method name
     // Stub implementation for context-aware loading
     // TODO: Implement actual device/environment checking
     this.logger.debug('[PluginHost] Checking activation criteria (stub)');
@@ -79,10 +79,14 @@ export class PluginHost {
   /**
    * Execute plugin command
    */
-  async executePluginCommand(pluginName: string, command: string, payload?: any): Promise<any> {
+  async executePluginCommand(
+    pluginName: string,
+    command: string,
+    payload?: unknown // any -> unknown
+  ): Promise<unknown> { // Promise<any> -> Promise<unknown>
     const plugin = this.loadedPlugins.get(pluginName);
     if (plugin && plugin.onCommand) {
-      return await plugin.onCommand(command, payload);
+      return await plugin.onCommand(command, payload); // This might cause a new error if onCommand returns any
     }
     throw new Error(`Plugin ${pluginName} not found or doesn't support commands`);
   }

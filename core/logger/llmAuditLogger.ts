@@ -9,7 +9,7 @@ export interface LLMAuditEntry {
   prompt: string;
   response: string | null;
   model: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>; // any -> unknown
   duration: number;
   success: boolean;
   error?: string;
@@ -24,7 +24,7 @@ export interface PipelineAuditEntry {
   executorId?: string;
   timestamp: Date;
   event: 'created' | 'started' | 'step_started' | 'step_completed' | 'step_failed' | 'completed' | 'failed' | 'cancelled';
-  details?: Record<string, any>;
+  details?: Record<string, unknown>; // any -> unknown
   duration?: number;
 }
 
@@ -94,7 +94,8 @@ export function getAuditLogs(filter?: {
       filtered = filtered.filter(log => log.success === filter.success);
     }
     if (filter.since) {
-      filtered = filtered.filter(log => log.timestamp >= filter.since!);
+      const sinceDate = filter.since; // Assign to new variable
+      filtered = filtered.filter(log => log.timestamp >= sinceDate);
     }
   }
 
@@ -124,7 +125,8 @@ export function getPipelineAuditLogs(filter?: {
       filtered = filtered.filter(log => log.event === filter.event);
     }
     if (filter.since) {
-      filtered = filtered.filter(log => log.timestamp >= filter.since!);
+      const sinceDate = filter.since; // Assign to new variable
+      filtered = filtered.filter(log => log.timestamp >= sinceDate);
     }
   }
 

@@ -1,57 +1,69 @@
-import { Router, Request, Response, NextFunction } from 'express'; // Added NextFunction
-import { IdeaManager } from '../../../core/IdeaManager'; // Corrected path
-import { logger } from '../../../core/utils/logger'; // Corrected path
-import { NewThoughtData } from '../../../contracts/storageAdapter';
+import { Router, Request, Response, NextFunction } from 'express'; // Use Request directly
+import { IdeaManager } from '../../../core/IdeaManager';
+import { logger } from '../../../core/utils/logger';
+import { NewThoughtData, NewSegmentData } from '../../../contracts/storageAdapter';
 
 const router = Router();
 
+// AuthenticatedRequest is now globally augmented. Local definition removed.
+
+
 // Authentication middleware for thought routes
-const requireAuth = (req: Request, res: Response, next: any) => {
-  if (!req.user?.isAuthenticated) {
-    return res.status(401).json({ 
+const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
+  if (!req.user?.isAuthenticated || !req.user.id) {
+    res.status(401).json({ // Removed return from here
       error: 'Authentication required',
       message: 'Please log in to access your thoughts'
     });
+    return; // Added return here
   }
   next();
+  return;
 };
 
 // Apply authentication to all thought routes
 router.use(requireAuth);
 
-// Middleware to attach services to request
-router.use((req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
-  // const ideaManager: IdeaManager = req.app.locals.ideaManager; // ideaManager is used below directly from req.app.locals
-  // logger is already imported and available in module scope
-  next();
-});
-
 // GET /api/v1/thoughts - Get all thoughts for authenticated user
-router.get('/', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
+router.get('/', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   try {
-    const ideaManager: IdeaManager = req.app.locals.ideaManager;
-    const thoughts = await ideaManager.getThoughts(req.user!.id);
-    res.json(thoughts);
+    const ideaManager = req.app.locals.ideaManager as IdeaManager;
+    const userId = req.user?.id;
+    if (!userId) {
+      logger.error('User ID not found in authenticated request for GET /thoughts');
+      res.status(401).json({ error: 'Authentication error: User ID missing' });
+      return; // Ensure path returns
+    }
+    const thoughts = await ideaManager.getThoughts(userId);
+    res.json(thoughts); // Implicitly returns after this
   } catch (error) {
     logger.error('Error fetching thoughts:', error);
-    // Pass error to Express error handler if available, or handle here
-    // next(error); // Example if you have an error handling middleware
+    // _next(error); // If using error middleware
     res.status(500).json({ error: 'Failed to fetch thoughts' });
+    // No explicit return needed here as it's the end of the catch block
   }
 });
 
 // POST /api/v1/thoughts - Create new thought
-router.post('/', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
+router.post('/', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   try {
-    const ideaManager: IdeaManager = req.app.locals.ideaManager;
-    const thoughtData = req.body;
+    const ideaManager = req.app.locals.ideaManager as IdeaManager;
+    const thoughtData = req.body as NewThoughtData;
 
     // Basic validation
     if (!thoughtData.title) {
-      return res.status(400).json({ error: 'Title is required' });
+      res.status(400).json({ error: 'Title is required' });
+      return;
     }
 
-    const newThought = await ideaManager.addThought(req.user!.id, thoughtData);
+    const userId = req.user?.id;
+    if (!userId) {
+      logger.error('User ID not found in authenticated request for POST /thoughts');
+      res.status(401).json({ error: 'Authentication error: User ID missing' });
+      return;
+    }
+
+    const newThought = await ideaManager.addThought(userId, thoughtData);
     res.status(201).json(newThought);
   } catch (error) {
     logger.error('Error creating thought:', error);
@@ -61,14 +73,22 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => { //
 });
 
 // GET /api/v1/thoughts/:thoughtId - Get specific thought
-router.get('/:thoughtId', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
+router.get('/:thoughtId', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   try {
-    const ideaManager: IdeaManager = req.app.locals.ideaManager;
+    const ideaManager = req.app.locals.ideaManager as IdeaManager;
     const { thoughtId } = req.params;
 
-    const thought = await ideaManager.getThoughtById(req.user!.id, thoughtId);
+    const userId = req.user?.id;
+    if (!userId) {
+      logger.error('User ID not found in authenticated request for GET /thoughts/:thoughtId');
+      res.status(401).json({ error: 'Authentication error: User ID missing' });
+      return;
+    }
+
+    const thought = await ideaManager.getThoughtById(userId, thoughtId);
     if (!thought) {
-      return res.status(404).json({ error: 'Thought not found' });
+      res.status(404).json({ error: 'Thought not found' });
+      return;
     }
 
     res.json(thought);
@@ -80,15 +100,23 @@ router.get('/:thoughtId', async (req: Request, res: Response, next: NextFunction
 });
 
 // PUT /api/v1/thoughts/:thoughtId - Update thought
-router.put('/:thoughtId', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
+router.put('/:thoughtId', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   try {
-    const ideaManager: IdeaManager = req.app.locals.ideaManager;
+    const ideaManager = req.app.locals.ideaManager as IdeaManager;
     const { thoughtId } = req.params;
-    const updateData = req.body;
+    const updateData = req.body as Partial<NewThoughtData>;
 
-    const updatedThought = await ideaManager.updateThought(req.user!.id, thoughtId, updateData);
+    const userId = req.user?.id;
+    if (!userId) {
+      logger.error('User ID not found in authenticated request for PUT /thoughts/:thoughtId');
+      res.status(401).json({ error: 'Authentication error: User ID missing' });
+      return;
+    }
+
+    const updatedThought = await ideaManager.updateThought(userId, thoughtId, updateData);
     if (!updatedThought) {
-      return res.status(404).json({ error: 'Thought not found' });
+      res.status(404).json({ error: 'Thought not found' });
+      return;
     }
 
     res.json(updatedThought);
@@ -100,14 +128,22 @@ router.put('/:thoughtId', async (req: Request, res: Response, next: NextFunction
 });
 
 // DELETE /api/v1/thoughts/:thoughtId - Delete thought
-router.delete('/:thoughtId', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
+router.delete('/:thoughtId', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   try {
-    const ideaManager: IdeaManager = req.app.locals.ideaManager;
+    const ideaManager = req.app.locals.ideaManager as IdeaManager;
     const { thoughtId } = req.params;
 
-    const success = await ideaManager.deleteThought(req.user!.id, thoughtId);
+    const userId = req.user?.id;
+    if (!userId) {
+      logger.error('User ID not found in authenticated request for DELETE /thoughts/:thoughtId');
+      res.status(401).json({ error: 'Authentication error: User ID missing' });
+      return;
+    }
+
+    const success = await ideaManager.deleteThought(userId, thoughtId);
     if (!success) {
-      return res.status(404).json({ error: 'Thought not found' });
+      res.status(404).json({ error: 'Thought not found' });
+      return;
     }
 
     res.status(204).send();
@@ -119,20 +155,29 @@ router.delete('/:thoughtId', async (req: Request, res: Response, next: NextFunct
 });
 
 // POST /api/v1/thoughts/:thoughtId/segments - Create new segment
-router.post('/:thoughtId/segments', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
+router.post('/:thoughtId/segments', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   try {
-    const ideaManager: IdeaManager = req.app.locals.ideaManager;
+    const ideaManager = req.app.locals.ideaManager as IdeaManager;
     const { thoughtId } = req.params;
-    const segmentData = req.body;
+    const segmentData = req.body as NewSegmentData;
 
     // Basic validation
     if (!segmentData.title || !segmentData.content) {
-      return res.status(400).json({ error: 'Title and content are required' });
+      res.status(400).json({ error: 'Title and content are required' });
+      return;
     }
 
-    const newSegment = await ideaManager.addSegment(req.user!.id, thoughtId, segmentData);
+    const userId = req.user?.id;
+    if (!userId) {
+      logger.error('User ID not found in authenticated request for POST /thoughts/:thoughtId/segments');
+      res.status(401).json({ error: 'Authentication error: User ID missing' });
+      return;
+    }
+
+    const newSegment = await ideaManager.addSegment(userId, thoughtId, segmentData);
     if (!newSegment) {
-      return res.status(404).json({ error: 'Thought not found' });
+      res.status(404).json({ error: 'Thought not found' });
+      return;
     }
     res.status(201).json(newSegment);
   } catch (error) {
@@ -143,15 +188,16 @@ router.post('/:thoughtId/segments', async (req: Request, res: Response, next: Ne
 });
 
 // PUT /api/v1/thoughts/:thoughtId/segments/:segmentId - Update segment
-router.put('/:thoughtId/segments/:segmentId', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
+router.put('/:thoughtId/segments/:segmentId', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   try {
-    const ideaManager: IdeaManager = req.app.locals.ideaManager;
+    const ideaManager = req.app.locals.ideaManager as IdeaManager;
     const { thoughtId, segmentId } = req.params;
-    const updateData = req.body;
+    const updateData = req.body as Partial<NewSegmentData>;
 
     const updatedSegment = await ideaManager.updateSegment(thoughtId, segmentId, updateData);
     if (!updatedSegment) {
-      return res.status(404).json({ error: 'Segment not found' });
+      res.status(404).json({ error: 'Segment not found' });
+      return;
     }
 
     res.json(updatedSegment);
@@ -163,14 +209,15 @@ router.put('/:thoughtId/segments/:segmentId', async (req: Request, res: Response
 });
 
 // DELETE /api/v1/thoughts/:thoughtId/segments/:segmentId - Delete segment
-router.delete('/:thoughtId/segments/:segmentId', async (req: Request, res: Response, next: NextFunction) => { // Added NextFunction type
+router.delete('/:thoughtId/segments/:segmentId', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   try {
-    const ideaManager: IdeaManager = req.app.locals.ideaManager;
+    const ideaManager = req.app.locals.ideaManager as IdeaManager;
     const { thoughtId, segmentId } = req.params;
 
     const success = await ideaManager.deleteSegment(thoughtId, segmentId);
     if (!success) {
-      return res.status(404).json({ error: 'Segment not found' });
+      res.status(404).json({ error: 'Segment not found' });
+      return;
     }
 
     res.status(204).send();

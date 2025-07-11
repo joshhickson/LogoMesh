@@ -1,10 +1,10 @@
-import { Pool, Client, QueryResult } from 'pg';
+import { Pool, QueryResult } from 'pg'; // Removed Client
 import { StorageAdapter, NewThoughtData, NewSegmentData } from '../../../contracts/storageAdapter';
 import { Segment, Thought } from '../../../contracts/entities';
 import { 
   PostgresThoughtRecord, 
-  PostgresSegmentRecord,
-  DatabaseQueryResult 
+  PostgresSegmentRecord
+  // Removed DatabaseQueryResult
 } from '../../../contracts/types';
 
 export class PostgresAdapter implements StorageAdapter {
@@ -38,6 +38,9 @@ export class PostgresAdapter implements StorageAdapter {
           description TEXT,
           fields JSONB DEFAULT '{}',
           metadata JSONB DEFAULT '{}',
+          color TEXT,
+          position_x REAL,
+          position_y REAL,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
@@ -52,6 +55,10 @@ export class PostgresAdapter implements StorageAdapter {
           metadata JSONB DEFAULT '{}',
           position_x FLOAT DEFAULT 0,
           position_y FLOAT DEFAULT 0,
+          abstraction_level TEXT,
+          local_priority REAL,
+          cluster_id VARCHAR(255),
+          sort_order INTEGER,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
@@ -80,29 +87,39 @@ export class PostgresAdapter implements StorageAdapter {
   async createThought(thoughtData: NewThoughtData, userId = 'anonymous'): Promise<Thought> {
     const client = await this.pool.connect();
     try {
+      // TODO: Handle thoughtData.tags in createThought - requires tag table and thought_tags linking table
       const result: QueryResult<PostgresThoughtRecord> = await client.query(
-        `INSERT INTO thoughts (id, user_id, title, description, fields, metadata) 
-         VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+        `INSERT INTO thoughts (id, user_id, title, description, fields, metadata, color, position_x, position_y)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
         [
-          thoughtData.id || `thought_${Date.now()}`, // Generate ID if not provided
+          thoughtData.id || `thought_${Date.now()}`,
           userId,
           thoughtData.title,
-          thoughtData.description || '',
+          thoughtData.description || null, // Use null for DB
           JSON.stringify(thoughtData.fields || {}),
-          JSON.stringify(thoughtData.metadata || {})
+          JSON.stringify(thoughtData.metadata || {}),
+          thoughtData.color || null,
+          thoughtData.position?.x || null,
+          thoughtData.position?.y || null
         ]
       );
       const dbRow = result.rows[0];
       const thought: Thought = {
         thought_bubble_id: dbRow.id,
         title: dbRow.title,
-        description: dbRow.description,
-        created_at: dbRow.created_at.toISOString(),
-        updated_at: dbRow.updated_at.toISOString(),
-        fields: dbRow.fields || {},
-        metadata: dbRow.metadata || {}, // Added metadata
-        // color, position, tags, segments would need to be handled if they exist in thoughts table or are joined
+        created_at: dbRow.created_at,
+        updated_at: dbRow.updated_at,
+        tags: [],
+        segments: []
       };
+      if (dbRow.description !== undefined && dbRow.description !== null) thought.description = dbRow.description;
+      if (dbRow.fields !== undefined) thought.fields = dbRow.fields as Record<string, unknown>;
+      if (dbRow.metadata !== undefined) thought.metadata = dbRow.metadata as Record<string, unknown>;
+      if (dbRow.color !== undefined && dbRow.color !== null) thought.color = dbRow.color;
+      if (dbRow.position_x !== undefined && dbRow.position_x !== null &&
+          dbRow.position_y !== undefined && dbRow.position_y !== null) {
+        thought.position = { x: dbRow.position_x, y: dbRow.position_y };
+      }
       return thought;
     } finally {
       client.release();
@@ -123,13 +140,21 @@ export class PostgresAdapter implements StorageAdapter {
       const thought: Thought = {
         thought_bubble_id: dbRow.id,
         title: dbRow.title,
-        description: dbRow.description,
-        created_at: dbRow.created_at.toISOString(),
-        updated_at: dbRow.updated_at.toISOString(),
-        fields: dbRow.fields || {},
-        metadata: dbRow.metadata || {}, // Added metadata
-        // color, position, tags, segments would need to be handled
+        created_at: dbRow.created_at,
+        updated_at: dbRow.updated_at,
+        // segments will be populated by a separate call if needed by consumer
+        // For now, tags and segments are placeholders as per Thought entity.
+        tags: [],
+        segments: []
       };
+      if (dbRow.description !== undefined && dbRow.description !== null) thought.description = dbRow.description;
+      if (dbRow.fields !== undefined) thought.fields = dbRow.fields as Record<string, unknown>;
+      if (dbRow.metadata !== undefined) thought.metadata = dbRow.metadata as Record<string, unknown>;
+      if (dbRow.color !== undefined && dbRow.color !== null) thought.color = dbRow.color;
+      if (dbRow.position_x !== undefined && dbRow.position_x !== null &&
+          dbRow.position_y !== undefined && dbRow.position_y !== null) {
+        thought.position = { x: dbRow.position_x, y: dbRow.position_y };
+      }
       return thought;
     } finally {
       client.release();
@@ -147,13 +172,19 @@ export class PostgresAdapter implements StorageAdapter {
         const thought: Thought = {
           thought_bubble_id: dbRow.id,
           title: dbRow.title,
-          description: dbRow.description,
-          created_at: dbRow.created_at.toISOString(),
-          updated_at: dbRow.updated_at.toISOString(),
-          fields: dbRow.fields || {},
-        metadata: dbRow.metadata || {}, // Added metadata
-          // color, position, tags, segments would need to be handled
+          created_at: dbRow.created_at,
+          updated_at: dbRow.updated_at,
+          tags: [],
+          segments: []
         };
+        if (dbRow.description !== undefined && dbRow.description !== null) thought.description = dbRow.description;
+        if (dbRow.fields !== undefined) thought.fields = dbRow.fields as Record<string, unknown>;
+        if (dbRow.metadata !== undefined) thought.metadata = dbRow.metadata as Record<string, unknown>;
+        if (dbRow.color !== undefined && dbRow.color !== null) thought.color = dbRow.color;
+        if (dbRow.position_x !== undefined && dbRow.position_x !== null &&
+            dbRow.position_y !== undefined && dbRow.position_y !== null) {
+          thought.position = { x: dbRow.position_x, y: dbRow.position_y };
+        }
         return thought;
       });
     } finally {
@@ -164,33 +195,44 @@ export class PostgresAdapter implements StorageAdapter {
   async updateThought(id: string, thoughtData: Partial<NewThoughtData>, userId = 'anonymous'): Promise<Thought | null> {
     const client = await this.pool.connect();
     try {
-      const updates = [];
+      // TODO: Handle updates.tags in updateThought - requires tag table and thought_tags linking table logic (delete old, insert new)
+      const updateFields = []; // Changed 'updates' to 'updateFields'
       const values = [];
       let paramCount = 1;
 
       if (thoughtData.title !== undefined) {
-        updates.push(`title = $${paramCount++}`);
+        updateFields.push(`title = $${paramCount++}`);
         values.push(thoughtData.title);
       }
       if (thoughtData.description !== undefined) {
-        updates.push(`description = $${paramCount++}`);
+        updateFields.push(`description = $${paramCount++}`);
         values.push(thoughtData.description);
       }
       if (thoughtData.fields !== undefined) {
-        updates.push(`fields = $${paramCount++}`);
-        values.push(JSON.stringify(thoughtData.fields));
+        updateFields.push(`fields = $${paramCount++}`);
+        values.push(JSON.stringify(thoughtData.fields || {})); // Ensure not undefined
       }
       if (thoughtData.metadata !== undefined) {
-        updates.push(`metadata = $${paramCount++}`);
-        values.push(JSON.stringify(thoughtData.metadata));
+        updateFields.push(`metadata = $${paramCount++}`);
+        values.push(JSON.stringify(thoughtData.metadata || {})); // Ensure not undefined
+      }
+      if (thoughtData.color !== undefined) {
+        updateFields.push(`color = $${paramCount++}`);
+        values.push(thoughtData.color);
+      }
+      if (thoughtData.position !== undefined) {
+        updateFields.push(`position_x = $${paramCount++}`);
+        values.push(thoughtData.position.x);
+        updateFields.push(`position_y = $${paramCount++}`);
+        values.push(thoughtData.position.y);
       }
 
-      updates.push(`updated_at = CURRENT_TIMESTAMP`);
+      updateFields.push(`updated_at = CURRENT_TIMESTAMP`);
       values.push(id); // For WHERE id =
       values.push(userId); // For WHERE user_id =
 
       const result: QueryResult<PostgresThoughtRecord> = await client.query(
-        `UPDATE thoughts SET ${updates.join(', ')} WHERE id = $${paramCount} AND user_id = $${paramCount + 1} RETURNING *`,
+        `UPDATE thoughts SET ${updateFields.join(', ')} WHERE id = $${paramCount} AND user_id = $${paramCount + 1} RETURNING *`,
         values
       );
 
@@ -199,13 +241,19 @@ export class PostgresAdapter implements StorageAdapter {
       const thought: Thought = {
         thought_bubble_id: dbRow.id,
         title: dbRow.title,
-        description: dbRow.description,
-        created_at: dbRow.created_at.toISOString(),
-        updated_at: dbRow.updated_at.toISOString(),
-        fields: dbRow.fields || {},
-        metadata: dbRow.metadata || {}, // Added metadata
-        // color, position, tags, segments would need to be handled
+        created_at: dbRow.created_at,
+        updated_at: dbRow.updated_at,
+        tags: [],
+        segments: []
       };
+      if (dbRow.description !== undefined && dbRow.description !== null) thought.description = dbRow.description;
+      if (dbRow.fields !== undefined) thought.fields = dbRow.fields as Record<string, unknown>;
+      if (dbRow.metadata !== undefined) thought.metadata = dbRow.metadata as Record<string, unknown>;
+      if (dbRow.color !== undefined && dbRow.color !== null) thought.color = dbRow.color;
+      if (dbRow.position_x !== undefined && dbRow.position_x !== null &&
+          dbRow.position_y !== undefined && dbRow.position_y !== null) {
+        thought.position = { x: dbRow.position_x, y: dbRow.position_y };
+      }
       return thought;
     } finally {
       client.release();
@@ -225,20 +273,25 @@ export class PostgresAdapter implements StorageAdapter {
   async getSegmentsForThought(thoughtId: string, userId = 'anonymous'): Promise<Segment[]> {
     const client = await this.pool.connect();
     try {
-      const result: QueryResult<PostgresSegmentRecord> = await client.query('SELECT * FROM segments WHERE thought_id = $1 AND user_id = $2', [thoughtId, userId]);
-      return result.rows.map(segment => ({
-        segment_id: segment.id,
-        thought_bubble_id: segment.thought_id,
-        title: segment.title,
-        content: segment.content,
-        content_type: segment.segment_type,
-        fields: segment.fields || {},
-        created_at: segment.created_at.toISOString(),
-        updated_at: segment.updated_at.toISOString(),
-        abstraction_level: 'Fact',
-        local_priority: 0.5,
-        cluster_id: 'uncategorized'
-      }));
+      const result: QueryResult<PostgresSegmentRecord> = await client.query('SELECT * FROM segments WHERE thought_id = $1 AND user_id = $2 ORDER BY sort_order, created_at', [thoughtId, userId]); // Added explicit sort
+      return result.rows.map(dbRow => {
+        const segment: Segment = {
+          segment_id: dbRow.id,
+          thought_bubble_id: dbRow.thought_id,
+          content: dbRow.content,
+          created_at: dbRow.created_at,
+          updated_at: dbRow.updated_at,
+        };
+        if (dbRow.title !== undefined && dbRow.title !== null) segment.title = dbRow.title;
+        if (dbRow.segment_type !== undefined && dbRow.segment_type !== null) segment.content_type = dbRow.segment_type;
+        if (dbRow.fields !== undefined) segment.fields = dbRow.fields as Record<string, unknown>;
+        if (dbRow.metadata !== undefined) segment.metadata = dbRow.metadata as Record<string, unknown>;
+        if (dbRow.abstraction_level !== undefined && dbRow.abstraction_level !== null) segment.abstraction_level = dbRow.abstraction_level;
+        if (dbRow.local_priority !== undefined && dbRow.local_priority !== null) segment.local_priority = dbRow.local_priority;
+        if (dbRow.cluster_id !== undefined && dbRow.cluster_id !== null) segment.cluster_id = dbRow.cluster_id;
+        if (dbRow.sort_order !== undefined && dbRow.sort_order !== null) segment.sort_order = dbRow.sort_order;
+        return segment;
+      });
     } finally {
       client.release();
     }
@@ -249,20 +302,23 @@ export class PostgresAdapter implements StorageAdapter {
     try {
       const result: QueryResult<PostgresSegmentRecord> = await client.query('SELECT * FROM segments WHERE id = $1 AND user_id = $2', [segmentId, userId]);
       if (result.rows.length === 0) return null;
-      const segment = result.rows[0];
-      return {
-        segment_id: segment.id,
-        thought_bubble_id: segment.thought_id,
-        title: segment.title,
-        content: segment.content,
-        content_type: segment.segment_type,
-        fields: segment.fields || {},
-        created_at: segment.created_at.toISOString(),
-        updated_at: segment.updated_at.toISOString(),
-        abstraction_level: 'Fact',
-        local_priority: 0.5,
-        cluster_id: 'uncategorized'
+      const dbRow = result.rows[0]; // Renamed for clarity
+      const segment: Segment = {
+        segment_id: dbRow.id,
+        thought_bubble_id: dbRow.thought_id,
+        content: dbRow.content,
+        created_at: dbRow.created_at,
+        updated_at: dbRow.updated_at,
       };
+      if (dbRow.title !== undefined && dbRow.title !== null) segment.title = dbRow.title;
+      if (dbRow.segment_type !== undefined && dbRow.segment_type !== null) segment.content_type = dbRow.segment_type;
+      if (dbRow.fields !== undefined) segment.fields = dbRow.fields as Record<string, unknown>;
+      if (dbRow.metadata !== undefined) segment.metadata = dbRow.metadata as Record<string, unknown>;
+      if (dbRow.abstraction_level !== undefined && dbRow.abstraction_level !== null) segment.abstraction_level = dbRow.abstraction_level;
+      if (dbRow.local_priority !== undefined && dbRow.local_priority !== null) segment.local_priority = dbRow.local_priority;
+      if (dbRow.cluster_id !== undefined && dbRow.cluster_id !== null) segment.cluster_id = dbRow.cluster_id;
+      if (dbRow.sort_order !== undefined && dbRow.sort_order !== null) segment.sort_order = dbRow.sort_order;
+      return segment;
     } finally {
       client.release();
     }
@@ -272,19 +328,23 @@ export class PostgresAdapter implements StorageAdapter {
     const client = await this.pool.connect();
     try {
       const result: QueryResult<PostgresSegmentRecord> = await client.query(
-        `INSERT INTO segments (id, thought_id, user_id, content, segment_type, fields, metadata, position_x, position_y, title)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
+        `INSERT INTO segments (id, thought_id, user_id, title, content, segment_type, fields, metadata, position_x, position_y, abstraction_level, local_priority, cluster_id, sort_order)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *`,
         [
           segmentData.id || `segment_${Date.now()}`,
           thoughtId,
           userId,
+          segmentData.title || null,
           segmentData.content,
-          'text', // Use fixed type for now
+          segmentData.segmentType || 'text',
           JSON.stringify(segmentData.fields || {}),
-          JSON.stringify({}), // Fixed metadata
-          0, // Fixed position
-          0, // Fixed position
-          segmentData.title || null
+          JSON.stringify(segmentData.metadata || {}), // Use segmentData.metadata
+          segmentData.positionX || 0,
+          segmentData.positionY || 0,
+          segmentData.abstraction_level || null,
+          segmentData.local_priority || null,
+          segmentData.cluster_id || null,
+          0 // Default sort_order, NewSegmentData doesn't have it
         ]
       );
 
@@ -293,31 +353,30 @@ export class PostgresAdapter implements StorageAdapter {
       const segment: Segment = {
         segment_id: dbRow.id,
         thought_bubble_id: dbRow.thought_id,
-        // user_id: dbRow.user_id, // Not in Segment interface explicitly, but good for internal use
-        title: dbRow.title,
         content: dbRow.content,
-        content_type: dbRow.segment_type,
-        fields: dbRow.fields || {},
-        metadata: dbRow.metadata || {},
-        // position_x: dbRow.position_x, // Not in Segment interface
-        // position_y: dbRow.position_y, // Not in Segment interface
-        created_at: dbRow.created_at.toISOString(),
-        updated_at: dbRow.updated_at.toISOString(),
-        // Ensure all Segment interface fields are mapped
-        // abstraction_level, local_priority, cluster_id, sort_order might be missing from DB or need defaults
+        created_at: dbRow.created_at,
+        updated_at: dbRow.updated_at,
       };
+      if (dbRow.title !== undefined && dbRow.title !== null) segment.title = dbRow.title;
+      if (dbRow.segment_type !== undefined && dbRow.segment_type !== null) segment.content_type = dbRow.segment_type;
+      if (dbRow.fields !== undefined) segment.fields = dbRow.fields as Record<string, unknown>;
+      if (dbRow.metadata !== undefined) segment.metadata = dbRow.metadata as Record<string, unknown>;
+      if (dbRow.abstraction_level !== undefined && dbRow.abstraction_level !== null) segment.abstraction_level = dbRow.abstraction_level;
+      if (dbRow.local_priority !== undefined && dbRow.local_priority !== null) segment.local_priority = dbRow.local_priority;
+      if (dbRow.cluster_id !== undefined && dbRow.cluster_id !== null) segment.cluster_id = dbRow.cluster_id;
+      if (dbRow.sort_order !== undefined && dbRow.sort_order !== null) segment.sort_order = dbRow.sort_order;
       return segment;
     } finally {
       client.release();
     }
   }
 
-  async getSegmentsByThoughtId(thoughtId: string, userId = 'anonymous'): Promise<PostgresSegmentRecord[]> {
+  async getSegmentsByThoughtId(thoughtId: string, _userId = 'anonymous'): Promise<PostgresSegmentRecord[]> { // userId -> _userId
     const client = await this.pool.connect();
     try {
       const result: QueryResult<PostgresSegmentRecord> = await client.query(
         'SELECT * FROM segments WHERE thought_id = $1 AND user_id = $2 ORDER BY created_at',
-        [thoughtId, userId]
+        [thoughtId, _userId] // Changed userId to _userId
       );
       return result.rows.map(segment => ({
         ...segment,
@@ -344,6 +403,7 @@ export class PostgresAdapter implements StorageAdapter {
         updateFields.push(`content = $${paramCount++}`);
         values.push(updates.content);
       }
+      // segmentType is already segment_type in NewSegmentData and table
       if (updates.segmentType !== undefined) {
         updateFields.push(`segment_type = $${paramCount++}`);
         values.push(updates.segmentType);
@@ -351,6 +411,10 @@ export class PostgresAdapter implements StorageAdapter {
       if (updates.fields !== undefined) {
         updateFields.push(`fields = $${paramCount++}`);
         values.push(JSON.stringify(updates.fields));
+      }
+      if (updates.metadata !== undefined) { // Added metadata update
+        updateFields.push(`metadata = $${paramCount++}`);
+        values.push(JSON.stringify(updates.metadata));
       }
       if (updates.positionX !== undefined) {
         updateFields.push(`position_x = $${paramCount++}`);
@@ -360,8 +424,25 @@ export class PostgresAdapter implements StorageAdapter {
         updateFields.push(`position_y = $${paramCount++}`);
         values.push(updates.positionY);
       }
+      if (updates.abstraction_level !== undefined) {
+        updateFields.push(`abstraction_level = $${paramCount++}`);
+        values.push(updates.abstraction_level);
+      }
+      if (updates.local_priority !== undefined) {
+        updateFields.push(`local_priority = $${paramCount++}`);
+        values.push(updates.local_priority);
+      }
+      if (updates.cluster_id !== undefined) {
+        updateFields.push(`cluster_id = $${paramCount++}`);
+        values.push(updates.cluster_id);
+      }
+       // TODO: Consider if sort_order needs to be updatable here. NewSegmentData does not currently include it.
+      // if (updates.sort_order !== undefined) {
+      //   updateFields.push(`sort_order = $${paramCount++}`);
+      //   values.push(updates.sort_order);
+      // }
 
-      if (updateFields.length === 0) { // No actual fields to update other than timestamp
+      if (updateFields.length === 0) {
         // Optionally, still update timestamp or just return current segment data
         // For now, let's assume if no fields are provided, no update runs
         const currentSegment = await this.getSegmentById(segmentId, userId);
@@ -386,24 +467,28 @@ export class PostgresAdapter implements StorageAdapter {
       const segment: Segment = {
         segment_id: dbRow.id,
         thought_bubble_id: dbRow.thought_id,
-        title: dbRow.title,
         content: dbRow.content,
-        content_type: dbRow.segment_type,
-        fields: dbRow.fields || {},
-        metadata: dbRow.metadata || {},
-        created_at: dbRow.created_at.toISOString(),
-        updated_at: dbRow.updated_at.toISOString(),
+        created_at: dbRow.created_at,
+        updated_at: dbRow.updated_at,
       };
+      if (dbRow.title !== undefined && dbRow.title !== null) segment.title = dbRow.title;
+      if (dbRow.segment_type !== undefined && dbRow.segment_type !== null) segment.content_type = dbRow.segment_type;
+      if (dbRow.fields !== undefined) segment.fields = dbRow.fields as Record<string, unknown>;
+      if (dbRow.metadata !== undefined) segment.metadata = dbRow.metadata as Record<string, unknown>;
+      if (dbRow.abstraction_level !== undefined && dbRow.abstraction_level !== null) segment.abstraction_level = dbRow.abstraction_level;
+      if (dbRow.local_priority !== undefined && dbRow.local_priority !== null) segment.local_priority = dbRow.local_priority;
+      if (dbRow.cluster_id !== undefined && dbRow.cluster_id !== null) segment.cluster_id = dbRow.cluster_id;
+      if (dbRow.sort_order !== undefined && dbRow.sort_order !== null) segment.sort_order = dbRow.sort_order;
       return segment;
     } finally {
       client.release();
     }
   }
 
-  async deleteSegment(thoughtId: string, segmentId: string, userId = 'anonymous'): Promise<boolean> { // Align with interface
+  async deleteSegment(_thoughtId: string, segmentId: string, userId = 'anonymous'): Promise<boolean> { // Prefixed unused thoughtId
     const client = await this.pool.connect();
     try {
-      // thoughtId is not used in this query as segmentId should be unique in combination with userId
+      // _thoughtId is not used in this query as segmentId should be unique in combination with userId
       const result = await client.query('DELETE FROM segments WHERE id = $1 AND user_id = $2', [segmentId, userId]);
       return (result.rowCount || 0) > 0;
     } finally {

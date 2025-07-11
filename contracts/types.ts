@@ -6,16 +6,15 @@
 // Cognitive Context Engine Types
 export interface CognitiveContext {
   id: string;
-  data: Record<string, unknown>;
+  data: Record<string, unknown>; // Consider making this generic if specific data shapes are common
   metadata: ContextMetadata;
-  timestamp: Date;
-  relevanceScore: number;
+  relevanceScore: number; // Score indicating relevance to a query or other contexts
 }
 
 export interface ContextMetadata {
-  timestamp: string;
-  source: string;
-  confidence: number;
+  timestamp: Date; // Unified to Date object, serialization handled at boundaries
+  source: string; // Origin of the context data (e.g., user input, plugin, LLM)
+  confidence: number; // Confidence score (0.0 to 1.0) in the accuracy/relevance of the context
   compressionLevel?: 'none' | 'basic' | 'semantic' | 'aggressive';
   clusterId?: string;
 }
@@ -104,42 +103,8 @@ export interface QueryField {
   format: string;
 }
 
-export interface DatabaseRow {
-  id: string;
-  user_id: string;
-  created_at: Date;
-  updated_at: Date;
-  fields: Record<string, unknown>;
-  metadata: Record<string, unknown>;
-}
-
-export interface ThoughtRecord extends DatabaseRow {
-  thought_bubble_id: string;
-  title: string;
-  description?: string | null;
-  color?: string | null;
-  position_x?: number | null;
-  position_y?: number | null;
-  fields?: Record<string, unknown> | null;
-  metadata?: Record<string, unknown> | null;
-  tags?: Tag[] | null;
-  created_at: Date;
-  updated_at: Date;
-}
-
-export interface SegmentRecord extends DatabaseRow {
-  segment_id: string;
-  thought_bubble_id: string;
-  title?: string | null;
-  content: string;
-  content_type: string;
-  fields?: Record<string, unknown> | null;
-  abstraction_level: string;
-  local_priority: number;
-  cluster_id?: string | null;
-  created_at: Date;
-  updated_at: Date;
-}
+// Removed DatabaseRow, ThoughtRecord, and SegmentRecord as they were causing TSC errors
+// and SQLite adapter now uses SQLiteThoughtRecord and SQLiteSegmentRecord.
 
 // Compression and Filtering Types
 export interface SemanticCompressionOptions {
@@ -220,7 +185,9 @@ export interface SQLiteThoughtRecord {
   color: string | null;
   position_x: number | null;
   position_y: number | null;
-  tags?: string | null; // Concatenated tag string from JOIN
+  tags_str?: string | null; // Renamed and clarified
+  fields?: string | null;   // Assuming TEXT column for JSON
+  metadata?: string | null; // Assuming TEXT column for JSON
 }
 
 export interface SQLiteSegmentRecord {
@@ -228,10 +195,14 @@ export interface SQLiteSegmentRecord {
   thought_bubble_id: string;
   title: string | null;
   content: string;
+  content_type?: string | null; // Added
   created_at: string;
   updated_at: string;
   sort_order?: number;
-  metadata?: string; // JSON string
+  metadata?: string | null; // JSON string, made nullable
+  abstraction_level?: string | null; // Added
+  local_priority?: number | null;    // Added
+  cluster_id?: string | null;        // Added
 }
 
 export interface TagRecord {
@@ -250,6 +221,9 @@ export interface PostgresThoughtRecord {
   metadata: Record<string, unknown>;
   created_at: Date;
   updated_at: Date;
+  color?: string | null;
+  position_x?: number | null;
+  position_y?: number | null;
 }
 
 export interface PostgresSegmentRecord {
@@ -265,6 +239,10 @@ export interface PostgresSegmentRecord {
   position_y: number;
   created_at: Date;
   updated_at: Date;
+  abstraction_level?: string | null;
+  local_priority?: number | null;
+  cluster_id?: string | null;
+  sort_order?: number | null;
 }
 
 // ================================
@@ -298,6 +276,48 @@ export interface LLMExecutionContext {
   response?: string;
   error?: string;
   duration?: number;
+}
+
+// ================================
+// PLUGIN TYPES
+// ================================
+
+export interface PluginManifest {
+  id: string; // Unique identifier for the plugin
+  name: string; // Display name of the plugin
+  version: string; // Version of the plugin (e.g., "1.0.0")
+  description?: string; // Optional description
+  author?: string; // Optional author information
+  permissions: PluginPermission[]; // Permissions requested by the plugin
+  capabilities: PluginCapability[]; // Capabilities provided by the plugin
+  entryPoint: string; // Main execution file for the plugin (e.g., "index.js")
+  configSchema?: Record<string, unknown>; // Optional JSON schema for plugin configuration
+}
+
+export type PluginPermission =
+  | 'readThoughts'
+  | 'writeThoughts'
+  | 'deleteThoughts'
+  | 'executeLLM'
+  | 'accessFileSystem'
+  | 'networkRequest';
+
+export type PluginCapability =
+  | 'onThoughtCreated'
+  | 'onThoughtUpdated'
+  | 'onThoughtDeleted'
+  | 'customCommand';
+
+// ================================
+// DATABASE CONFIGURATION TYPES
+// ================================
+
+export interface DatabaseConfig {
+  type: 'sqlite' | 'postgres' | 'memory'; // Added 'memory' for testing/ephemeral
+  connectionString?: string; // Optional for memory, required for others
+  filePath?: string; // For SQLite, if not in connectionString
+  options?: Record<string, unknown>; // Driver-specific options
+  debug?: boolean; // Enable debug logging for queries
 }
 
 export interface Tag {

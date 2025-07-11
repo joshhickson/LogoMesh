@@ -9,21 +9,17 @@
 import { logger } from '../utils/logger';
 import { 
   CognitiveContext, 
-  ContextMetadata, 
+  // ContextMetadata, // To be imported via import type
   RelatedContext, 
-  ContextCluster, 
+  ContextCluster,
   CompressionResult,
-  SemanticCompressionOptions
+  SemanticCompressionOptions,
+  ThoughtData
 } from '../../contracts/types';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { ContextMetadata } from '../../contracts/types';
 
-export interface ContextGenerationOptions {
-  abstractionLevelFilter?: string[];
-  localPriorityThreshold?: number;
-  clusterIdFilter?: string[];
-  maxDepth?: number;
-  includeRelatedContext?: boolean;
-  compressionLevel?: 'none' | 'basic' | 'semantic' | 'aggressive';
-}
+// Removed local ContextGenerationOptions, will use SemanticCompressionOptions from contracts
 
 export interface GeneratedContext {
   thoughtId: string;
@@ -37,25 +33,27 @@ export interface GeneratedContext {
 }
 
 export interface IdeaManagerInterface {
-  getThought(id: string): Promise<unknown>;
-  getRelatedThoughts(id: string): Promise<string[]>;
+  getThought(id: string): Promise<ThoughtData | null>;
+  getRelatedThoughts(id: string): Promise<string[]>; // Assuming string IDs for related thoughts
 }
 
 export interface MeshGraphEngineInterface {
-  traverse(startId: string, depth: number): Promise<string[]>;
-  getCluster(clusterId: string): Promise<ContextCluster>;
+  traverse(startNodeId: string, depth: number): Promise<string[]>; // Assuming string IDs for nodes
+  getCluster(clusterId: string): Promise<ContextCluster | null>; // Allow null if cluster not found
 }
 
+export type CompressionLevel = 'none' | 'basic' | 'semantic' | 'aggressive';
+
 export interface VTCInterface {
-  compress(data: unknown, level: string): Promise<CompressionResult>;
-  decompress(data: unknown): Promise<unknown>;
+  compress(data: CognitiveContext, level: CompressionLevel): Promise<CompressionResult>;
+  decompress(data: CompressionResult): Promise<CognitiveContext>; // Assuming decompressing a CompressionResult yields a CognitiveContext
 }
 
 export class CognitiveContextEngine {
   constructor(
-    private ideaManager?: IdeaManagerInterface,
-    private meshGraphEngine?: MeshGraphEngineInterface,
-    private vtc?: VTCInterface
+    private _ideaManager?: IdeaManagerInterface,
+    private _meshGraphEngine?: MeshGraphEngineInterface,
+    private _vtc?: VTCInterface
   ) {
     logger.info('[CCE] Cognitive Context Engine initialized (Phase 1 stub)');
   }
@@ -67,7 +65,7 @@ export class CognitiveContextEngine {
   async generateContextForLLM(
     thoughtId: string, 
     query: string, 
-    options: ContextGenerationOptions = {}
+    options: SemanticCompressionOptions = {}
   ): Promise<GeneratedContext> {
     logger.info(`[CCE Stub] Generating context for thought ${thoughtId} with query: ${query}`);
     
@@ -101,7 +99,7 @@ export class CognitiveContextEngine {
    */
   async getRelatedContext(
     thoughtId: string, 
-    options: ContextGenerationOptions = {}
+    options: SemanticCompressionOptions = {}
   ): Promise<RelatedContext> {
     logger.info(`[CCE Stub] Getting related context for thought: ${thoughtId}`);
     
@@ -120,7 +118,7 @@ export class CognitiveContextEngine {
    */
   async compressContext(
     contextData: CognitiveContext, 
-    compressionLevel: 'none' | 'basic' | 'semantic' | 'aggressive' = 'basic'
+    compressionLevel: CompressionLevel = 'basic'
   ): Promise<CompressionResult> {
     logger.info(`[CCE Stub] Applying ${compressionLevel} compression to context data`);
     
@@ -174,7 +172,7 @@ export class CognitiveContextEngine {
    * Stub for future semantic relevance scoring
    */
   async evaluateContextRelevance(
-    context: CognitiveContext, 
+    context: CognitiveContext, // Was: any, now CognitiveContext
     query: string
   ): Promise<number> {
     logger.debug(`[CCE Stub] Evaluating context relevance for query: ${query}`);
@@ -198,9 +196,9 @@ export class CognitiveContextEngine {
    * Placeholder for VTC-powered clustering in future phases
    */
   async clusterContextBySemantic(
-    contexts: CognitiveContext[], 
-    options: ContextGenerationOptions = {}
-  ): Promise<Record<string, CognitiveContext[]>> {
+    contexts: CognitiveContext[], // Was: any[], now CognitiveContext[]
+    options: SemanticCompressionOptions = {}
+  ): Promise<Record<string, CognitiveContext[]>> { // Was: Record<string, any[]>, now Record<string, CognitiveContext[]>
     logger.info(`[CCE Stub] Clustering ${contexts.length} contexts by semantic similarity`);
     
     // Mock clustering

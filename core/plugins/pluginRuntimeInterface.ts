@@ -1,7 +1,7 @@
 
 import { EventBus } from '../services/eventBus';
 import { PluginAPI } from '../../contracts/plugins/pluginApi';
-import { CognitiveContextEngine } from '../context/cognitiveContextEngine'; // Future dependency
+// import { CognitiveContextEngine } from '../context/cognitiveContextEngine'; // Removed unused import
 
 /**
  * Defines the core runtime lifecycle methods for LogoMesh plugins.
@@ -18,13 +18,13 @@ export interface PluginRuntimeInterface {
    * @param eventBus - The global EventBus for sending/receiving signals.
    * @param config - Plugin-specific configuration.
    */
-  init(pluginApi: PluginAPI, eventBus: EventBus, config?: Record<string, any>): Promise<void>;
+  init(pluginApi: PluginAPI, eventBus: EventBus, config?: Record<string, unknown>): Promise<void>; // any -> unknown
 
   /**
    * Called when the plugin is enabled and its state should be loaded or initialized.
    * @param initialState - Any state to be passed to the plugin upon activation.
    */
-  onLoad?(initialState?: any): Promise<void>;
+  onLoad?(initialState?: unknown): Promise<void>; // any -> unknown
 
   /**
    * Called periodically for continuous logic or simulation updates (e.g., per frame in a game engine).
@@ -38,7 +38,7 @@ export interface PluginRuntimeInterface {
    * @param payload - Optional data accompanying the command.
    * @returns Optional response from the command execution.
    */
-  onCommand?(command: string, payload?: any): Promise<any>;
+  onCommand?(command: string, payload?: unknown): Promise<unknown>; // any -> unknown for both
 
   /**
    * Called when the plugin is being shut down or unloaded. Used for cleanup.

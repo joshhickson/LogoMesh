@@ -11,8 +11,8 @@ export interface NewThoughtData {
   tags?: Array<{ name: string; color: string }>;
   position?: { x: number; y: number };
   color?: string;
-  fields?: Record<string, any>;
-  metadata?: Record<string, any>;
+  fields?: Record<string, unknown>; // Changed from any
+  metadata?: Record<string, unknown>; // Changed from any
 }
 
 /**
@@ -24,14 +24,13 @@ export interface NewSegmentData {
   content: string;
   content_type?: string;
   asset_path?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  fields?: Record<string, any>; // TODO: Replace 'any' with a more specific type if possible
+  fields?: Record<string, unknown>; // Changed from any
   abstraction_level?: string;
   local_priority?: number;
   cluster_id?: string;
   thoughtId?: string;
   segmentType?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>; // Changed from any
   positionX?: number;
   positionY?: number;
 }

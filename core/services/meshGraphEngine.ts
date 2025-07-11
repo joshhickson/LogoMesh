@@ -1,11 +1,42 @@
-import { Thought } from '../../contracts/entities';
+import { Thought } from '../../contracts/entities'; // Will be used
 import { StorageAdapter } from '../../contracts/storageAdapter';
 import { logger } from '../utils/logger';
 
-export class MeshGraphEngine {
-  private weightThreshold = 0.3;
+// --- Specific Types for MeshGraphEngine ---
+export interface RelatedThoughtLink {
+  thoughtId: string;
+  relationshipType: string; // e.g., 'semantic_similarity', 'conceptual_cluster', 'explicit_link'
+  strength: number;         // e.g., similarity score, link weight
+  depth: number;            // Traversal depth at which this link was found
+  // Potentially add the related Thought object itself if needed directly
+  // thought?: Thought;
+}
 
-  constructor(private storage: StorageAdapter) {}
+export interface SemanticPath {
+  path: string[];
+  semanticStrength: number;
+  conceptualTheme: string;
+}
+
+export interface SemanticTraversalResult {
+  startingThought: string;
+  traversalDepth: number;
+  semanticPaths: SemanticPath[];
+  clustersEncountered: string[];
+  abstractionLevels: string[];
+}
+
+export interface SemanticBridge {
+  bridgeThought: string;
+  bridgeStrength: number;
+  hopCount: number;
+  conceptualRole: string;
+}
+
+export class MeshGraphEngine {
+  private _weightThreshold = 0.3; // Prefixed
+
+  constructor(private _storage: StorageAdapter) {} // Prefixed
 
   /*
   async getRelatedThoughts(thoughtId: string, maxResults: number = 10): Promise<Thought[]> {
@@ -41,11 +72,11 @@ export class MeshGraphEngine {
   async getRelatedThoughts( // Keeping this version
     thoughtId: string, 
     options?: { maxDepth?: number; relationshipTypes?: string[]; semanticThreshold?: number }
-  ): Promise<any[]> {
+  ): Promise<RelatedThoughtLink[]> { // Changed return type from any[]
     logger.debug(`[MeshGraphEngine] Getting related thoughts for ${thoughtId} with options:`, options);
 
     // Mock related thoughts based on semantic similarity
-    const mockRelated = [
+    const mockRelated: RelatedThoughtLink[] = [ // Typed the mock data
       {
         thoughtId: `related-${Math.random().toString(36).substr(2, 6)}`,
         relationshipType: 'semantic_similarity',
@@ -89,18 +120,20 @@ export class MeshGraphEngine {
    * Cluster thoughts by tag similarity
    * Enhanced stub implementation for CCE clustering support
    */
-  async clusterThoughtsByTag( // Keeping this version
-    thoughts: any[], 
+  async clusterThoughtsByTag(
+    thoughts: Thought[], // Changed from any[] to Thought[]
     options?: { minClusterSize?: number; semanticGrouping?: boolean }
-  ): Promise<Record<string, any[]>> {
+  ): Promise<Record<string, Thought[]>> { // Changed return value from any[] to Thought[]
     logger.debug(`[MeshGraphEngine] Clustering ${thoughts.length} thoughts by tag similarity`);
 
     // Mock clustering logic
-    const clusters: Record<string, any[]> = {};
+    const clusters: Record<string, Thought[]> = {}; // Typed the clusters
 
-    thoughts.forEach((thought, index) => {
-      const clusterKey = thought.tags?.length > 0 
-        ? `cluster_${thought.tags[0]}` 
+    thoughts.forEach((thought, index) => { // thought is now Thought
+      // Accessing thought.tags should be safe as Thought has tags?: Tag[]
+      const firstTag = thought.tags && thought.tags.length > 0 ? thought.tags[0] : undefined;
+      const clusterKey = firstTag
+        ? `cluster_${firstTag.name}` // Use tag name for key
         : `cluster_misc_${Math.floor(index / 3)}`;
 
       if (!clusters[clusterKey]) {
@@ -158,13 +191,13 @@ export class MeshGraphEngine {
       includeBacklinks?: boolean;
       filterByAbstraction?: string[];
     }
-  ): Promise<any> {
+  ): Promise<SemanticTraversalResult> { // Changed from any
     logger.debug(`[MeshGraphEngine] Traversing semantic graph from ${startingThoughtId}`);
 
     // Mock semantic traversal
-    const traversalResult = {
+    const traversalResult: SemanticTraversalResult = { // Typed mock data
       startingThought: startingThoughtId,
-      traversalDepth: options?.maxDepth !== undefined ? options.maxDepth : 3, // Explicit check
+      traversalDepth: options?.maxDepth !== undefined ? options.maxDepth : 3,
       semanticPaths: [
         {
           path: [startingThoughtId, 'node1', 'node2'],
@@ -191,12 +224,12 @@ export class MeshGraphEngine {
   async findSemanticBridges(
     thoughtId1: string,
     thoughtId2: string,
-    options?: { maxHops?: number; bridgeStrengthThreshold?: number }
-  ): Promise<any[]> {
+    _options?: { maxHops?: number; bridgeStrengthThreshold?: number } // options -> _options
+  ): Promise<SemanticBridge[]> { // Changed from any[]
     logger.debug(`[MeshGraphEngine] Finding semantic bridges between ${thoughtId1} and ${thoughtId2}`);
 
     // Mock bridge finding
-    return [
+    const mockBridges: SemanticBridge[] = [ // Typed mock data
       {
         bridgeThought: `bridge-${Math.random().toString(36).substr(2, 6)}`,
         bridgeStrength: Math.random() * 0.3 + 0.6,
@@ -204,13 +237,18 @@ export class MeshGraphEngine {
         conceptualRole: 'connector'
       }
     ];
+    return mockBridges;
   }
 
   /**
    * Enhanced clustering with configurable algorithms
    */
-  async clusterThoughts(thoughts: any[], algorithm = 'tag-based'): Promise<any[]> {
-    // Implementation logic
-    return [];
+  async clusterThoughts(
+    _thoughts: Thought[], // thoughts -> _thoughts
+    _algorithm?: string
+  ): Promise<Record<string, Thought[]>> {
+    // Implementation logic (stubbed)
+    // logger.debug(`Clustering ${_thoughts.length} thoughts using ${_algorithm} algorithm`);
+    return {}; // Return an empty object for Record<string, Thought[]>
   }
 }

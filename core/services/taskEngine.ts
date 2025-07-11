@@ -1,16 +1,16 @@
-import { EventBus } from './eventBus.js';
-import { LLMOrchestrator } from '../llm/LLMOrchestrator.js';
-import { LLMTaskRunner } from '../llm/LLMTaskRunner.js';
-import { PluginHost } from './pluginHost.js';
-import { logger } from '../utils/logger.js';
+import { EventBus } from './eventBus';
+import { LLMOrchestrator } from '../llm/LLMOrchestrator';
+import { LLMTaskRunner } from '../llm/LLMTaskRunner';
+import { PluginHost } from './pluginHost';
+import { logger } from '../utils/logger';
 
 // TaskEngine interfaces
 export interface TaskStep {
   id: string;
   type: 'llm' | 'plugin' | 'system';
   executorId: string;
-  input: Record<string, any>;
-  output?: Record<string, any>;
+  input: Record<string, unknown>; // any -> unknown
+  output?: Record<string, unknown>; // any -> unknown
   status: 'pending' | 'running' | 'completed' | 'failed';
   startTime?: Date;
   endTime?: Date;
@@ -27,21 +27,38 @@ export interface Pipeline {
   createdAt: Date;
   startTime?: Date;
   endTime?: Date;
-  context: Record<string, any>;
+  context: Record<string, unknown>; // any -> unknown
 }
 
 export interface ExecutorRegistry {
   llmExecutors: Map<string, LLMTaskRunner>;
   pluginExecutors: Map<string, PluginHost>;
-  systemExecutors: Map<string, any>;
+  systemExecutors: Map<string, SystemExecutor>; // Replaced any with SystemExecutor
 }
+
+// --- System Executor Types (New) ---
+export interface SystemExecutorInput {
+  command: string;
+  params?: Record<string, unknown>;
+}
+
+export interface SystemExecutorOutput {
+  result: unknown;
+  [key: string]: unknown;
+}
+
+export type SystemExecutor = (
+  input: SystemExecutorInput, // Using a more structured input type
+  context: Record<string, unknown>
+) => Promise<SystemExecutorOutput>; // Using a more structured output type
+
 
 // Audit logging function stub
 async function logPipelineEvent(event: {
   pipelineId: string;
   pipelineName: string;
   event: string;
-  details?: Record<string, any>;
+  details?: Record<string, unknown>; // any -> unknown
 }) {
   logger.info(`[Pipeline Audit] ${event.event}:`, event);
 }
@@ -52,13 +69,13 @@ async function logPipelineEvent(event: {
  */
 export class TaskEngine {
   private registry: ExecutorRegistry;
-  private orchestrator: LLMOrchestrator;
+  private _orchestrator: LLMOrchestrator; // Prefixed
   private eventBus: EventBus;
   private activePipelines: Map<string, Pipeline> = new Map();
 
   constructor(eventBus: EventBus) {
     this.eventBus = eventBus;
-    this.orchestrator = new LLMOrchestrator(eventBus);
+    this._orchestrator = new LLMOrchestrator(eventBus); // orchestrator -> _orchestrator
     this.registry = {
       llmExecutors: new Map(),
       pluginExecutors: new Map(),
@@ -92,14 +109,14 @@ export class TaskEngine {
     description?: string;
     steps: Omit<TaskStep, 'id' | 'status' | 'startTime' | 'endTime'>[];
     executionMode: 'sequential' | 'parallel';
-    context?: Record<string, any>;
+    context?: Record<string, unknown>; // any -> unknown
   }): Promise<Pipeline> {
     const pipelineId = `pipeline_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
 
-    const pipeline: Pipeline = {
+    const pipelineObject: Pipeline = { // Changed variable name for clarity
       id: pipelineId,
       name: definition.name,
-      description: definition.description,
+      // description will be added conditionally
       steps: definition.steps.map((step, index) => ({
         ...step,
         id: `step_${index}_${step.type}_${step.executorId}`,
@@ -108,27 +125,30 @@ export class TaskEngine {
       executionMode: definition.executionMode,
       status: 'pending',
       createdAt: new Date(),
-      context: definition.context || {}
+      context: definition.context || {} // context is Record<string, unknown> which is fine
     };
+    if (definition.description !== undefined) {
+      pipelineObject.description = definition.description;
+    }
 
-    this.activePipelines.set(pipelineId, pipeline);
+    this.activePipelines.set(pipelineId, pipelineObject);
 
-    logger.info(`[TaskEngine] Created pipeline: ${pipeline.name} (${pipelineId})`);
+    logger.info(`[TaskEngine] Created pipeline: ${pipelineObject.name} (${pipelineId})`);
 
     // Audit log pipeline creation
     await logPipelineEvent({
       pipelineId,
-      pipelineName: pipeline.name,
+      pipelineName: pipelineObject.name,
       event: 'created',
       details: {
-        stepCount: pipeline.steps.length,
-        executionMode: pipeline.executionMode
+        stepCount: pipelineObject.steps.length,
+        executionMode: pipelineObject.executionMode
       }
     });
 
-    this.eventBus.emit('pipelineCreated', { pipeline });
+    this.eventBus.emit('pipelineCreated', { pipeline: pipelineObject });
 
-    return pipeline;
+    return pipelineObject;
   }
 
   /**
@@ -198,9 +218,9 @@ export class TaskEngine {
    */
   private async executeInParallel(pipeline: Pipeline): Promise<void> {
     const stepPromises = pipeline.steps.map(step => 
-      this.executeStep(step, pipeline.context).catch(error => {
+      this.executeStep(step, pipeline.context).catch((error: unknown) => { // Typed error here
         step.status = 'failed';
-        step.error = error.message;
+        step.error = error instanceof Error ? error.message : String(error); // Safer error handling
         logger.error(`[TaskEngine] Parallel step failed: ${step.id}`, error);
       })
     );
@@ -217,7 +237,7 @@ export class TaskEngine {
   /**
    * Execute a single task step
    */
-  private async executeStep(step: TaskStep, context: Record<string, any>): Promise<void> {
+  private async executeStep(step: TaskStep, context: Record<string, unknown>): Promise<void> { // any -> unknown
     step.status = 'running';
     step.startTime = new Date();
 
@@ -245,9 +265,9 @@ export class TaskEngine {
       logger.info(`[TaskEngine] Step completed: ${step.id}`);
       this.eventBus.emit('stepCompleted', { step });
 
-    } catch (error: any) {
+    } catch (error: unknown) { // any -> unknown
       step.status = 'failed';
-      step.error = error.message;
+      step.error = error instanceof Error ? error.message : String(error); // Safer error handling
       step.endTime = new Date();
 
       logger.error(`[TaskEngine] Step failed: ${step.id}`, error);
@@ -260,15 +280,21 @@ export class TaskEngine {
   /**
    * Execute an LLM step using registered LLMTaskRunner
    */
-  private async executeLLMStep(step: TaskStep, context: Record<string, any>): Promise<Record<string, any>> {
+  private async executeLLMStep(step: TaskStep, context: Record<string, unknown>): Promise<Record<string, unknown>> { // any -> unknown
     const executor = this.registry.llmExecutors.get(step.executorId);
     if (!executor) {
       throw new Error(`LLM executor ${step.executorId} not found`);
     }
 
-    const prompt = step.input.prompt || '';
-    const metadata = { ...step.input.metadata, context };
+    // Assuming step.input.prompt is string and step.input.metadata is Record<string, unknown>
+    // Need to ensure these accesses are safe if input is Record<string, unknown>
+    const prompt = typeof step.input.prompt === 'string' ? step.input.prompt : '';
+    const stepMetadata = typeof step.input.metadata === 'object' && step.input.metadata !== null
+                         ? step.input.metadata
+                         : {};
+    const metadata = { ...stepMetadata, context }; // context is Record<string, unknown>
 
+    // executor.run now accepts Record<string, unknown> for metadata, so no cast needed.
     const response = await executor.run(prompt, metadata);
 
     return {
@@ -281,7 +307,7 @@ export class TaskEngine {
   /**
    * Execute a plugin step using registered PluginHost
    */
-  private async executePluginStep(step: TaskStep, context: Record<string, any>): Promise<Record<string, any>> {
+  private async executePluginStep(step: TaskStep, _context: Record<string, unknown>): Promise<Record<string, unknown>> { // context -> _context
     const executor = this.registry.pluginExecutors.get(step.executorId);
     if (!executor) {
       throw new Error(`Plugin executor ${step.executorId} not found`);
@@ -290,9 +316,12 @@ export class TaskEngine {
     // For now, return a mock response - will be implemented when PluginHost is enhanced
     logger.warn(`[TaskEngine] Plugin execution is stubbed for: ${step.executorId}`);
 
+    // When implemented, ensure safe access to step.input properties if needed for PluginHost
+    // const pluginInput = step.input.pluginSpecificInput; // Example, would need type check
+
     return {
       result: `Plugin ${step.executorId} executed successfully`,
-      input: step.input,
+      input: step.input, // step.input is Record<string, unknown>
       timestamp: new Date().toISOString()
     };
   }
@@ -300,13 +329,26 @@ export class TaskEngine {
   /**
    * Execute a system step (filesystem, API calls, etc.)
    */
-  private async executeSystemStep(step: TaskStep, context: Record<string, any>): Promise<Record<string, any>> {
+  private async executeSystemStep(step: TaskStep, _context: Record<string, unknown>): Promise<Record<string, unknown>> { // context -> _context
+    const executor = this.registry.systemExecutors.get(step.executorId);
+    if (!executor) {
+      throw new Error(`System executor ${step.executorId} not found`);
+    }
+
     // For now, return a mock response - system execution will be implemented in DevShell
     logger.warn(`[TaskEngine] System execution is stubbed for: ${step.executorId}`);
 
+    // When implemented, need to ensure step.input is correctly shaped for SystemExecutorInput
+    // const systemInput: SystemExecutorInput = {
+    //   command: typeof step.input.command === 'string' ? step.input.command : 'default',
+    //   params: typeof step.input.params === 'object' ? step.input.params as Record<string, unknown> : {}
+    // };
+    // await executor(systemInput, context);
+
+
     return {
       result: `System command ${step.executorId} executed successfully`,
-      input: step.input,
+      input: step.input, // step.input is Record<string, unknown>
       timestamp: new Date().toISOString()
     };
   }
