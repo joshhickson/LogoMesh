@@ -5,7 +5,7 @@ export interface LLMExecutionOptions {
   model?: string;
   temperature?: number;
   maxTokens?: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>; // any -> unknown
   // other options
 }
 

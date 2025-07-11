@@ -1,5 +1,5 @@
-import { LLMExecutor } from '../../contracts/llmExecutor';
-import { logLLMInteraction } from '../logger/llmAuditLogger';
+import { LLMExecutor, LLMExecutionOptions } from '../../contracts/llmExecutor'; // Added LLMExecutionOptions
+import { logLLMInteraction, LLMAuditEntry } from '../logger/llmAuditLogger'; // Added LLMAuditEntry
 import { logger } from '../utils/logger';
 
 // Define LLMResponse type
@@ -19,7 +19,7 @@ export class LLMTaskRunner {
     this.executor = executor;
   }
 
-  async run(prompt: string, metadata?: Record<string, any>): Promise<string> {
+  async run(prompt: string, metadata?: Record<string, unknown>): Promise<string> { // any -> unknown
     const startTime = Date.now();
 
     try {
@@ -27,27 +27,33 @@ export class LLMTaskRunner {
       const response = await this.executor.executePrompt(prompt, metadata);
 
       // Log the interaction
-      await logLLMInteraction({
+      const logEntrySuccess: Omit<LLMAuditEntry, 'id' | 'timestamp'> = {
         prompt,
         response,
         model: this.executor.getModelName(),
-        metadata,
         duration: Date.now() - startTime,
         success: true
-      });
+      };
+      if (metadata !== undefined) {
+        logEntrySuccess.metadata = metadata;
+      }
+      await logLLMInteraction(logEntrySuccess);
 
       return response;
     } catch (error) {
       // Log the failed interaction
-      await logLLMInteraction({
+      const logEntryError: Omit<LLMAuditEntry, 'id' | 'timestamp'> = {
         prompt,
         response: null,
         model: this.executor.getModelName(),
-        metadata,
         duration: Date.now() - startTime,
         success: false,
         error: error instanceof Error ? error.message : String(error)
-      });
+      };
+      if (metadata !== undefined) {
+        logEntryError.metadata = metadata;
+      }
+      await logLLMInteraction(logEntryError);
 
       throw error;
     }
@@ -57,7 +63,7 @@ export class LLMTaskRunner {
   async runPromptWithStreaming?(
     prompt: string, 
     onChunk: (chunk: string) => void, 
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown> // any -> unknown
   ): Promise<string> {
     // For now, just call the regular run method and simulate streaming
     const response = await this.run(prompt, metadata);
@@ -74,7 +80,7 @@ export class LLMTaskRunner {
 
     return fullResponse.trim();
   }
-  async executePrompt(prompt: string, metadata?: Record<string, any>): Promise<LLMResponse> {
+  async executePrompt(prompt: string, metadata?: Record<string, unknown>): Promise<LLMResponse> { // any -> unknown
     try {
       this.totalRequests++;
       logger.info('[LLMTaskRunner] Executing prompt', { 
@@ -84,26 +90,33 @@ export class LLMTaskRunner {
       });
 
       const startTime = Date.now();
-      const response = await this.executor.execute(prompt, { metadata });
+      const executeOptions: LLMExecutionOptions = {}; // Used imported LLMExecutionOptions
+      if (metadata !== undefined) {
+        executeOptions.metadata = metadata;
+      }
+      const response = await this.executor.execute(prompt, executeOptions);
       const executionTime = Date.now() - startTime;
 
-      const result: LLMResponse = {
+      const resultObject: LLMResponse = {
         response: response.response,
         model: response.model || 'unknown',
         executionTimeMs: executionTime,
-        tokensUsed: response.tokensUsed
       };
+      if (response.tokensUsed !== undefined) {
+        resultObject.tokensUsed = response.tokensUsed;
+      }
 
       logger.info('[LLMTaskRunner] Prompt executed successfully', { 
         executionTimeMs: executionTime,
-        responseLength: result.response.length,
+        responseLength: resultObject.response.length, // Changed result to resultObject
         totalRequests: this.totalRequests
       });
 
-      return result;
-    } catch (error: any) {
-      logger.error('[LLMTaskRunner] Error executing prompt:', error);
-      throw new Error(`LLM execution failed: ${error.message}`);
+      return resultObject;
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      logger.error('[LLMTaskRunner] Error executing prompt:', { message: errorMessage, error });
+      throw new Error(`LLM execution failed: ${errorMessage}`);
     }
   }
 
@@ -116,10 +129,10 @@ export class LLMTaskRunner {
     try {
       // Simple health check - try to execute a minimal prompt
       const healthCheckPrompt = "Reply with 'OK'";
-      const startTime = Date.now();
+      // const startTime = Date.now(); // Removed as executionTime which used it is removed
 
       const response = await this.executor.execute(healthCheckPrompt, {});
-      const executionTime = Date.now() - startTime;
+      // const executionTime = Date.now() - startTime; // This was unused
 
       this.lastHealthCheck = new Date();
 
@@ -129,14 +142,22 @@ export class LLMTaskRunner {
         lastHealthCheck: this.lastHealthCheck,
         totalRequests: this.totalRequests
       };
-    } catch (error) {
-      logger.warn('[LLMTaskRunner] Health check failed:', error);
-      return {
+    } catch (error: unknown) { // implicit any -> unknown
+      logger.warn('[LLMTaskRunner] Health check failed:', error instanceof Error ? error.message : String(error), error);
+      const statusOffline: {
+        isConnected: boolean;
+        currentModel: string;
+        lastHealthCheck?: Date; // Make it optional here for construction
+        totalRequests: number;
+      } = {
         isConnected: false,
         currentModel: 'unknown',
-        lastHealthCheck: this.lastHealthCheck,
         totalRequests: this.totalRequests
       };
+      if (this.lastHealthCheck !== undefined) {
+        statusOffline.lastHealthCheck = this.lastHealthCheck;
+      }
+      return statusOffline;
     }
   }
 }

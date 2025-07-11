@@ -1,11 +1,14 @@
 
-import jwt from 'jsonwebtoken';
-import { ServiceResponse, ServiceError } from '../../contracts/types';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { ServiceResponse } from '../../contracts/types';
+import { Request as ExpressRequest, Response, NextFunction } from 'express';
+// AuthenticatedRequest is now globally augmented via server/src/types/express.d.ts
+// No local definition needed. AuthUser is used for the structure of req.user.
 
 export interface AuthUser {
   id: string;
   name: string;
-  roles: string[];
+  roles: string; // Changed to string
   isAuthenticated: boolean;
 }
 
@@ -31,8 +34,8 @@ export class AuthService {
         name: user.name,
         roles: user.roles
       },
-      this.config.jwtSecret,
-      { expiresIn: this.config.jwtExpiration }
+      this.config.jwtSecret as jwt.Secret,
+      { expiresIn: this.config.jwtExpiration } as jwt.SignOptions
     );
   }
 
@@ -41,14 +44,22 @@ export class AuthService {
    */
   verifyToken(token: string): ServiceResponse<AuthUser> {
     try {
-      const decoded = jwt.verify(token, this.config.jwtSecret) as any;
+      // jwt.verify can return JwtPayload or string. We expect JwtPayload.
+      const decoded = jwt.verify(token, this.config.jwtSecret);
       
+      if (typeof decoded === 'string') {
+        throw new Error('Invalid token payload: expected object, got string');
+      }
+      // Now decoded is JwtPayload
+      const jwtPayload = decoded as JwtPayload;
+
+
       return {
         success: true,
         data: {
-          id: decoded.id,
-          name: decoded.name,
-          roles: decoded.roles || [],
+          id: jwtPayload.id as string,
+          name: jwtPayload.name as string,
+          roles: (jwtPayload.roles as string) || '', // Expect roles as string from JWT
           isAuthenticated: true
         }
       };
@@ -77,7 +88,7 @@ export class AuthService {
   /**
    * Middleware for token validation
    */
-  requireAuth = (req: any, res: any, next: any) => {
+  requireAuth = (req: ExpressRequest, res: Response, next: NextFunction) => { // Use augmented ExpressRequest
     const token = this.extractTokenFromHeader(req.headers.authorization);
     
     if (!token) {
@@ -89,37 +100,39 @@ export class AuthService {
 
     const authResult = this.verifyToken(token);
     
-    if (!authResult.success) {
+    if (!authResult.success || authResult.data === undefined) { // Explicitly check data
       return res.status(401).json({
-        error: authResult.error?.message,
-        code: authResult.error?.code
+        error: authResult.error?.message || 'Authentication failed, missing data.',
+        code: authResult.error?.code || 'AUTH_VERIFY_FAILED'
       });
     }
-
-    req.user = authResult.data;
+    // Now authResult.data is definitely AuthUser
+    req.user = authResult.data; // No cast needed if AuthUser and AuthUserForRequest are compatible
     next();
+    return;
   };
 
   /**
    * Check if user has required role
    */
   hasRole(user: AuthUser, requiredRole: string): boolean {
-    return user.roles.includes(requiredRole) || user.roles.includes('admin');
+    const rolesArray = user.roles ? user.roles.split(',').map(r => r.trim()) : [];
+    return rolesArray.includes(requiredRole) || rolesArray.includes('admin');
   }
 
   /**
    * Middleware for role-based access control
    */
   requireRole = (role: string) => {
-    return (req: any, res: any, next: any) => {
-      if (!req.user) {
+    return (req: ExpressRequest, res: Response, next: NextFunction) => { // Use augmented ExpressRequest
+      if (!req.user) { // req.user is now available via augmentation
         return res.status(401).json({
           error: 'Authentication required',
           code: 'AUTH_MISSING_USER'
         });
       }
 
-      if (!this.hasRole(req.user, role)) {
+      if (!this.hasRole(req.user, role)) { // req.user is AuthUserForRequest, this.hasRole expects AuthUser. They should be compatible.
         return res.status(403).json({
           error: 'Insufficient permissions',
           code: 'AUTH_INSUFFICIENT_ROLE',
@@ -128,6 +141,7 @@ export class AuthService {
       }
 
       next();
+      return; // Added to satisfy noImplicitReturns
     };
   };
 }

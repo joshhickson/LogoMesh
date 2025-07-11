@@ -1,17 +1,22 @@
 
-import express, { Request, Response } from 'express';
+import express, { Request, Response } from 'express'; // Use Request directly
 import { logger } from '../../../core/utils/logger';
 
 const router = express.Router();
 
+// AuthenticatedRequest is now globally augmented. Local definition removed.
+
 // Get current user info
-router.get('/me', (req: Request, res: Response) => {
+router.get('/me', (req: Request, res: Response): void => {
   try {
-    if (!req.user?.isAuthenticated) {
-      return res.status(401).json({ 
+    // After requireAuth middleware (if applied globally or to this route), req.user should be set.
+    // The check here is an additional safeguard or for routes not using requireAuth.
+    if (!req.user?.isAuthenticated) { // req.user is now from augmented Request
+      res.status(401).json({
         error: 'Not authenticated',
         message: 'Please log in to access this resource'
       });
+      return;
     }
 
     res.json({
@@ -32,13 +37,14 @@ router.get('/me', (req: Request, res: Response) => {
 });
 
 // Get current user info (alternative endpoint that frontend is calling)
-router.get('/current', (req: Request, res: Response) => {
+router.get('/current', (req: Request, res: Response): void => {
   try {
     if (!req.user?.isAuthenticated) {
-      return res.status(401).json({ 
+      res.status(401).json({
         error: 'Not authenticated',
         message: 'Please log in to access this resource'
       });
+      return;
     }
 
     res.json({
@@ -57,7 +63,7 @@ router.get('/current', (req: Request, res: Response) => {
 });
 
 // Health check for user services
-router.get('/health', (req: Request, res: Response) => {
+router.get('/health', (req: Request, res: Response): void => {
   res.json({ 
     service: 'user-auth', 
     status: 'healthy', 

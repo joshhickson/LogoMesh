@@ -12,7 +12,7 @@ export interface LLMMessage {
   referencesTo?: string[];
   confidence: number;
   timestamp: Date;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>; // Changed from any to unknown
 }
 
 export interface ModelRole {
@@ -30,6 +30,52 @@ export interface ConversationState {
   currentTopic: string;
   consensusReached: boolean;
   startTime: Date;
+  lastActivity: Date;
+}
+
+// --- Specific Return Types for Methods ---
+
+interface TrainingPairContext {
+  topic: string;
+  fromModel: string;
+  toModel: string;
+  messageType: LLMMessage['messageType'];
+  timestamp: Date;
+}
+
+interface TrainingPair {
+  prompt: string;
+  response: string;
+  context: TrainingPairContext;
+}
+
+export interface FormattedTrainingData {
+  conversationId: string;
+  topic: string;
+  trainingPairs: TrainingPair[];
+  metadata: {
+    participantCount: number;
+    totalMessages: number;
+    duration: number;
+  };
+}
+
+export interface ExportedConversationJson {
+  id: string;
+  topic: string;
+  participants: string[];
+  messages: LLMMessage[];
+  duration: number;
+  messageCount: number;
+}
+
+export interface ConversationStatistics {
+  id: string;
+  topic: string;
+  participantCount: number;
+  totalMessages: number;
+  messagesByModel: Record<string, number>;
+  duration: number;
   lastActivity: Date;
 }
 
@@ -232,7 +278,10 @@ export class LLMOrchestrator {
   /**
    * Export conversation for training data
    */
-  exportConversation(conversationId: string, format: 'json' | 'training-data' = 'json'): any {
+  exportConversation(
+    conversationId: string,
+    format: 'json' | 'training-data' = 'json'
+  ): ExportedConversationJson | FormattedTrainingData {
     const conversation = this.conversations.get(conversationId);
     if (!conversation) {
       throw new Error(`Conversation ${conversationId} not found`);
@@ -337,8 +386,8 @@ Please acknowledge that you understand the context and are ready to contribute.
   /**
    * Private: Format conversation as training data
    */
-  private formatAsTrainingData(conversation: ConversationState): any {
-    const trainingPairs = [];
+  private formatAsTrainingData(conversation: ConversationState): FormattedTrainingData {
+    const trainingPairs: TrainingPair[] = [];
     
     for (let i = 0; i < conversation.messageHistory.length - 1; i++) {
       const currentMsg = conversation.messageHistory[i];
@@ -398,7 +447,7 @@ Please acknowledge that you understand the context and are ready to contribute.
   /**
    * Get conversation statistics
    */
-  getConversationStats(conversationId: string): any {
+  getConversationStats(conversationId: string): ConversationStatistics | null {
     const conversation = this.conversations.get(conversationId);
     if (!conversation) return null;
 

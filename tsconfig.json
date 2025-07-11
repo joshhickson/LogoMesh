@@ -28,7 +28,8 @@
     "src/**/*.test.ts",
     "src/**/*.test.tsx",
     "core/**/*",
-    "contracts/**/*"
+    "contracts/**/*",
+    "server/src/**/*" // Added server/src files
   ],
   "exclude": [
     "node_modules",

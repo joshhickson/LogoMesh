@@ -16,14 +16,16 @@ const llmTaskRunner = new LLMTaskRunner(ollamaExecutor);
  * POST /api/v1/llm/prompt
  * Execute a prompt using the LLM
  */
-router.post('/prompt', async (req: Request, res: Response) => {
+// The PromptBody interface is now defined below, outside this handler.
+router.post('/prompt', async (req: Request, res: Response): Promise<void> => {
   try {
-    const { prompt, metadata = {} } = req.body; // metadata is in scope for try block
+    const { prompt, metadata = {} } = req.body as PromptBody;
     
     if (!prompt || typeof prompt !== 'string') {
-      return res.status(400).json({ 
+      res.status(400).json({
         error: 'Prompt is required and must be a string' 
       });
+      return;
     }
 
     logger.info('[LLM Routes] Processing prompt request', { 
@@ -32,15 +34,13 @@ router.post('/prompt', async (req: Request, res: Response) => {
     });
 
     // Log the request for auditing
-    // Using imported logLLMInteraction function
     await logLLMInteraction({
       prompt,
-      response: null, // Or actual response if available pre-execution
-      model: ollamaExecutor.getModelName(), // Assuming you can get model name
+      response: null,
+      model: ollamaExecutor.getModelName(),
       metadata,
-      duration: 0, // Placeholder, ideally measured around actual execution
-      success: true, // Placeholder, set based on actual outcome
-      // requestId: `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}` // If needed
+      duration: 0,
+      success: true,
     });
 
     // Execute the prompt
@@ -54,7 +54,6 @@ router.post('/prompt', async (req: Request, res: Response) => {
       metadata,
       duration: result.executionTimeMs,
       success: true,
-      // requestId: ... // If you have a corresponding request ID
     });
 
     res.json({
@@ -67,33 +66,49 @@ router.post('/prompt', async (req: Request, res: Response) => {
       }
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     logger.error('[LLM Routes] Error processing prompt:', error);
     
+    const bodyAsUnknown = req.body as Record<string, unknown>;
+    const promptFromRequest = typeof bodyAsUnknown?.prompt === 'string' ? bodyAsUnknown.prompt : '[prompt_unavailable]';
+    const metadataFromRequest = typeof bodyAsUnknown?.metadata === 'object' ? bodyAsUnknown.metadata as Record<string, unknown> : {};
+
     // Log the error for auditing
     await logLLMInteraction({
-      prompt: req.body.prompt, // Access from req.body directly
+      prompt: promptFromRequest,
       response: null,
-      model: ollamaExecutor.getModelName(), // Or from error if available
-      metadata: req.body.metadata || {}, // Access from req.body, provide default
-      duration: 0, // Placeholder
+      model: ollamaExecutor.getModelName(),
+      metadata: metadataFromRequest,
+      duration: 0,
       success: false,
-      error: (error instanceof Error ? error.message : String(error)), // Robust error message
-      // requestId: ...
+      error: (error instanceof Error ? error.message : String(error)),
     });
 
     res.status(500).json({ 
       error: 'Failed to process prompt',
-      details: (error instanceof Error ? error.message : String(error)) // Robust error message
+      details: (error instanceof Error ? error.message : String(error))
     });
   }
 });
+
+// --- Helper Interfaces for Request Bodies ---
+interface PromptBody { // This is the correct definition location
+  prompt?: string;
+  metadata?: Record<string, unknown>;
+}
+
+interface AnalyzeSegmentBody {
+  segmentContent?: string; // Make optional for check
+  analysisType?: string;
+}
+// --- End Helper Interfaces ---
+
 
 /**
  * GET /api/v1/llm/status
  * Get LLM service status
  */
-router.get('/status', async (req: Request, res: Response) => {
+router.get('/status', async (_req: Request, res: Response): Promise<void> => { // req -> _req as it's unused
   try {
     const status = await llmTaskRunner.getStatus();
     res.json({
@@ -105,11 +120,11 @@ router.get('/status', async (req: Request, res: Response) => {
         totalRequests: status.totalRequests || 0
       }
     });
-  } catch (error: any) {
+  } catch (error: unknown) { // any -> unknown
     logger.error('[LLM Routes] Error getting status:', error);
     res.status(500).json({ 
       error: 'Failed to get LLM status',
-      details: error.message 
+      details: error instanceof Error ? error.message : String(error)
     });
   }
 });
@@ -118,15 +133,17 @@ router.get('/status', async (req: Request, res: Response) => {
  * POST /api/v1/llm/analyze-segment
  * Analyze a thought segment for insights
  */
-router.post('/analyze-segment', async (req: Request, res: Response) => {
+router.post('/analyze-segment', async (req: Request, res: Response): Promise<void> => {
   try {
-    const { segmentContent, analysisType = 'general' } = req.body;
+    const { segmentContent, analysisType = 'general' } = req.body as AnalyzeSegmentBody;
     
-    if (!segmentContent) {
-      return res.status(400).json({ 
-        error: 'Segment content is required' 
+    if (!segmentContent || typeof segmentContent !== 'string') {
+      res.status(400).json({
+        error: 'Segment content is required and must be a string'
       });
+      return;
     }
+    // segmentContent is now definitely a string
 
     const analysisPrompt = `Analyze the following text segment for insights and potential connections:
 
@@ -156,11 +173,11 @@ Respond in JSON format with keys: themes, connections, suggestedTags, summary`;
       }
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) { // any -> unknown
     logger.error('[LLM Routes] Error analyzing segment:', error);
     res.status(500).json({ 
       error: 'Failed to analyze segment',
-      details: error.message 
+      details: error instanceof Error ? error.message : String(error) // Safer access
     });
   }
 });

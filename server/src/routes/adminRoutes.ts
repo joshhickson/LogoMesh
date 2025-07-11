@@ -1,14 +1,14 @@
 import express, { Request, Response } from 'express';
 import * as fs from 'fs'; // Use standard fs for sync methods used below
 import path from 'path';
-import { Client } from 'pg';
+import { Client, QueryResult } from 'pg'; // Added QueryResult
 import { logger } from '../../../core/utils/logger'; // Corrected path
 
 const router = express.Router();
 
 // Health check for admin services
 // Health check endpoint
-router.get('/health', async (req: Request, res: Response) => {
+router.get('/health', async (_req: Request, res: Response): Promise<void> => { // req -> _req
   try {
     // Test database connection
     const databaseUrl = process.env.DATABASE_URL;
@@ -36,25 +36,31 @@ router.get('/health', async (req: Request, res: Response) => {
 });
 
 // Test database connection with custom connection string
-router.post('/test-db', async (req: Request, res: Response) => {
+interface TestDbBody {
+  connectionString?: string;
+}
+router.post('/test-db', async (req: Request, res: Response): Promise<void> => {
   try {
-    const { connectionString } = req.body;
+    const { connectionString } = req.body as TestDbBody;
 
     if (!connectionString) {
-      return res.status(400).json({ error: 'Connection string is required' });
+      res.status(400).json({ error: 'Connection string is required' });
+      return;
     }
 
     const client = new Client({ connectionString });
     await client.connect();
 
     // Test basic query
-    const result = await client.query('SELECT version()');
+    const result: QueryResult<{ version: string }> = await client.query('SELECT version()');
     await client.end();
+
+    const version = result.rows && result.rows.length > 0 ? result.rows[0].version : 'unknown';
 
     res.json({ 
       success: true, 
       message: 'Database connection successful',
-      version: result.rows[0]?.version
+      version: version
     });
   } catch (error) {
     logger.error('[AdminRoutes] Database test failed:', error);
@@ -69,7 +75,7 @@ router.post('/test-db', async (req: Request, res: Response) => {
  * POST /api/v1/admin/backup
  * Creates a timestamped backup of the SQLite database
  */
-router.post('/backup', async (req: Request, res: Response) => {
+router.post('/backup', async (_req: Request, res: Response): Promise<void> => { // req -> _req
   try {
     // Prefer DB_PATH from environment, fallback to default within server/data
     const dbPath = process.env.DB_PATH || path.resolve(__dirname, '../../../data/logomesh.sqlite3');
@@ -84,10 +90,11 @@ router.post('/backup', async (req: Request, res: Response) => {
     // Check if database file exists
     if (!fs.existsSync(dbPath)) {
       logger.error(`[AdminRoutes] Database file not found at: ${dbPath}`);
-      return res.status(404).json({
+      res.status(404).json({
         error: 'Database file not found',
         path: dbPath
       });
+      return;
     }
 
     // Create timestamped backup filename
@@ -121,16 +128,17 @@ router.post('/backup', async (req: Request, res: Response) => {
  * GET /api/v1/admin/backups
  * Lists all available backup files
  */
-router.get('/backups', async (req: Request, res: Response) => { // Made async to align if fs.promises were used later
+router.get('/backups', async (_req: Request, res: Response): Promise<void> => { // req -> _req
   try {
     const backupDir = path.resolve(__dirname, '../../../backups');
 
     if (!fs.existsSync(backupDir)) {
       logger.info('[AdminRoutes] Backup directory does not exist, returning empty list.');
-      return res.status(200).json({ backups: [] });
+      res.status(200).json({ backups: [] });
+      return;
     }
 
-    const files = fs.readdirSync(backupDir) // Using sync version
+    const files = fs.readdirSync(backupDir)
       .filter(file => file.endsWith('.sqlite3'))
       .map(file => {
         const filePath = path.join(backupDir, file);
@@ -156,9 +164,9 @@ router.get('/backups', async (req: Request, res: Response) => { // Made async to
 });
 
 // Save error logs endpoint
-router.post('/save-errors', (req, res) => {
+router.post('/save-errors', (req: Request, res: Response): void => { // Added void return type
   try {
-    const errorData = req.body;
+    const errorData = req.body as Record<string, unknown>;
     const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
     const logFile = path.join(process.cwd(), 'error_exports', 'runtime_errors', `errors_${timestamp}.jsonl`);
 

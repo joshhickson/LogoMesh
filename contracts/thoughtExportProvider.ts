@@ -8,11 +8,13 @@ export interface SemanticCompressionOptions {
   preserveRelationships?: boolean;
 }
 
+import { ExportData, ServiceResponse } from "./types"; // Import necessary types
+
 export interface ThoughtExportProvider {
-  exportData(options?: SemanticCompressionOptions): Promise<any>;
-  importData(data: any): Promise<void>;
+  exportData(options?: SemanticCompressionOptions): Promise<ServiceResponse<ExportData>>;
+  importData(jsonData: ExportData): Promise<ServiceResponse<{ imported: number; skipped: number }>>;
 
   // Enhanced methods for semantic compression
-  exportWithCompression?(options: SemanticCompressionOptions): Promise<any>;
+  exportWithCompression?(options: SemanticCompressionOptions): Promise<ServiceResponse<ExportData>>; // Assuming similar return type
   getSemanticSummary?(thoughtId: string, options?: SemanticCompressionOptions): Promise<string>;
 }

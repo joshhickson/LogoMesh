@@ -5,8 +5,8 @@ export interface Thought {
   thought_bubble_id: string;
   title: string;
   description?: string | null;
-  created_at: string;
-  updated_at: string;
+  created_at: Date; // string -> Date
+  updated_at: Date; // string -> Date
   color?: string | null;
   position?: { x: number; y: number };
   fields?: Record<string, any>; // Added
@@ -23,8 +23,8 @@ export interface Segment {
   content_type?: string; // e.g., 'text', 'code', 'mermaid'
   fields?: Record<string, any>; // For custom metadata
   metadata?: Record<string, any>; // Added to match NewSegmentData and PostgresAdapter usage
-  created_at: string;
-  updated_at: string;
+  created_at: Date; // string -> Date
+  updated_at: Date; // string -> Date
   abstraction_level?: string;
   local_priority?: number;
   cluster_id?: string;
