@@ -9,8 +9,8 @@ export interface Thought {
   updated_at: Date; // string -> Date
   color?: string | null;
   position?: { x: number; y: number };
-  fields?: Record<string, any>; // Added
-  metadata?: Record<string, any>; // Added
+  fields?: Record<string, unknown>; // Added
+  metadata?: Record<string, unknown>; // Added
   tags?: Tag[];
   segments?: Segment[];
 }
@@ -21,8 +21,8 @@ export interface Segment {
   title?: string | null;
   content: string;
   content_type?: string; // e.g., 'text', 'code', 'mermaid'
-  fields?: Record<string, any>; // For custom metadata
-  metadata?: Record<string, any>; // Added to match NewSegmentData and PostgresAdapter usage
+  fields?: Record<string, unknown>; // For custom metadata
+  metadata?: Record<string, unknown>; // Added to match NewSegmentData and PostgresAdapter usage
   created_at: Date; // string -> Date
   updated_at: Date; // string -> Date
   abstraction_level?: string;
@@ -51,7 +51,7 @@ export interface Edge {
 
 export interface UserSettings {
   user_id: string;
-  settings: Record<string, any>;
+  settings: Record<string, unknown>;
   // any other relevant fields
 }
 

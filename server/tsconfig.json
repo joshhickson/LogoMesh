@@ -20,9 +20,9 @@
     "exactOptionalPropertyTypes": true
   },
   "include": [
-    "src/**/*",
-    "../core/**/*",
-    "../contracts/**/*"
+    "src",
+    "../core",
+    "../contracts"
   ],
   "exclude": [
     "node_modules",

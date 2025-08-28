@@ -1,6 +1,7 @@
 
 import { StorageAdapter } from '../storageAdapter';
 import { Logger } from '../../core/utils/logger';
+import { Thought, Segment } from '../entities';
 
 /**
  * API interface provided to plugins for interacting with LogoMesh core services.
@@ -21,18 +22,18 @@ export interface PluginAPI {
   /**
    * Get configuration values
    */
-  getConfig(key: string): any;
+  getConfig(key: string): unknown;
 
   /**
    * Set configuration values (if plugin has permission)
    */
-  setConfig(key: string, value: any): Promise<void>;
+  setConfig(key: string, value: unknown): Promise<void>;
 
   /**
    * Access to thought and segment data (read-only for most plugins)
    */
-  getThoughts(): Promise<any[]>;
-  getSegments(thoughtId: string): Promise<any[]>;
+  getThoughts(): Promise<Thought[]>;
+  getSegments(thoughtId: string): Promise<Segment[]>;
 
   /**
    * Plugin permission checks

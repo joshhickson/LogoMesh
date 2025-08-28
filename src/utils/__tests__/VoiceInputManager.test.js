@@ -110,7 +110,7 @@ describe('VoiceInputManager', () => {
   });
 
   it('should initialize with default options', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+
     const manager = new VoiceInputManager(() => { /* mock callback */ }, () => { /* mock callback */ });
     expect(manager).toBeDefined();
     expect(manager.isSupported()).toBe(true);
