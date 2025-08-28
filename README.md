@@ -14,7 +14,7 @@ LogoMesh is a local-first cognitive framework that enables users to create, orga
 |-------|-----------|-------------------------|--------|
 | 0 | Framework Skeleton | React/Node scaffold, baseline tests | Complete |
 | 1 | Core Functionality | Thought graph, JSON I/O, initial plug-in scaffold | Complete |
-| **2** | Hardened Spine | Type-safe codebase, secure plug-in sandbox, TaskEngine, LLM gateway, observability | **In progress** |
+| **2** | Hardened Spine | Type-safe codebase, secure plug-in sandbox, TaskEngine, LLM gateway, observability | **Resumed after hiatus** |
 | 2 b | Memory Layer | Vector store, summarisation and relevance routing, read-only FlowMesh CLI | Planned |
 | 3 | Working-Memory Features | Adaptive chunking, replay API, glossary reconciliation | Planned |
 | 4 | Knowledge Graph & Ontology | Contradiction detection, multi-user collaboration, conflict resolution | Vision |
@@ -173,7 +173,7 @@ GET    /api/v1/plugins             List registered plug-ins
 POST   /api/v1/plugins/:id/execute Invoke plug-in command
 ```
 
-Full API reference is generated from OpenAPI specifications in `/docs/specs/`.
+A full API reference is planned, but not yet available.
 
 ---
 
