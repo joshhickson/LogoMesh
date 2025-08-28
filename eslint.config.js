@@ -6,6 +6,11 @@ import typescriptEslintPlugin from "@typescript-eslint/eslint-plugin";
 import reactPlugin from "eslint-plugin-react";
 import prettierConfig from "eslint-config-prettier"; // Assuming prettier is used for formatting rules
 import globals from "globals";
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default [
   // Global ignores
@@ -45,7 +50,7 @@ export default [
         ecmaVersion: "latest",
         sourceType: "module",
         project: ["./tsconfig.json", "./server/tsconfig.json"],
-        tsconfigRootDir: ".",
+        tsconfigRootDir: __dirname,
         warnOnUnsupportedTypeScriptVersion: false,
       },
       globals: {

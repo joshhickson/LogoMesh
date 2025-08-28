@@ -14,7 +14,7 @@ vi.mock('../../services/authService', () => ({
 
 // Mock apiService, specifically the methods App.jsx uses
 vi.mock('../../services/apiService', () => ({
-  apiService: {
+  default: {
     fetchThoughts: vi.fn().mockResolvedValue([]), // App.jsx calls this
     // Add any other methods from apiService that App.jsx might directly call
     // For now, only fetchThoughts seems relevant for App.jsx initialization path
@@ -22,6 +22,10 @@ vi.mock('../../services/apiService', () => ({
     updateThought: vi.fn(), // placeholder
     // Note: baseURL is part of the actual apiService export, not a function to mock here unless tested directly
   }
+}));
+
+vi.mock('../../components/Sidebar', () => ({
+  default: () => <div data-testid="sidebar-mock"></div>,
 }));
 
 describe('App Integration - Authentication Flow', () => {
