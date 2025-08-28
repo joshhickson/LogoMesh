@@ -116,7 +116,7 @@ export async function deleteSegmentApi(thoughtId: string, segmentId: string) {
 
 // Import/Export API functions
 export async function exportDataApi() {
-  return apiRequest<any>('/export/json');
+  return apiRequest<unknown>('/export/json');
 }
 
 export async function importDataApi(file: File) {
@@ -130,7 +130,7 @@ export async function importDataApi(file: File) {
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }
-    return response.json();
+    return response.json() as Promise<unknown>;
   });
 }
 
@@ -143,18 +143,18 @@ export async function triggerBackupApi() {
 
 // LLM API functions
 export async function getLLMStatus() {
-  return apiRequest<any>('/llm/status');
+  return apiRequest<unknown>('/llm/status');
 }
 
-export async function callLLMApi(prompt: string, metadata?: Record<string, any>) {
-  return apiRequest<any>('/llm/prompt', {
+export async function callLLMApi(prompt: string, metadata?: Record<string, unknown>) {
+  return apiRequest<unknown>('/llm/prompt', {
     method: 'POST',
     body: JSON.stringify({ prompt, metadata }),
   });
 }
 
-export const analyzeSegment = async (segmentId: string, analysisType = 'general'): Promise<any> => {
-  return apiRequest<any>('/llm/analyze-segment', {
+export const analyzeSegment = async (segmentId: string, analysisType = 'general'): Promise<unknown> => {
+  return apiRequest<unknown>('/llm/analyze-segment', {
     method: 'POST',
     body: JSON.stringify({ segmentId, analysisType }),
   });

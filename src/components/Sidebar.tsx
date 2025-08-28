@@ -15,7 +15,7 @@ interface Tag {
 interface Segment {
   segment_id: string;
   title: string;
-  fields?: Record<string, any>;
+  fields?: Record<string, unknown>;
 }
 
 interface Thought {
@@ -161,9 +161,13 @@ function Sidebar({
       console.log('Import successful:', result);
       onRefreshThoughts();
       alert('Data imported successfully!');
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Import failed:', error);
-      alert(`Failed to import data: ${error.message}`);
+      if (error instanceof Error) {
+        alert(`Failed to import data: ${error.message}`);
+      } else {
+        alert('An unknown error occurred during import.');
+      }
     }
 
     // Reset the file input

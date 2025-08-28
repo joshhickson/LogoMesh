@@ -8,8 +8,8 @@ describe('Debug Component Rendering', () => {
     const { container } = render(
       <AddThoughtModal 
         isOpen={true} 
-        onClose={() => { /* eslint-disable-line @typescript-eslint/no-empty-function */ }}
-        onSave={() => { /* eslint-disable-line @typescript-eslint/no-empty-function */ }}
+        onClose={() => {   }}
+        onSave={() => {   }}
       />
     );
 

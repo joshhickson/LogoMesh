@@ -13,7 +13,7 @@ import adminRoutes from './routes/adminRoutes';
 import taskRoutes, { initializeTaskEngine } from './routes/taskRoutes';
 import { EventBus } from '../../core/services/eventBus';
 import userRoutes from './routes/userRoutes';
-import { Request, Response, NextFunction, Router } from 'express'; // Import Router
+import type { Request, Response, NextFunction, Router, RequestHandler } from 'express'; // Import Router and RequestHandler
 
 const app = express();
 const PORT = parseInt(process.env.PORT || "3001", 10);
@@ -62,20 +62,13 @@ const eventBus = new EventBus(); // Keep eventBus global for now if taskEngine i
 // Mount routes before service init, services will be attached to app.locals in startServer
 // This means routes should be robust to services not being immediately available if hit too early,
 // or server should only start listening after services are ready.
-// @ts-ignore TS2769: Express router type compatibility issue with app.use
-app.use('/api/v1/user', userRoutes);
-// @ts-ignore TS2769: Express router type compatibility issue with app.use
-app.use('/api/v1/thoughts', thoughtRoutes);
-// @ts-ignore TS2769: Express router type compatibility issue with app.use
-app.use('/api/v1/llm', llmRoutes);
-// @ts-ignore TS2769: Express router type compatibility issue with app.use
-app.use('/api/v1/admin', adminRoutes);
-// @ts-ignore TS2769: Express router type compatibility issue with app.use
-app.use('/api/v1/portability', portabilityRoutes);
-// @ts-ignore TS2769: Express router type compatibility issue with app.use
-app.use('/api/v1/orchestrator', orchestratorRoutes);
-// @ts-ignore TS2769: Express router type compatibility issue with app.use
-app.use('/api/v1/tasks', taskRoutes);
+app.use('/api/v1/user', userRoutes as Router);
+app.use('/api/v1/thoughts', thoughtRoutes as Router);
+app.use('/api/v1/llm', llmRoutes as Router);
+app.use('/api/v1/admin', adminRoutes as Router);
+app.use('/api/v1/portability', portabilityRoutes as Router);
+app.use('/api/v1/orchestrator', orchestratorRoutes as Router);
+app.use('/api/v1/tasks', taskRoutes as Router);
 
 // Import security middleware
 import { createApiRateLimiter, createAuthRateLimiter } from '../../core/middleware/rateLimiter';
@@ -86,10 +79,8 @@ const apiRateLimit = createApiRateLimiter();
 const authRateLimit = createAuthRateLimiter();
 
 // Apply rate limiting
-// @ts-ignore TS2769: Express middleware type compatibility issue
-app.use('/api/v1', apiRateLimit.middleware());
-// @ts-ignore TS2769: Express middleware type compatibility issue
-app.use('/api/v1/auth', authRateLimit.middleware());
+app.use('/api/v1', apiRateLimit.middleware() as RequestHandler);
+app.use('/api/v1/auth', authRateLimit.middleware() as RequestHandler);
 
 // Setup authentication service
 const _authService = new AuthService({ // Prefixed with _

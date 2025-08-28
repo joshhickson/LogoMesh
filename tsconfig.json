@@ -25,14 +25,12 @@
   },
   "include": [
     "src/**/*",
-    "src/**/*.test.ts",
-    "src/**/*.test.tsx",
     "core/**/*",
     "contracts/**/*",
-    "server/src/**/*" // Added server/src files
+    "server/src/**/*",
+    "src/__tests__/**/*"
   ],
   "exclude": [
-    "node_modules",
-    "src/**/*.test.js" // Exclude .test.js files from TS checking
+    "node_modules"
   ]
 }

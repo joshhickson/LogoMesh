@@ -1,4 +1,3 @@
-
 /**
  * Abstract interface for all embedding interactions to ensure model-agnostic handling.
  * Components interacting with embeddings (e.g., ShellNode, EchoMesh) should use this.
@@ -9,14 +8,14 @@ export interface EmbeddingInterface {
    * @param input - The input data to convert (text, image, audio, etc.)
    * @returns Promise resolving to numerical vector
    */
-  toVector(input: any): Promise<number[]>;
+  toVector(input: unknown): Promise<number[]>;
 
   /**
    * Convert vector back to meaningful representation
    * @param vector - The numerical vector to convert
    * @returns Promise resolving to decoded representation
    */
-  fromVector(vector: number[]): Promise<any>;
+  fromVector(vector: number[]): Promise<unknown>;
 
   /**
    * Get the name/identifier of the embedding model
@@ -38,12 +37,12 @@ export interface ContextualEmbeddingInterface extends EmbeddingInterface {
   /**
    * Convert input with additional context/metadata
    */
-  toVectorWithContext(input: any, context?: Record<string, any>): Promise<number[]>;
+  toVectorWithContext(input: unknown, context?: Record<string, unknown>): Promise<number[]>;
 
   /**
    * Batch processing for multiple inputs
    */
-  toVectorBatch(inputs: any[]): Promise<number[][]>;
+  toVectorBatch(inputs: unknown[]): Promise<number[][]>;
 
   /**
    * Get similarity score between two vectors

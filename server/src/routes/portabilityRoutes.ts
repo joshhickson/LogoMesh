@@ -13,7 +13,7 @@ const upload = multer({
   limits: {
     fileSize: 10 * 1024 * 1024, // 10MB limit
   },
-  fileFilter: (_req: ExpressRequest, file: Express.Multer.File, cb: multer.FileFilterCallback) => { // Changed MulterFile to Express.Multer.File
+  fileFilter: (_req: ExpressRequest, file: express.Multer.File, cb: multer.FileFilterCallback) => { // Changed MulterFile to Express.Multer.File
     /* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call */
     if (file && typeof file.mimetype === 'string' && typeof file.originalname === 'string' &&
         (file.mimetype === 'application/json' || file.originalname.endsWith('.json'))) {
