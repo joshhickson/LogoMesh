@@ -1,3 +1,4 @@
+/* globals Express:readonly */
 import express, { Request, Response, Request as ExpressRequest } from 'express';
 import multer from 'multer';
 // Express.Multer.File should be available globally via @types/multer and @types/express

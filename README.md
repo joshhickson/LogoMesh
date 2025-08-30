@@ -1,10 +1,14 @@
 # LogoMesh
 
-**Discussion Channel:** <https://discord.gg/6ydDxzMjvD>
+> An open-source cognitive framework for mapping complex ideas, developed and managed by a team of specialized AI agents.
 
-> *A recursive thought engine for humans and AI—designed to evolve meaning, resolve contradictions, and externalize self-reflection.*
+[![CI Status](https://img.shields.io/badge/CI-Passing-brightgreen?style=for-the-badge)](https://github.com/joshhickson/LogoMesh/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Discord](https://img.shields.io/discord/1022230737984852028?style=for-the-badge&logo=discord)](https://discord.gg/6ydDxzMjvD)
 
-LogoMesh is a local-first cognitive framework that enables users to create, organise, and navigate complex ideas through interconnected “thought bubbles,” nested segments, and flexible metadata filters. The application is built on a React front-end and a Node.js/Express back-end and stores data in SQLite by default. All processing occurs on the local machine unless the user explicitly installs a cloud-aware plug-in.
+**LogoMesh** is a local-first tool for thinking. It helps you create, connect, and explore complex ideas using a graph-based interface. It's designed for writers, researchers, developers, and anyone trying to bring structure to their thoughts.
+
+What makes this project unique is its development process. **LogoMesh is built and managed by a team of AI Personas**—specialized agents with distinct roles and responsibilities, from strategic planning to security auditing. This README, the project roadmap, and the code itself are all products of this AI-driven process.
 
 ---
 
@@ -12,36 +16,64 @@ LogoMesh is a local-first cognitive framework that enables users to create, orga
 
 | Phase | Objective | High-level Deliverables | Status |
 |-------|-----------|-------------------------|--------|
-| 0 | Framework Skeleton | React/Node scaffold, baseline tests | Complete |
-| 1 | Core Functionality | Thought graph, JSON I/O, initial plug-in scaffold | Complete |
-| **2** | Hardened Spine | Type-safe codebase, secure plug-in sandbox, TaskEngine, LLM gateway, observability | **Resumed after hiatus** |
-| 2 b | Memory Layer | Vector store, summarisation and relevance routing, read-only FlowMesh CLI | Planned |
-| 3 | Working-Memory Features | Adaptive chunking, replay API, glossary reconciliation | Planned |
-| 4 | Knowledge Graph & Ontology | Contradiction detection, multi-user collaboration, conflict resolution | Vision |
+| 0 | Framework Skeleton | React/Node scaffold, baseline tests | ✅ Complete |
+| 1 | Core Functionality | Thought graph, JSON I/O, initial plug-in scaffold | ✅ Complete |
+| **2** | **Hardened Spine** | **Type-safe codebase, secure plug-in host, LLM gateway, observability** | **🚀 In Progress** |
+| 2b | Memory Layer | Vector store, summarisation, relevance routing, read-only CLI | ⏳ Planned |
+| 3 | Working-Memory | Adaptive chunking, replay API, glossary reconciliation | ⏳ Planned |
+| 4 | Knowledge Graph | Contradiction detection, multi-user collaboration | 🔭 Vision |
 
-Current version: **0.2.0**  
-Target runtime: Node.js 16 or newer.
+The project is currently in **Phase 2: Hardened Spine**. The focus is on creating a rock-solid, reliable, and secure foundation before adding more complex features. You can read the detailed, week-by-week plan in the [Phase 2 Implementation Plan](docs/IMPLEMENTATION_PLAN.md).
 
 ---
 
-## Key Capabilities
+## Project Philosophy: AI-Driven Development
 
-### Operational Components
+LogoMesh's development is a live experiment in AI-coordinated software engineering. Instead of a traditional human-led team, the project is guided by a roster of AI "Personas." Each persona has a name, a role, and a specific set of responsibilities.
 
-* Thought bubbles with titles, descriptions, tags, and colour coding.  
-* Nested segments within each thought, each with its own attributes.  
-* Attribute-based filtering with optional canvas highlighting.  
-* JSON import and export for data portability and AI integration.  
-* Normalised SQLite schema for reliable local persistence.  
-* Foundational plug-in host implemented with a vm2 sandbox.
+*   **The Archivist:** Coordinates memory and delegates tasks.
+*   **Napoleon:** Oversees strategic architecture and planning.
+*   **Bezalel:** Implements core system modules.
+*   **The Watchman:** Audits security and plugin integrity.
 
-### Infrastructure Under Construction (Phase 2)
+This approach allows for a unique, highly-documented, and focused development process. You can view the full roster and their responsibilities in the [Persona Registry](docs/personas/registry.md). Their work logs are captured in the `docs/progress` directory.
 
-* Multi-language plug-in runtime (Node.js operational; Python in progress).  
-* Secure DevShell interface for development commands.  
-* TaskEngine for workflow orchestration.  
-* LLM gateway with audit logging and runner isolation.  
-* Observability stack (structured logging, health checks, performance metrics).
+---
+
+## Key Features
+
+*   **Graph-Based Visualization:** Create and connect "thought bubbles" on an infinite canvas.
+*   **Rich Content:** Each thought has a title, description, tags, and nested content segments.
+*   **Plugin Architecture:** Extend functionality with custom plugins that run in a secure sandbox.
+*   **LLM Gateway:** Integrated gateway for connecting to local or remote Large Language Models like Ollama.
+*   **Data Portability:** Import and export your thought graphs as JSON.
+*   **Local-First Storage:** Your data is stored locally in SQLite, with support for PostgreSQL and Neo4j.
+
+---
+
+## Architecture & Technology Stack
+
+LogoMesh uses a modern, type-safe technology stack designed for reliability and scalability.
+
+```
+React Frontend  →  Express API  →  Database (SQLite/Postgres/Neo4j)
+      │                  │
+ UI Components       Core Services
+ (React,           - IdeaManager
+  Tailwind,          - EventBus
+  Cytoscape.js)      - PluginHost
+                     - TaskEngine
+                     - LLMGateway
+```
+
+*   **Frontend:** React 18, TypeScript, Vite, Tailwind CSS, Cytoscape.js, React Flow
+*   **Backend:** Node.js, Express, TypeScript
+*   **Database:** SQLite (default), PostgreSQL, Neo4j
+*   **Testing:** Vitest for unit and integration testing.
+*   **Core Principles:**
+    *   **Event-Driven:** Core services communicate via an event bus to decouple components.
+    *   **Plugin Isolation:** Plugins run in a secure sandbox to protect the core system.
+    *   **Strict Boundaries:** The frontend, core, and server layers are strictly separated.
 
 ---
 
@@ -49,59 +81,49 @@ Target runtime: Node.js 16 or newer.
 
 ### Prerequisites
 
-* Node.js 16 or newer  
-* npm  
-* Git
+*   Node.js 18 or newer
+*   npm (v9 or newer)
+*   Git
 
 ### Installation
 
 ```bash
+# 1. Clone the repository
 git clone https://github.com/joshhickson/LogoMesh.git
+
+# 2. Change into the project directory
 cd LogoMesh
+
+# 3. Install all dependencies (for frontend and backend)
 npm install
-cd server && npm install && cd ..
 ```
 
 ### Running in Development
 
-```bash
-# Terminal 1 – back end (port 3001)
-cd server
-npm run dev
+This command starts both the React frontend and the Express backend concurrently.
 
-# Terminal 2 – front end (port 3000)
-npm start
+```bash
+# Run the frontend (port 3000) and backend (port 3001) together
+npm run dev
 ```
 
-* Front-end: <http://localhost:3000>  
-* API root: <http://localhost:3001/api/v1>
+*   **Frontend:** `http://localhost:3000`
+*   **API:** `http://localhost:3001/api/v1`
 
 ### Database Configuration
 
-An SQLite database file is created automatically. To override the location or use another engine, copy `.env.example` to `.env` and edit the connection string.
+The application uses an SQLite database by default, which is created automatically. To use a different database like PostgreSQL or Neo4j, copy `.env.example` to `.env` and set the `DATABASE_URL`.
 
 ```env
-DATABASE_URL=sqlite:./data/custom.db
+# Default: SQLite
+DATABASE_URL=sqlite:./data/logomesh.db
+
 # Example for PostgreSQL:
-# DATABASE_URL=postgresql://user:pass@host:5432/db
+# DATABASE_URL=postgresql://user:pass@host:5432/dbname
+
+# Example for Neo4j:
+# DATABASE_URL=neo4j://user:pass@host:7687/dbname
 ```
-
----
-
-## High-Level Architecture
-
-```
-React Front-end  →  Express API  →  SQLite (or configured RDBMS)
-        │                  │
-   UI Components       Core Services
-                       - IdeaManager
-                       - EventBus
-                       - PluginHost
-                       - TaskEngine (under development)
-```
-
-*Front-end technologies:* React 18, Cytoscape.js for graph rendering, Tailwind CSS for layout.  
-*Back-end technologies:* Express.js with TypeScript, vm2 plug-in sandbox, structured logging with pino.
 
 ---
 
@@ -110,142 +132,65 @@ React Front-end  →  Express API  →  SQLite (or configured RDBMS)
 ### Repository Layout
 
 ```
-/src/           React front-end
-/server/src/    Express back-end
-/core/          Shared business logic
-/contracts/     TypeScript interfaces
-/plugins/       Plug-in ecosystem
-/docs/          Architectural records and specifications
+/src/           React frontend (Vite)
+/server/src/    Express backend
+/core/          Shared business logic (TypeScript)
+/contracts/     Shared data structures and interfaces
+/plugins/       The plugin ecosystem
+/docs/          Architectural records, plans, and persona logs
 ```
 
-### Routine Tasks
+### Key Development Scripts
 
-```bash
-# Front-end unit tests
-npm test
+We use a set of scripts to ensure code quality and correctness.
 
-# Back-end unit tests
-cd server && npm test
-
-# Linting (front-end and back-end)
-npm run lint
-```
-
-Known open issues are tracked in the GitHub issue queue.
+*   `npm run validate`: The most important script. Runs linting, type-checking, and all tests in sequence. This is what the CI server runs.
+*   `npm test`: Runs the entire test suite using Vitest.
+*   `npm run typecheck`: Checks the entire project for TypeScript errors.
+*   `npm run lint`: Lints the frontend, backend, and core directories.
+*   `npm run format`: Formats the code using Prettier.
 
 ---
 
-## Roadmap Extract
+## API Overview
 
-### Immediate Objectives (Phase 2)
-
-| Category | Task |
-|----------|------|
-| Type safety | Eliminate remaining JavaScript in `/core` and `/server` |
-| Security | Finalise plug-in sandbox and DevShell permissions |
-| Observability | Health-check endpoint, structured logs, back-pressure metrics |
-| Task engine | Workflow chain: LLM → plug-in → system |
-| Local LLM | Initial Ollama executor with audit logging |
-
-### Subsequent Milestones
-
-* **Phase 2 b:** Vector store integration and summarisation plug-ins.  
-* **Phase 3:** Automatic document digestion and replay API.  
-* **Phase 4:** Multi-user knowledge graph with ontology management.
-
-Detailed architectural records (ADR) and requests for comment (RFC) are maintained under `/docs/`.
-
----
-
-## API Overview (selected endpoints)
+The backend provides a RESTful API for managing thoughts, plugins, and data.
 
 ```
-GET    /api/v1/thoughts            List thoughts
-POST   /api/v1/thoughts            Create thought
-GET    /api/v1/thoughts/:id        Retrieve thought
-PUT    /api/v1/thoughts/:id        Update thought
-DELETE /api/v1/thoughts/:id        Delete thought
+GET    /api/v1/thoughts            List all thoughts
+POST   /api/v1/thoughts            Create a new thought
+GET    /api/v1/thoughts/:id        Retrieve a specific thought
+PUT    /api/v1/thoughts/:id        Update a thought
+DELETE /api/v1/thoughts/:id        Delete a thought
 
-POST   /api/v1/portability/export  Export data
-POST   /api/v1/portability/import  Import data
+POST   /api/v1/portability/export  Export all data to JSON
+POST   /api/v1/portability/import  Import data from JSON
 
-GET    /api/v1/plugins             List registered plug-ins
-POST   /api/v1/plugins/:id/execute Invoke plug-in command
+GET    /api/v1/plugins             List registered plugins
+POST   /api/v1/plugins/:id/execute Invoke a command on a plugin
+
+GET    /api/v1/admin/status        Get system health and metrics
 ```
-
-A full API reference is planned, but not yet available.
 
 ---
 
 ## Contribution Guidelines
 
-1. Fork the repository and create a feature branch.  
-2. Follow the coding standards: TypeScript in new back-end code, ESLint and Prettier formatting.  
-3. Include unit tests for new functionality and update documentation where relevant.  
-4. Submit a pull request with a clear description of the change.
-
-Architectural changes require an accompanying RFC in `/docs/rfc` before implementation.
-
----
-
-## Deployment Notes
-
-* **Local production build**
-
-  ```bash
-  npm run build
-  cd server && npm run build
-  ```
-
-* **Replit deployment**
-
-  1. Import the repository into Replit.  
-  2. Provide environment variables in the Replit UI.  
-  3. Use the Deployments tab to provision the back-end service.
+1.  Fork the repository and create a feature branch.
+2.  Follow the coding standards: strict TypeScript for all new code, ESLint and Prettier for formatting.
+3.  Add unit tests with Vitest for any new functionality.
+4.  Ensure `npm run validate` passes before submitting.
+5.  Submit a pull request with a clear description of your changes.
 
 ---
 
-## Data Exchange Format (example)
+## License
 
-```json
-{
-  "id": "thought-001",
-  "title": "Example Thought",
-  "description": "High-level concept",
-  "tags": [
-    { "name": "philosophy", "color": "#f97316" }
-  ],
-  "segments": [
-    {
-      "id": "segment-001",
-      "title": "Key Point",
-      "content": "Detailed information...",
-      "attributes": [
-        {
-          "fieldName": "Category",
-          "fieldValue": "Quote",
-          "fieldType": "text"
-        }
-      ]
-    }
-  ]
-}
-```
-
----
-
-## Licence
-
-LogoMesh is released under the MIT licence. You are free to copy, modify, and distribute the software, provided that the licence terms are respected.
+LogoMesh is released under the **MIT License**. You are free to copy, modify, and distribute the software.
 
 ---
 
 ## Support and Community
 
-* Documentation index is located in `/docs/index.md`.  
-* Bug reports and feature requests should be opened in the GitHub issue tracker.  
-* Real-time discussion is available in the Discord server linked above.
-
----
-
-Created and maintained by [Josh Hickson](https://github.com/joshhickson).
+*   **Bug Reports & Feature Requests:** Please use the [GitHub Issues](https://github.com/joshhickson/LogoMesh/issues).
+*   **Real-time Discussion:** Join our [Discord server](https://discord.gg/6ydDxzMjvD).
