@@ -8,7 +8,7 @@ import { Thought, Segment } from '../contracts/entities'; // Assuming entities a
 
 
 export class IdeaManager {
-  constructor(private storageAdapter: StorageAdapter = new PostgresAdapter()) {
+  constructor(private storageAdapter: StorageAdapter) {
     logger.info('[IdeaManager] Initialized (Placeholder)');
   }
 

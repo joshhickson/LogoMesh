@@ -10,14 +10,13 @@ import {
 export class PostgresAdapter implements StorageAdapter {
   private pool: Pool;
 
-  constructor() {
-    const databaseUrl = process.env.DATABASE_URL;
-    if (!databaseUrl) {
-      throw new Error('DATABASE_URL environment variable is required');
+  constructor(options: { databaseUrl: string }) {
+    if (!options.databaseUrl) {
+      throw new Error('DATABASE_URL is required for PostgresAdapter');
     }
 
     // Use connection pooling for better performance
-    const poolUrl = databaseUrl.replace('.us-east-2', '-pooler.us-east-2');
+    const poolUrl = options.databaseUrl.replace('.us-east-2', '-pooler.us-east-2');
     this.pool = new Pool({
       connectionString: poolUrl,
       max: 10,

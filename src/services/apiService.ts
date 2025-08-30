@@ -1,10 +1,15 @@
 
 // API Service for LogoMesh Backend Communication
-import { Thought, Segment } from '../contracts/entities';
-import { NewThoughtData, NewSegmentData } from '../contracts/storageAdapter';
+import { Thought, Segment } from '../../contracts/entities';
+import { NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
 import { User } from './authService';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1';
+let API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1';
+
+export function setApiBaseUrl(url: string) {
+  API_BASE_URL = url;
+  console.log('[API Service] Base URL set to:', API_BASE_URL);
+}
 
 console.log('[API Service] Using API base URL:', API_BASE_URL);
 
@@ -19,14 +24,21 @@ interface FetchOptions extends globalThis.RequestInit {
 // Generic API request function
 async function apiRequest<T>(
   endpoint: string,
-  options: globalThis.RequestInit = {}
+  options: globalThis.RequestInit = {},
+  token?: string
 ): Promise<T> {
+  const headers = new Headers(options.headers);
+  if (!headers.has('Content-Type')) {
+    headers.set('Content-Type', 'application/json');
+  }
+
+  if (token) {
+    headers.set('Authorization', `Bearer ${token}`);
+  }
+
   const config: globalThis.RequestInit = {
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
     ...options,
+    headers,
   };
 
   try {
@@ -66,32 +78,32 @@ async function apiRequest<T>(
 }
 
 // Thought API functions
-export async function fetchThoughts() {
-  return apiRequest<Thought[]>('/thoughts');
+export async function fetchThoughts(token?: string) {
+  return apiRequest<Thought[]>('/thoughts', {}, token);
 }
 
-export async function getThoughtById(thoughtId: string) {
-  return apiRequest<Thought | null>(`/thoughts/${thoughtId}`);
+export async function getThoughtById(thoughtId: string, token?: string) {
+  return apiRequest<Thought | null>(`/thoughts/${thoughtId}`, {}, token);
 }
 
-export async function createThoughtApi(thoughtData: NewThoughtData) {
+export async function createThoughtApi(thoughtData: NewThoughtData, token?: string) {
   return apiRequest<Thought>('/thoughts', {
     method: 'POST',
     body: JSON.stringify(thoughtData),
-  });
+  }, token);
 }
 
-export async function updateThoughtApi(thoughtId: string, thoughtData: Partial<NewThoughtData>) {
+export async function updateThoughtApi(thoughtId: string, thoughtData: Partial<NewThoughtData>, token?: string) {
   return apiRequest<Thought | null>(`/thoughts/${thoughtId}`, {
     method: 'PUT',
     body: JSON.stringify(thoughtData),
-  });
+  }, token);
 }
 
-export async function deleteThoughtApi(thoughtId: string) {
+export async function deleteThoughtApi(thoughtId: string, token?: string) {
   return apiRequest<void>(`/thoughts/${thoughtId}`, {
     method: 'DELETE',
-  });
+  }, token);
 }
 
 // Segment API functions
@@ -162,16 +174,16 @@ export const analyzeSegment = async (segmentId: string, analysisType = 'general'
 };
 
 // Legacy method names for backward compatibility
-export async function updateThought(id: string, updates: Partial<NewThoughtData>) {
-  return updateThoughtApi(id, updates);
+export async function updateThought(id: string, updates: Partial<NewThoughtData>, token?: string) {
+  return updateThoughtApi(id, updates, token);
 }
 
-export async function createThought(thoughtData: NewThoughtData) {
-  return createThoughtApi(thoughtData);
+export async function createThought(thoughtData: NewThoughtData, token?: string) {
+  return createThoughtApi(thoughtData, token);
 }
 
-export async function deleteThought(id: string) {
-  return deleteThoughtApi(id);
+export async function deleteThought(id: string, token?: string) {
+  return deleteThoughtApi(id, token);
 }
 
 export async function getCurrentUser() {

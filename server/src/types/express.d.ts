@@ -6,6 +6,7 @@ import { IdeaManager } from '../../../core/IdeaManager';
 import { EventBus } from '../../../core/services/eventBus';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { PortabilityService } from '../../../core/services/portabilityService';
+import { AuthService } from '../../../core/services/authService';
 
 // AuthUserForRequest is no longer exported from here, defined inline for augmentation.
 // If other modules need this specific shape, they should define it or import from a central type def.
@@ -21,13 +22,13 @@ declare global {
         isAuthenticated: boolean;
       };
     }
-    // export interface Application {
-    //   locals: {
-    //     ideaManager: IdeaManager;
-    //     eventBus: EventBus;
-    //     portabilityService: PortabilityService;
-    //     // Add other app.locals types here as they are introduced
-    //   };
-    // }
+    export interface Application {
+      locals: {
+        ideaManager: IdeaManager;
+        eventBus: EventBus;
+        portabilityService: PortabilityService;
+        authService: AuthService;
+      };
+    }
   }
 }

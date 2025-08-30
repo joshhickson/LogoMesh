@@ -57,10 +57,11 @@ SESSION_SECRET=another_secure_random_string_here
 3. Set: `OLLAMA_URL=http://localhost:11434`
 
 ### External LLM APIs
-Add your API keys:
+Add your API keys to your `.env` file (do not commit them):
 ```env
-OPENAI_API_KEY=sk-...
-ANTHROPIC_API_KEY=sk-ant-...
+# Example (in your .env file):
+# OPENAI_API_KEY your_key_here
+# ANTHROPIC_API_KEY your_key_here
 ```
 
 ## Development Workflow

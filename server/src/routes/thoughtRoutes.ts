@@ -3,26 +3,18 @@ import { IdeaManager } from '../../../core/IdeaManager';
 import { logger } from '../../../core/utils/logger';
 import { NewThoughtData, NewSegmentData } from '../../../contracts/storageAdapter';
 
+import { AuthService } from '../../../core/services/authService';
+
 const router = Router();
 
 // AuthenticatedRequest is now globally augmented. Local definition removed.
 
-
-// Authentication middleware for thought routes
-const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
-  if (!req.user?.isAuthenticated || !req.user.id) {
-    res.status(401).json({ // Removed return from here
-      error: 'Authentication required',
-      message: 'Please log in to access your thoughts'
-    });
-    return; // Added return here
-  }
-  next();
-  return;
-};
-
-// Apply authentication to all thought routes
-router.use(requireAuth);
+// Apply JWT authentication to all thought routes
+router.use((req: Request, res: Response, next: NextFunction) => {
+  // This middleware extracts the service from app.locals and applies the real JWT auth middleware
+  const authService = req.app.locals.authService as AuthService;
+  authService.requireAuth(req, res, next);
+});
 
 // GET /api/v1/thoughts - Get all thoughts for authenticated user
 router.get('/', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
