@@ -91,7 +91,7 @@ describe('VoiceInputManager', () => {
   });
 
   test('handles speech recognition errors', () => {
-    const localManager = new VoiceInputManager(onTranscriptUpdate, onError);
+    new VoiceInputManager(onTranscriptUpdate, onError);
 
     mockRecognition.onerror({ error: 'network' });
 

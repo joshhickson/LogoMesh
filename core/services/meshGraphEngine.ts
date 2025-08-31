@@ -1,5 +1,4 @@
 import { Thought } from '../../contracts/entities'; // Will be used
-import { StorageAdapter } from '../../contracts/storageAdapter';
 import { logger } from '../utils/logger';
 
 // --- Specific Types for MeshGraphEngine ---
@@ -35,8 +34,6 @@ export interface SemanticBridge {
 
 export class MeshGraphEngine {
   private _weightThreshold = 0.3; // Prefixed
-
-  constructor(private _storage: StorageAdapter) {} // Prefixed
 
   /*
   async getRelatedThoughts(thoughtId: string, maxResults: number = 10): Promise<Thought[]> {
@@ -223,8 +220,7 @@ export class MeshGraphEngine {
    */
   async findSemanticBridges(
     thoughtId1: string,
-    thoughtId2: string,
-    _options?: { maxHops?: number; bridgeStrengthThreshold?: number } // options -> _options
+    thoughtId2: string
   ): Promise<SemanticBridge[]> { // Changed from any[]
     logger.debug(`[MeshGraphEngine] Finding semantic bridges between ${thoughtId1} and ${thoughtId2}`);
 
@@ -243,10 +239,7 @@ export class MeshGraphEngine {
   /**
    * Enhanced clustering with configurable algorithms
    */
-  async clusterThoughts(
-    _thoughts: Thought[], // thoughts -> _thoughts
-    _algorithm?: string
-  ): Promise<Record<string, Thought[]>> {
+  async clusterThoughts(): Promise<Record<string, Thought[]>> {
     // Implementation logic (stubbed)
     // logger.debug(`Clustering ${_thoughts.length} thoughts using ${_algorithm} algorithm`);
     return {}; // Return an empty object for Record<string, Thought[]>

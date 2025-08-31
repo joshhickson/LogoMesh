@@ -16,8 +16,6 @@ import {
   SemanticCompressionOptions,
   ThoughtData
 } from '../../contracts/types';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type { ContextMetadata } from '../../contracts/types';
 
 // Removed local ContextGenerationOptions, will use SemanticCompressionOptions from contracts
 
@@ -33,28 +31,34 @@ export interface GeneratedContext {
 }
 
 export interface IdeaManagerInterface {
-  getThought(id: string): Promise<ThoughtData | null>;
-  getRelatedThoughts(id: string): Promise<string[]>; // Assuming string IDs for related thoughts
+  getThought(_id: string): Promise<ThoughtData | null>;
+  getRelatedThoughts(_id: string): Promise<string[]>; // Assuming string IDs for related thoughts
 }
 
 export interface MeshGraphEngineInterface {
-  traverse(startNodeId: string, depth: number): Promise<string[]>; // Assuming string IDs for nodes
-  getCluster(clusterId: string): Promise<ContextCluster | null>; // Allow null if cluster not found
+  traverse(_startNodeId: string, _depth: number): Promise<string[]>; // Assuming string IDs for nodes
+  getCluster(_clusterId: string): Promise<ContextCluster | null>; // Allow null if cluster not found
 }
 
 export type CompressionLevel = 'none' | 'basic' | 'semantic' | 'aggressive';
 
 export interface VTCInterface {
-  compress(data: CognitiveContext, level: CompressionLevel): Promise<CompressionResult>;
-  decompress(data: CompressionResult): Promise<CognitiveContext>; // Assuming decompressing a CompressionResult yields a CognitiveContext
+  compress(_data: CognitiveContext, _level: CompressionLevel): Promise<CompressionResult>;
+  decompress(_data: CompressionResult): Promise<CognitiveContext>; // Assuming decompressing a CompressionResult yields a CognitiveContext
 }
 
 export class CognitiveContextEngine {
+  private _ideaManager?: IdeaManagerInterface;
+  private _meshGraphEngine?: MeshGraphEngineInterface;
+  private _vtc?: VTCInterface;
   constructor(
-    private _ideaManager?: IdeaManagerInterface,
-    private _meshGraphEngine?: MeshGraphEngineInterface,
-    private _vtc?: VTCInterface
+    _ideaManager?: IdeaManagerInterface,
+    _meshGraphEngine?: MeshGraphEngineInterface,
+    _vtc?: VTCInterface
   ) {
+    this._ideaManager = _ideaManager;
+    this._meshGraphEngine = _meshGraphEngine;
+    this._vtc = _vtc;
     logger.info('[CCE] Cognitive Context Engine initialized (Phase 1 stub)');
   }
 

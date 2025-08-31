@@ -22,21 +22,21 @@ export interface PluginAPI {
   /**
    * Get configuration values
    */
-  getConfig(key: string): unknown;
+  getConfig(_key: string): unknown;
 
   /**
    * Set configuration values (if plugin has permission)
    */
-  setConfig(key: string, value: unknown): Promise<void>;
+  setConfig(_key: string, _value: unknown): Promise<void>;
 
   /**
    * Access to thought and segment data (read-only for most plugins)
    */
   getThoughts(): Promise<Thought[]>;
-  getSegments(thoughtId: string, userId?: string): Promise<Segment[]>;
+  getSegments(_thoughtId: string, _userId?: string): Promise<Segment[]>;
 
   /**
    * Plugin permission checks
    */
-  hasPermission(permission: string): boolean;
+  hasPermission(_permission: string): boolean;
 }

@@ -1,7 +1,5 @@
-
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { vi } from 'vitest';
 
 describe('Step by Step Component Debug', () => {
   test('Step 1: Raw HTML rendering', () => {

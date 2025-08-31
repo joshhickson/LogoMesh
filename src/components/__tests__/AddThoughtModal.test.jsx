@@ -167,7 +167,7 @@ describe('AddThoughtModal', () => {
   });
 });
 test('handles voice input correctly', () => {
-  const mockAlert = vi.spyOn(window, 'alert').mockImplementation(() => {});
+  vi.spyOn(window, 'alert').mockImplementation(() => {});
   // Setup speech recognition mock before render
   const mockRecognition = {
     start: vi.fn(),

@@ -13,9 +13,9 @@ export interface AdapterRegistry {
    * @param outputAdapter - Adapter for converting ULS back to model format
    */
   registerAdapter(
-    modelName: string, 
-    inputAdapter: EmbeddingInterface, 
-    outputAdapter: EmbeddingInterface
+    _modelName: string,
+    _inputAdapter: EmbeddingInterface,
+    _outputAdapter: EmbeddingInterface
   ): void;
 
   /**
@@ -23,14 +23,14 @@ export interface AdapterRegistry {
    * @param modelName - The model identifier
    * @returns Input adapter or undefined if not found
    */
-  getInputAdapter(modelName: string): EmbeddingInterface | undefined;
+  getInputAdapter(_modelName: string): EmbeddingInterface | undefined;
 
   /**
    * Get the output adapter for a specific model
    * @param modelName - The model identifier
    * @returns Output adapter or undefined if not found
    */
-  getOutputAdapter(modelName: string): EmbeddingInterface | undefined;
+  getOutputAdapter(_modelName: string): EmbeddingInterface | undefined;
 
   /**
    * List all registered model names
@@ -43,14 +43,14 @@ export interface AdapterRegistry {
    * @param modelName - The model identifier to remove
    * @returns True if removed, false if not found
    */
-  unregisterAdapter(modelName: string): boolean;
+  unregisterAdapter(_modelName: string): boolean;
 
   /**
    * Check if a model has both input and output adapters registered
    * @param modelName - The model identifier
    * @returns True if fully registered
    */
-  isFullyRegistered(modelName: string): boolean;
+  isFullyRegistered(_modelName: string): boolean;
 }
 
 /**
@@ -72,14 +72,14 @@ export interface ExtendedAdapterRegistry extends AdapterRegistry {
   /**
    * Get metadata for a registered adapter
    */
-  getAdapterMetadata(modelName: string): AdapterMetadata | undefined;
+  getAdapterMetadata(_modelName: string): AdapterMetadata | undefined;
 
   /**
    * Register adapter with metadata
    */
   registerAdapterWithMetadata(
-    metadata: Omit<AdapterMetadata, 'registeredAt'>,
-    inputAdapter: EmbeddingInterface,
-    outputAdapter: EmbeddingInterface
+    _metadata: Omit<AdapterMetadata, 'registeredAt'>,
+    _inputAdapter: EmbeddingInterface,
+    _outputAdapter: EmbeddingInterface
   ): void;
 }

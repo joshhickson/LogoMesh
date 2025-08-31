@@ -1,5 +1,5 @@
 
-import { describe, test, expect, vi } from 'vitest';
+import { describe, test, expect } from 'vitest';
 
 describe('Backend Connectivity Test', () => {
   test('should detect if backend server is running', async () => {
