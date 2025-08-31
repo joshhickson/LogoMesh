@@ -215,17 +215,6 @@ global.File = vi.fn((content, name, options) => ({
   webkitRelativePath: ''
 }));
 
-// Mock fetch for API tests
-global.fetch = vi.fn(() => 
-  Promise.resolve({
-    ok: true,
-    status: 200,
-    json: () => Promise.resolve({}),
-    text: () => Promise.resolve(''),
-    blob: () => Promise.resolve(new Blob())
-  })
-);
-
 // Mock IntersectionObserver for component tests
 global.IntersectionObserver = vi.fn(() => ({
   observe: vi.fn(),

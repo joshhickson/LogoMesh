@@ -39,7 +39,7 @@ router.post('/init', async (_req: Request, res: Response): Promise<void> => {
           process.env[key] = String(value); // Value might need more robust stringification
         },
         getThoughts: async () => storage.getAllThoughts(), // Assuming getAllThoughts doesn't need userId here or handles it
-        getSegments: async (thoughtId: string) => storage.getSegmentsForThought(thoughtId), // Assuming getSegmentsForThought doesn't need userId here
+        getSegments: async (thoughtId: string, userId?: string) => storage.getSegmentsForThought(thoughtId, userId),
         hasPermission: (_permission: string) => true // _permission
       };
 
