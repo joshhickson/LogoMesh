@@ -38,8 +38,6 @@ describe('Sidebar', () => {
     onRefreshThoughts: vi.fn(),
   };
 
-  const mockOnThoughtClick = vi.fn();
-
   test('renders all thoughts initially', () => {
     render(<Sidebar {...mockProps} />);
     expect(screen.getByText('Philosophy Thought')).toBeInTheDocument();

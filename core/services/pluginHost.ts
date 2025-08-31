@@ -1,5 +1,4 @@
 import { PluginRuntimeInterface } from '../plugins/pluginRuntimeInterface';
-import { PluginAPI } from '../../contracts/plugins/pluginApi';
 import { EventBus } from './eventBus';
 import { Logger } from '../utils/logger';
 
@@ -12,11 +11,10 @@ export class PluginHost {
   private loadedPlugins: Map<string, PluginRuntimeInterface> = new Map();
   private pluginConfigs: Map<string, unknown> = new Map(); // any -> unknown
   private eventBus: EventBus = new EventBus();
+  private logger: Logger;
 
-  constructor(
-    private logger: Logger,
-    private _pluginApi: PluginAPI // Prefixed
-  ) {
+  constructor(logger: Logger) {
+    this.logger = logger;
     this.logger.info('[PluginHost] Initialized with extended manifest support');
   }
 
@@ -62,7 +60,7 @@ export class PluginHost {
   /**
    * Check if plugin meets activation criteria
    */
-  private _checkActivationCriteria(_criteria: unknown): boolean { // Prefixed method name
+  private _checkActivationCriteria(): boolean { // Prefixed method name
     // Stub implementation for context-aware loading
     // TODO: Implement actual device/environment checking
     this.logger.debug('[PluginHost] Checking activation criteria (stub)');

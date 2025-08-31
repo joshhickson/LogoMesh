@@ -72,7 +72,6 @@ app.use('/api/v1/tasks', taskRoutes as Router);
 
 // Import security middleware
 import { createApiRateLimiter, createAuthRateLimiter } from '../../core/middleware/rateLimiter';
-import { AuthService } from '../../core/services/authService';
 
 // Setup rate limiters
 const apiRateLimit = createApiRateLimiter();
@@ -82,11 +81,6 @@ const authRateLimit = createAuthRateLimiter();
 app.use('/api/v1', apiRateLimit.middleware() as RequestHandler);
 app.use('/api/v1/auth', authRateLimit.middleware() as RequestHandler);
 
-// Setup authentication service
-const _authService = new AuthService({ // Prefixed with _
-  jwtSecret: process.env.JWT_SECRET || 'changeme-in-production',
-  jwtExpiration: '24h'
-});
 
 // Health check
 app.get(`${apiBasePath}/health`, (req: Request, res: Response) => {

@@ -41,18 +41,18 @@ export interface NewSegmentData {
  */
 export interface StorageAdapter {
   // Thought operations
-  getAllThoughts(userId?: string): Promise<Thought[]>;
-  getThoughtById(thoughtId: string, userId?: string): Promise<Thought | null>;
-  createThought(thoughtData: NewThoughtData, userId?: string): Promise<Thought>;
-  updateThought(thoughtId: string, updates: Partial<NewThoughtData>, userId?: string): Promise<Thought | null>;
-  deleteThought(thoughtId: string, userId?: string): Promise<boolean>;
+  getAllThoughts(_userId?: string): Promise<Thought[]>;
+  getThoughtById(_thoughtId: string, _userId?: string): Promise<Thought | null>;
+  createThought(_thoughtData: NewThoughtData, _userId?: string): Promise<Thought>;
+  updateThought(_thoughtId: string, _updates: Partial<NewThoughtData>, _userId?: string): Promise<Thought | null>;
+  deleteThought(_thoughtId: string, _userId?: string): Promise<boolean>;
 
   // Segment operations
-  getSegmentsForThought(thoughtId: string, userId?: string): Promise<Segment[]>;
-  getSegmentById(segmentId: string, userId?: string): Promise<Segment | null>;
-  createSegment(thoughtId: string, segmentData: NewSegmentData, userId?: string): Promise<Segment>;
-  updateSegment(thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>, userId?: string): Promise<Segment | null>;
-  deleteSegment(thoughtId: string, segmentId: string, userId?: string): Promise<boolean>;
+  getSegmentsForThought(_thoughtId: string, _userId?: string): Promise<Segment[]>;
+  getSegmentById(_segmentId: string, _userId?: string): Promise<Segment | null>;
+  createSegment(_thoughtId: string, _segmentData: NewSegmentData, _userId?: string): Promise<Segment>;
+  updateSegment(_thoughtId: string, _segmentId: string, _updates: Partial<NewSegmentData>, _userId?: string): Promise<Segment | null>;
+  deleteSegment(_thoughtId: string, _segmentId: string, _userId?: string): Promise<boolean>;
 
   // Utility operations
   initialize(): Promise<void>;

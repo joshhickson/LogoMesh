@@ -320,7 +320,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
     });
   }
 
-  async deleteThought(thoughtId: string, _userId?: string): Promise<boolean> { // userId -> _userId
+  async deleteThought(thoughtId: string): Promise<boolean> { // userId -> _userId
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
@@ -370,8 +370,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
               const parsed = JSON.parse(row.metadata) as Record<string, unknown>;
               if (typeof parsed.fields === 'object' && parsed.fields !== null) {
                 finalFields = parsed.fields as Record<string, unknown>;
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const { fields, ...rest } = parsed;
+                const { ...rest } = parsed;
                 finalMetadata = rest;
               } else {
                 finalMetadata = parsed;
@@ -404,7 +403,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
     });
   }
 
-  async getSegmentById(segmentId: string, _userId?: string): Promise<Segment | null> {
+  async getSegmentById(segmentId: string): Promise<Segment | null> {
      return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
@@ -431,8 +430,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
             const parsed = JSON.parse(row.metadata) as Record<string, unknown>;
             if (typeof parsed.fields === 'object' && parsed.fields !== null) {
               finalFields = parsed.fields as Record<string, unknown>;
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
-              const { fields, ...rest } = parsed;
+              const { ...rest } = parsed;
               finalMetadata = rest;
             } else {
               finalMetadata = parsed;
@@ -588,7 +586,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
     });
   }
 
-  async deleteSegment(_thoughtId: string, segmentId: string, _userId?: string): Promise<boolean> { // userId, thoughtId -> _userId, _thoughtId
+  async deleteSegment(_thoughtId: string, segmentId: string): Promise<boolean> { // userId, thoughtId -> _userId, _thoughtId
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));

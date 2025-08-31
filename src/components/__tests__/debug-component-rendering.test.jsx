@@ -22,7 +22,7 @@ describe('Debug Component Rendering', () => {
   });
 
   test('Component debug information collection', () => {
-    const testComponent = render(<div data-testid="debug-test">Debug Test</div>);
+    render(<div data-testid="debug-test">Debug Test</div>);
 
     // Verify basic React rendering works
     expect(screen.getByTestId('debug-test')).toBeInTheDocument();

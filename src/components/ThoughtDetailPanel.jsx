@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ThoughtDetailPanel = ({ thought, onUpdate, onClose }) => {
+const ThoughtDetailPanel = ({ thought, onClose }) => {
   if (!thought) return null;
 
   return (

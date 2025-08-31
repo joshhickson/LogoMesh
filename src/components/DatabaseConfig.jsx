@@ -34,7 +34,7 @@ function DatabaseConfig() {
         setIsConnected(false);
         setConnectionStatus('Database connection failed');
       }
-    } catch (error) {
+    } catch {
       setIsConnected(false);
       setConnectionStatus('Unable to reach backend');
     }
@@ -108,7 +108,7 @@ function DatabaseConfig() {
           password: url.password,
           ssl: url.searchParams.get('sslmode') === 'require'
         });
-      } catch (error) {
+      } catch {
         alert('Invalid DATABASE_URL format');
       }
     }

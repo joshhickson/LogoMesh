@@ -23,7 +23,7 @@ export interface LLMExecutor {
    * @param options Optional parameters for execution.
    * @returns A promise that resolves to the LLM's output as a string.
    */
-  executePrompt(prompt: string, options?: LLMExecutionOptions): Promise<string>;
+  executePrompt(_prompt: string, _options?: LLMExecutionOptions): Promise<string>;
 
   /**
    * Executes a given prompt and returns a more detailed response object.
@@ -31,7 +31,7 @@ export interface LLMExecutor {
    * @param options Optional parameters for execution.
    * @returns A promise that resolves to an LLMFullResponse object.
    */
-  execute(prompt: string, options?: LLMExecutionOptions): Promise<LLMFullResponse>;
+  execute(_prompt: string, _options?: LLMExecutionOptions): Promise<LLMFullResponse>;
 
 
   /**

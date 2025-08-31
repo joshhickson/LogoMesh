@@ -307,7 +307,7 @@ export class TaskEngine {
   /**
    * Execute a plugin step using registered PluginHost
    */
-  private async executePluginStep(step: TaskStep, _context: Record<string, unknown>): Promise<Record<string, unknown>> { // context -> _context
+  private async executePluginStep(step: TaskStep): Promise<Record<string, unknown>> { // context -> _context
     const executor = this.registry.pluginExecutors.get(step.executorId);
     if (!executor) {
       throw new Error(`Plugin executor ${step.executorId} not found`);
@@ -329,7 +329,7 @@ export class TaskEngine {
   /**
    * Execute a system step (filesystem, API calls, etc.)
    */
-  private async executeSystemStep(step: TaskStep, _context: Record<string, unknown>): Promise<Record<string, unknown>> { // context -> _context
+  private async executeSystemStep(step: TaskStep): Promise<Record<string, unknown>> { // context -> _context
     const executor = this.registry.systemExecutors.get(step.executorId);
     if (!executor) {
       throw new Error(`System executor ${step.executorId} not found`);

@@ -63,7 +63,7 @@ export class AuthService {
           isAuthenticated: true
         }
       };
-    } catch (_error) {
+    } catch {
       return {
         success: false,
         error: {

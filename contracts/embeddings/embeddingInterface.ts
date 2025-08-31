@@ -8,14 +8,14 @@ export interface EmbeddingInterface {
    * @param input - The input data to convert (text, image, audio, etc.)
    * @returns Promise resolving to numerical vector
    */
-  toVector(input: unknown): Promise<number[]>;
+  toVector(_input: unknown): Promise<number[]>;
 
   /**
    * Convert vector back to meaningful representation
    * @param vector - The numerical vector to convert
    * @returns Promise resolving to decoded representation
    */
-  fromVector(vector: number[]): Promise<unknown>;
+  fromVector(_vector: number[]): Promise<unknown>;
 
   /**
    * Get the name/identifier of the embedding model
@@ -37,15 +37,15 @@ export interface ContextualEmbeddingInterface extends EmbeddingInterface {
   /**
    * Convert input with additional context/metadata
    */
-  toVectorWithContext(input: unknown, context?: Record<string, unknown>): Promise<number[]>;
+  toVectorWithContext(_input: unknown, _context?: Record<string, unknown>): Promise<number[]>;
 
   /**
    * Batch processing for multiple inputs
    */
-  toVectorBatch(inputs: unknown[]): Promise<number[][]>;
+  toVectorBatch(_inputs: unknown[]): Promise<number[][]>;
 
   /**
    * Get similarity score between two vectors
    */
-  getSimilarity(vector1: number[], vector2: number[]): number;
+  getSimilarity(_vector1: number[], _vector2: number[]): number;
 }

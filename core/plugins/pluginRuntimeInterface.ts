@@ -18,19 +18,19 @@ export interface PluginRuntimeInterface {
    * @param eventBus - The global EventBus for sending/receiving signals.
    * @param config - Plugin-specific configuration.
    */
-  init(pluginApi: PluginAPI, eventBus: EventBus, config?: Record<string, unknown>): Promise<void>; // any -> unknown
+  init(_pluginApi: PluginAPI, _eventBus: EventBus, _config?: Record<string, unknown>): Promise<void>; // any -> unknown
 
   /**
    * Called when the plugin is enabled and its state should be loaded or initialized.
    * @param initialState - Any state to be passed to the plugin upon activation.
    */
-  onLoad?(initialState?: unknown): Promise<void>; // any -> unknown
+  onLoad?(_initialState?: unknown): Promise<void>; // any -> unknown
 
   /**
    * Called periodically for continuous logic or simulation updates (e.g., per frame in a game engine).
    * @param delta - Time elapsed since the last update.
    */
-  onUpdate?(delta: number): Promise<void>;
+  onUpdate?(_delta: number): Promise<void>;
 
   /**
    * Called when a specific command is issued to the plugin.
@@ -38,7 +38,7 @@ export interface PluginRuntimeInterface {
    * @param payload - Optional data accompanying the command.
    * @returns Optional response from the command execution.
    */
-  onCommand?(command: string, payload?: unknown): Promise<unknown>; // any -> unknown for both
+  onCommand?(_command: string, _payload?: unknown): Promise<unknown>; // any -> unknown for both
 
   /**
    * Called when the plugin is being shut down or unloaded. Used for cleanup.

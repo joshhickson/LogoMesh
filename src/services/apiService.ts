@@ -12,10 +12,6 @@ if (process.env.NODE_ENV === 'development') {
   console.log('Development mode');
 }
 
-interface FetchOptions extends globalThis.RequestInit {
-  timeout?: number;
-}
-
 // Generic API request function
 async function apiRequest<T>(
   endpoint: string,
