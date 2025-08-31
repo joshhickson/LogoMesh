@@ -1,7 +1,7 @@
 
 // API Service for LogoMesh Backend Communication
-import { Thought, Segment } from '../contracts/entities';
-import { NewThoughtData, NewSegmentData } from '../contracts/storageAdapter';
+import { Thought, Segment } from '@contracts/entities';
+import { NewThoughtData, NewSegmentData } from '@contracts/storageAdapter';
 import { User } from './authService';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1';
@@ -179,7 +179,7 @@ export async function getCurrentUser() {
     return await apiRequest<User>('/user/current');
   } catch (error) {
     console.warn('Failed to get current user from backend');
-    return null;
+    throw error;
   }
 }
 

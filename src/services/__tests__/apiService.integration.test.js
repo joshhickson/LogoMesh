@@ -1,40 +1,34 @@
 import { describe, test, expect, beforeEach, afterEach, vi } from 'vitest';
-import { apiService } from '../apiService';
+import { apiService, getCurrentUser } from '../apiService';
 
 describe('API Service Integration - User Authentication', () => {
   beforeEach(() => {
-    // Reset fetch mock before each test
+    // Mock fetch before each test in this suite
     global.fetch = vi.fn();
   });
 
   afterEach(() => {
-    vi.resetAllMocks();
+    // Restore all mocks after each test
+    vi.restoreAllMocks();
   });
 
-  test.skip('getCurrentUser - should handle successful response', async () => { // SKIPPED
+  test('getCurrentUser - should handle successful response', async () => {
     const mockUser = { id: '123', name: 'Test User', email: 'test@example.com' };
     
     global.fetch.mockResolvedValueOnce({
       ok: true,
       status: 200,
       headers: new Headers({ 'content-type': 'application/json' }),
-      json: async () => mockUser
+      json: async () => mockUser,
     });
 
-    // This would fail as apiService doesn't have getCurrentUser
-    // const result = await apiService.getCurrentUser();
+    const result = await getCurrentUser();
     
-    expect(fetch).toHaveBeenCalledWith('http://localhost:3001/api/v1/user/current', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include'
-    });
-    // expect(result).toEqual(mockUser);
+    expect(global.fetch).toHaveBeenCalledWith('http://localhost:3001/api/v1/user/current', expect.any(Object));
+    expect(result).toEqual(mockUser);
   });
 
-  test.skip('getCurrentUser - should handle HTML error response (current issue)', async () => { // SKIPPED
+  test('getCurrentUser - should handle HTML error response', async () => {
     const htmlErrorResponse = '<!DOCTYPE html><html><head><title>Error</title></head><body><h1>Cannot GET /api/v1/user/current</h1></body></html>';
     
     global.fetch.mockResolvedValueOnce({
@@ -47,34 +41,33 @@ describe('API Service Integration - User Authentication', () => {
       }
     });
 
-    // await expect(apiService.getCurrentUser()).rejects.toThrow('API request failed');
-    expect(true).toBe(true); // Placeholder to make test pass when skipped
+    await expect(getCurrentUser()).rejects.toThrow('HTTP 404: <!DOCTYPE html><html><head><title>Error</title></head><body><h1>Cannot GET /api/v1/user/current</h1></body></html>');
   });
 
-  test.skip('getCurrentUser - should handle network errors', async () => { // SKIPPED
+  test('getCurrentUser - should handle network errors', async () => {
+    // To test network errors, we make the fetch call itself fail
     global.fetch.mockRejectedValueOnce(new Error('Network error'));
 
-    // await expect(apiService.getCurrentUser()).rejects.toThrow('Network error');
-    expect(true).toBe(true); // Placeholder
+    await expect(getCurrentUser()).rejects.toThrow('Network error');
   });
 
-  test.skip('getCurrentUser - should handle server errors', async () => { // SKIPPED
+  test('getCurrentUser - should handle server errors', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: false,
       status: 500,
       headers: new Headers({ 'content-type': 'application/json' }),
-      json: async () => ({ error: 'Internal server error' })
+      json: async () => ({ error: 'Internal server error' }),
+      text: async () => '{"error":"Internal server error"}'
     });
 
-    // await expect(apiService.getCurrentUser()).rejects.toThrow('API request failed');
-    expect(true).toBe(true); // Placeholder
+    await expect(getCurrentUser()).rejects.toThrow('HTTP 500: {"error":"Internal server error"}');
   });
 
   test('API base URL configuration', () => {
     expect(apiService.baseURL).toBe('http://localhost:3001/api/v1');
   });
 
-  test('Backend health check', async () => {
+  test('Backend health check should use the mock', async () => {
     global.fetch.mockResolvedValueOnce({
       ok: true,
       status: 200,
@@ -82,17 +75,10 @@ describe('API Service Integration - User Authentication', () => {
       json: async () => ({ status: 'healthy' })
     });
 
-    try {
-      // This test actually calls fetch directly, not via apiService methods.
-      // It's more of a generic backend health check rather than apiService specific.
-      const response = await fetch('http://localhost:3001/api/v1/health');
-      const data = await response.json();
-      expect(data.status).toBe('healthy');
-    } catch (error) {
-      console.warn('Backend health check failed:', error.message);
-      // Allow test to pass if backend isn't running, but warn.
-      // For CI, this might need to be stricter.
-      expect(true).toBe(true);
-    }
+    // This test now uses the same mock as others.
+    const response = await fetch('http://localhost:3001/api/v1/health');
+    const data = await response.json();
+    expect(data.status).toBe('healthy');
+    expect(global.fetch).toHaveBeenCalledWith('http://localhost:3001/api/v1/health');
   });
 });

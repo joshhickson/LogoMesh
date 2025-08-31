@@ -7,7 +7,6 @@ module.exports = function override(config) {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     alias: {
       '@core': path.resolve(__dirname, './src/core'),
-      '@contracts': path.resolve(__dirname, './src/contracts'),
       '~': path.resolve(__dirname, './src')
     }
   };

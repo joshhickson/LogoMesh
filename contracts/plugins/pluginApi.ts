@@ -33,7 +33,7 @@ export interface PluginAPI {
    * Access to thought and segment data (read-only for most plugins)
    */
   getThoughts(): Promise<Thought[]>;
-  getSegments(thoughtId: string): Promise<Segment[]>;
+  getSegments(thoughtId: string, userId?: string): Promise<Segment[]>;
 
   /**
    * Plugin permission checks
