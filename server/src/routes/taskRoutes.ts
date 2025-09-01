@@ -1,12 +1,10 @@
 
 import { Router, Request, Response } from 'express';
-import { TaskEngine } from '../../../core/services/taskEngine'; // Removed Pipeline import
+import { TaskEngine, TaskStep } from '../../../core/services/taskEngine'; // Removed Pipeline import
 import { EventBus } from '../../../core/services/eventBus';
 import { LLMTaskRunner } from '../../../core/llm/LLMTaskRunner';
 import { OllamaExecutor } from '../../../core/llm/OllamaExecutor';
 import { logger } from '../../../core/utils/logger';
-
-import { TaskStep } from '../../../core/services/taskEngine'; // Import TaskStep for body typing
 
 const router = Router();
 

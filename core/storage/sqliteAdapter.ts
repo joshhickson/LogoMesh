@@ -460,7 +460,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
     });
   }
 
-  async createSegment(thoughtId: string, segmentData: NewSegmentData, userId?: string): Promise<Segment> {
+  async createSegment(thoughtId: string, segmentData: NewSegmentData, _userId?: string): Promise<Segment> {
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
@@ -507,7 +507,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         }
 
         try {
-          const createdSegment = await self.getSegmentById(segmentId, userId);
+          const createdSegment = await self.getSegmentById(segmentId);
           if (createdSegment) {
             logger.info(`Created segment: ${segmentId}`);
             resolve(createdSegment);
@@ -526,7 +526,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
     });
   }
 
-  async updateSegment(_thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>, userId?: string): Promise<Segment | null> { // Prefixed thoughtId
+  async updateSegment(_thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>, _userId?: string): Promise<Segment | null> { // Prefixed thoughtId
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database not initialized'));
@@ -551,7 +551,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
 
       if (updateFields.length === 0) {
-        this.getSegmentById(segmentId, userId).then(resolve).catch(reject);
+        this.getSegmentById(segmentId).then(resolve).catch(reject);
         return;
       }
 
@@ -572,7 +572,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         }
 
         try {
-          const updatedSegment = await self.getSegmentById(segmentId, userId);
+          const updatedSegment = await self.getSegmentById(segmentId);
           resolve(updatedSegment);
         } catch (error: unknown) {
           logger.error('Error retrieving updated segment:', error);

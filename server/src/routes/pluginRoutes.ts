@@ -22,28 +22,14 @@ let pluginHost: PluginHost | null = null;
 // Initialize plugin host with proper API wiring
 import { SQLiteStorageAdapter } from '../../../core/storage/sqliteAdapter';
 // import { EventBus } from '../../../core/services/eventBus';
-import type { PluginAPI } from '../../../contracts/plugins/pluginApi';
 
 router.post('/init', async (_req: Request, res: Response): Promise<void> => {
   try {
     // Create minimal plugin API for testing
     // const eventBus = new EventBus();
-    const storage = new SQLiteStorageAdapter('./data/logomesh.sqlite3');
+    new SQLiteStorageAdapter('./data/logomesh.sqlite3');
 
-     const pluginApi: PluginAPI = {
-        getStorageAdapter: () => storage,
-        getLogger: () => logger,
-        getConfig: (key: string) => process.env[key],
-        setConfig: async (key: string, value: unknown) => { // any -> unknown
-          // Basic implementation - in production this would persist config
-          process.env[key] = String(value); // Value might need more robust stringification
-        },
-        getThoughts: async () => storage.getAllThoughts(), // Assuming getAllThoughts doesn't need userId here or handles it
-        getSegments: async (thoughtId: string, userId?: string) => storage.getSegmentsForThought(thoughtId, userId),
-        hasPermission: (_permission: string) => true // _permission
-      };
-
-    pluginHost = new PluginHost(logger, pluginApi);
+    pluginHost = new PluginHost(logger);
     res.json({ success: true, message: 'Plugin host initialized with API' });
   } catch (error: unknown) { // Typed error
     logger.error('Plugin host initialization failed:', error);
