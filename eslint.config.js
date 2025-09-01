@@ -4,6 +4,7 @@ import eslintJs from "@eslint/js";
 import typescriptEslintParser from "@typescript-eslint/parser";
 import typescriptEslintPlugin from "@typescript-eslint/eslint-plugin";
 import reactPlugin from "eslint-plugin-react";
+import importPlugin from "eslint-plugin-import";
 import prettierConfig from "eslint-config-prettier";
 import globals from "globals";
 import path from 'path';
@@ -32,6 +33,7 @@ export default [
     plugins: {
       react: reactPlugin,
       "@typescript-eslint": typescriptEslintPlugin,
+      "import": importPlugin,
     },
     languageOptions: {
         ecmaVersion: "latest",
@@ -60,12 +62,16 @@ export default [
       ...eslintJs.configs.recommended.rules,
       ...typescriptEslintPlugin.configs.recommended.rules,
       ...reactPlugin.configs.recommended.rules,
+      ...importPlugin.configs.recommended.rules,
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": ["error", { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }],
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
     },
     settings: {
+      "import/resolver": {
+        "typescript": {}
+      },
       react: {
         version: "detect",
       },

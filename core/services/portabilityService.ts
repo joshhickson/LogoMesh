@@ -12,7 +12,6 @@ import {
   // Position // Removed as it's part of Thought/NewThoughtData directly
 } from '../../contracts/types';
 import { Thought, Segment, Tag } from '../../contracts/entities';
-import { NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
 
 export class PortabilityService implements ThoughtExportProvider {
   constructor(private storage: StorageAdapter) {}

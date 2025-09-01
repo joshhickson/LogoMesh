@@ -250,10 +250,10 @@ export class TaskEngine {
           step.output = await this.executeLLMStep(step, context);
           break;
         case 'plugin':
-          step.output = await this.executePluginStep(step, context);
+          step.output = await this.executePluginStep(step);
           break;
         case 'system':
-          step.output = await this.executeSystemStep(step, context);
+          step.output = await this.executeSystemStep(step);
           break;
         default:
           throw new Error(`Unknown step type: ${step.type}`);
