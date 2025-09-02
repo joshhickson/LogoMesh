@@ -56,6 +56,7 @@ import { IdeaManager } from '../../core/IdeaManager';
 import { PortabilityService } from '../../core/services/portabilityService';
 import { MeshGraphEngine } from '../../core/services/meshGraphEngine';
 import { OllamaEmbeddingProvider } from '../../core/embeddings/OllamaEmbeddingProvider';
+import { EmbeddingGenerationService } from '../../core/services/EmbeddingGenerationService';
 
 // Initialize TaskEngine with EventBus
 const eventBus = new EventBus(); // Keep eventBus global for now if taskEngine init is outside startServer
@@ -161,7 +162,7 @@ async function startServer() {
     logger.info('MeshGraphEngine initialized and attached to app.locals.');
 
     // Initialize IdeaManager with the initialized adapter
-    const ideaManager = new IdeaManager(storageAdapter);
+    const ideaManager = new IdeaManager(storageAdapter, eventBus);
     app.locals.ideaManager = ideaManager;
     logger.info('IdeaManager initialized and attached to app.locals.');
 
@@ -173,6 +174,11 @@ async function startServer() {
     // Initialize TaskEngine
     initializeTaskEngine(eventBus);
     app.locals.eventBus = eventBus;
+
+    // Initialize and start the EmbeddingGenerationService
+    const embeddingGenerationService = new EmbeddingGenerationService(eventBus, storageAdapter, embeddingProvider);
+    embeddingGenerationService.start();
+    logger.info('EmbeddingGenerationService started.');
 
     app.listen(PORT, '0.0.0.0', () => {
       logger.info(`Server running on port ${PORT}`);
