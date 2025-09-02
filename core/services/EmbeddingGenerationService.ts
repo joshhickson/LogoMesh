@@ -42,7 +42,8 @@ export class EmbeddingGenerationService {
   }
 
   /**
-   * Handles a thought creation or update event.
+   * Handles a thought creation or update event by generating a comprehensive
+   * embedding from the thought's title, description, and all its segments.
    * @param thought The thought that was created or updated.
    */
   private async handleThoughtChange(thought: Thought): Promise<void> {
@@ -51,31 +52,48 @@ export class EmbeddingGenerationService {
       return;
     }
 
-    // Use the thought's description as the content for embedding, falling back to title.
-    const contentToEmbed = thought.description || thought.title;
-
-    if (!contentToEmbed) {
-      logger.debug(`[EmbeddingGenerationService] Thought ${thought.thought_bubble_id} has no content to embed. Skipping.`);
-      return;
-    }
-
-    logger.info(`[EmbeddingGenerationService] Processing thought ${thought.thought_bubble_id}...`);
+    logger.info(`[EmbeddingGenerationService] Processing thought ${thought.thought_bubble_id} for embedding generation.`);
 
     try {
-      const embedding = await this.embeddingProvider.toVector(contentToEmbed);
+      // We need the user ID, which is not in the event payload. Using a placeholder.
+      // TODO: Pass userId in the event payload from IdeaManager.
+      const userId = 'anonymous';
+
+      // 1. Fetch all segments for the thought
+      const segments = await this.storage.getSegmentsForThought(thought.thought_bubble_id, userId);
+
+      // 2. Aggregate content from thought and its segments
+      const contentParts: string[] = [];
+      if (thought.title) {
+        contentParts.push(`Title: ${thought.title}`);
+      }
+      if (thought.description) {
+        contentParts.push(`Description: ${thought.description}`);
+      }
+      segments.forEach(segment => {
+        if (segment.content) {
+          contentParts.push(segment.content);
+        }
+      });
+
+      const aggregatedContent = contentParts.join('\n\n---\n\n');
+
+      if (!aggregatedContent) {
+        logger.debug(`[EmbeddingGenerationService] Thought ${thought.thought_bubble_id} has no aggregate content to embed. Skipping.`);
+        return;
+      }
+
+      // 3. Generate embedding from the aggregated content
+      const embedding = await this.embeddingProvider.toVector(aggregatedContent);
 
       if (!embedding || embedding.length === 0) {
         logger.warn(`[EmbeddingGenerationService] Embedding provider returned an empty embedding for thought ${thought.thought_bubble_id}.`);
         return;
       }
 
-      // We need the user ID to update the thought, but the event payload doesn't contain it.
-      // This is a limitation. For now, we'll assume a default or 'anonymous' user.
-      // A better implementation would have the user ID in the event payload.
-      const userId = 'anonymous'; // TODO: Get this from the event payload if possible.
-
+      // 4. Save the new embedding to the database
       await this.storage.updateThought(thought.thought_bubble_id, { embedding }, userId);
-      logger.info(`[EmbeddingGenerationService] Successfully generated and saved embedding for thought ${thought.thought_bubble_id}.`);
+      logger.info(`[EmbeddingGenerationService] Successfully generated and saved enhanced embedding for thought ${thought.thought_bubble_id}.`);
 
     } catch (error) {
       logger.error(`[EmbeddingGenerationService] Failed to process thought ${thought.thought_bubble_id}:`, error);
