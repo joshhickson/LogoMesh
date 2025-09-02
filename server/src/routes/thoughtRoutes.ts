@@ -44,6 +44,26 @@ router.get('/', async (req: Request, res: Response, _next: NextFunction): Promis
   }
 });
 
+// GET /api/v1/thoughts/clusters - Get all thoughts clustered by tag
+router.get('/clusters', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+  try {
+    const ideaManager = req.app.locals.ideaManager as IdeaManager;
+    const meshGraphEngine = req.app.locals.meshGraphEngine as MeshGraphEngine;
+    const userId = req.user?.id;
+    if (!userId) {
+      logger.error('User ID not found in authenticated request for GET /clusters');
+      res.status(401).json({ error: 'Authentication error: User ID missing' });
+      return;
+    }
+    const thoughts = await ideaManager.getThoughts(userId);
+    const clusters = await meshGraphEngine.clusterThoughtsByTag(thoughts, { userId });
+    res.json(clusters);
+  } catch (error) {
+    logger.error('Error fetching thought clusters:', error);
+    res.status(500).json({ error: 'Failed to fetch thought clusters' });
+  }
+});
+
 // POST /api/v1/thoughts - Create new thought
 router.post('/', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   try {

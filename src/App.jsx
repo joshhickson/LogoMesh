@@ -10,8 +10,8 @@ import './App.css';
 
 function App() {
   const [thoughts, setThoughts] = useState([]);
-  const [relatedLinks, setRelatedLinks] = useState([]);
   const [selectedThought, setSelectedThought] = useState(null);
+  const [clusters, setClusters] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showDevAssistant, setShowDevAssistant] = useState(false);
   const [user, setUser] = useState(null);
@@ -21,19 +21,6 @@ function App() {
   useEffect(() => {
     initializeApp();
   }, []);
-
-  useEffect(() => {
-    if (selectedThought) {
-      apiService.getRelatedThoughts(selectedThought.thought_bubble_id).then(links => {
-        setRelatedLinks(links);
-      }).catch(error => {
-        console.error("Failed to fetch related thoughts:", error);
-        setRelatedLinks([]);
-      });
-    } else {
-      setRelatedLinks([]);
-    }
-  }, [selectedThought]);
 
   const initializeApp = async () => {
     setIsLoading(true);
@@ -82,6 +69,16 @@ function App() {
       setSelectedThought({ ...selectedThought, ...updatedThought });
     } catch (error) {
       console.error("Failed to update thought:", error);
+    }
+  };
+
+  const handleClusterThoughts = async () => {
+    try {
+      const fetchedClusters = await apiService.fetchClusters();
+      setClusters(fetchedClusters);
+    } catch (error) {
+      console.error("Failed to fetch clusters:", error);
+      setClusters({});
     }
   };
 
@@ -140,10 +137,15 @@ function App() {
         setActiveFilters={setActiveFilters} // Pass setActiveFilters
       />
       <div className="main-content">
+        <button
+          onClick={handleClusterThoughts}
+          className="absolute top-20 right-4 z-10 bg-purple-600 text-white py-2 px-4 rounded shadow-lg hover:bg-purple-700"
+        >
+          Cluster Thoughts
+        </button>
         <Canvas 
           thoughts={thoughts}
-          relatedLinks={relatedLinks}
-          selectedThought={selectedThought}
+          clusters={clusters}
           onThoughtSelect={setSelectedThought}
           activeFilters={activeFilters} // Pass activeFilters to Canvas
         />

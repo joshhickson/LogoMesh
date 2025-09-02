@@ -4,6 +4,11 @@ import { ContextualEmbeddingInterface } from '../../contracts/embeddings/embeddi
 import { Thought } from '../../contracts/entities';
 import { logger } from '../utils/logger';
 
+interface ThoughtChangeEvent {
+  thought: Thought;
+  userId: string;
+}
+
 /**
  * A service that listens for thought events and automatically
  * generates and saves embeddings for them.
@@ -27,8 +32,8 @@ export class EmbeddingGenerationService {
    * Starts the service by subscribing to relevant events.
    */
   public start(): void {
-    this.eventBus.on<Thought>('thought.created', this.handleThoughtChange.bind(this));
-    this.eventBus.on<Thought>('thought.updated', this.handleThoughtChange.bind(this));
+    this.eventBus.on<ThoughtChangeEvent>('thought.created', this.handleThoughtChange.bind(this));
+    this.eventBus.on<ThoughtChangeEvent>('thought.updated', this.handleThoughtChange.bind(this));
     logger.info('[EmbeddingGenerationService] Started and listening for thought events.');
   }
 
@@ -36,29 +41,26 @@ export class EmbeddingGenerationService {
    * Stops the service by unsubscribing from events.
    */
   public stop(): void {
-    this.eventBus.off<Thought>('thought.created', this.handleThoughtChange.bind(this));
-    this.eventBus.off<Thought>('thought.updated', this.handleThoughtChange.bind(this));
+    this.eventBus.off<ThoughtChangeEvent>('thought.created', this.handleThoughtChange.bind(this));
+    this.eventBus.off<ThoughtChangeEvent>('thought.updated', this.handleThoughtChange.bind(this));
     logger.info('[EmbeddingGenerationService] Stopped.');
   }
 
   /**
    * Handles a thought creation or update event by generating a comprehensive
    * embedding from the thought's title, description, and all its segments.
-   * @param thought The thought that was created or updated.
+   * @param data The event payload containing the thought and userId.
    */
-  private async handleThoughtChange(thought: Thought): Promise<void> {
-    if (!thought || !thought.thought_bubble_id) {
-      logger.warn('[EmbeddingGenerationService] Received an invalid thought event.', { thought });
+  private async handleThoughtChange(data: ThoughtChangeEvent): Promise<void> {
+    const { thought, userId } = data;
+    if (!thought || !thought.thought_bubble_id || !userId) {
+      logger.warn('[EmbeddingGenerationService] Received an invalid thought event payload.', { data });
       return;
     }
 
-    logger.info(`[EmbeddingGenerationService] Processing thought ${thought.thought_bubble_id} for embedding generation.`);
+    logger.info(`[EmbeddingGenerationService] Processing thought ${thought.thought_bubble_id} for embedding generation for user ${userId}.`);
 
     try {
-      // We need the user ID, which is not in the event payload. Using a placeholder.
-      // TODO: Pass userId in the event payload from IdeaManager.
-      const userId = 'anonymous';
-
       // 1. Fetch all segments for the thought
       const segments = await this.storage.getSegmentsForThought(thought.thought_bubble_id, userId);
 

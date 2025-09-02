@@ -22,10 +22,10 @@ export class IdeaManager {
     return this.storageAdapter.getThoughtById(id, userId); // Pass userId
   }
 
-  async createThought(thoughtData: NewThoughtData, userId?: string): Promise<Thought> {
+  async createThought(thoughtData: NewThoughtData, userId = 'anonymous'): Promise<Thought> {
     logger.info(`[IdeaManager] Creating thought`, thoughtData);
     const newThought = await this.storageAdapter.createThought(thoughtData, userId);
-    this.eventBus.emit('thought.created', newThought);
+    this.eventBus.emit('thought.created', { thought: newThought, userId });
     return newThought;
   }
 
@@ -37,7 +37,7 @@ export class IdeaManager {
   async addThought(userId: string, thoughtData: NewThoughtData): Promise<Thought> {
     logger.info(`[IdeaManager] Adding thought`, thoughtData);
     const newThought = await this.storageAdapter.createThought(thoughtData, userId);
-    this.eventBus.emit('thought.created', newThought);
+    this.eventBus.emit('thought.created', { thought: newThought, userId });
     return newThought;
   }
 
@@ -45,7 +45,7 @@ export class IdeaManager {
     logger.info(`[IdeaManager] Updating thought ID: ${id} for user: ${userId}`, updates);
     const updatedThought = await this.storageAdapter.updateThought(id, updates, userId);
     if (updatedThought) {
-      this.eventBus.emit('thought.updated', updatedThought);
+      this.eventBus.emit('thought.updated', { thought: updatedThought, userId });
     }
     return updatedThought;
   }

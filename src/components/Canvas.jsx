@@ -10,6 +10,7 @@ cytoscape.use(coseBilkent);
 const Canvas = ({
   thoughts = [],
   relatedLinks = [],
+  clusters = {},
   selectedThought,
   onThoughtSelect: setSelectedThought,
   filteredThoughtIds = [],
@@ -165,53 +166,38 @@ const Canvas = ({
 
   useEffect(() => {
     if (cy && thoughts.length > 0) {
-      // Clear existing elements
       cy.elements().remove();
 
-      // Group thoughts by tags for clustering
-      const tagGroups = {};
-      thoughts.forEach(thought => {
-        if (thought.tags && thought.tags.length > 0) {
-          thought.tags.forEach(tag => {
-            if (!tagGroups[tag.name]) {
-              tagGroups[tag.name] = [];
-            }
-            tagGroups[tag.name].push(thought);
-          });
-        }
-      });
-
       const elements = [];
+      const thoughtIdToClusterName = {};
 
-      // Create cluster nodes for tags with multiple thoughts
-      Object.entries(tagGroups).forEach(([tagName, taggedThoughts]) => {
-        if (taggedThoughts.length > 1) {
-          elements.push({
-            data: {
-              id: `cluster-${tagName}`,
-              label: `${tagName} (${taggedThoughts.length})`,
-              type: 'cluster'
-            }
-          });
-        }
+      // Create cluster parent nodes from the API data
+      Object.entries(clusters).forEach(([clusterName, thoughtsInCluster]) => {
+        elements.push({
+          data: {
+            id: `cluster-${clusterName}`,
+            label: `${clusterName} (${thoughtsInCluster.length})`,
+            type: 'cluster',
+          },
+        });
+        thoughtsInCluster.forEach(thought => {
+          thoughtIdToClusterName[thought.thought_bubble_id] = clusterName;
+        });
       });
 
       // Convert thoughts to cytoscape elements
       thoughts.forEach(thought => {
-        // Main thought node
+        const clusterName = thoughtIdToClusterName[thought.thought_bubble_id];
         elements.push({
           data: {
-            id: thought.id,
+            id: thought.thought_bubble_id,
             label: thought.title || 'Untitled',
             color: thought.color || '#3b82f6',
             type: 'thought',
             thought: thought,
-            parent: thought.tags && thought.tags.length > 0 && 
-                   tagGroups[thought.tags[0].name] && 
-                   tagGroups[thought.tags[0].name].length > 1 ? 
-                   `cluster-${thought.tags[0].name}` : undefined
+            parent: clusterName ? `cluster-${clusterName}` : undefined,
           },
-          position: thought.position || { x: Math.random() * 400, y: Math.random() * 400 }
+          position: thought.position || { x: Math.random() * 400, y: Math.random() * 400 },
         });
 
         // Add segment nodes if segments exist
@@ -408,7 +394,7 @@ const Canvas = ({
 
       cy.layout(layoutOptions[layoutMode] || layoutOptions.fcose).run();
     }
-  }, [cy, thoughts, relatedLinks, filteredThoughtIds, setSelectedThought, onUpdateThought, layoutMode]);
+  }, [cy, thoughts, relatedLinks, clusters, filteredThoughtIds, setSelectedThought, onUpdateThought, layoutMode]);
 
   const handleLayoutChange = (newLayout) => {
     setLayoutMode(newLayout);
