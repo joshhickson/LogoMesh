@@ -51,9 +51,11 @@ app.use((req: Request, _res: Response, next: NextFunction) => { // res -> _res
 //   return {};
 // }
 
-import { PostgresAdapter } from './db/postgresAdapter'; // Import adapter
-import { IdeaManager } from '../../core/IdeaManager'; // Import IdeaManager
-import { PortabilityService } from '../../core/services/portabilityService'; // Import PortabilityService
+import { PostgresAdapter } from './db/postgresAdapter';
+import { IdeaManager } from '../../core/IdeaManager';
+import { PortabilityService } from '../../core/services/portabilityService';
+import { MeshGraphEngine } from '../../core/services/meshGraphEngine';
+import { OllamaEmbeddingProvider } from '../../core/embeddings/OllamaEmbeddingProvider';
 
 // Initialize TaskEngine with EventBus
 const eventBus = new EventBus(); // Keep eventBus global for now if taskEngine init is outside startServer
@@ -146,8 +148,17 @@ async function startServer() {
   try {
     // Initialize Storage Adapter
     const storageAdapter = new PostgresAdapter();
-    await storageAdapter.initialize(); // Initialize the database connection and schema
+    await storageAdapter.initialize();
     logger.info('Storage adapter initialized successfully.');
+
+    // Initialize Embedding Provider
+    const embeddingProvider = new OllamaEmbeddingProvider('nomic-embed-text');
+    logger.info('Embedding provider initialized.');
+
+    // Initialize MeshGraphEngine with dependencies
+    const meshGraphEngine = new MeshGraphEngine(storageAdapter, embeddingProvider);
+    app.locals.meshGraphEngine = meshGraphEngine;
+    logger.info('MeshGraphEngine initialized and attached to app.locals.');
 
     // Initialize IdeaManager with the initialized adapter
     const ideaManager = new IdeaManager(storageAdapter);
@@ -155,17 +166,13 @@ async function startServer() {
     logger.info('IdeaManager initialized and attached to app.locals.');
 
     // Initialize PortabilityService
-    const portabilityService = new PortabilityService(storageAdapter); // Assuming it takes a StorageAdapter
+    const portabilityService = new PortabilityService(storageAdapter);
     app.locals.portabilityService = portabilityService;
     logger.info('PortabilityService initialized and attached to app.locals.');
 
-    // Initialize TaskEngine (if its init is async or depends on other async services)
-    // For now, assuming initializeTaskEngine is synchronous or self-contained for its dependencies
+    // Initialize TaskEngine
     initializeTaskEngine(eventBus);
-    app.locals.eventBus = eventBus; // Make EventBus available if needed by routes directly
-
-    // Old setupServices can be removed or integrated if it did more
-    // await setupServices();
+    app.locals.eventBus = eventBus;
 
     app.listen(PORT, '0.0.0.0', () => {
       logger.info(`Server running on port ${PORT}`);

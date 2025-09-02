@@ -5,6 +5,7 @@ export interface Thought {
   thought_bubble_id: string;
   title: string;
   description?: string | null;
+  embedding?: number[];
   created_at: Date; // string -> Date
   updated_at: Date; // string -> Date
   color?: string | null;

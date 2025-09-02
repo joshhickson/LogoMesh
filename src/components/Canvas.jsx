@@ -1,5 +1,3 @@
-// TODO: This variable was flagged as unused by ESLint.
-// import React, { useEffect, useRef, useState } from 'react';
 import React, { useState, useEffect, useRef } from 'react';
 import cytoscape from 'cytoscape';
 import fcose from 'cytoscape-fcose';
@@ -9,11 +7,11 @@ import coseBilkent from 'cytoscape-cose-bilkent';
 cytoscape.use(fcose);
 cytoscape.use(coseBilkent);
 
-const Canvas = ({ 
-  thoughts = [], 
-  // TODO: This variable was flagged as unused by ESLint.
-  // selectedThought,
-  setSelectedThought,
+const Canvas = ({
+  thoughts = [],
+  relatedLinks = [],
+  selectedThought,
+  onThoughtSelect: setSelectedThought,
   filteredThoughtIds = [],
   onUpdateThought
 }) => {
@@ -126,6 +124,15 @@ const Canvas = ({
               'line-color': '#10b981',
               'target-arrow-color': '#10b981',
               'curve-style': 'unbundled-bezier'
+            }
+          },
+          {
+            selector: 'edge[type="semantic"]',
+            style: {
+              'line-color': '#8b5cf6',
+              'target-arrow-color': '#8b5cf6',
+              'line-style': 'dotted',
+              'width': 'mapData(strength, 0.7, 1, 1, 4)',
             }
           }
         ],
@@ -247,7 +254,7 @@ const Canvas = ({
             )) {
               elements.push({
                 data: {
-                  id: `${thought1.id}-to-${thought2.id}`,
+                  id: `related-${thought1.id}-to-${thought2.id}`,
                   source: thought1.id,
                   target: thought2.id,
                   type: 'related',
@@ -258,6 +265,29 @@ const Canvas = ({
           }
         });
       });
+
+      // Add AI-generated semantic links
+      if (selectedThought && relatedLinks && relatedLinks.length > 0) {
+        relatedLinks.forEach(link => {
+          // Ensure the edge doesn't already exist from the tag-based relationships
+          const edgeExists = elements.some(el =>
+            (el.data.source === selectedThought.thought_bubble_id && el.data.target === link.thoughtId) ||
+            (el.data.source === link.thoughtId && el.data.target === selectedThought.thought_bubble_id)
+          );
+
+          if (!edgeExists) {
+            elements.push({
+              data: {
+                id: `semantic-${selectedThought.thought_bubble_id}-to-${link.thoughtId}`,
+                source: selectedThought.thought_bubble_id,
+                target: link.thoughtId,
+                type: 'semantic',
+                strength: link.strength
+              }
+            });
+          }
+        });
+      }
 
       // Add elements to cytoscape
       cy.add(elements);
@@ -378,7 +408,7 @@ const Canvas = ({
 
       cy.layout(layoutOptions[layoutMode] || layoutOptions.fcose).run();
     }
-  }, [cy, thoughts, filteredThoughtIds, setSelectedThought, onUpdateThought, layoutMode]);
+  }, [cy, thoughts, relatedLinks, filteredThoughtIds, setSelectedThought, onUpdateThought, layoutMode]);
 
   const handleLayoutChange = (newLayout) => {
     setLayoutMode(newLayout);

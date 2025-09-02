@@ -10,6 +10,7 @@ import './App.css';
 
 function App() {
   const [thoughts, setThoughts] = useState([]);
+  const [relatedLinks, setRelatedLinks] = useState([]);
   const [selectedThought, setSelectedThought] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showDevAssistant, setShowDevAssistant] = useState(false);
@@ -20,6 +21,19 @@ function App() {
   useEffect(() => {
     initializeApp();
   }, []);
+
+  useEffect(() => {
+    if (selectedThought) {
+      apiService.getRelatedThoughts(selectedThought.thought_bubble_id).then(links => {
+        setRelatedLinks(links);
+      }).catch(error => {
+        console.error("Failed to fetch related thoughts:", error);
+        setRelatedLinks([]);
+      });
+    } else {
+      setRelatedLinks([]);
+    }
+  }, [selectedThought]);
 
   const initializeApp = async () => {
     setIsLoading(true);
@@ -128,6 +142,8 @@ function App() {
       <div className="main-content">
         <Canvas 
           thoughts={thoughts}
+          relatedLinks={relatedLinks}
+          selectedThought={selectedThought}
           onThoughtSelect={setSelectedThought}
           activeFilters={activeFilters} // Pass activeFilters to Canvas
         />

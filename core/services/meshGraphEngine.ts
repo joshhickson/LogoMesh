@@ -1,14 +1,14 @@
-import { Thought } from '../../contracts/entities'; // Will be used
+import { Thought } from '../../contracts/entities';
+import { StorageAdapter } from '../../contracts/storageAdapter';
+import { ContextualEmbeddingInterface } from '../../contracts/embeddings/embeddingInterface';
 import { logger } from '../utils/logger';
 
 // --- Specific Types for MeshGraphEngine ---
 export interface RelatedThoughtLink {
   thoughtId: string;
-  relationshipType: string; // e.g., 'semantic_similarity', 'conceptual_cluster', 'explicit_link'
-  strength: number;         // e.g., similarity score, link weight
-  depth: number;            // Traversal depth at which this link was found
-  // Potentially add the related Thought object itself if needed directly
-  // thought?: Thought;
+  relationshipType: 'semantic_similarity' | 'explicit_link' | 'conceptual_cluster';
+  strength: number;
+  depth: number;
 }
 
 export interface SemanticPath {
@@ -33,74 +33,67 @@ export interface SemanticBridge {
 }
 
 export class MeshGraphEngine {
-  private _weightThreshold = 0.3; // Prefixed
+  private storage: StorageAdapter;
+  private embeddingProvider: ContextualEmbeddingInterface;
+  private _weightThreshold = 0.7; // Threshold for considering a thought "related"
 
-  /*
-  async getRelatedThoughts(thoughtId: string, maxResults: number = 10): Promise<Thought[]> {
-    try {
-      logger.info(`[MeshGraphEngine Stub] Getting related thoughts for ${thoughtId}`);
-
-      // Basic implementation: find thoughts with shared tags
-      const targetThought = await this.storage.getThoughtById(thoughtId);
-      if (!targetThought) {
-        return [];
-      }
-
-      const allThoughts = await this.storage.getAllThoughts();
-      const relatedThoughts = allThoughts
-        .filter(thought => 
-          thought.thought_bubble_id !== thoughtId &&
-          thought.tags?.some(tag => targetThought.tags?.includes(tag))
-        )
-        .slice(0, maxResults);
-
-      return relatedThoughts;
-    } catch (error) {
-      logger.error('[MeshGraphEngine] Error getting related thoughts:', error);
-      return [];
-    }
+  constructor(storage: StorageAdapter, embeddingProvider: ContextualEmbeddingInterface) {
+    this.storage = storage;
+    this.embeddingProvider = embeddingProvider;
+    logger.info('[MeshGraphEngine] Initialized with storage and embedding provider');
   }
-  */
 
   /**
-   * Get related thoughts for a given thought
-   * Enhanced stub implementation for CCE semantic traversal
+   * Get related thoughts for a given thought based on semantic similarity.
+   * This implementation now delegates the heavy lifting of similarity search to the storage adapter.
    */
-  async getRelatedThoughts( // Keeping this version
-    thoughtId: string, 
-    options?: { maxDepth?: number; relationshipTypes?: string[]; semanticThreshold?: number }
-  ): Promise<RelatedThoughtLink[]> { // Changed return type from any[]
-    logger.debug(`[MeshGraphEngine] Getting related thoughts for ${thoughtId} with options:`, options);
+  async getRelatedThoughts(
+    thoughtId: string,
+    options?: { maxResults?: number; semanticThreshold?: number; userId?: string }
+  ): Promise<RelatedThoughtLink[]> {
+    logger.debug(`[MeshGraphEngine] Getting related thoughts for ${thoughtId}`);
+    const { maxResults = 10, semanticThreshold = this._weightThreshold, userId = 'anonymous' } = options || {};
 
-    // Mock related thoughts based on semantic similarity
-    const mockRelated: RelatedThoughtLink[] = [ // Typed the mock data
-      {
-        thoughtId: `related-${Math.random().toString(36).substr(2, 6)}`,
-        relationshipType: 'semantic_similarity',
-        strength: Math.random() * 0.4 + 0.6, // 0.6-1.0
-        depth: 1
-      },
-      {
-        thoughtId: `related-${Math.random().toString(36).substr(2, 6)}`,
-        relationshipType: 'conceptual_cluster',
-        strength: Math.random() * 0.3 + 0.5, // 0.5-0.8
-        depth: 2
-      }
-    ];
-
-    // Apply depth filtering
-    if (options?.maxDepth !== undefined) { // Check for undefined explicitly
-      const maxDepth = options.maxDepth;
-      return mockRelated.filter(rel => rel.depth <= maxDepth);
+    const targetThought = await this.storage.getThoughtById(thoughtId, userId);
+    if (!targetThought) {
+      logger.warn(`[MeshGraphEngine] Target thought ${thoughtId} not found.`);
+      return [];
     }
 
-    // Apply semantic threshold filtering
-    if (options?.semanticThreshold !== undefined) { // Check for undefined explicitly
-      const semanticThreshold = options.semanticThreshold;
-      return mockRelated.filter(rel => rel.strength >= semanticThreshold);
+    // Step 1: Ensure the target thought has an embedding.
+    let targetVector = targetThought.embedding;
+    if (!targetVector && targetThought.content) {
+      logger.info(`[MeshGraphEngine] Generating and saving embedding for target thought ${thoughtId}...`);
+      targetVector = await this.embeddingProvider.toVector(targetThought.content);
+      await this.storage.updateThought(thoughtId, { embedding: targetVector }, userId);
     }
 
-    return mockRelated;
+    if (!targetVector) {
+      logger.warn(`[MeshGraphEngine] Cannot find or generate embedding for thought ${thoughtId}.`);
+      return [];
+    }
+
+    // Step 2: Use the storage adapter to find similar thoughts.
+    logger.info(`[MeshGraphEngine] Finding thoughts similar to ${thoughtId} in the database...`);
+    const similarThoughts = await this.storage.findSimilarThoughts(targetVector, maxResults + 1, userId);
+
+    // Step 3: Format the results.
+    const relatedLinks: RelatedThoughtLink[] = similarThoughts
+      .filter(thought => thought.thought_bubble_id !== thoughtId) // Exclude the thought itself
+      .map(thought => {
+        const similarity = thought.embedding ? this.embeddingProvider.getSimilarity(targetVector!, thought.embedding) : 0;
+        return {
+          thoughtId: thought.thought_bubble_id,
+          relationshipType: 'semantic_similarity' as const,
+          strength: similarity,
+          depth: 1,
+        };
+      })
+      .filter(link => link.strength >= semanticThreshold)
+      .slice(0, maxResults);
+
+    logger.info(`[MeshGraphEngine] Found ${relatedLinks.length} related thoughts for ${thoughtId}`);
+    return relatedLinks;
   }
 
   /*

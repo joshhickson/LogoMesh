@@ -72,6 +72,8 @@ router.post('/', async (req: Request, res: Response, _next: NextFunction): Promi
   }
 });
 
+import { MeshGraphEngine } from '../../../core/services/meshGraphEngine';
+
 // GET /api/v1/thoughts/:thoughtId - Get specific thought
 router.get('/:thoughtId', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   try {
@@ -96,6 +98,27 @@ router.get('/:thoughtId', async (req: Request, res: Response, _next: NextFunctio
     logger.error('Error fetching thought:', error);
     // next(error);
     res.status(500).json({ error: 'Failed to fetch thought' });
+  }
+});
+
+// GET /api/v1/thoughts/:thoughtId/related - Get related thoughts
+router.get('/:thoughtId/related', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+  try {
+    const meshGraphEngine = req.app.locals.meshGraphEngine as MeshGraphEngine;
+    const { thoughtId } = req.params;
+    const userId = req.user?.id;
+
+    if (!userId) {
+      logger.error('User ID not found in authenticated request for GET /thoughts/:thoughtId/related');
+      res.status(401).json({ error: 'Authentication error: User ID missing' });
+      return;
+    }
+
+    const relatedThoughts = await meshGraphEngine.getRelatedThoughts(thoughtId, { userId });
+    res.json(relatedThoughts);
+  } catch (error) {
+    logger.error('Error fetching related thoughts:', error);
+    res.status(500).json({ error: 'Failed to fetch related thoughts' });
   }
 });
 
