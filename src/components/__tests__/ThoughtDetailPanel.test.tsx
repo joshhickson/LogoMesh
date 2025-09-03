@@ -1,12 +1,17 @@
+import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { vi } from 'vitest';
-import ThoughtDetailPanel from '../ThoughtDetailPanel';
+import { vi, describe, test, expect } from 'vitest';
+import ThoughtDetailPanel from '../ThoughtDetailPanel.tsx';
 
 describe('ThoughtDetailPanel', () => {
   const mockThought = {
-    id: '1',
+    thought_bubble_id: '1',
     title: 'Test Thought',
-    content: 'Test content'
+    description: 'Test content',
+    created_at: new Date(),
+    updated_at: new Date(),
+    tags: [],
+    segments: [],
   };
 
   const mockProps = {
@@ -18,8 +23,7 @@ describe('ThoughtDetailPanel', () => {
   test('renders thought details', () => {
     render(<ThoughtDetailPanel {...mockProps} />);
 
-    expect(screen.getByText('Test Thought')).toBeInTheDocument();
-    // Look for content in the paragraph element specifically
+    expect(screen.getByDisplayValue('Test Thought')).toBeInTheDocument();
     expect(screen.getByDisplayValue('Test content')).toBeInTheDocument();
   });
 

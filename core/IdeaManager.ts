@@ -1,17 +1,20 @@
 // Placeholder IdeaManager
 // TODO: Implement full IdeaManager functionality
 
-import { logger } from './utils/logger'; // Assuming logger is in core/utils
-import { PostgresAdapter } from '../server/src/db/postgresAdapter';
-import { StorageAdapter, NewThoughtData, NewSegmentData } from '../contracts/storageAdapter'; // Import New... types
-import { Thought, Segment } from '../contracts/entities'; // Assuming entities are in contracts
+import { logger } from './utils/logger';
+import { StorageAdapter, NewThoughtData, NewSegmentData } from '../contracts/storageAdapter';
+import { Thought, Segment } from '../contracts/entities';
+import { EventBus } from './services/eventBus';
 
 
 export class IdeaManager {
   private storageAdapter: StorageAdapter;
-  constructor(storageAdapter: StorageAdapter = new PostgresAdapter()) {
+  private eventBus: EventBus;
+
+  constructor(storageAdapter: StorageAdapter, eventBus: EventBus) {
     this.storageAdapter = storageAdapter;
-    logger.info('[IdeaManager] Initialized (Placeholder)');
+    this.eventBus = eventBus;
+    logger.info('[IdeaManager] Initialized');
   }
 
   async getThoughtById(id: string, userId: string): Promise<Thought | null> {
@@ -19,9 +22,11 @@ export class IdeaManager {
     return this.storageAdapter.getThoughtById(id, userId); // Pass userId
   }
 
-  async createThought(thoughtData: NewThoughtData, userId?: string): Promise<Thought> { // Corrected type, added optional userId
-    logger.info(`[IdeaManager] Creating thought (Placeholder)`, thoughtData);
-    return this.storageAdapter.createThought(thoughtData, userId);
+  async createThought(thoughtData: NewThoughtData, userId = 'anonymous'): Promise<Thought> {
+    logger.info(`[IdeaManager] Creating thought`, thoughtData);
+    const newThought = await this.storageAdapter.createThought(thoughtData, userId);
+    this.eventBus.emit('thought.created', { thought: newThought, userId });
+    return newThought;
   }
 
   async getThoughts(userId = 'anonymous'): Promise<Thought[]> {
@@ -30,13 +35,19 @@ export class IdeaManager {
   }
 
   async addThought(userId: string, thoughtData: NewThoughtData): Promise<Thought> {
-    logger.info(`[IdeaManager] Adding thought (Placeholder)`, thoughtData);
-    return this.storageAdapter.createThought(thoughtData, userId);
+    logger.info(`[IdeaManager] Adding thought`, thoughtData);
+    const newThought = await this.storageAdapter.createThought(thoughtData, userId);
+    this.eventBus.emit('thought.created', { thought: newThought, userId });
+    return newThought;
   }
 
   async updateThought(userId: string, id: string, updates: Partial<NewThoughtData>): Promise<Thought | null> {
-    logger.info(`[IdeaManager] Updating thought ID: ${id} for user: ${userId} (Placeholder)`, updates);
-    return this.storageAdapter.updateThought(id, updates, userId);
+    logger.info(`[IdeaManager] Updating thought ID: ${id} for user: ${userId}`, updates);
+    const updatedThought = await this.storageAdapter.updateThought(id, updates, userId);
+    if (updatedThought) {
+      this.eventBus.emit('thought.updated', { thought: updatedThought, userId });
+    }
+    return updatedThought;
   }
 
   async deleteThought(userId: string, id: string): Promise<boolean> {

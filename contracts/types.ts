@@ -217,6 +217,7 @@ export interface PostgresThoughtRecord {
   user_id: string;
   title: string;
   description: string | null;
+  embedding: number[] | null;
   fields: Record<string, unknown>;
   metadata: Record<string, unknown>;
   created_at: Date;
