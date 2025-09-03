@@ -31,11 +31,14 @@ export class PostgresAdapter implements StorageAdapter {
     try {
       // Create tables if they don't exist
       await client.query(`
+        CREATE EXTENSION IF NOT EXISTS vector;
+
         CREATE TABLE IF NOT EXISTS thoughts (
           id VARCHAR(36) PRIMARY KEY,
           user_id VARCHAR(100) NOT NULL DEFAULT 'anonymous',
           title TEXT NOT NULL,
           description TEXT,
+          embedding VECTOR(768),
           fields JSONB DEFAULT '{}',
           metadata JSONB DEFAULT '{}',
           color TEXT,
@@ -84,18 +87,35 @@ export class PostgresAdapter implements StorageAdapter {
     }
   }
 
+  private dbRowToThought(dbRow: PostgresThoughtRecord): Thought {
+    return {
+      thought_bubble_id: dbRow.id,
+      title: dbRow.title,
+      description: dbRow.description,
+      embedding: dbRow.embedding || undefined,
+      created_at: dbRow.created_at,
+      updated_at: dbRow.updated_at,
+      color: dbRow.color || undefined,
+      position: (dbRow.position_x != null && dbRow.position_y != null) ? { x: dbRow.position_x, y: dbRow.position_y } : undefined,
+      fields: dbRow.fields as Record<string, unknown>,
+      metadata: dbRow.metadata as Record<string, unknown>,
+      tags: [], // Tags and segments are loaded separately
+      segments: [],
+    };
+  }
+
   async createThought(thoughtData: NewThoughtData, userId = 'anonymous'): Promise<Thought> {
     const client = await this.pool.connect();
     try {
-      // TODO: Handle thoughtData.tags in createThought - requires tag table and thought_tags linking table
       const result: QueryResult<PostgresThoughtRecord> = await client.query(
-        `INSERT INTO thoughts (id, user_id, title, description, fields, metadata, color, position_x, position_y)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
+        `INSERT INTO thoughts (id, user_id, title, description, embedding, fields, metadata, color, position_x, position_y)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
         [
           thoughtData.id || `thought_${Date.now()}`,
           userId,
           thoughtData.title,
-          thoughtData.description || null, // Use null for DB
+          thoughtData.description || null,
+          thoughtData.embedding ? `[${thoughtData.embedding.join(',')}]` : null,
           JSON.stringify(thoughtData.fields || {}),
           JSON.stringify(thoughtData.metadata || {}),
           thoughtData.color || null,
@@ -103,24 +123,7 @@ export class PostgresAdapter implements StorageAdapter {
           thoughtData.position?.y || null
         ]
       );
-      const dbRow = result.rows[0];
-      const thought: Thought = {
-        thought_bubble_id: dbRow.id,
-        title: dbRow.title,
-        created_at: dbRow.created_at,
-        updated_at: dbRow.updated_at,
-        tags: [],
-        segments: []
-      };
-      if (dbRow.description !== undefined && dbRow.description !== null) thought.description = dbRow.description;
-      if (dbRow.fields !== undefined) thought.fields = dbRow.fields as Record<string, unknown>;
-      if (dbRow.metadata !== undefined) thought.metadata = dbRow.metadata as Record<string, unknown>;
-      if (dbRow.color !== undefined && dbRow.color !== null) thought.color = dbRow.color;
-      if (dbRow.position_x !== undefined && dbRow.position_x !== null &&
-          dbRow.position_y !== undefined && dbRow.position_y !== null) {
-        thought.position = { x: dbRow.position_x, y: dbRow.position_y };
-      }
-      return thought;
+      return this.dbRowToThought(result.rows[0]);
     } finally {
       client.release();
     }
@@ -130,32 +133,11 @@ export class PostgresAdapter implements StorageAdapter {
     const client = await this.pool.connect();
     try {
       const result: QueryResult<PostgresThoughtRecord> = await client.query(
-        'SELECT * FROM thoughts WHERE id = $1 AND user_id = $2', 
+        'SELECT * FROM thoughts WHERE id = $1 AND user_id = $2',
         [id, userId]
       );
       if (result.rows.length === 0) return null;
-
-      const dbRow = result.rows[0];
-      // Parse JSON fields & map to Thought
-      const thought: Thought = {
-        thought_bubble_id: dbRow.id,
-        title: dbRow.title,
-        created_at: dbRow.created_at,
-        updated_at: dbRow.updated_at,
-        // segments will be populated by a separate call if needed by consumer
-        // For now, tags and segments are placeholders as per Thought entity.
-        tags: [],
-        segments: []
-      };
-      if (dbRow.description !== undefined && dbRow.description !== null) thought.description = dbRow.description;
-      if (dbRow.fields !== undefined) thought.fields = dbRow.fields as Record<string, unknown>;
-      if (dbRow.metadata !== undefined) thought.metadata = dbRow.metadata as Record<string, unknown>;
-      if (dbRow.color !== undefined && dbRow.color !== null) thought.color = dbRow.color;
-      if (dbRow.position_x !== undefined && dbRow.position_x !== null &&
-          dbRow.position_y !== undefined && dbRow.position_y !== null) {
-        thought.position = { x: dbRow.position_x, y: dbRow.position_y };
-      }
-      return thought;
+      return this.dbRowToThought(result.rows[0]);
     } finally {
       client.release();
     }
@@ -168,25 +150,7 @@ export class PostgresAdapter implements StorageAdapter {
         'SELECT * FROM thoughts WHERE user_id = $1 ORDER BY created_at DESC',
         [userId]
       );
-      return result.rows.map(dbRow => {
-        const thought: Thought = {
-          thought_bubble_id: dbRow.id,
-          title: dbRow.title,
-          created_at: dbRow.created_at,
-          updated_at: dbRow.updated_at,
-          tags: [],
-          segments: []
-        };
-        if (dbRow.description !== undefined && dbRow.description !== null) thought.description = dbRow.description;
-        if (dbRow.fields !== undefined) thought.fields = dbRow.fields as Record<string, unknown>;
-        if (dbRow.metadata !== undefined) thought.metadata = dbRow.metadata as Record<string, unknown>;
-        if (dbRow.color !== undefined && dbRow.color !== null) thought.color = dbRow.color;
-        if (dbRow.position_x !== undefined && dbRow.position_x !== null &&
-            dbRow.position_y !== undefined && dbRow.position_y !== null) {
-          thought.position = { x: dbRow.position_x, y: dbRow.position_y };
-        }
-        return thought;
-      });
+      return result.rows.map(this.dbRowToThought);
     } finally {
       client.release();
     }
@@ -195,8 +159,7 @@ export class PostgresAdapter implements StorageAdapter {
   async updateThought(id: string, thoughtData: Partial<NewThoughtData>, userId = 'anonymous'): Promise<Thought | null> {
     const client = await this.pool.connect();
     try {
-      // TODO: Handle updates.tags in updateThought - requires tag table and thought_tags linking table logic (delete old, insert new)
-      const updateFields = []; // Changed 'updates' to 'updateFields'
+      const updateFields = [];
       const values = [];
       let paramCount = 1;
 
@@ -208,13 +171,17 @@ export class PostgresAdapter implements StorageAdapter {
         updateFields.push(`description = $${paramCount++}`);
         values.push(thoughtData.description);
       }
+      if (thoughtData.embedding !== undefined) {
+        updateFields.push(`embedding = $${paramCount++}`);
+        values.push(thoughtData.embedding ? `[${thoughtData.embedding.join(',')}]` : null);
+      }
       if (thoughtData.fields !== undefined) {
         updateFields.push(`fields = $${paramCount++}`);
-        values.push(JSON.stringify(thoughtData.fields || {})); // Ensure not undefined
+        values.push(JSON.stringify(thoughtData.fields || {}));
       }
       if (thoughtData.metadata !== undefined) {
         updateFields.push(`metadata = $${paramCount++}`);
-        values.push(JSON.stringify(thoughtData.metadata || {})); // Ensure not undefined
+        values.push(JSON.stringify(thoughtData.metadata || {}));
       }
       if (thoughtData.color !== undefined) {
         updateFields.push(`color = $${paramCount++}`);
@@ -227,9 +194,13 @@ export class PostgresAdapter implements StorageAdapter {
         values.push(thoughtData.position.y);
       }
 
+      if (updateFields.length === 0) {
+        return this.getThoughtById(id, userId);
+      }
+
       updateFields.push(`updated_at = CURRENT_TIMESTAMP`);
-      values.push(id); // For WHERE id =
-      values.push(userId); // For WHERE user_id =
+      values.push(id);
+      values.push(userId);
 
       const result: QueryResult<PostgresThoughtRecord> = await client.query(
         `UPDATE thoughts SET ${updateFields.join(', ')} WHERE id = $${paramCount} AND user_id = $${paramCount + 1} RETURNING *`,
@@ -237,24 +208,21 @@ export class PostgresAdapter implements StorageAdapter {
       );
 
       if (result.rows.length === 0) return null;
-      const dbRow = result.rows[0];
-      const thought: Thought = {
-        thought_bubble_id: dbRow.id,
-        title: dbRow.title,
-        created_at: dbRow.created_at,
-        updated_at: dbRow.updated_at,
-        tags: [],
-        segments: []
-      };
-      if (dbRow.description !== undefined && dbRow.description !== null) thought.description = dbRow.description;
-      if (dbRow.fields !== undefined) thought.fields = dbRow.fields as Record<string, unknown>;
-      if (dbRow.metadata !== undefined) thought.metadata = dbRow.metadata as Record<string, unknown>;
-      if (dbRow.color !== undefined && dbRow.color !== null) thought.color = dbRow.color;
-      if (dbRow.position_x !== undefined && dbRow.position_x !== null &&
-          dbRow.position_y !== undefined && dbRow.position_y !== null) {
-        thought.position = { x: dbRow.position_x, y: dbRow.position_y };
-      }
-      return thought;
+      return this.dbRowToThought(result.rows[0]);
+    } finally {
+      client.release();
+    }
+  }
+
+  async findSimilarThoughts(embedding: number[], maxResults: number, userId = 'anonymous'): Promise<Thought[]> {
+    const client = await this.pool.connect();
+    try {
+      const embeddingString = `[${embedding.join(',')}]`;
+      const result: QueryResult<PostgresThoughtRecord> = await client.query(
+        `SELECT * FROM thoughts WHERE user_id = $1 ORDER BY embedding <=> $2 LIMIT $3`,
+        [userId, embeddingString, maxResults]
+      );
+      return result.rows.map(this.dbRowToThought);
     } finally {
       client.release();
     }

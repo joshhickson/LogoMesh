@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { newBubbleId } from '../utils/eventBus';
 import { VoiceInputManager } from '../utils/VoiceInputManager';
 import { ulid } from 'ulid';
+import { NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
+
+interface AddThoughtModalProps {
+  onSubmit: (thoughtData: NewThoughtData) => void;
+  onClose: () => void;
+}
 
 const defaultFieldOptions = [
   'Concept Type',
@@ -12,14 +17,14 @@ const defaultFieldOptions = [
   'Related Concepts',
 ];
 
-function AddThoughtModal({ createThought, onClose }) {
+function AddThoughtModal({ onSubmit, onClose }: AddThoughtModalProps) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState<string[]>([]);
   const [color, setColor] = useState('#f97316');
-  const [segments, setSegments] = useState([]);
+  const [segments, setSegments] = useState<Partial<NewSegmentData>[]>([]);
   const [isListening, setIsListening] = useState(false);
-  const voiceManagerRef = useRef(null);
+  const voiceManagerRef = useRef<VoiceInputManager | null>(null);
 
   useEffect(() => {
     voiceManagerRef.current = new VoiceInputManager(
@@ -87,13 +92,16 @@ function AddThoughtModal({ createThought, onClose }) {
     ]);
   };
 
-  const updateSegmentField = (segmentIndex, fieldName, fieldValue) => {
+  const updateSegmentField = (segmentIndex: number, fieldName: string, fieldValue: any) => {
     const updatedSegments = [...segments];
-    updatedSegments[segmentIndex].fields[fieldName] = fieldValue;
+    if (!updatedSegments[segmentIndex].fields) {
+      updatedSegments[segmentIndex].fields = {};
+    }
+    updatedSegments[segmentIndex].fields![fieldName] = fieldValue;
     setSegments(updatedSegments);
   };
 
-  const addCustomFieldToSegment = (segmentIndex) => {
+  const addCustomFieldToSegment = (segmentIndex: number) => {
     const fieldName = prompt('Enter custom field name:');
     if (!fieldName) return;
     updateSegmentField(segmentIndex, fieldName, '');
@@ -105,26 +113,28 @@ function AddThoughtModal({ createThought, onClose }) {
       return;
     }
 
-    const newThought = {
-      thought_bubble_id: newBubbleId(),
+    const newThought: NewThoughtData = {
+      id: ulid(),
       title,
       description,
-      created_at: new Date().toISOString(),
       color,
-      tags: tags.map((tag) => ({ name: tag, color })), //Adjusted tag handling
+      tags: tags.map((tag) => ({ name: tag, color })),
       position: { x: Math.random() * 400, y: Math.random() * 400 },
-      segments,
+      // The parent component will handle associating segments
     };
 
-    createThought(newThought);
-    onClose(); //Close the modal using onClose prop.
+    onSubmit(newThought);
+    onClose();
   };
 
-  const handleTagChange = (e) => {
-    const newTag = e.target.value;
-    if (newTag) {
-      setTags([...tags, newTag]);
-      e.target.value = '';
+  const handleTagChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const newTag = e.currentTarget.value.trim();
+      if (newTag && !tags.includes(newTag)) {
+        setTags([...tags, newTag]);
+      }
+      e.currentTarget.value = '';
+      e.preventDefault();
     }
   };
 
@@ -182,8 +192,8 @@ function AddThoughtModal({ createThought, onClose }) {
         <div>
           <input
             type="text"
-            placeholder="Add Tag"
-            onChange={handleTagChange}
+            placeholder="Add Tag (press Enter)"
+            onKeyDown={handleTagChange}
             className="w-full mb-2 p-2 border rounded"
           />
           <ul>
@@ -265,7 +275,7 @@ function AddThoughtModal({ createThought, onClose }) {
                     <label className="w-1/3 text-sm">{key}</label>
                     <input
                       type="text"
-                      value={value}
+                      value={value as string}
                       onChange={(e) =>
                         updateSegmentField(segIndex, key, e.target.value)
                       }
