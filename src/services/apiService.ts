@@ -90,14 +90,6 @@ export async function deleteThoughtApi(thoughtId: string) {
   });
 }
 
-export async function getRelatedThoughts(thoughtId: string) {
-  return apiRequest<any[]>(`/thoughts/${thoughtId}/related`);
-}
-
-export async function fetchClusters() {
-  return apiRequest<Record<string, any[]>>('/thoughts/clusters');
-}
-
 // Segment API functions
 export async function createSegmentApi(thoughtId: string, segmentData: NewSegmentData) {
   return apiRequest<Segment>(`/thoughts/${thoughtId}/segments`, {
@@ -194,8 +186,6 @@ export const apiService = {
   createThoughtApi,
   updateThoughtApi,
   deleteThoughtApi,
-  getRelatedThoughts,
-  fetchClusters,
   createThought,
   updateThought,
   deleteThought,
