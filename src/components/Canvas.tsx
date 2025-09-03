@@ -1,24 +1,36 @@
 import React, { useState, useEffect, useRef } from 'react';
-import cytoscape from 'cytoscape';
+import cytoscape, { Core, ElementDefinition } from 'cytoscape';
 import fcose from 'cytoscape-fcose';
 import coseBilkent from 'cytoscape-cose-bilkent';
+import { Thought } from '../../contracts/entities';
+import { RelatedThoughtLink } from '../../core/services/meshGraphEngine';
 
 // Register layout extensions
 cytoscape.use(fcose);
 cytoscape.use(coseBilkent);
 
-const Canvas = ({
+interface CanvasProps {
+  thoughts: Thought[];
+  relatedLinks: RelatedThoughtLink[];
+  clusters: Record<string, Thought[]>;
+  selectedThought: Thought | null;
+  onThoughtSelect: (thought: Thought | null) => void;
+  filteredThoughtIds: string[];
+  onUpdateThought: (id: string, thought: Partial<Thought>) => void;
+}
+
+const Canvas: React.FC<CanvasProps> = ({
   thoughts = [],
   relatedLinks = [],
   clusters = {},
   selectedThought,
   onThoughtSelect: setSelectedThought,
   filteredThoughtIds = [],
-  onUpdateThought
+  onUpdateThought,
 }) => {
-  const cyRef = useRef(null);
-  const [cy, setCy] = useState(null);
-  const [layoutMode, setLayoutMode] = useState('fcose');
+  const cyRef = useRef<HTMLDivElement>(null);
+  const [cy, setCy] = useState<Core | null>(null);
+  const [layoutMode, setLayoutMode] = useState<string>('fcose');
 
   useEffect(() => {
     if (cyRef.current && !cy) {
@@ -82,16 +94,14 @@ const Canvas = ({
             style: {
               'border-width': 4,
               'border-color': '#ef4444',
-              'box-shadow': '0 0 20px rgba(239, 68, 68, 0.5)'
-            }
+            } as cytoscape.Css.Node,
           },
           {
             selector: 'node.highlighted',
             style: {
               'border-width': 3,
               'border-color': '#10b981',
-              'box-shadow': '0 0 15px rgba(16, 185, 129, 0.5)'
-            }
+            } as cytoscape.Css.Node,
           },
           {
             selector: 'node.faded',
@@ -168,8 +178,8 @@ const Canvas = ({
     if (cy && thoughts.length > 0) {
       cy.elements().remove();
 
-      const elements = [];
-      const thoughtIdToClusterName = {};
+      const elements: ElementDefinition[] = [];
+      const thoughtIdToClusterName: Record<string, string> = {};
 
       // Create cluster parent nodes from the API data
       Object.entries(clusters).forEach(([clusterName, thoughtsInCluster]) => {
@@ -205,10 +215,10 @@ const Canvas = ({
           thought.segments.forEach((segment, index) => {
             elements.push({
               data: {
-                id: `${thought.id}-segment-${index}`,
+                id: segment.segment_id,
                 label: segment.title || `Segment ${index + 1}`,
                 type: 'segment',
-                parent: thought.id,
+                parent: thought.thought_bubble_id,
                 segment: segment
               }
             });
@@ -216,9 +226,9 @@ const Canvas = ({
             // Add edge from thought to segment
             elements.push({
               data: {
-                id: `${thought.id}-to-segment-${index}`,
-                source: thought.id,
-                target: `${thought.id}-segment-${index}`,
+                id: `${thought.thought_bubble_id}-to-${segment.segment_id}`,
+                source: thought.thought_bubble_id,
+                target: segment.segment_id,
                 type: 'contains'
               }
             });
@@ -229,20 +239,20 @@ const Canvas = ({
       // Add semantic relationships between thoughts based on shared tags
       thoughts.forEach(thought1 => {
         thoughts.forEach(thought2 => {
-          if (thought1.id !== thought2.id && thought1.tags && thought2.tags) {
+          if (thought1.thought_bubble_id !== thought2.thought_bubble_id && thought1.tags && thought2.tags) {
             const sharedTags = thought1.tags.filter(tag1 => 
-              thought2.tags.some(tag2 => tag1.name === tag2.name)
+              thought2.tags?.some(tag2 => tag1.name === tag2.name)
             );
 
             if (sharedTags.length > 0 && !elements.some(el => 
-              el.data.id === `${thought1.id}-to-${thought2.id}` ||
-              el.data.id === `${thought2.id}-to-${thought1.id}`
+              el.data.id === `related-${thought1.thought_bubble_id}-to-${thought2.thought_bubble_id}` ||
+              el.data.id === `related-${thought2.thought_bubble_id}-to-${thought1.thought_bubble_id}`
             )) {
               elements.push({
                 data: {
-                  id: `related-${thought1.id}-to-${thought2.id}`,
-                  source: thought1.id,
-                  target: thought2.id,
+                  id: `related-${thought1.thought_bubble_id}-to-${thought2.thought_bubble_id}`,
+                  source: thought1.thought_bubble_id,
+                  target: thought2.thought_bubble_id,
                   type: 'related',
                   sharedTags: sharedTags.length
                 }
@@ -338,22 +348,20 @@ const Canvas = ({
       // Save position changes
       cy.on('position', 'node[type="thought"]', (event) => {
         const node = event.target;
-        const thought = node.data('thought');
+        const thought = node.data('thought') as Thought;
         const position = node.position();
 
         if (onUpdateThought && thought) {
-          onUpdateThought({
-            ...thought,
+          onUpdateThought(thought.thought_bubble_id, {
             position: { x: position.x, y: position.y }
           });
         }
       });
 
       // Run layout
-      const layoutOptions = {
+      const layoutOptions: { [key: string]: cytoscape.LayoutOptions } = {
         fcose: {
           name: 'fcose',
-          quality: 'proof',
           randomize: false,
           animate: true,
           animationDuration: 1000,
@@ -371,8 +379,7 @@ const Canvas = ({
           tile: true
         },
         'cose-bilkent': {
-          name: 'cose-bilkent',
-          quality: 'proof',
+          name: 'cose-bilkent' as any, // Bypass strict type checking for extension
           randomize: false,
           animate: true,
           animationDuration: 1000,
@@ -396,7 +403,7 @@ const Canvas = ({
     }
   }, [cy, thoughts, relatedLinks, clusters, filteredThoughtIds, setSelectedThought, onUpdateThought, layoutMode]);
 
-  const handleLayoutChange = (newLayout) => {
+  const handleLayoutChange = (newLayout: string) => {
     setLayoutMode(newLayout);
   };
 

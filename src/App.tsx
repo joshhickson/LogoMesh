@@ -1,26 +1,45 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Canvas from './components/Canvas';
 import AddThoughtModal from './components/AddThoughtModal';
 import Sidebar from './components/Sidebar';
 import ThoughtDetailPanel from './components/ThoughtDetailPanel';
 import DevAssistantPanel from './components/DevAssistantPanel';
 import apiService from './services/apiService';
-import { authService } from './services/authService';
+import { authService, User } from './services/authService';
+import { Thought } from '../contracts/entities';
+import { NewThoughtData } from '../contracts/storageAdapter';
+import { RelatedThoughtLink } from '../core/services/meshGraphEngine';
 import './App.css';
 
-function App() {
-  const [thoughts, setThoughts] = useState([]);
-  const [selectedThought, setSelectedThought] = useState(null);
-  const [clusters, setClusters] = useState({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showDevAssistant, setShowDevAssistant] = useState(false);
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [activeFilters, setActiveFilters] = useState([]); // Add activeFilters state
+type Clusters = Record<string, Thought[]>;
+
+function App(): React.ReactElement {
+  const [thoughts, setThoughts] = useState<Thought[]>([]);
+  const [selectedThought, setSelectedThought] = useState<Thought | null>(null);
+  const [relatedLinks, setRelatedLinks] = useState<RelatedThoughtLink[]>([]);
+  const [clusters, setClusters] = useState<Clusters>({});
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [showDevAssistant, setShowDevAssistant] = useState<boolean>(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [activeFilters, setActiveFilters] = useState<string[]>([]);
 
   useEffect(() => {
     initializeApp();
   }, []);
+
+  useEffect(() => {
+    if (selectedThought) {
+      apiService.getRelatedThoughts(selectedThought.thought_bubble_id).then(links => {
+        setRelatedLinks(links);
+      }).catch(error => {
+        console.error("Failed to fetch related thoughts:", error);
+        setRelatedLinks([]);
+      });
+    } else {
+      setRelatedLinks([]);
+    }
+  }, [selectedThought]);
 
   const initializeApp = async () => {
     setIsLoading(true);
@@ -49,17 +68,19 @@ function App() {
     }
   };
 
-  const handleCreateThought = async (thoughtData) => {
+  const handleCreateThought = async (thoughtData: NewThoughtData) => {
     try {
       const newThought = await apiService.createThought(thoughtData);
-      setThoughts([...thoughts, newThought]);
+      if (newThought) {
+        setThoughts([...thoughts, newThought]);
+      }
       setIsModalOpen(false);
     } catch (error) {
       console.error("Failed to create thought:", error);
     }
   };
 
-  const handleUpdateThought = async (id, updatedThought) => {
+  const handleUpdateThought = async (id: string, updatedThought: Partial<Thought>) => {
     try {
       await apiService.updateThought(id, updatedThought);
       const updatedThoughts = thoughts.map(thought =>
@@ -131,10 +152,12 @@ function App() {
     <div className="app">
       <Sidebar 
         onCreateThought={() => setIsModalOpen(true)}
+        onClusterThoughts={handleClusterThoughts}
         onShowDevAssistant={() => setShowDevAssistant(true)}
         user={user}
-        thoughts={thoughts} // Pass thoughts to Sidebar
-        setActiveFilters={setActiveFilters} // Pass setActiveFilters
+        thoughts={thoughts}
+        setActiveFilters={setActiveFilters}
+        setSelectedThought={setSelectedThought}
       />
       <div className="main-content">
         <button
@@ -146,8 +169,11 @@ function App() {
         <Canvas 
           thoughts={thoughts}
           clusters={clusters}
+          relatedLinks={relatedLinks}
+          selectedThought={selectedThought}
           onThoughtSelect={setSelectedThought}
-          activeFilters={activeFilters} // Pass activeFilters to Canvas
+          onUpdateThought={handleUpdateThought}
+          filteredThoughtIds={activeFilters}
         />
         {selectedThought && (
           <ThoughtDetailPanel

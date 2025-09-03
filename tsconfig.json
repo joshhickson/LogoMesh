@@ -15,6 +15,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "types": ["vitest/globals", "node"],
     "downlevelIteration": true, // Add this
     "baseUrl": ".",
     "paths": {
@@ -24,13 +25,14 @@
     }
   },
   "include": [
-    "src/**/*",
-    "core/**/*",
-    "contracts/**/*",
-    "server/src/**/*",
-    "src/__tests__/**/*"
+    "src",
+    "core",
+    "contracts",
+    "server/src"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.test.ts",
+    "**/*.test.jsx"
   ]
 }
