@@ -1,0 +1,4 @@
+# Placeholder for Elasticsearch configuration.
+# Settings can be added here to be mounted into the container.
+# For now, primary configuration is handled via environment variables
+# in the docker-compose.yml file.
