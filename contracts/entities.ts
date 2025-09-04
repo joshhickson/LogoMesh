@@ -68,3 +68,39 @@ export interface NodePosition {
   x: number;
   y: number;
 }
+
+// =============================================================================
+// TYPES FOR BIBLICAL INGESTION ENGINE
+// =============================================================================
+
+export interface VersificationMap {
+  [scheme: string]: string; // e.g., { "eng_kjv": "Ps.23.1", "lxx": "Ps.22.1" }
+}
+
+export interface OriginalLanguageWord {
+  text: string;
+  transliteration: string;
+  lemma: string;
+  strongsNumber: string;
+  morphology: string; // e.g., "N-NSM"
+  // syntax?: any; // To be defined later
+  contextualVector?: number[];
+}
+
+export interface EnrichedVerse {
+  canonicalId: string; // UUID
+  osisRef: string; // e.g., "Gen.1.1"
+  versificationMap: VersificationMap;
+
+  texts: {
+    [versionAbbreviation: string]: string; // e.g., { "KJV": "The LORD is my shepherd...", "SBLGNT": "..." }
+  };
+
+  originalLanguageWords: OriginalLanguageWord[];
+
+  entities?: {
+    entityId: string;
+    type: 'person' | 'place' | 'concept';
+    wordIndices: number[];
+  }[];
+}
