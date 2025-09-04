@@ -13,9 +13,8 @@ const App: React.FC = () => {
   const [selectedThought, setSelectedThought] = useState<Thought | null>(null);
   const [user, setUser] = useState<User | null>({ id: '1', name: 'Dev' }); // Mock user
   const [showAddThoughtModal, setShowAddThoughtModal] = useState<boolean>(false);
-  const [clusters, setClusters] = useState<any[]>([]); // Define proper type later
+  const [clusters, setClusters] = useState<any[]>([]);
   const [activeCluster, setActiveCluster] = useState<string | null>(null);
-
 
   useEffect(() => {
     const fetchThoughts = async () => {
@@ -33,14 +32,15 @@ const App: React.FC = () => {
 
   const handleClusterThoughts = async () => {
       if (activeCluster) {
-          // If clusters are already active, toggle them off
           setActiveCluster(null);
           setClusters([]);
           return;
       }
       try {
-          const fetchedClusters = await apiService.getThoughtClusters(user!.id);
-          setClusters(fetchedClusters);
+          if(user) {
+            const fetchedClusters = await apiService.getThoughtClusters(user.id);
+            setClusters(fetchedClusters);
+          }
       } catch (error) {
           console.error('Error fetching thought clusters:', error);
       }
