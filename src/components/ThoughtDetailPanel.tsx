@@ -4,11 +4,11 @@ import { Thought } from '../../contracts/entities';
 interface ThoughtDetailPanelProps {
   thought: Thought;
   onClose: () => void;
-  onUpdate: (id: string, updatedThought: Partial<Thought>) => void;
+  onUpdate: (updatedThought: Thought) => void;
 }
 
 const ThoughtDetailPanel: React.FC<ThoughtDetailPanelProps> = ({ thought, onClose, onUpdate }) => {
-  const [editableThought, setEditableThought] = useState<Partial<Thought>>(thought);
+  const [editableThought, setEditableThought] = useState<Thought>(thought);
 
   useEffect(() => {
     setEditableThought(thought);
@@ -16,17 +16,17 @@ const ThoughtDetailPanel: React.FC<ThoughtDetailPanelProps> = ({ thought, onClos
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setEditableThought(prev => ({ ...prev, [name]: value }));
+    setEditableThought(prev => ({ ...prev, [name]: value } as Thought));
   };
 
   const handleSave = () => {
-    onUpdate(thought.thought_bubble_id, editableThought);
+    onUpdate(editableThought);
   };
 
   if (!thought) return null;
 
   return (
-    <div className="absolute top-0 right-0 h-full w-1/3 bg-white dark:bg-gray-800 shadow-lg p-4 overflow-y-auto">
+    <div className="absolute top-0 right-0 h-full w-1/3 bg-white dark:bg-gray-800 shadow-lg p-4 overflow-y-auto z-10">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-bold">Thought Details</h2>
         <button onClick={onClose} className="p-2">Close</button>
@@ -39,7 +39,7 @@ const ThoughtDetailPanel: React.FC<ThoughtDetailPanelProps> = ({ thought, onClos
             name="title"
             value={editableThought.title || ''}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           />
         </div>
         <div>
@@ -49,9 +49,10 @@ const ThoughtDetailPanel: React.FC<ThoughtDetailPanelProps> = ({ thought, onClos
             value={editableThought.description || ''}
             onChange={handleChange}
             rows={5}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           />
         </div>
+        {/* Add other fields as necessary */}
         <button
           onClick={handleSave}
           className="w-full bg-blue-500 text-white py-2 rounded"

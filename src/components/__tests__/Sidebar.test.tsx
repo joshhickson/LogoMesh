@@ -31,7 +31,11 @@ describe('Sidebar', () => {
     onCreateThought: vi.fn(),
     onClusterThoughts: vi.fn(),
     onShowDevAssistant: vi.fn(),
-    setSelectedThought: vi.fn(),
+    onSelectThought: vi.fn(),
+    activeThought: null,
+    clusters: [],
+    activeCluster: null,
+    onClusterClick: vi.fn(),
   };
 
   beforeEach(() => {
@@ -53,7 +57,7 @@ describe('Sidebar', () => {
 
   test('calls onClusterThoughts when "Toggle Cluster View" is clicked', () => {
     render(<Sidebar {...mockProps} />);
-    fireEvent.click(screen.getByText('Toggle Cluster View'));
+    fireEvent.click(screen.getByTestId('toggle-cluster-view-btn'));
     expect(mockProps.onClusterThoughts).toHaveBeenCalledTimes(1);
   });
 
@@ -63,9 +67,9 @@ describe('Sidebar', () => {
     expect(mockProps.onShowDevAssistant).toHaveBeenCalledTimes(1);
   });
 
-  test('calls setSelectedThought when a thought is clicked', () => {
+  test('calls onSelectThought when a thought is clicked', () => {
     render(<Sidebar {...mockProps} />);
     fireEvent.click(screen.getByText('AI Thought'));
-    expect(mockProps.setSelectedThought).toHaveBeenCalledWith(mockThoughts[1]);
+    expect(mockProps.onSelectThought).toHaveBeenCalledWith(mockThoughts[1]);
   });
 });

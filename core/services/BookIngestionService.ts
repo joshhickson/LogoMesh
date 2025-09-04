@@ -1,10 +1,7 @@
-import { EnrichedVerse } from '../../contracts/entities';
+import { EnrichedVerse, OriginalLanguageWord, VersificationMap } from '../../contracts/entities';
+import { BibleStorageAdapter } from '../../contracts/bibleStorageAdapter';
 import { logger } from '../utils/logger';
-
-// TODO: Define a proper storage adapter interface for the new Bible schema
-interface BibleStorageAdapter {
-  saveEnrichedVerse(verse: EnrichedVerse): Promise<void>;
-}
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * BookIngestionService is responsible for fetching biblical texts from various sources,
@@ -19,61 +16,106 @@ export class BookIngestionService {
   }
 
   /**
-   * The main public method to trigger the ingestion of a full chapter.
-   * @param book - The name of the book (e.g., "John").
-   * @param chapter - The chapter number.
+   * The main public method to trigger the ingestion of a full chapter's data.
+   * @param bookOsisRef - The OSIS reference for the book (e.g., "John").
+   * @param chapterNum - The chapter number.
+   * @param chapterData - A raw string containing the tab-separated interlinear data.
    */
-  public async ingestChapter(book: string, chapter: number): Promise<void> {
-    logger.info(`[BookIngestionService] Starting ingestion for ${book} ${chapter}`);
+  public async ingestChapter(bookOsisRef: string, chapterNum: number, chapterData: string): Promise<void> {
+    logger.info(`[BookIngestionService] Starting ingestion for ${bookOsisRef} ${chapterNum}`);
+    const parsedData = this._parseChapterData(chapterData);
 
-    // In a real implementation, we would fetch and process verse by verse
-    // or the whole chapter at once.
+    const enrichedVerses: EnrichedVerse[] = [];
 
-    // 1. Fetch KJV text from wldeh/bible-api
-    // const kjvChapter = await this.fetchKJVText(book, chapter);
+    for (const [verseNum, words] of parsedData.entries()) {
+      const canonicalId = uuidv4();
+      const osisRef = `${bookOsisRef}.${chapterNum}.${verseNum}`;
 
-    // 2. Fetch Interlinear data from downloaded Berean dataset
-    // const interlinearChapter = await this.fetchInterlinearData(book, chapter);
+      const originalLanguageWords: OriginalLanguageWord[] = words.map(word => ({
+        text: word.greekWord,
+        transliteration: word.translit,
+        lemma: '', // The raw data doesn't contain the lemma directly, would need a lexicon lookup.
+        strongsNumber: word.strongsNum,
+        morphology: word.parsing,
+      }));
 
-    // 3. Combine and enrich the data for each verse
-    // for (const verseNum in kjvChapter) {
-    //   const enrichedVerse = this.combineAndEnrichVerse(kjvChapter[verseNum], interlinearChapter[verseNum]);
-    //   await this.bibleStorage.saveEnrichedVerse(enrichedVerse);
-    // }
+      const englishText = words.map(word => word.bsbGloss).join(' ').replace(/\s+/g, ' ').trim();
 
-    logger.info(`[BookIngestionService] Completed ingestion for ${book} ${chapter}`);
-    // This is a placeholder implementation.
+      const verse: EnrichedVerse = {
+        canonicalId,
+        osisRef,
+        versificationMap: {
+            'berean': `${bookOsisRef} ${chapterNum}:${verseNum}` // Placeholder
+        },
+        texts: {
+            'BSB': englishText
+        },
+        originalLanguageWords
+      };
+      enrichedVerses.push(verse);
+    }
+
+    logger.info(`[BookIngestionService] Created ${enrichedVerses.length} enriched verse objects.`);
+
+    for (const verse of enrichedVerses) {
+      await this.bibleStorage.saveEnrichedVerse(verse);
+    }
+
+    logger.info(`[BookIngestionService] Completed ingestion for ${bookOsisRef} ${chapterNum}`);
     await Promise.resolve();
   }
 
   /**
-   * Fetches the KJV text for a given chapter.
+   * Parses the raw tab-separated interlinear data into a structured map.
+   * @param rawData - The raw TSV string.
+   * @returns A map where the key is the verse number and the value is an array of word objects.
    * @private
    */
-  private async fetchKJVText(book: string, chapter: number): Promise<any> {
-    // Placeholder for fetching from https://cdn.jsdelivr.net/gh/wldeh/bible-api/
-    logger.debug(`Fetching KJV text for ${book} ${chapter}`);
-    return {};
-  }
+  private _parseChapterData(rawData: string): Map<number, any[]> {
+    const verses = new Map<number, any[]>();
+    const rows = rawData.trim().split('\n');
 
-  /**
-   * Fetches the Interlinear Greek data for a given chapter.
-   * @private
-   */
-  private async fetchInterlinearData(book: string, chapter: number): Promise<any> {
-    // Placeholder for reading from the downloaded Berean Interlinear Bible dataset.
-    logger.debug(`Fetching Interlinear data for ${book} ${chapter}`);
-    return {};
-  }
+    for (const row of rows) {
+      const columns = row.split('\t');
+      if (columns.length < 16) {
+        continue; // Skip malformed or empty rows
+      }
 
-  /**
-   * Combines the various data sources into a single EnrichedVerse object.
-   * @private
-   */
-  private combineAndEnrichVerse(kjvVerse: any, interlinearVerse: any): EnrichedVerse {
-    // Placeholder for the complex logic of merging the data sources
-    // into the canonical EnrichedVerse format.
-    logger.debug(`Enriching verse data...`);
-    return {} as EnrichedVerse;
+      const verseRef = columns[3];
+      const greekWord = columns[6];
+      const translit = columns[8];
+      const parsing = columns[9];
+      const strongsNum = columns[11];
+      const bsbGloss = columns[15];
+
+      // Skip rows that don't have a valid Greek word (e.g., empty formatting rows)
+      if (!greekWord) {
+        continue;
+      }
+
+      const verseMatch = verseRef.match(/:(\d+)$/);
+      if (!verseMatch) {
+        continue;
+      }
+      const verseNum = parseInt(verseMatch[1], 10);
+
+      if (!verses.has(verseNum)) {
+        verses.set(verseNum, []);
+      }
+
+      // The raw data has some extra columns that can mess up the gloss.
+      // We'll take the BSB version column and clean it up.
+      const cleanedGloss = bsbGloss.replace(/<[^>]*>/g, '').trim();
+
+      verses.get(verseNum)?.push({
+        greekWord,
+        translit,
+        parsing,
+        strongsNum,
+        bsbGloss: cleanedGloss,
+      });
+    }
+
+    return verses;
   }
 }
