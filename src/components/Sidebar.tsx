@@ -3,22 +3,47 @@ import { Thought } from '../../contracts/entities';
 import { User } from '../services/authService';
 
 interface SidebarProps {
-  thoughts: Thought[];
   user: User | null;
+  thoughts: Thought[];
+  onSelectThought: (thought: Thought) => void;
   onCreateThought: () => void;
+  activeThought: Thought | null;
   onClusterThoughts: () => void;
+  clusters: any[];
+  activeCluster: string | null;
+  onClusterClick: (clusterId: string | null) => void;
   onShowDevAssistant: () => void;
-  setSelectedThought: (thought: Thought) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
-  thoughts,
   user,
+  thoughts,
+  onSelectThought,
   onCreateThought,
+  activeThought,
   onClusterThoughts,
+  clusters,
+  activeCluster,
+  onClusterClick,
   onShowDevAssistant,
-  setSelectedThought,
 }) => {
+  const renderThoughtList = (thoughtList: Thought[]) => (
+    <ul>
+      {thoughtList.map((thought) => (
+        <li key={thought.id} className="mb-1">
+          <div
+            onClick={() => onSelectThought(thought)}
+            className={`cursor-pointer p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 ${
+              activeThought?.id === thought.id ? 'bg-blue-200 dark:bg-blue-800' : ''
+            }`}
+          >
+            {thought.title}
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+
   return (
     <div className="w-1/4 p-4 border-r bg-gray-50 dark:bg-gray-800 overflow-y-auto">
       <div className="flex justify-between items-center mb-4">
@@ -46,25 +71,40 @@ const Sidebar: React.FC<SidebarProps> = ({
         <button
           onClick={onClusterThoughts}
           className="w-full px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+          data-testid="toggle-cluster-view-btn"
         >
-          Toggle Cluster View
+          {clusters.length > 0 ? 'Hide Clusters' : 'Show Clusters'}
         </button>
       </div>
 
-      {/* Thought List */}
-      <h3 className="text-md font-semibold mb-2">Thoughts</h3>
-      <ul>
-        {thoughts.map((thought) => (
-          <li key={thought.id} className="mb-1">
-            <div
-              onClick={() => setSelectedThought(thought)}
-              className="cursor-pointer p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
-            >
-              {thought.title}
-            </div>
-          </li>
-        ))}
-      </ul>
+      {/* Cluster and Thought List */}
+      {clusters.length > 0 ? (
+        <div>
+          <h3 className="text-md font-semibold mb-2">Clusters</h3>
+          <ul>
+            {clusters.map((cluster) => (
+              <li key={cluster.id} className="mb-1">
+                <div
+                  onClick={() => onClusterClick(cluster.id)}
+                  className={`cursor-pointer p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 ${
+                    activeCluster === cluster.id ? 'bg-purple-200 dark:bg-purple-800' : ''
+                  }`}
+                >
+                  {cluster.label} ({cluster.thoughtIds.length})
+                </div>
+              </li>
+            ))}
+          </ul>
+          <hr className="my-4" />
+          <h3 className="text-md font-semibold mb-2">Thoughts</h3>
+          {renderThoughtList(thoughts)}
+        </div>
+      ) : (
+        <div>
+          <h3 className="text-md font-semibold mb-2">Thoughts</h3>
+          {renderThoughtList(thoughts)}
+        </div>
+      )}
     </div>
   );
 };
