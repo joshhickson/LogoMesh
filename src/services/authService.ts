@@ -1,10 +1,7 @@
 export interface User {
   id: string;
-  name: string;
-  username?: string; // Make optional as name is used
+  username: string;
   email?: string;
-  isAuthenticated: boolean;
-  roles?: string;
 }
 
 interface AuthState {
