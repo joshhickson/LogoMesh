@@ -611,12 +611,6 @@ export class SQLiteStorageAdapter implements StorageAdapter {
     });
   }
 
-  // Mock implementation for vector search in SQLite
-  async findSimilarThoughts(_embedding: number[], _maxResults: number, _userId?: string): Promise<Thought[]> {
-    logger.warn('[SQLiteStorageAdapter] findSimilarThoughts is not implemented and will return an empty array.');
-    return Promise.resolve([]);
-  }
-
   // Helper methods
 
   private parseTagsFromRow(tagsString: string | null): Tag[] {

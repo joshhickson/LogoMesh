@@ -8,7 +8,6 @@ export interface NewThoughtData {
   title: string;
   content?: string;
   description?: string;
-  embedding?: number[];
   tags?: Array<{ name: string; color: string }>;
   position?: { x: number; y: number };
   color?: string;
@@ -45,9 +44,8 @@ export interface StorageAdapter {
   getAllThoughts(_userId?: string): Promise<Thought[]>;
   getThoughtById(_thoughtId: string, _userId?: string): Promise<Thought | null>;
   createThought(_thoughtData: NewThoughtData, _userId?: string): Promise<Thought>;
-  updateThought(_thoughtId:string, _updates: Partial<NewThoughtData>, _userId?: string): Promise<Thought | null>;
+  updateThought(_thoughtId: string, _updates: Partial<NewThoughtData>, _userId?: string): Promise<Thought | null>;
   deleteThought(_thoughtId: string, _userId?: string): Promise<boolean>;
-  findSimilarThoughts(embedding: number[], maxResults: number, userId?: string): Promise<Thought[]>;
 
   // Segment operations
   getSegmentsForThought(_thoughtId: string, _userId?: string): Promise<Segment[]>;
