@@ -44,7 +44,7 @@
   "scripts": {
     "start": "PORT=5000 react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "vitest",
+    "test": "vitest run --coverage",
     "test:export": "node scripts/test-with-error-export.js",
     "eject": "react-scripts eject",
     "typecheck": "tsc --noEmit",
