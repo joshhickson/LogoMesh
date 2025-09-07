@@ -679,7 +679,8 @@ export class SQLiteStorageAdapter implements StorageAdapter {
           db.run(deleteQuery, [thoughtId], (errDelete: Error | null) => {
             if (errDelete) {
               logger.error('Failed to delete old tags, rolling back.', errDelete);
-              return db.run('ROLLBACK;', () => reject(errDelete));
+              db.run('ROLLBACK;', () => reject(errDelete));
+              return;
             }
 
             this.associateTagsWithThought(thoughtId, tags)

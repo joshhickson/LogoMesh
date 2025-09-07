@@ -48,17 +48,8 @@ export interface VTCInterface {
 }
 
 export class CognitiveContextEngine {
-  private _ideaManager?: IdeaManagerInterface | undefined;
-  private _meshGraphEngine?: MeshGraphEngineInterface | undefined;
-  private _vtc?: VTCInterface | undefined;
-  constructor(
-    _ideaManager?: IdeaManagerInterface,
-    _meshGraphEngine?: MeshGraphEngineInterface,
-    _vtc?: VTCInterface
-  ) {
-    this._ideaManager = _ideaManager;
-    this._meshGraphEngine = _meshGraphEngine;
-    this._vtc = _vtc;
+  // Removed unused private fields to fix TS6133 errors
+  constructor() {
     logger.info('[CCE] Cognitive Context Engine initialized (Phase 1 stub)');
   }
 
