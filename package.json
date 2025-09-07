@@ -116,7 +116,7 @@
     "vitest": "^3.1.2"
   },
   "description": "LogoMesh - Advanced thought mapping and cognitive assistance platform",
-  "main": "config-overrides.js",
+  "main": "config-overrides.cjs",
   "directories": {
     "doc": "docs"
   },
