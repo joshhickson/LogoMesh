@@ -18,6 +18,14 @@ module.exports = function override(config, env) {
       plugin.constructor.name !== 'ReactRefreshPlugin'
     );
     
+    // Configure dev server to bind to all interfaces
+    if (!config.devServer) {
+      config.devServer = {};
+    }
+    config.devServer.host = '0.0.0.0';
+    config.devServer.allowedHosts = 'all';
+    config.devServer.port = 5000;
+    
     // Remove react-refresh from babel-loader
     config.module.rules.forEach((rule) => {
       if (rule.oneOf) {

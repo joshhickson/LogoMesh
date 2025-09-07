@@ -42,7 +42,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "PORT=5000 react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "vitest",
     "test:export": "node scripts/test-with-error-export.js",
