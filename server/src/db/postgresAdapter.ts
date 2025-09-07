@@ -388,7 +388,7 @@ export class PostgresAdapter implements StorageAdapter {
     }
   }
 
-  async updateSegment(thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>, userId = 'anonymous'): Promise<Segment | null> { // Align with interface
+  async updateSegment(_thoughtId: string, segmentId: string, updates: Partial<NewSegmentData>, userId = 'anonymous'): Promise<Segment | null> { // Align with interface
     const client = await this.pool.connect();
     try {
       const updateFields = [];

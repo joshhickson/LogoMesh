@@ -33,7 +33,7 @@ export interface SemanticBridge {
 }
 
 export class MeshGraphEngine {
-  private _weightThreshold = 0.3; // Prefixed
+  // Removed unused _weightThreshold field to fix TS6133
 
   /*
   async getRelatedThoughts(thoughtId: string, maxResults: number = 10): Promise<Thought[]> {

@@ -60,12 +60,7 @@ export class PluginHost {
   /**
    * Check if plugin meets activation criteria
    */
-  private _checkActivationCriteria(): boolean { // Prefixed method name
-    // Stub implementation for context-aware loading
-    // TODO: Implement actual device/environment checking
-    this.logger.debug('[PluginHost] Checking activation criteria (stub)');
-    return true;
-  }
+  // Removed unused _checkActivationCriteria method to fix TS6133
 
   /**
    * Get loaded plugins

@@ -78,12 +78,12 @@ const apiRateLimit = createApiRateLimiter();
 const authRateLimit = createAuthRateLimiter();
 
 // Apply rate limiting
-app.use('/api/v1', apiRateLimit.middleware() as RequestHandler);
-app.use('/api/v1/auth', authRateLimit.middleware() as RequestHandler);
+app.use('/api/v1', apiRateLimit.middleware() as any);
+app.use('/api/v1/auth', authRateLimit.middleware() as any);
 
 
 // Health check
-app.get(`${apiBasePath}/health`, (req: Request, res: Response) => {
+app.get(`${apiBasePath}/health`, (_req: Request, res: Response) => {
   res.json({ 
     status: 'healthy', 
     timestamp: new Date().toISOString(),
@@ -93,7 +93,7 @@ app.get(`${apiBasePath}/health`, (req: Request, res: Response) => {
 });
 
 // Comprehensive status endpoint
-app.get(`${apiBasePath}/status`, (req: Request, res: Response) => {
+app.get(`${apiBasePath}/status`, (_req: Request, res: Response) => {
   const memUsage = process.memoryUsage();
   const uptime = process.uptime();
   
