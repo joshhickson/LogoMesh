@@ -20,7 +20,8 @@ LogoMesh is a local-first cognitive framework that enables users to create, orga
 | 4 | Knowledge Graph & Ontology | Contradiction detection, multi-user collaboration, conflict resolution | Vision |
 
 Current version: **0.2.0**  
-Target runtime: Node.js 16 or newer.
+Target runtime: Node.js 16 or newer.  
+**Environment Status**: ✅ Development environment stabilized (09.07.2025)
 
 ---
 
@@ -65,15 +66,19 @@ cd server && npm install && cd ..
 ### Running in Development
 
 ```bash
+# Option 1: Start both services with workflows (recommended)
+# Both services will start automatically in Replit
+
+# Option 2: Manual start
 # Terminal 1 – back end (port 3001)
 cd server
 npm run dev
 
-# Terminal 2 – front end (port 3000)
+# Terminal 2 – front end (port 5000)
 npm start
 ```
 
-* Front-end: <http://localhost:3000>  
+* Front-end: <http://localhost:5000> (configured for Replit environment)
 * API root: <http://localhost:3001/api/v1>
 
 ### Database Configuration
