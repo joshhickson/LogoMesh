@@ -362,3 +362,6 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd server && npm install && npm run build && npm start"
+
+[agent]
+expertMode = true
