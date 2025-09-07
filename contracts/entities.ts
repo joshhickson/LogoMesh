@@ -2,7 +2,7 @@
 // TODO: Define proper entity interfaces/types
 
 export interface Thought {
-  thought_bubble_id: string;
+  id: string;
   title: string;
   description?: string | null;
   created_at: Date; // string -> Date
