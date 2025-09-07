@@ -1,0 +1,3 @@
+
+> logomesh-server@0.1.0 dev
+> tsc && node dist/server/src/index.js
