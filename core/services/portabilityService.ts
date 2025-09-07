@@ -1,5 +1,5 @@
 import { ThoughtExportProvider, SemanticCompressionOptions } from '../../contracts/thoughtExportProvider';
-import { StorageAdapter } from '../../contracts/storageAdapter';
+import { StorageAdapter, NewThoughtData, NewSegmentData } from '../../contracts/storageAdapter';
 import { logger } from '../utils/logger';
 import { 
   ExportData, 

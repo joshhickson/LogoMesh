@@ -48,9 +48,9 @@ export interface VTCInterface {
 }
 
 export class CognitiveContextEngine {
-  private _ideaManager?: IdeaManagerInterface;
-  private _meshGraphEngine?: MeshGraphEngineInterface;
-  private _vtc?: VTCInterface;
+  private _ideaManager?: IdeaManagerInterface | undefined;
+  private _meshGraphEngine?: MeshGraphEngineInterface | undefined;
+  private _vtc?: VTCInterface | undefined;
   constructor(
     _ideaManager?: IdeaManagerInterface,
     _meshGraphEngine?: MeshGraphEngineInterface,

@@ -69,13 +69,13 @@ async function logPipelineEvent(event: {
  */
 export class TaskEngine {
   private registry: ExecutorRegistry;
-  private _orchestrator: LLMOrchestrator; // Prefixed
+  // Removed unused _orchestrator field to fix TS6133
   private eventBus: EventBus;
   private activePipelines: Map<string, Pipeline> = new Map();
 
   constructor(eventBus: EventBus) {
     this.eventBus = eventBus;
-    this._orchestrator = new LLMOrchestrator(eventBus); // orchestrator -> _orchestrator
+    // Removed _orchestrator initialization to fix TS6133
     this.registry = {
       llmExecutors: new Map(),
       pluginExecutors: new Map(),
