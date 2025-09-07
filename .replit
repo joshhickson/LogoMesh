@@ -19,12 +19,8 @@ externalPort = 80
 localPort = 3001
 externalPort = 3001
 
-[[ports]]
-localPort = 5000
-externalPort = 5000
-
 [workflows]
-runButton = "Imperial Guard Deployment"
+runButton = "Project"
 
 [[workflows.workflow]]
 name = "Run"
@@ -362,6 +358,43 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd server && npm install && npm run build && npm start"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Frontend"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Backend"
+
+[[workflows.workflow]]
+name = "Frontend"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm start"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow]]
+name = "Backend"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd server && npm run dev"
+waitForPort = 3001
+
+[workflows.workflow.metadata]
+outputType = "console"
 
 [agent]
 expertMode = true

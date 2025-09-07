@@ -1,5 +1,5 @@
 import { EventBus } from './eventBus';
-import { LLMOrchestrator } from '../llm/LLMOrchestrator';
+// Removed unused import to fix TS6133
 import { LLMTaskRunner } from '../llm/LLMTaskRunner';
 import { PluginHost } from './pluginHost';
 import { logger } from '../utils/logger';

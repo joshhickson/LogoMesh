@@ -13,7 +13,7 @@ import adminRoutes from './routes/adminRoutes';
 import taskRoutes, { initializeTaskEngine } from './routes/taskRoutes';
 import { EventBus } from '../../core/services/eventBus';
 import userRoutes from './routes/userRoutes';
-import type { Request, Response, NextFunction, Router, RequestHandler } from 'express'; // Import Router and RequestHandler
+import type { Request, Response, NextFunction, Router } from 'express'; // Import Router
 
 const app = express();
 const PORT = parseInt(process.env.PORT || "3001", 10);
