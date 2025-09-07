@@ -1,4 +1,4 @@
-# Environment Bug Report: Unreliable Shell Behavior Blocking Server Execution
+# Environment Bug Report (09.07.2025): Unreliable Shell Behavior Blocking Server Execution - RESOLVED
 
 ## 1. Executive Summary
 
