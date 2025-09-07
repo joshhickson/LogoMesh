@@ -2,6 +2,7 @@
   "name": "logomesh",
   "version": "0.1.0",
   "private": true,
+  "config-overrides-path": "config-overrides.cjs",
   "type": "module",
   "dependencies": {
     "@babel/preset-env": "^7.27.1",
