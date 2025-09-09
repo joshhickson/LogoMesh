@@ -1,132 +1,85 @@
 export interface User {
   id: string;
-  username: string;
-  email?: string;
-}
-
-interface AuthState {
+  name: string;
   isAuthenticated: boolean;
-  user: User | null;
-  token: string | null;
 }
 
 class AuthService {
-  private authState: AuthState = {
-    isAuthenticated: false,
-    user: null,
-    token: null
-  };
-
-  private listeners: Array<(authState: AuthState) => void> = [];
+  user: User | null;
+  isAuthenticated: boolean;
 
   constructor() {
-    this.loadAuthState();
+    this.user = null;
+    this.isAuthenticated = false;
   }
 
-  private loadAuthState(): void {
+  async getCurrentUser(): Promise<User | null> {
     try {
-      const token = localStorage.getItem('auth_token');
-      const userStr = localStorage.getItem('auth_user');
+      const apiBaseUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+      const response = await fetch(`${apiBaseUrl}/api/v1/user/current`);
 
-      if (token && userStr) {
-        const user = JSON.parse(userStr) as User;
-        this.authState = {
-          isAuthenticated: true,
-          user,
-          token
+      if (response.ok) {
+        const userData = await response.json();
+        if (userData && userData.isAuthenticated) {
+          this.user = userData;
+          this.isAuthenticated = true;
+          return userData;
+        }
+      }
+
+      const replitUserId = (window as any).REPLIT_USER_ID;
+      const replitUserName = (window as any).REPLIT_USER_NAME;
+
+      if (replitUserId) {
+        const replitUser: User = {
+          id: replitUserId,
+          name: replitUserName || 'Replit User',
+          isAuthenticated: true
         };
+        this.user = replitUser;
+        this.isAuthenticated = true;
+        return replitUser;
       }
+
+      this.user = null;
+      this.isAuthenticated = false;
+      return null;
     } catch (error) {
-      console.error('Error loading auth state:', error);
-      this.clearAuthState();
-    }
-  }
+      console.error('Failed to get current user:', error);
 
-  private saveAuthState(): void {
-    try {
-      if (this.authState.token && this.authState.user) {
-        localStorage.setItem('auth_token', this.authState.token);
-        localStorage.setItem('auth_user', JSON.stringify(this.authState.user));
-      } else {
-        this.clearAuthState();
+      const replitUserId = (window as any).REPLIT_USER_ID;
+      const replitUserName = (window as any).REPLIT_USER_NAME;
+
+      if (replitUserId) {
+        const replitUser: User = {
+          id: replitUserId,
+          name: replitUserName || 'Replit User',
+          isAuthenticated: true
+        };
+        this.user = replitUser;
+        this.isAuthenticated = true;
+        return replitUser;
       }
-    } catch (error) {
-      console.error('Error saving auth state:', error);
+
+      this.user = null;
+      this.isAuthenticated = false;
+      return null;
     }
   }
 
-  private clearAuthState(): void {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('auth_user');
-    this.authState = {
-      isAuthenticated: false,
-      user: null,
-      token: null
-    };
+  getUser(): User | null {
+    return this.user;
   }
 
-  public login(user: User, token: string): void {
-    this.authState = {
-      isAuthenticated: true,
-      user,
-      token
-    };
-    this.saveAuthState();
-    this.notifyListeners();
+  isUserAuthenticated(): boolean {
+    return this.isAuthenticated;
   }
 
-  public logout(): void {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('auth_user');
-    this.authState = {
-      isAuthenticated: false,
-      user: null,
-      token: null
-    };
-    this.notifyListeners();
-  }
-
-  getCurrentUser() {
-    return this.authState.user;
-  }
-
-  public getAuthState(): AuthState {
-    return { ...this.authState };
-  }
-
-  public isAuthenticated(): boolean {
-    return this.authState.isAuthenticated;
-  }
-
-  public getUser(): User | null {
-    return this.authState.user;
-  }
-
-  public getToken(): string | null {
-    return this.authState.token;
-  }
-
-  public addAuthListener(listener: (authState: AuthState) => void): void {
-    this.listeners.push(listener);
-  }
-
-  public removeAuthListener(listener: (authState: AuthState) => void): void {
-    const index = this.listeners.indexOf(listener);
-    if (index > -1) {
-      this.listeners.splice(index, 1);
-    }
-  }
-
-  private notifyListeners(): void {
-    this.listeners.forEach(listener => {
-      try {
-        listener(this.getAuthState());
-      } catch (error) {
-        console.error('Error in auth listener:', error);
-      }
-    });
+  logout(): void {
+    this.user = null;
+    this.isAuthenticated = false;
+    window.location.reload();
   }
 }
 
 export const authService = new AuthService();
-export default authService;

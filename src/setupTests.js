@@ -22,11 +22,8 @@ window.matchMedia = window.matchMedia || function () {
 // Mock ResizeObserver
 window.ResizeObserver = class ResizeObserver {
   constructor() {
-
     this.observe = () => {};
-
     this.unobserve = () => {};
-
     this.disconnect = () => {};
   }
 };
