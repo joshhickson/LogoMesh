@@ -48,7 +48,7 @@ export interface ExportMetadata {
 }
 
 export interface ThoughtData {
-  thought_bubble_id: string;
+  id: string;
   title: string;
   description: string;
   segments?: SegmentData[];
@@ -318,11 +318,4 @@ export interface DatabaseConfig {
   filePath?: string; // For SQLite, if not in connectionString
   options?: Record<string, unknown>; // Driver-specific options
   debug?: boolean; // Enable debug logging for queries
-}
-
-export interface Tag {
-    tag_id: string;
-    name: string;
-    color: string;
-    created_at: string;
 }

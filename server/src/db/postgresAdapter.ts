@@ -105,10 +105,10 @@ export class PostgresAdapter implements StorageAdapter {
       );
       const dbRow = result.rows[0];
       const thought: Thought = {
-        thought_bubble_id: dbRow.id,
+        id: dbRow.id,
         title: dbRow.title,
-        created_at: dbRow.created_at,
-        updated_at: dbRow.updated_at,
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
         tags: [],
         segments: []
       };
@@ -138,10 +138,10 @@ export class PostgresAdapter implements StorageAdapter {
       const dbRow = result.rows[0];
       // Parse JSON fields & map to Thought
       const thought: Thought = {
-        thought_bubble_id: dbRow.id,
+        id: dbRow.id,
         title: dbRow.title,
-        created_at: dbRow.created_at,
-        updated_at: dbRow.updated_at,
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
         // segments will be populated by a separate call if needed by consumer
         // For now, tags and segments are placeholders as per Thought entity.
         tags: [],
@@ -170,10 +170,10 @@ export class PostgresAdapter implements StorageAdapter {
       );
       return result.rows.map(dbRow => {
         const thought: Thought = {
-          thought_bubble_id: dbRow.id,
+          id: dbRow.id,
           title: dbRow.title,
-          created_at: dbRow.created_at,
-          updated_at: dbRow.updated_at,
+          created_at: dbRow.created_at.toISOString(),
+          updated_at: dbRow.updated_at.toISOString(),
           tags: [],
           segments: []
         };
@@ -239,10 +239,10 @@ export class PostgresAdapter implements StorageAdapter {
       if (result.rows.length === 0) return null;
       const dbRow = result.rows[0];
       const thought: Thought = {
-        thought_bubble_id: dbRow.id,
+        id: dbRow.id,
         title: dbRow.title,
-        created_at: dbRow.created_at,
-        updated_at: dbRow.updated_at,
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
         tags: [],
         segments: []
       };
@@ -279,8 +279,8 @@ export class PostgresAdapter implements StorageAdapter {
           segment_id: dbRow.id,
           thought_bubble_id: dbRow.thought_id,
           content: dbRow.content,
-          created_at: dbRow.created_at,
-          updated_at: dbRow.updated_at,
+          created_at: dbRow.created_at.toISOString(),
+          updated_at: dbRow.updated_at.toISOString(),
         };
         if (dbRow.title !== undefined && dbRow.title !== null) segment.title = dbRow.title;
         if (dbRow.segment_type !== undefined && dbRow.segment_type !== null) segment.content_type = dbRow.segment_type;
@@ -307,8 +307,8 @@ export class PostgresAdapter implements StorageAdapter {
         segment_id: dbRow.id,
         thought_bubble_id: dbRow.thought_id,
         content: dbRow.content,
-        created_at: dbRow.created_at,
-        updated_at: dbRow.updated_at,
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
       };
       if (dbRow.title !== undefined && dbRow.title !== null) segment.title = dbRow.title;
       if (dbRow.segment_type !== undefined && dbRow.segment_type !== null) segment.content_type = dbRow.segment_type;
@@ -354,8 +354,8 @@ export class PostgresAdapter implements StorageAdapter {
         segment_id: dbRow.id,
         thought_bubble_id: dbRow.thought_id,
         content: dbRow.content,
-        created_at: dbRow.created_at,
-        updated_at: dbRow.updated_at,
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
       };
       if (dbRow.title !== undefined && dbRow.title !== null) segment.title = dbRow.title;
       if (dbRow.segment_type !== undefined && dbRow.segment_type !== null) segment.content_type = dbRow.segment_type;
@@ -468,8 +468,8 @@ export class PostgresAdapter implements StorageAdapter {
         segment_id: dbRow.id,
         thought_bubble_id: dbRow.thought_id,
         content: dbRow.content,
-        created_at: dbRow.created_at,
-        updated_at: dbRow.updated_at,
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
       };
       if (dbRow.title !== undefined && dbRow.title !== null) segment.title = dbRow.title;
       if (dbRow.segment_type !== undefined && dbRow.segment_type !== null) segment.content_type = dbRow.segment_type;
