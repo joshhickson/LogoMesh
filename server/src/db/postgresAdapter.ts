@@ -6,54 +6,14 @@ import {
   PostgresSegmentRecord
   // Removed DatabaseQueryResult
 } from '../../../contracts/types';
-import config from '../../../core/config';
 
 export class PostgresAdapter implements StorageAdapter {
   private pool: Pool;
 
-  private _mapRecordToThought(dbRow: PostgresThoughtRecord): Thought {
-    const thought: Thought = {
-      id: dbRow.id,
-      title: dbRow.title,
-      created_at: dbRow.created_at.toISOString(),
-      updated_at: dbRow.updated_at.toISOString(),
-      tags: [], // Tags would be handled separately
-      segments: [] // Segments are loaded separately
-    };
-    if (dbRow.description !== undefined && dbRow.description !== null) thought.description = dbRow.description;
-    if (dbRow.fields !== undefined) thought.fields = dbRow.fields as Record<string, unknown>;
-    if (dbRow.metadata !== undefined) thought.metadata = dbRow.metadata as Record<string, unknown>;
-    if (dbRow.color !== undefined && dbRow.color !== null) thought.color = dbRow.color;
-    if (dbRow.position_x !== undefined && dbRow.position_x !== null &&
-        dbRow.position_y !== undefined && dbRow.position_y !== null) {
-      thought.position = { x: dbRow.position_x, y: dbRow.position_y };
-    }
-    return thought;
-  }
-
-  private _mapRecordToSegment(dbRow: PostgresSegmentRecord): Segment {
-    const segment: Segment = {
-      segment_id: dbRow.id,
-      thought_bubble_id: dbRow.thought_id,
-      content: dbRow.content,
-      created_at: dbRow.created_at.toISOString(),
-      updated_at: dbRow.updated_at.toISOString(),
-    };
-    if (dbRow.title !== undefined && dbRow.title !== null) segment.title = dbRow.title;
-    if (dbRow.segment_type !== undefined && dbRow.segment_type !== null) segment.content_type = dbRow.segment_type;
-    if (dbRow.fields !== undefined) segment.fields = dbRow.fields as Record<string, unknown>;
-    if (dbRow.metadata !== undefined) segment.metadata = dbRow.metadata as Record<string, unknown>;
-    if (dbRow.abstraction_level !== undefined && dbRow.abstraction_level !== null) segment.abstraction_level = dbRow.abstraction_level;
-    if (dbRow.local_priority !== undefined && dbRow.local_priority !== null) segment.local_priority = dbRow.local_priority;
-    if (dbRow.cluster_id !== undefined && dbRow.cluster_id !== null) segment.cluster_id = dbRow.cluster_id;
-    if (dbRow.sort_order !== undefined && dbRow.sort_order !== null) segment.sort_order = dbRow.sort_order;
-    return segment;
-  }
-
   constructor() {
-    const databaseUrl = config.database.url;
+    const databaseUrl = process.env.DATABASE_URL;
     if (!databaseUrl) {
-      throw new Error('DATABASE_URL is not configured in core/config.ts');
+      throw new Error('DATABASE_URL environment variable is required');
     }
 
     // Use connection pooling for better performance
@@ -144,7 +104,23 @@ export class PostgresAdapter implements StorageAdapter {
         ]
       );
       const dbRow = result.rows[0];
-      return this._mapRecordToThought(dbRow);
+      const thought: Thought = {
+        id: dbRow.id,
+        title: dbRow.title,
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
+        tags: [],
+        segments: []
+      };
+      if (dbRow.description !== undefined && dbRow.description !== null) thought.description = dbRow.description;
+      if (dbRow.fields !== undefined) thought.fields = dbRow.fields as Record<string, unknown>;
+      if (dbRow.metadata !== undefined) thought.metadata = dbRow.metadata as Record<string, unknown>;
+      if (dbRow.color !== undefined && dbRow.color !== null) thought.color = dbRow.color;
+      if (dbRow.position_x !== undefined && dbRow.position_x !== null &&
+          dbRow.position_y !== undefined && dbRow.position_y !== null) {
+        thought.position = { x: dbRow.position_x, y: dbRow.position_y };
+      }
+      return thought;
     } finally {
       client.release();
     }
@@ -160,7 +136,26 @@ export class PostgresAdapter implements StorageAdapter {
       if (result.rows.length === 0) return null;
 
       const dbRow = result.rows[0];
-      return this._mapRecordToThought(dbRow);
+      // Parse JSON fields & map to Thought
+      const thought: Thought = {
+        id: dbRow.id,
+        title: dbRow.title,
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
+        // segments will be populated by a separate call if needed by consumer
+        // For now, tags and segments are placeholders as per Thought entity.
+        tags: [],
+        segments: []
+      };
+      if (dbRow.description !== undefined && dbRow.description !== null) thought.description = dbRow.description;
+      if (dbRow.fields !== undefined) thought.fields = dbRow.fields as Record<string, unknown>;
+      if (dbRow.metadata !== undefined) thought.metadata = dbRow.metadata as Record<string, unknown>;
+      if (dbRow.color !== undefined && dbRow.color !== null) thought.color = dbRow.color;
+      if (dbRow.position_x !== undefined && dbRow.position_x !== null &&
+          dbRow.position_y !== undefined && dbRow.position_y !== null) {
+        thought.position = { x: dbRow.position_x, y: dbRow.position_y };
+      }
+      return thought;
     } finally {
       client.release();
     }
@@ -173,7 +168,25 @@ export class PostgresAdapter implements StorageAdapter {
         'SELECT * FROM thoughts WHERE user_id = $1 ORDER BY created_at DESC',
         [userId]
       );
-      return result.rows.map(dbRow => this._mapRecordToThought(dbRow));
+      return result.rows.map(dbRow => {
+        const thought: Thought = {
+          id: dbRow.id,
+          title: dbRow.title,
+          created_at: dbRow.created_at.toISOString(),
+          updated_at: dbRow.updated_at.toISOString(),
+          tags: [],
+          segments: []
+        };
+        if (dbRow.description !== undefined && dbRow.description !== null) thought.description = dbRow.description;
+        if (dbRow.fields !== undefined) thought.fields = dbRow.fields as Record<string, unknown>;
+        if (dbRow.metadata !== undefined) thought.metadata = dbRow.metadata as Record<string, unknown>;
+        if (dbRow.color !== undefined && dbRow.color !== null) thought.color = dbRow.color;
+        if (dbRow.position_x !== undefined && dbRow.position_x !== null &&
+            dbRow.position_y !== undefined && dbRow.position_y !== null) {
+          thought.position = { x: dbRow.position_x, y: dbRow.position_y };
+        }
+        return thought;
+      });
     } finally {
       client.release();
     }
@@ -225,7 +238,23 @@ export class PostgresAdapter implements StorageAdapter {
 
       if (result.rows.length === 0) return null;
       const dbRow = result.rows[0];
-      return this._mapRecordToThought(dbRow);
+      const thought: Thought = {
+        id: dbRow.id,
+        title: dbRow.title,
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
+        tags: [],
+        segments: []
+      };
+      if (dbRow.description !== undefined && dbRow.description !== null) thought.description = dbRow.description;
+      if (dbRow.fields !== undefined) thought.fields = dbRow.fields as Record<string, unknown>;
+      if (dbRow.metadata !== undefined) thought.metadata = dbRow.metadata as Record<string, unknown>;
+      if (dbRow.color !== undefined && dbRow.color !== null) thought.color = dbRow.color;
+      if (dbRow.position_x !== undefined && dbRow.position_x !== null &&
+          dbRow.position_y !== undefined && dbRow.position_y !== null) {
+        thought.position = { x: dbRow.position_x, y: dbRow.position_y };
+      }
+      return thought;
     } finally {
       client.release();
     }
@@ -245,7 +274,24 @@ export class PostgresAdapter implements StorageAdapter {
     const client = await this.pool.connect();
     try {
       const result: QueryResult<PostgresSegmentRecord> = await client.query('SELECT * FROM segments WHERE thought_id = $1 AND user_id = $2 ORDER BY sort_order, created_at', [thoughtId, userId]); // Added explicit sort
-      return result.rows.map(dbRow => this._mapRecordToSegment(dbRow));
+      return result.rows.map(dbRow => {
+        const segment: Segment = {
+          segment_id: dbRow.id,
+          thought_bubble_id: dbRow.thought_id,
+          content: dbRow.content,
+          created_at: dbRow.created_at.toISOString(),
+          updated_at: dbRow.updated_at.toISOString(),
+        };
+        if (dbRow.title !== undefined && dbRow.title !== null) segment.title = dbRow.title;
+        if (dbRow.segment_type !== undefined && dbRow.segment_type !== null) segment.content_type = dbRow.segment_type;
+        if (dbRow.fields !== undefined) segment.fields = dbRow.fields as Record<string, unknown>;
+        if (dbRow.metadata !== undefined) segment.metadata = dbRow.metadata as Record<string, unknown>;
+        if (dbRow.abstraction_level !== undefined && dbRow.abstraction_level !== null) segment.abstraction_level = dbRow.abstraction_level;
+        if (dbRow.local_priority !== undefined && dbRow.local_priority !== null) segment.local_priority = dbRow.local_priority;
+        if (dbRow.cluster_id !== undefined && dbRow.cluster_id !== null) segment.cluster_id = dbRow.cluster_id;
+        if (dbRow.sort_order !== undefined && dbRow.sort_order !== null) segment.sort_order = dbRow.sort_order;
+        return segment;
+      });
     } finally {
       client.release();
     }
@@ -256,8 +302,23 @@ export class PostgresAdapter implements StorageAdapter {
     try {
       const result: QueryResult<PostgresSegmentRecord> = await client.query('SELECT * FROM segments WHERE id = $1 AND user_id = $2', [segmentId, userId]);
       if (result.rows.length === 0) return null;
-      const dbRow = result.rows[0];
-      return this._mapRecordToSegment(dbRow);
+      const dbRow = result.rows[0]; // Renamed for clarity
+      const segment: Segment = {
+        segment_id: dbRow.id,
+        thought_bubble_id: dbRow.thought_id,
+        content: dbRow.content,
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
+      };
+      if (dbRow.title !== undefined && dbRow.title !== null) segment.title = dbRow.title;
+      if (dbRow.segment_type !== undefined && dbRow.segment_type !== null) segment.content_type = dbRow.segment_type;
+      if (dbRow.fields !== undefined) segment.fields = dbRow.fields as Record<string, unknown>;
+      if (dbRow.metadata !== undefined) segment.metadata = dbRow.metadata as Record<string, unknown>;
+      if (dbRow.abstraction_level !== undefined && dbRow.abstraction_level !== null) segment.abstraction_level = dbRow.abstraction_level;
+      if (dbRow.local_priority !== undefined && dbRow.local_priority !== null) segment.local_priority = dbRow.local_priority;
+      if (dbRow.cluster_id !== undefined && dbRow.cluster_id !== null) segment.cluster_id = dbRow.cluster_id;
+      if (dbRow.sort_order !== undefined && dbRow.sort_order !== null) segment.sort_order = dbRow.sort_order;
+      return segment;
     } finally {
       client.release();
     }
@@ -288,7 +349,23 @@ export class PostgresAdapter implements StorageAdapter {
       );
 
       const dbRow = result.rows[0];
-      return this._mapRecordToSegment(dbRow);
+      // Map dbRow to Segment type
+      const segment: Segment = {
+        segment_id: dbRow.id,
+        thought_bubble_id: dbRow.thought_id,
+        content: dbRow.content,
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
+      };
+      if (dbRow.title !== undefined && dbRow.title !== null) segment.title = dbRow.title;
+      if (dbRow.segment_type !== undefined && dbRow.segment_type !== null) segment.content_type = dbRow.segment_type;
+      if (dbRow.fields !== undefined) segment.fields = dbRow.fields as Record<string, unknown>;
+      if (dbRow.metadata !== undefined) segment.metadata = dbRow.metadata as Record<string, unknown>;
+      if (dbRow.abstraction_level !== undefined && dbRow.abstraction_level !== null) segment.abstraction_level = dbRow.abstraction_level;
+      if (dbRow.local_priority !== undefined && dbRow.local_priority !== null) segment.local_priority = dbRow.local_priority;
+      if (dbRow.cluster_id !== undefined && dbRow.cluster_id !== null) segment.cluster_id = dbRow.cluster_id;
+      if (dbRow.sort_order !== undefined && dbRow.sort_order !== null) segment.sort_order = dbRow.sort_order;
+      return segment;
     } finally {
       client.release();
     }
@@ -387,7 +464,22 @@ export class PostgresAdapter implements StorageAdapter {
       if (result.rows.length === 0) return null;
 
       const dbRow = result.rows[0];
-      return this._mapRecordToSegment(dbRow);
+      const segment: Segment = {
+        segment_id: dbRow.id,
+        thought_bubble_id: dbRow.thought_id,
+        content: dbRow.content,
+        created_at: dbRow.created_at.toISOString(),
+        updated_at: dbRow.updated_at.toISOString(),
+      };
+      if (dbRow.title !== undefined && dbRow.title !== null) segment.title = dbRow.title;
+      if (dbRow.segment_type !== undefined && dbRow.segment_type !== null) segment.content_type = dbRow.segment_type;
+      if (dbRow.fields !== undefined) segment.fields = dbRow.fields as Record<string, unknown>;
+      if (dbRow.metadata !== undefined) segment.metadata = dbRow.metadata as Record<string, unknown>;
+      if (dbRow.abstraction_level !== undefined && dbRow.abstraction_level !== null) segment.abstraction_level = dbRow.abstraction_level;
+      if (dbRow.local_priority !== undefined && dbRow.local_priority !== null) segment.local_priority = dbRow.local_priority;
+      if (dbRow.cluster_id !== undefined && dbRow.cluster_id !== null) segment.cluster_id = dbRow.cluster_id;
+      if (dbRow.sort_order !== undefined && dbRow.sort_order !== null) segment.sort_order = dbRow.sort_order;
+      return segment;
     } finally {
       client.release();
     }

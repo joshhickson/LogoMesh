@@ -4,12 +4,11 @@ import { LLMTaskRunner } from '../../../core/llm/LLMTaskRunner';
 import { OllamaExecutor } from '../../../core/llm/OllamaExecutor';
 import { logger } from '../../../core/utils/logger';
 import { logLLMInteraction } from '../../../core/logger/llmAuditLogger'; // Corrected import
-import config from '../../../core/config';
 
 const router = Router();
 
 // Initialize LLM Task Runner with Ollama executor
-const ollamaExecutor = new OllamaExecutor(config.llm.ollamaDefaultModel); // Corrected constructor call
+const ollamaExecutor = new OllamaExecutor(process.env.OLLAMA_DEFAULT_MODEL || 'llama2'); // Corrected constructor call
 
 const llmTaskRunner = new LLMTaskRunner(ollamaExecutor);
 
