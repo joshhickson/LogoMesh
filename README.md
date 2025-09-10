@@ -21,7 +21,7 @@ LogoMesh is a local-first cognitive framework that enables users to create, orga
 
 Current version: **0.2.0**  
 Target runtime: Node.js 16 or newer.  
-**Environment Status**: ✅ Development environment stabilized (09.07.2025)
+**Environment Status**: ✅ Development environment stabilized (09.10.2025)
 
 ---
 
@@ -60,7 +60,6 @@ Target runtime: Node.js 16 or newer.
 git clone https://github.com/joshhickson/LogoMesh.git
 cd LogoMesh
 npm install
-cd server && npm install && cd ..
 ```
 
 ### Running in Development
@@ -71,8 +70,7 @@ cd server && npm install && cd ..
 
 # Option 2: Manual start
 # Terminal 1 – back end (port 3001)
-cd server
-npm run dev
+npx ts-node server/src/index.ts
 
 # Terminal 2 – front end (port 5000)
 npm start
@@ -83,7 +81,7 @@ npm start
 
 ### Database Configuration
 
-An SQLite database file is created automatically. To override the location or use another engine, copy `.env.example` to `.env` and edit the connection string.
+An SQLite database file is created automatically. All environment variables, including the database connection string, are managed in `core/config.ts`. To override the default settings, copy `.env.example` to `.env` and edit the values.
 
 ```env
 DATABASE_URL=sqlite:./data/custom.db
@@ -106,7 +104,7 @@ React Front-end  →  Express API  →  SQLite (or configured RDBMS)
 ```
 
 *Front-end technologies:* React 18, Cytoscape.js for graph rendering, Tailwind CSS for layout.  
-*Back-end technologies:* Express.js with TypeScript, vm2 plug-in sandbox, structured logging with pino.
+*Back-end technologies:* Express.js with TypeScript, vm2 plug-in sandbox, structured logging with pino, and a centralized configuration management system in `core/config.ts`.
 
 ---
 
@@ -126,11 +124,8 @@ React Front-end  →  Express API  →  SQLite (or configured RDBMS)
 ### Routine Tasks
 
 ```bash
-# Front-end unit tests
+# Run the full test suite (frontend and backend)
 npm test
-
-# Back-end unit tests
-cd server && npm test
 
 # Linting (front-end and back-end)
 npm run lint
@@ -198,7 +193,10 @@ Architectural changes require an accompanying RFC in `/docs/rfc` before implemen
 * **Local production build**
 
   ```bash
+  # Build the frontend
   npm run build
+
+  # Build the backend
   cd server && npm run build
   ```
 
