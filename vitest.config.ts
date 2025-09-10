@@ -14,7 +14,6 @@ export default defineConfig({
     globals: true,
 
     // Path to a setup file that runs before each test file.
-    // The file that extends expect (`setupTests.js`) should come first.
     setupFiles: ['./src/setupTests.js', './vitest.setup.ts'],
 
     // Configure code coverage reporting.

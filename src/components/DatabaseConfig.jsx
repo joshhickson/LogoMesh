@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import config from '../../core/config';
 
 function DatabaseConfig() {
   const [config, setConfig] = useState({
