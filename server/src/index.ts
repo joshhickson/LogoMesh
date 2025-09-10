@@ -52,7 +52,7 @@ app.use((req: Request, _res: Response, next: NextFunction) => { // res -> _res
 //   return {};
 // }
 
-import { PostgresAdapter } from './db/postgresAdapter'; // Import adapter
+import { SQLiteStorageAdapter } from '../../core/storage/sqliteAdapter'; // Import adapter
 import { IdeaManager } from '../../core/IdeaManager'; // Import IdeaManager
 import { PortabilityService } from '../../core/services/portabilityService'; // Import PortabilityService
 
@@ -146,7 +146,7 @@ app.get(`${apiBasePath}/status`, (_req: Request, res: Response) => {
 async function startServer() {
   try {
     // Initialize Storage Adapter
-    const storageAdapter = new PostgresAdapter();
+    const storageAdapter = new SQLiteStorageAdapter(config.database.path);
     await storageAdapter.initialize(); // Initialize the database connection and schema
     logger.info('Storage adapter initialized successfully.');
 

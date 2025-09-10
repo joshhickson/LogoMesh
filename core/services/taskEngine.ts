@@ -65,7 +65,7 @@ async function logPipelineEvent(event: {
 
 /**
  * TaskEngine orchestrates execution of multi-step workflows using existing
- * LLMTaskRunner, LLMOrchestrator, and PluginHost components
+ * LLMTaskRunner, ConversationOrchestrator, and PluginHost components
  */
 export class TaskEngine {
   private registry: ExecutorRegistry;
