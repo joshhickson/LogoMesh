@@ -70,7 +70,9 @@ export default [
     },
     settings: {
       "import/resolver": {
-        "typescript": {}
+        "typescript": {
+          "project": ["./tsconfig.json", "./server/tsconfig.json", "./src/tsconfig.json"]
+        }
       },
       react: {
         version: "18.2",

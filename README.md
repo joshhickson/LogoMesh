@@ -65,15 +65,8 @@ npm install
 ### Running in Development
 
 ```bash
-# Option 1: Start both services with workflows (recommended)
-# Both services will start automatically in Replit
-
-# Option 2: Manual start
-# Terminal 1 – back end (port 3001)
-npx ts-node server/src/index.ts
-
-# Terminal 2 – front end (port 5000)
-npm start
+# Start both the frontend and backend services concurrently
+npm run dev
 ```
 
 * Front-end: <http://localhost:5000> (configured for Replit environment)
@@ -126,9 +119,6 @@ React Front-end  →  Express API  →  SQLite (or configured RDBMS)
 ```bash
 # Run the full test suite (frontend and backend)
 npm test
-
-# Linting (front-end and back-end)
-npm run lint
 ```
 
 Known open issues are tracked in the GitHub issue queue.
