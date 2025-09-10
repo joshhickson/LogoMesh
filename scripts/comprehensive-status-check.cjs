@@ -1,6 +1,3 @@
-
-#!/usr/bin/env node
-
 /**
  * Comprehensive Status Check Script
  * Date: 07.03.2025

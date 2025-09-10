@@ -1,14 +1,15 @@
 
+import config from '@contracts/../core/config';
 // API Service for LogoMesh Backend Communication
 import { Thought, Segment } from '@contracts/entities';
 import { NewThoughtData, NewSegmentData } from '@contracts/storageAdapter';
 import { User } from './authService';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1';
+const API_BASE_URL = config.frontend.apiUrl;
 
 console.log('[API Service] Using API base URL:', API_BASE_URL);
 
-if (process.env.NODE_ENV === 'development') {
+if (config.nodeEnv === 'development') {
   console.log('Development mode');
 }
 

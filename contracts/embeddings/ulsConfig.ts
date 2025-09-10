@@ -45,11 +45,13 @@ export interface ULSConfig {
   };
 }
 
+import config from '../../core/config';
+
 /**
  * Default ULS configuration
  */
 export const DEFAULT_ULS_CONFIG: ULSConfig = {
-  dimension: parseInt(process.env.ULS_DIMENSION || '768', 10),
+  dimension: config.vtc.ulsDimension,
   normalization: 'l2',
   quantization: {
     enabled: false,

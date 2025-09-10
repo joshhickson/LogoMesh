@@ -3,6 +3,7 @@ import * as fs from 'fs'; // Use standard fs for sync methods used below
 import path from 'path';
 import { Client, QueryResult } from 'pg'; // Added QueryResult
 import { logger } from '../../../core/utils/logger'; // Corrected path
+import config from '../../../core/config';
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ const router = express.Router();
 router.get('/health', async (_req: Request, res: Response): Promise<void> => { // req -> _req
   try {
     // Test database connection
-    const databaseUrl = process.env.DATABASE_URL;
+    const databaseUrl = config.database.url;
     if (databaseUrl) {
       const client = new Client({ connectionString: databaseUrl });
       await client.connect();
@@ -19,10 +20,10 @@ router.get('/health', async (_req: Request, res: Response): Promise<void> => { /
       await client.end();
     }
 
-    res.json({ 
-      status: 'healthy', 
+    res.json({
+      status: 'healthy',
       timestamp: new Date().toISOString(),
-      environment: process.env.NODE_ENV || 'development',
+      environment: config.nodeEnv,
       database: databaseUrl ? 'connected' : 'not_configured'
     });
   } catch (error) {
@@ -78,7 +79,7 @@ router.post('/test-db', async (req: Request, res: Response): Promise<void> => {
 router.post('/backup', async (_req: Request, res: Response): Promise<void> => { // req -> _req
   try {
     // Prefer DB_PATH from environment, fallback to default within server/data
-    const dbPath = process.env.DB_PATH || path.resolve(__dirname, '../../../data/logomesh.sqlite3');
+    const dbPath = config.database.path;
     const backupDir = path.resolve(__dirname, '../../../backups'); // Store backups in /app/server/backups
 
     // Ensure backup directory exists

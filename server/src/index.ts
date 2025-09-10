@@ -4,6 +4,7 @@ import cors from 'cors';
 // import * as fs from 'fs'; // Removed unused
 
 import { logger } from '../../core/utils/logger'; // Use core logger
+import config from '../../core/config';
 
 import thoughtRoutes from './routes/thoughtRoutes';
 import llmRoutes from './routes/llmRoutes';
@@ -13,11 +14,11 @@ import adminRoutes from './routes/adminRoutes';
 import taskRoutes, { initializeTaskEngine } from './routes/taskRoutes';
 import { EventBus } from '../../core/services/eventBus';
 import userRoutes from './routes/userRoutes';
-import type { Request, Response, NextFunction, Router } from 'express'; // Import Router
+import type { Request, Response, NextFunction, Router, RequestHandler } from 'express'; // Import Router
 
 const app = express();
-const PORT = parseInt(process.env.PORT || "3001", 10);
-const apiBasePath = '/api/v1'; // Define the base path
+const PORT = config.server.port;
+const apiBasePath = config.server.apiBasePath; // Define the base path
 
 // Middleware
 app.use(cors());
@@ -78,16 +79,16 @@ const apiRateLimit = createApiRateLimiter();
 const authRateLimit = createAuthRateLimiter();
 
 // Apply rate limiting
-app.use('/api/v1', apiRateLimit.middleware() as any);
-app.use('/api/v1/auth', authRateLimit.middleware() as any);
+app.use('/api/v1', apiRateLimit.middleware() as RequestHandler);
+app.use('/api/v1/auth', authRateLimit.middleware() as RequestHandler);
 
 
 // Health check
 app.get(`${apiBasePath}/health`, (_req: Request, res: Response) => {
-  res.json({ 
-    status: 'healthy', 
+  res.json({
+    status: 'healthy',
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development',
+    environment: config.nodeEnv,
     version: '0.2.0'
   });
 });

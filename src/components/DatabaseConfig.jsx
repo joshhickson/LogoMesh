@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import config from '../../core/config';
 
 function DatabaseConfig() {
   const [config, setConfig] = useState({
@@ -26,7 +27,7 @@ function DatabaseConfig() {
 
   const checkConnectionStatus = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/v1/admin/health`);
+      const response = await fetch(`${config.frontend.apiUrl}/admin/health`);
       if (response.ok) {
         setIsConnected(true);
         setConnectionStatus('Connected to database');
@@ -69,7 +70,7 @@ function DatabaseConfig() {
     setConnectionStatus('Testing connection...');
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/v1/admin/test-db`, {
+      const response = await fetch(`${config.frontend.apiUrl}/admin/test-db`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -96,7 +97,7 @@ function DatabaseConfig() {
 
   const loadFromEnv = () => {
     // Parse DATABASE_URL if available
-    const dbUrl = process.env.REACT_APP_DATABASE_URL;
+    const dbUrl = config.frontend.databaseUrl;
     if (dbUrl) {
       try {
         const url = new URL(dbUrl);
@@ -278,6 +279,7 @@ function DatabaseConfig() {
             <li>6. Start: npm run dev (frontend) and cd server && npm run dev (backend)</li>
           </ol>
         </div>
+        {/* eslint-disable-next-line react/no-unescaped-entities */}
         <p>Note: Your connection string might contain special characters. Wrap them in &quot;quotes&quot; if needed.</p>
       </div>
     </div>
