@@ -73,7 +73,7 @@ export default [
         "typescript": {}
       },
       react: {
-        version: "detect",
+        version: "18.2",
       },
     },
   },

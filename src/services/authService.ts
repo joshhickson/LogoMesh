@@ -1,3 +1,5 @@
+import config from '../../core/config';
+
 export interface User {
   id: string;
   name: string;
@@ -15,7 +17,7 @@ class AuthService {
 
   async getCurrentUser(): Promise<User | null> {
     try {
-      const apiBaseUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+      const apiBaseUrl = config.frontend.apiUrl.replace('/api/v1', '');
       const response = await fetch(`${apiBaseUrl}/api/v1/user/current`);
 
       if (response.ok) {
@@ -27,8 +29,8 @@ class AuthService {
         }
       }
 
-      const replitUserId = (window as any).REPLIT_USER_ID;
-      const replitUserName = (window as any).REPLIT_USER_NAME;
+      const replitUserId = window.REPLIT_USER_ID;
+      const replitUserName = window.REPLIT_USER_NAME;
 
       if (replitUserId) {
         const replitUser: User = {
@@ -47,8 +49,8 @@ class AuthService {
     } catch (error) {
       console.error('Failed to get current user:', error);
 
-      const replitUserId = (window as any).REPLIT_USER_ID;
-      const replitUserName = (window as any).REPLIT_USER_NAME;
+      const replitUserId = window.REPLIT_USER_ID;
+      const replitUserName = window.REPLIT_USER_NAME;
 
       if (replitUserId) {
         const replitUser: User = {

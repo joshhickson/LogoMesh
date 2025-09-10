@@ -103,8 +103,36 @@ export interface QueryField {
   format: string;
 }
 
-// Removed DatabaseRow, ThoughtRecord, and SegmentRecord as they were causing TSC errors
-// and SQLite adapter now uses SQLiteThoughtRecord and SQLiteSegmentRecord.
+export interface DatabaseRow {
+  id: string;
+}
+
+export interface ThoughtRecord extends DatabaseRow {
+  title: string;
+  description: string | null;
+  created_at: string;
+  updated_at: string;
+  // Fields from ThoughtData that are likely in the record
+  abstraction_level?: string;
+  local_priority?: number;
+  cluster_id?: string;
+  position?: Position;
+  metadata?: Record<string, unknown>;
+}
+
+export interface SegmentRecord extends DatabaseRow {
+  thought_id: string;
+  title: string;
+  content: string;
+  content_type: string;
+  created_at: string;
+  updated_at: string;
+  // Fields from SegmentData that are likely in the record
+  abstraction_level?: string;
+  local_priority?: number;
+  cluster_id?: string;
+  sort_order?: number;
+}
 
 // Compression and Filtering Types
 export interface SemanticCompressionOptions {

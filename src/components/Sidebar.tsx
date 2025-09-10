@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { graphService } from '../services/graphService';
 import errorLogger from '../utils/errorLogger';
 import DevAssistantPanel from './DevAssistantPanel';
+import config from '../../core/config';
 import DatabaseConfig from './DatabaseConfig';
 
 // Current schema version for display purposes
@@ -147,7 +148,7 @@ function Sidebar({
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api/v1'}/import/json`, {
+      const response = await fetch(`${config.frontend.apiUrl}/import/json`, {
         method: 'POST',
         body: formData
       });

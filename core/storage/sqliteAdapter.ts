@@ -18,6 +18,74 @@ export class SQLiteStorageAdapter implements StorageAdapter {
 
   constructor(private dbPath: string) {}
 
+  private _mapRecordToThought(row: SQLiteThoughtRecord, segments: Segment[], tags: Tag[]): Thought {
+    let parsedFields: Record<string, unknown> = {};
+    if (row.fields) {
+      try { parsedFields = JSON.parse(row.fields) as Record<string, unknown>; }
+      catch (e) { logger.warn(`Failed to parse fields JSON for thought ${row.thought_bubble_id}`, e); }
+    }
+    let parsedMetadata: Record<string, unknown> = {};
+    if (row.metadata) {
+      try { parsedMetadata = JSON.parse(row.metadata) as Record<string, unknown>; }
+      catch (e) { logger.warn(`Failed to parse metadata JSON for thought ${row.thought_bubble_id}`, e); }
+    }
+
+    const thought: Thought = {
+      id: row.thought_bubble_id,
+      title: row.title,
+      created_at: new Date(row.created_at).toISOString(),
+      updated_at: new Date(row.updated_at).toISOString(),
+      tags,
+      segments,
+      fields: parsedFields,
+      metadata: parsedMetadata
+    };
+    if (row.description !== undefined && row.description !== null) thought.description = row.description;
+    if (row.color !== undefined && row.color !== null) thought.color = row.color;
+    if (row.position_x !== undefined && row.position_x !== null &&
+        row.position_y !== undefined && row.position_y !== null) {
+      thought.position = { x: row.position_x, y: row.position_y };
+    }
+    return thought;
+  }
+
+  private _mapRecordToSegment(row: SQLiteSegmentRecord): Segment {
+    let finalFields: Record<string, unknown> = {};
+    let finalMetadata: Record<string, unknown> = {};
+
+    if (row.metadata) {
+      try {
+        const parsed = JSON.parse(row.metadata) as Record<string, unknown>;
+        if (typeof parsed.fields === 'object' && parsed.fields !== null) {
+          finalFields = parsed.fields as Record<string, unknown>;
+          const { ...rest } = parsed;
+          finalMetadata = rest;
+        } else {
+          finalMetadata = parsed;
+        }
+      } catch (e) {
+        logger.warn(`Failed to parse metadata JSON for segment ${row.segment_id}:`, e);
+      }
+    }
+
+    const segment: Segment = {
+      segment_id: row.segment_id,
+      thought_bubble_id: row.thought_bubble_id,
+      content: row.content || '',
+      created_at: new Date(row.created_at).toISOString(),
+      updated_at: new Date(row.updated_at).toISOString(),
+      fields: finalFields,
+      metadata: finalMetadata,
+    };
+    if (row.title !== undefined && row.title !== null) segment.title = row.title;
+    if (row.content_type !== undefined && row.content_type !== null) segment.content_type = row.content_type;
+    if (row.abstraction_level !== undefined && row.abstraction_level !== null) segment.abstraction_level = row.abstraction_level;
+    if (row.local_priority !== undefined && row.local_priority !== null) segment.local_priority = row.local_priority;
+    if (row.cluster_id !== undefined && row.cluster_id !== null) segment.cluster_id = row.cluster_id;
+    if (row.sort_order !== undefined && row.sort_order !== null) segment.sort_order = row.sort_order;
+    return segment;
+  }
+
   async initialize(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.db = new sqlite3.Database(this.dbPath, (err: Error | null) => {
@@ -74,40 +142,11 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         }
 
         try {
-          const thoughts: Thought[] = [];
-          for (const row of rows) {
-            const segments = await this.getSegmentsForThought(row.thought_bubble_id, _userId); // userId -> _userId
-            const tags = this.parseTagsFromRow(row.tags_str || null); // Use tags_str
-
-            let parsedFields: Record<string, unknown> = {};
-            if (row.fields) {
-              try { parsedFields = JSON.parse(row.fields) as Record<string, unknown>; }
-              catch (e) { logger.warn(`Failed to parse fields JSON for thought ${row.thought_bubble_id}`, e); }
-            }
-            let parsedMetadata: Record<string, unknown> = {};
-            if (row.metadata) {
-              try { parsedMetadata = JSON.parse(row.metadata) as Record<string, unknown>; }
-              catch (e) { logger.warn(`Failed to parse metadata JSON for thought ${row.thought_bubble_id}`, e); }
-            }
-
-            const thought: Thought = {
-              id: row.thought_bubble_id,
-              title: row.title,
-              created_at: new Date(row.created_at).toISOString(),
-              updated_at: new Date(row.updated_at).toISOString(),
-              tags, // Assuming Tag[] is fine, or it needs mapping too
-              segments, // Assuming Segment[] is fine
-              fields: parsedFields, // Assuming Record<string, unknown> is fine
-              metadata: parsedMetadata // Assuming Record<string, unknown> is fine
-            };
-            if (row.description !== undefined && row.description !== null) thought.description = row.description;
-            if (row.color !== undefined && row.color !== null) thought.color = row.color;
-            if (row.position_x !== undefined && row.position_x !== null &&
-                row.position_y !== undefined && row.position_y !== null) {
-              thought.position = { x: row.position_x, y: row.position_y };
-            }
-            thoughts.push(thought);
-          }
+          const thoughts = await Promise.all(rows.map(async row => {
+            const segments = await this.getSegmentsForThought(row.thought_bubble_id, _userId);
+            const tags = this.parseTagsFromRow(row.tags_str || null);
+            return this._mapRecordToThought(row, segments, tags);
+          }));
           resolve(thoughts);
         } catch (error) {
           reject(error);
@@ -146,36 +185,9 @@ export class SQLiteStorageAdapter implements StorageAdapter {
         }
 
         try {
-          const segments = await this.getSegmentsForThought(thoughtId, _userId); // userId -> _userId
-          const tags = this.parseTagsFromRow(row.tags_str || null); // Use tags_str
-
-          let parsedFields: Record<string, unknown> = {};
-          if (row.fields) {
-            try { parsedFields = JSON.parse(row.fields) as Record<string, unknown>; }
-            catch (e) { logger.warn(`Failed to parse fields JSON for thought ${row.thought_bubble_id}`, e); }
-          }
-          let parsedMetadata: Record<string, unknown> = {};
-          if (row.metadata) {
-            try { parsedMetadata = JSON.parse(row.metadata) as Record<string, unknown>; }
-            catch (e) { logger.warn(`Failed to parse metadata JSON for thought ${row.thought_bubble_id}`, e); }
-          }
-
-          const thought: Thought = {
-            id: row.thought_bubble_id,
-            title: row.title,
-            created_at: new Date(row.created_at).toISOString(),
-            updated_at: new Date(row.updated_at).toISOString(),
-            tags,
-            segments,
-            fields: parsedFields,
-            metadata: parsedMetadata
-          };
-          if (row.description !== undefined && row.description !== null) thought.description = row.description;
-          if (row.color !== undefined && row.color !== null) thought.color = row.color;
-          if (row.position_x !== undefined && row.position_x !== null &&
-              row.position_y !== undefined && row.position_y !== null) {
-            thought.position = { x: row.position_x, y: row.position_y };
-          }
+          const segments = await this.getSegmentsForThought(thoughtId, _userId);
+          const tags = this.parseTagsFromRow(row.tags_str || null);
+          const thought = this._mapRecordToThought(row, segments, tags);
           resolve(thought);
         } catch (error) {
           reject(error);
@@ -361,43 +373,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
           return;
         }
 
-        const segments: Segment[] = rows.map(row => {
-          let finalFields: Record<string, unknown> = {};
-          let finalMetadata: Record<string, unknown> = {};
-
-          if (row.metadata) {
-            try {
-              const parsed = JSON.parse(row.metadata) as Record<string, unknown>;
-              if (typeof parsed.fields === 'object' && parsed.fields !== null) {
-                finalFields = parsed.fields as Record<string, unknown>;
-                const { ...rest } = parsed;
-                finalMetadata = rest;
-              } else {
-                finalMetadata = parsed;
-              }
-            } catch (e) {
-              logger.warn(`Failed to parse metadata JSON for segment ${row.segment_id}:`, e);
-            }
-          }
-
-          const segment: Segment = {
-            segment_id: row.segment_id,
-            thought_bubble_id: row.thought_bubble_id,
-            content: row.content || '',
-            created_at: new Date(row.created_at).toISOString(),
-            updated_at: new Date(row.updated_at).toISOString(),
-            fields: finalFields, // finalFields is already {} if not found
-            metadata: finalMetadata, // finalMetadata is already {} if not found
-          };
-          if (row.title !== undefined && row.title !== null) segment.title = row.title;
-          if (row.content_type !== undefined && row.content_type !== null) segment.content_type = row.content_type;
-          if (row.abstraction_level !== undefined && row.abstraction_level !== null) segment.abstraction_level = row.abstraction_level;
-          if (row.local_priority !== undefined && row.local_priority !== null) segment.local_priority = row.local_priority;
-          if (row.cluster_id !== undefined && row.cluster_id !== null) segment.cluster_id = row.cluster_id;
-          if (row.sort_order !== undefined && row.sort_order !== null) segment.sort_order = row.sort_order;
-          return segment;
-        });
-
+        const segments = rows.map(row => this._mapRecordToSegment(row));
         resolve(segments);
       });
     });
@@ -423,38 +399,7 @@ export class SQLiteStorageAdapter implements StorageAdapter {
           return;
         }
 
-        let finalFields: Record<string, unknown> = {};
-        let finalMetadata: Record<string, unknown> = {};
-        if (row.metadata) {
-          try {
-            const parsed = JSON.parse(row.metadata) as Record<string, unknown>;
-            if (typeof parsed.fields === 'object' && parsed.fields !== null) {
-              finalFields = parsed.fields as Record<string, unknown>;
-              const { ...rest } = parsed;
-              finalMetadata = rest;
-            } else {
-              finalMetadata = parsed;
-            }
-          } catch (e) {
-            logger.warn(`Failed to parse metadata JSON for segment ${row.segment_id}:`, e);
-          }
-        }
-
-        const segment: Segment = {
-          segment_id: row.segment_id,
-          thought_bubble_id: row.thought_bubble_id,
-          content: row.content || '',
-          created_at: new Date(row.created_at).toISOString(),
-          updated_at: new Date(row.updated_at).toISOString(),
-          fields: finalFields, // finalFields is already {} if not found
-          metadata: finalMetadata, // finalMetadata is already {} if not found
-        };
-        if (row.title !== undefined && row.title !== null) segment.title = row.title;
-        if (row.content_type !== undefined && row.content_type !== null) segment.content_type = row.content_type;
-        if (row.abstraction_level !== undefined && row.abstraction_level !== null) segment.abstraction_level = row.abstraction_level;
-        if (row.local_priority !== undefined && row.local_priority !== null) segment.local_priority = row.local_priority;
-        if (row.cluster_id !== undefined && row.cluster_id !== null) segment.cluster_id = row.cluster_id;
-        if (row.sort_order !== undefined && row.sort_order !== null) segment.sort_order = row.sort_order;
+        const segment = this._mapRecordToSegment(row);
         resolve(segment);
       });
     });
