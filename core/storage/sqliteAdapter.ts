@@ -91,10 +91,10 @@ export class SQLiteStorageAdapter implements StorageAdapter {
             }
 
             const thought: Thought = {
-              thought_bubble_id: row.thought_bubble_id,
+              id: row.thought_bubble_id,
               title: row.title,
-              created_at: new Date(row.created_at),
-              updated_at: new Date(row.updated_at),
+              created_at: new Date(row.created_at).toISOString(),
+              updated_at: new Date(row.updated_at).toISOString(),
               tags, // Assuming Tag[] is fine, or it needs mapping too
               segments, // Assuming Segment[] is fine
               fields: parsedFields, // Assuming Record<string, unknown> is fine
@@ -161,10 +161,10 @@ export class SQLiteStorageAdapter implements StorageAdapter {
           }
 
           const thought: Thought = {
-            thought_bubble_id: row.thought_bubble_id,
+            id: row.thought_bubble_id,
             title: row.title,
-            created_at: new Date(row.created_at),
-            updated_at: new Date(row.updated_at),
+            created_at: new Date(row.created_at).toISOString(),
+            updated_at: new Date(row.updated_at).toISOString(),
             tags,
             segments,
             fields: parsedFields,
@@ -384,8 +384,8 @@ export class SQLiteStorageAdapter implements StorageAdapter {
             segment_id: row.segment_id,
             thought_bubble_id: row.thought_bubble_id,
             content: row.content || '',
-            created_at: new Date(row.created_at),
-            updated_at: new Date(row.updated_at),
+            created_at: new Date(row.created_at).toISOString(),
+            updated_at: new Date(row.updated_at).toISOString(),
             fields: finalFields, // finalFields is already {} if not found
             metadata: finalMetadata, // finalMetadata is already {} if not found
           };
@@ -444,8 +444,8 @@ export class SQLiteStorageAdapter implements StorageAdapter {
           segment_id: row.segment_id,
           thought_bubble_id: row.thought_bubble_id,
           content: row.content || '',
-          created_at: new Date(row.created_at),
-          updated_at: new Date(row.updated_at),
+          created_at: new Date(row.created_at).toISOString(),
+          updated_at: new Date(row.updated_at).toISOString(),
           fields: finalFields, // finalFields is already {} if not found
           metadata: finalMetadata, // finalMetadata is already {} if not found
         };

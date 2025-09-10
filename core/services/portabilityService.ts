@@ -33,8 +33,8 @@ export class PortabilityService implements ThoughtExportProvider {
       title: segment.title || '',
       content: segment.content,
       content_type: segment.content_type || 'text',
-      created_at: segment.created_at.toISOString(),
-      updated_at: segment.updated_at.toISOString(),
+      created_at: segment.created_at,
+      updated_at: segment.updated_at,
     };
 
     if (segment.abstraction_level !== undefined) segmentData.abstraction_level = segment.abstraction_level;
@@ -51,11 +51,11 @@ export class PortabilityService implements ThoughtExportProvider {
 
   private mapThoughtToThoughtData(thought: Thought): ThoughtData {
     const thoughtData: ThoughtData = {
-      thought_bubble_id: thought.thought_bubble_id,
+      id: thought.id,
       title: thought.title,
       description: thought.description || '',
-      created_at: thought.created_at.toISOString(),
-      updated_at: thought.updated_at.toISOString(),
+      created_at: thought.created_at,
+      updated_at: thought.updated_at,
     };
 
     if (thought.segments && thought.segments.length > 0) {
@@ -109,7 +109,7 @@ export class PortabilityService implements ThoughtExportProvider {
 
   private mapThoughtDataToNewThoughtData(thoughtData: ThoughtData): NewThoughtData {
     const newThought: NewThoughtData = {
-      id: thoughtData.thought_bubble_id,
+      id: thoughtData.id,
       title: thoughtData.title,
     };
 
@@ -339,9 +339,9 @@ export class PortabilityService implements ThoughtExportProvider {
 
       for (const thoughtData of jsonData.thoughts) {
         try {
-          const existingThought = await this.storage.getThoughtById(thoughtData.thought_bubble_id);
+          const existingThought = await this.storage.getThoughtById(thoughtData.id);
           if (existingThought) {
-            logger.warn(`Thought ${thoughtData.thought_bubble_id} already exists, skipping`);
+            logger.warn(`Thought ${thoughtData.id} already exists, skipping`);
             skippedThoughts++;
             continue;
           }
@@ -355,20 +355,20 @@ export class PortabilityService implements ThoughtExportProvider {
               try {
                 const newSegmentDataForStorage: NewSegmentData = this.mapSegmentDataToNewSegmentData(
                   segmentData,
-                  createdThought.thought_bubble_id
+                  createdThought.id
                 );
                 await this.storage.createSegment(
-                  createdThought.thought_bubble_id,
+                  createdThought.id,
                   newSegmentDataForStorage
                 );
                 importedSegments++;
               } catch (segmentError: unknown) {
-                logger.warn(`Failed to import segment for thought ${createdThought.thought_bubble_id}: ${segmentError instanceof Error ? segmentError.message : String(segmentError)}`);
+                logger.warn(`Failed to import segment for thought ${createdThought.id}: ${segmentError instanceof Error ? segmentError.message : String(segmentError)}`);
               }
             }
           }
         } catch (thoughtError: unknown) {
-          logger.warn(`Failed to import thought ${thoughtData.thought_bubble_id}: ${thoughtError instanceof Error ? thoughtError.message : String(thoughtError)}`);
+          logger.warn(`Failed to import thought ${thoughtData.id}: ${thoughtError instanceof Error ? thoughtError.message : String(thoughtError)}`);
           skippedThoughts++;
         }
       }
