@@ -219,8 +219,8 @@ export interface PostgresThoughtRecord {
   description: string | null;
   fields: Record<string, unknown>;
   metadata: Record<string, unknown>;
-  created_at: Date;
-  updated_at: Date;
+  created_at: Date; // PostgreSQL returns Date objects, converted to string when mapping to entities
+  updated_at: Date; // PostgreSQL returns Date objects, converted to string when mapping to entities
   color?: string | null;
   position_x?: number | null;
   position_y?: number | null;
@@ -237,8 +237,8 @@ export interface PostgresSegmentRecord {
   metadata: Record<string, unknown>;
   position_x: number;
   position_y: number;
-  created_at: Date;
-  updated_at: Date;
+  created_at: Date; // PostgreSQL returns Date objects, converted to string when mapping to entities
+  updated_at: Date; // PostgreSQL returns Date objects, converted to string when mapping to entities
   abstraction_level?: string | null;
   local_priority?: number | null;
   cluster_id?: string | null;
