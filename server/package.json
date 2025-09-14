@@ -8,9 +8,21 @@
     "start": "node dist/server/src/index.js",
     "dev": "tsc && node dist/server/src/index.js",
     "watch": "tsc -w",
-    "test": "echo \"Server tests not yet implemented\" && exit 0"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^8.16.2",
+    "@types/pg": "^8.15.4"
+  },
+  "devDependencies": {
+    "vitest": "^3.1.2",
+    "supertest": "^7.1.4",
+    "express": "^5.1.0",
+    "@types/supertest": "^6.0.3",
+    "@types/express": "^5.0.2"
+  }
 }
