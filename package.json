@@ -51,7 +51,7 @@
     "eject": "react-scripts eject",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/ core/ contracts/ server/src/",
-    "lint:strict": "eslint core/ server/src/ --max-warnings 0 --ignore-pattern \"**/*.test.ts\"",
+    "lint:strict": "eslint core/ server/src/ --max-warnings 0",
     "lint:fix": "eslint src/ core/ contracts/ server/src/ --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\" \"core/**/*.{js,jsx,ts,tsx,json,css,md}\" \"contracts/**/*.{js,jsx,ts,tsx,json,css,md}\" \"server/src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "validate": "npm run lint:strict && npm run typecheck && npm run test",
