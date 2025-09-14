@@ -4,10 +4,10 @@
   "description": "LogoMesh backend server",
   "main": "index.js",
   "scripts": {
-    "build": "../node_modules/.bin/tsc --noEmit false && cp -r ../core ./dist/",
+    "build": "tsc --noEmit false && cp -r ../core ./dist/",
     "start": "node dist/server/src/index.js",
-    "dev": "../node_modules/.bin/tsc && node dist/server/src/index.js",
-    "watch": "../node_modules/.bin/tsc -w",
+    "dev": "tsc && node dist/server/src/index.js",
+    "watch": "tsc -w",
     "test": "echo \"Server tests not yet implemented\" && exit 0"
   },
   "keywords": [],

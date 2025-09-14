@@ -1,3 +1,5 @@
+import path from 'path';
+
 // Define the shape of the application's configuration
 interface AppConfig {
   nodeEnv: string;
@@ -36,7 +38,7 @@ const config: AppConfig = {
     apiBasePath: process.env.API_BASE_PATH || '/api/v1',
   },
   database: {
-    path: process.env.DB_PATH || './data/logomesh.sqlite3',
+    path: process.env.DB_PATH || path.join(__dirname, '..', '..', '..', 'data', 'logomesh.sqlite3'),
     ...(process.env.DATABASE_URL && { url: process.env.DATABASE_URL }),
   },
   plugins: {

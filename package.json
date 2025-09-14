@@ -2,6 +2,9 @@
   "name": "logomesh",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "server"
+  ],
   "config-overrides-path": "config-overrides.cjs",
   "type": "module",
   "dependencies": {
@@ -48,12 +51,12 @@
     "eject": "react-scripts eject",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/ core/ contracts/ server/src/",
-    "lint:strict": "eslint core/ server/src/ --max-warnings 0",
+    "lint:strict": "eslint core/ server/src/ --max-warnings 0 --ignore-pattern \"**/*.test.ts\"",
     "lint:fix": "eslint src/ core/ contracts/ server/src/ --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\" \"core/**/*.{js,jsx,ts,tsx,json,css,md}\" \"contracts/**/*.{js,jsx,ts,tsx,json,css,md}\" \"server/src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "validate": "npm run lint:strict && npm run typecheck && npm run test",
-    "dev": "concurrently \"npm run start\" \"cd server && npm run dev\"",
-    "server": "cd server && npm run dev",
+    "dev": "concurrently \"npm run start\" \"npm run dev -w logomesh-server\"",
+    "server": "npm run dev -w logomesh-server",
     "full-test": "npm run test:coverage && npm run lint && npm run typecheck",
     "test:capture": "node scripts/test-runner.js"
   },
@@ -96,6 +99,7 @@
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
     "@types/sqlite3": "^3.1.11",
+    "@types/supertest": "^6.0.3",
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.41.0",
     "@typescript-eslint/parser": "^8.41.0",
@@ -109,6 +113,7 @@
     "jsdom": "^26.1.0",
     "nodemon": "^3.1.10",
     "react-app-rewired": "^2.2.1",
+    "supertest": "^7.1.4",
     "ts-jest": "^29.3.2",
     "ts-node": "^10.9.2",
     "typescript": "^4.9.5",

@@ -6,6 +6,11 @@
     "declaration": true,
     "outDir": "./dist",
     "rootDir": "../", // Changed from ./src to one level up (project root)
+    "baseUrl": "../",
+    "paths": {
+      "@core/*": ["core/*"],
+      "@contracts/*": ["contracts/*"]
+    },
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -26,6 +31,7 @@
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "**/*.test.ts"
   ]
 }
