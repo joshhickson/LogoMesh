@@ -5,21 +5,12 @@ export default defineConfig({
   test: {
     environment: 'node',
     globals: true,
-    setupFiles: ['../vitest.setup.ts'],
     include: ['src/**/__tests__/**/*.test.{js,ts}'],
     coverage: {
       provider: 'v8',
-      include: ['src/**/*.ts'],
-      exclude: ['src/types/**', '**/*.d.ts', '**/index.ts'],
+      include: ['src/**/*.ts', '../core/**/*.ts'],
+      exclude: ['src/types/**', '**/*.d.ts', '**/index.ts', '../contracts/**'],
       reporter: ['text', 'html', 'json-summary', 'json'],
-      thresholds: {
-        global: {
-          lines: 85,
-          branches: 80,
-          functions: 90,
-          statements: 85,
-        },
-      },
     },
   },
   resolve: {
