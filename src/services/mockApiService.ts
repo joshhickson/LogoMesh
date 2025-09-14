@@ -6,10 +6,10 @@ let thoughts: Thought[] = [
   {
     id: 'thought_1',
     title: 'Welcome to LogoMesh',
-    content: 'This is a mock thought for development.',
+    description: 'This is a mock thought for development.',
     tags: [{name: 'welcome', color: 'blue'}],
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
     segments: [],
   }
 ];
@@ -28,8 +28,8 @@ export const mockApiService = {
     const newThought: Thought = {
       id: `thought_${Date.now()}`,
       ...thoughtData,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
       segments: [],
     };
     thoughts.push(newThought);
@@ -39,7 +39,7 @@ export const mockApiService = {
   async updateThoughtApi(thoughtId: string, thoughtData: Partial<NewThoughtData>): Promise<Thought | null> {
     const index = thoughts.findIndex(t => t.id === thoughtId);
     if (index !== -1) {
-      thoughts[index] = { ...thoughts[index], ...thoughtData, updatedAt: new Date().toISOString() };
+      thoughts[index] = { ...thoughts[index], ...thoughtData, updated_at: new Date().toISOString() };
       return Promise.resolve(thoughts[index]);
     }
     return Promise.resolve(null);
@@ -55,13 +55,17 @@ export const mockApiService = {
 
   async createSegmentApi(thoughtId: string, segmentData: NewSegmentData): Promise<Segment> {
     const newSegment: Segment = {
-      id: `segment_${Date.now()}`,
+      segment_id: `segment_${Date.now()}`,
+      thought_bubble_id: thoughtId,
       ...segmentData,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
     };
     const thought = thoughts.find(t => t.id === thoughtId);
     if (thought) {
+      if (!thought.segments) {
+        thought.segments = [];
+      }
       thought.segments.push(newSegment);
     }
     return Promise.resolve(newSegment);
@@ -69,10 +73,10 @@ export const mockApiService = {
 
   async updateSegmentApi(thoughtId: string, segmentId: string, segmentData: Partial<NewSegmentData>): Promise<Segment | null> {
     const thought = thoughts.find(t => t.id === thoughtId);
-    if (thought) {
-      const index = thought.segments.findIndex(s => s.id === segmentId);
+    if (thought && thought.segments) {
+      const index = thought.segments.findIndex(s => s.segment_id === segmentId);
       if (index !== -1) {
-        thought.segments[index] = { ...thought.segments[index], ...segmentData, updatedAt: new Date().toISOString() };
+        thought.segments[index] = { ...thought.segments[index], ...segmentData, updated_at: new Date().toISOString() };
         return Promise.resolve(thought.segments[index]);
       }
     }
@@ -81,8 +85,8 @@ export const mockApiService = {
 
   async deleteSegmentApi(thoughtId: string, segmentId: string): Promise<void> {
     const thought = thoughts.find(t => t.id === thoughtId);
-    if (thought) {
-      const index = thought.segments.findIndex(s => s.id === segmentId);
+    if (thought && thought.segments) {
+      const index = thought.segments.findIndex(s => s.segment_id === segmentId);
       if (index !== -1) {
         thought.segments.splice(index, 1);
       }
@@ -115,7 +119,7 @@ export const mockApiService = {
   },
 
   async getCurrentUser(): Promise<User> {
-    return Promise.resolve({ id: 'user_1', email: 'dev@logomesh.com', name: 'Dev User', isAuthenticated: true, roles: ['developer'] });
+    return Promise.resolve({ id: 'user_1', email: 'dev@logomesh.com', name: 'Dev User', isAuthenticated: true, roles: 'developer' });
   },
 
   // Legacy method names for backward compatibility
