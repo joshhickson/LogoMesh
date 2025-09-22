@@ -17,6 +17,12 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm run validate
+    - name: Scan for secrets
+      run: |
+        if grep -r -E "sk-|jwtSecret=changeme|OPENAI_API_KEY=|AWS_(ACCESS|SECRET)_KEY=" .; then
+          echo "Error: Found potential secrets in the codebase."
+          exit 1
+        fi
 
   deploy:
     needs: test

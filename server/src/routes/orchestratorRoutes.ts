@@ -1,8 +1,8 @@
 
 import { Router, Request, Response } from 'express';
-import { LLMOrchestrator, LLMMessage } from '../../../core/llm/LLMOrchestrator'; // Import LLMMessage
+import { ConversationOrchestrator, LLMMessage } from '../../../core/llm/ConversationOrchestrator';
 import { LLMRegistry } from '../../../core/llm/LLMRegistry';
-import { EventBus } from '../../../core/services/eventBus';
+import { LLMOrchestrator } from '../../../core/llm/LLMOrchestrator';
 import { logger } from '../../../core/utils/logger';
 
 const router = Router();
@@ -35,36 +35,25 @@ interface SendMessageBody {
 }
 // --- End Request Body Interfaces ---
 
-// Initialize services
-const eventBus = new EventBus();
-const orchestrator = new LLMOrchestrator(eventBus);
-const registry = new LLMRegistry();
 
 // Load model endpoint
 router.post('/models/load', async (req: Request, res: Response): Promise<void> => {
+  const { llmOrchestrator, llmRegistry } = req.app.locals as { llmOrchestrator: LLMOrchestrator, llmRegistry: LLMRegistry };
   try {
     const { modelId, roleId, specialization, systemPrompt } = req.body as LoadModelBody;
 
-    if (!modelId || !roleId || !specialization ||
-        typeof modelId !== 'string' || typeof roleId !== 'string' || typeof specialization !== 'string') {
-      res.status(400).json({
-        error: 'Missing or invalid required fields: modelId, roleId, specialization must be strings'
-      });
-      return;
-    }
-    if (systemPrompt && typeof systemPrompt !== 'string') {
-      res.status(400).json({ error: 'systemPrompt must be a string if provided' });
+    if (!modelId || !roleId || !specialization) {
+      res.status(400).json({ error: 'Missing required fields: modelId, roleId, specialization' });
       return;
     }
 
-
-    const executor = await registry.loadModel(modelId);
-    await orchestrator.loadModel(roleId, executor, specialization, systemPrompt);
+    const executor = await llmRegistry.loadModel(modelId);
+    await llmOrchestrator.loadModel(roleId, executor, specialization, systemPrompt);
 
     res.json({ 
       success: true, 
       message: `Model ${modelId} loaded as ${roleId}`,
-      memoryStats: registry.getMemoryStats()
+      memoryStats: llmRegistry.getMemoryStats()
     });
 
   } catch (error: unknown) {
@@ -78,27 +67,22 @@ router.post('/models/load', async (req: Request, res: Response): Promise<void> =
 
 // Hot-swap model endpoint
 router.put('/models/hotswap', async (req: Request, res: Response): Promise<void> => {
+  const { llmOrchestrator, llmRegistry } = req.app.locals as { llmOrchestrator: LLMOrchestrator, llmRegistry: LLMRegistry };
   try {
     const { roleId, newModelId, conversationId } = req.body as HotSwapModelBody;
 
-    if (!roleId || !newModelId || typeof roleId !== 'string' || typeof newModelId !== 'string') {
-      res.status(400).json({
-        error: 'Missing or invalid required fields: roleId, newModelId must be strings'
-      });
-      return;
-    }
-    if (conversationId && typeof conversationId !== 'string') {
-      res.status(400).json({ error: 'conversationId must be a string if provided' });
+    if (!roleId || !newModelId) {
+      res.status(400).json({ error: 'Missing required fields: roleId, newModelId' });
       return;
     }
 
-    const newExecutor = await registry.loadModel(newModelId);
-    await orchestrator.hotSwapModel(roleId, newExecutor, conversationId);
+    const newExecutor = await llmRegistry.loadModel(newModelId);
+    await llmOrchestrator.hotSwapModel(roleId, newExecutor, conversationId);
 
     res.json({ 
       success: true, 
       message: `Hot-swapped ${roleId} to ${newModelId}`,
-      memoryStats: registry.getMemoryStats()
+      memoryStats: llmRegistry.getMemoryStats()
     });
 
   } catch (error: unknown) {
@@ -112,20 +96,16 @@ router.put('/models/hotswap', async (req: Request, res: Response): Promise<void>
 
 // Start conversation endpoint
 router.post('/conversations/start', async (req: Request, res: Response): Promise<void> => {
+  const { llmOrchestrator } = req.app.locals as { llmOrchestrator: LLMOrchestrator };
   try {
     const { participantRoles, initialPrompt, topic } = req.body as StartConversationBody;
 
-    if (!participantRoles || !Array.isArray(participantRoles) ||
-        !initialPrompt || typeof initialPrompt !== 'string' ||
-        !topic || typeof topic !== 'string' ||
-        participantRoles.some(role => typeof role !== 'string')) {
-      res.status(400).json({
-        error: 'Missing or invalid required fields: participantRoles (array of strings), initialPrompt (string), topic (string)'
-      });
+    if (!participantRoles || !initialPrompt || !topic) {
+      res.status(400).json({ error: 'Missing required fields: participantRoles, initialPrompt, topic' });
       return;
     }
 
-    const conversationId = await orchestrator.startConversation(
+    const conversationId = await llmOrchestrator.startConversation(
       participantRoles, 
       initialPrompt, 
       topic
@@ -149,24 +129,17 @@ router.post('/conversations/start', async (req: Request, res: Response): Promise
 
 // Send message endpoint
 router.post('/conversations/:conversationId/message', async (req: Request, res: Response): Promise<void> => {
+  const { llmOrchestrator } = req.app.locals as { llmOrchestrator: LLMOrchestrator };
   try {
     const { conversationId } = req.params;
     const { fromRole, toRoles, content, messageType } = req.body as SendMessageBody;
 
-    if (!fromRole || typeof fromRole !== 'string' ||
-        !content || typeof content !== 'string') {
-      res.status(400).json({
-        error: 'Missing or invalid required fields: fromRole (string), content (string)'
-      });
+    if (!fromRole || !content) {
+      res.status(400).json({ error: 'Missing required fields: fromRole, content' });
       return;
     }
-    if (toRoles && (!Array.isArray(toRoles) || toRoles.some(role => typeof role !== 'string'))) {
-      res.status(400).json({ error: 'toRoles must be an array of strings if provided' });
-      return;
-    }
-    // messageType is already validated by its type in SendMessageBody if provided
 
-    const message = await orchestrator.sendMessage(
+    llmOrchestrator.sendMessage(
       conversationId,
       fromRole,
       toRoles || [],
@@ -176,8 +149,7 @@ router.post('/conversations/:conversationId/message', async (req: Request, res: 
 
     res.json({ 
       success: true, 
-      message,
-      conversationStats: orchestrator.getConversationStats(conversationId)
+      message: 'Message sent'
     });
 
   } catch (error: unknown) {
@@ -191,18 +163,19 @@ router.post('/conversations/:conversationId/message', async (req: Request, res: 
 
 // Get conversation history endpoint
 router.get('/conversations/:conversationId/history', (req: Request, res: Response): void => {
+  const { conversationOrchestrator } = req.app.locals as { conversationOrchestrator: ConversationOrchestrator };
   try {
     const { conversationId } = req.params;
-    const history = orchestrator.getConversationHistory(conversationId);
+    const history = conversationOrchestrator.getConversationHistory(conversationId);
 
-    res.json({ 
-      success: true, 
+    res.json({
+      success: true,
       conversationId,
       messageCount: history.length,
       messages: history
     });
 
-  } catch (error: unknown) { // any -> unknown
+  } catch (error: unknown) {
     logger.error('[OrchestratorRoutes] Error getting conversation history:', error);
     res.status(500).json({
       error: 'Failed to get conversation history',
@@ -211,39 +184,15 @@ router.get('/conversations/:conversationId/history', (req: Request, res: Respons
   }
 });
 
-// Export conversation endpoint
-router.get('/conversations/:conversationId/export', (req: Request, res: Response): void => {
-  try {
-    const { conversationId } = req.params;
-    const { format } = req.query as { format?: 'json' | 'training-data' }; // Type req.query
-
-    const exportData = orchestrator.exportConversation(
-      conversationId, 
-      format // Pass format directly, exportConversation handles default
-    );
-
-    res.json({ 
-      success: true, 
-      exportData
-    });
-
-  } catch (error: unknown) { // any -> unknown
-    logger.error('[OrchestratorRoutes] Error exporting conversation:', error);
-    res.status(500).json({
-      error: 'Failed to export conversation',
-      details: error instanceof Error ? error.message : String(error)
-    });
-  }
-});
-
 // Get available models endpoint
 router.get('/models/available', (req: Request, res: Response): void => {
+  const { llmRegistry } = req.app.locals as { llmRegistry: LLMRegistry };
   try {
-    const availableModels = registry.getAvailableModels();
     const { capability } = req.query as { capability?: string };
 
+    const availableModels = llmRegistry.getAvailableModels();
     const filteredModels = capability 
-      ? registry.getModelsByCapability(capability)
+      ? llmRegistry.getModelsByCapability(capability)
       : availableModels;
 
     res.json({ 
@@ -251,63 +200,34 @@ router.get('/models/available', (req: Request, res: Response): void => {
       models: filteredModels,
       totalCount: filteredModels.length
     });
-    return; // Added return
   } catch (error: unknown) {
     logger.error('[OrchestratorRoutes] Error getting available models:', error);
     res.status(500).json({
       error: 'Failed to get available models',
       details: error instanceof Error ? error.message : String(error)
     });
-    return; // Added return
   }
 });
 
 // Get loaded models endpoint
-router.get('/models/loaded', async (_req: Request, res: Response): Promise<void> => {
+router.get('/models/loaded', async (req: Request, res: Response): Promise<void> => {
+  const { llmOrchestrator, llmRegistry } = req.app.locals as { llmOrchestrator: LLMOrchestrator, llmRegistry: LLMRegistry };
   try {
-    const loadedModels = registry.getLoadedModels();
-    const activeModels = orchestrator.getActiveModels();
+    const loadedModels = llmRegistry.getLoadedModels();
+    const activeModels = llmOrchestrator.getActiveModels();
 
     res.json({ 
       success: true, 
       loadedModels,
       activeModels,
-      memoryStats: registry.getMemoryStats()
+      memoryStats: llmRegistry.getMemoryStats()
     });
-    // No explicit return needed here if it's the last statement in try
   } catch (error: unknown) {
     logger.error('[OrchestratorRoutes] Error getting loaded models:', error);
     res.status(500).json({
       error: 'Failed to get loaded models',
       details: error instanceof Error ? error.message : String(error)
     });
-    // No explicit return needed here if it's the last statement in catch
-  }
-});
-
-// Get conversation statistics endpoint
-router.get('/conversations/:conversationId/stats', async (req: Request, res: Response): Promise<void> => {
-  try {
-    const { conversationId } = req.params;
-    const stats = orchestrator.getConversationStats(conversationId);
-
-    if (!stats) {
-      res.status(404).json({ error: 'Conversation not found' });
-      return;
-    }
-
-    res.json({ 
-      success: true, 
-      stats
-    });
-    return; // Explicit return
-  } catch (error: unknown) {
-    logger.error('[OrchestratorRoutes] Error getting conversation stats:', error);
-    res.status(500).json({
-      error: 'Failed to get conversation stats',
-      details: error instanceof Error ? error.message : String(error)
-    });
-    return; // Explicit return
   }
 });
 
