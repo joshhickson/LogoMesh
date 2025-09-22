@@ -10,7 +10,7 @@ import { Client } from 'pg';
 vi.mock('@core/config', () => ({
   default: {
     database: {
-      url: null,
+      url: undefined,
       path: '/data/logomesh.sqlite3',
     },
     nodeEnv: 'test',
@@ -47,14 +47,14 @@ describe('Admin Routes', () => {
 
   afterEach(() => {
       // Restore config to default state after each test
-      vi.mocked(config.database, true).url = null;
+      vi.mocked(config.database, true).url = undefined;
       vi.mocked(config.database, true).path = '/data/logomesh.sqlite3';
   });
 
 
   describe('GET /admin/health', () => {
     it('should return a healthy status when the database is not configured', async () => {
-      vi.mocked(config.database, true).url = null;
+      vi.mocked(config.database, true).url = undefined;
       const response = await request(app).get('/admin/health');
 
       expect(response.status).toBe(200);

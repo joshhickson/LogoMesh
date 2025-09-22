@@ -71,7 +71,7 @@ export default [
     settings: {
       "import/resolver": {
         "typescript": {
-          "project": ["./tsconfig.json", "./server/tsconfig.json", "./src/tsconfig.json"]
+          "project": ["./tsconfig.json", "./server/tsconfig.json"]
         }
       },
       react: {

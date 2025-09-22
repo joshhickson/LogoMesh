@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import request from 'supertest';
 import express, { Request, Response, NextFunction } from 'express';
 import thoughtRoutes from '../thoughtRoutes';
-import { IdeaManager } from '@core/IdeaManager';
 
 // Mock the core service
 vi.mock('@core/IdeaManager');

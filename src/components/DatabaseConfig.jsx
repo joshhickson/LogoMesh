@@ -116,8 +116,8 @@ function DatabaseConfig() {
 
   return (
     <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-      <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
-        Database Configuration
+<h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
+  Database Configuration
       </h2>
 
       {/* Connection Status */}
@@ -278,7 +278,7 @@ function DatabaseConfig() {
             <li>6. Start: npm run dev (frontend) and cd server && npm run dev (backend)</li>
           </ol>
         </div>
-        {/* eslint-disable-next-line react/no-unescaped-entities */}
+        { }
         <p>Note: Your connection string might contain special characters. Wrap them in &quot;quotes&quot; if needed.</p>
       </div>
     </div>

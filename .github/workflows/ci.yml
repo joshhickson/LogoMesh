@@ -16,7 +16,7 @@ jobs:
         node-version: '16'
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
+    - run: npm run validate
 
   deploy:
     needs: test
