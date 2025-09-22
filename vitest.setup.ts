@@ -1,7 +1,12 @@
-import '@testing-library/jest-dom/vitest';
+import { expect, afterEach, vi, beforeEach } from 'vitest';
+import * as matchers from '@testing-library/jest-dom/matchers';
 import { cleanup } from '@testing-library/react';
-import { afterEach, vi, beforeEach } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 
+// Extend Vitest's expect with jest-dom matchers
+expect.extend(matchers);
+
+// Ensure proper cleanup after each test
 afterEach(() => {
   cleanup();
 });
@@ -14,6 +19,15 @@ if (typeof window !== 'undefined') {
       addListener: function () { return null; },
       removeListener: function () { return null; },
     };
+  };
+
+  // Mock ResizeObserver for browser-like environments
+  window.ResizeObserver = window.ResizeObserver || class ResizeObserver {
+    constructor() {
+      this.observe = () => {};
+      this.unobserve = () => {};
+      this.disconnect = () => {};
+    }
   };
 
   // Mock window.alert globally
