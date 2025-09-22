@@ -1,4 +1,5 @@
 
+/** @vitest-environment node */
 import { describe, test, expect } from 'vitest';
 
 describe('Backend Connectivity Test', () => {
