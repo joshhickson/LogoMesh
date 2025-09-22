@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import request from 'supertest';
 import express from 'express';
 import portabilityRoutes from '../portabilityRoutes';
-import { PortabilityService } from '@core/services/portabilityService';
 
 // Mock the service
 vi.mock('@core/services/portabilityService');
