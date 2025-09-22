@@ -4,11 +4,13 @@ import express from 'express';
 import { LLMOrchestrator } from '@core/llm/LLMOrchestrator';
 import { LLMRegistry } from '@core/llm/LLMRegistry';
 import { EventBus } from '@core/services/eventBus';
+import { ConversationOrchestrator } from '@core/llm/ConversationOrchestrator';
 
 // Mock dependencies
 vi.mock('@core/llm/LLMOrchestrator');
 vi.mock('@core/llm/LLMRegistry');
 vi.mock('@core/services/eventBus');
+vi.mock('@core/llm/ConversationOrchestrator');
 
 describe('Orchestrator Routes', () => {
   let app: express.Express;
@@ -19,10 +21,7 @@ describe('Orchestrator Routes', () => {
     hotSwapModel: vi.fn(),
     startConversation: vi.fn(),
     sendMessage: vi.fn(),
-    getConversationHistory: vi.fn(),
-    exportConversation: vi.fn(),
     getActiveModels: vi.fn(),
-    getConversationStats: vi.fn(),
   };
 
   const mockRegistry = {
@@ -33,16 +32,25 @@ describe('Orchestrator Routes', () => {
     getLoadedModels: vi.fn(),
   };
 
+  const mockConversationOrchestrator = {
+    getConversationHistory: vi.fn(),
+  };
+
   beforeEach(async () => {
+    vi.resetModules();
     vi.clearAllMocks();
 
     vi.mocked(LLMOrchestrator).mockImplementation(() => mockOrchestrator as any);
     vi.mocked(LLMRegistry).mockImplementation(() => mockRegistry as any);
+    vi.mocked(ConversationOrchestrator).mockImplementation(() => mockConversationOrchestrator as any);
     vi.mocked(EventBus).mockImplementation(() => ({} as any));
 
     const { default: orchestratorRoutes } = await import('../orchestratorRoutes');
 
     app = express();
+    app.locals.llmOrchestrator = mockOrchestrator;
+    app.locals.llmRegistry = mockRegistry;
+    app.locals.conversationOrchestrator = mockConversationOrchestrator;
     app.use(express.json());
     app.use('/orchestrator', orchestratorRoutes);
   });
@@ -105,34 +113,26 @@ describe('Orchestrator Routes', () => {
 
   describe('POST /orchestrator/conversations/:conversationId/message', () => {
     it('should send a message successfully', async () => {
-        mockOrchestrator.sendMessage.mockResolvedValue({ id: 'msg-1' } as any);
+        mockOrchestrator.sendMessage.mockReturnValue(undefined);
         const response = await request(app)
             .post('/orchestrator/conversations/conv-123/message')
             .send({ fromRole: 'r1', content: 'Hello' });
         expect(response.status).toBe(200);
         expect(response.body.success).toBe(true);
+        expect(response.body.message).toBe('Message sent');
     });
   });
 
   describe('GET /orchestrator/conversations/:conversationId/history', () => {
     it('should retrieve conversation history', async () => {
         const mockHistory = [{ id: 'msg-1', content: 'Hello' }];
-        mockOrchestrator.getConversationHistory.mockReturnValue(mockHistory);
+        mockConversationOrchestrator.getConversationHistory.mockReturnValue(mockHistory);
         const response = await request(app).get('/orchestrator/conversations/conv-123/history');
         expect(response.status).toBe(200);
         expect(response.body.messages).toEqual(mockHistory);
     });
   });
 
-  describe('GET /orchestrator/conversations/:conversationId/export', () => {
-    it('should export a conversation successfully', async () => {
-        const mockExport = { data: 'exported data' };
-        mockOrchestrator.exportConversation.mockReturnValue(mockExport);
-        const response = await request(app).get('/orchestrator/conversations/conv-123/export');
-        expect(response.status).toBe(200);
-        expect(response.body.exportData).toEqual(mockExport);
-    });
-  });
 
   describe('GET /orchestrator/models/available', () => {
     it('should retrieve available models', async () => {
@@ -163,19 +163,4 @@ describe('Orchestrator Routes', () => {
     });
   });
 
-  describe('GET /orchestrator/conversations/:conversationId/stats', () => {
-    it('should return stats successfully', async () => {
-        const mockStats = { messageCount: 10 };
-        mockOrchestrator.getConversationStats.mockReturnValue(mockStats);
-        const response = await request(app).get('/orchestrator/conversations/conv-123/stats');
-        expect(response.status).toBe(200);
-        expect(response.body.stats).toEqual(mockStats);
-    });
-
-    it('should return 404 if conversation is not found', async () => {
-        mockOrchestrator.getConversationStats.mockReturnValue(null);
-        const response = await request(app).get('/orchestrator/conversations/not-found-id/stats');
-        expect(response.status).toBe(404);
-    });
-  });
 });

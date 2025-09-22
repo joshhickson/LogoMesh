@@ -229,3 +229,5 @@ Once the **hardened spine** ships, Phase 2b will add:
 **Ship a hardened spine first, then hang organs on it.** This plan focuses on **infrastructure that won't break** rather than features that impress. Every week delivers working, tested, load-proven capabilities.
 
 Week 1-4 creates the **foundation** that Phase 2b can safely build upon. No enterprise fantasies, no scope creep, just **survival and growth**.
+
+For a glimpse into the long-term vision beyond Phase 2, see the [Future Vision](future-vision.md) document.

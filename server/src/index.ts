@@ -55,10 +55,22 @@ app.use((req: Request, _res: Response, next: NextFunction) => { // res -> _res
 import { SQLiteStorageAdapter } from '../../core/storage/sqliteAdapter'; // Import adapter
 import { IdeaManager } from '../../core/IdeaManager'; // Import IdeaManager
 import { PortabilityService } from '../../core/services/portabilityService'; // Import PortabilityService
+import { LLMRegistry } from '../../core/llm/LLMRegistry';
+import { RunnerPool } from '../../core/llm/RunnerPool';
+import { ConversationOrchestrator } from '../../core/llm/ConversationOrchestrator';
+import { LLMGateway } from '../../core/llm/LLMGateway';
+import { LLMOrchestrator } from '../../core/llm/LLMOrchestrator';
 
 // Initialize TaskEngine with EventBus
 const eventBus = new EventBus(); // Keep eventBus global for now if taskEngine init is outside startServer
 // initializeTaskEngine(eventBus); // Moved to startServer
+
+// Initialize LLM components
+const llmRegistry = new LLMRegistry();
+const runnerPool = new RunnerPool(llmRegistry);
+const conversationOrchestrator = new ConversationOrchestrator(eventBus);
+new LLMGateway(llmRegistry, runnerPool, conversationOrchestrator, eventBus);
+const llmOrchestrator = new LLMOrchestrator(eventBus, conversationOrchestrator);
 
 // Mount routes before service init, services will be attached to app.locals in startServer
 // This means routes should be robust to services not being immediately available if hit too early,
@@ -164,6 +176,8 @@ async function startServer() {
     // For now, assuming initializeTaskEngine is synchronous or self-contained for its dependencies
     initializeTaskEngine(eventBus);
     app.locals.eventBus = eventBus; // Make EventBus available if needed by routes directly
+    app.locals.llmOrchestrator = llmOrchestrator;
+    app.locals.llmRegistry = llmRegistry;
 
     // Old setupServices can be removed or integrated if it did more
     // await setupServices();
