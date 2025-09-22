@@ -6,9 +6,14 @@ import path from 'path';
 export default defineConfig({
   plugins: [react()],
   test: {
-    environment: 'jsdom',
     globals: true,
-    setupFiles: ['./src/setupTests.js', './vitest.setup.ts'],
+    // Use a single setup file
+    setupFiles: ['./vitest.setup.ts'],
+    environmentMatchGlobs: [
+      ['src/**', 'jsdom'],
+      ['core/**', 'node'],
+      ['server/src/**', 'node'],
+    ],
     coverage: {
       provider: 'v8',
       include: ['src/**/*.{js,ts,jsx,tsx}', 'core/**/*.{js,ts,jsx,tsx}', 'server/src/**/*.{js,ts,jsx,tsx}'],
@@ -20,7 +25,8 @@ export default defineConfig({
         '**/__tests__/**',
         '**/__mocks__/**',
         'src/reportWebVitals.js',
-        'src/setupTests.js',
+        // We deleted this file, so it should be removed from here
+        // 'src/setupTests.js',
         'server/src/types/**',
         'contracts/**'
       ],
