@@ -1,93 +1,89 @@
-import { PluginRuntimeInterface } from '../plugins/pluginRuntimeInterface';
-import { EventBus } from './eventBus';
+import * as ivm from 'isolated-vm';
+import * as fs from 'fs';
 import { Logger } from '../utils/logger';
 
-/**
- * PluginHost manages the loading, initialization, and lifecycle of plugins.
- * It provides a controlled environment for plugin execution and API access.
- * Enhanced for Phase 1 to support extended manifest schema.
- */
 export class PluginHost {
-  private loadedPlugins: Map<string, PluginRuntimeInterface> = new Map();
-  private pluginConfigs: Map<string, unknown> = new Map(); // any -> unknown
-  private eventBus: EventBus = new EventBus();
-  private logger: Logger;
+  private isolate: ivm.Isolate;
+  private context: ivm.Context | null = null;
+  private runFn: ivm.Reference<(...args: any[]) => any> | null = null;
+  private loadedPluginPath: string | null = null;
 
-  constructor(logger: Logger) {
-    this.logger = logger;
-    this.logger.info('[PluginHost] Initialized with extended manifest support');
+  constructor(private logger: Logger) {
+    this.isolate = new ivm.Isolate({ memoryLimit: 128 });
+    this.logger.info('[PluginHost] Initialized with secure sandbox.');
   }
 
-  /**
-   * Load plugin with extended manifest validation
-   */
-  async loadPlugin(manifestPath: string): Promise<boolean> {
+  public async loadPlugin(pluginPath: string): Promise<boolean> {
     try {
-      this.logger.info(`[PluginHost] Loading plugin from ${manifestPath}`);
+      const pluginCode = fs.readFileSync(pluginPath, 'utf-8');
 
-      // TODO: Read and validate manifest against extended schema
-      // TODO: Check activation_criteria against current environment
-      // TODO: Validate capabilities and permissions
-      // TODO: Load translation_plugins if specified
-
-      return true;
-    } catch (error) {
-      this.logger.error(`[PluginHost] Failed to load plugin: ${error}`);
-      return false;
-    }
-  }
-
-  /**
-   * Unload plugin with proper cleanup
-   */
-  async unloadPlugin(pluginName: string): Promise<boolean> {
-    try {
-      const plugin = this.loadedPlugins.get(pluginName);
-      if (plugin && plugin.onShutdown) {
-        await plugin.onShutdown();
+      if (this.context) {
+        this.context.release();
       }
-      this.loadedPlugins.delete(pluginName);
-      this.pluginConfigs.delete(pluginName);
 
-      this.logger.info(`[PluginHost] Unloaded plugin ${pluginName}`);
+      this.context = await this.isolate.createContext();
+      const jail = this.context.global;
+      await jail.set('global', jail.derefInto());
+
+      let capturedRunFn: ivm.Reference<(...args: any[]) => any> | null = null;
+      const registerFn = (fn: ivm.Reference<(...args: any[]) => any>) => {
+        capturedRunFn = fn;
+      };
+      await jail.set('registerRunFn', new ivm.Reference(registerFn));
+
+      const pluginScript = await this.isolate.compileScript(pluginCode);
+      await pluginScript.run(this.context);
+
+      const bootstrap = `
+        const pluginInstance = new Plugin();
+        const run = function(command, payload) {
+          if (typeof pluginInstance[command] === 'function') {
+            return pluginInstance[command](payload);
+          } else {
+            throw new Error('Command not found: ' + command);
+          }
+        };
+        global.registerRunFn.applySync(undefined, [run]);
+      `;
+
+      const bootstrapScript = await this.isolate.compileScript(bootstrap);
+      await bootstrapScript.run(this.context);
+
+      if (!capturedRunFn) {
+        throw new Error('Failed to get run function from plugin');
+      }
+      this.runFn = capturedRunFn;
+      this.loadedPluginPath = pluginPath;
+      this.logger.info(`[PluginHost] Successfully loaded plugin from ${pluginPath}`);
       return true;
     } catch (error) {
-      this.logger.error(`[PluginHost] Failed to unload plugin ${pluginName}: ${error}`);
+      this.logger.error(`[PluginHost] Failed to load plugin from ${pluginPath}:`, error);
       return false;
     }
   }
 
-  /**
-   * Check if plugin meets activation criteria
-   */
-  // Removed unused _checkActivationCriteria method to fix TS6133
-
-  /**
-   * Get loaded plugins
-   */
-  getLoadedPlugins(): string[] {
-    return Array.from(this.loadedPlugins.keys());
-  }
-
-  /**
-   * Execute plugin command
-   */
-  async executePluginCommand(
-    pluginName: string,
+  public async executePluginCommand(
+    _pluginName: string,
     command: string,
-    payload?: unknown // any -> unknown
-  ): Promise<unknown> { // Promise<any> -> Promise<unknown>
-    const plugin = this.loadedPlugins.get(pluginName);
-    if (plugin && plugin.onCommand) {
-      return await plugin.onCommand(command, payload); // This might cause a new error if onCommand returns any
+    payload: any
+  ): Promise<any> {
+    if (!this.runFn) {
+      throw new Error('Plugin not loaded');
     }
-    throw new Error(`Plugin ${pluginName} not found or doesn't support commands`);
+    return await this.runFn.apply(undefined, [command, payload], { result: { promise: true } });
   }
 
-  /**
-   * Get event bus for plugin communication
-   */
-  getEventBus(): EventBus {
-    return this.eventBus;
+  public getLoadedPlugins(): string[] {
+    return this.loadedPluginPath ? [this.loadedPluginPath] : [];
+  }
+
+  public dispose() {
+    if (this.context) {
+      this.context.release();
+      this.context = null;
+    }
+    if (this.isolate) {
+        this.isolate.dispose();
+    }
   }
 }

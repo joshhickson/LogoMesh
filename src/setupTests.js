@@ -10,20 +10,22 @@ afterEach(() => {
   cleanup();
 });
 
-// Mock window.matchMedia
-window.matchMedia = window.matchMedia || function () {
-  return {
-    matches: false,
-    addListener: function () { return null; },
-    removeListener: function () { return null; },
+// Mock window.matchMedia for browser-like environments
+if (typeof window !== 'undefined') {
+  window.matchMedia = window.matchMedia || function () {
+    return {
+      matches: false,
+      addListener: function () { return null; },
+      removeListener: function () { return null; },
+    };
   };
-};
 
-// Mock ResizeObserver
-window.ResizeObserver = class ResizeObserver {
-  constructor() {
-    this.observe = () => {};
-    this.unobserve = () => {};
-    this.disconnect = () => {};
-  }
-};
+  // Mock ResizeObserver for browser-like environments
+  window.ResizeObserver = window.ResizeObserver || class ResizeObserver {
+    constructor() {
+      this.observe = () => {};
+      this.unobserve = () => {};
+      this.disconnect = () => {};
+    }
+  };
+}
