@@ -75,10 +75,10 @@ describe('LLM Routes', () => {
       const response = await request(app)
         .post('/llm/prompt')
         .send({});
-      const body = response.body as PromptResponse;
+      const body = response.body as { errors: { msg: string }[] };
 
       expect(response.status).toBe(400);
-      expect(body.error).toBe('Prompt is required and must be a string');
+      expect(body.errors[0].msg).toBe('Prompt is required and must be a string');
     });
 
     it('should return 500 if prompt execution fails', async () => {
@@ -170,10 +170,10 @@ describe('LLM Routes', () => {
         const response = await request(app)
           .post('/llm/analyze-segment')
           .send({});
-        const body = response.body as AnalyzeSegmentResponse;
+        const body = response.body as { errors: { msg: string }[] };
 
         expect(response.status).toBe(400);
-        expect(body.error).toBe('Segment content is required and must be a string');
+        expect(body.errors[0].msg).toBe('Segment content is required and must be a string');
       });
 
     it('should return 500 if analysis fails', async () => {

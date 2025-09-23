@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express'; // Use Reques
 import { IdeaManager } from '../../../core/IdeaManager';
 import { logger } from '../../../core/utils/logger';
 import { NewThoughtData, NewSegmentData } from '../../../contracts/storageAdapter';
+import { body, validationResult } from 'express-validator';
 
 const router = Router();
 
@@ -45,16 +46,18 @@ router.get('/', async (req: Request, res: Response, _next: NextFunction): Promis
 });
 
 // POST /api/v1/thoughts - Create new thought
-router.post('/', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+router.post('/',
+  body('title').notEmpty().withMessage('Title is required'),
+  async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   try {
-    const ideaManager = req.app.locals.ideaManager as IdeaManager;
-    const thoughtData = req.body as NewThoughtData;
-
-    // Basic validation
-    if (!thoughtData.title) {
-      res.status(400).json({ error: 'Title is required' });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
       return;
     }
+
+    const ideaManager = req.app.locals.ideaManager as IdeaManager;
+    const thoughtData = req.body as NewThoughtData;
 
     const userId = req.user?.id;
     if (!userId) {
@@ -155,17 +158,20 @@ router.delete('/:thoughtId', async (req: Request, res: Response, _next: NextFunc
 });
 
 // POST /api/v1/thoughts/:thoughtId/segments - Create new segment
-router.post('/:thoughtId/segments', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+router.post('/:thoughtId/segments',
+  body('title').notEmpty().withMessage('Title is required'),
+  body('content').notEmpty().withMessage('Content is required'),
+  async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+
     const ideaManager = req.app.locals.ideaManager as IdeaManager;
     const { thoughtId } = req.params;
     const segmentData = req.body as NewSegmentData;
-
-    // Basic validation
-    if (!segmentData.title || !segmentData.content) {
-      res.status(400).json({ error: 'Title and content are required' });
-      return;
-    }
 
     const userId = req.user?.id;
     if (!userId) {

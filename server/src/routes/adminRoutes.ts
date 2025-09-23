@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import * as fs from 'fs'; // Use standard fs for sync methods used below
 import path from 'path';
 import { Client, QueryResult } from 'pg'; // Added QueryResult
+import { body, validationResult } from 'express-validator';
 import { logger } from '../../../core/utils/logger'; // Corrected path
 import config from '../../../core/config';
 
@@ -40,14 +41,17 @@ router.get('/health', async (_req: Request, res: Response): Promise<void> => { /
 interface TestDbBody {
   connectionString?: string;
 }
-router.post('/test-db', async (req: Request, res: Response): Promise<void> => {
+router.post('/test-db',
+  body('connectionString').notEmpty().withMessage('Connection string is required'),
+  async (req: Request, res: Response): Promise<void> => {
   try {
-    const { connectionString } = req.body as TestDbBody;
-
-    if (!connectionString) {
-      res.status(400).json({ error: 'Connection string is required' });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
       return;
     }
+
+    const { connectionString } = req.body as TestDbBody;
 
     const client = new Client({ connectionString });
     await client.connect();
@@ -165,8 +169,16 @@ router.get('/backups', async (_req: Request, res: Response): Promise<void> => { 
 });
 
 // Save error logs endpoint
-router.post('/save-errors', (req: Request, res: Response): void => { // Added void return type
+router.post('/save-errors',
+  body('error').notEmpty().withMessage('Error field is required'),
+  (req: Request, res: Response): void => { // Added void return type
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+
     const errorData = req.body as Record<string, unknown>;
     const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
     const logFile = path.join(process.cwd(), 'error_exports', 'runtime_errors', `errors_${timestamp}.jsonl`);

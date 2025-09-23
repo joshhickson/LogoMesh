@@ -1,5 +1,6 @@
 
 import { Router, Request, Response } from 'express';
+import { body, validationResult } from 'express-validator';
 import { LLMTaskRunner } from '../../../core/llm/LLMTaskRunner';
 import { OllamaExecutor } from '../../../core/llm/OllamaExecutor';
 import { logger } from '../../../core/utils/logger';
@@ -17,16 +18,17 @@ const llmTaskRunner = new LLMTaskRunner(ollamaExecutor);
  * Execute a prompt using the LLM
  */
 // The PromptBody interface is now defined below, outside this handler.
-router.post('/prompt', async (req: Request, res: Response): Promise<void> => {
+router.post('/prompt',
+  body('prompt').notEmpty().withMessage('Prompt is required and must be a string'),
+  async (req: Request, res: Response): Promise<void> => {
   try {
-    const { prompt, metadata = {} } = req.body as PromptBody;
-    
-    if (!prompt || typeof prompt !== 'string') {
-      res.status(400).json({
-        error: 'Prompt is required and must be a string' 
-      });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
       return;
     }
+
+    const { prompt, metadata = {} } = req.body as PromptBody;
 
     logger.info('[LLM Routes] Processing prompt request', { 
       promptLength: prompt.length,
@@ -133,16 +135,17 @@ router.get('/status', async (_req: Request, res: Response): Promise<void> => { /
  * POST /api/v1/llm/analyze-segment
  * Analyze a thought segment for insights
  */
-router.post('/analyze-segment', async (req: Request, res: Response): Promise<void> => {
+router.post('/analyze-segment',
+  body('segmentContent').notEmpty().withMessage('Segment content is required and must be a string'),
+  async (req: Request, res: Response): Promise<void> => {
   try {
-    const { segmentContent, analysisType = 'general' } = req.body as AnalyzeSegmentBody;
-    
-    if (!segmentContent || typeof segmentContent !== 'string') {
-      res.status(400).json({
-        error: 'Segment content is required and must be a string'
-      });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
       return;
     }
+
+    const { segmentContent, analysisType = 'general' } = req.body as AnalyzeSegmentBody;
     // segmentContent is now definitely a string
 
     const analysisPrompt = `Analyze the following text segment for insights and potential connections:
