@@ -14,8 +14,22 @@ const logger = {
 
 describe('PluginHost', () => {
   let pluginHost: PluginHost;
-  const helloWorldPluginPath = path.resolve(__dirname, 'test-plugins/hello-world/index.js');
-  const maliciousPluginPath = path.resolve(__dirname, 'test-plugins/malicious-plugin/index.js');
+
+  const helloWorldPluginCode = `
+    module.exports = {
+      greet: (payload) => {
+        return \`Hello, \${payload.name}!\`;
+      }
+    };
+  `;
+
+  const maliciousPluginCode = `
+    module.exports = {
+      exploit: () => {
+        return String(typeof process);
+      }
+    };
+  `;
 
   beforeEach(() => {
     pluginHost = new PluginHost(logger);
@@ -26,25 +40,25 @@ describe('PluginHost', () => {
   });
 
   it('should load and run a simple plugin', async () => {
-    await pluginHost.loadPlugin(helloWorldPluginPath);
+    await pluginHost.loadPluginFromString(helloWorldPluginCode, 'hello-world');
     const result = await pluginHost.executePluginCommand('hello-world', 'greet', { name: 'Tester' }) as string;
     expect(result).toBe('Hello, Tester!');
   });
 
   it('should prevent a malicious plugin from accessing process', async () => {
-    await pluginHost.loadPlugin(maliciousPluginPath);
+    await pluginHost.loadPluginFromString(maliciousPluginCode, 'malicious-plugin');
     const result = await pluginHost.executePluginCommand('malicious-plugin', 'exploit', {}) as string;
     expect(result).toBe('undefined');
   });
 
   it('should throw an error for a non-existent command', async () => {
-    await pluginHost.loadPlugin(helloWorldPluginPath);
-    await expect(pluginHost.executePluginCommand('hello-world', 'nonExistent', {})).rejects.toThrow('Command not found: nonExistent');
+    await pluginHost.loadPluginFromString(helloWorldPluginCode, 'hello-world');
+    await expect(pluginHost.executePluginCommand('hello-world', 'nonExistent', {})).rejects.toThrow('Command not found in plugin: nonExistent');
   });
 
-  it('should return the loaded plugin path', async () => {
-    await pluginHost.loadPlugin(helloWorldPluginPath);
+  it('should return the loaded plugin name', async () => {
+    await pluginHost.loadPluginFromString(helloWorldPluginCode, 'hello-world');
     const loadedPlugins = pluginHost.getLoadedPlugins();
-    expect(loadedPlugins).toEqual([helloWorldPluginPath]);
+    expect(loadedPlugins).toEqual(['hello-world']);
   });
 });
