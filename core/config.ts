@@ -28,6 +28,9 @@ interface AppConfig {
     apiUrl: string;
     databaseUrl?: string;
   };
+  jwt: {
+    secret: string;
+  };
 }
 
 // Read and parse environment variables with defaults
@@ -57,6 +60,9 @@ const config: AppConfig = {
   frontend: {
     apiUrl: process.env.REACT_APP_API_URL || 'http://localhost:3001/api/v1',
     ...(process.env.REACT_APP_DATABASE_URL && { databaseUrl: process.env.REACT_APP_DATABASE_URL }),
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET || 'changeme',
   },
 };
 
