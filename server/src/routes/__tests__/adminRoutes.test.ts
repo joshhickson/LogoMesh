@@ -104,9 +104,9 @@ describe('Admin Routes', () => {
 
     it('should return 400 if connectionString is not provided', async () => {
       const response = await request(app).post('/admin/test-db').send({});
-      const body = response.body as TestDbResponse;
+      const body = response.body as { errors: { msg: string }[] };
       expect(response.status).toBe(400);
-      expect(body.error).toBe('Connection string is required');
+      expect(body.errors[0].msg).toBe('Connection string is required');
     });
 
     it('should return success on a valid connection string', async () => {

@@ -705,4 +705,20 @@ export class SQLiteStorageAdapter implements StorageAdapter {
       });
     });
   }
+
+  async healthCheck(): Promise<{ status: 'ok' | 'error'; message?: string }> {
+    return new Promise((resolve) => {
+      if (!this.db) {
+        resolve({ status: 'error', message: 'Database not initialized' });
+        return;
+      }
+      this.db.get('SELECT 1', (err) => {
+        if (err) {
+          resolve({ status: 'error', message: err.message });
+        } else {
+          resolve({ status: 'ok' });
+        }
+      });
+    });
+  }
 }

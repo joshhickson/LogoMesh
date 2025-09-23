@@ -1,5 +1,6 @@
 
 import { Router, Request, Response } from 'express';
+import { body, validationResult } from 'express-validator';
 import { ConversationOrchestrator, LLMMessage } from '../../../core/llm/ConversationOrchestrator';
 import { LLMRegistry } from '../../../core/llm/LLMRegistry';
 import { LLMOrchestrator } from '../../../core/llm/LLMOrchestrator';
@@ -37,15 +38,20 @@ interface SendMessageBody {
 
 
 // Load model endpoint
-router.post('/models/load', async (req: Request, res: Response): Promise<void> => {
+router.post('/models/load',
+  body('modelId').notEmpty().withMessage('modelId is required'),
+  body('roleId').notEmpty().withMessage('roleId is required'),
+  body('specialization').notEmpty().withMessage('specialization is required'),
+  async (req: Request, res: Response): Promise<void> => {
   const { llmOrchestrator, llmRegistry } = req.app.locals as { llmOrchestrator: LLMOrchestrator, llmRegistry: LLMRegistry };
   try {
-    const { modelId, roleId, specialization, systemPrompt } = req.body as LoadModelBody;
-
-    if (!modelId || !roleId || !specialization) {
-      res.status(400).json({ error: 'Missing required fields: modelId, roleId, specialization' });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
       return;
     }
+
+    const { modelId, roleId, specialization, systemPrompt } = req.body as LoadModelBody;
 
     const executor = await llmRegistry.loadModel(modelId);
     await llmOrchestrator.loadModel(roleId, executor, specialization, systemPrompt);
@@ -66,15 +72,19 @@ router.post('/models/load', async (req: Request, res: Response): Promise<void> =
 });
 
 // Hot-swap model endpoint
-router.put('/models/hotswap', async (req: Request, res: Response): Promise<void> => {
+router.put('/models/hotswap',
+  body('roleId').notEmpty().withMessage('roleId is required'),
+  body('newModelId').notEmpty().withMessage('newModelId is required'),
+  async (req: Request, res: Response): Promise<void> => {
   const { llmOrchestrator, llmRegistry } = req.app.locals as { llmOrchestrator: LLMOrchestrator, llmRegistry: LLMRegistry };
   try {
-    const { roleId, newModelId, conversationId } = req.body as HotSwapModelBody;
-
-    if (!roleId || !newModelId) {
-      res.status(400).json({ error: 'Missing required fields: roleId, newModelId' });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
       return;
     }
+
+    const { roleId, newModelId, conversationId } = req.body as HotSwapModelBody;
 
     const newExecutor = await llmRegistry.loadModel(newModelId);
     await llmOrchestrator.hotSwapModel(roleId, newExecutor, conversationId);
@@ -95,15 +105,20 @@ router.put('/models/hotswap', async (req: Request, res: Response): Promise<void>
 });
 
 // Start conversation endpoint
-router.post('/conversations/start', async (req: Request, res: Response): Promise<void> => {
+router.post('/conversations/start',
+  body('participantRoles').isArray({ min: 1 }).withMessage('participantRoles must be a non-empty array'),
+  body('initialPrompt').notEmpty().withMessage('initialPrompt is required'),
+  body('topic').notEmpty().withMessage('topic is required'),
+  async (req: Request, res: Response): Promise<void> => {
   const { llmOrchestrator } = req.app.locals as { llmOrchestrator: LLMOrchestrator };
   try {
-    const { participantRoles, initialPrompt, topic } = req.body as StartConversationBody;
-
-    if (!participantRoles || !initialPrompt || !topic) {
-      res.status(400).json({ error: 'Missing required fields: participantRoles, initialPrompt, topic' });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
       return;
     }
+
+    const { participantRoles, initialPrompt, topic } = req.body as StartConversationBody;
 
     const conversationId = await llmOrchestrator.startConversation(
       participantRoles, 
@@ -128,16 +143,20 @@ router.post('/conversations/start', async (req: Request, res: Response): Promise
 });
 
 // Send message endpoint
-router.post('/conversations/:conversationId/message', async (req: Request, res: Response): Promise<void> => {
+router.post('/conversations/:conversationId/message',
+  body('fromRole').notEmpty().withMessage('fromRole is required'),
+  body('content').notEmpty().withMessage('content is required'),
+  async (req: Request, res: Response): Promise<void> => {
   const { llmOrchestrator } = req.app.locals as { llmOrchestrator: LLMOrchestrator };
   try {
-    const { conversationId } = req.params;
-    const { fromRole, toRoles, content, messageType } = req.body as SendMessageBody;
-
-    if (!fromRole || !content) {
-      res.status(400).json({ error: 'Missing required fields: fromRole, content' });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
       return;
     }
+
+    const { conversationId } = req.params;
+    const { fromRole, toRoles, content, messageType } = req.body as SendMessageBody;
 
     llmOrchestrator.sendMessage(
       conversationId,

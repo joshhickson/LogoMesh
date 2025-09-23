@@ -106,15 +106,14 @@ app.get(`${apiBasePath}/health`, (_req: Request, res: Response) => {
 });
 
 // Comprehensive status endpoint
-app.get(`${apiBasePath}/status`, (_req: Request, res: Response) => {
+app.get(`${apiBasePath}/status`, async (_req: Request, res: Response) => {
   const memUsage = process.memoryUsage();
   const uptime = process.uptime();
   
   try {
-    // Check database connection
-    // const dbStatus = await storageAdapter.healthCheck();
+    const storageAdapter = app.locals.storageAdapter as SQLiteStorageAdapter;
+    const dbStatus = await storageAdapter.healthCheck();
     
-    // Check EventBus status
     const eventBusStats = eventBus.getRegisteredEvents();
     
     res.json({
@@ -123,26 +122,15 @@ app.get(`${apiBasePath}/status`, (_req: Request, res: Response) => {
       system: {
         uptime: Math.floor(uptime),
         memory: {
-          used: Math.round(memUsage.heapUsed / 1024 / 1024),
-          total: Math.round(memUsage.heapTotal / 1024 / 1024),
-          external: Math.round(memUsage.external / 1024 / 1024)
+          heapUsedMB: Math.round(memUsage.heapUsed / 1024 / 1024),
         },
-        cpu: process.cpuUsage()
       },
       services: {
-        database: 'connected', // TODO: Implement actual health check
-        eventBus: {
-          status: 'active',
-          registeredEvents: eventBusStats.length
-        },
-        plugins: {
-          status: 'ready',
-          loaded: 0 // TODO: Get from PluginHost
-        }
+        dbConn: dbStatus.status,
+        pluginSandboxAlive: false, // TODO: Implement
       },
       metrics: {
         queueLag: 0, // TODO: Implement from TaskEngine
-        activeConnections: 0 // TODO: Track active connections
       }
     });
   } catch (error) {

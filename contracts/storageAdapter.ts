@@ -57,4 +57,5 @@ export interface StorageAdapter {
   // Utility operations
   initialize(): Promise<void>;
   close(): Promise<void>;
+  healthCheck(): Promise<{ status: 'ok' | 'error'; message?: string }>;
 }
