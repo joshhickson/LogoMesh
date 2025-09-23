@@ -5,7 +5,7 @@ import { Logger } from '../utils/logger';
 export class PluginHost {
   private isolate: ivm.Isolate;
   private context: ivm.Context | null = null;
-  private runFn: ivm.Reference<(...args: any[]) => any> | null = null;
+  private runFn: ivm.Reference<(...args: [string, unknown][]) => unknown> | null = null;
   private loadedPluginPath: string | null = null;
 
   constructor(private logger: Logger) {
@@ -25,8 +25,8 @@ export class PluginHost {
       const jail = this.context.global;
       await jail.set('global', jail.derefInto());
 
-      let capturedRunFn: ivm.Reference<(...args: any[]) => any> | null = null;
-      const registerFn = (fn: ivm.Reference<(...args: any[]) => any>) => {
+      let capturedRunFn: ivm.Reference<(...args: [string, unknown][]) => unknown> | null = null;
+      const registerFn = (fn: ivm.Reference<(...args: [string, unknown][]) => unknown>) => {
         capturedRunFn = fn;
       };
       await jail.set('registerRunFn', new ivm.Reference(registerFn));
@@ -65,12 +65,12 @@ export class PluginHost {
   public async executePluginCommand(
     _pluginName: string,
     command: string,
-    payload: any
-  ): Promise<any> {
+    payload: unknown
+  ): Promise<unknown> {
     if (!this.runFn) {
       throw new Error('Plugin not loaded');
     }
-    return await this.runFn.apply(undefined, [command, payload], { result: { promise: true } });
+    return await this.runFn.apply(undefined, [command, payload as any], { result: { promise: true } });
   }
 
   public getLoadedPlugins(): string[] {

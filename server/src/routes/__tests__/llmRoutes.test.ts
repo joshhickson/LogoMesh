@@ -25,12 +25,12 @@ describe('LLM Routes', () => {
     vi.clearAllMocks();
 
     // The factory for the mocked class now returns our shared mock object
-    vi.mocked(LLMTaskRunner).mockImplementation(() => mockLLMTaskRunner as any);
+    vi.mocked(LLMTaskRunner).mockImplementation(() => mockLLMTaskRunner as unknown as LLMTaskRunner);
 
     // Mock other dependencies
     vi.mocked(OllamaExecutor).mockImplementation(() => ({
       getModelName: vi.fn().mockReturnValue('mock-model'),
-    }) as any);
+    }) as unknown as OllamaExecutor);
     vi.mocked(logLLMInteraction).mockResolvedValue(undefined);
 
     // Dynamically import the routes to ensure they use the mocks
@@ -42,6 +42,13 @@ describe('LLM Routes', () => {
   });
 
   describe('POST /llm/prompt', () => {
+    interface PromptResponse {
+      success: boolean;
+      result?: string;
+      error?: string;
+      details?: string;
+    }
+
     it('should execute a prompt and return a result', async () => {
       const prompt = 'What is the meaning of life?';
       const mockResult = {
@@ -56,10 +63,11 @@ describe('LLM Routes', () => {
       const response = await request(app)
         .post('/llm/prompt')
         .send({ prompt });
+      const body = response.body as PromptResponse;
 
       expect(response.status).toBe(200);
-      expect(response.body.success).toBe(true);
-      expect(response.body.result).toBe('42');
+      expect(body.success).toBe(true);
+      expect(body.result).toBe('42');
       expect(mockLLMTaskRunner.executePrompt).toHaveBeenCalledWith(prompt, {});
     });
 
@@ -67,9 +75,10 @@ describe('LLM Routes', () => {
       const response = await request(app)
         .post('/llm/prompt')
         .send({});
+      const body = response.body as PromptResponse;
 
       expect(response.status).toBe(400);
-      expect(response.body.error).toBe('Prompt is required and must be a string');
+      expect(body.error).toBe('Prompt is required and must be a string');
     });
 
     it('should return 500 if prompt execution fails', async () => {
@@ -80,14 +89,24 @@ describe('LLM Routes', () => {
       const response = await request(app)
         .post('/llm/prompt')
         .send({ prompt });
+      const body = response.body as PromptResponse;
 
       expect(response.status).toBe(500);
-      expect(response.body.error).toBe('Failed to process prompt');
-      expect(response.body.details).toBe('LLM error');
+      expect(body.error).toBe('Failed to process prompt');
+      expect(body.details).toBe('LLM error');
     });
   });
 
   describe('GET /llm/status', () => {
+    interface StatusResponse {
+      success: boolean;
+      status?: {
+        isConnected: boolean;
+        model: string;
+      };
+      error?: string;
+    }
+
     it('should return the LLM service status', async () => {
       const mockStatus = {
         isConnected: true,
@@ -99,11 +118,12 @@ describe('LLM Routes', () => {
       mockLLMTaskRunner.getStatus.mockResolvedValue(mockStatus);
 
       const response = await request(app).get('/llm/status');
+      const body = response.body as StatusResponse;
 
       expect(response.status).toBe(200);
-      expect(response.body.success).toBe(true);
-      expect(response.body.status.isConnected).toBe(true);
-      expect(response.body.status.model).toBe('mock-model');
+      expect(body.success).toBe(true);
+      expect(body.status?.isConnected).toBe(true);
+      expect(body.status?.model).toBe('mock-model');
     });
 
     it('should return 500 if getting status fails', async () => {
@@ -111,13 +131,20 @@ describe('LLM Routes', () => {
         mockLLMTaskRunner.getStatus.mockRejectedValue(new Error('Status check failed'));
 
         const response = await request(app).get('/llm/status');
+        const body = response.body as StatusResponse;
 
         expect(response.status).toBe(500);
-        expect(response.body.error).toBe('Failed to get LLM status');
+        expect(body.error).toBe('Failed to get LLM status');
     });
   });
 
   describe('POST /llm/analyze-segment', () => {
+    interface AnalyzeSegmentResponse {
+      success: boolean;
+      analysis?: string;
+      error?: string;
+    }
+
     it('should analyze a segment and return a result', async () => {
       const segmentContent = 'This is a test segment.';
       const mockResult = {
@@ -131,10 +158,11 @@ describe('LLM Routes', () => {
       const response = await request(app)
         .post('/llm/analyze-segment')
         .send({ segmentContent });
+      const body = response.body as AnalyzeSegmentResponse;
 
       expect(response.status).toBe(200);
-      expect(response.body.success).toBe(true);
-      expect(response.body.analysis).toBe('{"themes": ["testing"]}');
+      expect(body.success).toBe(true);
+      expect(body.analysis).toBe('{"themes": ["testing"]}');
       expect(mockLLMTaskRunner.executePrompt).toHaveBeenCalled();
     });
 
@@ -142,9 +170,10 @@ describe('LLM Routes', () => {
         const response = await request(app)
           .post('/llm/analyze-segment')
           .send({});
+        const body = response.body as AnalyzeSegmentResponse;
 
         expect(response.status).toBe(400);
-        expect(response.body.error).toBe('Segment content is required and must be a string');
+        expect(body.error).toBe('Segment content is required and must be a string');
       });
 
     it('should return 500 if analysis fails', async () => {
@@ -155,9 +184,10 @@ describe('LLM Routes', () => {
         const response = await request(app)
           .post('/llm/analyze-segment')
           .send({ segmentContent });
+        const body = response.body as AnalyzeSegmentResponse;
 
         expect(response.status).toBe(500);
-        expect(response.body.error).toBe('Failed to analyze segment');
+        expect(body.error).toBe('Failed to analyze segment');
       });
   });
 });

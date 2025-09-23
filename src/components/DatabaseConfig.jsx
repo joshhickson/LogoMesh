@@ -271,11 +271,11 @@ function DatabaseConfig() {
           </h3>
           <ol className="text-sm text-blue-700 dark:text-blue-300 space-y-1">
             <li>1. Configure your database connection above</li>
-            <li>2. Click "Save & Copy Connection String"</li>
+            <li>2. Click &quot;Save &amp; Copy Connection String&quot;</li>
             <li>3. Download LogoMesh source code to your PC</li>
             <li>4. Create a .env file with: DATABASE_URL=&lt;paste connection string&gt;</li>
-            <li>5. Run: npm install && cd server && npm install</li>
-            <li>6. Start: npm run dev (frontend) and cd server && npm run dev (backend)</li>
+            <li>5. Run: npm install &amp;&amp; cd server &amp;&amp; npm install</li>
+            <li>6. Start: npm run dev (frontend) and cd server &amp;&amp; npm run dev (backend)</li>
           </ol>
         </div>
         { }

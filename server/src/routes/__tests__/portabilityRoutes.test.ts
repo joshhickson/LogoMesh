@@ -25,24 +25,32 @@ describe('Portability Routes', () => {
   });
 
   describe('GET /portability/json (Export)', () => {
+    interface ExportResponse {
+      version: number;
+      thoughts: { id: string; title: string }[];
+      error?: string;
+    }
+
     it('should export data successfully', async () => {
       const mockExport = { version: 1, thoughts: [{ id: 't1', title: 'Test Thought' }] };
       mockPortabilityService.exportData.mockResolvedValue(mockExport);
 
       const response = await request(app).get('/portability/json');
+      const body = response.body as ExportResponse;
 
       expect(response.status).toBe(200);
       expect(response.headers['content-type']).toContain('application/json');
       expect(response.headers['content-disposition']).toMatch(/attachment; filename="logomesh-export-.*\.json"/);
-      expect(response.body).toEqual(mockExport);
+      expect(body).toEqual(mockExport);
       expect(mockPortabilityService.exportData).toHaveBeenCalled();
     });
 
     it('should return 500 if export fails', async () => {
       mockPortabilityService.exportData.mockRejectedValue(new Error('Export failed'));
       const response = await request(app).get('/portability/json');
+      const body = response.body as ExportResponse;
       expect(response.status).toBe(500);
-      expect(response.body.error).toBe('Failed to export data');
+      expect(body.error).toBe('Failed to export data');
     });
   });
 
@@ -50,22 +58,29 @@ describe('Portability Routes', () => {
     const validJsonString = '{"version":1,"thoughts":[]}';
     const validJsonBuffer = Buffer.from(validJsonString);
 
+    interface ImportResponse {
+      success?: boolean;
+      error?: string;
+    }
+
     it('should import data successfully from a valid JSON file', async () => {
       mockPortabilityService.importData.mockResolvedValue(undefined);
 
       const response = await request(app)
         .post('/portability/json')
         .attach('file', validJsonBuffer, 'import.json');
+      const body = response.body as ImportResponse;
 
       expect(response.status).toBe(200);
-      expect(response.body.success).toBe(true);
+      expect(body.success).toBe(true);
       expect(mockPortabilityService.importData).toHaveBeenCalledWith(JSON.parse(validJsonString));
     });
 
     it('should return 400 if no file is uploaded', async () => {
       const response = await request(app).post('/portability/json');
+      const body = response.body as ImportResponse;
       expect(response.status).toBe(400);
-      expect(response.body.error).toBe('No file uploaded');
+      expect(body.error).toBe('No file uploaded');
     });
 
     it('should return 400 for a file with invalid JSON', async () => {
@@ -73,9 +88,10 @@ describe('Portability Routes', () => {
       const response = await request(app)
         .post('/portability/json')
         .attach('file', invalidJsonBuffer, 'bad.json');
+      const body = response.body as ImportResponse;
 
       expect(response.status).toBe(400);
-      expect(response.body.error).toBe('Invalid JSON file');
+      expect(body.error).toBe('Invalid JSON file');
     });
 
     it('should return 500 if import process fails', async () => {
@@ -84,9 +100,10 @@ describe('Portability Routes', () => {
       const response = await request(app)
         .post('/portability/json')
         .attach('file', validJsonBuffer, 'import.json');
+      const body = response.body as ImportResponse;
 
       expect(response.status).toBe(500);
-      expect(response.body.error).toBe('Failed to import data');
+      expect(body.error).toBe('Failed to import data');
     });
 
     // Note: Testing multer's file type filter is harder here as it rejects

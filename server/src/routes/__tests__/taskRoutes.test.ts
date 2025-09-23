@@ -31,10 +31,10 @@ describe('Task Routes', () => {
     vi.resetModules();
     vi.clearAllMocks();
 
-    vi.mocked(TaskEngine).mockImplementation(() => mockTaskEngine as any);
-    vi.mocked(EventBus).mockImplementation(() => ({} as any));
-    vi.mocked(LLMTaskRunner).mockImplementation(() => ({} as any));
-    vi.mocked(OllamaExecutor).mockImplementation(() => ({} as any));
+    vi.mocked(TaskEngine).mockImplementation(() => mockTaskEngine as unknown as TaskEngine);
+    vi.mocked(EventBus).mockImplementation(() => ({}) as unknown as EventBus);
+    vi.mocked(LLMTaskRunner).mockImplementation(() => ({}) as unknown as LLMTaskRunner);
+    vi.mocked(OllamaExecutor).mockImplementation(() => ({}) as unknown as OllamaExecutor);
 
     // Dynamically import to get a fresh module and wait for it
     const module = await import('../taskRoutes');
@@ -60,8 +60,13 @@ describe('Task Routes', () => {
         .post('/tasks/pipelines')
         .send(pipelineDef);
 
+      interface PipelineResponse {
+        pipeline: { id: string };
+      }
+      const body = response.body as PipelineResponse;
+
       expect(response.status).toBe(201);
-      expect(response.body.pipeline.id).toBe('pipe-123');
+      expect(body.pipeline.id).toBe('pipe-123');
       expect(mockTaskEngine.createPipeline).toHaveBeenCalledWith(pipelineDef);
     });
 
@@ -80,15 +85,23 @@ describe('Task Routes', () => {
     it('GET /tasks/pipelines should list active pipelines', async () => {
         mockTaskEngine.getActivePipelines.mockReturnValue([{ id: 'pipe-123' }]);
         const response = await request(app).get('/tasks/pipelines');
+        interface PipelinesResponse {
+          pipelines: { id: string }[];
+        }
+        const body = response.body as PipelinesResponse;
         expect(response.status).toBe(200);
-        expect(response.body.pipelines).toHaveLength(1);
+        expect(body.pipelines).toHaveLength(1);
     });
 
     it('GET /tasks/pipelines/:id should get pipeline status', async () => {
         mockTaskEngine.getPipelineStatus.mockReturnValue({ id: 'pipe-123', status: 'running' });
         const response = await request(app).get('/tasks/pipelines/pipe-123');
+        interface PipelineStatusResponse {
+          pipeline: { status: string };
+        }
+        const body = response.body as PipelineStatusResponse;
         expect(response.status).toBe(200);
-        expect(response.body.pipeline.status).toBe('running');
+        expect(body.pipeline.status).toBe('running');
     });
 
     it('GET /tasks/pipelines/:id should return 404 if not found', async () => {
@@ -100,8 +113,12 @@ describe('Task Routes', () => {
     it('POST /tasks/pipelines/:id/cancel should cancel a pipeline', async () => {
         mockTaskEngine.cancelPipeline.mockReturnValue(true);
         const response = await request(app).post('/tasks/pipelines/pipe-123/cancel');
+        interface CancelResponse {
+          success: boolean;
+        }
+        const body = response.body as CancelResponse;
         expect(response.status).toBe(200);
-        expect(response.body.success).toBe(true);
+        expect(body.success).toBe(true);
     });
 
     it('POST /tasks/pipelines/:id/cancel should return 400 if cancellation fails', async () => {
@@ -113,8 +130,12 @@ describe('Task Routes', () => {
     it('GET /tasks/status should return engine status', async () => {
         mockTaskEngine.getStatus.mockReturnValue({ status: 'idle' });
         const response = await request(app).get('/tasks/status');
+        interface StatusResponse {
+          status: { status: string };
+        }
+        const body = response.body as StatusResponse;
         expect(response.status).toBe(200);
-        expect(response.body.status).toEqual({ status: 'idle' });
+        expect(body.status).toEqual({ status: 'idle' });
     });
   });
 });

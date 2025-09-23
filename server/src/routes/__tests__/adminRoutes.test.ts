@@ -54,23 +54,32 @@ describe('Admin Routes', () => {
 
 
   describe('GET /admin/health', () => {
+    interface HealthCheckResponse {
+      status: string;
+      database: string;
+      environment: string;
+      error?: string;
+    }
+
     it('should return a healthy status when the database is not configured', async () => {
       vi.mocked(config.database, true).url = undefined;
       const response = await request(app).get('/admin/health');
+      const body = response.body as HealthCheckResponse;
 
       expect(response.status).toBe(200);
-      expect(response.body.status).toBe('healthy');
-      expect(response.body.database).toBe('not_configured');
-      expect(response.body.environment).toBe('test');
+      expect(body.status).toBe('healthy');
+      expect(body.database).toBe('not_configured');
+      expect(body.environment).toBe('test');
     });
 
     it('should return a healthy status when the database is configured and connects', async () => {
       vi.mocked(config.database, true).url = 'postgresql://test:test@localhost:5432/test';
       const response = await request(app).get('/admin/health');
+      const body = response.body as HealthCheckResponse;
 
       expect(response.status).toBe(200);
-      expect(response.body.status).toBe('healthy');
-      expect(response.body.database).toBe('connected');
+      expect(body.status).toBe('healthy');
+      expect(body.database).toBe('connected');
       expect(mockConnect).toHaveBeenCalled();
     });
 
@@ -78,18 +87,26 @@ describe('Admin Routes', () => {
       vi.mocked(config.database, true).url = 'postgresql://test:test@localhost:5432/test';
       mockConnect.mockRejectedValueOnce(new Error('Connection failed'));
       const response = await request(app).get('/admin/health');
+      const body = response.body as HealthCheckResponse;
 
       expect(response.status).toBe(500);
-      expect(response.body.status).toBe('unhealthy');
-      expect(response.body.error).toContain('Connection failed');
+      expect(body.status).toBe('unhealthy');
+      expect(body.error).toContain('Connection failed');
     });
   });
 
   describe('POST /admin/test-db', () => {
+    interface TestDbResponse {
+      success?: boolean;
+      version?: string;
+      error?: string;
+    }
+
     it('should return 400 if connectionString is not provided', async () => {
       const response = await request(app).post('/admin/test-db').send({});
+      const body = response.body as TestDbResponse;
       expect(response.status).toBe(400);
-      expect(response.body.error).toBe('Connection string is required');
+      expect(body.error).toBe('Connection string is required');
     });
 
     it('should return success on a valid connection string', async () => {
@@ -97,10 +114,11 @@ describe('Admin Routes', () => {
       const response = await request(app)
         .post('/admin/test-db')
         .send({ connectionString: 'valid-string' });
+      const body = response.body as TestDbResponse;
 
       expect(response.status).toBe(200);
-      expect(response.body.success).toBe(true);
-      expect(response.body.version).toContain('PostgreSQL');
+      expect(body.success).toBe(true);
+      expect(body.version).toContain('PostgreSQL');
       expect(Client).toHaveBeenCalledWith({ connectionString: 'valid-string' });
     });
 
@@ -109,18 +127,26 @@ describe('Admin Routes', () => {
       const response = await request(app)
         .post('/admin/test-db')
         .send({ connectionString: 'invalid-string' });
+      const body = response.body as TestDbResponse;
 
       expect(response.status).toBe(500);
-      expect(response.body.error).toBe('Database connection failed');
+      expect(body.error).toBe('Database connection failed');
     });
   });
 
   describe('POST /admin/backup', () => {
+    interface BackupResponse {
+      success?: boolean;
+      message?: string;
+      error?: string;
+    }
+
     it('should return 404 if database file is not found', async () => {
       vi.mocked(fs.existsSync).mockReturnValue(false);
       const response = await request(app).post('/admin/backup');
+      const body = response.body as BackupResponse;
       expect(response.status).toBe(404);
-      expect(response.body.error).toBe('Database file not found');
+      expect(body.error).toBe('Database file not found');
     });
 
     it('should create a backup directory if it does not exist', async () => {
@@ -136,9 +162,10 @@ describe('Admin Routes', () => {
     it('should create a backup file successfully', async () => {
         vi.mocked(fs.existsSync).mockReturnValue(true);
         const response = await request(app).post('/admin/backup');
+        const body = response.body as BackupResponse;
         expect(response.status).toBe(200);
-        expect(response.body.success).toBe(true);
-        expect(response.body.message).toBe('Database backup created successfully');
+        expect(body.success).toBe(true);
+        expect(body.message).toBe('Database backup created successfully');
         expect(fs.copyFileSync).toHaveBeenCalled();
       });
 
@@ -148,41 +175,60 @@ describe('Admin Routes', () => {
         throw new Error('Copy failed');
       });
       const response = await request(app).post('/admin/backup');
+      const body = response.body as BackupResponse;
       expect(response.status).toBe(500);
-      expect(response.body.error).toBe('Failed to create database backup');
+      expect(body.error).toBe('Failed to create database backup');
     });
   });
 
   describe('GET /admin/backups', () => {
+    interface BackupFile {
+      filename: string;
+      size: number;
+      createdAt: string;
+      modifiedAt: string;
+    }
+
+    interface ListBackupsResponse {
+      backups: BackupFile[];
+    }
+
     it('should return an empty array when backup directory does not exist', async () => {
         vi.mocked(fs.existsSync).mockReturnValue(false);
         const response = await request(app).get('/admin/backups');
+        const body = response.body as ListBackupsResponse;
         expect(response.status).toBe(200);
-        expect(response.body.backups).toEqual([]);
+        expect(body.backups).toEqual([]);
     });
 
     it('should return a list of backup files', async () => {
-        const mockFiles = ['backup1.sqlite3', 'backup2.sqlite3'];
-        const mockStats = { size: 1024, birthtime: new Date(), mtime: new Date() };
+        const mockFiles: string[] = ['backup1.sqlite3', 'backup2.sqlite3'];
+        const mockStats: fs.Stats = { size: 1024, birthtime: new Date(), mtime: new Date() } as fs.Stats;
         vi.mocked(fs.existsSync).mockReturnValue(true);
-        vi.mocked(fs.readdirSync).mockReturnValue(mockFiles as any);
-        vi.mocked(fs.statSync).mockReturnValue(mockStats as any);
+        vi.mocked(fs.readdirSync).mockReturnValue(mockFiles as never[]);
+        vi.mocked(fs.statSync).mockReturnValue(mockStats);
 
         const response = await request(app).get('/admin/backups');
+        const body = response.body as ListBackupsResponse;
         expect(response.status).toBe(200);
-        expect(response.body.backups).toHaveLength(2);
-        expect(response.body.backups[0].filename).toBe('backup1.sqlite3');
+        expect(body.backups).toHaveLength(2);
+        expect(body.backups[0].filename).toBe('backup1.sqlite3');
     });
   });
 
   describe('POST /admin/save-errors', () => {
+    interface SaveErrorsResponse {
+      success: boolean;
+    }
+
     it('should save error data and return success', async () => {
         const errorData = { error: 'test error', details: 'details here' };
         vi.mocked(fs.existsSync).mockReturnValue(false); // To test directory creation
         const response = await request(app).post('/admin/save-errors').send(errorData);
+        const body = response.body as SaveErrorsResponse;
 
         expect(response.status).toBe(200);
-        expect(response.body.success).toBe(true);
+        expect(body.success).toBe(true);
         expect(fs.mkdirSync).toHaveBeenCalled();
         expect(fs.appendFileSync).toHaveBeenCalledWith(expect.any(String), JSON.stringify(errorData) + '\n');
     });
@@ -194,8 +240,9 @@ describe('Admin Routes', () => {
         });
 
         const response = await request(app).post('/admin/save-errors').send(errorData);
+        const body = response.body as SaveErrorsResponse;
         expect(response.status).toBe(500);
-        expect(response.body.success).toBe(false);
+        expect(body.success).toBe(false);
     });
   });
 });

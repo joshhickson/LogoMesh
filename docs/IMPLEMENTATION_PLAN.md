@@ -231,3 +231,19 @@ Once the **hardened spine** ships, Phase 2b will add:
 Week 1-4 creates the **foundation** that Phase 2b can safely build upon. No enterprise fantasies, no scope creep, just **survival and growth**.
 
 For a glimpse into the long-term vision beyond Phase 2, see the [Future Vision](future-vision.md) document.
+
+---
+
+## Progress Log
+
+**2025-09-22: Test Suite Hardening**
+- **Status:** ✅ COMPLETE
+- **Summary:** Fixed the project's test suite, which was suffering from mixed-environment issues (`node` vs. `jsdom`).
+- **Details:**
+    - Reconfigured `vitest.config.ts` to use `environmentMatchGlobs`, allowing for per-directory environment settings.
+    - Resolved critical dependency installation failures by:
+        1.  Switching to the project's specified Node.js version (`v20.11.1`).
+        2.  Downgrading `vitest` and `jsdom` to compatible versions.
+        3.  Performing a clean install to fix native addon loading errors.
+    - Created missing test plugin files to ensure `PluginHost` tests could run.
+- **Outcome:** The entire test suite now passes, unblocking further development and ensuring CI/CD integrity.

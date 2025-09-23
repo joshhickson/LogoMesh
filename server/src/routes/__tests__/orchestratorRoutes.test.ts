@@ -41,10 +41,10 @@ describe('Orchestrator Routes', () => {
     vi.resetModules();
     vi.clearAllMocks();
 
-    vi.mocked(LLMOrchestrator).mockImplementation(() => mockOrchestrator as any);
-    vi.mocked(LLMRegistry).mockImplementation(() => mockRegistry as any);
-    vi.mocked(ConversationOrchestrator).mockImplementation(() => mockConversationOrchestrator as any);
-    vi.mocked(EventBus).mockImplementation(() => ({} as any));
+    vi.mocked(LLMOrchestrator).mockImplementation(() => mockOrchestrator as unknown as LLMOrchestrator);
+    vi.mocked(LLMRegistry).mockImplementation(() => mockRegistry as unknown as LLMRegistry);
+    vi.mocked(ConversationOrchestrator).mockImplementation(() => mockConversationOrchestrator as unknown as ConversationOrchestrator);
+    vi.mocked(EventBus).mockImplementation(() => ({}) as unknown as EventBus);
 
     const { default: orchestratorRoutes } = await import('../orchestratorRoutes');
 
@@ -57,17 +57,22 @@ describe('Orchestrator Routes', () => {
   });
 
   describe('POST /orchestrator/models/load', () => {
+    interface LoadModelResponse {
+      success: boolean;
+    }
+
     it('should load a model successfully', async () => {
-      mockRegistry.loadModel.mockResolvedValue({} as any);
+      mockRegistry.loadModel.mockResolvedValue({} as never);
       mockOrchestrator.loadModel.mockResolvedValue(undefined);
       mockRegistry.getMemoryStats.mockReturnValue({ usage: '100MB' });
 
       const response = await request(app)
         .post('/orchestrator/models/load')
         .send({ modelId: 'llama2', roleId: 'test-role', specialization: 'testing' });
+      const body = response.body as LoadModelResponse;
 
       expect(response.status).toBe(200);
-      expect(response.body.success).toBe(true);
+      expect(body.success).toBe(true);
     });
 
     it('should return 400 for missing fields', async () => {
@@ -85,14 +90,19 @@ describe('Orchestrator Routes', () => {
   });
 
   describe('PUT /orchestrator/models/hotswap', () => {
+    interface HotswapResponse {
+      success: boolean;
+    }
+
     it('should hotswap a model successfully', async () => {
-        mockRegistry.loadModel.mockResolvedValue({} as any);
+        mockRegistry.loadModel.mockResolvedValue({} as never);
         mockOrchestrator.hotSwapModel.mockResolvedValue(undefined);
         const response = await request(app)
             .put('/orchestrator/models/hotswap')
             .send({ roleId: 'test-role', newModelId: 'llama3' });
+        const body = response.body as HotswapResponse;
         expect(response.status).toBe(200);
-        expect(response.body.success).toBe(true);
+        expect(body.success).toBe(true);
     });
 
     it('should return 400 for missing fields', async () => {
@@ -102,46 +112,67 @@ describe('Orchestrator Routes', () => {
   });
 
   describe('POST /orchestrator/conversations/start', () => {
+    interface StartConversationResponse {
+      conversationId: string;
+    }
+
     it('should start a conversation successfully', async () => {
         mockOrchestrator.startConversation.mockResolvedValue('conv-123');
         const response = await request(app)
             .post('/orchestrator/conversations/start')
             .send({ participantRoles: ['r1'], initialPrompt: 'Hi', topic: 'Test' });
+        const body = response.body as StartConversationResponse;
         expect(response.status).toBe(200);
-        expect(response.body.conversationId).toBe('conv-123');
+        expect(body.conversationId).toBe('conv-123');
     });
   });
 
   describe('POST /orchestrator/conversations/:conversationId/message', () => {
+    interface SendMessageResponse {
+      success: boolean;
+      message: string;
+    }
+
     it('should send a message successfully', async () => {
         mockOrchestrator.sendMessage.mockReturnValue(undefined);
         const response = await request(app)
             .post('/orchestrator/conversations/conv-123/message')
             .send({ fromRole: 'r1', content: 'Hello' });
+        const body = response.body as SendMessageResponse;
         expect(response.status).toBe(200);
-        expect(response.body.success).toBe(true);
-        expect(response.body.message).toBe('Message sent');
+        expect(body.success).toBe(true);
+        expect(body.message).toBe('Message sent');
     });
   });
 
   describe('GET /orchestrator/conversations/:conversationId/history', () => {
+    interface HistoryResponse {
+      messages: { id: string; content: string }[];
+    }
+
     it('should retrieve conversation history', async () => {
         const mockHistory = [{ id: 'msg-1', content: 'Hello' }];
         mockConversationOrchestrator.getConversationHistory.mockReturnValue(mockHistory);
         const response = await request(app).get('/orchestrator/conversations/conv-123/history');
+        const body = response.body as HistoryResponse;
         expect(response.status).toBe(200);
-        expect(response.body.messages).toEqual(mockHistory);
+        expect(body.messages).toEqual(mockHistory);
     });
   });
 
 
   describe('GET /orchestrator/models/available', () => {
+    interface AvailableModelsResponse {
+      models: { id: string }[];
+    }
+
     it('should retrieve available models', async () => {
         const mockModels = [{ id: 'llama2' }];
         mockRegistry.getAvailableModels.mockReturnValue(mockModels);
         const response = await request(app).get('/orchestrator/models/available');
+        const body = response.body as AvailableModelsResponse;
         expect(response.status).toBe(200);
-        expect(response.body.models).toEqual(mockModels);
+        expect(body.models).toEqual(mockModels);
     });
 
     it('should filter models by capability', async () => {
@@ -154,13 +185,19 @@ describe('Orchestrator Routes', () => {
   });
 
   describe('GET /orchestrator/models/loaded', () => {
+    interface LoadedModelsResponse {
+      loadedModels: string[];
+      activeModels: Record<string, string>;
+    }
+
     it('should retrieve loaded models successfully', async () => {
         mockRegistry.getLoadedModels.mockReturnValue(['llama2']);
         mockOrchestrator.getActiveModels.mockReturnValue({ 'test-role': 'llama2' });
         const response = await request(app).get('/orchestrator/models/loaded');
+        const body = response.body as LoadedModelsResponse;
         expect(response.status).toBe(200);
-        expect(response.body.loadedModels).toEqual(['llama2']);
-        expect(response.body.activeModels).toEqual({ 'test-role': 'llama2' });
+        expect(body.loadedModels).toEqual(['llama2']);
+        expect(body.activeModels).toEqual({ 'test-role': 'llama2' });
     });
   });
 
