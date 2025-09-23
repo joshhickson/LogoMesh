@@ -1,6 +1,5 @@
 /** @vitest-environment node */
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import * as fs from 'fs';
 import * as path from 'path';
 import { PluginHost } from './pluginHost';
 import { Logger } from '../utils/logger';
@@ -28,13 +27,13 @@ describe('PluginHost', () => {
 
   it('should load and run a simple plugin', async () => {
     await pluginHost.loadPlugin(helloWorldPluginPath);
-    const result = await pluginHost.executePluginCommand('hello-world', 'greet', { name: 'Tester' });
+    const result = await pluginHost.executePluginCommand('hello-world', 'greet', { name: 'Tester' }) as string;
     expect(result).toBe('Hello, Tester!');
   });
 
   it('should prevent a malicious plugin from accessing process', async () => {
     await pluginHost.loadPlugin(maliciousPluginPath);
-    const result = await pluginHost.executePluginCommand('malicious-plugin', 'exploit', {});
+    const result = await pluginHost.executePluginCommand('malicious-plugin', 'exploit', {}) as string;
     expect(result).toBe('undefined');
   });
 
