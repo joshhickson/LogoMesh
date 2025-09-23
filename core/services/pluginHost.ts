@@ -35,20 +35,12 @@ export class PluginHost {
       await pluginScript.run(this.context);
 
       const bootstrap = `
-        const module = { exports: {} };
-        (function(module, exports) {
-          ${pluginCode}
-        })(module, module.exports);
-
-        const pluginInstance = module.exports;
+        const pluginInstance = new Plugin();
         const run = function(command, payload) {
           if (typeof pluginInstance[command] === 'function') {
             return pluginInstance[command](payload);
-          } else if (typeof pluginInstance.run === 'function') {
-            return pluginInstance.run(command, payload);
-          }
-          else {
-            throw new Error('Command not found in plugin: ' + command);
+          } else {
+            throw new Error('Command not found: ' + command);
           }
         };
         global.registerRunFn.applySync(undefined, [run]);
@@ -92,58 +84,6 @@ export class PluginHost {
     }
     if (this.isolate) {
         this.isolate.dispose();
-    }
-  }
-
-  public async loadPluginFromString(pluginCode: string, pluginName: string): Promise<boolean> {
-    try {
-      if (this.context) {
-        this.context.release();
-      }
-
-      this.context = await this.isolate.createContext();
-      const jail = this.context.global;
-      await jail.set('global', jail.derefInto());
-
-      let capturedRunFn: ivm.Reference<(...args: [string, unknown][]) => unknown> | null = null;
-      const registerFn = (fn: ivm.Reference<(...args: [string, unknown][]) => unknown>) => {
-        capturedRunFn = fn;
-      };
-      await jail.set('registerRunFn', new ivm.Reference(registerFn));
-
-      const bootstrap = `
-        const module = { exports: {} };
-        (function(module, exports) {
-          ${pluginCode}
-        })(module, module.exports);
-
-        const pluginInstance = module.exports;
-        const run = function(command, payload) {
-          if (typeof pluginInstance[command] === 'function') {
-            return pluginInstance[command](payload);
-          } else if (typeof pluginInstance.run === 'function') {
-            return pluginInstance.run(command, payload);
-          }
-          else {
-            throw new Error('Command not found in plugin: ' + command);
-          }
-        };
-        global.registerRunFn.applySync(undefined, [run]);
-      `;
-
-      const bootstrapScript = await this.isolate.compileScript(bootstrap);
-      await bootstrapScript.run(this.context);
-
-      if (!capturedRunFn) {
-        throw new Error('Failed to get run function from plugin');
-      }
-      this.runFn = capturedRunFn;
-      this.loadedPluginPath = pluginName; // Use a name for identification
-      this.logger.info(`[PluginHost] Successfully loaded plugin from string: ${pluginName}`);
-      return true;
-    } catch (error) {
-      this.logger.error(`[PluginHost] Failed to load plugin from string: ${pluginName}:`, error);
-      return false;
     }
   }
 }
