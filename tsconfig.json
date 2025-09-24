@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
+    "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -20,17 +20,17 @@
     "paths": {
       "@core/*": ["core/*"],
       "@contracts/*": ["contracts/*"],
-      "~/*": ["src/*"]
+      "@/*": ["src/*"]
     }
   },
   "include": [
-    "src/**/*",
-    "core/**/*",
-    "contracts/**/*",
-    "server/src/**/*",
-    "src/__tests__/**/*"
+    "src",
+    "core",
+    "contracts",
+    "server/src"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/coverage"
   ]
 }
