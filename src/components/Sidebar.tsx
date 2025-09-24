@@ -4,34 +4,19 @@ import errorLogger from '../utils/errorLogger';
 import DevAssistantPanel from './DevAssistantPanel';
 import config from '../../core/config';
 import DatabaseConfig from './DatabaseConfig';
+import { Thought as ContractThought, Segment, Tag } from '../../contracts/entities';
 
 // Current schema version for display purposes
 const thoughtSchemaVersion = '0.5';
 
-interface Tag {
-  name: string;
-  color: string;
-}
-
-interface Segment {
-  segment_id: string;
-  title: string;
-  fields?: Record<string, unknown>;
-}
-
-interface Thought {
-  thought_bubble_id: string;
-  title: string;
-  segments?: Segment[];
-  tags?: Tag[];
-  color?: string;
+interface Thought extends ContractThought {
   filteredSegments?: Segment[];
 }
 
 interface SidebarProps {
   thoughts: Thought[];
   setThoughts: (thoughts: Thought[]) => void;
-  setSelectedThought: (thought: Thought) => void;
+  setSelectedThought: (thought: Thought | null) => void;
   setShowModal: (show: boolean) => void;
   toggleDarkMode: () => void;
   setActiveFilters: (ids: string[]) => void;
@@ -125,7 +110,7 @@ function Sidebar({
 
   // Sync active filters to parent for canvas highlighting
   useEffect(() => {
-    const ids = filteredThoughts.map((t) => t.thought_bubble_id);
+    const ids = filteredThoughts.map((t) => t.id);
     setFilteredThoughtIds(ids);
     setActiveFilters(ids);
   }, [filteredThoughts, setActiveFilters]);
@@ -367,7 +352,7 @@ function Sidebar({
       {/* Thought List */}
       <ul>
         {filteredThoughts.map((thought) => (
-          <li key={thought.thought_bubble_id} className="mb-3">
+          <li key={thought.id} className="mb-3">
             <div
               onClick={() => setSelectedThought(thought)}
               className="cursor-pointer font-semibold hover:underline"
@@ -396,7 +381,7 @@ function Sidebar({
             const newTag = prompt('Enter new tag to apply:');
             if (!newTag) return;
             const updated = thoughts.map((t) =>
-              filteredThoughtIds.includes(t.thought_bubble_id)
+              filteredThoughtIds.includes(t.id)
                 ? {
                     ...t,
                     tags: [
@@ -418,7 +403,7 @@ function Sidebar({
             const newColor = prompt('Enter new hex color (e.g. #10b981):');
             if (!newColor) return;
             const updated = thoughts.map((t) =>
-              filteredThoughtIds.includes(t.thought_bubble_id)
+              filteredThoughtIds.includes(t.id)
                 ? { ...t, color: newColor }
                 : t
             );

@@ -1,6 +1,5 @@
 
 import config from '@contracts/../core/config';
-// API Service for LogoMesh Backend Communication
 import { Thought, Segment } from '@contracts/entities';
 import { NewThoughtData, NewSegmentData } from '@contracts/storageAdapter';
 import { User } from './authService';
@@ -13,12 +12,11 @@ if (config.nodeEnv === 'development') {
   console.log('Development mode');
 }
 
-// Generic API request function
 async function apiRequest<T>(
   endpoint: string,
-  options: globalThis.RequestInit = {}
+  options: RequestInit = {}
 ): Promise<T> {
-  const config: globalThis.RequestInit = {
+  const reqConfig: RequestInit = {
     headers: {
       'Content-Type': 'application/json',
       ...options.headers,
@@ -27,7 +25,7 @@ async function apiRequest<T>(
   };
 
   try {
-    const response = await fetch(API_BASE_URL + endpoint, config);
+    const response = await fetch(API_BASE_URL + endpoint, reqConfig);
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -35,26 +33,17 @@ async function apiRequest<T>(
     }
 
     const contentType = response.headers.get('content-type');
-    if (contentType && contentType.includes('application/json')) {
-      return await response.json();
+    if (contentType?.includes('application/json')) {
+      return response.json();
     } else {
-      return await response.text() as T;
+      return response.text() as unknown as T;
     }
   } catch (error: unknown) {
-    let errorMessage = 'An unknown error occurred';
-    let errorStack = undefined;
-
-    if (error instanceof Error) {
-      errorMessage = error.message;
-      errorStack = error.stack;
-    } else if (typeof error === 'string') {
-      errorMessage = error;
-    }
-
-    console.log('API request failed for', endpoint + ':', errorMessage);
+    const err = error as Error;
+    console.log('API request failed for', endpoint + ':', err.message);
     console.log('Full error details:', {
-      message: errorMessage,
-      stack: errorStack,
+      message: err.message,
+      stack: err.stack,
       originalError: error,
       url: API_BASE_URL + endpoint
     });
@@ -62,89 +51,84 @@ async function apiRequest<T>(
   }
 }
 
-// Thought API functions
-export async function fetchThoughts() {
+export async function fetchThoughts(): Promise<Thought[]> {
   return apiRequest<Thought[]>('/thoughts');
 }
 
-export async function getThoughtById(thoughtId: string) {
+export async function getThoughtById(thoughtId: string): Promise<Thought | null> {
   return apiRequest<Thought | null>(`/thoughts/${thoughtId}`);
 }
 
-export async function createThoughtApi(thoughtData: NewThoughtData) {
+export async function createThoughtApi(thoughtData: NewThoughtData): Promise<Thought> {
   return apiRequest<Thought>('/thoughts', {
     method: 'POST',
     body: JSON.stringify(thoughtData),
   });
 }
 
-export async function updateThoughtApi(thoughtId: string, thoughtData: Partial<NewThoughtData>) {
+export async function updateThoughtApi(thoughtId: string, thoughtData: Partial<NewThoughtData>): Promise<Thought | null> {
   return apiRequest<Thought | null>(`/thoughts/${thoughtId}`, {
     method: 'PUT',
     body: JSON.stringify(thoughtData),
   });
 }
 
-export async function deleteThoughtApi(thoughtId: string) {
+export async function deleteThoughtApi(thoughtId: string): Promise<void> {
   return apiRequest<void>(`/thoughts/${thoughtId}`, {
     method: 'DELETE',
   });
 }
 
-// Segment API functions
-export async function createSegmentApi(thoughtId: string, segmentData: NewSegmentData) {
+export async function createSegmentApi(thoughtId: string, segmentData: NewSegmentData): Promise<Segment> {
   return apiRequest<Segment>(`/thoughts/${thoughtId}/segments`, {
     method: 'POST',
     body: JSON.stringify(segmentData),
   });
 }
 
-export async function updateSegmentApi(thoughtId: string, segmentId: string, segmentData: Partial<NewSegmentData>) {
+export async function updateSegmentApi(thoughtId: string, segmentId: string, segmentData: Partial<NewSegmentData>): Promise<Segment | null> {
   return apiRequest<Segment | null>(`/thoughts/${thoughtId}/segments/${segmentId}`, {
     method: 'PUT',
     body: JSON.stringify(segmentData),
   });
 }
 
-export async function deleteSegmentApi(thoughtId: string, segmentId: string) {
+export async function deleteSegmentApi(thoughtId: string, segmentId: string): Promise<void> {
   return apiRequest<void>(`/thoughts/${thoughtId}/segments/${segmentId}`, {
     method: 'DELETE',
   });
 }
 
-// Import/Export API functions
-export async function exportDataApi() {
+export async function exportDataApi(): Promise<unknown> {
   return apiRequest<unknown>('/export/json');
 }
 
-export async function importDataApi(file: File) {
+export async function importDataApi(file: File): Promise<unknown> {
   const formData = new FormData();
   formData.append('file', file);
 
-  return fetch(`${API_BASE_URL}/import/json`, {
+  const response = await fetch(`${API_BASE_URL}/import/json`, {
     method: 'POST',
     body: formData,
-  }).then(response => {
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-    return response.json() as Promise<unknown>;
   });
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+  return response.json();
 }
 
-// Admin API functions
-export async function triggerBackupApi() {
+export async function triggerBackupApi(): Promise<unknown> {
   return apiRequest('/admin/backup', {
     method: 'POST',
   });
 }
 
-// LLM API functions
-export async function getLLMStatus() {
+export async function getLLMStatus(): Promise<unknown> {
   return apiRequest<unknown>('/llm/status');
 }
 
-export async function callLLMApi(prompt: string, metadata?: Record<string, unknown>) {
+export async function callLLMApi(prompt: string, metadata?: Record<string, unknown>): Promise<unknown> {
   return apiRequest<unknown>('/llm/prompt', {
     method: 'POST',
     body: JSON.stringify({ prompt, metadata }),
@@ -158,20 +142,19 @@ export const analyzeSegment = async (segmentId: string, analysisType = 'general'
   });
 };
 
-// Legacy method names for backward compatibility
-export async function updateThought(id: string, updates: Partial<NewThoughtData>) {
+export async function updateThought(id: string, updates: Partial<NewThoughtData>): Promise<Thought | null> {
   return updateThoughtApi(id, updates);
 }
 
-export async function createThought(thoughtData: NewThoughtData) {
+export async function createThought(thoughtData: NewThoughtData): Promise<Thought> {
   return createThoughtApi(thoughtData);
 }
 
-export async function deleteThought(id: string) {
+export async function deleteThought(id: string): Promise<void> {
   return deleteThoughtApi(id);
 }
 
-export async function getCurrentUser() {
+export async function getCurrentUser(): Promise<User | null> {
   try {
     return await apiRequest<User>('/user/current');
   } catch (error) {
