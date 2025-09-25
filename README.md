@@ -69,12 +69,12 @@ npm install
 npm run dev
 ```
 
-* Front-end: <http://localhost:5000> (configured for Replit environment)
+* Front-end: <http://localhost:3000>
 * API root: <http://localhost:3001/api/v1>
 
 ### Database Configuration
 
-An SQLite database file is created automatically. All environment variables, including the database connection string, are managed in `core/config.ts`. To override the default settings, copy `.env.example` to `.env` and edit the values.
+An SQLite database file is created automatically in the `data/` directory. All environment variables, including the database connection string, are managed in `core/config.ts`. To override the default settings, you can create a `.env` file in the root of the project.
 
 ```env
 DATABASE_URL=sqlite:./data/custom.db
@@ -118,7 +118,7 @@ React Front-end  →  Express API  →  SQLite (or configured RDBMS)
 
 ```bash
 # Run the full test suite (frontend and backend)
-npm test
+npm run test:e2e
 ```
 
 Known open issues are tracked in the GitHub issue queue.
@@ -131,7 +131,6 @@ Known open issues are tracked in the GitHub issue queue.
 
 | Category | Task |
 |----------|------|
-| Type safety | Eliminate remaining JavaScript in `/core` and `/server` |
 | Security | Finalise plug-in sandbox and DevShell permissions |
 | Observability | Health-check endpoint, structured logs, back-pressure metrics |
 | Task engine | Workflow chain: LLM → plug-in → system |
