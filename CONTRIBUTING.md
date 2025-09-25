@@ -39,7 +39,7 @@ To start the development server for both the frontend and backend, run the follo
 npm run dev
 ```
 
-This command uses `concurrently` to start both the React development server (on port 5000) and the backend server (on port 3001).
+This command uses `concurrently` to start both the React development server (on port 3000) and the backend server (on port 3001).
 
 ### Running Individual Workspaces
 
@@ -52,7 +52,7 @@ You can also run scripts for individual workspaces:
 This project has a comprehensive validation suite that includes linting, type-checking, and running all tests. To run the full suite, use the following command:
 
 ```bash
-npm run validate
+npm run test:e2e
 ```
 
 It is highly recommended to run this command before submitting any changes to ensure your code meets the project's quality standards.
