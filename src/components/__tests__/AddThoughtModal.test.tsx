@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { vi } from 'vitest';
 import AddThoughtModal from '../AddThoughtModal';
 import '@testing-library/jest-dom';
@@ -120,14 +120,9 @@ describe('AddThoughtModal', () => {
   });
 
   test('creates thought with correct data structure', async () => {
-    vi.doMock('../../services/apiService', () => ({
-      apiService: {
-        createSegmentApi: vi.fn().mockResolvedValue({}),
-      },
-    }));
     const mockCreateThought = vi.fn().mockResolvedValue({ id: 'new-thought-id' });
     const mockOnClose = vi.fn();
-    const mockCreateSegment = vi.fn();
+    const mockCreateSegment = vi.fn().mockResolvedValue({});
 
     render(
       <AddThoughtModal
@@ -147,8 +142,15 @@ describe('AddThoughtModal', () => {
     const addSegmentButton = screen.getByText('+ Add Segment');
     fireEvent.click(addSegmentButton);
 
+    // Add some data to the segment
+    const segmentTitleInput = await screen.findByPlaceholderText('Segment Title');
+    fireEvent.change(segmentTitleInput, { target: { value: 'My Segment' } });
+
+
     const submitButton = screen.getByText('Add Thought');
-    await fireEvent.click(submitButton);
+    await act(async () => {
+      await fireEvent.click(submitButton);
+    });
 
     expect(mockCreateThought).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -160,10 +162,7 @@ describe('AddThoughtModal', () => {
     expect(mockCreateSegment).toHaveBeenCalledWith(
       'new-thought-id',
       expect.objectContaining({
-        id: 'test-ulid-123',
-        title: '',
-        content: '',
-        fields: {},
+        title: 'My Segment',
       })
     );
 

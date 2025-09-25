@@ -15,14 +15,13 @@ const defaultFieldOptions = [
   'Related Concepts',
 ];
 
-import { Segment } from '@contracts/entities';
-
 interface AddThoughtModalProps {
-    createThought: (thought: NewThoughtData) => void;
-    onClose: () => void;
+  createThought: (thought: NewThoughtData) => Promise<Thought | undefined>;
+  createSegment: (thoughtId: string, segment: NewSegmentData) => Promise<Segment | undefined>;
+  onClose: () => void;
 }
 
-function AddThoughtModal({ createThought, onClose }: AddThoughtModalProps) {
+function AddThoughtModal({ createThought, createSegment, onClose }: AddThoughtModalProps) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState<Array<{ name: string; color: string }>>([]);
@@ -111,13 +110,13 @@ function AddThoughtModal({ createThought, onClose }: AddThoughtModalProps) {
     updateSegmentField(segmentIndex, fieldName, '');
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!title.trim()) {
       alert('Please enter a title for your thought.');
       return;
     }
 
-    const newThought: NewThoughtData = {
+    const newThoughtData: NewThoughtData = {
       title,
       description,
       color,
@@ -125,7 +124,14 @@ function AddThoughtModal({ createThought, onClose }: AddThoughtModalProps) {
       position: { x: Math.random() * 400, y: Math.random() * 400 },
     };
 
-    createThought(newThought);
+    const newThought = await createThought(newThoughtData);
+
+    if (newThought) {
+      for (const segment of segments) {
+        await createSegment(newThought.id, segment);
+      }
+    }
+
     onClose();
   };
 
