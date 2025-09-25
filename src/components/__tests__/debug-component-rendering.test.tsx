@@ -8,9 +8,10 @@ import '@testing-library/jest-dom';
 describe('Debug Component Rendering', () => {
   test('AddThoughtModal renders with debug output', () => {
     const { container } = render(
-      <AddThoughtModal 
+      <AddThoughtModal
         createThought={vi.fn()}
-        onClose={() => {   }}
+        createSegment={vi.fn()}
+        onClose={() => {}}
       />
     );
 
