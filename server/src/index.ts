@@ -20,7 +20,10 @@ const app = express();
 const PORT = config.server.port;
 const apiBasePath = config.server.apiBasePath; // Define the base path
 
+import requestIp from 'request-ip';
+
 // Middleware
+app.use(requestIp.mw());
 app.use(cors());
 app.use(express.json());
 
@@ -84,29 +87,14 @@ app.use('/api/v1/orchestrator', orchestratorRoutes as Router);
 app.use('/api/v1/tasks', taskRoutes as Router);
 
 // Import security middleware
-import { createApiRateLimiter, createAuthRateLimiter } from '../../core/middleware/rateLimiter';
-
-// Setup rate limiters
-const apiRateLimit = createApiRateLimiter();
-const authRateLimit = createAuthRateLimiter();
+import { apiLimiter } from '../../core/middleware/rateLimiter';
 
 // Apply rate limiting
-app.use('/api/v1', apiRateLimit.middleware() as RequestHandler);
-app.use('/api/v1/auth', authRateLimit.middleware() as RequestHandler);
+app.use('/api/v1', apiLimiter);
 
 
 // Health check
-app.get(`${apiBasePath}/health`, (_req: Request, res: Response) => {
-  res.json({
-    status: 'healthy',
-    timestamp: new Date().toISOString(),
-    environment: config.nodeEnv,
-    version: '0.2.0'
-  });
-});
-
-// Comprehensive status endpoint
-app.get(`${apiBasePath}/status`, async (_req: Request, res: Response) => {
+app.get(`${apiBasePath}/health`, async (_req: Request, res: Response) => {
   const memUsage = process.memoryUsage();
   const uptime = process.uptime();
   
@@ -169,12 +157,6 @@ async function startServer() {
 
     // Old setupServices can be removed or integrated if it did more
     // await setupServices();
-
-    app.listen(PORT, '0.0.0.0', () => {
-      logger.info(`Server running on port ${PORT}`);
-      logger.info(`Health check available at http://localhost:${PORT}${apiBasePath}/health`);
-      logger.info(`API base URL: http://localhost:${PORT}${apiBasePath}`);
-    });
   } catch (error) {
     logger.error('Failed to start server:', error);
     process.exit(1);
@@ -182,3 +164,5 @@ async function startServer() {
 }
 
 startServer();
+
+export default app;

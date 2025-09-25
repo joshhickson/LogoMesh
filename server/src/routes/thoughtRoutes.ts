@@ -103,8 +103,16 @@ router.get('/:thoughtId', async (req: Request, res: Response, _next: NextFunctio
 });
 
 // PUT /api/v1/thoughts/:thoughtId - Update thought
-router.put('/:thoughtId', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+router.put('/:thoughtId',
+  body().notEmpty().withMessage('Request body cannot be empty'),
+  async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+
     const ideaManager = req.app.locals.ideaManager as IdeaManager;
     const { thoughtId } = req.params;
     const updateData = req.body as Partial<NewThoughtData>;
@@ -194,8 +202,16 @@ router.post('/:thoughtId/segments',
 });
 
 // PUT /api/v1/thoughts/:thoughtId/segments/:segmentId - Update segment
-router.put('/:thoughtId/segments/:segmentId', async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+router.put('/:thoughtId/segments/:segmentId',
+  body().notEmpty().withMessage('Request body cannot be empty'),
+  async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+
     const ideaManager = req.app.locals.ideaManager as IdeaManager;
     const { thoughtId, segmentId } = req.params;
     const updateData = req.body as Partial<NewSegmentData>;
