@@ -34,8 +34,9 @@ describe('Rate Limiter Middleware', () => {
   it('should not rate limit whitelisted endpoints', async () => {
     const app = express();
     app.use(requestIp.mw());
-    app.use(apiLimiter);
-    app.get('/health', (_req, res) => res.status(200).send('OK'));
+    app.use('/api/v1', apiLimiter);
+    app.get('/api/v1/health', (_req, res) => res.status(200).send('OK'));
+    app.get('/api/v1/status', (_req, res) => res.status(200).send('OK'));
     app.get('/', (_req, res) => res.status(200).send('OK'));
 
     // Exhaust the rate limit on a non-whitelisted endpoint
@@ -43,7 +44,10 @@ describe('Rate Limiter Middleware', () => {
       await request(app).get('/');
     }
 
-    const whitelistedResponse = await request(app).get('/health');
-    expect(whitelistedResponse.status).toBe(200);
+    const healthResponse = await request(app).get('/api/v1/health');
+    expect(healthResponse.status).toBe(200);
+
+    const statusResponse = await request(app).get('/api/v1/status');
+    expect(statusResponse.status).toBe(200);
   });
 });
