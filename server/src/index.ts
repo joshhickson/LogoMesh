@@ -14,10 +14,9 @@ import adminRoutes from './routes/adminRoutes';
 import taskRoutes, { initializeTaskEngine } from './routes/taskRoutes';
 import { EventBus } from '../../core/services/eventBus';
 import userRoutes from './routes/userRoutes';
-import type { Request, Response, NextFunction, Router, RequestHandler } from 'express'; // Import Router
+import type { Request, Response, NextFunction, Router } from 'express'; // Import Router
 
 const app = express();
-const PORT = config.server.port;
 const apiBasePath = config.server.apiBasePath; // Define the base path
 
 import requestIp from 'request-ip';
@@ -72,7 +71,7 @@ const eventBus = new EventBus(); // Keep eventBus global for now if taskEngine i
 const llmRegistry = new LLMRegistry();
 const runnerPool = new RunnerPool(llmRegistry);
 const conversationOrchestrator = new ConversationOrchestrator(eventBus);
-new LLMGateway(llmRegistry, runnerPool, conversationOrchestrator, eventBus);
+new LLMGateway(runnerPool, conversationOrchestrator, eventBus);
 const llmOrchestrator = new LLMOrchestrator(eventBus, conversationOrchestrator);
 
 // Mount routes before service init, services will be attached to app.locals in startServer
@@ -102,8 +101,6 @@ app.get(`${apiBasePath}/health`, async (_req: Request, res: Response) => {
     const storageAdapter = app.locals.storageAdapter as SQLiteStorageAdapter;
     const dbStatus = await storageAdapter.healthCheck();
     
-    const eventBusStats = eventBus.getRegisteredEvents();
-    
     res.json({
       status: 'operational',
       timestamp: new Date().toISOString(),
@@ -131,12 +128,13 @@ app.get(`${apiBasePath}/health`, async (_req: Request, res: Response) => {
   }
 });
 
-async function startServer() {
+export async function startServer() {
   try {
     // Initialize Storage Adapter
     const storageAdapter = new SQLiteStorageAdapter(config.database.path);
     await storageAdapter.initialize(); // Initialize the database connection and schema
     logger.info('Storage adapter initialized successfully.');
+    app.locals.storageAdapter = storageAdapter;
 
     // Initialize IdeaManager with the initialized adapter
     const ideaManager = new IdeaManager(storageAdapter);
@@ -158,11 +156,9 @@ async function startServer() {
     // Old setupServices can be removed or integrated if it did more
     // await setupServices();
   } catch (error) {
-    logger.error('Failed to start server:', error);
-    process.exit(1);
+    logger.error('Failed to initialize server:', error);
+    throw error;
   }
 }
-
-startServer();
 
 export default app;

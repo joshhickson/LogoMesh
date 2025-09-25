@@ -14,7 +14,7 @@ export const apiLimiter = rateLimit({
     // Whitelist /status and /health endpoints
     return req.path === '/status' || req.path === '/health';
   },
-  handler: (req: Request, res: Response) => {
+  handler: (_req: Request, res: Response) => {
     res.status(429).json({
       error: 'Too many requests, please try again later.',
       rateLimit: {

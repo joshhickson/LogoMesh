@@ -13,13 +13,20 @@ import { logger } from '../utils/logger'; // Removed .js
  * SQLite implementation of the StorageAdapter interface
  * Handles all database operations with proper DTO <-> DB mapping
  */
+import path from 'path';
+import fs from 'fs';
 export class SQLiteStorageAdapter implements StorageAdapter {
   private db: Database | null = null;
+  private dbPath: string;
 
-  constructor(private dbPath: string) {}
+  constructor(dbPath: string) {
+    this.dbPath = path.resolve(dbPath);
+  }
 
   async initialize(): Promise<void> {
     return new Promise((resolve, reject) => {
+      const dbDir = path.dirname(this.dbPath);
+      fs.mkdirSync(dbDir, { recursive: true });
       this.db = new sqlite3.Database(this.dbPath, (err: Error | null) => {
         if (err) {
           logger.error('Failed to open SQLite database:', err);

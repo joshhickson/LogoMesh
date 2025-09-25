@@ -9,7 +9,7 @@ describe('Rate Limiter Middleware', () => {
     const app = express();
     app.use(requestIp.mw());
     app.use(apiLimiter);
-    app.get('/', (req, res) => res.status(200).send('OK'));
+    app.get('/', (_req, res) => res.status(200).send('OK'));
 
     const response = await request(app).get('/');
     expect(response.status).toBe(200);
@@ -19,7 +19,7 @@ describe('Rate Limiter Middleware', () => {
     const app = express();
     app.use(requestIp.mw());
     app.use(apiLimiter);
-    app.get('/', (req, res) => res.status(200).send('OK'));
+    app.get('/', (_req, res) => res.status(200).send('OK'));
 
     // Exhaust the rate limit
     for (let i = 0; i < 100; i++) {
@@ -35,8 +35,8 @@ describe('Rate Limiter Middleware', () => {
     const app = express();
     app.use(requestIp.mw());
     app.use(apiLimiter);
-    app.get('/health', (req, res) => res.status(200).send('OK'));
-    app.get('/', (req, res) => res.status(200).send('OK'));
+    app.get('/health', (_req, res) => res.status(200).send('OK'));
+    app.get('/', (_req, res) => res.status(200).send('OK'));
 
     // Exhaust the rate limit on a non-whitelisted endpoint
     for (let i = 0; i < 100; i++) {

@@ -48,6 +48,7 @@
     "start": "PORT=5000 react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "vitest run --coverage",
+    "test:e2e": "concurrently --kill-others --success first \"npm run server\" \"npm test\"",
     "test:export": "node scripts/test-with-error-export.js",
     "eject": "react-scripts eject",
     "typecheck": "tsc --noEmit",
