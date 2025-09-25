@@ -11,8 +11,11 @@ export const apiLimiter = rateLimit({
     return requestIp.getClientIp(req) || 'unknown';
   },
   skip: (req: Request) => {
-    // Whitelist /api/v1/status and /api/v1/health endpoints
-    return req.originalUrl === '/api/v1/status' || req.originalUrl === '/api/v1/health';
+    const url = req.originalUrl;
+    // Whitelist /api/v1/status and /api/v1/health endpoints.
+    // This regex matches the exact paths, with an optional trailing slash.
+    const whitelist = /^\/api\/v1\/(status|health)\/?$/;
+    return whitelist.test(url);
   },
   handler: (_req: Request, res: Response) => {
     res.status(429).json({
