@@ -11,8 +11,8 @@ export const apiLimiter = rateLimit({
     return requestIp.getClientIp(req) || 'unknown';
   },
   skip: (req: Request) => {
-    // Whitelist /status and /health endpoints
-    return req.path === '/status' || req.path === '/health';
+    // Whitelist /api/v1/status and /api/v1/health endpoints
+    return req.originalUrl === '/api/v1/status' || req.originalUrl === '/api/v1/health';
   },
   handler: (_req: Request, res: Response) => {
     res.status(429).json({
