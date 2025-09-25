@@ -1,22 +1,18 @@
-import { LLMRegistry } from './LLMRegistry';
 import { RunnerPool } from './RunnerPool';
 import { ConversationOrchestrator, LLMMessage } from './ConversationOrchestrator';
 import { EventBus } from '../services/eventBus';
 import { logger } from '../utils/logger';
 
 export class LLMGateway {
-  private registry: LLMRegistry;
   private runnerPool: RunnerPool;
   private conversationOrchestrator: ConversationOrchestrator;
   private eventBus: EventBus;
 
   constructor(
-    registry: LLMRegistry,
     runnerPool: RunnerPool,
     conversationOrchestrator: ConversationOrchestrator,
     eventBus: EventBus
   ) {
-    this.registry = registry;
     this.runnerPool = runnerPool;
     this.conversationOrchestrator = conversationOrchestrator;
     this.eventBus = eventBus;

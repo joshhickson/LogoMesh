@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --noEmit false && cp -r ../core ./dist/",
-    "start": "node dist/server/src/index.js",
-    "dev": "tsc && node dist/server/src/index.js",
+    "start": "node dist/server/src/server.js",
+    "dev": "tsc && node dist/server/src/server.js",
     "watch": "tsc -w",
     "test": "vitest run",
     "test:watch": "vitest"

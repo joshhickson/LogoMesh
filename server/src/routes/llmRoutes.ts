@@ -30,6 +30,11 @@ router.post('/prompt',
 
     const { prompt, metadata = {} } = req.body as PromptBody;
 
+    if (!prompt) {
+      res.status(400).json({ error: 'Prompt is required' });
+      return;
+    }
+
     logger.info('[LLM Routes] Processing prompt request', { 
       promptLength: prompt.length,
       metadata 
@@ -71,16 +76,14 @@ router.post('/prompt',
   } catch (error: unknown) {
     logger.error('[LLM Routes] Error processing prompt:', error);
     
-    const bodyAsUnknown = req.body as Record<string, unknown>;
-    const promptFromRequest = typeof bodyAsUnknown?.prompt === 'string' ? bodyAsUnknown.prompt : '[prompt_unavailable]';
-    const metadataFromRequest = typeof bodyAsUnknown?.metadata === 'object' ? bodyAsUnknown.metadata as Record<string, unknown> : {};
+    const { prompt, metadata = {} } = req.body as PromptBody;
 
     // Log the error for auditing
     await logLLMInteraction({
-      prompt: promptFromRequest,
+      prompt: prompt || '[prompt_unavailable]',
       response: null,
       model: ollamaExecutor.getModelName(),
-      metadata: metadataFromRequest,
+      metadata,
       duration: 0,
       success: false,
       error: (error instanceof Error ? error.message : String(error)),
@@ -146,7 +149,11 @@ router.post('/analyze-segment',
     }
 
     const { segmentContent, analysisType = 'general' } = req.body as AnalyzeSegmentBody;
-    // segmentContent is now definitely a string
+
+    if (!segmentContent) {
+      res.status(400).json({ error: 'segmentContent is required' });
+      return;
+    }
 
     const analysisPrompt = `Analyze the following text segment for insights and potential connections:
 

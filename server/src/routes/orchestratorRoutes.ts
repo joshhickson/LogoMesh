@@ -53,6 +53,11 @@ router.post('/models/load',
 
     const { modelId, roleId, specialization, systemPrompt } = req.body as LoadModelBody;
 
+    if (!modelId || !roleId || !specialization) {
+      res.status(400).json({ error: 'modelId, roleId, and specialization are required' });
+      return;
+    }
+
     const executor = await llmRegistry.loadModel(modelId);
     await llmOrchestrator.loadModel(roleId, executor, specialization, systemPrompt);
 
@@ -85,6 +90,11 @@ router.put('/models/hotswap',
     }
 
     const { roleId, newModelId, conversationId } = req.body as HotSwapModelBody;
+
+    if (!roleId || !newModelId) {
+      res.status(400).json({ error: 'roleId and newModelId are required' });
+      return;
+    }
 
     const newExecutor = await llmRegistry.loadModel(newModelId);
     await llmOrchestrator.hotSwapModel(roleId, newExecutor, conversationId);
@@ -119,6 +129,11 @@ router.post('/conversations/start',
     }
 
     const { participantRoles, initialPrompt, topic } = req.body as StartConversationBody;
+
+    if (!participantRoles || !initialPrompt || !topic) {
+      res.status(400).json({ error: 'participantRoles, initialPrompt, and topic are required' });
+      return;
+    }
 
     const conversationId = await llmOrchestrator.startConversation(
       participantRoles, 
@@ -157,6 +172,11 @@ router.post('/conversations/:conversationId/message',
 
     const { conversationId } = req.params;
     const { fromRole, toRoles, content, messageType } = req.body as SendMessageBody;
+
+    if (!fromRole || !content) {
+      res.status(400).json({ error: 'fromRole and content are required' });
+      return;
+    }
 
     llmOrchestrator.sendMessage(
       conversationId,

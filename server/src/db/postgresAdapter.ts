@@ -528,4 +528,16 @@ export class PostgresAdapter implements StorageAdapter {
   async close(): Promise<void> {
     await this.pool.end();
   }
+
+  async healthCheck(): Promise<{ status: 'ok' | 'error'; message?: string }> {
+    const client = await this.pool.connect();
+    try {
+      await client.query('SELECT 1');
+      return { status: 'ok' };
+    } catch (error) {
+      return { status: 'error', message: (error as Error).message };
+    } finally {
+      client.release();
+    }
+  }
 }
