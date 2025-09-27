@@ -23,6 +23,7 @@ vi.mock('./components/ThoughtDetailPanel', () => ({
 }));
 
 vi.mock('./services/apiService', () => ({
+  fetchThoughts: vi.fn().mockResolvedValue([]),
   default: { // The module exports an object named apiService
     fetchThoughts: vi.fn().mockResolvedValue([]),
     createThoughtApi: vi.fn().mockResolvedValue({}),
