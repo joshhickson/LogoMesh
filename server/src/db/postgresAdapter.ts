@@ -6,12 +6,13 @@ import {
   PostgresSegmentRecord
   // Removed DatabaseQueryResult
 } from '../../../contracts/types';
+import { secretsService } from '../../../core/services/secretsService';
 
 export class PostgresAdapter implements StorageAdapter {
   private pool: Pool;
 
   constructor() {
-    const databaseUrl = process.env.DATABASE_URL;
+    const databaseUrl = secretsService.get('DATABASE_URL', true);
     if (!databaseUrl) {
       throw new Error('DATABASE_URL environment variable is required');
     }

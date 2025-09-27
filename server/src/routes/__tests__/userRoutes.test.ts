@@ -24,7 +24,7 @@ vi.mock('@core/services/authService', () => {
 const authenticatedApp = express();
 authenticatedApp.use(express.json());
 // Since AuthService is mocked, this will use the mocked instance
-const mockAuthService = new AuthService();
+const mockAuthService = new AuthService({ jwtSecret: 'test-secret', jwtExpiration: '1h' });
 authenticatedApp.use('/user', mockAuthService.requireAuth, userRoutes);
 
 
