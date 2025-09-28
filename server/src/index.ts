@@ -130,9 +130,12 @@ app.get(`${apiBasePath}/health`, async (_req: Request, res: Response) => {
 
 export async function startServer() {
   try {
+    // Migrations are now run as a separate step before starting the server.
+    // See server/package.json and the db:migrate script.
+
     // Initialize Storage Adapter
     const storageAdapter = new SQLiteStorageAdapter(config.database.path);
-    await storageAdapter.initialize(); // Initialize the database connection and schema
+    // await storageAdapter.initialize(); // This is now handled by migrations
     logger.info('Storage adapter initialized successfully.');
     app.locals.storageAdapter = storageAdapter;
 
@@ -157,7 +160,8 @@ export async function startServer() {
     // await setupServices();
   } catch (error) {
     logger.error('Failed to initialize server:', error);
-    throw error;
+    // process.exit(1); // Exit with error code
+    throw error; // Re-throw for testing or higher-level handling
   }
 }
 
