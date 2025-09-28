@@ -1,8 +1,8 @@
-import { EventBus } from './eventBus';
+import { EventBus } from './eventBus.js';
 // Removed unused import to fix TS6133
-import { LLMTaskRunner } from '../llm/LLMTaskRunner';
-import { PluginHost } from './pluginHost';
-import { logger } from '../utils/logger';
+import { LLMTaskRunner } from '../llm/LLMTaskRunner.js';
+import { PluginHost } from './pluginHost.js';
+import { logger } from '../utils/logger.js';
 
 // TaskEngine interfaces
 export interface TaskStep {
