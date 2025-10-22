@@ -1,16 +1,22 @@
 import re
 
 def main():
-    # Read the list of files from the markdown file
-    with open('gemini-research-files.md', 'r') as f:
-        content = f.read()
-
-    # Extract file paths using a regular expression
-    # This pattern looks for backticks surrounding the file paths
-    filepaths = re.findall(r'`([^`]+)`', content)
+    # The list of files to be included in the compendium, as specified in the prompt
+    filepaths = [
+        "README.md",
+        "docs/future-vision.md",
+        "docs/IMPLEMENTATION_PLAN.md",
+        "docs/06.26.2025 architecture-diagram.md",
+        "docs/Agentic Coding Debt Management Research.md",
+        "package.json",
+        "core/IdeaManager.ts",
+        "contracts/storageAdapter.ts",
+        "server/src/server.ts",
+        "src/App.tsx"
+    ]
 
     # Define the output file
-    output_filename = 'logomesh-compendium.md'
+    output_filename = 'logomesh-compendium-updated.txt'
 
     with open(output_filename, 'w') as outfile:
         for filepath in filepaths:
