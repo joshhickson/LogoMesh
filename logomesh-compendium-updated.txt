@@ -1247,7 +1247,7 @@ An agent that can execute this self-correction loop is no longer just an amplifi
     "@types/pg": "^8.15.4",
     "@types/request-ip": "^0.0.41",
     "babel-plugin-module-resolver": "^5.0.2",
-    "canvas": "^3.1.1",
+    "canvas": "^2.11.2",
     "cors": "^2.8.5",
     "cytoscape": "^3.32.0",
     "cytoscape-cose-bilkent": "^4.1.0",
