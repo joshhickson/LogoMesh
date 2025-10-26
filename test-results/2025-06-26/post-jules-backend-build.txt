@@ -1,6 +1,0 @@
-
-> logomesh-server@0.1.0 build
-> node_modules/.bin/tsc && cp -r ../core ./dist/
-
-src/routes/pluginRoutes.ts(12,10): error TS2305: Module '"../../../core/storage/sqliteAdapter"' has no exported member 'SQLiteAdapter'.
-src/routes/pluginRoutes.ts(20,27): error TS2693: 'PluginAPI' only refers to a type, but is being used as a value here.
