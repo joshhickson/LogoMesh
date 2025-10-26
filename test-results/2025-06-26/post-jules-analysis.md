@@ -1,3 +1,0 @@
-=== POST-JULES ANALYSIS SUMMARY ===
-Generated: Fri Jun 27 05:30:41 AM UTC 2025
-
