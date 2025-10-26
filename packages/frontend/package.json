@@ -1,0 +1,12 @@
+{
+  "name": "@logomesh/frontend",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "echo \"Frontend build not implemented yet.\"",
+    "test": "echo \"Frontend tests not implemented yet.\""
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

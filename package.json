@@ -1,0 +1,12 @@
+{
+  "name": "logomesh",
+  "private": true,
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "pnpm -r test"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "pnpm": "^8.0.0"
+  }
+}
