@@ -1,0 +1,95 @@
+name: Operation Phoenix CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # Job 1: Verify basic installation and build integrity
+  install_and_build:
+    name: Install & Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build all packages
+        # This script will need to be added to the root package.json
+        run: pnpm run build
+
+  # Job 2: Enforce the Covenant of Discipline
+  lint_and_test:
+    name: Lint, Test & Enforce Boundaries
+    runs-on: ubuntu-latest
+    needs: install_and_build # This job runs only if the first one succeeds
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run Linter (Enforce 'no-any')
+        # This script will need to be added to the root package.json
+        run: pnpm run lint:strict
+
+      - name: Check Architectural Boundaries
+        # This script will need to be added to the root package.json
+        run: pnpm run check:boundaries
+
+      - name: Run Test Suite
+        # This script will need to be added to the root package.json
+        run: pnpm run test
+
+  # Job 3: Check for security vulnerabilities
+  security_audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    needs: install_and_build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run PNPM Audit
+        run: pnpm audit --audit-level=high

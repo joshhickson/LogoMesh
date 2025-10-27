@@ -2,5 +2,8 @@
   "name": "@logomesh/server",
   "version": "1.0.0",
   "private": true,
-  "main": "src/index.ts"
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"'server' build script not implemented.\""
+  }
 }

@@ -2,5 +2,8 @@
   "name": "@logomesh/core",
   "version": "1.0.0",
   "private": true,
-  "main": "src/index.ts"
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"'core' build script not implemented.\""
+  }
 }

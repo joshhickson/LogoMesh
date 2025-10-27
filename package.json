@@ -4,6 +4,11 @@
   "private": true,
   "description": "The foundational monorepo for the LogoMesh C-IDE and AgentX competition entry.",
   "scripts": {
+    "build": "pnpm --recursive run build",
+    "lint": "eslint packages/**/*.{ts,tsx}",
+    "lint:strict": "eslint packages/**/*.{ts,tsx} --max-warnings 0",
+    "check:boundaries": "depcruise packages --config .dependency-cruiser.js",
+    "test": "vitest run",
     "core": "pnpm --filter @logomesh/core",
     "server": "pnpm --filter @logomesh/server",
     "contracts": "pnpm --filter @logomesh/contracts",
@@ -11,6 +16,9 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.1",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "dependency-cruiser": "^17.1.0",
     "eslint": "^8.57.0",
     "pnpm": "^9.0.0",
     "prettier": "^3.2.5",
