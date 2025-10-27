@@ -1,12 +1,22 @@
 {
-  "name": "logomesh",
+  "name": "logomesh-monorepo",
+  "version": "1.0.0",
   "private": true,
+  "description": "The foundational monorepo for the LogoMesh C-IDE and AgentX competition entry.",
   "scripts": {
-    "build": "pnpm -r build",
-    "test": "pnpm -r test"
+    "core": "pnpm --filter @logomesh/core",
+    "server": "pnpm --filter @logomesh/server",
+    "contracts": "pnpm --filter @logomesh/contracts",
+    "frontend": "pnpm --filter @logomesh/frontend"
   },
   "devDependencies": {
-    "typescript": "^5.0.0",
-    "pnpm": "^8.0.0"
-  }
+    "@types/node": "^20.11.1",
+    "eslint": "^8.57.0",
+    "pnpm": "^9.0.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3",
+    "vitest": "^1.3.1"
+  },
+  "author": "Josh Hickson",
+  "license": "MIT"
 }
