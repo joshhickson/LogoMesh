@@ -1,13 +1,6 @@
 {
   "name": "@logomesh/core",
-  "version": "0.1.0",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc",
-    "test": "vitest"
-  },
-  "devDependencies": {
-    "typescript": "^5.0.0",
-    "vitest": "^0.34.6"
-  }
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.ts"
 }
