@@ -16,10 +16,10 @@ describe('SQLiteAdapter Integration Tests', () => {
   });
 
   it('should initialize the database with the correct tables', async () => {
-    const thoughtTable = await (adapter as any).db?.get(
+    const thoughtTable = await adapter.db?.get(
       "SELECT name FROM sqlite_master WHERE type='table' AND name='thoughts';"
     );
-    const segmentTable = await (adapter as any).db?.get(
+    const segmentTable = await adapter.db?.get(
       "SELECT name FROM sqlite_master WHERE type='table' AND name='segments';"
     );
     expect(thoughtTable).toBeDefined();
