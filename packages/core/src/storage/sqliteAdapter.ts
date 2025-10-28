@@ -11,7 +11,7 @@ import {
 import { ulid } from 'ulid';
 
 export class SQLiteAdapter implements StorageAdapter {
-  private db: Database | null = null;
+  public db: Database | null = null;
   private dbPath: string;
 
   constructor(dbPath: string = ':memory:') {
