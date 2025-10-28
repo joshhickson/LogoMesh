@@ -2,8 +2,20 @@
   "name": "@logomesh/core",
   "version": "1.0.0",
   "private": true,
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "echo \"'core' build script not implemented.\""
+    "clean": "rm -rf dist",
+    "build": "pnpm run clean && tsc -p tsconfig.json",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@logomesh/contracts": "workspace:*",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
+    "ulid": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/sqlite3": "^5.1.0"
   }
 }
