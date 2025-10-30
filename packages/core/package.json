@@ -6,12 +6,11 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "pnpm run clean && tsc -b",
+    "build": "pnpm run clean && tsc -p tsconfig.json",
     "test": "vitest"
   },
   "dependencies": {
     "@logomesh/contracts": "workspace:*",
-    "isolated-vm": "^6.0.2",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
     "ulid": "^3.0.1"
