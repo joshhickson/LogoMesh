@@ -1,0 +1,14 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "lint:strict": {},
+    "check:boundaries": {},
+    "test": {
+      "dependsOn": ["build"]
+    }
+  }
+}

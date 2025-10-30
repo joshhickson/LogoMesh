@@ -6,6 +6,6 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "pnpm run clean && tsc -p tsconfig.json"
+    "build": "pnpm run clean && tsc -b"
   }
 }

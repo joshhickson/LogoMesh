@@ -1,0 +1,7 @@
+
+> @logomesh/server@1.0.0 build /app/packages/server
+> pnpm run clean && tsc -b
+
+
+> @logomesh/server@1.0.0 clean /app/packages/server
+> rm -rf dist

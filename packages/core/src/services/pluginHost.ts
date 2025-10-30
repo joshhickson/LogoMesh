@@ -1,15 +1,5 @@
 import ivm from 'isolated-vm';
-import { ULID } from '@logomesh/contracts';
 
-// A simplified manifest for now.
-interface PluginManifest {
-id: ULID;
-name: string;
-permissions: {
-network: string; // List of allowed domains
-filesystem: 'none' | 'read-only';
-};
-}
 
 export class PluginHost {
 private isolate: ivm.Isolate;
@@ -19,7 +9,7 @@ constructor() {
 this.isolate = new ivm.Isolate({ memoryLimit: 128 });
 }
 
-async execute(code: string, manifest: PluginManifest): Promise<any> {
+async execute(code: string): Promise<unknown> {
 const context = await this.isolate.createContext();
 const jail = context.global;
 
