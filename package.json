@@ -4,7 +4,7 @@
   "private": true,
   "description": "The foundational monorepo for the LogoMesh C-IDE and AgentX competition entry.",
   "scripts": {
-    "build": "pnpm --recursive run build",
+    "build": "turbo run build",
     "lint": "eslint packages/**/*.{ts,tsx}",
     "lint:strict": "eslint packages/**/*.{ts,tsx} --max-warnings 0",
     "check:boundaries": "depcruise packages --config .dependency-cruiser.js",
@@ -24,11 +24,13 @@
     "eslint": "^8.57.0",
     "pnpm": "^10.19.0",
     "prettier": "^3.2.5",
+    "turbo": "^2.5.8",
     "typescript": "^5.3.3",
     "vitest": "^4.0.4"
   },
   "author": "Josh Hickson",
   "license": "MIT",
+  "packageManager": "pnpm@10.20.0",
   "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild",
