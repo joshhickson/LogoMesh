@@ -1,7 +1,0 @@
-
-> @logomesh/core@1.0.0 build /app/packages/core
-> pnpm run clean && tsc -b
-
-
-> @logomesh/core@1.0.0 clean /app/packages/core
-> rm -rf dist

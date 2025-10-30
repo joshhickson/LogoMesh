@@ -1,7 +1,0 @@
-
-> @logomesh/contracts@1.0.0 build /app/packages/contracts
-> pnpm run clean && tsc -b
-
-
-> @logomesh/contracts@1.0.0 clean /app/packages/contracts
-> rm -rf dist
