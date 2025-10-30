@@ -28,5 +28,12 @@
     "vitest": "^4.0.4"
   },
   "author": "Josh Hickson",
-  "license": "MIT"
+  "license": "MIT",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "isolated-vm",
+      "sqlite3"
+    ]
+  }
 }
