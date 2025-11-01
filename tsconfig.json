@@ -1,37 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
+    "target": "es2016",
+    "module": "commonjs",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "downlevelIteration": true, // Add this
-    "baseUrl": ".",
-    "paths": {
-      "@core/*": ["core/*"],
-      "@contracts/*": ["contracts/*"],
-      "~/*": ["src/*"]
-    }
+    "strict": true,
+    "skipLibCheck": true
   },
-  "include": [
-    "src/**/*",
-    "src/**/*.test.ts",
-    "src/**/*.test.tsx",
-    "core/**/*",
-    "contracts/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "src/**/*.test.js" // Exclude .test.js files from TS checking
-  ]
+  "include": ["packages/**/*"]
 }

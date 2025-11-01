@@ -1,76 +1,12 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "jest": true,
-    "node": true
-  },
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react/jsx-runtime",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": "latest",
-    "sourceType": "module",
-    "project": ["./tsconfig.json", "./server/tsconfig.json"],
-    "tsconfigRootDir": ".",
-    "warnOnUnsupportedTypeScriptVersion": false
-  },
-  "plugins": ["react", "@typescript-eslint"],
-  "ignorePatterns": [
-    "**/*.js.map", 
-    "**/*.d.ts.map", 
-    "**/*.d.ts", 
-    "build/", 
-    "dist/", 
-    "node_modules/", 
-    "core/**/*.js", 
-    "contracts/**/*.js", 
-    "src/utils/__tests__/eventBus.test.js",
-    "*.config.js",
-    "*.config.ts"
+    "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-    "react/prop-types": "off",
-    "no-unused-vars": "warn",
-    "no-undef": "error",
-    "no-prototype-builtins": "warn"
-  },
-  "globals": {
-    "vi": "readonly"
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  },
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx"],
-      "rules": {
-        "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": "warn"
-      }
-    },
-    {
-      "files": ["core/**/*", "server/src/**/*"],
-      "rules": {
-        "@typescript-eslint/no-explicit-any": "error",
-        "@typescript-eslint/no-unsafe-assignment": "error",
-        "@typescript-eslint/no-unsafe-call": "error",
-        "@typescript-eslint/no-unsafe-member-access": "error",
-        "@typescript-eslint/no-unsafe-return": "error",
-        "@typescript-eslint/no-inferrable-types": "error",
-        "@typescript-eslint/ban-ts-comment": "error",
-        "@typescript-eslint/no-var-requires": "error"
-      }
-    }
-  ]
+    "@typescript-eslint/no-explicit-any": "error"
+  }
 }
