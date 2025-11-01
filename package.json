@@ -8,7 +8,7 @@
     "build": "turbo run build",
     "lint": "eslint packages/**/*.{ts,tsx}",
     "lint:strict": "eslint packages/**/*.{ts,tsx} --max-warnings 0",
-    "check:boundaries": "depcruise packages --config.dependency-cruiser.js",
+    "check:boundaries": "depcruise packages",
     "test": "vitest run",
     "contracts": "pnpm --filter @logomesh/contracts",
     "core": "pnpm --filter @logomesh/core",
@@ -42,5 +42,10 @@
     "vitest": "^1.6.0"
   },
   "author": "Josh Hickson",
-  "license": "MIT"
+  "license": "MIT",
+  "pnpm": {
+    "overrides": {
+      "esbuild": "0.25.0"
+    }
+  }
 }
