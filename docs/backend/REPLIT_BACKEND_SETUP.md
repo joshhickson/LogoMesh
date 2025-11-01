@@ -19,8 +19,14 @@ server/
 │   ├── routes/
 │   │   ├── thoughtRoutes.ts
 │   │   ├── llmRoutes.ts
-│   │   └── adminRoutes.ts
-│   └── index.ts
+│   │   ├── orchestratorRoutes.ts
+│   │   ├── portabilityRoutes.ts
+│   │   ├── adminRoutes.ts
+│   │   └── taskRoutes.ts
+│   ├── db/
+│   │   └── postgresAdapter.ts
+│   ├── index.ts
+│   └── server.ts
 ├── package.json
 └── tsconfig.json
 ```
@@ -45,11 +51,11 @@ Required packages:
 
 ### 2. Starting the Backend Server
 
-Use the existing "Backend Server" workflow:
+To start the backend server, run the following command from the root of the project:
 
-1. In the Replit interface, locate the workflow dropdown next to the Run button
-2. Select "Backend Server" from the list
-3. Click to start the workflow
+```bash
+npm run dev
+```
 
 The backend server will:
 - Start on port 3001 (accessible via `http://localhost:3001`)
@@ -63,14 +69,27 @@ Once the backend is running, verify it's working:
 
 **Health Check:**
 ```
-GET http://localhost:3001/
+GET http://localhost:3001/api/v1/health
 ```
 
 Expected response:
 ```json
 {
-  "message": "ThoughtWeb API Server",
-  "version": "1.0.0"
+  "status": "operational",
+  "timestamp": "2025-09-25T08:32:41.668Z",
+  "system": {
+    "uptime": 1,
+    "memory": {
+      "heapUsedMB": 30
+    }
+  },
+  "services": {
+    "dbConn": "ok",
+    "pluginSandboxAlive": false
+  },
+  "metrics": {
+    "queueLag": 0
+  }
 }
 ```
 
@@ -93,7 +112,7 @@ The backend uses these environment variables:
 
 The backend automatically:
 - Creates SQLite database if it doesn't exist
-- Runs schema initialization from `core/db/schema.sql`
+- The schema is initialized in the `SQLiteStorageAdapter`
 - Sets up required tables for thoughts, segments, and metadata
 
 ### 6. Running Both Frontend and Backend
@@ -107,7 +126,6 @@ The backend automatically:
 **Port Configuration:**
 - Frontend: Port 3000
 - Backend: Port 3001
-- Node-RED: Port 1880
 
 ### 7. Troubleshooting
 
@@ -118,7 +136,7 @@ The backend automatically:
    - Check for running processes on port 3001
 
 2. **Database Connection Errors:**
-   - Ensure `/data` directory exists
+   - The `SQLiteStorageAdapter` will automatically create the `data` directory if it doesn't exist.
    - Check file permissions for database creation
 
 3. **CORS Errors:**
@@ -133,13 +151,11 @@ The backend automatically:
 
 Check server status:
 ```bash
-cd server && npm run dev
+npm run dev
 ```
 
 View logs:
-```bash
-tail -f server/logs/app.log
-```
+The server now logs to the console.
 
 ### 8. API Testing
 
@@ -147,7 +163,7 @@ Use the browser console or external tools to test API endpoints:
 
 ```javascript
 // Test in browser console
-fetch('http://localhost:3001/api/v1/thoughts')
+fetch('http://localhost:3001/api/v1/health')
   .then(r => r.json())
   .then(console.log);
 ```
@@ -164,8 +180,7 @@ For deployment:
 1. Verify backend is running successfully
 2. Start frontend application
 3. Test API connectivity between frontend and backend
-4. Configure Node-RED automation workflows
-5. Set up deployment configuration
+4. Set up deployment configuration
 
 ## Support
 

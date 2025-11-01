@@ -3,17 +3,17 @@
 
 **Purpose**: Central registry tracking all active agents, their roles, and assignments  
 **Maintained By**: The Project Archivist  
-**Last Updated**: 2025-07-03
+**Last Updated**: 2025-08-27
 
 ## Active Agent Roster
 
 | Name | Role | Inspired By | Assigned Tasks | Output Folder | Active? | Last Activity |
 |------|------|-------------|----------------|---------------|---------|---------------|
-| **Archivist** | Memory coordination + delegation | Ezra | Track state, create prompts, coordinate delegation | `docs/progress/archivist/` | ✅ Yes | 2025-07-03 |
+| **Archivist** | Memory coordination + delegation | Ezra | Track state, create prompts, coordinate delegation | `docs/progress/archivist/` | ✅ Yes | 2025-08-27 |
 | **Napoleon** | Strategic architecture & task wars | Napoleon Bonaparte | Campaign planning, morale logs, Phase 2 oversight | `docs/progress/Napoleon/` | ✅ Yes | 2025-07-03 |
 | **Elijah** | Voice of clarity, rebuke & direction | Prophet Elijah | Kill false logic, reset tasks, scope clarity | `docs/progress/elijah/` | 🟡 Dormant | Never |
-| **Bezalel** | Inspired system builder | Exodus 31 craftsman | Implement core modules, TypeScript migration | `docs/progress/bezalel/` | 🟡 Dormant | Never |
-| **Watchman** | Plugin security auditor | Ezekiel | VM2 sandbox testing, security warnings | `docs/progress/watchman/` | 🟡 Dormant | Never |
+| **Bezalel** | Inspired system builder | Exodus 31 craftsman | Implement core modules, TypeScript migration | `docs/progress/bezalel/` | ✅ Yes | 2025-08-27 |
+| **Watchman** | Plugin security auditor | Ezekiel | VM2 sandbox testing, security warnings | `docs/progress/watchman/` | ✅ Yes | 2025-08-27 |
 
 ## Agent Boundaries & Authority
 
