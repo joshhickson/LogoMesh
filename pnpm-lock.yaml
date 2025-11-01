@@ -51,8 +51,8 @@ importers:
         specifier: ^7.2.0
         version: 7.5.1(express@4.21.2)
       isolated-vm:
-        specifier: ^4.7.2
-        version: 4.7.2
+        specifier: ^6.0.2
+        version: 6.0.2
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -1318,9 +1318,9 @@ packages:
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
-  isolated-vm@4.7.2:
-    resolution: {integrity: sha512-JVEs5gzWObzZK5+OlBplCdYSpokMcdhLSs/xWYYxmYWVfOOFF4oZJsYh7E/FmfX8e7gMioXMpMMeEyX1afuKrg==}
-    engines: {node: '>=16.0.0'}
+  isolated-vm@6.0.2:
+    resolution: {integrity: sha512-Qw6AJuagG/VJuh2AIcSWmQPsAArti/L+lKhjXU+lyhYkbt3J57XZr+ZjgfTnOr4NJcY1r3f8f0eePS7MRGp+pg==}
+    engines: {node: '>=22.0.0'}
 
   istanbul-lib-coverage@3.2.2:
     resolution: {integrity: sha512-O8dpsF+r0WV/8MNRKfnmrtCWhuKjxrq2w+jpzBL5UZKTi2LeVWnWOmWRxFlesJONmc+wLAGvKQZEOanko0LFTg==}
@@ -3521,7 +3521,7 @@ snapshots:
 
   isexe@2.0.0: {}
 
-  isolated-vm@4.7.2:
+  isolated-vm@6.0.2:
     dependencies:
       prebuild-install: 7.1.3
 
