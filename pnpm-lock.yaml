@@ -91,6 +91,9 @@ importers:
       '@logomesh/contracts':
         specifier: workspace:*
         version: link:../contracts
+      escomplex:
+        specifier: 2.0.0-alpha
+        version: 2.0.0-alpha
       sqlite:
         specifier: ^5.1.1
         version: 5.1.1
@@ -784,6 +787,9 @@ packages:
   check-error@1.0.3:
     resolution: {integrity: sha512-iKEoDYaRmd1mxM90a2OEfWhjsjPpYPuQ+lMYsoxB126+t8fw7ySEO48nmDg5COTjxDI65/Y2OWpeEHk3ZOe8zg==}
 
+  check-types@5.1.0:
+    resolution: {integrity: sha512-avyYsSECJeYxowzVMGxzwXz9gc+LAEQ8l8nDVRJqbJilfwHDBPxpjTZC0mb1gr8AAARDc/I7P4+IG6SxokWWmw==}
+
   chownr@1.1.4:
     resolution: {integrity: sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==}
 
@@ -988,6 +994,9 @@ packages:
   escape-string-regexp@4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
+
+  escomplex@2.0.0-alpha:
+    resolution: {integrity: sha512-svXitH4tBpW1CPLlGQOxZrqosDj/88GEIoul1bM7WpVGgBnp/5RXb2L0Fo62TAt56k1ZrqTgn+93vnLsAchCcw==}
 
   eslint-scope@7.2.2:
     resolution: {integrity: sha512-dOt21O7lTMhDM+X9mB4GX+DZrZtCUJPL/wlcTqxyrx5IvO0IYtILdtrQGQp+8n5S0gwSVmOf9NQrjMOgfQZlIg==}
@@ -2912,6 +2921,8 @@ snapshots:
     dependencies:
       get-func-name: 2.0.2
 
+  check-types@5.1.0: {}
+
   chownr@1.1.4: {}
 
   chownr@2.0.0: {}
@@ -3122,6 +3133,10 @@ snapshots:
   escape-html@1.0.3: {}
 
   escape-string-regexp@4.0.0: {}
+
+  escomplex@2.0.0-alpha:
+    dependencies:
+      check-types: 5.1.0
 
   eslint-scope@7.2.2:
     dependencies:
