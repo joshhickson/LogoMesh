@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@logomesh/contracts": "workspace:*",
+    "escomplex": "2.0.0-alpha",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
     "ulid": "^3.0.1"

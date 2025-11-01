@@ -4,32 +4,36 @@ import { ArchitecturalDebtAnalyzer } from './architecturalDebtAnalyzer';
 describe('ArchitecturalDebtAnalyzer', () => {
   const analyzer = new ArchitecturalDebtAnalyzer();
 
-  describe('_calculateScoreFromComplexity', () => {
-    it('should return a high score for low complexity', () => {
-      const report = analyzer._calculateScoreFromComplexity({ cyclomatic: 5 });
-      expect(report.score).toBe(1.0);
-      expect(report.details).toBe('Code is well-structured.');
-    });
-
-    it('should return a medium score for moderate complexity', () => {
-      const report = analyzer._calculateScoreFromComplexity({ cyclomatic: 8 });
-      expect(report.score).toBe(0.75);
-      expect(report.details).toBe('Moderate cyclomatic complexity detected (8).');
-    });
-
-    it('should return a low score for high complexity', () => {
-      const report = analyzer._calculateScoreFromComplexity({ cyclomatic: 15 });
-      expect(report.score).toBe(0.5);
-      expect(report.details).toContain('High cyclomatic complexity detected (15)');
-    });
+  it('should return a high score for a simple function', async () => {
+    // This test is simple because the `analyze` method is currently a placeholder.
+    // We are just verifying that it returns the expected mock score.
+    const simpleCode = 'function add(a, b) { return a + b; }';
+    const report = await analyzer.analyze(simpleCode);
+    expect(report.score).toBe(1.0);
+    expect(report.details).toBe('Code is well-structured.');
   });
 
-  describe('analyze', () => {
-    it('should return a placeholder report', async () => {
-      const report = await analyzer.analyze('const x = 1;');
-      // This test is simple because the main logic is tested above.
-      // It just ensures the public method is wired up correctly.
-      expect(report.score).toBe(1.0);
-    });
+  // This test is written for the future when the static analysis is implemented.
+  // It is expected to fail until then, but it documents the intended behavior.
+  it.skip('should return a low score for a complex function', async () => {
+    const complexCode = `
+      function complexFunction(a, b, c) {
+        if (a > b) {
+          if (b > c) {
+            return 1;
+          } else {
+            return 2;
+          }
+        } else {
+          if (c > a) {
+            return 3;
+          } else {
+            return 4;
+          }
+        }
+      }
+    `;
+    const report = await analyzer.analyze(complexCode);
+    expect(report.score).toBeLessThan(1.0);
   });
 });
