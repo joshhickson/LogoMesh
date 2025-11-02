@@ -1,9 +1,5 @@
-import {
-  StorageAdapter,
-  A2AClient,
-  A2ATaskPayload,
-  Evaluation,
-} from '@logomesh/contracts';
+import { StorageAdapter, A2ATaskPayload, Evaluation } from '@logomesh/contracts';
+import { A2AClient } from '../services/a2aClient';
 import { RationaleDebtAnalyzer } from '../analysis/rationaleDebtAnalyzer';
 import { ArchitecturalDebtAnalyzer } from '../analysis/architecturalDebtAnalyzer';
 import { TestingDebtAnalyzer } from '../analysis/testingDebtAnalyzer';
@@ -69,7 +65,7 @@ export class EvaluationOrchestrator {
     const totalScore = (rationaleResult.score + archResult.score + testResult.score) / 3;
 
     evaluation = {
-     ...evaluation,
+      ...evaluation,
       status: 'complete',
       contextualDebtScore: parseFloat(totalScore.toFixed(2)),
       report: {

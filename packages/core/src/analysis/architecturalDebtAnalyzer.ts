@@ -9,7 +9,7 @@ interface CodeComplexityReport {
 
 export class ArchitecturalDebtAnalyzer {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async analyze(sourceCode: string): Promise<EvaluationReport> {
+  async analyze(sourceCode: string): Promise<EvaluationReport['architecturalCoherenceDebt']> {
     // TODO: Implement actual static analysis using a library.
     // For now, this is a placeholder.
     const complexity: CodeComplexityReport = { cyclomatic: 5 }; // Mock value
