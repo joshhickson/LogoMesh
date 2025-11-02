@@ -2,10 +2,10 @@ import { describe, it, expect, vi } from 'vitest';
 import { EvaluationOrchestrator } from './evaluationOrchestrator';
 import {
   StorageAdapter,
-  A2AClient,
   Thought,
   A2ASubmissionPayload,
 } from '@logomesh/contracts';
+import { A2AClient } from '../services/a2aClient';
 import { RationaleDebtAnalyzer } from '../analysis/rationaleDebtAnalyzer';
 import { ArchitecturalDebtAnalyzer } from '../analysis/architecturalDebtAnalyzer';
 import { TestingDebtAnalyzer } from '../analysis/testingDebtAnalyzer';
@@ -59,9 +59,18 @@ describe('EvaluationOrchestrator', () => {
 
     vi.spyOn(mockStorageAdapter, 'getAllThoughts').mockResolvedValue([mockTaskThought]);
     vi.spyOn(mockA2AClient, 'sendTask').mockResolvedValue(mockSubmission);
-    vi.spyOn(mockRationaleAnalyzer, 'analyze').mockResolvedValue({ score: 0.9, details: 'Good rationale.' });
-    vi.spyOn(mockArchAnalyzer, 'analyze').mockResolvedValue({ score: 0.8, details: 'Good architecture.' });
-    vi.spyOn(mockTestAnalyzer, 'analyze').mockResolvedValue({ score: 0.7, details: 'Good tests.' });
+    vi.spyOn(mockRationaleAnalyzer, 'analyze').mockResolvedValue({
+      score: 0.9,
+      details: 'Good rationale.',
+    });
+    vi.spyOn(mockArchAnalyzer, 'analyze').mockResolvedValue({
+      score: 0.8,
+      details: 'Good architecture.',
+    });
+    vi.spyOn(mockTestAnalyzer, 'analyze').mockResolvedValue({
+      score: 0.7,
+      details: 'Good tests.',
+    });
 
     // 2. Run the Orchestrator
     const result = await orchestrator.runEvaluation('http://mock-agent.com/a2a');

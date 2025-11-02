@@ -110,6 +110,16 @@ importers:
 
   packages/frontend: {}
 
+  packages/mock-agent:
+    dependencies:
+      express:
+        specifier: ^4.19.2
+        version: 4.21.2
+    devDependencies:
+      '@types/express':
+        specifier: ^4.17.21
+        version: 4.17.25
+
   packages/server: {}
 
 packages:

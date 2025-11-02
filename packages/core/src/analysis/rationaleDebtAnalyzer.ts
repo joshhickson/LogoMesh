@@ -12,7 +12,7 @@ export class RationaleDebtAnalyzer {
     this.llmClient = llmClient;
   }
 
-  async analyze(rationale: string): Promise<EvaluationReport> {
+  async analyze(rationale: string): Promise<EvaluationReport['rationaleDebt']> {
     const systemMessage = `
       You are an expert software architect. Your task is to evaluate a rationale provided
       by an AI agent for a piece of code it generated. Score the rationale from 0.0 (high debt)
@@ -26,10 +26,13 @@ export class RationaleDebtAnalyzer {
     try {
       // Basic validation, will need to be more robust
       const result = JSON.parse(responseJson);
-      return result as EvaluationReport;
+      return result;
     } catch (error) {
-      console.error("Failed to parse LLM response for rationale analysis:", error);
-      return { score: 0.0, details: "Failed to analyze rationale due to an internal error." };
+      console.error('Failed to parse LLM response for rationale analysis:', error);
+      return {
+        score: 0.0,
+        details: 'Failed to analyze rationale due to an internal error.',
+      };
     }
   }
 }
