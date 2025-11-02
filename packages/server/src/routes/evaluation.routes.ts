@@ -1,10 +1,12 @@
 import { Router } from 'express';
-import { EvaluationOrchestrator } from '@logomesh/core/src/orchestration/evaluationOrchestrator';
-import { SQLiteAdapter } from '@logomesh/core/src/storage/sqliteAdapter';
-import { A2AClient } from '@logomesh/core/src/services/a2aClient';
-import { RationaleDebtAnalyzer } from '@logomesh/core/src/analysis/rationaleDebtAnalyzer';
-import { ArchitecturalDebtAnalyzer } from '@logomesh/core/src/analysis/architecturalDebtAnalyzer';
-import { TestingDebtAnalyzer } from '@logomesh/core/src/analysis/testingDebtAnalyzer';
+import {
+  EvaluationOrchestrator,
+  SQLiteAdapter,
+  A2AClient,
+  RationaleDebtAnalyzer,
+  ArchitecturalDebtAnalyzer,
+  TestingDebtAnalyzer,
+} from '@logomesh/core';
 
 const router = Router();
 
