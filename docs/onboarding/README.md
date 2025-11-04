@@ -14,22 +14,32 @@ This plan is a living document and will be executed by the **Documentation & Pro
 
 ### Step-by-Step Tasks:
 
-1.  **Document: "What is Contextual Debt?"**
+1.  **Read: "The Project Plan" (HIGH PRIORITY)**
+    *   **Task:** Read the main `PROJECT_PLAN.md` in the root of the repository.
+    *   **Content:** This is our team's single source of truth for our mission, roles, architecture, and timeline. Understanding this document is the most important first step.
+    *   **Owner:** All Team Members.
+
+2.  **Understand: "How We Work: The Intent Logging Framework" (HIGH PRIORITY)**
+    *   **Task:** Read the rulebook for our Intent Logging framework in `docs/intent_log/README.md`.
+    *   **Content:** This document explains how we record our decisions, questions, and actions to prevent contextual debt. This is a core practice for our team.
+    *   **Owner:** All Team Members.
+
+3.  **Document: "What is Contextual Debt?"**
     *   **Task:** Create a simple, one-page document (`what_is_contextual_debt.md`) that explains our core problem.
     *   **Content:** Use analogies and simple language. Avoid jargon. For example, compare Contextual Debt to a building's messy, undocumented wiring—it might work, but it's impossible to maintain or safely upgrade.
     *   **Owner:** Narrative & Pitch Strategist.
 
-2.  **Document: "Our Mission: The Cyber-Sentinel Agent"**
+4.  **Document: "Our Mission: The Cyber-Sentinel Agent"**
     *   **Task:** Create a document (`mission_overview.md`) that summarizes the project's narrative as defined in the `PROJECT_PLAN.md`.
     *   **Content:** Explain *why* we are focusing on the cybersecurity domain. Detail the story of our agent and the high-stakes problem it solves. This will be the foundation for our final pitch.
     *   **Owner:** Narrative & Pitch Strategist.
 
-3.  **Document: "System Architecture at a Glance"**
+5.  **Document: "System Architecture at a Glance"**
     *   **Task:** Create a document (`architecture_overview.md`) that provides a visual guide to our system.
     *   **Content:** Include a clean, simplified version of the "Proposed Architecture" Mermaid diagram from our project plan. Below the diagram, provide a one-sentence explanation for each component (e.g., "Orchestrator Agent: The 'manager' of the team, who assigns tasks to the workers.").
     *   **Owner:** Documentation & Project Coordinator, with support from the Team Lead.
 
-4.  **Create: "Project Glossary"**
+6.  **Create: "Project Glossary"**
     *   **Task:** Create a central glossary (`glossary.md`) of all key terms.
     *   **Content:** Define terms like "Green Agent," "Purple Agent," "Monorepo," "API," "LLM," "Fine-Grained Authorization (FGA)," and "Static Analysis" in clear, simple language.
     *   **Owner:** Documentation & Project Coordinator.
