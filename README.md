@@ -1,46 +1,31 @@
-# Welcome to the Cyber-Sentinel Agent Project! 🛡️
+# LogoMesh Green Agent: A Benchmark for Contextual Debt
 
-**Our Mission: To build a groundbreaking AI agent that can judge the quality and security of other AI-generated code, and to win the AgentX AgentBeats competition!**
+**Submission for the AgentX AgentBeats Competition (Benchmarks Track)**
 
 ---
 
-Hello team, and welcome!
+## 1. Mission Overview
 
-You've just joined a project at the cutting edge of agentic AI. We're not just building another coding agent; we're building an **"Agent-as-a-Judge."** Our "Cyber-Sentinel" will be a sophisticated evaluator that can analyze code for "Contextual Debt"—the hidden costs of poorly-reasoned, badly-architected, and insecure code that other AI agents often produce.
+This repository contains the source code for our "Green Agent," a system designed to introduce a new benchmark for evaluating AI coding agents: the **Contextual Debt Score**.
 
-This is an ambitious goal, but we have a solid plan, a great team, and a real chance to create something that will be recognized by leaders in the field.
+Current benchmarks primarily measure task completion, failing to capture the long-term engineering quality of AI-generated code. Our project addresses this gap by quantifying "Contextual Debt"—the liability incurred from code that lacks clear human intent and sound architectural reasoning. Our agent provides a more holistic evaluation of agent performance, moving beyond *if* a task was completed to *how well* it was completed.
 
-## Your Journey Starts Here 👇
+For a complete explanation of the theory and methodology, please review our full submission paper.
 
-This repository contains everything we need to succeed, but don't feel overwhelmed! We've created a central document that explains our entire strategy.
+**➡️ [Read the Full Submission Paper](./docs/AgentX_Submission_Paper.md)**
 
-**Your absolute first step is to read our Project Plan.** It's our team's single source of truth.
+## 2. Quick Start & Verification
 
-### **[➡️ START HERE: Read the Project Plan](./PROJECT_PLAN.md)**
+To ensure our system is reproducible and transparent, you can run the core evaluation logic with two simple commands. This will execute the end-to-end test suite for our Minimum Viable Product (MVP), which validates the functionality of our API and analysis services.
 
-This plan will walk you through:
-*   Our full vision for the "Cyber-Sentinel Agent."
-*   The new multi-agent architecture we will build.
-*   Your specific role on the team and what you'll be learning.
-*   Our week-by-week timeline to the submission deadline.
-
-Once you've read the plan, you'll be directed to our structured onboarding documents to get you fully up to speed.
-
-## For the Technically Curious (Coders!)
-
-If you're eager to dive into the code, our project is a `pnpm` monorepo built with TypeScript. The quickest way to see the *current* (soon-to-be-upgraded!) system in action is to run the end-to-end test suite.
-
-**1. Install Dependencies**
+**Step 1: Install Dependencies**
 ```bash
 pnpm install
 ```
 
-**2. Run the End-to-End Test**
+**Step 2: Run the Verification Test**
 ```bash
 pnpm test
 ```
-*(**Note:** This will test the old architecture. The fun part will be building the new one together!)*
 
----
-
-Let's get started. We're excited to have you on the team!
+Upon successful execution, the tests will confirm that the evaluation server can start, process a mock agent submission, and generate a correctly structured Contextual Debt report.
