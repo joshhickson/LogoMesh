@@ -2,11 +2,12 @@
   "name": "@logomesh/server",
   "version": "1.0.0",
   "private": true,
-"main": "dist/server.js",
+"main": "dist/index.js",
   "scripts": {
-"start": "node dist/server.js",
-"dev": "tsx src/server.ts",
-    "build": "tsc -b"
+"start": "node --loader ts-node/esm src/index.ts",
+  "build": "tsc -b",
+  "test": "vitest run",
+  "test:e2e": "vitest run src/e2e/evaluation.e2e.test.ts"
 },
 "dependencies": {
 "@logomesh/core": "workspace:*",

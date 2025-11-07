@@ -1,5 +1,0 @@
-
-> @logomesh/mock-agent@1.0.0 start /app/packages/mock-agent
-> node dist/server.js
-
-[Mock Agent] Listening on http://localhost:3002

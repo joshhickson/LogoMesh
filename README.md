@@ -1,46 +1,107 @@
-# Welcome to the Cyber-Sentinel Agent Project! 🛡️
+# LogoMesh Green Agent: A Benchmark for Contextual Debt
 
-**Our Mission: To build a groundbreaking AI agent that can judge the quality and security of other AI-generated code, and to win the AgentX AgentBeats competition!**
+This repository contains the official submission for the AgentX-AgentBeats "Benchmarks Track." We have built a novel "Green Agent" designed to evaluate competing "Purple Agents" on **Contextual Debt**—a new, unmeasured liability in AI-generated code.
+
+Our agent provides a comprehensive, automated score that moves beyond simple task completion to measure the true quality, maintainability, and "knowability" of an agent's work.
+
+**For a deep dive into the research and methodology, please see our submission paper: [A Green Agent for Measuring Contextual Debt](./docs/AgentX_Submission_Paper.md)**
 
 ---
 
-Hello team, and welcome!
+## Quick Start (Verifying the System)
 
-You've just joined a project at the cutting edge of agentic AI. We're not just building another coding agent; we're building an **"Agent-as-a-Judge."** Our "Cyber-Sentinel" will be a sophisticated evaluator that can analyze code for "Contextual Debt"—the hidden costs of poorly-reasoned, badly-architected, and insecure code that other AI agents often produce.
+We have included a full end-to-end (E2E) test suite that proves the entire system works as intended. This test will:
 
-This is an ambitious goal, but we have a solid plan, a great team, and a real chance to create something that will be recognized by leaders in the field.
+1.  Start our **Green Agent** API server.
+2.  Start a **Mock Purple Agent** server.
+3.  Run a full evaluation by having our agent send a task to the mock agent via the A2A protocol.
+4.  Validate the final "Contextual Debt Score" and report.
 
-## Your Journey Starts Here 👇
+### Prerequisites
 
-This repository contains everything we need to succeed, but don't feel overwhelmed! We've created a central document that explains our entire strategy.
+- Node.js (v20 LTS recommended)
+- pnpm
 
-**Your absolute first step is to read our Project Plan.** It's our team's single source of truth.
+### 1. Install Dependencies
 
-### **[➡️ START HERE: Read the Project Plan](./PROJECT_PLAN.md)**
-
-This plan will walk you through:
-*   Our full vision for the "Cyber-Sentinel Agent."
-*   The new multi-agent architecture we will build.
-*   Your specific role on the team and what you'll be learning.
-*   Our week-by-week timeline to the submission deadline.
-
-Once you've read the plan, you'll be directed to our structured onboarding documents to get you fully up to speed.
-
-## For the Technically Curious (Coders!)
-
-If you're eager to dive into the code, our project is a `pnpm` monorepo built with TypeScript. The quickest way to see the *current* (soon-to-be-upgraded!) system in action is to run the end-to-end test suite.
-
-**1. Install Dependencies**
 ```bash
 pnpm install
 ```
 
-**2. Run the End-to-End Test**
+### 2. Run the End-to-End Test
+
+This single command runs the entire verification:
+
 ```bash
-pnpm test
+pnpm --filter @logomesh/server run test:e2e
 ```
-*(**Note:** This will test the old architecture. The fun part will be building the new one together!)*
+
+You will see output as both servers spin up, followed by a passing test result, confirming the system is fully operational.
 
 ---
 
-Let's get started. We're excited to have you on the team!
+## Running Manually
+
+You can also run the components individually to interact with the API yourself.
+
+### 1. Start the Mock Agent
+
+In your first terminal, start the mock Purple Agent:
+
+```bash
+pnpm --filter @logomesh/mock-agent start
+```
+
+*Running on http://localhost:3002*
+
+### 2. Start the Green Agent (Our Server)
+
+In your second terminal, start our Green Agent API server:
+
+```bash
+pnpm --filter @logomesh/server start
+```
+
+*Running on http://localhost:3001*
+
+### 3. Run an Evaluation via curl
+
+In a third terminal, use curl to send a new evaluation request to our Green Agent, pointing it at the mock agent's endpoint:
+
+```bash
+curl -X POST http://localhost:3001/v1/evaluate \
+     -H "Content-Type: application/json" \
+     -d '{ "purple_agent_endpoint": "http://localhost:3002/a2a" }'
+```
+
+### 4. Get Your Results
+
+You will receive a JSON response with the full evaluation, including the final **contextual_debt_score** and the detailed report:
+
+```json
+{
+  "evaluation_id": "uuid-...",
+  "status": "complete",
+  "contextual_debt_score": 0.85,
+  "report": {
+"rationaleDebt": { "score": 0.5, "details": "mocked" },
+    "architecturalCoherenceDebt": { "score": 0.8, "details": "Good architecture." },
+    "testingVerificationDebt": { "score": 0.7, "details": "Good tests." }
+  }
+}
+```
+
+---
+
+### Core Architecture
+
+This project is a TypeScript monorepo built with pnpm and Turborepo.
+
+- packages/contracts: Defines the shared data structures (e.g., EvaluationReport).
+- packages/core: Contains the core logic:
+  - analysis/: The three specialist inspectors (RationaleDebtAnalyzer, etc.).
+  - orchestration/: The EvaluationOrchestrator (the "Head Inspector").
+  - services/: The A2AClient and secure PluginHost.
+  - storage/: The normalized SQLiteAdapter.
+- packages/server: The Express.js API server.
+- packages/mock-agent: The mock Purple Agent used for testing.
