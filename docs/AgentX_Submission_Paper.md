@@ -1,63 +1,55 @@
-# A Benchmark for Agentic Quality: Measuring and Managing Contextual Debt
+# AgentX Submission Paper: A Green Agent for Measuring Contextual Debt
 
 ## Abstract
 
-The proliferation of AI-powered code generation tools has unlocked unprecedented development velocity but has also introduced a novel, insidious form of liability: **Contextual Debt**. This is the future cost incurred from a lack of discernible human intent and architectural rationale within a codebase. Current agentic benchmarks, which focus solely on task completion, fail to measure this critical dimension of software quality. This paper introduces a new benchmark and a reference implementation—a "Green Agent"—designed to quantify Contextual Debt. Our agent analyzes code submissions from other AI agents across three axes: rationale, architecture, and testing. It aggregates these findings into a single, actionable **Contextual Debt Score**, providing a more holistic measure of agent performance and paving the way for a new generation of quality-aware AI development tools.
+The proliferation of AI agents in software development is creating a new, unmeasured liability we call "Contextual Debt"—code that is syntactically correct but lacks discernible human intent, architectural coherence, or testability. This productivity paradox, where development velocity increases while system quality and maintainability decline, stems from practices like "vibecoding," where AI is prompted to generate solutions without a strong underlying mental model. Current benchmarks are ill-equipped to measure this new form of debt, as they focus on functional correctness rather than the semantic and architectural integrity of an agent's work.
 
-## Introduction: The Problem of Contextual Debt
+To address this critical gap, we have built a "Green Agent" that, for the first time, provides a comprehensive, automated score for Contextual Debt. Our evaluator issues a software requirement to a competing "Purple Agent" and analyzes its submission—code, tests, and rationale—using a multi-faceted framework. The final "Contextual Debt Score" is an aggregation of three metrics: **Rationale Debt**, measuring the clarity of the agent's explanation; **Architectural Debt**, assessing the structural quality of the code via static analysis; and **Testing Debt**, evaluating the thoroughness of the agent's tests. This new benchmark enables a more meaningful evaluation of agentic systems, moving beyond simple task completion to measure the quality and maintainability of an agent's work, which is a critical, missing piece in agent evaluation.
 
-Agentic software engineering is grappling with a **productivity paradox**: while individual developers report massive speed gains, system-level stability and throughput are declining. The root cause is that AI agents, optimized for localized task completion, are flooding codebases with syntactically correct but semantically opaque code. This practice, termed **"vibecoding,"** prioritizes immediate results over intentional design, leading to a systemic erosion of the "why" behind the code.
+## 1. Introduction: The Problem of "Contextual Debt"
 
-This erosion creates **Contextual Debt**. Unlike traditional technical debt (a suboptimal "how"), contextual debt is the cost of a missing "why." It manifests as code that is difficult to debug, maintain, and evolve because its underlying logic and architectural purpose are not owned or understood by the human team. Existing benchmarks, which typically measure only whether an agent can complete a task (e.g., pass a set of unit tests), are insufficient. They incentivize the very "vibecoding" that generates this long-term liability, failing to distinguish between a brittle, context-free solution and a robust, well-architected one. A new benchmark is needed—one that measures not just *if* an agent can solve a problem, but *how well* it solves it from an engineering perspective.
+The agentic era of software development has introduced a significant "productivity paradox": while AI-assisted development feels faster and dramatically increases code output, it can lead to systemic fragility and a decline in delivery stability. This paradox arises from a new and insidious form of liability that current evaluation methods fail to capture. The primary source of this liability is a practice we term "vibecoding"—the process of prompting an AI to generate code without a strong, pre-existing mental model of the desired outcome, architecture, or logic. This leads to code that is syntactically correct but semantically opaque.
 
-## Methods: A Green Agent for Quantifying Debt
+To address this, we formally define **Contextual Debt**: "the future cost incurred from a lack of discernible human intent, architectural rationale, and domain-specific knowledge within a codebase." Unlike traditional technical debt, which concerns a flawed implementation (the "how"), contextual debt is the cost of a missing or opaque intent (the "why"). This is the critical "secret" that current benchmarks are missing. They can confirm that an agent's solution *works*, but they cannot tell you if the solution is maintainable, well-architected, or even understandable to the human team responsible for its long-term ownership. As agentic systems become more powerful, this unmeasured liability represents the single greatest threat to the long-term health of software projects.
 
-To address this gap, we have developed a Green Agent that acts as an automated code reviewer, specifically designed to score the quality of another agent's (a "Purple Agent") code submission. Our agent's architecture is built around an **`EvaluationOrchestrator`** that coordinates three specialized analyzer services:
+## 2. Methods: A Green Agent for Measuring Agentic Quality
 
-1.  **`RationaleDebtAnalyzer`:** This service uses a Large Language Model (LLM) to evaluate the quality of the rationale submitted alongside the code. It scores the explanation based on its clarity, completeness, and discussion of trade-offs, directly measuring the "explainability" of the solution.
-2.  **`ArchitecturalDebtAnalyzer`:** This service performs static analysis on the source code to measure its structural integrity. In its initial version, it uses metrics like cyclomatic complexity to identify code that is overly complex and difficult to maintain.
-3.  **`TestingDebtAnalyzer`:** This service analyzes the submitted test code to gauge its thoroughness. It rewards submissions that go beyond simple "happy path" tests to include checks for edge cases and error conditions.
+To solve the problem of Contextual Debt, we have constructed a **Green Agent**, an automated evaluator designed to compete in the "Benchmarks Track" and assess the quality of competing "Purple Agents" on the "Coding Agent" track. Our system provides a novel, comprehensive, and automated scoring methodology that moves beyond mere functional correctness.
 
-The orchestrator invokes these three analyzers in parallel and then aggregates their individual scores (each from 0.0 to 1.0) into a single, averaged **Contextual Debt Score**. This score provides a quantitative measure of the submission's overall engineering quality.
+The evaluation workflow follows the Agent-to-Agent (A2A) protocol:
+1.  Our Green Agent issues a software requirement (a "thought") to a Purple Agent via an API endpoint.
+2.  It receives the Purple Agent's submission, which must include the generated code, a set of corresponding tests, and a natural language rationale explaining its approach.
+3.  It analyzes this multi-faceted submission using a "step-level evaluation framework" executed by a team of specialized internal agents.
 
-## Results: The MVP and its API
+The agent's final output is a single, normalized **"Contextual Debt Score"**, which is an aggregation of three distinct metrics, each targeting a different type of debt:
 
-Our Minimum Viable Product (MVP) is a Node.js server that exposes a single API endpoint: `POST /v1/evaluate`. This endpoint accepts the URL of a competing Purple Agent. It then orchestrates the entire evaluation workflow: sending a task to the Purple Agent, receiving its submission, running the analysis, and returning a final report.
+1.  **Rationale Debt (`RationaleDebtAnalyzer`):** This service uses a Large Language Model (LLM) to evaluate the quality of the rationale submitted alongside the code. It scores the explanation based on its clarity, completeness, and discussion of trade-offs, directly measuring the "explainability" of the solution. Does the agent "show its work" and justify its decisions?
+2.  **Architectural Debt (`ArchitecturalDebtAnalyzer`):** This service uses static analysis to measure the objective complexity and quality of the generated source code. It calculates metrics such as cyclomatic complexity to determine if the code is simple, modular, and maintainable, or a tangled, high-debt mess.
+3.  **Testing Debt (`TestingDebtAnalyzer`):** This service performs a heuristic analysis of the tests provided by the Purple Agent. It verifies not only the existence of tests but also their quality, checking for coverage of edge cases and error conditions beyond the simple "happy path."
 
-### Example JSON Report
+## 3. Results: The MVP and a Sample Report
 
-The final output is a JSON object that provides the overall score and a detailed breakdown from each analyzer. This structured data is designed to be machine-readable, enabling its use in automated competition benchmarks.
+Our Green Agent is implemented and functional, with a working `/v1/evaluate` endpoint that can receive a Purple Agent's endpoint and execute the full evaluation workflow. The tangible output of this process is a detailed JSON report that provides both a top-level Contextual Debt score and a breakdown of the individual debt components. This report serves as our concrete "scoring" deliverable, providing a clear and machine-readable assessment of the Purple Agent's work.
+
+Below is an example of the final JSON report produced by our Green Agent:
 
 ```json
 {
-  "id": "01J8Y2Z5X3N4Q5R6S7T8V9W0X2",
+  "evaluation_id": "uuid-...",
   "status": "complete",
-  "contextualDebtScore": 0.77,
+  "contextual_debt_score": 0.85,
   "report": {
-    "rationaleDebt": {
-      "score": 0.9,
-      "details": "The rationale is clear, well-structured, and discusses potential trade-offs."
-    },
-    "architecturalCoherenceDebt": {
-      "score": 0.8,
-      "details": "Code is well-structured with a low cyclomatic complexity score of 5."
-    },
-    "testingVerificationDebt": {
-      "score": 0.6,
-      "details": "Tests cover the happy path, but no explicit tests for edge cases were found."
-    }
-  },
-  "createdAt": "2025-12-15T10:00:00.000Z",
-  "completedAt": "2025-12-15T10:01:15.000Z"
+    "rationaleDebt": { "score": 0.9, "details": "The rationale is clear, well-structured, and discusses the primary trade-offs." },
+    "architecturalDebt": { "score": 0.8, "details": "Cyclomatic complexity is low and the code adheres to a clean, single-responsibility pattern." },
+    "testingDebt": { "score": 0.7, "details": "The tests cover the happy path and some edge cases, but miss potential null input failures." }
+  }
 }
 ```
 
-## Discussion: Impact and Future Work
+## 4. Discussion: Impact and Future Work
 
-The Contextual Debt Score represents a new, more meaningful benchmark for comparing the performance of autonomous software agents. By moving beyond mere task completion, it encourages the development of agents that produce code that is not just functional, but also maintainable, robust, and understandable. We believe this benchmark is a valuable public good that will:
+Our Green Agent directly meets the judging criteria for the Benchmarks Track by providing a "comprehensive, standardized" evaluation method with "novel tasks, automation, and scoring." The Contextual Debt score offers deep "insights into efficiency, accuracy, and generalization" by measuring the quality of the agent's underlying thought process, not just its final output. This moves beyond a simple pass/fail check to a nuanced assessment of maintainability and architectural integrity—qualities that are essential for real-world software engineering.
 
-*   Enable more insightful cross-agent comparisons.
-*   Incentivize the AI research community to focus on engineering quality, not just capability.
-*   Provide a tool for organizations to measure and manage the quality of AI-generated code in their own systems.
+This project represents a **"Zero to One" Benchmark**. The problem of Contextual Debt will only grow as agentic systems become more powerful and prolific. By providing the first standardized tool to measure this liability, we are contributing a critical public good that will enable the community to build and compare agents based on the quality and sustainability of their work.
 
-Future work will involve expanding the sophistication of the analyzer services, such as incorporating more advanced static analysis, measuring test coverage directly, and fine-tuning the rationale analyzer on a dataset of expert code reviews. By open-sourcing our Green Agent, we invite the community to collaborate on building a comprehensive and standardized benchmark for agentic code quality.
+**Future Work:** This benchmark is the first step toward our long-term vision of a full **Cognitive Integrated Development Environment (C-IDE)**. Our goal is to evolve this project from a passive evaluator into an active, collaborative tool that helps humans and AI partners manage Contextual Debt in real-time, transforming the very nature of how we build complex systems together.
