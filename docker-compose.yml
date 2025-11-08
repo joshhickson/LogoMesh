@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  redis:
+    build: ./docker-redis
+    ports:
+      - '6379:6379'
+
+  api-server:
+    build: .
+    command: pnpm --filter @logomesh/server start
+    ports:
+      - '3001:3001'
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+  safe-workers:
+    build: .
+    command: >
+      sh -c "pnpm --filter @logomesh/workers start:rationale &
+             pnpm --filter @logomesh/workers start:architectural &
+             wait"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+  testing-worker:
+    build: .
+    command: pnpm --filter @logomesh/workers start:testing
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+  e2e-tester:
+    build: .
+    command: pnpm --filter @logomesh/server test
+    depends_on:
+      - api-server
+      - safe-workers
+      - testing-worker
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - API_SERVER_URL=http://api-server:3001

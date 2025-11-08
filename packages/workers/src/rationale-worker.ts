@@ -16,8 +16,8 @@ const worker = new Worker('rationale-analysis', async job => {
   return report;
 }, {
   connection: {
-    host: 'localhost',
-    port: 6379
+    host: process.env.REDIS_HOST || 'localhost',
+    port: parseInt(process.env.REDIS_PORT || '6379', 10),
   }
 });
 
