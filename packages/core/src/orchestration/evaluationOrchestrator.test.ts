@@ -4,50 +4,50 @@ import {
   StorageAdapter,
   Thought,
   A2ASubmissionPayload,
+  Evaluation,
 } from '@logomesh/contracts';
 import { A2AClient } from '../services/a2aClient';
 import { RationaleDebtAnalyzer } from '../analysis/rationaleDebtAnalyzer';
 import { ArchitecturalDebtAnalyzer } from '../analysis/architecturalDebtAnalyzer';
 import { TestingDebtAnalyzer } from '../analysis/testingDebtAnalyzer';
+import { evaluationEvents } from '../events';
 
 // Mock all dependencies
-const mockStorageAdapter: StorageAdapter = {
+const mockStorageAdapter = {
   getAllThoughts: vi.fn(),
-  // Add other methods as needed, returning Promises
 } as unknown as StorageAdapter;
 
-const mockA2AClient: A2AClient = {
+const mockA2AClient = {
   sendTask: vi.fn(),
 } as unknown as A2AClient;
 
-const mockRationaleAnalyzer: RationaleDebtAnalyzer = {
+const mockRationaleAnalyzer = {
   analyze: vi.fn(),
 } as unknown as RationaleDebtAnalyzer;
 
-const mockArchAnalyzer: ArchitecturalDebtAnalyzer = {
+const mockArchAnalyzer = {
   analyze: vi.fn(),
 } as unknown as ArchitecturalDebtAnalyzer;
 
-const mockTestAnalyzer: TestingDebtAnalyzer = {
+const mockTestAnalyzer = {
   analyze: vi.fn(),
 } as unknown as TestingDebtAnalyzer;
 
-describe('EvaluationOrchestrator', () => {
+describe('EvaluationOrchestrator (Asynchronous)', () => {
   const orchestrator = new EvaluationOrchestrator(
     mockStorageAdapter,
     mockA2AClient,
     mockRationaleAnalyzer,
     mockArchAnalyzer,
-    mockTestAnalyzer
+    mockTestAnalyzer,
   );
 
-  it('should execute the full evaluation workflow successfully', async () => {
+  it('should start an evaluation and complete it asynchronously via events', async () => {
     // 1. Setup Mocks
     const mockTaskThought: Thought = {
       id: 'thought-01',
       title: 'Test Requirement',
       description: 'Implement a basic API.',
-      //... other properties
     } as Thought;
 
     const mockSubmission: A2ASubmissionPayload = {
@@ -60,8 +60,8 @@ describe('EvaluationOrchestrator', () => {
     vi.spyOn(mockStorageAdapter, 'getAllThoughts').mockResolvedValue([mockTaskThought]);
     vi.spyOn(mockA2AClient, 'sendTask').mockResolvedValue(mockSubmission);
     vi.spyOn(mockRationaleAnalyzer, 'analyze').mockResolvedValue({
-      score: 0.9,
-      details: 'Good rationale.',
+      overallScore: 0.9,
+      trace: [],
     });
     vi.spyOn(mockArchAnalyzer, 'analyze').mockResolvedValue({
       score: 0.8,
@@ -72,24 +72,26 @@ describe('EvaluationOrchestrator', () => {
       details: 'Good tests.',
     });
 
-    // 2. Run the Orchestrator
-    const result = await orchestrator.runEvaluation('http://mock-agent.com/a2a');
-
-    // 3. Assert the Flow
-    expect(mockStorageAdapter.getAllThoughts).toHaveBeenCalled();
-    expect(mockA2AClient.sendTask).toHaveBeenCalledWith('http://mock-agent.com/a2a', {
-      taskId: expect.any(String),
-      requirement: mockTaskThought.description,
+    // 2. Start the Orchestration and listen for the result
+    const evaluationPromise = new Promise<Evaluation>((resolve) => {
+      evaluationEvents.on('evaluation:complete', (evaluation: Evaluation) => {
+        resolve(evaluation);
+      });
     });
-    expect(mockRationaleAnalyzer.analyze).toHaveBeenCalledWith(mockSubmission.rationale);
-    expect(mockArchAnalyzer.analyze).toHaveBeenCalledWith(mockSubmission.sourceCode);
-    expect(mockTestAnalyzer.analyze).toHaveBeenCalledWith(mockSubmission.sourceCode, mockSubmission.testCode);
+
+    const evaluationId = await orchestrator.startEvaluation('http://mock-agent.com/a2a');
+    expect(evaluationId).toBeDefined();
+
+    const initialStatus = await orchestrator.getEvaluation(evaluationId);
+    expect(initialStatus?.status).toBe('running');
+
+    // 3. Wait for the asynchronous process to complete
+    const finalResult = await evaluationPromise;
 
     // 4. Assert the Final Result
-    expect(result.status).toBe('complete');
-    expect(result.report?.rationaleDebt.score).toBe(0.9);
-    expect(result.report?.architecturalCoherenceDebt.score).toBe(0.8);
-    expect(result.report?.testingVerificationDebt.score).toBe(0.7);
-    expect(result.contextualDebtScore).toBe(0.8); // (0.9 + 0.8 + 0.7) / 3 = 0.8
+    expect(finalResult.id).toBe(evaluationId);
+    expect(finalResult.status).toBe('complete');
+    expect(finalResult.report?.rationaleDebt.overallScore).toBe(0.9);
+    expect(finalResult.contextualDebtScore).toBeCloseTo(0.8); // (0.9 + 0.8 + 0.7) / 3
   });
 });

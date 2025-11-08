@@ -1,41 +1,47 @@
-import { StorageAdapter, A2ATaskPayload, Evaluation } from '@logomesh/contracts';
+import {
+  StorageAdapter,
+  A2ATaskPayload,
+  Evaluation,
+  ReasoningStep,
+} from '@logomesh/contracts';
 import { A2AClient } from '../services/a2aClient';
 import { RationaleDebtAnalyzer } from '../analysis/rationaleDebtAnalyzer';
 import { ArchitecturalDebtAnalyzer } from '../analysis/architecturalDebtAnalyzer';
 import { TestingDebtAnalyzer } from '../analysis/testingDebtAnalyzer';
 import { ulid } from 'ulid';
+import { evaluationEvents } from '../events';
 
 /**
  * The EvaluationOrchestrator is the core logic for the Green Agent.
  * It manages the entire process of evaluating a Purple Agent.
  */
 export class EvaluationOrchestrator {
+  // In-memory store for evaluation results for the E2E test.
+  // In a real system, this would be in a persistent database.
+  private evaluationResults = new Map<string, Evaluation>();
+
   constructor(
     private storageAdapter: StorageAdapter,
     private a2aClient: A2AClient,
     private rationaleAnalyzer: RationaleDebtAnalyzer,
     private archAnalyzer: ArchitecturalDebtAnalyzer,
-    private testAnalyzer: TestingDebtAnalyzer
-  ) {}
+    private testAnalyzer: TestingDebtAnalyzer,
+  ) {
+    // Listen for the start event to perform the evaluation asynchronously.
+    evaluationEvents.on(
+      'evaluation:start',
+      this._performEvaluation.bind(this),
+    );
+  }
 
   /**
-   * Runs a full evaluation workflow against a given Purple Agent.
+   * Kicks off a new evaluation workflow. This method returns immediately.
    * @param purpleAgentEndpoint The endpoint of the agent to be evaluated.
-   * @returns The final Evaluation record with score and report.
+   * @returns The ID of the newly created evaluation.
    */
-  async runEvaluation(purpleAgentEndpoint: string): Promise<Evaluation> {
-    // 1. Fetch a task "thought" from the database.
-    // For the MVP, we'll assume there's a single task thought to retrieve.
-    const thoughts = await this.storageAdapter.getAllThoughts();
-    const taskThought = thoughts[0];
-    if (!taskThought) {
-      throw new Error('No task thought found in the database to issue.');
-    }
-
-    // 2. Create an initial Evaluation record in the database.
+  async startEvaluation(purpleAgentEndpoint: string): Promise<string> {
     const evaluationId = ulid();
-    // This is a placeholder; in a real system, we'd create this record in the DB.
-    let evaluation: Evaluation = {
+    const initialEvaluation: Evaluation = {
       id: evaluationId,
       status: 'running',
       contextualDebtScore: null,
@@ -44,41 +50,100 @@ export class EvaluationOrchestrator {
       completedAt: null,
     };
 
-    // 3. Use A2AClient to send the task and receive the submission.
-    const taskPayload: A2ATaskPayload = {
-      taskId: evaluationId,
-      requirement: taskThought.description || taskThought.title,
-    };
-    const submission = await this.a2aClient.sendTask(
-      purpleAgentEndpoint,
-      taskPayload
-    );
+    // Store the initial state
+    this.evaluationResults.set(evaluationId, initialEvaluation);
 
-    // 4. Pass the payload to the three Analyzer services in parallel.
-    const [rationaleResult, archResult, testResult] = await Promise.all([
-      this.rationaleAnalyzer.analyze(submission.rationale),
-      this.archAnalyzer.analyze(submission.sourceCode),
-      this.testAnalyzer.analyze(submission.sourceCode, submission.testCode),
-    ]);
+    // Emit an event to start the actual processing in the background.
+    evaluationEvents.emit('evaluation:start', evaluationId, purpleAgentEndpoint);
 
-    // 5. Aggregate scores and store the final report.
-    const totalScore = (rationaleResult.score + archResult.score + testResult.score) / 3;
+    return evaluationId;
+  }
 
-    evaluation = {
-      ...evaluation,
-      status: 'complete',
-      contextualDebtScore: parseFloat(totalScore.toFixed(2)),
-      report: {
-        rationaleDebt: rationaleResult,
-        architecturalCoherenceDebt: archResult,
-        testingVerificationDebt: testResult,
-      },
-      completedAt: new Date(),
-    };
+  /**
+   * Retrieves the current state of an evaluation.
+   * @param evaluationId The ID of the evaluation to fetch.
+   * @returns The Evaluation record.
+   */
+  async getEvaluation(evaluationId: string): Promise<Evaluation | undefined> {
+    return this.evaluationResults.get(evaluationId);
+  }
 
-    // 6. Update the Evaluation record in the database (placeholder).
-    // await this.storageAdapter.updateEvaluation(evaluation);
+  /**
+   * The private, long-running evaluation process.
+   */
+  private async _performEvaluation(
+    evaluationId: string,
+    purpleAgentEndpoint: string,
+  ) {
+    try {
+      // 1. Fetch task and create initial record (already done in startEvaluation)
+      const thoughts = await this.storageAdapter.getAllThoughts();
+      const taskThought = thoughts[0];
+      if (!taskThought) throw new Error('No task thought found.');
 
-    return evaluation;
+      // 2. Use A2AClient to send the task and receive the submission.
+      const taskPayload: A2ATaskPayload = {
+        taskId: evaluationId,
+        requirement: taskThought.description || taskThought.title,
+      };
+      const submission = await this.a2aClient.sendTask(
+        purpleAgentEndpoint,
+        taskPayload,
+      );
+
+      // This is a placeholder for the multi-step trace. In a real scenario,
+      // the submission itself would contain this trace.
+      const reasoningTrace: readonly ReasoningStep[] = [
+        {
+          stepIndex: 0,
+          goal: 'Implement the feature.',
+          consumedContext: [{ id: ulid(), source: 'memory', content: 'irrelevant context'}],
+          rationale: submission.rationale,
+          action: { toolName: 'writeFile', toolInput: '...'},
+          actionResult: 'ok'
+        }
+      ];
+
+
+      // 4. Pass the payload to the three Analyzer services in parallel.
+      const [rationaleResult, archResult, testResult] = await Promise.all([
+        this.rationaleAnalyzer.analyze(reasoningTrace),
+        this.archAnalyzer.analyze(submission.sourceCode),
+        this.testAnalyzer.analyze(submission.sourceCode, submission.testCode),
+      ]);
+
+      // 5. Aggregate scores and create the final report.
+      const totalScore =
+        (rationaleResult.overallScore + archResult.score + testResult.score) / 3;
+
+      const finalEvaluation: Evaluation = {
+        id: evaluationId,
+        status: 'complete',
+        contextualDebtScore: parseFloat(totalScore.toFixed(2)),
+        report: {
+          rationaleDebt: rationaleResult,
+          architecturalCoherenceDebt: archResult,
+          testingVerificationDebt: testResult,
+        },
+        createdAt: this.evaluationResults.get(evaluationId)!.createdAt,
+        completedAt: new Date(),
+      };
+
+      // 6. Update the record and emit completion event.
+      this.evaluationResults.set(evaluationId, finalEvaluation);
+      evaluationEvents.emit('evaluation:complete', finalEvaluation);
+    } catch (error) {
+      console.error(`Evaluation ${evaluationId} failed:`, error);
+      const errorEvaluation: Evaluation = {
+        id: evaluationId,
+        status: 'error',
+        contextualDebtScore: null,
+        report: null,
+        createdAt: this.evaluationResults.get(evaluationId)!.createdAt,
+        completedAt: new Date(),
+      };
+      this.evaluationResults.set(evaluationId, errorEvaluation);
+      evaluationEvents.emit('evaluation:error', errorEvaluation);
+    }
   }
 }

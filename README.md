@@ -1,4 +1,4 @@
-# LogoMesh Green Agent: A Benchmark for Contextual Debt
+# LogoMesh: An Open Platform for Agent-on-Agent Evaluation
 
 **Submission for the AgentX AgentBeats Competition (Benchmarks Track)**
 
@@ -6,26 +6,28 @@
 
 ## 1. Mission Overview
 
-This repository contains the source code for our "Green Agent," a system designed to introduce a new benchmark for evaluating AI coding agents: the **Contextual Debt Score**.
+This repository contains the source code for the **LogoMesh Evaluation Platform**, an open-source, scalable, and resilient system for running "agent-on-agent" evaluations. Our primary goal is to provide a robust piece of "public good" infrastructure that solves the fragmentation and reproducibility crisis in agent evaluation.
 
-Current benchmarks primarily measure task completion, failing to capture the long-term engineering quality of AI-generated code. Our project addresses this gap by quantifying "Contextual Debt"—the liability incurred from code that lacks clear human intent and sound architectural reasoning. Our agent provides a more holistic evaluation of agent performance, moving beyond *if* a task was completed to *how well* it was completed.
+To demonstrate the platform's power, we have implemented a premier, novel benchmark: the **Contextual Debt Score**.
 
-For a complete explanation of the theory and methodology, please review our full submission paper.
+**Contextual Debt is a dynamic, multi-step benchmark for quantifying how irrelevant or misleading context in an agent's memory degrades its future reasoning steps.**
+
+This metric moves beyond static, single-turn evaluations to provide a systems-level view of an agent's long-term reasoning capabilities. For a complete explanation of the theory and methodology, please review our full submission paper.
 
 **➡️ [Read the Full Submission Paper](./docs/AgentX_Submission_Paper.md)**
 
 ## 2. Quick Start & Verification
 
-To ensure our system is reproducible and transparent, you can run the core evaluation logic with two simple commands. This will execute the end-to-end test suite for our Minimum Viable Product (MVP), which validates the functionality of our API and analysis services.
+To ensure our system is reproducible and transparent, you can run the core evaluation logic with two simple commands. This will execute the full, asynchronous end-to-end test suite, which validates the entire platform, including the API, the asynchronous orchestrator, and the analysis services.
 
 **Step 1: Install Dependencies**
 ```bash
 pnpm install
 ```
 
-**Step 2: Run the Verification Test**
+**Step 2: Run the End-to-End Verification Test**
 ```bash
-pnpm test
+pnpm --filter @logomesh/server test:e2e
 ```
 
-Upon successful execution, the tests will confirm that the evaluation server can start, process a mock agent submission, and generate a correctly structured Contextual Debt report.
+Upon successful execution, the test will confirm that the evaluation server can start, process a mock agent submission via the asynchronous pipeline, and generate a correctly structured Contextual Debt report.
