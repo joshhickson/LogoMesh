@@ -1,4 +1,8 @@
-import { EvaluationReport } from '@logomesh/contracts';
+import {
+  ReasoningStep,
+  DebtEvent,
+  RationaleDebtReport,
+} from '@logomesh/contracts';
 
 // A simplified interface for a local LLM client (e.g., Ollama)
 interface LlmClient {
@@ -12,27 +16,78 @@ export class RationaleDebtAnalyzer {
     this.llmClient = llmClient;
   }
 
-  async analyze(rationale: string): Promise<EvaluationReport['rationaleDebt']> {
-    const systemMessage = `
-      You are an expert software architect. Your task is to evaluate a rationale provided
-      by an AI agent for a piece of code it generated. Score the rationale from 0.0 (high debt)
-      to 1.0 (low debt) based on its clarity, completeness, and discussion of trade-offs
-      and edge cases. Respond ONLY with a JSON object in the format:
-      { "score": number, "details": "string" }
-    `;
+  async analyze(
+    steps: readonly ReasoningStep[],
+  ): Promise<RationaleDebtReport> {
+    const debtTrace: DebtEvent[] = [];
 
-    const responseJson = await this.llmClient.prompt(systemMessage, rationale);
+    for (const step of steps) {
+      const systemMessage = `
+        You are an expert software architect and AI evaluator. Your task is to analyze a single
+        step from an AI agent's reasoning process. The agent was given a goal and a set of
+        context items. Based on its rationale, it chose to use a specific tool.
 
-    try {
-      // Basic validation, will need to be more robust
-      const result = JSON.parse(responseJson);
-      return result;
-    } catch (error) {
-      console.error('Failed to parse LLM response for rationale analysis:', error);
-      return {
-        score: 0.0,
-        details: 'Failed to analyze rationale due to an internal error.',
-      };
+        Your job is to determine if the agent's rationale was flawed *due to a specific piece
+        of irrelevant or misleading context*.
+
+        - If the rationale is sound and uses the correct context, respond with: { "debtIncurred": false }
+        - If the rationale is flawed because it relies on a bad piece of context, respond with:
+          {
+            "debtIncurred": true,
+            "incurredByContextId": "ULID of the bad context item",
+            "debtScore": <a score from 0.0 (no debt) to 1.0 (max debt) for this step>,
+            "details": "A brief explanation of why this context led to a flawed rationale."
+          }
+
+        Respond ONLY with the JSON object. Do not add any extra commentary.
+      `;
+
+      // For this analysis, we need to provide the LLM with the full context of the step.
+      const userMessage = `
+        Goal: ${step.goal}
+        Consumed Context: ${JSON.stringify(step.consumedContext, null, 2)}
+        Rationale: ${step.rationale}
+      `;
+
+      const responseJson = await this.llmClient.prompt(
+        systemMessage,
+        userMessage,
+      );
+
+      try {
+        const result = JSON.parse(responseJson);
+        if (result.debtIncurred) {
+          debtTrace.push({
+            stepIndex: step.stepIndex,
+            incurredByContextId: result.incurredByContextId,
+            debtScore: result.debtScore,
+            details: result.details,
+          });
+        }
+      } catch (error) {
+        console.error(
+          `Failed to parse LLM response for step ${step.stepIndex}:`,
+          error,
+        );
+        // Optionally, add a debt event to signify an analysis failure
+        debtTrace.push({
+          stepIndex: step.stepIndex,
+          incurredByContextId: 'SYSTEM_ERROR',
+          debtScore: 1.0,
+          details: 'Failed to analyze this step due to an internal error.',
+        });
+      }
     }
+
+    // Aggregate the scores. For now, a simple average.
+    // A score of 0.0 means high debt, so we invert the average.
+    const totalDebt = debtTrace.reduce((sum, event) => sum + event.debtScore, 0);
+    const overallScore =
+      debtTrace.length > 0 ? 1.0 - totalDebt / debtTrace.length : 1.0;
+
+    return {
+      overallScore,
+      trace: debtTrace,
+    };
   }
 }

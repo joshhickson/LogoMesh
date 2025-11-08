@@ -39,7 +39,8 @@
     "turbo": "^2.0.4",
     "typescript": "^5.4.5",
     "ulid": "^2.3.0",
-    "vitest": "^1.6.0"
+    "vitest": "^1.6.0",
+    "vitest-tsconfig-paths": "^3.4.1"
   },
   "author": "Josh Hickson",
   "license": "MIT",
