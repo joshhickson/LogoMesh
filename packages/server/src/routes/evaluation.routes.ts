@@ -4,9 +4,6 @@ import {
   EvaluationOrchestrator,
   SQLiteAdapter,
   A2AClient,
-  RationaleDebtAnalyzer,
-  ArchitecturalDebtAnalyzer,
-  TestingDebtAnalyzer,
 } from '@logomesh/core';
 
 const router = Router();
@@ -30,21 +27,10 @@ const checkJwt =
 // Instantiate all dependencies. In a real application, this would use a dependency injection container.
 const storageAdapter = new SQLiteAdapter();
 const a2aClient = new A2AClient();
-// TODO: The RationaleDebtAnalyzer needs a real LlmClient. For now, we can use a mock.
-const mockLlmClient = {
-  prompt: async () =>
-    '{ "debtIncurred": true, "incurredByContextId": "mockId", "debtScore": 0.5, "details": "mocked" }',
-};
-const rationaleAnalyzer = new RationaleDebtAnalyzer(mockLlmClient);
-const archAnalyzer = new ArchitecturalDebtAnalyzer();
-const testAnalyzer = new TestingDebtAnalyzer();
 
 const orchestrator = new EvaluationOrchestrator(
   storageAdapter,
-  a2aClient,
-  rationaleAnalyzer,
-  archAnalyzer,
-  testAnalyzer,
+  a2aClient
 );
 
 // Initialize storage.

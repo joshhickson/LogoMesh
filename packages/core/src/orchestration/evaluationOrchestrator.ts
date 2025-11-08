@@ -3,116 +3,45 @@ import {
   A2ATaskPayload,
   Evaluation,
   ReasoningStep,
+  RationaleDebtReport,
+  EvaluationReport,
 } from '@logomesh/contracts';
 import { A2AClient } from '../services/a2aClient';
-import { RationaleDebtAnalyzer } from '../analysis/rationaleDebtAnalyzer';
-import { ArchitecturalDebtAnalyzer } from '../analysis/architecturalDebtAnalyzer';
-import { TestingDebtAnalyzer } from '../analysis/testingDebtAnalyzer';
 import { ulid } from 'ulid';
-import { evaluationEvents } from '../events';
+import { Queue, FlowProducer, Worker } from 'bullmq';
+import IORedis from 'ioredis';
+
+const connection = new IORedis({ maxRetriesPerRequest: null });
 
 /**
  * The EvaluationOrchestrator is the core logic for the Green Agent.
- * It manages the entire process of evaluating a Purple Agent.
+ * It manages the entire process of evaluating a Purple Agent by dispatching
+ * analysis tasks to a distributed network of workers.
  */
 export class EvaluationOrchestrator {
-  // In-memory store for evaluation results for the E2E test.
-  // In a real system, this would be in a persistent database.
   private evaluationResults = new Map<string, Evaluation>();
+  private flowProducer: FlowProducer;
+  private aggregatorWorker: Worker;
 
   constructor(
     private storageAdapter: StorageAdapter,
     private a2aClient: A2AClient,
-    private rationaleAnalyzer: RationaleDebtAnalyzer,
-    private archAnalyzer: ArchitecturalDebtAnalyzer,
-    private testAnalyzer: TestingDebtAnalyzer,
   ) {
-    // Listen for the start event to perform the evaluation asynchronously.
-    evaluationEvents.on(
-      'evaluation:start',
-      this._performEvaluation.bind(this),
-    );
-  }
+    this.flowProducer = new FlowProducer({ connection });
 
-  /**
-   * Kicks off a new evaluation workflow. This method returns immediately.
-   * @param purpleAgentEndpoint The endpoint of the agent to be evaluated.
-   * @returns The ID of the newly created evaluation.
-   */
-  async startEvaluation(purpleAgentEndpoint: string): Promise<string> {
-    const evaluationId = ulid();
-    const initialEvaluation: Evaluation = {
-      id: evaluationId,
-      status: 'running',
-      contextualDebtScore: null,
-      report: null,
-      createdAt: new Date(),
-      completedAt: null,
-    };
+    // This worker's job is to listen for the completion of the entire evaluation flow.
+    // When the parent job (the flow) is complete, this worker aggregates the results
+    // from all the child jobs (the individual analyses).
+    this.aggregatorWorker = new Worker('evaluation-flow', async (job) => {
+      const { evaluationId } = job.data;
+      console.log(`[Orchestrator] Aggregating results for evaluation ${evaluationId}...`);
 
-    // Store the initial state
-    this.evaluationResults.set(evaluationId, initialEvaluation);
+      const childrenValues = await job.getChildrenValues();
 
-    // Emit an event to start the actual processing in the background.
-    evaluationEvents.emit('evaluation:start', evaluationId, purpleAgentEndpoint);
+      const rationaleResult = childrenValues.rationale;
+      const archResult = childrenValues.architectural;
+      const testResult = childrenValues.testing;
 
-    return evaluationId;
-  }
-
-  /**
-   * Retrieves the current state of an evaluation.
-   * @param evaluationId The ID of the evaluation to fetch.
-   * @returns The Evaluation record.
-   */
-  async getEvaluation(evaluationId: string): Promise<Evaluation | undefined> {
-    return this.evaluationResults.get(evaluationId);
-  }
-
-  /**
-   * The private, long-running evaluation process.
-   */
-  private async _performEvaluation(
-    evaluationId: string,
-    purpleAgentEndpoint: string,
-  ) {
-    try {
-      // 1. Fetch task and create initial record (already done in startEvaluation)
-      const thoughts = await this.storageAdapter.getAllThoughts();
-      const taskThought = thoughts[0];
-      if (!taskThought) throw new Error('No task thought found.');
-
-      // 2. Use A2AClient to send the task and receive the submission.
-      const taskPayload: A2ATaskPayload = {
-        taskId: evaluationId,
-        requirement: taskThought.description || taskThought.title,
-      };
-      const submission = await this.a2aClient.sendTask(
-        purpleAgentEndpoint,
-        taskPayload,
-      );
-
-      // This is a placeholder for the multi-step trace. In a real scenario,
-      // the submission itself would contain this trace.
-      const reasoningTrace: readonly ReasoningStep[] = [
-        {
-          stepIndex: 0,
-          goal: 'Implement the feature.',
-          consumedContext: [{ id: ulid(), source: 'memory', content: 'irrelevant context'}],
-          rationale: submission.rationale,
-          action: { toolName: 'writeFile', toolInput: '...'},
-          actionResult: 'ok'
-        }
-      ];
-
-
-      // 4. Pass the payload to the three Analyzer services in parallel.
-      const [rationaleResult, archResult, testResult] = await Promise.all([
-        this.rationaleAnalyzer.analyze(reasoningTrace),
-        this.archAnalyzer.analyze(submission.sourceCode),
-        this.testAnalyzer.analyze(submission.sourceCode, submission.testCode),
-      ]);
-
-      // 5. Aggregate scores and create the final report.
       const totalScore =
         (rationaleResult.overallScore + archResult.score + testResult.score) / 3;
 
@@ -129,11 +58,103 @@ export class EvaluationOrchestrator {
         completedAt: new Date(),
       };
 
-      // 6. Update the record and emit completion event.
       this.evaluationResults.set(evaluationId, finalEvaluation);
-      evaluationEvents.emit('evaluation:complete', finalEvaluation);
+      console.log(`[Orchestrator] Evaluation ${evaluationId} complete.`);
+    }, { connection });
+  }
+
+  async startEvaluation(purpleAgentEndpoint: string): Promise<string> {
+    const evaluationId = ulid();
+    const initialEvaluation: Evaluation = {
+      id: evaluationId,
+      status: 'running',
+      contextualDebtScore: null,
+      report: null,
+      createdAt: new Date(),
+      completedAt: null,
+    };
+    this.evaluationResults.set(evaluationId, initialEvaluation);
+
+    // This doesn't need to be awaited. We kick off the background job and return.
+    this._performEvaluation(evaluationId, purpleAgentEndpoint);
+
+    return evaluationId;
+  }
+
+  async getEvaluation(evaluationId: string): Promise<Evaluation | undefined> {
+    return this.evaluationResults.get(evaluationId);
+  }
+
+  private async _performEvaluation(
+    evaluationId: string,
+    purpleAgentEndpoint: string,
+  ) {
+    try {
+      // 1. Fetch task and agent submission
+      const thoughts = await this.storageAdapter.getAllThoughts();
+      const taskThought = thoughts[0];
+      if (!taskThought) throw new Error('No task thought found.');
+
+      const taskPayload: A2ATaskPayload = {
+        taskId: evaluationId,
+        requirement: taskThought.description || taskThought.title,
+      };
+      const submission = await this.a2aClient.sendTask(
+        purpleAgentEndpoint,
+        taskPayload,
+      );
+
+      const reasoningTrace: readonly ReasoningStep[] = [
+        {
+          stepIndex: 0,
+          goal: 'Implement the feature.',
+          consumedContext: [{ id: ulid(), source: 'memory', content: 'irrelevant context'}],
+          rationale: submission.rationale,
+          action: { toolName: 'writeFile', toolInput: '...'},
+          actionResult: 'ok'
+        }
+      ];
+
+      // 2. Create a flow of analysis jobs.
+      // The parent job ('evaluation-flow') will only complete after all its
+      // children have completed successfully.
+      await this.flowProducer.add({
+        name: 'evaluation-flow',
+        queueName: 'evaluation-flow',
+        data: { evaluationId },
+        children: [
+          {
+            name: 'rationale-job',
+            queueName: 'rationale-analysis',
+            data: { evaluationId, steps: reasoningTrace },
+            opts: {
+              jobId: `${evaluationId}-rationale`,
+            }
+          },
+          {
+            name: 'architectural-job',
+            queueName: 'architectural-analysis',
+            data: { evaluationId, sourceCode: submission.sourceCode },
+             opts: {
+              jobId: `${evaluationId}-architectural`,
+            }
+          },
+          {
+            name: 'testing-job',
+            queueName: 'testing-analysis',
+            data: {
+              evaluationId,
+              sourceCode: submission.sourceCode,
+              testCode: submission.testCode,
+            },
+             opts: {
+              jobId: `${evaluationId}-testing`,
+            }
+          },
+        ],
+      });
     } catch (error) {
-      console.error(`Evaluation ${evaluationId} failed:`, error);
+      console.error(`Evaluation ${evaluationId} failed to start:`, error);
       const errorEvaluation: Evaluation = {
         id: evaluationId,
         status: 'error',
@@ -143,7 +164,6 @@ export class EvaluationOrchestrator {
         completedAt: new Date(),
       };
       this.evaluationResults.set(evaluationId, errorEvaluation);
-      evaluationEvents.emit('evaluation:error', errorEvaluation);
     }
   }
 }
