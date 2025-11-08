@@ -18,14 +18,13 @@
   },
   "dependencies": {
     "@logomesh/contracts": "workspace:*",
-    "bullmq": "^5.63.0",
     "escomplex": "2.0.0-alpha",
-    "ioredis": "^5.8.2",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
     "ulid": "^3.0.1"
   },
   "devDependencies": {
-    "@types/sqlite3": "^5.1.0"
+    "@types/sqlite3": "^5.1.0",
+    "vitest": "^1.6.0"
   }
 }

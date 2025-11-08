@@ -11,7 +11,11 @@ import { ulid } from 'ulid';
 import { Queue, FlowProducer, Worker } from 'bullmq';
 import IORedis from 'ioredis';
 
-const connection = new IORedis({ maxRetriesPerRequest: null });
+const connection = new IORedis({
+  host: process.env.REDIS_HOST || 'localhost',
+  port: parseInt(process.env.REDIS_PORT || '6379', 10),
+  maxRetriesPerRequest: null
+});
 
 /**
  * The EvaluationOrchestrator is the core logic for the Green Agent.

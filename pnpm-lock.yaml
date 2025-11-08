@@ -94,15 +94,9 @@ importers:
       '@logomesh/contracts':
         specifier: workspace:*
         version: link:../contracts
-      bullmq:
-        specifier: ^5.63.0
-        version: 5.63.0
       escomplex:
         specifier: 2.0.0-alpha
         version: 2.0.0-alpha
-      ioredis:
-        specifier: ^5.8.2
-        version: 5.8.2
       sqlite:
         specifier: ^5.1.1
         version: 5.1.1
@@ -116,6 +110,9 @@ importers:
       '@types/sqlite3':
         specifier: ^5.1.0
         version: 5.1.0
+      vitest:
+        specifier: ^1.6.0
+        version: 1.6.1(@types/node@20.19.24)
 
   packages/frontend: {}
 

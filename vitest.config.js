@@ -6,7 +6,7 @@ module.exports = defineConfig({
   test: {
     // By default, vitest searches for tests in all packages, including node_modules.
     // We explicitly only want to run tests in our source code.
-    include: ['packages/**/*.test.ts', 'packages/**/*.e2e.test.ts'],
+    include: ['packages/**/*.test.ts'],
     // We also want to explicitly exclude the sample repo we downloaded.
     exclude: ['**/auth0-ai-samples/**', '**/node_modules/**'],
     coverage: {
