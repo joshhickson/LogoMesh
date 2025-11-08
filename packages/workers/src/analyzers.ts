@@ -2,6 +2,7 @@ import {
   ReasoningStep,
   DebtEvent,
   RationaleDebtReport,
+  EvaluationReport,
 } from '@logomesh/contracts';
 
 // A simplified interface for a local LLM client (e.g., Ollama)
@@ -88,6 +89,62 @@ export class RationaleDebtAnalyzer {
     return {
       overallScore,
       trace: debtTrace,
+    };
+  }
+}
+
+
+// Placeholder for a static analysis library like 'escomplex' or similar
+// We will need to add this dependency: pnpm --filter @logomesh/core add escomplex
+interface CodeComplexityReport {
+  cyclomatic: number;
+  //... other metrics
+}
+
+export class ArchitecturalDebtAnalyzer {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async analyze(sourceCode: string): Promise<EvaluationReport['architecturalCoherenceDebt']> {
+    // TODO: Implement actual static analysis using a library.
+    // For now, this is a placeholder.
+    const complexity: CodeComplexityReport = { cyclomatic: 5 }; // Mock value
+
+    let score = 1.0;
+    let details = "Code is well-structured.";
+
+    if (complexity.cyclomatic > 10) {
+      score = 0.5;
+      details = `High cyclomatic complexity detected (${complexity.cyclomatic}), indicating complex logic that may be hard to maintain.`;
+    }
+
+    return { score, details };
+  }
+}
+
+export class TestingDebtAnalyzer {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async analyze(
+    sourceCode: string,
+    testCode?: string
+  ): Promise<EvaluationReport['testingVerificationDebt']> {
+    if (!testCode || testCode.trim() === '') {
+      return {
+        score: 0.0,
+        details: 'No tests were provided.',
+      };
+    }
+
+    const hasEdgeCaseTests = /edge case|invalid|null|undefined|error/i.test(testCode);
+
+    if (!hasEdgeCaseTests) {
+      return {
+        score: 0.6,
+        details: 'Tests cover the happy path, but no explicit tests for edge cases were found.',
+      };
+    }
+
+    return {
+      score: 0.9,
+      details: 'Unit tests cover happy path and appear to consider edge cases.',
     };
   }
 }

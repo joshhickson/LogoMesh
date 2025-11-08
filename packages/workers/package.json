@@ -1,0 +1,20 @@
+{
+  "name": "@logomesh/workers",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "tsc -b",
+    "start:rationale": "node dist/rationale-worker.js",
+    "start:architectural": "node dist/architectural-worker.js",
+    "start:testing": "node dist/testing-worker.js"
+  },
+  "dependencies": {
+    "@logomesh/contracts": "workspace:*",
+    "@logomesh/core": "workspace:*",
+    "bullmq": "^5.63.0",
+    "ioredis": "^5.8.2"
+  }
+}
