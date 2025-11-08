@@ -39,7 +39,7 @@ graph TD
 
 ```mermaid
 graph TD
-    subgraph @logomesh Monorepo
+    subgraph logomesh Monorepo
         Server["@logomesh/server"];
         Core["@logomesh/core"];
         Contracts["@logomesh/contracts"];
