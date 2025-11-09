@@ -10,6 +10,7 @@
     "composite": true,
     "declaration": true,
     "sourceMap": true,
-    "lib": ["ES2022"]
+    "lib": ["ES2022"],
+    "types": ["vitest/globals"]
   }
 }

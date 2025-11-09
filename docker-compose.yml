@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   redis:
-    build: ./docker-redis
+    image: redis:alpine
     ports:
       - '6379:6379'
 
@@ -16,6 +16,8 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - AUTH0_ISSUER_BASE_URL=https://your-auth0-domain.auth0.com
+      - AUTH0_AUDIENCE=your-api-audience
 
   safe-workers:
     build: .
