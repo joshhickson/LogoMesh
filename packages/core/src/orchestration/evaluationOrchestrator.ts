@@ -11,10 +11,18 @@ import { ulid } from 'ulid';
 import { Queue, FlowProducer, Worker } from 'bullmq';
 import IORedis from 'ioredis';
 
-const connection = new IORedis({
+export const connection = new IORedis({
   host: process.env.REDIS_HOST || 'localhost',
   port: parseInt(process.env.REDIS_PORT || '6379', 10),
-  maxRetriesPerRequest: null
+  maxRetriesPerRequest: null,
+  retryStrategy: (times) => {
+    // A little jitter is added to the delay to avoid a thundering herd problem.
+    const delay = Math.min(times * 50, 2000) + Math.random() * 100;
+    if (times > 10) { // Approx 30 seconds
+        return null; // Stop retrying
+    }
+    return delay;
+  },
 });
 
 /**
