@@ -5,6 +5,7 @@
     "rootDir": "./src"
   },
   "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts", "**/*.e2e.test.ts"],
   "references": [
     { "path": "../contracts" },
     { "path": "../core" }

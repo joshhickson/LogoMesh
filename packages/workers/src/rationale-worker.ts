@@ -1,4 +1,5 @@
 import { Worker } from 'bullmq';
+import { connection } from '@logomesh/core';
 import { RationaleDebtAnalyzer } from './analyzers';
 
 // TODO: The RationaleDebtAnalyzer needs a real LlmClient.
@@ -14,11 +15,6 @@ const worker = new Worker('rationale-analysis', async job => {
   console.log(`[Rationale Worker] Processing job for evaluation ${job.data.evaluationId}`);
   const report = await rationaleAnalyzer.analyze(steps);
   return report;
-}, {
-  connection: {
-    host: process.env.REDIS_HOST || 'localhost',
-    port: parseInt(process.env.REDIS_PORT || '6379', 10),
-  }
-});
+}, { connection });
 
 console.log('[Rationale Worker] Started and listening for jobs...');

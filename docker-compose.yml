@@ -5,6 +5,11 @@ services:
     build: ./docker-redis
     ports:
       - '6379:6379'
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
 
   api-server:
     build: .
@@ -12,8 +17,10 @@ services:
     ports:
       - '3001:3001'
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
     environment:
+      - NODE_ENV=test
       - REDIS_HOST=redis
       - REDIS_PORT=6379
 
@@ -24,7 +31,8 @@ services:
              pnpm --filter @logomesh/workers start:architectural &
              wait"
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -33,7 +41,8 @@ services:
     build: .
     command: pnpm --filter @logomesh/workers start:testing
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
