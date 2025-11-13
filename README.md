@@ -20,12 +20,14 @@ This document provides a comprehensive overview of:
 
 ### Development Environment
 
-To set up your local environment, please follow these steps:
-
 **1. Install Dependencies:**
 ```bash
 pnpm install
 ```
 
-**2. Current Status:**
-Please be aware that the project's build is currently blocked by a known Redis connection issue. The `test:e2e` script will not run successfully at this time. This is our top priority to resolve after you are fully onboarded. We believe in transparency and want you to have a clear picture of the project's state from day one.
+**2. Current Status & Verification:**
+Our end-to-end verification test can be run with the following command:
+```bash
+pnpm --filter @logomesh/server test:e2e
+```
+**Important:** Please be aware that this script is **expected to fail** at this time. The project's build is currently blocked by a known Redis connection issue, which prevents the test from running successfully. We believe in full transparency and want you to have a clear picture of the project's state from day one. Resolving this is our top priority after you are fully onboarded.
