@@ -1,33 +1,31 @@
 # LogoMesh: An Open Platform for Agent-on-Agent Evaluation
 
-**Submission for the AgentX AgentBeats Competition (Benchmarks Track)**
+Welcome to the LogoMesh project! This repository contains the source code for a next-generation platform designed to evaluate the reasoning capabilities of advanced AI agents.
+
+Our mission is to create a new benchmark for AI safety and reliability, framed through the lens of our core concept: **Contextual Debt**.
 
 ---
 
-## 1. Mission Overview
+## Getting Started
 
-This repository contains the source code for the **LogoMesh Evaluation Platform**, an open-source, scalable, and resilient system for running "agent-on-agent" evaluations. Our primary goal is to provide a robust piece of "public good" infrastructure that solves the fragmentation and reproducibility crisis in agent evaluation.
+As a new team member, your first step is to get a complete picture of our project's vision, current status, and strategic goals. We've prepared a detailed document that will bring you up to speed.
 
-To demonstrate the platform's power, we have implemented a premier, novel benchmark: the **Contextual Debt Score**.
+**➡️ [Start Here: Read the Project Status & Strategic Overview](./docs/PROJECT_STATUS.md)**
 
-**Contextual Debt is a dynamic, multi-step benchmark for quantifying how irrelevant or misleading context in an agent's memory degrades its future reasoning steps.**
+This document provides a comprehensive overview of:
+*   Our strategic vision for the "Cyber-Sentinel Agent".
+*   The core concept of "Contextual Debt".
+*   The current technical state of the platform.
+*   A gap analysis outlining the key areas where you can make an impact.
 
-This metric moves beyond static, single-turn evaluations to provide a systems-level view of an agent's long-term reasoning capabilities. For a complete explanation of the theory and methodology, please review our full submission paper.
+### Development Environment
 
-**➡️ [Read the Full Submission Paper](./docs/AgentX_Submission_Paper.md)**
+To set up your local environment, please follow these steps:
 
-## 2. Quick Start & Verification
-
-To ensure our system is reproducible and transparent, you can run the core evaluation logic with two simple commands. This will execute the full, asynchronous end-to-end test suite, which validates the entire platform, including the API, the asynchronous orchestrator, and the analysis services.
-
-**Step 1: Install Dependencies**
+**1. Install Dependencies:**
 ```bash
 pnpm install
 ```
 
-**Step 2: Run the End-to-End Verification Test**
-```bash
-pnpm --filter @logomesh/server test:e2e
-```
-
-Upon successful execution, the test will confirm that the evaluation server can start, process a mock agent submission via the asynchronous pipeline, and generate a correctly structured Contextual Debt report.
+**2. Current Status:**
+Please be aware that the project's build is currently blocked by a known Redis connection issue. The `test:e2e` script will not run successfully at this time. This is our top priority to resolve after you are fully onboarded. We believe in transparency and want you to have a clear picture of the project's state from day one.
