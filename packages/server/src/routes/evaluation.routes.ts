@@ -28,17 +28,32 @@ const checkJwt =
 const storageAdapter = new SQLiteAdapter();
 const a2aClient = new A2AClient();
 
-const orchestrator = new EvaluationOrchestrator(
-  storageAdapter,
-  a2aClient
-);
+// Hold a reference to the orchestrator. It will be initialized asynchronously.
+let orchestrator: EvaluationOrchestrator;
 
-// Initialize storage.
-storageAdapter.initialize().then(() => {
-  storageAdapter.createThought({
+/**
+ * Initializes the application's dependencies. This function is designed to be
+ * called once at startup. It ensures that the orchestrator and its own
+ * dependencies (like the Redis client) are fully ready before the server
+ * starts accepting traffic.
+ */
+const initializeDependencies = async () => {
+  // Initialize storage first.
+  await storageAdapter.initialize();
+  await storageAdapter.createThought({
     title: 'Competition Task',
     description: 'Implement a user authentication endpoint with JWT.',
   });
+
+  // Now, create the orchestrator, which will wait for a ready Redis connection.
+  orchestrator = await EvaluationOrchestrator.create(storageAdapter, a2aClient);
+  console.log('[Server] EvaluationOrchestrator initialized.');
+};
+
+// Initialize all dependencies and then set up the routes.
+initializeDependencies().catch((error) => {
+  console.error('Failed to initialize server dependencies:', error);
+  process.exit(1);
 });
 
 router.post('/', checkJwt, async (req, res) => {
@@ -46,6 +61,11 @@ router.post('/', checkJwt, async (req, res) => {
 
   if (!purple_agent_endpoint) {
     return res.status(400).json({ error: 'purple_agent_endpoint is required' });
+  }
+
+  // A simple readiness check.
+  if (!orchestrator) {
+    return res.status(503).json({ error: 'Server is not ready.' });
   }
 
   try {
