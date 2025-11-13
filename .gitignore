@@ -7,6 +7,3 @@ dist/
 *.tsbuildinfo
 coverage/
 .turbo/
-
-# Logs
-*.log
