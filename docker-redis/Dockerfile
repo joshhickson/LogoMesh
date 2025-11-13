@@ -60,8 +60,10 @@ VOLUME /data
 WORKDIR /data
 
 COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+# Ensure entrypoint has Unix line endings and is executable (fixes CRLF shebang issues on Windows hosts)
+RUN sed -i 's/\r$//' /usr/local/bin/docker-entrypoint.sh && \
+	chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 6379
-CMD ["redis-server"]
+CMD ["redis-server", "--protected-mode", "no"]
