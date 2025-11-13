@@ -8,22 +8,8 @@ import {
 } from '@logomesh/contracts';
 import { A2AClient } from '../services/a2aClient';
 import { ulid } from 'ulid';
-import { Queue, FlowProducer, Worker } from 'bullmq';
-import IORedis from 'ioredis';
-
-export const connection = new IORedis({
-  host: process.env.REDIS_HOST || 'localhost',
-  port: parseInt(process.env.REDIS_PORT || '6379', 10),
-  maxRetriesPerRequest: null,
-  retryStrategy: (times) => {
-    // A little jitter is added to the delay to avoid a thundering herd problem.
-    const delay = Math.min(times * 50, 2000) + Math.random() * 100;
-    if (times > 10) { // Approx 30 seconds
-        return null; // Stop retrying
-    }
-    return delay;
-  },
-});
+import { FlowProducer, Worker } from 'bullmq';
+import { getRedisConnection } from '../services/redis';
 
 /**
  * The EvaluationOrchestrator is the core logic for the Green Agent.
@@ -32,47 +18,77 @@ export const connection = new IORedis({
  */
 export class EvaluationOrchestrator {
   private evaluationResults = new Map<string, Evaluation>();
-  private flowProducer: FlowProducer;
-  private aggregatorWorker: Worker;
+  private flowProducer!: FlowProducer;
+  private aggregatorWorker!: Worker;
 
-  constructor(
+  // Private constructor to enforce the use of the async factory
+  private constructor(
     private storageAdapter: StorageAdapter,
     private a2aClient: A2AClient,
-  ) {
+  ) {}
+
+  /**
+   * Asynchronously initializes the orchestrator and its components that depend
+   * on a ready Redis connection.
+   */
+  private async initialize() {
+    const connection = await getRedisConnection();
+
     this.flowProducer = new FlowProducer({ connection });
 
     // This worker's job is to listen for the completion of the entire evaluation flow.
     // When the parent job (the flow) is complete, this worker aggregates the results
     // from all the child jobs (the individual analyses).
-    this.aggregatorWorker = new Worker('evaluation-flow', async (job) => {
-      const { evaluationId } = job.data;
-      console.log(`[Orchestrator] Aggregating results for evaluation ${evaluationId}...`);
+    this.aggregatorWorker = new Worker(
+      'evaluation-flow',
+      async (job) => {
+        const { evaluationId } = job.data;
+        console.log(
+          `[Orchestrator] Aggregating results for evaluation ${evaluationId}...`,
+        );
 
-      const childrenValues = await job.getChildrenValues();
+        const childrenValues = await job.getChildrenValues();
 
-      const rationaleResult = childrenValues.rationale;
-      const archResult = childrenValues.architectural;
-      const testResult = childrenValues.testing;
+        const rationaleResult = childrenValues.rationale;
+        const archResult = childrenValues.architectural;
+        const testResult = childrenValues.testing;
 
-      const totalScore =
-        (rationaleResult.overallScore + archResult.score + testResult.score) / 3;
+        const totalScore =
+          (rationaleResult.overallScore + archResult.score + testResult.score) /
+          3;
 
-      const finalEvaluation: Evaluation = {
-        id: evaluationId,
-        status: 'complete',
-        contextualDebtScore: parseFloat(totalScore.toFixed(2)),
-        report: {
-          rationaleDebt: rationaleResult,
-          architecturalCoherenceDebt: archResult,
-          testingVerificationDebt: testResult,
-        },
-        createdAt: this.evaluationResults.get(evaluationId)!.createdAt,
-        completedAt: new Date(),
-      };
+        const finalEvaluation: Evaluation = {
+          id: evaluationId,
+          status: 'complete',
+          contextualDebtScore: parseFloat(totalScore.toFixed(2)),
+          report: {
+            rationaleDebt: rationaleResult,
+            architecturalCoherenceDebt: archResult,
+            testingVerificationDebt: testResult,
+          },
+          createdAt: this.evaluationResults.get(evaluationId)!.createdAt,
+          completedAt: new Date(),
+        };
 
-      this.evaluationResults.set(evaluationId, finalEvaluation);
-      console.log(`[Orchestrator] Evaluation ${evaluationId} complete.`);
-    }, { connection });
+        this.evaluationResults.set(evaluationId, finalEvaluation);
+        console.log(`[Orchestrator] Evaluation ${evaluationId} complete.`);
+      },
+      { connection },
+    );
+  }
+
+  /**
+   * Creates and initializes a new instance of the EvaluationOrchestrator.
+   * This factory pattern is used to handle the asynchronous initialization
+   * of the Redis-dependent components.
+   */
+  public static async create(
+    storageAdapter: StorageAdapter,
+    a2aClient: A2AClient,
+  ): Promise<EvaluationOrchestrator> {
+    const orchestrator = new EvaluationOrchestrator(storageAdapter, a2aClient);
+    await orchestrator.initialize();
+    return orchestrator;
   }
 
   async startEvaluation(purpleAgentEndpoint: string): Promise<string> {

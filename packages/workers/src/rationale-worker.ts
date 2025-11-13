@@ -1,5 +1,5 @@
 import { Worker } from 'bullmq';
-import { connection } from '@logomesh/core';
+import { getRedisConnection } from '@logomesh/core';
 import { RationaleDebtAnalyzer } from './analyzers';
 
 // TODO: The RationaleDebtAnalyzer needs a real LlmClient.
@@ -10,11 +10,21 @@ const mockLlmClient = {
 
 const rationaleAnalyzer = new RationaleDebtAnalyzer(mockLlmClient);
 
-const worker = new Worker('rationale-analysis', async job => {
-  const { steps } = job.data;
-  console.log(`[Rationale Worker] Processing job for evaluation ${job.data.evaluationId}`);
-  const report = await rationaleAnalyzer.analyze(steps);
-  return report;
-}, { connection });
+const startWorker = async () => {
+  console.log('[Rationale Worker] Initializing...');
+  const connection = await getRedisConnection();
 
-console.log('[Rationale Worker] Started and listening for jobs...');
+  const worker = new Worker('rationale-analysis', async job => {
+    const { steps } = job.data;
+    console.log(`[Rationale Worker] Processing job for evaluation ${job.data.evaluationId}`);
+    const report = await rationaleAnalyzer.analyze(steps);
+    return report;
+  }, { connection });
+
+  console.log('[Rationale Worker] Started and listening for jobs...');
+};
+
+startWorker().catch(error => {
+  console.error('Failed to start Rationale Worker:', error);
+  process.exit(1);
+});
