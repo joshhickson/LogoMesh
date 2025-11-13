@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "description": "The foundational monorepo for the LogoMesh C-IDE and AgentX competition entry.",
-  "packageManager": "pnpm@9.0.6",
+  "packageManager": "pnpm@8.15.7",
   "scripts": {
     "build": "turbo run build",
     "lint": "eslint packages/**/*.{ts,tsx}",
     "lint:strict": "eslint packages/**/*.{ts,tsx} --max-warnings 0",
-    "check:boundaries": "depcruise packages --config.dependency-cruiser.js",
+    "check:boundaries": "depcruise packages",
     "test": "vitest run",
     "contracts": "pnpm --filter @logomesh/contracts",
     "core": "pnpm --filter @logomesh/core",
@@ -30,7 +30,7 @@
     "eslint": "^8.57.0",
     "express": "^4.19.2",
     "express-rate-limit": "^7.2.0",
-    "isolated-vm": "^4.7.2",
+    "isolated-vm": "4.3.6",
     "jsonwebtoken": "^9.0.2",
     "prettier": "^3.2.5",
     "sqlite": "^5.1.1",
@@ -39,8 +39,14 @@
     "turbo": "^2.0.4",
     "typescript": "^5.4.5",
     "ulid": "^2.3.0",
-    "vitest": "^1.6.0"
+    "vitest": "^1.6.0",
+    "vitest-tsconfig-paths": "^3.4.1"
   },
   "author": "Josh Hickson",
-  "license": "MIT"
+  "license": "MIT",
+  "pnpm": {
+    "overrides": {
+      "esbuild": "0.25.0"
+    }
+  }
 }
