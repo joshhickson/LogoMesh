@@ -24,9 +24,18 @@ However, as with any ambitious project, we have our challenges.
 
 **Current Blocker:** The application is currently experiencing a build failure related to a persistent Redis connection error (`EPIPE`). This is a known issue, and the debugging logs have been archived for future reference. While the bug is a temporary blocker, it does not affect the core architectural soundness of the project. We see this not as a setback, but as a well-defined, solvable problem that will make our system even more resilient once fixed.
 
+### Key Technology Status (In a Nutshell)
+
+*   **Authentication (Auth0):** Our research identifies a robust, identity-based security model using a technology like Auth0 as a critical requirement for success. The codebase includes a placeholder for the official Auth0 middleware, but it is **currently inactive and mocked out**. Full implementation is a key future task.
+*   **Agent-to-Agent (A2A) Protocol:** The competition requires a formal A2A protocol for evaluators to communicate with the agents being tested. Our system's asynchronous, message-based architecture provides the **perfect foundation** for this, but we have not yet implemented the competition's specific A2A standard.
+
 ## Gap Analysis & Your Role
 
-You are joining at the perfect moment to make a massive impact. Your role is not just to contribute to a project, but to help shape its future. Based on our internal analysis, here are the key gaps we've identified and where you can lead the charge:
+You are joining at the perfect moment to make a massive impact. Your role is not just to contribute to a project, but to help shape its future.
+
+This table provides a high-level summary of the key opportunity areas. For a more in-depth analysis and a structured set of questions to guide your evaluation, please see our detailed Gap Analysis document.
+
+**➡️ [Deep Dive: Detailed Gap Analysis](./GAP_ANALYSIS.md)**
 
 | Area of Opportunity | Description | Your Potential Impact |
 | :--- | :--- | :--- |
