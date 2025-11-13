@@ -2,14 +2,14 @@
   "name": "@logomesh/workers",
   "version": "1.0.0",
   "private": true,
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist",
     "build": "tsc -b",
-    "start:rationale": "node dist/rationale-worker.js",
-    "start:architectural": "node dist/architectural-worker.js",
-    "start:testing": "node dist/testing-worker.js"
+  "start:rationale": "node dist/src/rationale-worker.js",
+  "start:architectural": "node dist/src/architectural-worker.js",
+  "start:testing": "node dist/src/testing-worker.js"
   },
   "dependencies": {
     "@logomesh/contracts": "workspace:*",
