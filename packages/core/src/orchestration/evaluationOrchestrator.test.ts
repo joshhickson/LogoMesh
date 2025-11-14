@@ -1,95 +1,82 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { EvaluationOrchestrator } from './evaluationOrchestrator';
-import {
-  StorageAdapter,
-  Thought,
-  A2ASubmissionPayload,
-} from '@logomesh/contracts';
+import { StorageAdapter } from '@logomesh/contracts';
 import { A2AClient } from '../services/a2aClient';
-import { RationaleDebtAnalyzer } from '../analysis/rationaleDebtAnalyzer';
-import { ArchitecturalDebtAnalyzer } from '../analysis/architecturalDebtAnalyzer';
-import { TestingDebtAnalyzer } from '../analysis/testingDebtAnalyzer';
+import { FlowProducer } from 'bullmq';
 
-// Mock all dependencies
-const mockStorageAdapter: StorageAdapter = {
+// Mock the dependencies
+vi.mock('bullmq');
+vi.mock('../services/a2aClient');
+vi.mock('../storage/sqliteAdapter');
+
+const mockStorageAdapter = {
   getAllThoughts: vi.fn(),
-  // Add other methods as needed, returning Promises
 } as unknown as StorageAdapter;
 
-const mockA2AClient: A2AClient = {
+const mockA2AClient = {
   sendTask: vi.fn(),
 } as unknown as A2AClient;
 
-const mockRationaleAnalyzer: RationaleDebtAnalyzer = {
-  analyze: vi.fn(),
-} as unknown as RationaleDebtAnalyzer;
+describe('EvaluationOrchestrator Flow Production', () => {
+  let orchestrator: EvaluationOrchestrator;
+  let mockFlowProducer: { add: vi.Mock };
 
-const mockArchAnalyzer: ArchitecturalDebtAnalyzer = {
-  analyze: vi.fn(),
-} as unknown as ArchitecturalDebtAnalyzer;
+  beforeEach(() => {
+    // Reset mocks before each test
+    vi.clearAllMocks();
 
-const mockTestAnalyzer: TestingDebtAnalyzer = {
-  analyze: vi.fn(),
-} as unknown as TestingDebtAnalyzer;
+    orchestrator = new EvaluationOrchestrator(mockStorageAdapter, mockA2AClient);
+    // The orchestrator creates its own FlowProducer. We need to grab that instance
+    // to mock its 'add' method. This is a common pattern for testing classes
+    // that encapsulate their own dependencies.
+    mockFlowProducer = (FlowProducer as any).mock.results[0].value;
+  });
 
-describe('EvaluationOrchestrator', () => {
-  const orchestrator = new EvaluationOrchestrator(
-    mockStorageAdapter,
-    mockA2AClient,
-    mockRationaleAnalyzer,
-    mockArchAnalyzer,
-    mockTestAnalyzer
-  );
-
-  it('should execute the full evaluation workflow successfully', async () => {
+  it('should dispatch a correctly structured flow to BullMQ', async () => {
     // 1. Setup Mocks
-    const mockTaskThought: Thought = {
-      id: 'thought-01',
-      title: 'Test Requirement',
-      description: 'Implement a basic API.',
-      //... other properties
-    } as Thought;
+    vi.spyOn(mockStorageAdapter, 'getAllThoughts').mockResolvedValue([
+      { id: 'task1', title: 'Test Task', description: 'A test requirement.' },
+    ] as any);
 
-    const mockSubmission: A2ASubmissionPayload = {
-      taskId: expect.any(String),
-      sourceCode: 'const app = {}',
-      testCode: 'expect(true).toBe(true)',
-      rationale: 'This is my rationale.',
-    };
+    vi.spyOn(mockA2AClient, 'sendTask').mockResolvedValue({
+      sourceCode: 'const x = 1;',
+      testCode: 'expect(x).toBe(1);',
+      rationale: 'It is simple.',
+    } as any);
 
-    vi.spyOn(mockStorageAdapter, 'getAllThoughts').mockResolvedValue([mockTaskThought]);
-    vi.spyOn(mockA2AClient, 'sendTask').mockResolvedValue(mockSubmission);
-    vi.spyOn(mockRationaleAnalyzer, 'analyze').mockResolvedValue({
-      score: 0.9,
-      details: 'Good rationale.',
-    });
-    vi.spyOn(mockArchAnalyzer, 'analyze').mockResolvedValue({
-      score: 0.8,
-      details: 'Good architecture.',
-    });
-    vi.spyOn(mockTestAnalyzer, 'analyze').mockResolvedValue({
-      score: 0.7,
-      details: 'Good tests.',
-    });
+    // 2. Start the Orchestration
+    await orchestrator.startEvaluation('http://mock-agent.com/a2a');
 
-    // 2. Run the Orchestrator
-    const result = await orchestrator.runEvaluation('http://mock-agent.com/a2a');
+    // 3. Assert the FlowProducer was called correctly
+    expect(mockFlowProducer.add).toHaveBeenCalledOnce();
+    const flowPayload = mockFlowProducer.add.mock.calls[0][0];
 
-    // 3. Assert the Flow
-    expect(mockStorageAdapter.getAllThoughts).toHaveBeenCalled();
-    expect(mockA2AClient.sendTask).toHaveBeenCalledWith('http://mock-agent.com/a2a', {
-      taskId: expect.any(String),
-      requirement: mockTaskThought.description,
-    });
-    expect(mockRationaleAnalyzer.analyze).toHaveBeenCalledWith(mockSubmission.rationale);
-    expect(mockArchAnalyzer.analyze).toHaveBeenCalledWith(mockSubmission.sourceCode);
-    expect(mockTestAnalyzer.analyze).toHaveBeenCalledWith(mockSubmission.sourceCode, mockSubmission.testCode);
+    // Assert the parent job is correct
+    expect(flowPayload.name).toBe('evaluation-flow');
+    expect(flowPayload.queueName).toBe('evaluation-flow');
+    expect(flowPayload.data.evaluationId).toBeDefined();
 
-    // 4. Assert the Final Result
-    expect(result.status).toBe('complete');
-    expect(result.report?.rationaleDebt.score).toBe(0.9);
-    expect(result.report?.architecturalCoherenceDebt.score).toBe(0.8);
-    expect(result.report?.testingVerificationDebt.score).toBe(0.7);
-    expect(result.contextualDebtScore).toBe(0.8); // (0.9 + 0.8 + 0.7) / 3 = 0.8
+    // Assert the children jobs are correct
+    const children = flowPayload.children;
+    expect(children).toHaveLength(3);
+
+    // Assert the rationale job has a minimal, targeted payload
+    const rationaleJob = children.find((c: any) => c.queueName === 'rationale-analysis');
+    expect(rationaleJob).toBeDefined();
+    expect(rationaleJob.data.steps).toBeDefined();
+    expect(rationaleJob.data.sourceCode).toBeUndefined(); // Ensure no extra data is sent
+
+    // Assert the architectural job has a minimal, targeted payload
+    const architecturalJob = children.find((c: any) => c.queueName === 'architectural-analysis');
+    expect(architecturalJob).toBeDefined();
+    expect(architecturalJob.data.sourceCode).toBeDefined();
+    expect(architecturalJob.data.steps).toBeUndefined(); // Ensure no extra data is sent
+
+    // Assert the testing job has a minimal, targeted payload
+    const testingJob = children.find((c: any) => c.queueName === 'testing-analysis');
+    expect(testingJob).toBeDefined();
+    expect(testingJob.data.sourceCode).toBeDefined();
+    expect(testingJob.data.testCode).toBeDefined();
+    expect(testingJob.data.steps).toBeUndefined(); // Ensure no extra data is sent
   });
 });

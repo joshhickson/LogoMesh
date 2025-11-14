@@ -1,60 +1,100 @@
-import { Router } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
+import { auth } from 'express-oauth2-jwt-bearer';
 import {
   EvaluationOrchestrator,
   SQLiteAdapter,
   A2AClient,
-  RationaleDebtAnalyzer,
-  ArchitecturalDebtAnalyzer,
-  TestingDebtAnalyzer,
 } from '@logomesh/core';
 
 const router = Router();
 
+// Conditionally apply auth middleware. In a test environment, we use a mock
+// middleware to bypass the need for a real access token.
+const checkJwt =
+  process.env.NODE_ENV === 'test'
+    ? (req: Request, res: Response, next: NextFunction) => {
+        // Mock authentication for testing purposes
+        // Vitest/Supertest requires extending the Request type for custom properties,
+        // which is outside the scope of this fix. We'll use `any` for now.
+        (req as any).auth = { sub: 'test-user' };
+        next();
+      }
+    : auth({
+        audience: process.env.AUTH0_AUDIENCE,
+        issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL,
+      });
+
 // Instantiate all dependencies. In a real application, this would use a dependency injection container.
-const storageAdapter = new SQLiteAdapter(); // Using in-memory for now
+const storageAdapter = new SQLiteAdapter();
 const a2aClient = new A2AClient();
-// TODO: The RationaleDebtAnalyzer needs a real LlmClient. For now, we can use a mock.
-const mockLlmClient = { prompt: async () => '{ "score": 0.5, "details": "mocked" }' };
-const rationaleAnalyzer = new RationaleDebtAnalyzer(mockLlmClient);
-const archAnalyzer = new ArchitecturalDebtAnalyzer();
-const testAnalyzer = new TestingDebtAnalyzer();
 
-const orchestrator = new EvaluationOrchestrator(
-storageAdapter,
-a2aClient,
-rationaleAnalyzer,
-archAnalyzer,
-testAnalyzer
-);
+// Hold a reference to the orchestrator. It will be initialized asynchronously.
+let orchestrator: EvaluationOrchestrator;
 
-// Initialize storage and add a dummy task thought for the MVP
-storageAdapter.initialize().then(() => {
-storageAdapter.createThought({
-title: 'Competition Task',
-description: 'Implement a user authentication endpoint with JWT.',
-});
-});
+/**
+ * Initializes the application's dependencies. This function is designed to be
+ * called once at startup. It ensures that the orchestrator and its own
+ * dependencies (like the Redis client) are fully ready before the server
+ * starts accepting traffic.
+ */
+const initializeDependencies = async () => {
+  // Initialize storage first.
+  await storageAdapter.initialize();
+  await storageAdapter.createThought({
+    title: 'Competition Task',
+    description: 'Implement a user authentication endpoint with JWT.',
+  });
 
-router.post('/', async (req, res) => {
-const { purple_agent_endpoint } = req.body;
+  // Now, create the orchestrator, which will wait for a ready Redis connection.
+  orchestrator = await EvaluationOrchestrator.create(storageAdapter, a2aClient);
+  console.log('[Server] EvaluationOrchestrator initialized.');
+};
 
-if (!purple_agent_endpoint) {
-return res.status(400).json({ error: 'purple_agent_endpoint is required' });
-}
-
-try {
-const result = await orchestrator.runEvaluation(purple_agent_endpoint);
-return res.status(200).json(result);
-} catch (error) {
-console.error('Evaluation failed:', error);
-return res.status(500).json({ error: 'An internal error occurred during evaluation.' });
-}
+// Initialize all dependencies and then set up the routes.
+initializeDependencies().catch((error) => {
+  console.error('Failed to initialize server dependencies:', error);
+  process.exit(1);
 });
 
-// Remove the 501 placeholder for the GET route
-router.get('/:evaluation_id', (req, res) => {
-// In a real implementation, this would fetch the result from the database.
-res.status(501).json({ message: 'Not Implemented' });
+router.post('/', checkJwt, async (req, res) => {
+  const { purple_agent_endpoint } = req.body;
+
+  if (!purple_agent_endpoint) {
+    return res.status(400).json({ error: 'purple_agent_endpoint is required' });
+  }
+
+  // A simple readiness check.
+  if (!orchestrator) {
+    return res.status(503).json({ error: 'Server is not ready.' });
+  }
+
+  try {
+    const evaluationId = await orchestrator.startEvaluation(
+      purple_agent_endpoint,
+    );
+    // Respond immediately with 202 Accepted
+    return res.status(202).json({
+      message: 'Evaluation started.',
+      evaluationId,
+      statusUrl: `/v1/evaluate/${evaluationId}`,
+    });
+  } catch (error) {
+    console.error('Failed to start evaluation:', error);
+    return res
+      .status(500)
+      .json({ error: 'An internal error occurred.' });
+  }
+});
+
+router.get('/:evaluation_id', checkJwt, async (req, res) => {
+  const { evaluation_id } = req.params;
+  const evaluation = await orchestrator.getEvaluation(evaluation_id);
+
+  if (!evaluation) {
+    return res.status(404).json({ error: 'Evaluation not found.' });
+  }
+
+  return res.status(200).json(evaluation);
 });
 
 export { router as evaluationRoutes };

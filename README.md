@@ -1,46 +1,113 @@
-# Welcome to the Cyber-Sentinel Agent Project! 🛡️
+# LogoMesh: An Open Platform for Agent-on-Agent Evaluation
 
-**Our Mission: To build a groundbreaking AI agent that can judge the quality and security of other AI-generated code, and to win the AgentX AgentBeats competition!**
+Welcome — and thanks for jumping in. This repo contains the LogoMesh monorepo: a TypeScript-based platform for evaluating AI agents and measuring our core metric, "Contextual Debt." The codebase is organized as pnpm workspaces and includes the API server, worker processes, and test harness used during development and evaluation.
 
----
+Quick links
+- Project Plan: `PROJECT_PLAN.md`
+- Project status & overview: `docs/PROJECT_STATUS.md`
+- Gap analysis for new reviewers: `docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md`
+- CI guidance for running e2e in GitHub Actions: `docs/CI_COMPOSE_E2E_WORKFLOW.md`
 
-Hello team, and welcome!
+Who this README is for
+- Engineers who will develop the system (backend, infra, eval logic).
+- Data scientists and evaluators who need a clear, reproducible path to run the system locally and inspect evaluation output (this README includes a dedicated Quickstart section for you).
 
-You've just joined a project at the cutting edge of agentic AI. We're not just building another coding agent; we're building an **"Agent-as-a-Judge."** Our "Cyber-Sentinel" will be a sophisticated evaluator that can analyze code for "Contextual Debt"—the hidden costs of poorly-reasoned, badly-architected, and insecure code that other AI agents often produce.
+Quickstart for Data Scientists (recommended)
 
-This is an ambitious goal, but we have a solid plan, a great team, and a real chance to create something that will be recognized by leaders in the field.
+Prerequisites (local machine)
+- Node.js v16 — use `nvm` (or nvm-windows) to install and select v16:
 
-## Your Journey Starts Here 👇
+```bash
+nvm install 16
+nvm use 16
+```
 
-This repository contains everything we need to succeed, but don't feel overwhelmed! We've created a central document that explains our entire strategy.
+- Enable `corepack` for pnpm:
 
-**Your absolute first step is to read our Project Plan.** It's our team's single source of truth.
+```bash
+corepack enable
+```
 
-### **[➡️ START HERE: Read the Project Plan](./PROJECT_PLAN.md)**
+- Python (3.8–3.11) and `setuptools` for native builds (node-gyp):
 
-This plan will walk you through:
-*   Our full vision for the "Cyber-Sentinel Agent."
-*   The new multi-agent architecture we will build.
-*   Your specific role on the team and what you'll be learning.
-*   Our week-by-week timeline to the submission deadline.
+```bash
+pip install --user setuptools
+```
 
-Once you've read the plan, you'll be directed to our structured onboarding documents to get you fully up to speed.
+- On Windows: Visual Studio Build Tools with the "Desktop development with C++" workload and Windows SDK installed (required for native dependencies like `isolated-vm`). Restart your terminal/VS Code after install.
+- Docker Desktop with virtualization enabled (WSL 2 or Hyper-V) to run the Compose-based E2E test.
 
-## For the Technically Curious (Coders!)
+Recommended local steps
 
-If you're eager to dive into the code, our project is a `pnpm` monorepo built with TypeScript. The quickest way to see the *current* (soon-to-be-upgraded!) system in action is to run the end-to-end test suite.
+1) Install dependencies and build the monorepo:
 
-**1. Install Dependencies**
 ```bash
 pnpm install
+pnpm run build
 ```
 
-**2. Run the End-to-End Test**
+2) Run the end-to-end verification (local, Docker Compose):
+
 ```bash
-pnpm test
+docker compose build --progress=plain
+docker compose up --build --abort-on-container-exit --exit-code-from e2e-tester
 ```
-*(**Note:** This will test the old architecture. The fun part will be building the new one together!)*
 
----
+This will start Redis, the API server, workers, and the `e2e-tester`. The Compose command returns the exit code of the `e2e-tester` service so the test result is visible directly in the terminal.
 
-Let's get started. We're excited to have you on the team!
+If you prefer to run services individually (faster iteration):
+
+```bash
+# Start Redis locally (container)
+docker compose up -d redis
+
+# Start the API server (in-process):
+pnpm --filter @logomesh/server start
+
+# Start workers in separate terminals:
+pnpm --filter @logomesh/workers start:rationale
+pnpm --filter @logomesh/workers start:architectural
+pnpm --filter @logomesh/workers start:testing
+
+# Run the e2e tests against the running API
+pnpm --filter @logomesh/server test
+```
+
+Where to look for results
+- Evaluation outputs and logs are written by default into the repository `logs/` folder during local runs. See `logs/2025-11-13_docker_compose_logs.log` for a recent successful verification run.
+
+- Evaluation output schema & example JSON:
+	- `docs/EVAL_OUTPUT_SCHEMA.md` describes the canonical output fields and includes a small example.
+	- `docs/onboarding/example-evaluation-report.json` contains a concrete example you can open directly in a notebook.
+
+Developer notes / environment gotchas
+- Node v16 is required because of native dependency compatibility (`isolated-vm` has strict requirements).
+- On Windows make sure a Windows SDK is installed and the machine restarted after installing Visual Studio Build Tools.
+- If you hit a native build error during `pnpm install`, try:
+
+```bash
+CXXFLAGS="-std=c++14" pnpm install
+```
+
+Where to go next (role-specific)
+- Data Scientist onboarding: quick links and commands to get productive:
+
+	- Gap analysis & onboarding plan: `docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md`
+	- Metric spec (how the score is computed): `docs/CONTEXTUAL_DEBT_SPEC.md`
+	- Evaluation output schema + example JSON: `docs/EVAL_OUTPUT_SCHEMA.md` and `docs/onboarding/example-evaluation-report.json`
+	- Example notebook: `notebooks/01-explore-sample-eval.ipynb`
+	- Small helpers: `tools/convert_eval_to_csv.py`, `tools/run_single_analyzer.py`, `tools/README.md`
+
+	Quick commands:
+
+	```bash
+	# Convert example JSON -> CSV
+	python tools/convert_eval_to_csv.py -i docs/onboarding/example-evaluation-report.json -o example-eval.csv
+
+	# Run a single analyzer locally (dry-run, fast iteration)
+	python tools/run_single_analyzer.py -a rationale -i docs/onboarding/example-evaluation-report.json -o tmp/rationale-output.json
+	```
+
+- If you're an engineer: see `docs/PROJECT_STATUS.md` and the new CI docs for build/verify guidance.
+
+Thank you for reviewing the repo — we've designed these instructions so someone with a strong data science background (familiar with Python, Node, Docker, and ML stacks) can get up to speed quickly. If anything is unclear, open an issue or ping the maintainer in the repo.

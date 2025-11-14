@@ -61,3 +61,11 @@ The Contextual Debt Score represents a new, more meaningful benchmark for compar
 *   Provide a tool for organizations to measure and manage the quality of AI-generated code in their own systems.
 
 Future work will involve expanding the sophistication of the analyzer services, such as incorporating more advanced static analysis, measuring test coverage directly, and fine-tuning the rationale analyzer on a dataset of expert code reviews. By open-sourcing our Green Agent, we invite the community to collaborate on building a comprehensive and standardized benchmark for agentic code quality.
+
+## Related Work
+
+The concept of "debt" as a metaphor for software quality issues is well-established. Our work builds upon two key precedents in the field of LLM and RAG evaluation.
+
+1.  **"PromptDebt" (ArXiv:2509.20497):** This foundational paper establishes the "debt" metaphor for Self-Admitted Technical Debt (SATD) in LLM-centric projects. It identifies "Prompt Debt" as a qualitative, self-admitted concept found in developer comments regarding suboptimal prompts. While we adopt the powerful "debt" metaphor, our contribution is distinct: **"PromptDebt" is a qualitative, manually-identified concept, whereas "Contextual Debt" is a quantitative, automatically-generated, and dynamic benchmark.**
+
+2.  **DeepEval "Contextual Relevancy":** DeepEval is a leading open-source framework for evaluating RAG pipelines. Its "Contextual Relevancy" metric provides a quantitative score for the quality of retrieved context in a single-turn RAG operation. While conceptually similar, the key differentiator is the scope of the analysis. **DeepEval's metric is a static, single-step measurement of a *retrieval* state. "Contextual Debt," in contrast, is a dynamic, multi-step measurement of a *reasoning process*.** Our benchmark is designed to trace the compounding, downstream impact of irrelevant context on an agent's future reasoning steps, which we argue is a fundamentally harder and more critical problem for the next generation of autonomous agents.
