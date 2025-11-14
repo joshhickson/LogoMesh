@@ -7,14 +7,16 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build": "tsc -b",
-  "start:rationale": "node dist/src/rationale-worker.js",
-  "start:architectural": "node dist/src/architectural-worker.js",
-  "start:testing": "node dist/src/testing-worker.js"
+    "start:rationale": "node dist/src/rationale-worker.js",
+    "start:architectural": "node dist/src/architectural-worker.js",
+    "start:testing": "node dist/src/testing-worker.js"
   },
   "dependencies": {
     "@logomesh/contracts": "workspace:*",
     "@logomesh/core": "workspace:*",
     "bullmq": "^5.63.0",
+    "escomplex": "2.0.0-alpha",
+    "esprima": "^4.0.1",
     "ioredis": "^5.8.2"
   }
 }
