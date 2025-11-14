@@ -3,6 +3,7 @@
 Welcome — and thanks for jumping in. This repo contains the LogoMesh monorepo: a TypeScript-based platform for evaluating AI agents and measuring our core metric, "Contextual Debt." The codebase is organized as pnpm workspaces and includes the API server, worker processes, and test harness used during development and evaluation.
 
 Quick links
+- Project Plan: `PROJECT_PLAN.md`
 - Project status & overview: `docs/PROJECT_STATUS.md`
 - Gap analysis for new reviewers: `docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md`
 - CI guidance for running e2e in GitHub Actions: `docs/CI_COMPOSE_E2E_WORKFLOW.md`
