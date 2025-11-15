@@ -53,9 +53,6 @@ importers:
       express-rate-limit:
         specifier: ^7.2.0
         version: 7.5.1(express@4.21.2)
-      isolated-vm:
-        specifier: 4.3.6
-        version: 4.3.6
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -177,6 +174,12 @@ importers:
       bullmq:
         specifier: ^5.63.0
         version: 5.63.0
+      escomplex:
+        specifier: 2.0.0-alpha
+        version: 2.0.0-alpha
+      esprima:
+        specifier: ^4.0.1
+        version: 4.0.1
       ioredis:
         specifier: ^5.8.2
         version: 5.8.2
@@ -2000,6 +2003,12 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
+  /esprima@4.0.1:
+    resolution: {integrity: sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A==}
+    engines: {node: '>=4'}
+    hasBin: true
+    dev: false
+
   /esquery@1.6.0:
     resolution: {integrity: sha512-ca9pw9fomFcKPvFLXhBKUK90ZvGibiGOvRJNbjljY7s7uq/5YO4BOzcYtJqExdx99rF6aAcnRxHmcUHcz6sQsg==}
     engines: {node: '>=0.10'}
@@ -2643,12 +2652,6 @@ packages:
   /isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
     requiresBuild: true
-
-  /isolated-vm@4.3.6:
-    resolution: {integrity: sha512-YvioBOU6wUNSTOWGgX/pDPLF9/WaSLsX8GqL7RlFCKzBXTXzyfG+T4JNIRNEiowtZk5H5ekJSUFqbx2QHSpJDQ==}
-    engines: {node: '>=10.4.0'}
-    requiresBuild: true
-    dev: true
 
   /istanbul-lib-coverage@3.2.2:
     resolution: {integrity: sha512-O8dpsF+r0WV/8MNRKfnmrtCWhuKjxrq2w+jpzBL5UZKTi2LeVWnWOmWRxFlesJONmc+wLAGvKQZEOanko0LFTg==}

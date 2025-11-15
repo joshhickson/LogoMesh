@@ -3,7 +3,9 @@ import {
   DebtEvent,
   RationaleDebtReport,
   EvaluationReport,
+  ArchitecturalDebtReport,
 } from '@logomesh/contracts';
+import { analyse as escomplexAnalyse } from 'escomplex';
 
 // A simplified interface for a local LLM client (e.g., Ollama)
 interface LlmClient {
@@ -94,29 +96,44 @@ export class RationaleDebtAnalyzer {
 }
 
 
-// Placeholder for a static analysis library like 'escomplex' or similar
-// We will need to add this dependency: pnpm --filter @logomesh/core add escomplex
-interface CodeComplexityReport {
-  cyclomatic: number;
-  //... other metrics
-}
+import { analyse } from 'escomplex';
+import { ArchitecturalDebtReport } from '@logomesh/contracts';
 
 export class ArchitecturalDebtAnalyzer {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async analyze(sourceCode: string): Promise<EvaluationReport['architecturalCoherenceDebt']> {
-    // TODO: Implement actual static analysis using a library.
-    // For now, this is a placeholder.
-    const complexity: CodeComplexityReport = { cyclomatic: 5 }; // Mock value
+  async analyze(sourceCode: string): Promise<ArchitecturalDebtReport> {
+    try {
+      const report = escomplexAnalyse(sourceCode);
 
-    let score = 1.0;
-    let details = "Code is well-structured.";
+      // Normalize the maintainability score (higher is better, max ~171) to our 0.0-1.0 scale.
+      // We'll cap the score at 171 to prevent scores > 1.0.
+      const normalizedScore = Math.min(report.maintainability, 171) / 171;
 
-    if (complexity.cyclomatic > 10) {
-      score = 0.5;
-      details = `High cyclomatic complexity detected (${complexity.cyclomatic}), indicating complex logic that may be hard to maintain.`;
+      let details = `Maintainability score is ${report.maintainability.toFixed(
+        2,
+      )}.`;
+      if (report.aggregate.cyclomatic > 10) {
+        details += ` High cyclomatic complexity (${report.aggregate.cyclomatic}) detected, suggesting complex and potentially hard-to-maintain logic.`;
+      } else {
+        details += ' Code complexity is within acceptable limits.';
+      }
+
+      return {
+        score: normalizedScore,
+        details,
+        metrics: report,
+      };
+    } catch (error: any) {
+      // If escomplex fails (e.g., syntax error), return a high-debt report.
+      const errorMessage = error.message || 'Unknown error';
+      const match = errorMessage.match(/line (\d+)/i);
+      const line = match ? parseInt(match[1], 10) : 'N/A';
+
+      return {
+        score: 0.0,
+        details: `Static analysis failed. Could not parse the source code. Error at line ${line}: ${errorMessage}`,
+        metrics: null,
+      };
     }
-
-    return { score, details };
   }
 }
 

@@ -99,12 +99,18 @@ export interface RationaleDebtReport {
   readonly trace: readonly DebtEvent[]; // The step-by-step breakdown of where debt was incurred.
 }
 
+/**
+ * The detailed report for Architectural Debt, including raw complexity metrics.
+ */
+export interface ArchitecturalDebtReport {
+  readonly score: number; // The final, composite score from 0.0 (high debt) to 1.0 (low debt).
+  readonly details: string; // A human-readable summary of the findings.
+  readonly metrics: any | null; // The raw, detailed metrics from the escomplex library. Null if analysis fails.
+}
+
 export interface EvaluationReport {
   readonly rationaleDebt: RationaleDebtReport;
-  readonly architecturalCoherenceDebt: {
-    readonly score: number; // 0.0 to 1.0
-    readonly details: string;
-  };
+  readonly architecturalCoherenceDebt: ArchitecturalDebtReport;
   readonly testingVerificationDebt: {
     readonly score: number; // 0.0 to 1.0
     readonly details: string;
