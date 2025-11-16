@@ -1,22 +1,26 @@
 # Phase 1 Target Clients
 
-This document lists potential "dream" clients for the initial (Phase 1) consulting business, which is the first step in our ["Consult-to-Product Flywheel" strategy](./README.md). The criteria for selection are companies operating in high-risk, regulated industries where the legal and financial liability of indefensible code would be most acute.
+This document lists the "dream" clients for our initial "Contextual Debt Audit" consulting engagements (Phase 1 of the "Consult-to-Product Flywheel").
+
+The criteria for selection is that these companies operate in high-risk, highly-regulated industries where the cost of software failure is catastrophic and the need for auditable, defensible software is paramount.
 
 ## Target List
 
 *   **Finance:**
     *   Bank of America
-    *   Goldman Sachs
+    *   JPMorgan Chase
+    *   Goldman Sachs (specifically their trading and risk management platforms)
+
 *   **Healthcare:**
     *   Kaiser Permanente
     *   UnitedHealth Group
+    *   Epic Systems (EHR software)
+
 *   **Insurance:**
     *   State Farm
     *   Allstate
+
 *   **Avionics/Defense:**
     *   Boeing
     *   Lockheed Martin
-*   **Pharmaceuticals:**
-    *   Pfizer
-*   **Automotive (Autonomous Driving):**
-    *   Waymo (Google)
+    *   Raytheon Technologies
