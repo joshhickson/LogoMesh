@@ -1,3 +1,5 @@
+* **This folder has been temporarily abandoned due to lack of implementation and time constraints. Please refer to `/logs/` for the majority of logs as of 2025-11-16.**
+
 # The Intent Logging Framework: A Rulebook
 
 This document is the official guide to **Intent Logging**, our team's methodology for capturing the "why" behind our work. Its purpose is to prevent contextual debt and ensure that any team member—human or AI—can understand the history, reasoning, and intent of the project at any point in time, independent of Git commit history.
