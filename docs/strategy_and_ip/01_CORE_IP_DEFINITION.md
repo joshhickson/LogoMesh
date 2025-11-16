@@ -1,6 +1,6 @@
 # Core Intellectual Property Definitions v0.1
 
-This document provides the initial, high-level definitions for the core intellectual property that forms the basis of the LogoMesh product strategy.
+This document provides the initial, high-level definitions for the core intellectual property that forms the basis of the LogoMesh product strategy. These concepts were first introduced in the foundational research paper, [*Contextual Debt: A Software Liability*](../20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md).
 
 ## The Contextual Integrity Score (CIS) v0.1
 

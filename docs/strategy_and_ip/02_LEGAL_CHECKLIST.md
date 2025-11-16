@@ -3,7 +3,7 @@
 This document tracks the necessary legal steps to protect the intellectual property of the project and form the corporate entity.
 
 ### Copyright
-- [ ] Register the "Unknowable Code" research paper with the U.S. Copyright Office.
+- [ ] Register the research paper, [*Contextual Debt: A Software Liability*](../20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md), with the U.S. Copyright Office.
 
 ### Trademarks
 - [ ] File "Intent-to-Use" trademark for "CONTEXTUAL DEBT".
