@@ -25,3 +25,10 @@ This is our low-risk, three-phase strategy to build the company.
 *   **Phase 2: Build (Year 1-3):** We will use the dataset from Phase 1 to train our "Agent-as-a-Judge." Now we can build the real SaaS product (the "Contextual Debt Analyzer") that does the job automatically.
 
 *   **Phase 3: Scale (Year 3+):** We will license our core technology (the CIS score and the AI Agent) to other companies like GitHub and GitLab. We become the "FICO Score for code," a standard everyone has to pay for.
+
+---
+
+## Related Documents
+
+*   **Source Research Paper:** [Contextual Debt: A Software Liability (2025-11-15)](../20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md)
+*   **Source IP & Business Strategy:** [IP and Business Strategy for Contextual Debt (2025-11-16)](../../logs/20251116-IP-and-Business-Strategy-for-Contextual%20Debt.md)
