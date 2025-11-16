@@ -1,3 +1,5 @@
+* **This document and folder is outdated as of 2025-11-16 and needs to be reviewed in order to decide if it is valuable enough to keep or archive.**
+
 # Onboarding Documentation Plan: The Cyber-Sentinel Agent
 
 This document outlines our phased, step-by-step plan for creating comprehensive documentation for our project. The goal is to onboard every team member, regardless of their initial skill level, and provide a central source of truth that is accessible to both technical experts and complete novices.
