@@ -1,23 +1,31 @@
-# Core Intellectual Property Definitions v0.1
+# Core IP Definition (v0.1)
 
-This document provides the initial, high-level definitions for the core intellectual property that forms the basis of the LogoMesh product strategy. These concepts were first introduced in the foundational research paper, [*Contextual Debt: A Software Liability*](../20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md).
+This document contains the initial working definitions for the core intellectual property of LogoMesh. These definitions are the basis for our future patent applications and product development.
 
 ## The Contextual Integrity Score (CIS) v0.1
 
-The Contextual Integrity Score (CIS) is a quantifiable metric, ranging from 1-100, designed to assess the legal and operational risk associated with a given software component or pull request. It is calculated based on three primary inputs:
+The Contextual Integrity Score (CIS) is a numerical score from 1-100 that quantifies the legal and operational risk associated with a given code change. It is calculated based on three equally-weighted inputs:
 
-1.  **Rationale Integrity:** This measures the clarity and accessibility of the *intent* behind the code. It is determined by the presence and quality of links from the code to documented business requirements, architectural decisions (e.g., ADRs), or issue tracker tickets. A high score indicates a clear "why" for every "what."
-2.  **Architectural Integrity:** This measures the code's adherence to the established, documented architecture and design patterns of the system. It analyzes dependencies and communication patterns to ensure they do not violate the system's explicit architectural rules.
-3.  **Testing Integrity:** This measures the alignment of the testing suite with the documented rationale. It verifies that the tests are not just executing code, but are explicitly validating the business requirements and acceptance criteria outlined in the source-of-truth documentation.
+1.  **Rationale Integrity (33.3%):** This measures the clarity and accessibility of the *why* behind the code.
+    *   **Measurement:** A score is generated based on the presence and quality of a link between a code commit and a documented source of intent (e.g., a project management ticket, an Architectural Decision Record (ADR), or a formal specification). A commit with no discernible link automatically receives a score of 0. Quality is assessed by an LLM trained to evaluate the clarity and completeness of the linked rationale.
+
+2.  **Architectural Integrity (33.3%):** This measures the code's adherence to the project's established architectural principles and patterns.
+    *   **Measurement:** The score is determined by statically analyzing the code's dependencies and structure against a predefined "Context Graph" of the system's architecture. Violations, such as a backend service directly calling a frontend component, will decrease the score. The "Context Graph" is a formal representation of the intended architecture, maintained as part of the project's documentation.
+
+3.  **Testing Integrity (33.3%):** This measures the sufficiency of the testing coverage in relation to the documented intent.
+    *   **Measurement:** This is not just about code coverage percentage. The score is calculated by evaluating whether the tests validate the specific requirements outlined in the documented rationale. An LLM will be used to compare the test cases against the acceptance criteria of the linked ticket or ADR. Code can have 100% line coverage but a low Testing Integrity score if its tests do not address the stated business goal.
 
 ## The Agent-as-a-Judge v0.1
 
-The "Agent-as-a-Judge" is a specialized AI agent that acts as an automated, programmatic gatekeeper in the CI/CD pipeline. Its primary function is to prevent code with high Contextual Debt from being merged into the main branch.
+The Agent-as-a-Judge is a specialized, autonomous AI agent designed to act as a "critic" and gatekeeper within the CI/CD pipeline. Its primary function is to prevent code with low Contextual Integrity from being merged into the main branch.
 
-Its conceptual operation is as follows:
+**Conceptual Workflow:**
 
-1.  **Initiation:** The Agent activates upon the creation of a new pull request.
-2.  **Context Graph Analysis:** It reads the code changes and compares them against a "Context Graph"—a knowledge graph derived from the company's documentation, ADRs, and issue tracking systems.
-3.  **Automated Adjudication:** The Agent automatically fails the build or blocks the merge if the code cannot be programmatically linked to a documented "why." It requires a verifiable connection to an approved ADR, a specific feature ticket, or a documented business requirement. This enforces a "No Context, No Commit" policy.
-
-The Agent will be trained on the proprietary dataset gathered during the Phase 1 consulting engagements.
+1.  **Trigger:** The Agent-as-a-Judge is triggered upon the creation of a new pull request.
+2.  **Analysis:** It reads the pull request's code and its associated commit messages.
+3.  **CIS Calculation:** The agent calculates the Contextual Integrity Score (CIS) for the proposed change by performing the three integrity checks described above.
+4.  **Enforcement:**
+    *   It automatically fails the build if the commit has no link to a documented source of intent (e.g., a ticket, ADR).
+    *   It provides a detailed report in the pull request, highlighting specific areas of Rationale, Architectural, or Testing debt.
+    *   It can be configured with a minimum acceptable CIS threshold (e.g., 80/100). If the score is below the threshold, the build fails.
+5.  **Training Data:** The underlying AI models for the agent will be trained on the proprietary dataset gathered during the Phase 1 consulting engagements.
