@@ -15,11 +15,14 @@ Who this README is for
 Quickstart for Data Scientists (recommended)
 
 Prerequisites (local machine)
-- Node.js v16 — use `nvm` (or nvm-windows) to install and select v16:
+- Node.js v20+ — use `nvm` (or nvm-windows) to install and select the version specified in `.nvmrc`:
 
 ```bash
-nvm install 16
-nvm use 16
+# Installs the version specified in .nvmrc
+nvm install
+
+# Selects the version for the current shell
+nvm use
 ```
 
 - Enable `corepack` for pnpm:
@@ -34,8 +37,13 @@ corepack enable
 pip install --user setuptools
 ```
 
-- On Windows: Visual Studio Build Tools with the "Desktop development with C++" workload and Windows SDK installed (required for native dependencies like `isolated-vm`). Restart your terminal/VS Code after install.
-- Docker Desktop with virtualization enabled (WSL 2 or Hyper-V) to run the Compose-based E2E test.
+- On Windows: **Visual Studio Build Tools**. This is required for native Node.js modules like `isolated-vm`.
+  - Download the installer directly from the [Visual Studio website](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
+  - During installation, you **must** select the **"Desktop development with C++"** workload. This includes the necessary C++ compiler, libraries, and the Windows SDK.
+  - After installation, **restart your computer** to ensure the environment variables are updated correctly.
+- **Docker Desktop**. This is required to run the full end-to-end test suite, which uses Docker Compose.
+  - Download and install Docker Desktop from the [official Docker website](https://www.docker.com/products/docker-desktop/).
+  - During or after installation, ensure that virtualization is enabled in your system's BIOS and that Docker is configured to use the **WSL 2 backend**, which is the modern standard. Follow the [official Microsoft guide to enable WSL 2](https://learn.microsoft.com/en-us/windows/wsl/install) if prompted.
 
 Recommended local steps
 
@@ -81,7 +89,7 @@ Where to look for results
 	- `docs/onboarding/example-evaluation-report.json` contains a concrete example you can open directly in a notebook.
 
 Developer notes / environment gotchas
-- Node v16 is required because of native dependency compatibility (`isolated-vm` has strict requirements).
+- Node v20+ is required due to dependencies like `vite` used in the `vitest` test runner.
 - On Windows make sure a Windows SDK is installed and the machine restarted after installing Visual Studio Build Tools.
 - If you hit a native build error during `pnpm install`, try:
 

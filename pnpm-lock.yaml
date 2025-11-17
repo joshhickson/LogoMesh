@@ -53,6 +53,9 @@ importers:
       express-rate-limit:
         specifier: ^7.2.0
         version: 7.5.1(express@4.21.2)
+      isolated-vm:
+        specifier: 4.3.6
+        version: 4.3.6
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -2652,6 +2655,12 @@ packages:
   /isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
     requiresBuild: true
+
+  /isolated-vm@4.3.6:
+    resolution: {integrity: sha512-YvioBOU6wUNSTOWGgX/pDPLF9/WaSLsX8GqL7RlFCKzBXTXzyfG+T4JNIRNEiowtZk5H5ekJSUFqbx2QHSpJDQ==}
+    engines: {node: '>=10.4.0'}
+    requiresBuild: true
+    dev: true
 
   /istanbul-lib-coverage@3.2.2:
     resolution: {integrity: sha512-O8dpsF+r0WV/8MNRKfnmrtCWhuKjxrq2w+jpzBL5UZKTi2LeVWnWOmWRxFlesJONmc+wLAGvKQZEOanko0LFTg==}
