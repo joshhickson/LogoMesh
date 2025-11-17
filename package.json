@@ -3,13 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "description": "The foundational monorepo for the LogoMesh C-IDE and AgentX competition entry.",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  },
   "packageManager": "pnpm@8.15.7",
   "scripts": {
     "build": "turbo run build",
     "lint": "eslint packages/**/*.{ts,tsx}",
     "lint:strict": "eslint packages/**/*.{ts,tsx} --max-warnings 0",
     "check:boundaries": "depcruise packages",
-    "test": "vitest run",
+    "test": "node --experimental-vm-modules node_modules/vitest/vitest.mjs run",
     "contracts": "pnpm --filter @logomesh/contracts",
     "core": "pnpm --filter @logomesh/core",
     "server": "pnpm --filter @logomesh/server",
