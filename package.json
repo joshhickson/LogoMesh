@@ -9,7 +9,7 @@
     "lint": "eslint packages/**/*.{ts,tsx}",
     "lint:strict": "eslint packages/**/*.{ts,tsx} --max-warnings 0",
     "check:boundaries": "depcruise packages",
-    "test": "vitest run",
+    "test": "node --experimental-vm-modules node_modules/vitest/vitest.mjs run",
     "contracts": "pnpm --filter @logomesh/contracts",
     "core": "pnpm --filter @logomesh/core",
     "server": "pnpm --filter @logomesh/server",

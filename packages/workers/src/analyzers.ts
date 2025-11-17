@@ -95,10 +95,6 @@ export class RationaleDebtAnalyzer {
   }
 }
 
-
-import { analyse } from 'escomplex';
-import { ArchitecturalDebtReport } from '@logomesh/contracts';
-
 export class ArchitecturalDebtAnalyzer {
   async analyze(sourceCode: string): Promise<ArchitecturalDebtReport> {
     try {
