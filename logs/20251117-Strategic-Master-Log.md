@@ -14,9 +14,10 @@ This document serves as a centralized, high-level reference sheet for the LogoMe
 
 ## 2. Pillar 1: Intellectual Property & Business Strategy
 
-**Narrative:** The project's core intellectual property is the concept of **"Contextual Debt,"** defined as the compounding liability a software organization incurs from a lack of discernible human intent, architectural rationale, and domain-specific knowledge within its codebase. This concept, originally detailed in a foundational research paper, has been validated by senior data scientist Deepti as a significant and commercially valuable piece of IP. This validation has triggered a strategic initiative to formalize the IP (copyrights, trademarks), develop a "Consult-to-Product Flywheel" business model, and pursue venture funding. The immediate priorities are to harden the IP definitions, prepare for an investor meeting facilitated by Deepti, and begin the formal process of IP protection.
+**Narrative:** The project's core intellectual property is the concept of **"Contextual Debt,"** defined as the compounding liability a software organization incurs from a lack of discernible human intent, architectural rationale, and domain-specific knowledge within its codebase. This abstract concept is made concrete through two core, patentable inventions: the **"Contextual Integrity Score (CIS),"** a quantitative metric to assess this risk, and the **"Agent-as-a-Judge,"** an automated governance system to enforce it. The validation of this IP's value by senior data scientist Deepti has triggered a strategic initiative to formalize and protect these assets, laying the groundwork for the commercialization strategy.
 
 **Key Documents:**
+*   **Core Invention:** `docs/strategy_and_ip/01_CORE_IP_DEFINITION.md` - Provides the technical and conceptual definitions for the "Contextual Integrity Score" and the "Agent-as-a-Judge" system.
 *   **Source Concept:** `logs/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md` - The foundational academic text that defines the core thesis and provides the language for the entire venture.
 *   **Strategic Framework:** `logs/20251116-IP-and-Business-Strategy-for-Contextual Debt.md` - The comprehensive plan detailing the IP portfolio (trademarks, patents), the 3-phase commercialization strategy, and the investor narrative.
 *   **Team Alignment & Decision Log:** `logs/20251115-!Meeting 1 Minutes.md` - Documents Deepti's validation of the IP's value and the team's formal decision to pursue copyright and investor conversations.
@@ -55,3 +56,14 @@ This document serves as a centralized, high-level reference sheet for the LogoMe
 *   **Conceptual Synthesis:** `logs/20251116-[import]-Corrected_Contextual_Debt_Analysis.md` - Links the "Contextual Debt" concept to lectures and talks from leading AI researchers, demonstrating that the underlying problems are a top-of-mind concern for the industry.
 *   **Academic Deep Dive:** `logs/20251116-Vinyals's Perspective On Embedding Geometry.md` - Provides a research-level analysis of a paper on embedding geometries, relevant to the long-term vision of creating a "society of models."
 *   **Revision History:** `logs/20251115-Jules-Research-Paper-Revision-Log.md` - Documents the process of refining and "hardening" the core research paper based on this ongoing synthesis and feedback.
+
+---
+
+## 5. Pillar 5: Commercialization Strategy
+
+**Narrative:** The commercialization strategy translates the core intellectual property into a viable business venture. The go-to-market plan is a three-phase **"Consult-to-Product Flywheel"** designed to de-risk product development and build a proprietary data moat. Phase 1 involves engaging high-value target clients in regulated industries (finance, healthcare) with paid "Contextual Debt Audits." This provides immediate revenue and generates the private dataset needed to train the "Agent-as-a-Judge." The core messaging for this initiative is captured in the investor pitch, which frames the problem as a new class of enterprise liability and the solution as a mandatory governance tool. A comprehensive legal checklist is in place to formally protect the IP through copyrights, trademarks, and patents, ensuring a defensible long-term position.
+
+**Key Documents:**
+*   **Fundraising Narrative:** `docs/strategy_and_ip/03_INVESTOR_PITCH.md` - The script containing the seven key talking points for raising venture capital.
+*   **Go-to-Market Plan:** `docs/strategy_and_ip/04_PHASE_1_CLIENTS.md` - Identifies the initial high-value target clients for the Phase 1 consulting engagements.
+*   **Legal Action Plan:** `docs/strategy_and_ip/02_LEGAL_CHECKLIST.md` - The checklist of legal actions required to protect the project's copyrights, trademarks, and patents.
