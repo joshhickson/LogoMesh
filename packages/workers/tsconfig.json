@@ -7,6 +7,6 @@
     { "path": "../contracts" },
     { "path": "../core" }
   ],
-  "include": ["src"],
+  "include": ["src", "src/types"],
   "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts", "**/*.e2e.test.ts"]
 }
