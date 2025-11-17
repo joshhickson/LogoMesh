@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "description": "The foundational monorepo for the LogoMesh C-IDE and AgentX competition entry.",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  },
   "packageManager": "pnpm@8.15.7",
   "scripts": {
     "build": "turbo run build",
