@@ -25,7 +25,12 @@ This document provides a step-by-step guide for preparing and registering the co
     *   **Rationale:** This transforms the paper from a purely academic work into a foundational document for the business. It establishes a clear link between the core problem ("Contextual Debt") and the commercial solution.
     *   **Source:** `docs/strategy_and_ip/03_INVESTOR_PITCH.md`
 
-*   **[ ] 4. Final Review and "Completion":**
+*   **[ ] 4. Conduct Deep Research Session (Optional but Recommended):**
+    *   Use a large language model (e.g., Google Gemini) to conduct a comparative analysis of the consolidated master document.
+    *   **Objective:** Compare the paper's structure, tone, and depth against other seminal, copyrighted works that have achieved significant commercial or academic success (e.g., whitepapers that launched major open-source projects, foundational academic papers that created new fields).
+    *   **Rationale:** This step serves as a final quality control and strategic refinement check. It can uncover potential weaknesses or opportunities to strengthen the paper before it is finalized for registration, increasing its long-term strategic value.
+
+*   **[ ] 5. Final Review and "Completion":**
     *   Perform a final read-through to ensure the integrated document is coherent and complete.
     *   **Guidance:** As per the legal advice, "complete" does not mean "final forever." It means the work is a finished, identifiable whole in its current state, ready for deposit.
 
