@@ -1,3 +1,4 @@
+import ivm from 'isolated-vm';
 import {
   ReasoningStep,
   DebtEvent,
@@ -6,6 +7,9 @@ import {
   ArchitecturalDebtReport,
 } from '@logomesh/contracts';
 import { analyse as escomplexAnalyse } from 'escomplex';
+import * as fs from 'fs/promises';
+import * as path from 'path';
+import * as os from 'os';
 
 // A simplified interface for a local LLM client (e.g., Ollama)
 interface LlmClient {
@@ -134,11 +138,10 @@ export class ArchitecturalDebtAnalyzer {
 }
 
 export class TestingDebtAnalyzer {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async analyze(
     sourceCode: string,
-    testCode?: string
-  ): Promise<EvaluationReport['testingVerificationDebt']> {
+    testCode?: string,
+  ): Promise<{ score: number; details: string; }> {
     if (!testCode || testCode.trim() === '') {
       return {
         score: 0.0,
@@ -146,18 +149,99 @@ export class TestingDebtAnalyzer {
       };
     }
 
-    const hasEdgeCaseTests = /edge case|invalid|null|undefined|error/i.test(testCode);
+    const isolate = new ivm.Isolate({ memoryLimit: 128 });
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'logomesh-test-'));
 
-    if (!hasEdgeCaseTests) {
+    try {
+      const context = await isolate.createContext();
+      const jail = context.global;
+
+      const resultPromise = new Promise<{ passed: boolean; details: string }>(
+        (resolve, reject) => {
+          jail.setSync('writeFile', new ivm.Reference(async (filePath: string, data: string) => {
+            const absolutePath = path.join(tempDir, filePath);
+            if (!absolutePath.startsWith(tempDir)) {
+              throw new Error('File system access outside of the sandbox is not allowed.');
+            }
+            await fs.writeFile(absolutePath, data);
+          }));
+          jail.setSync('readFile', new ivm.Reference(async (filePath: string) => {
+            const absolutePath = path.join(tempDir, filePath);
+            if (!absolutePath.startsWith(tempDir)) {
+              throw new Error('File system access outside of the sandbox is not allowed.');
+            }
+            return await fs.readFile(absolutePath, 'utf-8');
+          }));
+
+          jail.setSync(
+            '__report_result__',
+            new ivm.Callback((result: { passed: boolean; details: string }) => {
+              resolve(result);
+            }),
+          );
+
+          const finalScript = `
+            var reportResult = function(passed, details) {
+              __report_result__.apply(undefined, [{ passed, details }]);
+            };
+            
+            (async function() {
+              try {
+                ${testCode}
+              } catch(err) {
+                reportResult(false, 'Runtime error in test: ' + (err.message || err));
+              }
+            })();
+          `;
+
+          isolate
+            .compileScript(finalScript)
+            .then(script => {
+              script.run(context, { timeout: 4500, promise: true }).catch(err => {
+                // This will catch timeouts and other unrecoverable errors
+                reject(err);
+              });
+            })
+            .catch(reject);
+        },
+      );
+
+      const result = await resultPromise;
+      
+      // If the test failed because of a runtime error we caught, score is 0.0
+      if (!result.passed && result.details.startsWith('Runtime error in test:')) {
+        return {
+          score: 0.0,
+          details: result.details,
+        };
+      }
+
+      const score = result.passed ? 0.9 : 0.2;
+
       return {
-        score: 0.6,
-        details: 'Tests cover the happy path, but no explicit tests for edge cases were found.',
+        score,
+        details: result.details,
       };
-    }
+    } catch (error: any) {
+      let details = 'Test execution failed.';
+      if (error instanceof Error) {
+        details = `Test execution failed: ${error.message}`;
+        if (error.message.includes('Script execution timed out')) {
+          details = 'Test execution timed out after 4500ms.';
+        }
+      }
 
-    return {
-      score: 0.9,
-      details: 'Unit tests cover happy path and appear to consider edge cases.',
-    };
+      return {
+        score: 0.0,
+        details,
+      };
+    } finally {
+      if (!isolate.isDisposed) {
+        isolate.dispose();
+      }
+      // Clean up the temporary directory
+      await fs.rm(tempDir, { recursive: true, force: true });
+    }
   }
 }
+

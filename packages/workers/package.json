@@ -9,8 +9,7 @@
     "build": "tsc -b",
     "start:rationale": "node dist/src/rationale-worker.js",
     "start:architectural": "node dist/src/architectural-worker.js",
-    "start:testing": "node dist/src/testing-worker.js",
-    "verify:ivm": "tsc && node dist/src/tmp-iso-verify.js"
+    "start:testing": "node dist/src/testing-worker.js"
   },
   "dependencies": {
     "@logomesh/contracts": "workspace:*",
