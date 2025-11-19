@@ -12,7 +12,7 @@ This document provides a step-by-step guide for preparing and registering the co
 
 *   **[ ] 1. Create a Master "Copyright Edition" of the Research Paper:**
     *   Start with the latest version of the research paper as the base document:
-        *   **Source:** `logs/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md`
+        *   **Source:** `logs/research/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md`
     *   Create a new working copy to serve as the master registration document.
 
 *   **[ ] 2. Integrate Core Technical Definitions:**
