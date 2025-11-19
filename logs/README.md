@@ -26,12 +26,6 @@ This is the home for technical roadmaps, recovery plans, analyses of build failu
 
 This folder contains the original "Contextual Debt" research paper, analyses of related academic work (e.g., from Berkeley's AI MOOC or papers by leading researchers), and logs of the iterative process of refining the project's core concepts.
 
-## `/team`
-
-**Purpose:** Documents related to team members, meeting preparation, and internal alignment.
-
-This includes analyses of team members' skills, preparation guides for key meetings with collaborators or advisors, and predicted Q&A documents. It helps align the team and prepare for important external conversations.
-
 ## `/archive`
 
 **Purpose:** Contains older, timestamped logs that are kept for historical purposes but are not part of the active strategic pillars.
