@@ -1,3 +1,5 @@
+> ***Note:*** *This document was archived on 2025-11-18. It is preserved for historical context. For the most current version, please see `logs/20251118-Strategic-Master-Log.md`.*
+
 # Strategic Master Log (2025-11-17)
 
 This document serves as a centralized, high-level reference sheet for the LogoMesh project. It synthesizes the project's current status, strategic goals, and key intellectual assets, providing a coherent narrative and a structured index of essential documents for all internal team members.
