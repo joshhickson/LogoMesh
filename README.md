@@ -1,6 +1,6 @@
 # LogoMesh: An Open Platform for Agent-on-Agent Evaluation
 
-Welcome — and thanks for jumping in. This repo contains the LogoMesh monorepo: a TypeScript-based platform for evaluating AI agents and measuring our core metric, "Contextual Debt." The codebase is organized as pnpm workspaces and includes the API server, worker processes, and test harness used during development and evaluation.
+Welcome, and thanks for jumping in. This repo contains the LogoMesh monorepo: a TypeScript-based platform for evaluating AI agents and measuring our core metric, "Contextual Debt." The codebase is organized as pnpm workspaces and includes the API server, worker processes, and test harness used during development and evaluation.
 
 Quick links:
 - 2025-11-18 Strategic Master Log `logs/20251118-Strategic-Master-Log.md`
