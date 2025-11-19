@@ -1,80 +1,13 @@
 # Gap Analysis & Onboarding Plan — Data Scientist
 
 Date: 2025-11-13
-Author: repo maintainer (verification run included)
-
-Dear Deep,
-
-A quick note to avoid confusion: the most recent updates and concrete recommendations were appended at the bottom of this document (look for the "Detailed recommendations (added)" and "Next action suggestion" sections). If you want the latest actionable items, start by scrolling to the end — the top of this file contains the narrative and background.
-
-
 Purpose
 -------
-This document is a focused gap analysis and onboarding plan targeted at a Data Scientist reviewer with the profile you provided (experienced ML/Data Scientist, familiar with Python, SQL, model evaluation, and tooling such as Jupyter/Colab/VS Code). The deliverable has three goals:
+This document is a focused gap analysis and onboarding plan targeted at a Data Scientist reviewer (experienced ML/Data Scientist, familiar with Python, SQL, model evaluation, and tooling such as Jupyter/Colab/VS Code). The deliverable has three goals:
 
 1. Empirically verify the repository's current runtime state and surface any gaps relevant to a data scientist.
 2. Provide an actionable, prioritized set of tasks and experiments that a data scientist can run immediately.
 3. Ensure the repo's front-facing docs are clear enough that a data scientist will not be confused when setting up the project locally.
-
-Quick verdict (pass/fail question)
----------------------------------
-Will the data scientist be confused or have trouble finding instructions to set the project up for review?  
-Answer: No — after the updates made on 2025-11-13 (README quickstart, verification notes, and CI docs). This document explains why and lists exactly what remains.
-
-Executive summary of empirical verification
-------------------------------------------
-- I ran a full local verification on 2025-11-13: `pnpm install`, `pnpm run build`, and `docker compose up --build` (with fixes applied). The `e2e-tester` service completed and exited with code 0; Redis and workers reported successful "[Redis] Connection is ready." messages.
-- The primary previous blocker (Redis EPIPE race) was addressed by:
-  - Improving `packages/core/src/services/redis.ts` to use `lazyConnect`, disable the offline queue, and call `connect()` explicitly.
-  - Normalizing the Redis entrypoint line endings in `docker-redis/Dockerfile` and making it executable.
-  - Starting Redis with `--protected-mode no` inside the container for Compose network accessibility.
-- TypeScript builds (`pnpm run build`) completed successfully after installing native build tools and Windows SDK where required.
-
-What a data scientist will care about first
------------------------------------------
-1. How to reproduce evaluation outputs (where to run tests, which command to run, and where outputs/logs appear).
-2. Where the evaluation data is written and how to parse it (file locations / output schema).
-3. How to run small, focused experiments (e.g., re-run the rationale analyzer on a small sample and visualize the scores).
-4. How to explore outputs interactively (notebooks, scripts, or lightweight dashboards).
-
-Files / locations you will use frequently
-----------------------------------------
-- `packages/core` — core evaluation logic (analyzers, orchestration, Redis helper).
-- `packages/server` — API server; integration surface for e2e tests.
-- `packages/workers` — worker entrypoints and job handlers (rationale, architectural, testing analyzers).
-- `logs/` — runtime logs and e2e run captures. Example: `logs/2025-11-13_docker_compose_logs.log`.
-- `docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md` — this doc.
-- `docs/PROJECT_STATUS.md` — high-level project context and verified status.
-- `docs/EVAL_OUTPUT_SCHEMA.md` — schema for evaluation JSON and a short example.
-- `docs/onboarding/example-evaluation-report.json` — concrete example JSON that you can open in a notebook.
-
-````markdown
-# Gap Analysis & Onboarding Plan — Data Scientist
-
-Date: 2025-11-13
-Author: repo maintainer (verification run included)
-
-Purpose
--------
-This document is a focused gap analysis and onboarding plan targeted at a Data Scientist reviewer with the profile you provided (experienced ML/Data Scientist, familiar with Python, SQL, model evaluation, and tooling such as Jupyter/Colab/VS Code). The deliverable has three goals:
-
-1. Empirically verify the repository's current runtime state and surface any gaps relevant to a data scientist.
-2. Provide an actionable, prioritized set of tasks and experiments that a data scientist can run immediately.
-3. Ensure the repo's front-facing docs are clear enough that a data scientist will not be confused when setting up the project locally.
-
-Quick verdict (pass/fail question)
----------------------------------
-Will the data scientist be confused or have trouble finding instructions to set the project up for review?  
-Answer: No — after the updates made on 2025-11-13 (README quickstart, verification notes, and CI docs). This document explains why and lists exactly what remains.
-
-Executive summary of empirical verification
-------------------------------------------
-- I ran a full local verification on 2025-11-13: `pnpm install`, `pnpm run build`, and `docker compose up --build` (with fixes applied). The `e2e-tester` service completed and exited with code 0; Redis and workers reported successful "[Redis] Connection is ready." messages.
-- The primary previous blocker (Redis EPIPE race) was addressed by:
-  - Improving `packages/core/src/services/redis.ts` to use `lazyConnect`, disable the offline queue, and call `connect()` explicitly.
-  - Normalizing the Redis entrypoint line endings in `docker-redis/Dockerfile` and making it executable.
-  - Starting Redis with `--protected-mode no` inside the container for Compose network accessibility.
-- TypeScript builds (`pnpm run build`) completed successfully after installing native build tools and Windows SDK where required.
 
 What a data scientist will care about first
 -----------------------------------------
@@ -306,13 +239,3 @@ Below are the concrete, actionable recommendations I suggest we include here so 
   - Acceptance criteria: When `--mode node` is passed and Node is found, the script spawns the corresponding `node`/`pnpm` command under `packages/*` (guarded), captures JSON output, and writes it to the `-o` path. When Node isn't available, the script prints a clear message and falls back to the Python heuristic.
   - Minimal plan: Add an optional `--mode node` flag, use `shutil.which('node')` to detect Node, then `subprocess.run()` to call the TS harness (document expected TS command). Keep this guarded to avoid surprising failures on systems without Node.
 
-Next action suggestion
-----------------------
-If you'd like, I'll implement item (1) now: expand and wire `notebooks/01-explore-sample-eval.ipynb` to call the converter and produce the aggregated plots. Say "do notebook" and I will make the notebook edits, run a quick local validation (convert a known example JSON into CSV and render one plot), and commit the changes. Alternatively, pick (2) or (3) and I'll start on that instead.
-
-Where to get help
------------------
-- If something fails during setup, open `logs/2025-11-13_docker_compose_logs.log` for a recent run and check `logs/2025-11-12_readiness_and_fix_summary.log` for environment fixes.
-- For questions about the metric design, consult `docs/CONTEXTUAL_DEBT_SPEC.md` and `docs/AgentX_Submission_Paper.md` for background.
-
-End of consolidated onboarding doc.
