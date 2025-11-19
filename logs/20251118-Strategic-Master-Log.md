@@ -33,10 +33,15 @@ graph TD
         G("logs/ip_and_business/20251115-!Meeting 1 Minutes.md <br> [Meeting notes explaining the 'why' behind our focus on IP and commercialization.]")
     end
 
+    subgraph "Quick Start"
+        H("README.md <br> [Technical setup guide for local development and running tests.]")
+    end
+
     %% Define the connections
     A --> B;
     A --> D;
     A --> G;
+    A -- leads to --> H;
     B --> C;
     D -- inspires --> E;
     E -- leads to --> F;
@@ -47,11 +52,14 @@ graph TD
     classDef workshop fill:#EBF5FB,stroke:#3498DB,stroke-width:2px;
     classDef cuttingEdge fill:#FDEDEC,stroke:#E74C3C,stroke-width:2px;
     classDef genesis fill:#FEF9E7,stroke:#F1C40F,stroke-width:2px;
+    classDef quickstart fill:#E8DAEF,stroke:#8E44AD,stroke-width:2px;
+
 
     class A start;
     class B,C workshop;
     class D,E,F cuttingEdge;
     class G genesis;
+    class H quickstart;
 ```
 
 ---
@@ -91,3 +99,27 @@ This section contains the project's most ambitious and forward-looking ideas. Th
 This section provides historical context that explains key strategic decisions and the project's origins.
 
 *   **`logs/ip_and_business/20251115-!Meeting 1 Minutes.md`**: These are the notes from the first formal meeting between teammates Josh and Deepti. This document is the primary source for understanding *why* the project has a strong focus on intellectual property, copyright, and commercialization, as it records the moment these strategic initiatives were formally adopted.
+
+---
+
+## 5. Getting Started: Local Setup & Quick Start
+
+While this master log provides the strategic "why," the root `README.md` provides the tactical "how" for getting the project running on your local machine. It is the best place to start for hands-on development or data analysis.
+
+*   **`README.md`**: The primary entry point for technical onboarding. It contains:
+    *   Prerequisites and detailed setup instructions for the development environment (Node.js, Docker, etc.).
+    *   Step-by-step commands for installing dependencies, building the project, and running the end-to-end tests.
+    *   Role-specific guidance with quick links for both Data Scientists and Engineers.
+
+### Key Technical & Onboarding Documents (from `README.md`)
+
+*   **For Data Scientists:**
+    *   Gap Analysis & Onboarding Plan: `docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md`
+    *   Metric Specification: `docs/CONTEXTUAL_DEBT_SPEC.md`
+    *   Evaluation Output Schema: `docs/EVAL_OUTPUT_SCHEMA.md`
+    *   Example Notebook: `notebooks/01-explore-sample-eval.ipynb`
+    *   Helper Scripts: `tools/`
+
+*   **For Engineers:**
+    *   Project Status: `docs/PROJECT_STATUS.md`
+    *   CI/CD Workflow: `docs/CI_COMPOSE_E2E_WORKFLOW.md`
