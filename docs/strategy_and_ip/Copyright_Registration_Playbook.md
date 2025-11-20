@@ -30,10 +30,12 @@ Based on the initial inventory, the following documents are candidates for the g
 
 **Critical Action:** Address the findings in the **Gap Analysis Report** (`docs/strategy_and_ip/DOC-REVISIONS/20251119-Gap-Analysis-Critique-vs-IP-Assets.md`).
 
-*   **[ ] 1. Formalize the Math:** Transfer the mathematical formulas for the Contextual Integrity Score (from the Technical Specification log) into the Research Paper. The registered paper must define a *protocol*, not just a rubric.
-*   **[ ] 2. Adjust the Tone:** Update the Research Paper to reflect the "Passive Authority" voice recommended in the Strategic Critique.
-*   **[ ] 3. Synchronize Definitions:** Ensure `01_CORE_IP_DEFINITION.md` is updated to match the new mathematical definitions in the revised Paper.
-*   **[ ] 4. Create the Diagram:** Add a definitive description (or textual representation) of the "Agent-as-a-Judge" data flow to the Paper.
+*   **[x] 1. Formalize the Math:** Transfer the mathematical formulas for the Contextual Integrity Score (from the Technical Specification log) into the Research Paper. The registered paper must define a *protocol*, not just a rubric.
+*   **[x] 2. Adjust the Tone:** Update the Research Paper to reflect the "Passive Authority" voice recommended in the Strategic Critique.
+*   **[x] 3. Synchronize Definitions:** Ensure `01_CORE_IP_DEFINITION.md` is updated to match the new mathematical definitions in the revised Paper.
+*   **[x] 4. Create the Diagram:** Add a definitive description (or textual representation) of the "Agent-as-a-Judge" data flow to the Paper.
+
+*(Completed 2025-11-19)*
 
 ---
 
