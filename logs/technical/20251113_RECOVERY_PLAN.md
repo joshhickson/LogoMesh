@@ -10,19 +10,29 @@ Our strategy is sound, but execution is paramount. This plan breaks down the rem
 
 The following workstreams are designed to run in parallel, aligning with the roles and weekly milestones established in the `PROJECT_PLAN.md`.
 
-### Workstream 1: Harden Core Analyzer Logic
+### Workstream 1 (Revised): Implement Formalized CIS v2 Analyzers
 
-**Goal:** Move all analyzers from prototypes to production-ready components. This directly addresses the "Incomplete Implementation" gap.
+**Goal:** Implement the new, mathematically-grounded analyzers for each component of the Contextual Integrity Score, as defined in the strategic revision document.
 
-*   **Task 1.1: Integrate Static Analysis into `architecturalDebtAnalyzer`**
-    *   **Action:** Integrate the `escomplex` library to generate a quantitative score for code complexity and maintainability.
-    *   **Acceptance Criteria:** The analyzer's output report must include a valid `escomplex` score based on the "Purple Agent's" generated code.
-*   **Task 1.2: Build Secure Sandbox for `testingDebtAnalyzer`**
-    *   **Action:** Utilize the `isolated-vm` library to create a secure, sandboxed environment for executing the "Purple Agent's" test code.
-    *   **Acceptance Criteria:** The sandbox must prevent file system access outside of a temporary directory and enforce a strict execution timeout. The analyzer must successfully capture test results (`pass`/`fail`) from the sandboxed environment.
-*   **Task 1.3: Implement Compounding Debt Logic in `rationaleDebtAnalyzer`**
-    *   **Action:** Refactor the analyzer to explicitly trace how a piece of irrelevant context (a "debt event") is cited and used in subsequent reasoning steps.
-    *   **Acceptance Criteria:** The final `EvaluationReport` JSON must contain a `debtTrace` array that links an initial contextual error to a specific, downstream failure in the agent's logic. This is critical to defending our novelty claim.
+*   **Task 1.1: Implement Rationale Integrity Analyzer v2 (Semantic Alignment)**
+    *   **Action:**
+        1.  Develop a service capable of generating high-dimensional vector embeddings for text (from requirements, tickets, etc.) and code (from git diffs).
+        2.  Implement the Rationale Integrity function `R(Δ)` which calculates the cosine similarity between the intent vector (`v_intent`) and the code vector (`v_code`).
+    *   **Acceptance Criteria:** The analyzer must be able to take a code diff and a text requirement as input and output a similarity score between 0 and 1.
+
+*   **Task 1.2: Implement Architectural Integrity Analyzer v2 (Graph Centrality)**
+    *   **Action:**
+        1.  Design and implement a schema (e.g., in a `logomesh.arch.json` file) for defining the project's service architecture as a directed graph.
+        2.  Build a static analysis engine that parses a code change, identifies all new or modified cross-service dependencies, and checks them against the "allowed edges" in the architecture graph.
+        3.  Implement the Architectural Integrity function `A(Δ)` which returns 0 if any "illegal edge" is detected (the "Critical Veto").
+    *   **Acceptance Criteria:** The analyzer must correctly identify and fail a code change that introduces a dependency that violates the predefined architectural graph.
+
+*   **Task 1.3: Implement Testing Integrity Analyzer v2 (Semantic Coverage)**
+    *   **Action:**
+        1.  Integrate a standard code coverage tool to capture line/branch coverage data.
+        2.  Use the vector embedding service (from Task 1.1) to generate embeddings for test case assertions and the acceptance criteria of the linked requirement.
+        3.  Implement the Testing Integrity function `T(Δ)` which combines the code coverage score with the semantic similarity score between tests and requirements.
+    *   **Acceptance Criteria:** The analyzer must produce a low score for a code change that has 100% line coverage but whose tests do not semantically align with the stated business requirements.
 
 ### Workstream 2: Implement Production-Grade Security (Auth0)
 
