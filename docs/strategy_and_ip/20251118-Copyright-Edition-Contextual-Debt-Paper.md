@@ -302,6 +302,24 @@ The interaction is defined by the tuple $(C, \Delta, V)$, where $C$ is the const
 
 $$J(O(C), W(\Delta)) \to \{Accept \mid Reject\}$$
 
+**Figure 1: The Glass Box Protocol Topology**
+
+```mermaid
+graph TD
+    subgraph "The Glass Box Protocol"
+        O(Orchestrator) -- "1. Constraints (C)" --> W(Worker)
+        W -- "2. Artifact (Δ)" --> O
+        O -- "3. Verify (C, Δ)" --> J(Agent-as-a-Judge)
+
+        subgraph "Governance Loop"
+            J -- "4. Calculate CIS" --> J
+            J -- "5. Sign & Log" --> DBOM[(DBOM Ledger)]
+        end
+
+        J -- "6. Verdict" --> O
+    end
+```
+
 ### **4.2 The Decision Bill of Materials (DBOM)**
 
 In current CI/CD pipelines, the "Software Bill of Materials" (SBOM) tracks *components* (what). This is insufficient for liability protection. We introduce the **Decision Bill of Materials (DBOM)** to track *causality* (why).

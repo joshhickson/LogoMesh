@@ -1,6 +1,6 @@
-# Investor Pitch Script v1
+# Investor Pitch Script v2 (Protocol Edition)
 
-This document contains the core talking points for investor meetings, based on the analysis in the `20251116-IP-and-Business-Strategy-for-Contextual Debt.md` report.
+This document contains the core talking points for investor meetings, aligned with the "Hard Tech" strategy defined in the `Contextual Debt Protocol` paper.
 
 ## The 7 Key Talking Points
 
@@ -13,14 +13,14 @@ This document contains the core talking points for investor meetings, based on t
 3.  **The Consequence: Indefensible Liability**
     *   "When this 'unknowable' code fails—not if, *when*—it's not a simple bug. It's a 'catastrophic system failure,' a 'data breach,' or a 'major accounting error'. In today's regulatory world, being unable to explain *why* your system did what it did is, in a word, 'indefensible'".
 
-4.  **The Solution: A "FICO Score" for Code Intent**
-    *   "We have developed the 'Contextual Integrity Score' (CIS), the industry's first 'quantitative benchmark' for software intent. We provide a GRC dashboard that, for the first time, gives the C-suite and Board auditable visibility into this new liability class."
+4.  **The Solution: The "Contextual Integrity Protocol"**
+    *   "We have developed the 'Contextual Integrity Score' (CIS), a **computable probability function** that mathematically measures code risk. We don't just provide a dashboard; we generate a **Decision Bill of Materials (DBOM)**—a cryptographic record of the 'why' behind every line of code."
 
-5.  **The "Magic": The "Agent-as-a-Judge"**
-    *   "We've built the 'Agent-as-a-Judge,' a proprietary AI that *evaluates* code, not just writes it. While other AIs accelerate the *problem*, our 'Agent' acts as an 'automated governance system' that *preserves* intent, spots "missing rationale", and stops catastrophic failures *before* they're deployed."
+5.  **The "Magic": The "Glass Box" Architecture**
+    *   "We've built the 'Agent-as-a-Judge,' a **Glass Box Protocol** that *evaluates* code in real-time. While other AIs are 'black boxes' that hallucinate risk, our **Orchestrator-Worker** system externalizes reasoning, enforcing architectural constraints and stopping catastrophic failures *before* they're deployed."
 
 6.  **The Model: The "Consult-to-Product" Flywheel**
     *   "We are already signing high-margin consulting contracts to perform 'archeological code digs'. This *paid data acquisition* is building the world's only proprietary dataset of 'intent failure,' which serves as the unassailable data moat for our scalable SaaS platform."
 
 7.  **The Ask: Own the GRC Standard for Software**
-    *   "This is not a developer tool. This is a new category of enterprise risk management. We are raising $X million to become the mandatory, auditable standard for 'Contextual Integrity'—the "Fair Isaac" for all software."
+    *   "This is not a developer tool. This is a new category of enterprise risk management. We are raising $X million to become the mandatory, auditable standard for 'Contextual Integrity'—the 'Fair Isaac' for all software."
