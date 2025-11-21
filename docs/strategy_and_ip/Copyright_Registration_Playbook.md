@@ -1,83 +1,73 @@
-# Copyright Registration Playbook (v1)
+# Copyright Registration Playbook (v2 - GRUW Edition)
 
-This document provides a step-by-step guide for preparing and registering the core intellectual property of the LogoMesh project. It translates the project's strategic goals and legal advice into an actionable plan.
+**Objective:** To register the core intellectual property of the LogoMesh project using the **Group Registration of Unpublished Works (GRUW)** option. This allows for up to 10 distinct unpublished works to be registered with a single application and fee, avoiding the risks associated with "compendium" submissions.
 
----
-
-## Phase 1: Consolidate the IP for Registration
-
-**Objective:** To combine the foundational research paper with core business and technical concepts into a single, comprehensive document ready for copyright registration. This "deposit copy" will represent the complete intellectual asset as of the registration date.
-
-### Action Items
-
-*   **[ ] 1. Create a Master "Copyright Edition" of the Research Paper:**
-    *   Start with the latest version of the research paper as the base document:
-        *   **Source:** `logs/research/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md`
-    *   Create a new working copy to serve as the master registration document.
-
-*   **[ ] 2. Integrate Core Technical Definitions:**
-    *   Incorporate the precise definitions of the **"Contextual Integrity Score (CIS)"** and the **"Agent-as-a-Judge"** system into the paper.
-    *   **Rationale:** The final paper must contain the exact language and concepts that will be patented. This ensures the copyright and patent filings are mutually reinforcing.
-    *   **Source:** `docs/strategy_and_ip/01_CORE_IP_DEFINITION.md`
-
-*   **[ ] 3. Weave in the Commercial Narrative:**
-    *   Integrate the core "talking points" from the investor pitch into the paper's introduction and conclusion.
-    *   **Rationale:** This transforms the paper from a purely academic work into a foundational document for the business. It establishes a clear link between the core problem ("Contextual Debt") and the commercial solution.
-    *   **Source:** `docs/strategy_and_ip/03_INVESTOR_PITCH.md`
-
-*   **[ ] 4. Conduct Deep Research Session (Optional but Recommended):**
-    *   Use a large language model (e.g., Google Gemini) to conduct a comparative analysis of the consolidated master document.
-    *   **Objective:** Compare the paper's structure, tone, and depth against other seminal, copyrighted works that have achieved significant commercial or academic success (e.g., whitepapers that launched major open-source projects, foundational academic papers that created new fields).
-    *   **Rationale:** This step serves as a final quality control and strategic refinement check. It can uncover potential weaknesses or opportunities to strengthen the paper before it is finalized for registration, increasing its long-term strategic value.
-
-*   **[ ] 5. Final Review and "Completion":**
-    *   Perform a final read-through to ensure the integrated document is coherent and complete.
-    *   **Guidance:** As per the legal advice, "complete" does not mean "final forever." It means the work is a finished, identifiable whole in its current state, ready for deposit.
+**Author/Claimant:** Joshua Hickson ("Josh")
+**Registration Type:** Group Registration of Unpublished Works (Literary Works)
 
 ---
 
-## Phase 2: Execute the Copyright Registration
+## Phase 1: Discovery & Selection (The Candidate Works)
 
-**Objective:** To complete the electronic registration of the consolidated work with the U.S. Copyright Office, establishing a formal, public record of ownership.
+**Goal:** Identify and prepare the specific documents that will form the "Contextual Debt" group.
 
-### Action Items
+Based on the initial inventory, the following documents are candidates for the group. Note that **all works must be unpublished** at the time of registration.
 
-*   **[ ] 1. Prepare for Electronic Submission:**
-    *   Navigate to the U.S. Copyright Office electronic registration portal: `copyright.gov/registration/`
-    *   Select the option to register "Literary Work."
-
-*   **[ ] 2. Complete the Application Form:**
-    *   **Copyright Claimant:** Register the work in your own personal name (e.g., "Josh").
-    *   **Rationale:** Per the legal advice, you are the author and current copyright holder. The LLC does not exist yet. This step secures the registration date and establishes the "chain of title."
-    *   **Title of Work:** Use a clear, descriptive title, such as "Contextual Debt: A Framework for Measuring and Mitigating Software Liability."
-
-*   **[ ] 3. Upload the Deposit Copy:**
-    *   Upload the final, consolidated "Copyright Edition" of the research paper created in Phase 1.
-    *   **Guidance:** This single, complete PDF document is the "deposit copy" that will be permanently on file with the Copyright Office.
-
-*   **[ ] 4. Pay the Registration Fee:**
-    *   Submit the required payment via the portal.
-
-*   **[ ] 5. Record the Effective Date:**
-    *   Once the submission is complete, make a note of the effective date of registration. This is a critical date for legal purposes.
+1.  **The Primary Protocol:** `docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md`
+    *   *Description:* The foundational research paper defining "Contextual Debt" and the "Contextual Integrity Score."
+2.  **The Core Definitions:** `docs/strategy_and_ip/01_CORE_IP_DEFINITION.md`
+    *   *Description:* The specific definitions for the patentable methods (CIS and Agent-as-a-Judge).
+3.  **The Business Narrative:** `docs/strategy_and_ip/03_INVESTOR_PITCH.md`
+    *   *Description:* The commercial script outlining the market problem and solution.
+4.  **The Technical Specification:** `logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md`
+    *   *Description:* The detailed mathematical and architectural specifications for the CIS. (Consider registering this as a separate technical addendum if not fully merged into the Paper).
 
 ---
 
-## Phase 3: Plan the Legal Entity and IP Transfer
+## Phase 2: Remediation (The Gap Analysis)
 
-**Objective:** To outline the corporate and legal roadmap for forming a business entity and formally transferring the intellectual property to that entity, paving the way for investment and commercialization.
+**Goal:** Ensure the works are "finished" and strategically aligned before registration. A registration fixes the work in time; we must ensure the "v1.0" we register is the strongest possible version.
 
-### Action Items
+**Critical Action:** Address the findings in the **Gap Analysis Report** (`docs/strategy_and_ip/DOC-REVISIONS/20251119-Gap-Analysis-Critique-vs-IP-Assets.md`).
 
-*   **[ ] 1. Form a Delaware LLC:**
-    *   Engage legal counsel to form a Limited Liability Company in the state of Delaware.
-    *   **Rationale:** This is the investor-preferred jurisdiction, providing a flexible and well-understood legal framework for a high-growth startup.
+*   **[x] 1. Formalize the Math:** Transfer the mathematical formulas for the Contextual Integrity Score (from the Technical Specification log) into the Research Paper. The registered paper must define a *protocol*, not just a rubric.
+*   **[x] 2. Adjust the Tone:** Update the Research Paper to reflect the "Passive Authority" voice recommended in the Strategic Critique.
+*   **[x] 3. Synchronize Definitions:** Ensure `01_CORE_IP_DEFINITION.md` is updated to match the new mathematical definitions in the revised Paper.
+*   **[x] 4. Create the Diagram:** Add a definitive description (or textual representation) of the "Agent-as-a-Judge" data flow to the Paper.
 
-*   **[ ] 2. Draft and Sign the IP Assignment Agreement:**
-    *   Work with legal counsel to draft an "Intellectual Property Assignment Agreement."
-    *   **Process:** As an individual, you will sign this document to formally transfer your ownership of the "Contextual Debt" copyright (and all related IP) to the newly formed Delaware LLC.
-    *   **Rationale:** This is the essential legal step that gives the LLC value. The company, not you personally, will own the assets, which is a prerequisite for investment. This transfer will be the basis for your founder's equity stake.
+*(Completed 2025-11-19)*
 
-*   **[ ] 3. Plan for C-Corporation Conversion:**
-    *   Understand that the Delaware LLC will likely need to be converted into a Delaware C-Corporation as a condition of receiving venture capital funding.
-    *   **Rationale:** VCs prefer the C-Corp structure for issuing preferred stock and creating employee stock option pools. Planning for this conversion from the outset makes the fundraising process smoother.
+---
+
+## Phase 3: Execution (The GRUW Application)
+
+**Goal:** Submit the group registration to the U.S. Copyright Office.
+
+*   **[ ] 1. Prepare the Files:**
+    *   Ensure all selected works (from Phase 1) are saved as separate, clean PDF files.
+    *   Filenames should be descriptive (e.g., `01_Contextual_Debt_Paper.pdf`, `02_Core_IP_Definitions.pdf`).
+
+*   **[ ] 2. Log in to eCO:**
+    *   Access the Electronic Copyright Office (eCO) portal.
+    *   Select "Register a Group of Unpublished Works".
+
+*   **[ ] 3. Complete the Application:**
+    *   **Title of Group:** Use a collective title, e.g., "Contextual Debt: Foundational Protocols and Business Methods".
+    *   **Titles of Works:** Enter the title for each individual file (up to 10).
+    *   **Author:** Joshua Hickson (for all works).
+    *   **Claimant:** Joshua Hickson.
+    *   **Year of Creation:** 2025.
+
+*   **[ ] 4. Upload & Pay:**
+    *   Upload the individual PDFs.
+    *   Submit the single filing fee.
+
+---
+
+## Phase 4: Legal Entity & IP Transfer (Post-Registration)
+
+**Goal:** Transfer the now-registered assets to the company.
+
+*   **[ ] 1. Form the Entity:** Form "LogoMesh, LLC" (Delaware).
+*   **[ ] 2. Execute Assignment:** Sign an "Intellectual Property Assignment Agreement" transferring the ownership of the registered Copyright Group from Joshua Hickson to LogoMesh, LLC.
+*   **[ ] 3. Record the Transfer:** (Optional but Recommended) File a "Recordation of Transfer" with the Copyright Office to update the public record of ownership.

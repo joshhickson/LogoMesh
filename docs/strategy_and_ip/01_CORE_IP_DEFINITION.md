@@ -1,31 +1,51 @@
-# Core IP Definition (v0.1)
+# Core IP Definition (v0.2 - Protocol Edition)
 
-This document contains the initial working definitions for the core intellectual property of LogoMesh. These definitions are the basis for our future patent applications and product development.
+This document defines the core intellectual property of LogoMesh. These definitions serve as the basis for patent applications and the "Contextual Debt" copyright registration.
 
-## The Contextual Integrity Score (CIS) v0.1
+## 1. The Contextual Integrity Score (CIS) v0.2
 
-The Contextual Integrity Score (CIS) is a numerical score from 1-100 that quantifies the legal and operational risk associated with a given code change. It is calculated based on three equally-weighted inputs:
+The Contextual Integrity Score (CIS) is a computable probability function that quantifies the extent to which a software artifact preserves its original intent. It is not a qualitative rubric but a weighted summation of three vector-space measurements:
 
-1.  **Rationale Integrity (33.3%):** This measures the clarity and accessibility of the *why* behind the code.
-    *   **Measurement:** A score is generated based on the presence and quality of a link between a code commit and a documented source of intent (e.g., a project management ticket, an Architectural Decision Record (ADR), or a formal specification). A commit with no discernible link automatically receives a score of 0. Quality is assessed by an LLM trained to evaluate the clarity and completeness of the linked rationale.
+$$CIS(\Delta) = w_r \cdot R(\Delta) + w_a \cdot A(\Delta) + w_t \cdot T(\Delta)$$
 
-2.  **Architectural Integrity (33.3%):** This measures the code's adherence to the project's established architectural principles and patterns.
-    *   **Measurement:** The score is determined by statically analyzing the code's dependencies and structure against a predefined "Context Graph" of the system's architecture. Violations, such as a backend service directly calling a frontend component, will decrease the score. The "Context Graph" is a formal representation of the intended architecture, maintained as part of the project's documentation.
+### 1.1 Rationale Integrity ($R$)
+**Definition:** The cosine similarity between the vector embedding of the code change ($\vec{v}_{code}$) and the vector embedding of the documented requirement ($\vec{v}_{intent}$).
+**Formula:** $R(\Delta) = \frac{\vec{v}_{code} \cdot \vec{v}_{intent}}{\|\vec{v}_{code}\| \|\vec{v}_{intent}\|} \cdot \mathbb{I}(Link_{exists})$
 
-3.  **Testing Integrity (33.3%):** This measures the sufficiency of the testing coverage in relation to the documented intent.
-    *   **Measurement:** This is not just about code coverage percentage. The score is calculated by evaluating whether the tests validate the specific requirements outlined in the documented rationale. An LLM will be used to compare the test cases against the acceptance criteria of the linked ticket or ADR. Code can have 100% line coverage but a low Testing Integrity score if its tests do not address the stated business goal.
+### 1.2 Architectural Integrity ($A$)
+**Definition:** A binary compliance function scaled by graph centrality. It enforces the "Critical Veto," rejecting any change that introduces dependencies violating the predefined system graph $G$.
+**Formula:** $A(\Delta) = \prod_{e \in E_{new}} (1 - P(Violation | e))$
 
-## The Agent-as-a-Judge v0.1
+### 1.3 Testing Integrity ($T$)
+**Definition:** The semantic overlap between the test case assertions and the requirement's acceptance criteria, ensuring tests validate intent, not just execution.
+**Formula:** $T(\Delta) = \text{Coverage}(\Delta) \times \text{Sim}(\vec{v}_{test}, \vec{v}_{criteria})$
 
-The Agent-as-a-Judge is a specialized, autonomous AI agent designed to act as a "critic" and gatekeeper within the CI/CD pipeline. Its primary function is to prevent code with low Contextual Integrity from being merged into the main branch.
+---
 
-**Conceptual Workflow:**
+## 2. The Agent-as-a-Judge Protocol (v0.2)
 
-1.  **Trigger:** The Agent-as-a-Judge is triggered upon the creation of a new pull request.
-2.  **Analysis:** It reads the pull request's code and its associated commit messages.
-3.  **CIS Calculation:** The agent calculates the Contextual Integrity Score (CIS) for the proposed change by performing the three integrity checks described above.
-4.  **Enforcement:**
-    *   It automatically fails the build if the commit has no link to a documented source of intent (e.g., a ticket, ADR).
-    *   It provides a detailed report in the pull request, highlighting specific areas of Rationale, Architectural, or Testing debt.
-    *   It can be configured with a minimum acceptable CIS threshold (e.g., 80/100). If the score is below the threshold, the build fails.
-5.  **Training Data:** The underlying AI models for the agent will be trained on the proprietary dataset gathered during the Phase 1 consulting engagements.
+The Agent-as-a-Judge is not a single AI model but a **"Glass Box" Governance Protocol** implemented via a Multi-Agent Orchestrator-Worker (MA-OW) topology.
+
+**Core Components:**
+1.  **The Orchestrator ($O$):** Manages state and constraints; does not generate code.
+2.  **The Worker ($W$):** Generates code $\Delta$ to satisfy constraints.
+3.  **The Judge ($J$):** An adversarial agent that evaluates $\Delta$ against the CIS function.
+
+**The Governance Function:**
+The system accepts a change if and only if the Judge validates the Orchestrator's constraint against the Worker's output:
+$$J(O(C), W(\Delta)) \to \{Accept \mid Reject\}$$
+
+---
+
+## 3. The Decision Bill of Materials (DBOM)
+
+**Definition:** An immutable, cryptographic log that tracks the causality ("why") of a code change, not just its components. It serves as the primary evidentiary artifact for proving "duty of care."
+
+**Structure:**
+For every commit $\Delta_i$, the DBOM records:
+$$DBOM_i = \langle H(\Delta_i), \vec{v}_{intent}, \text{Score}_{CIS}, \sigma_{Judge} \rangle$$
+
+*   $H(\Delta_i)$: Hash of the code.
+*   $\vec{v}_{intent}$: Vector embedding of the rationale.
+*   $\text{Score}_{CIS}$: The computed Contextual Integrity Score.
+*   $\sigma_{Judge}$: Digital signature of the Judge Agent.
