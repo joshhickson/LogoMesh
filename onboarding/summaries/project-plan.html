@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT_PLAN.md - Summary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #D5F5E3 0%, #A9DFBF 100%);
+            padding: 40px;
+            border-bottom: 5px solid #2ECC71;
+        }
+
+        header h1 {
+            color: #27ae60;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            color: #16a085;
+            font-size: 1.2em;
+        }
+
+        .breadcrumb {
+            background: #ecf0f1;
+            padding: 15px 40px;
+            font-size: 0.9em;
+        }
+
+        .breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .badge-foundational {
+            background: #9b59b6;
+            color: white;
+        }
+
+        .summary-box {
+            background: #f8f9fa;
+            border-left: 5px solid #2ECC71;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .summary-box h3 {
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin: 35px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        h3 {
+            color: #34495e;
+            font-size: 1.3em;
+            margin: 25px 0 15px 0;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 10px 0;
+            line-height: 1.8;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .key-points {
+            background: #e8f5e9;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .key-points h3 {
+            color: #27ae60;
+            margin-top: 0;
+        }
+
+        .key-points ul {
+            margin-bottom: 0;
+        }
+
+        .timeline {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .timeline h3 {
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #3498db;
+            color: white;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 30px;
+            transition: background 0.3s;
+        }
+
+        .back-button:hover {
+            background: #2980b9;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 PROJECT_PLAN.md</h1>
+            <div class="subtitle">The Contextual Debt Evaluator - AgentBeats Green Phase</div>
+        </header>
+
+        <div class="breadcrumb">
+            <a href="../index.html">← Back to Strategic Master Log</a> /
+            <span>PROJECT_PLAN.md</span>
+        </div>
+
+        <div class="content">
+            <span class="badge badge-foundational">Foundational Document</span>
+
+            <div class="summary-box">
+                <h3>📌 Document Purpose</h3>
+                <p>
+                    <strong>This is the canonical starting point for any new team member.</strong> It outlines the
+                    strategic vision for the AgentX competition, defines the "Cyber-Sentinel Agent" narrative, details
+                    team roles, and describes the target multi-agent architecture.
+                </p>
+            </div>
+
+            <h2>1. Project Vision & Competitive Edge</h2>
+
+            <div class="key-points">
+                <h3>🎯 What We're Building</h3>
+                <ul>
+                    <li><strong>A "Green Agent"</strong> - A sophisticated evaluator that solves a critical problem in AI-generated code</li>
+                    <li><strong>Core Problem:</strong> The lack of discernible human intent, or "Contextual Debt"</li>
+                    <li><strong>Key Question:</strong> Not "does the code work?" but "is the code <em>good</em>?"</li>
+                    <li><strong>Evaluation Focus:</strong> Is it well-architected, clearly-reasoned, and thoroughly tested?</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <strong>🏆 Competitive Edge:</strong> Our novel "Agent-as-a-Judge" philosophy. We're not building a
+                static tool; we're building an intelligent system that analyzes the <em>process and quality</em> of an
+                AI agent's work.
+            </div>
+
+            <h2>2. Mission: Closing the Gaps</h2>
+
+            <h3>Critical Gap 1: Sponsor Alignment (Auth0)</h3>
+            <ul>
+                <li><strong>Problem:</strong> Need deeper integration with competition sponsor</li>
+                <li><strong>Solution:</strong> Deep integration of Auth0 for AI Agents with Fine-Grained Authorization (FGA)</li>
+                <li><strong>Impact:</strong> Purple Agent will interact with Auth0-secured resources, demonstrating real-world security</li>
+            </ul>
+
+            <h3>Critical Gap 2: High-Stakes Problem Domain</h3>
+            <ul>
+                <li><strong>Problem:</strong> "Contextual Debt" is too abstract</li>
+                <li><strong>Solution:</strong> Apply it to <strong>Cybersecurity</strong></li>
+                <li><strong>New Identity:</strong> "Cyber-Sentinel Agent" - evaluates AI agents on secure, auditable code generation</li>
+            </ul>
+
+            <h3>Critical Gap 3: Architectural Innovation</h3>
+            <ul>
+                <li><strong>Problem:</strong> Current architecture is too simple</li>
+                <li><strong>Solution:</strong> Implement sophisticated multi-agent <strong>Orchestrator-Worker pattern</strong></li>
+                <li><strong>Benefit:</strong> Demonstrates deeper understanding of agentic design, more robust and scalable</li>
+            </ul>
+
+            <h3>Critical Gap 4: Core Logic Implementation</h3>
+            <ul>
+                <li><strong>Problem:</strong> Currently using mock data</li>
+                <li><strong>Solution:</strong> Fully implement analyzers with real libraries (escomplex, isolated-vm)</li>
+                <li><strong>Goal:</strong> Production-ready, credible, data-driven scores</li>
+            </ul>
+
+            <h3>Critical Gap 5: Trust and Safety</h3>
+            <ul>
+                <li><strong>Problem:</strong> Weak demonstration of transparency</li>
+                <li><strong>Solution:</strong> Structured logging system with human-readable audit trails</li>
+                <li><strong>Impact:</strong> Makes agent judgments verifiable - key principle of responsible AI</li>
+            </ul>
+
+            <h2>3. Multi-Agent Architecture</h2>
+
+            <div class="summary-box">
+                <h3>🏗️ System Design</h3>
+                <p><strong>Orchestrator-Worker Pattern:</strong></p>
+                <pre style="background: #2c3e50; color: #2ecc71; padding: 15px; border-radius: 5px; overflow-x: auto;">
+API Endpoint → Orchestrator Agent
+                    ↓
+    ┌───────────────┼───────────────┐
+    ↓               ↓               ↓
+Rationale       Architecture    Testing
+Analyzer        Analyzer        Analyzer
+(LLM-based)     (escomplex)     (isolated-vm)
+    ↓               ↓               ↓
+    └───────────────┼───────────────┘
+                    ↓
+          Aggregated Final Report
+                </pre>
+            </div>
+
+            <h2>4. Team Roles & Responsibilities</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Key Responsibilities</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Team Lead</strong></td>
+                        <td>Oversee project, manage integration, lead check-ins</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Narrative & Pitch Strategist</strong></td>
+                        <td>Develop "Cyber-Sentinel" narrative, write submission</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Documentation Coordinator</strong></td>
+                        <td>Maintain PROJECT_PLAN.md, README.md, API docs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>UX & Benchmark Designer</strong></td>
+                        <td>Define cybersecurity tasks, design scoring rubrics</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Auth0 Security Specialist</strong></td>
+                        <td>Lead Auth0 integration, implement FGA model</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Core Logic Developer (Architecture)</strong></td>
+                        <td>Implement architectural analyzer with escomplex</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Core Logic Developer (Testing)</strong></td>
+                        <td>Build testing analyzer with isolated-vm sandbox</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Agent & Infrastructure Engineer</strong></td>
+                        <td>Build orchestrator, implement audit logger</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>5. Timeline to Submission</h2>
+
+            <div class="timeline">
+                <h3>📅 6-Week Plan to December 19, 2025</h3>
+                <ul>
+                    <li><strong>Week 1 (Nov 7-13):</strong> Foundation & Planning - Finalize narrative, assign roles</li>
+                    <li><strong>Week 2 (Nov 14-20):</strong> Core Logic & Security Prototyping - Begin analyzers, Auth0 POC</li>
+                    <li><strong>Week 3 (Nov 21-27):</strong> Full Implementation - Complete v1 analyzers, build orchestrator</li>
+                    <li><strong>Week 4 (Nov 28-Dec 4):</strong> Integration & Testing - Wire everything together, E2E tests</li>
+                    <li><strong>Week 5 (Dec 5-11):</strong> Finalization & Documentation - Bug fixes, complete docs, draft submission</li>
+                    <li><strong>Week 6 (Dec 12-19):</strong> Submission & Pitch Prep - Final review, demo video, rehearse, <strong>SUBMIT</strong></li>
+                </ul>
+            </div>
+
+            <div class="key-points">
+                <h3>✅ Implementation Status Summary</h3>
+                <ul>
+                    <li><strong>DONE:</strong> Tools & onboarding artifacts, orchestrator prototype, worker scaffolds</li>
+                    <li><strong>PARTIAL:</strong> Analyzer core logic (prototypes exist, need deeper integration)</li>
+                    <li><strong>TODO:</strong> Auth0 integration, production audit logging, hardened E2E flows</li>
+                </ul>
+            </div>
+
+            <a href="../index.html" class="back-button">← Back to Strategic Master Log</a>
+        </div>
+
+        <footer>
+            <p><strong>LogoMesh Onboarding</strong> | PROJECT_PLAN.md Summary</p>
+        </footer>
+    </div>
+</body>
+</html>

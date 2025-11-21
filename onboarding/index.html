@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogoMesh: Strategic Master Log - Documentation Navigator</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        header .version {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+
+        .critical-alert {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 30px 40px;
+            margin: 0;
+            border-top: 5px solid #ffd700;
+            border-bottom: 5px solid #ffd700;
+        }
+
+        .critical-alert h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            color: white;
+            border: none;
+            padding: 0;
+        }
+
+        .critical-alert h2::before {
+            content: "⚠️";
+            margin-right: 15px;
+            font-size: 1.5em;
+        }
+
+        .critical-alert p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin: 10px 0;
+        }
+
+        .critical-alert strong {
+            color: #ffd700;
+        }
+
+        .critical-alert .action {
+            background: rgba(255, 255, 255, 0.2);
+            border-left: 4px solid #ffd700;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .audience-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .audience-card {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .audience-card h3 {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+        }
+
+        .audience-card h3::before {
+            content: "👤";
+            margin-right: 10px;
+        }
+
+        .audience-card p {
+            font-size: 1em;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin: 50px 0 20px 0;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #3498db;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: "📁";
+            margin-right: 15px;
+        }
+
+        h3 {
+            color: #34495e;
+            font-size: 1.4em;
+            margin: 30px 0 15px 0;
+        }
+
+        .section-intro {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #3498db;
+        }
+
+        .section-intro p {
+            margin: 10px 0;
+            line-height: 1.8;
+        }
+
+        .doc-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .doc-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: #3498db;
+        }
+
+        .doc-card.deprecated::before {
+            background: #95a5a6;
+        }
+
+        .doc-card.experimental::before {
+            background: #f39c12;
+        }
+
+        .doc-card.critical::before {
+            background: #e74c3c;
+        }
+
+        .doc-card.foundational::before {
+            background: #9b59b6;
+        }
+
+        .doc-card:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            border-color: #3498db;
+        }
+
+        .doc-card h4 {
+            color: #2c3e50;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .view-summary-btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: all 0.3s;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .view-summary-btn:hover {
+            background: #2980b9;
+            transform: translateX(5px);
+        }
+
+        .view-summary-btn::after {
+            content: " →";
+            margin-left: 5px;
+        }
+
+        .doc-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-deprecated {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .badge-current {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .badge-experimental {
+            background: #f39c12;
+            color: white;
+        }
+
+        .badge-foundational {
+            background: #9b59b6;
+            color: white;
+        }
+
+        .badge-quickstart {
+            background: #27ae60;
+            color: white;
+        }
+
+        .file-path {
+            background: #2c3e50;
+            color: #2ecc71;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            margin: 10px 0;
+            display: inline-block;
+        }
+
+        .doc-description {
+            color: #555;
+            line-height: 1.8;
+            margin: 15px 0;
+        }
+
+        .flowchart-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .flowchart-section h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .flowchart-note {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .flowchart-note strong {
+            color: #856404;
+        }
+
+        .mermaid {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .quick-links {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .quick-links h3 {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .quick-links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quick-links li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.05em;
+        }
+
+        .quick-links li:last-child {
+            border-bottom: none;
+        }
+
+        .quick-links li::before {
+            content: "📄";
+            margin-right: 10px;
+        }
+
+        .quick-links code {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        .toc {
+            background: #ecf0f1;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .toc h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .toc ol {
+            padding-left: 25px;
+        }
+
+        .toc li {
+            padding: 8px 0;
+            line-height: 1.6;
+        }
+
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .toc a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .audience-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Strategic Master Log</h1>
+            <div class="subtitle">Your Complete Guide to the LogoMesh Documentation Ecosystem</div>
+            <div class="version">Last Updated: November 19, 2025</div>
+        </header>
+
+        <div class="critical-alert">
+            <h2>CURRENT STATUS: Strategic Inflection Point</h2>
+            <p>
+                <strong>Attention New Team Members:</strong> You are joining the project at a critical and exciting moment.
+                We have just completed an analysis that has resulted in a major strategic decision.
+            </p>
+            <p>
+                The project is currently at a <strong>strategic inflection point</strong>, moving from a prototype-based
+                technical plan to a more rigorous, mathematically-defined approach for our core IP. The tension between
+                our old <code>RECOVERY_PLAN</code> and a proposed <code>Strategic-Pivot-Plan</code> has now been resolved.
+            </p>
+            <div class="action">
+                <strong>🎯 Your First Action:</strong><br>
+                Read the following report: <code>logs/technical/20251119-Recommendation-Report-Strategic-Path-Forward.md</code>
+                <br><br>
+                This document provides the official analysis and justification for our immediate path forward.
+                It is the <strong>definitive source of truth</strong> for the project's current priorities.
+            </div>
+            <p>
+                The document descriptions and flowchart below provide essential historical context, but the recommendation
+                report above is your guide for what we are doing <em>right now</em>.
+            </p>
+        </div>
+
+        <div class="content">
+            <div class="toc">
+                <h3>📋 Navigation Guide</h3>
+                <ol>
+                    <li><a href="#audience">Who This Document Is For</a></li>
+                    <li><a href="#big-picture">The Big Picture: Core Strategy & Vision</a></li>
+                    <li><a href="#workshop">The Workshop: Historical Technical Plan</a></li>
+                    <li><a href="#cutting-edge">The Cutting Edge: Strategic Pivots & IP Development</a></li>
+                    <li><a href="#decision-point">The Decision Point: Read This Now</a></li>
+                    <li><a href="#genesis">Project Genesis: History and Context</a></li>
+                    <li><a href="#quickstart">Getting Started: Local Setup & Quick Start</a></li>
+                    <li><a href="#flowchart">Documentation Flowchart</a></li>
+                </ol>
+            </div>
+
+            <h2 id="audience">Who This Document Is For</h2>
+
+            <div class="section-intro">
+                <p>
+                    <strong>Welcome to the LogoMesh project.</strong> This document is a master log designed for two distinct audiences:
+                </p>
+            </div>
+
+            <div class="audience-section">
+                <div class="audience-card">
+                    <h3>For Human Developers</h3>
+                    <p>
+                        This serves as a guided tour through our project's key documents, helping you understand our
+                        high-level strategy, current technical plans, and core intellectual property.
+                    </p>
+                </div>
+                <div class="audience-card" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+                    <h3>For AI Agents</h3>
+                    <p>
+                        This acts as a primary context file. The structured format and explicit linking of documents are
+                        designed to be parsed by AI development assistants (like GitHub Copilot or Claude) to provide
+                        accurate, context-aware answers and generate relevant code.
+                    </p>
+                </div>
+            </div>
+
+            <div class="section-intro">
+                <p>
+                    <strong>Our goal</strong> is to maintain a "living document" that bridges the gap between human understanding
+                    and machine-readable context, mitigating the very <strong>"Contextual Debt"</strong> our project aims to solve.
+                </p>
+            </div>
+
+            <h2 id="big-picture">1. The Big Picture: Core Strategy & Vision</h2>
+
+            <div class="section-intro">
+                <p>
+                    This section provides the high-level context for the entire project. If you are new,
+                    <strong>start here</strong> to understand our goals and the problems we are trying to solve.
+                </p>
+            </div>
+
+            <div class="doc-card">
+                <h4>
+                    <span>PROJECT_PLAN.md</span>
+                    <span class="doc-badge badge-foundational">Foundational</span>
+                </h4>
+                <div class="file-path">PROJECT_PLAN.md</div>
+                <div class="doc-description">
+                    <strong>The canonical starting point for any new team member.</strong>
+                    <br><br>
+                    This document outlines our strategic vision for the AgentX competition, defines the "Cyber-Sentinel Agent"
+                    narrative, details team roles, and describes the target multi-agent architecture. It is the
+                    <strong>"what" and "why"</strong> of our project.
+                    <br><br>
+                    While it agrees with the current technical plan, it is intentionally less detailed than the implementation
+                    documents.
+                </div>
+                <a href="summaries/project-plan.html" class="view-summary-btn">View Summary</a>
+            </div>
+
+            <h2 id="decision-point">The Decision Point: Read This Now</h2>
+
+            <div class="section-intro" style="background: #feefef; border-left-color: #e74c3c;">
+                <p>
+                    <strong>⚠️ CRITICAL:</strong> This is the most important document to read right now. It resolves the
+                    strategic tension between competing technical approaches and defines our immediate priorities.
+                </p>
+            </div>
+
+            <div class="doc-card critical">
+                <h4>
+                    <span>Recommendation Report: Strategic Path Forward</span>
+                    <span class="doc-badge badge-current">CURRENT PRIORITY</span>
+                </h4>
+                <div class="file-path">logs/technical/20251119-Recommendation-Report-Strategic-Path-Forward.md</div>
+                <div class="doc-description">
+                    <strong>This report analyzes the two competing plans and defines our immediate path forward.</strong>
+                    <br><br>
+                    <strong>Key Recommendation:</strong> Finalize the core technical formalizations of the "Contextual Integrity
+                    Score" (CIS) within the research paper revision documents before building more product features.
+                    <br><br>
+                    This "Blueprint-First" approach ensures:
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>A stable, mathematically-sound foundation</li>
+                        <li>Team alignment on rigorous specifications</li>
+                        <li>Faster path to a tangible, defensible product</li>
+                        <li>Stronger intellectual property protection</li>
+                    </ul>
+                    <strong>START HERE.</strong>
+                </div>
+                <a href="summaries/recommendation-report.html" class="view-summary-btn">View Summary</a>
+            </div>
+
+            <h2 id="workshop">2. The Workshop: Historical Technical Plan</h2>
+
+            <div class="section-intro">
+                <p>
+                    This section details the engineering work that was being performed <strong>prior</strong> to our current
+                    strategic pivot. These documents are now primarily for <strong>historical context</strong>.
+                </p>
+            </div>
+
+            <div class="doc-card deprecated">
+                <h4>
+                    <span>RECOVERY_PLAN.md</span>
+                    <span class="doc-badge badge-deprecated">DEPRECATED</span>
+                </h4>
+                <div class="file-path">logs/technical/20251113_RECOVERY_PLAN.md</div>
+                <div class="doc-description">
+                    This was the project's previous tactical source of truth. It is preserved here to provide context for
+                    the decisions made in the <strong>Recommendation Report</strong>.
+                    <br><br>
+                    ⚠️ <strong>It should not be used as a guide for current work.</strong>
+                </div>
+                <a href="summaries/recovery-plan.html" class="view-summary-btn">View Summary</a>
+            </div>
+
+            <div class="doc-card">
+                <h4>
+                    <span>Task 1.2 Completion Summary</span>
+                </h4>
+                <div class="file-path">logs/CoPilot/20251117-Task-1.2-Completion-Summary.md</div>
+                <div class="doc-description">
+                    This is the most recent changelog or status report for the codebase. It documents the completion of
+                    a specific task from the <code>RECOVERY_PLAN.md</code>, providing a snapshot of our recent progress
+                    and technical decisions.
+                </div>
+            </div>
+
+            <h2 id="cutting-edge">3. The Cutting Edge: Strategic Pivots & IP Development</h2>
+
+            <div class="section-intro" style="background: #fef9e7; border-left-color: #f39c12;">
+                <p>
+                    This section contains the project's <strong>most ambitious and forward-looking ideas</strong>. The
+                    documents here define our core intellectual property and explore the major evolution of our technical
+                    strategy that we are now formally adopting.
+                </p>
+            </div>
+
+            <div class="doc-card foundational">
+                <h4>
+                    <span>The Contextual Debt Paper (Copyright Edition)</span>
+                    <span class="doc-badge badge-foundational">Core IP</span>
+                </h4>
+                <div class="file-path">docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md</div>
+                <div class="doc-description">
+                    <strong>This is the foundational document for our entire project.</strong>
+                    <br><br>
+                    It defines the concept of <strong>"Contextual Debt"</strong>, which is our core intellectual property
+                    and the central problem we aim to solve. The latest version has been updated to prepare it for a formal
+                    copyright application.
+                    <br><br>
+                    This document is the "why" behind everything we're building. Understanding this paper is essential to
+                    understanding the project's value proposition.
+                </div>
+                <a href="summaries/contextual-debt-paper.html" class="view-summary-btn">View Summary</a>
+            </div>
+
+            <div class="doc-card foundational">
+                <h4>
+                    <span>Strategic Critique: "The Unknowable Code"</span>
+                    <span class="doc-badge badge-foundational">Critical Analysis</span>
+                </h4>
+                <div class="file-path">docs/strategy_and_ip/DOC-REVISIONS/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md</div>
+                <div class="doc-description">
+                    This is a deep, critical analysis of the research paper. It argues that to be truly groundbreaking,
+                    our "Contextual Integrity Score (CIS)" must evolve from a rubric into a <strong>mathematically rigorous
+                    formula</strong>.
+                    <br><br>
+                    This critique is the direct inspiration for the experimental pivot plan and the current strategic direction.
+                </div>
+            </div>
+
+            <div class="doc-card experimental">
+                <h4>
+                    <span>Strategic Pivot Plan: CIS Formalization</span>
+                    <span class="doc-badge badge-experimental">Experimental & Ambitious</span>
+                </h4>
+                <div class="file-path">logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md</div>
+                <div class="doc-description">
+                    This document outlines a concrete plan to implement the ideas from the "Strategic Critique." It proposes
+                    a new, more advanced technical direction for our core analyzers, based on <strong>vector embeddings
+                    and graph theory</strong>.
+                    <br><br>
+                    While this plan is the likely future of the project, it is <strong>NOT</strong> the plan we are currently
+                    executing. It represents a major potential pivot that is still under investigation.
+                </div>
+                <a href="summaries/strategic-pivot-plan.html" class="view-summary-btn">View Summary</a>
+            </div>
+
+            <h2 id="genesis">4. Project Genesis: History and Context</h2>
+
+            <div class="section-intro">
+                <p>
+                    This section provides historical context that explains key strategic decisions and the project's origins.
+                </p>
+            </div>
+
+            <div class="doc-card">
+                <h4>
+                    <span>Meeting 1 Minutes: The IP Decision</span>
+                </h4>
+                <div class="file-path">logs/ip_and_business/20251115-!Meeting 1 Minutes.md</div>
+                <div class="doc-description">
+                    These are the notes from the first formal meeting between teammates Josh and Deepti. This document is
+                    the primary source for understanding <strong>why</strong> the project has a strong focus on intellectual
+                    property, copyright, and commercialization.
+                    <br><br>
+                    It records the moment these strategic initiatives were formally adopted, providing crucial context for
+                    our business-oriented approach.
+                </div>
+                <a href="summaries/meeting-minutes.html" class="view-summary-btn">View Summary</a>
+            </div>
+
+            <h2 id="quickstart">5. Getting Started: Local Setup & Quick Start</h2>
+
+            <div class="section-intro" style="background: #eafaf1; border-left-color: #27ae60;">
+                <p>
+                    While this master log provides the strategic "why," the root <code>README.md</code> provides the
+                    tactical "how" for getting the project running on your local machine. It is the best place to start
+                    for hands-on development or data analysis.
+                </p>
+            </div>
+
+            <div class="doc-card">
+                <h4>
+                    <span>README.md - Technical Setup Guide</span>
+                    <span class="doc-badge badge-quickstart">Quick Start</span>
+                </h4>
+                <div class="file-path">README.md</div>
+                <div class="doc-description">
+                    <strong>The primary entry point for technical onboarding.</strong> It contains:
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>Prerequisites and detailed setup instructions for the development environment (Node.js, Docker, etc.)</li>
+                        <li>Step-by-step commands for installing dependencies, building the project, and running the end-to-end tests</li>
+                        <li>Role-specific guidance with quick links for both Data Scientists and Engineers</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="quick-links">
+                <h3>🔗 Key Technical & Onboarding Documents</h3>
+
+                <h4 style="color: white; margin-top: 20px; margin-bottom: 10px;">For Data Scientists:</h4>
+                <ul>
+                    <li>Gap Analysis & Onboarding Plan: <code>docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md</code></li>
+                    <li>Metric Specification: <code>docs/CONTEXTUAL_DEBT_SPEC.md</code></li>
+                    <li>Evaluation Output Schema: <code>docs/EVAL_OUTPUT_SCHEMA.md</code></li>
+                    <li>Example Notebook: <code>notebooks/01-explore-sample-eval.ipynb</code></li>
+                    <li>Helper Scripts: <code>tools/</code></li>
+                </ul>
+
+                <h4 style="color: white; margin-top: 20px; margin-bottom: 10px;">For Engineers:</h4>
+                <ul>
+                    <li>Project Status: <code>docs/PROJECT_STATUS.md</code></li>
+                    <li>CI/CD Workflow: <code>docs/CI_COMPOSE_E2E_WORKFLOW.md</code></li>
+                </ul>
+            </div>
+
+            <h2 id="flowchart">Documentation Flowchart: A "Choose Your Own Adventure"</h2>
+
+            <div class="flowchart-section">
+                <div class="flowchart-note">
+                    <strong>Note:</strong> The diagram below shows the key documents that led to our current strategic decision.
+                    The most important node for you to focus on now is the <strong>Recommendation Report</strong>, which resolves
+                    the conflict between the two main technical plans.
+                </div>
+
+                <h3>High-Level Map of Project Documentation</h3>
+                <p style="text-align: center; color: #666; margin-bottom: 20px;">
+                    Start with the PROJECT_PLAN.md to understand the overall vision, then explore the different paths based on your area of interest.
+                </p>
+
+                <div class="mermaid">
+graph TD
+    subgraph "Start Here"
+        A("PROJECT_PLAN.md <br/> [The high-level vision, team roles, and target architecture. Your starting point.]")
+    end
+
+    subgraph "The Workshop: The Old Plan (Now Deprecated)"
+        B("logs/technical/20251113_RECOVERY_PLAN.md <br/> [DEPRECATED: The previous work plan. Valuable for historical context only.]")
+        C("logs/CoPilot/20251117-Task-1.2-Completion-Summary.md <br/> [The most recent status update showing progress against the Recovery Plan.]")
+    end
+
+    subgraph "The Decision Point: Read This Now"
+        I("logs/technical/20251119-Recommendation-Report-Strategic-Path-Forward.md <br/> [CURRENT PRIORITY: This report analyzes the two competing plans and defines our immediate path forward. START HERE.]")
+    end
+
+    subgraph "The Cutting Edge: Strategic Pivots & IP Development"
+        D("docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md <br/> [The foundational research paper defining our core IP, 'Contextual Debt'. This is being actively revised.]")
+        E("docs/strategy_and_ip/DOC-REVISIONS/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md <br/> [A critical review of the paper that inspired a major strategic pivot.]")
+        F("logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md <br/> [EXPERIMENTAL PLAN: Proposes a new, mathematically rigorous approach to our core metrics. Ambitious and NOT yet integrated into the main recovery plan.]")
+    end
+
+    subgraph "Project Genesis: History and Context"
+        G("logs/ip_and_business/20251115-!Meeting 1 Minutes.md <br/> [Meeting notes explaining the 'why' behind our focus on IP and commercialization.]")
+    end
+
+    subgraph "Quick Start"
+        H("README.md <br/> [Technical setup guide for local development and running tests.]")
+    end
+
+    A --> B
+    A --> D
+    A --> G
+    A --> H
+    B --> C
+    D --> E
+    E --> F
+    B -.-> F
+    F --> I
+    B --> I
+    I -.-> D
+
+    classDef start fill:#D5F5E3,stroke:#2ECC71,stroke-width:2px
+    classDef workshop fill:#EBF5FB,stroke:#3498DB,stroke-width:2px
+    classDef cuttingEdge fill:#FEF9E7,stroke:#F1C40F,stroke-width:2px
+    classDef genesis fill:#FEF9E7,stroke:#F1C40F,stroke-width:2px
+    classDef quickstart fill:#E8DAEF,stroke:#8E44AD,stroke-width:2px
+    classDef decision fill:#FDEDEC,stroke:#E74C3C,stroke-width:4px,stroke-dasharray: 5 5
+
+    class A start
+    class B,C workshop
+    class I decision
+    class D,E,F cuttingEdge
+    class G genesis
+    class H quickstart
+                </div>
+            </div>
+
+            <div class="section-intro" style="background: #eafaf1; border-left-color: #27ae60; margin-top: 40px;">
+                <p>
+                    <strong>🎯 Navigation Summary:</strong>
+                </p>
+                <ul style="margin: 10px 0 0 20px; padding-left: 20px;">
+                    <li><strong>New to the project?</strong> Start with <code>PROJECT_PLAN.md</code> → Then read the <code>Recommendation Report</code></li>
+                    <li><strong>Want to code?</strong> Read <code>README.md</code> for setup → Check <code>docs/PROJECT_STATUS.md</code> for current state</li>
+                    <li><strong>Interested in the IP/research?</strong> Read the <code>Copyright Edition Paper</code> → Then the <code>Strategic Critique</code></li>
+                    <li><strong>Need historical context?</strong> Check the <code>Meeting 1 Minutes</code> → Review deprecated <code>RECOVERY_PLAN</code></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <footer>
+            <p><strong>LogoMesh Project</strong> | Strategic Master Log</p>
+            <p style="margin-top: 10px; opacity: 0.8;">Last Updated: November 19, 2025</p>
+            <p style="margin-top: 5px; opacity: 0.7;">
+                "A living document bridging human understanding and machine-readable context"
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>
