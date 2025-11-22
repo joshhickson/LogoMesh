@@ -5,7 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LogoMesh: Strategic Master Log - Documentation Navigator</title>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
+        /* ... existing styles ... */
+
+        .graph-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 20px;
+            position: relative;
+            background-color: #f9f9f9;
+        }
+
+        .graph-note {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .links line {
+            stroke: #999;
+            stroke-opacity: 0.6;
+        }
+
+        .nodes circle {
+            stroke: #fff;
+            stroke-width: 1.5px;
+        }
+
+        .node-label {
+            font-size: 10px;
+            font-family: sans-serif;
+        }
         * {
             margin: 0;
             padding: 0;
@@ -850,6 +883,98 @@ graph TD
                 curve: 'basis'
             }
         });
+    </script>
+
+    <script>
+        function createGraph(graphPath, svgId) {
+            const svg = d3.select(svgId);
+            // Make svg responsive
+            const container = d3.select(svgId).node().parentNode;
+            const width = container.getBoundingClientRect().width;
+            const height = 600; // Fixed height for the graph
+            svg.attr('width', width).attr('height', height);
+
+
+            const simulation = d3.forceSimulation()
+                .force("link", d3.forceLink().id(d => d.id).distance(100))
+                .force("charge", d3.forceManyBody().strength(-300))
+                .force("center", d3.forceCenter(width / 2, height / 2));
+
+            d3.json(graphPath).then(function(graph) {
+                const link = svg.append("g")
+                    .attr("class", "links")
+                    .selectAll("line")
+                    .data(graph.edges)
+                    .enter().append("line")
+                    .attr("stroke-width", d => Math.sqrt(d.weight || 1));
+
+                const node = svg.append("g")
+                    .attr("class", "nodes")
+                    .selectAll("g")
+                    .data(graph.nodes)
+                    .enter().append("g")
+
+                const circles = node.append("circle")
+                    .attr("r", 10)
+                    .attr("fill", "#3498db")
+                    .call(d3.drag()
+                        .on("start", dragstarted)
+                        .on("drag", dragged)
+                        .on("end", dragended));
+
+                const labels = node.append("text")
+                    .text(d => d.label)
+                    .attr('x', 12)
+                    .attr('y', 4)
+                    .attr("class", "node-label");
+
+                node.append("title")
+                    .text(d => d.id);
+
+                simulation
+                    .nodes(graph.nodes)
+                    .on("tick", ticked);
+
+                simulation.force("link")
+                    .links(graph.edges);
+
+                function ticked() {
+                    link
+                        .attr("x1", d => d.source.x)
+                        .attr("y1", d => d.source.y)
+                        .attr("x2", d => d.target.x)
+                        .attr("y2", d => d.target.y);
+
+                    node
+                        .attr("transform", d => `translate(${d.x},${d.y})`);
+                }
+            }).catch(function(error) {
+                console.error("Error loading graph data:", error);
+                const svgElement = document.querySelector(svgId);
+                svgElement.parentElement.innerHTML += `<p style='color: red; padding: 20px;'>Error loading graph data from: ${graphPath}. Please check the file path and JSON format.</p>`;
+            });
+
+            function dragstarted(event, d) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+
+            function dragged(event, d) {
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+
+            function dragended(event, d) {
+                if (!event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+        }
+
+        // Create the graphs
+        createGraph('doc_graph/documentation_graph.json', '#doc-graph-svg');
+        createGraph('log_graph/logs_graph.json', '#log-graph-svg');
     </script>
 </body>
 </html>

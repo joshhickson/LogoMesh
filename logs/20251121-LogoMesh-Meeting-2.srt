@@ -1,0 +1,7068 @@
+1
+02:05:04,333 --> 02:05:05,633
+<b>on the cyber fiscal system.</b>
+
+2
+02:05:06,600 --> 02:05:12,266
+<b>Yeah, so yeah, I don't know if that's enough for you</b>
+
+3
+02:05:12,733 --> 02:05:13,533
+<b>or you want me to do.</b>
+
+4
+02:05:14,300 --> 02:05:14,666
+<b>(laughing)</b>
+
+5
+02:05:15,000 --> 02:05:17,533
+<b>It's okay, I think we can table that for another time.</b>
+
+6
+02:05:18,500 --> 02:05:19,899
+<b>Yeah, that's it.</b>
+
+7
+02:05:22,733 --> 02:05:25,233
+<b>Who wants to go next?</b>
+
+8
+02:05:25,300 --> 02:05:27,000
+<b>Would you like to go ahead, Garett?</b>
+
+9
+02:05:28,566 --> 02:05:30,466
+<b>Yeah, yeah, I can go ahead, yeah.</b>
+
+10
+02:05:30,766 --> 02:05:31,866
+<b>So my name is Garett.</b>
+
+11
+02:05:32,699 --> 02:05:38,699
+<b>I'm actually now living in Germany, so near Frankfurt.</b>
+
+12
+02:05:39,933 --> 02:05:42,233
+<b>So it's kind of midnight, so I just woke up.</b>
+
+13
+02:05:43,566 --> 02:05:47,033
+<b>So it's like 3 a.m. in the morning now.</b>
+
+14
+02:05:48,600 --> 02:05:53,699
+<b>I work as a AI engineer in a company already for a while</b>
+
+15
+02:05:54,100 --> 02:05:57,800
+<b>before I studied master in computer science,</b>
+
+16
+02:05:57,800 --> 02:05:58,533
+<b>focused in AI.</b>
+
+17
+02:05:59,533 --> 02:06:04,100
+<b>And my work is now mainly focusing on multi-agent system</b>
+
+18
+02:06:04,899 --> 02:06:09,933
+<b>that to build some productive AI or agent AI system</b>
+
+19
+02:06:10,933 --> 02:06:12,300
+<b>for the company.</b>
+
+20
+02:06:12,866 --> 02:06:17,399
+<b>So basically, for research part, I did relatively less.</b>
+
+21
+02:06:17,800 --> 02:06:22,399
+<b>I mostly attend the online courses like this Berkeley MOC,</b>
+
+22
+02:06:23,233 --> 02:06:27,733
+<b>and then also from my job, a little bit research.</b>
+
+23
+02:06:28,233 --> 02:06:32,433
+<b>But mainly, I, yeah, so learn AI from work</b>
+
+24
+02:06:32,933 --> 02:06:36,199
+<b>and also like, yeah, by myself, so yeah.</b>
+
+25
+02:06:37,133 --> 02:06:40,300
+<b>Sorry if I may add a few things which might be helpful.</b>
+
+26
+02:06:41,366 --> 02:06:42,600
+<b>Being part of the team.</b>
+
+27
+02:06:43,399 --> 02:06:46,133
+<b>Yeah, so I am a bit behind with AI</b>
+
+28
+02:06:46,333 --> 02:06:50,100
+<b>after not doing something for almost two years now.</b>
+
+29
+02:06:51,133 --> 02:06:54,966
+<b>And I mostly do research now.</b>
+
+30
+02:06:56,333 --> 02:06:58,899
+<b>So why I joined the hackathon is because</b>
+
+31
+02:06:59,300 --> 02:07:00,533
+<b>I would love to do an internship</b>
+
+32
+02:07:00,933 --> 02:07:04,000
+<b>and I need to do some dirty</b>
+
+33
+02:07:04,000 --> 02:07:06,566
+<b>works with some coding and stuff.</b>
+
+34
+02:07:07,833 --> 02:07:11,233
+<b>Yeah, I've never done a hackathon before.</b>
+
+35
+02:07:11,233 --> 02:07:13,199
+<b>It's a dream experience.</b>
+
+36
+02:07:14,133 --> 02:07:15,899
+<b>Yeah, I could have out.</b>
+
+37
+02:07:20,300 --> 02:07:22,300
+<b>Yeah, I mean, for me, it's kind of similar.</b>
+
+38
+02:07:22,600 --> 02:07:26,633
+<b>I mean, not really looking kind for a job,</b>
+
+39
+02:07:26,633 --> 02:07:28,933
+<b>but I think for like joining this hackathon for me,</b>
+
+40
+02:07:29,366 --> 02:07:34,866
+<b>I would be more like understanding the AI</b>
+
+41
+02:07:35,266 --> 02:07:37,033
+<b>or agent AI from the market.</b>
+
+42
+02:07:37,500 --> 02:07:39,699
+<b>So not just what I'm doing from the company,</b>
+
+43
+02:07:40,433 --> 02:07:43,533
+<b>but also like, because I'm also in touch</b>
+
+44
+02:07:43,733 --> 02:07:46,699
+<b>with different framework, I think it's also good</b>
+
+45
+02:07:47,233 --> 02:07:50,399
+<b>that to work on the topic that are like</b>
+
+46
+02:07:50,866 --> 02:07:53,600
+<b>from the research parts or from the outside.</b>
+
+47
+02:07:58,399 --> 02:08:03,433
+<b>I guess I'll go next.</b>
+
+48
+02:08:04,233 --> 02:08:05,733
+<b>Deepi, if you want, you can go after me.</b>
+
+49
+02:08:07,000 --> 02:08:08,633
+<b>So, oh, would you?</b>
+
+50
+02:08:10,766 --> 02:08:12,899
+<b>Oh, you want me to go now?</b>
+
+51
+02:08:13,833 --> 02:08:16,033
+<b>If you want, where I can go to.</b>
+
+52
+02:08:17,133 --> 02:08:18,699
+<b>Okay, yes, that is fine.</b>
+
+53
+02:08:20,000 --> 02:08:21,666
+<b>You can go first and I can.</b>
+
+54
+02:08:22,100 --> 02:08:24,000
+<b>Okay, yeah, so I'm Josh.</b>
+
+55
+02:08:26,366 --> 02:08:28,066
+<b>Obviously I came up with like this repository</b>
+
+56
+02:08:28,333 --> 02:08:31,433
+<b>and this crazy idea, but I'll be honest guys,</b>
+
+57
+02:08:31,733 --> 02:08:33,033
+<b>like I've only gotten into</b>
+
+58
+02:08:33,033 --> 02:08:35,033
+<b>like a genetic AI machine learning</b>
+
+59
+02:08:35,433 --> 02:08:38,333
+<b>data science, computer science this year.</b>
+
+60
+02:08:39,133 --> 02:08:45,100
+<b>So I'm kind of like, sorry,</b>
+
+61
+02:08:45,500 --> 02:08:46,733
+<b>I feel like I'm stuttering a lot.</b>
+
+62
+02:08:47,633 --> 02:08:49,100
+<b>Admittedly, I'm actually very nervous</b>
+
+63
+02:08:49,300 --> 02:08:52,066
+<b>because although like I have this very ambitious idea,</b>
+
+64
+02:08:53,000 --> 02:08:55,000
+<b>I'm actually the least knowledgeable person here.</b>
+
+65
+02:08:55,533 --> 02:08:58,199
+<b>I don't have a degree, I'm still in community college.</b>
+
+66
+02:08:58,433 --> 02:08:59,533
+<b>I'm getting a degree in cinema.</b>
+
+67
+02:08:59,899 --> 02:09:02,233
+<b>I'm not getting a degree in data science</b>
+
+68
+02:09:02,233 --> 02:09:02,866
+<b>and machine learning.</b>
+
+69
+02:09:03,300 --> 02:09:05,833
+<b>I only got into AI because I was trying to write a book</b>
+
+70
+02:09:06,133 --> 02:09:08,000
+<b>and use AI to organize my book,</b>
+
+71
+02:09:08,000 --> 02:09:10,600
+<b>but because the plot was so extensive and complicated,</b>
+
+72
+02:09:11,399 --> 02:09:14,633
+<b>the context windows of the AI were too short.</b>
+
+73
+02:09:14,633 --> 02:09:16,366
+<b>So I started learning about how AI worked</b>
+
+74
+02:09:17,133 --> 02:09:18,966
+<b>and I started figuring out like, okay,</b>
+
+75
+02:09:18,966 --> 02:09:20,300
+<b>well, what is a context window?</b>
+
+76
+02:09:23,033 --> 02:09:25,300
+<b>How do prompting work?</b>
+
+77
+02:09:25,733 --> 02:09:28,500
+<b>Like basically like what happens when you take a text</b>
+
+78
+02:09:28,500 --> 02:09:30,199
+<b>and you put it into a vector embedding?</b>
+
+79
+02:09:30,433 --> 02:09:34,066
+<b>And how do you do that with like document manipulation</b>
+
+80
+02:09:34,366 --> 02:09:35,033
+<b>and stuff like that?</b>
+
+81
+02:09:35,033 --> 02:09:36,199
+<b>So I started getting into like GitHub</b>
+
+82
+02:09:36,199 --> 02:09:38,600
+<b>and like agent AI coding and all that.</b>
+
+83
+02:09:39,233 --> 02:09:40,833
+<b>And I started coming up with this idea</b>
+
+84
+02:09:40,833 --> 02:09:43,800
+<b>for just a note taking app that would take your notes,</b>
+
+85
+02:09:44,866 --> 02:09:47,733
+<b>assign JSON strings and stuff to each note</b>
+
+86
+02:09:48,199 --> 02:09:49,899
+<b>and try to contextualize the note</b>
+
+87
+02:09:50,033 --> 02:09:52,800
+<b>and embed it in a vector graph database</b>
+
+88
+02:09:53,133 --> 02:09:55,699
+<b>and kind of do like a hybrid sort of thing</b>
+
+89
+02:09:55,833 --> 02:09:59,233
+<b>where you can do just vector embeddings and translations</b>
+
+90
+02:09:59,433 --> 02:10:00,566
+<b>within your own personal notes</b>
+
+91
+02:10:01,033 --> 02:10:02,899
+<b>and then export those into JSON strings.</b>
+
+92
+02:10:02,899 --> 02:10:07,199
+<b>And then kind of like a combination between like Neo4j,</b>
+
+93
+02:10:07,533 --> 02:10:09,833
+<b>Obsidian, maybe a little bit of Figma.</b>
+
+94
+02:10:10,466 --> 02:10:15,633
+<b>And then there's one more I'm kind of missing out on.</b>
+
+95
+02:10:15,633 --> 02:10:16,800
+<b>Oh, Notion too, right?</b>
+
+96
+02:10:17,100 --> 02:10:18,100
+<b>Because we all know those.</b>
+
+97
+02:10:18,500 --> 02:10:20,733
+<b>Anyway, I tried to start creating the app.</b>
+
+98
+02:10:21,133 --> 02:10:22,966
+<b>I called it LogoMesh, it failed</b>
+
+99
+02:10:23,133 --> 02:10:25,233
+<b>because I was using AI to code the app</b>
+
+100
+02:10:25,233 --> 02:10:27,600
+<b>and I had accumulated so much contextual debt,</b>
+
+101
+02:10:27,600 --> 02:10:28,333
+<b>which is like, you know,</b>
+
+102
+02:10:28,333 --> 02:10:29,666
+<b>a combination of like technical debt</b>
+
+103
+02:10:30,133 --> 02:10:31,966
+<b>and the why behind the code, not just the what,</b>
+
+104
+02:10:32,899 --> 02:10:35,933
+<b>that it was just completely demented code.</b>
+
+105
+02:10:35,933 --> 02:10:37,399
+<b>It was just completely embarrassing.</b>
+
+106
+02:10:37,600 --> 02:10:39,100
+<b>If you go back into the repository</b>
+
+107
+02:10:40,133 --> 02:10:42,500
+<b>that I've given you access to, you'll find that.</b>
+
+108
+02:10:42,500 --> 02:10:44,033
+<b>You will find that app, you</b>
+
+109
+02:10:44,033 --> 02:10:45,233
+<b>will find all of those branches.</b>
+
+110
+02:10:46,600 --> 02:10:49,633
+<b>And it kind of just led me to take a break</b>
+
+111
+02:10:49,633 --> 02:10:50,966
+<b>from just trying to build an app</b>
+
+112
+02:10:50,966 --> 02:10:54,066
+<b>and I just began to try and understand like what AI was</b>
+
+113
+02:10:54,066 --> 02:10:57,133
+<b>and try to define a term for what I kept discovering</b>
+
+114
+02:10:57,600 --> 02:10:59,399
+<b>in my own personal projects as a consumer.</b>
+
+115
+02:11:00,000 --> 02:11:02,366
+<b>And that's what led me to kind of just unofficially</b>
+
+116
+02:11:02,366 --> 02:11:03,833
+<b>coined the term contextual debt.</b>
+
+117
+02:11:04,566 --> 02:11:06,933
+<b>And it's not until like the past two months</b>
+
+118
+02:11:07,233 --> 02:11:10,166
+<b>that I had done research, I had decided,</b>
+
+119
+02:11:10,399 --> 02:11:12,399
+<b>okay, well, what if we evaluate it?</b>
+
+120
+02:11:12,399 --> 02:11:15,666
+<b>What if we try to avoid it in some way?</b>
+
+121
+02:11:15,666 --> 02:11:19,233
+<b>And I discovered this agentic AI competition</b>
+
+122
+02:11:19,500 --> 02:11:20,899
+<b>because I had started a data science club</b>
+
+123
+02:11:20,899 --> 02:11:21,899
+<b>at my community college.</b>
+
+124
+02:11:22,866 --> 02:11:25,633
+<b>So my faculty advisor brought that to me.</b>
+
+125
+02:11:26,100 --> 02:11:27,233
+<b>And I was like, well, you know what?</b>
+
+126
+02:11:27,233 --> 02:11:29,233
+<b>This competition would be like the perfect way</b>
+
+127
+02:11:29,233 --> 02:11:32,199
+<b>for me to try and complete this project in the first place</b>
+
+128
+02:11:32,199 --> 02:11:35,233
+<b>because if I reshaped it to fit the guidelines</b>
+
+129
+02:11:35,500 --> 02:11:37,266
+<b>of the competition, then it gives me structure</b>
+
+130
+02:11:37,266 --> 02:11:38,166
+<b>that I can work with.</b>
+
+131
+02:11:38,166 --> 02:11:39,800
+<b>It gives me deadlines that I can work with.</b>
+
+132
+02:11:40,000 --> 02:11:42,500
+<b>And maybe I can try and create something tangible</b>
+
+133
+02:11:42,699 --> 02:11:45,033
+<b>and find people that are interested in the same thing.</b>
+
+134
+02:11:45,633 --> 02:11:50,033
+<b>And I may not be able to understand everything</b>
+
+135
+02:11:50,033 --> 02:11:52,000
+<b>that's going on, but I've gotten a lot better</b>
+
+136
+02:11:52,000 --> 02:11:54,766
+<b>at managing GitHub repositories and planning</b>
+
+137
+02:11:54,766 --> 02:11:57,233
+<b>and documentation and making sure that the code actually</b>
+
+138
+02:11:57,333 --> 02:11:58,966
+<b>aligns with the research.</b>
+
+139
+02:11:59,733 --> 02:12:01,633
+<b>So in that kind of way, I've kind of found my strength,</b>
+
+140
+02:12:02,633 --> 02:12:05,733
+<b>but I have to be honest with you guys.</b>
+
+141
+02:12:05,733 --> 02:12:08,566
+<b>A lot of times you guys are going to speak a lot</b>
+
+142
+02:12:08,566 --> 02:12:10,699
+<b>of languages that I'm not going to understand.</b>
+
+143
+02:12:10,699 --> 02:12:11,899
+<b>You're gonna throw a lot of terms around</b>
+
+144
+02:12:11,899 --> 02:12:12,899
+<b>that I'm not gonna understand.</b>
+
+145
+02:12:13,100 --> 02:12:16,500
+<b>And I'm gonna have to come back later to like,</b>
+
+146
+02:12:16,866 --> 02:12:19,500
+<b>transcriptive recordings of it and kind of have things</b>
+
+147
+02:12:20,000 --> 02:12:20,833
+<b>explained to me.</b>
+
+148
+02:12:21,199 --> 02:12:22,899
+<b>That doesn't mean that I'm not capable</b>
+
+149
+02:12:23,233 --> 02:12:24,733
+<b>in like managing this project.</b>
+
+150
+02:12:24,733 --> 02:12:26,033
+<b>I'm going to do my best.</b>
+
+151
+02:12:26,866 --> 02:12:29,600
+<b>But I just wanted to put that out.</b>
+
+152
+02:12:29,800 --> 02:12:31,000
+<b>I wanted to be honest with you guys.</b>
+
+153
+02:12:31,033 --> 02:12:32,733
+<b>I'm not gonna lie and say like, oh, I have a PhD</b>
+
+154
+02:12:32,733 --> 02:12:33,533
+<b>in this and that.</b>
+
+155
+02:12:33,933 --> 02:12:39,199
+<b>You would be surprised that you're quite knowledgeable</b>
+
+156
+02:12:39,500 --> 02:12:43,133
+<b>because you really, really, even if it's a short time,</b>
+
+157
+02:12:43,133 --> 02:12:46,199
+<b>you've, you've dicked a little bit.</b>
+
+158
+02:12:47,433 --> 02:12:50,433
+<b>And I think some of the things you're saying might apply</b>
+
+159
+02:12:50,433 --> 02:12:53,166
+<b>to some of us here in one way or the other.</b>
+
+160
+02:12:53,166 --> 02:12:54,699
+<b>AI is a very broad field.</b>
+
+161
+02:12:55,300 --> 02:12:57,533
+<b>There are a lot of things that you even mentioned</b>
+
+162
+02:12:57,533 --> 02:13:00,033
+<b>in this repository that I've never heard of.</b>
+
+163
+02:13:00,399 --> 02:13:03,133
+<b>Yeah, it's really broad field.</b>
+
+164
+02:13:04,000 --> 02:13:05,566
+<b>It's an amazing learning experience.</b>
+
+165
+02:13:06,666 --> 02:13:11,300
+<b>Yeah, it's new enough that like lots of things</b>
+
+166
+02:13:11,300 --> 02:13:13,066
+<b>that are coming up is new enough that like,</b>
+
+167
+02:13:14,100 --> 02:13:14,899
+<b>as long as you can learn</b>
+
+168
+02:13:14,899 --> 02:13:16,699
+<b>quickly, I think you can definitely</b>
+
+169
+02:13:16,699 --> 02:13:17,533
+<b>be ahead of the goal.</b>
+
+170
+02:13:18,100 --> 02:13:18,300
+<b>Yeah.</b>
+
+171
+02:13:19,199 --> 02:13:22,100
+<b>Yeah, and I think also don't be just too humble Josh.</b>
+
+172
+02:13:22,333 --> 02:13:25,800
+<b>I think also not just about the experience because I feel</b>
+
+173
+02:13:25,800 --> 02:13:28,133
+<b>like especially with AI topic right now,</b>
+
+174
+02:13:28,666 --> 02:13:30,000
+<b>everything come really quick.</b>
+
+175
+02:13:30,266 --> 02:13:32,100
+<b>Like almost every month there's a new topic.</b>
+
+176
+02:13:32,633 --> 02:13:34,866
+<b>Even you start researching this year.</b>
+
+177
+02:13:35,366 --> 02:13:37,166
+<b>I think if you don't keep it up, like,</b>
+
+178
+02:13:37,600 --> 02:13:39,533
+<b>I feel like already lacking a little bit,</b>
+
+179
+02:13:39,533 --> 02:13:43,533
+<b>like not reading the latest research paper or the topics,</b>
+
+180
+02:13:43,899 --> 02:13:46,166
+<b>then I already don't know what's happening right now.</b>
+
+181
+02:13:46,166 --> 02:13:49,300
+<b>So maybe your, your information or your knowledge</b>
+
+182
+02:13:49,300 --> 02:13:51,399
+<b>is already up to date and then me.</b>
+
+183
+02:13:52,133 --> 02:13:52,633
+<b>Yeah, so.</b>
+
+184
+02:13:53,133 --> 02:13:55,633
+<b>LLMs just came to light two years ago and now,</b>
+
+185
+02:13:56,633 --> 02:13:57,766
+<b>like wait has gone.</b>
+
+186
+02:13:59,100 --> 02:14:04,266
+<b>Yeah, so I still remember when like chat GPT two came out</b>
+
+187
+02:14:04,266 --> 02:14:10,733
+<b>or it's been so crazy, especially with the video generation</b>
+
+188
+02:14:10,966 --> 02:14:12,633
+<b>stuff like that, that stuff is freaky.</b>
+
+189
+02:14:12,866 --> 02:14:14,300
+<b>That's what got me into it.</b>
+
+190
+02:14:14,300 --> 02:14:18,133
+<b>Cause you know, Google Bayo three came out when I started</b>
+
+191
+02:14:19,433 --> 02:14:21,066
+<b>some college classes, I was looking at it.</b>
+
+192
+02:14:21,066 --> 02:14:23,966
+<b>I was like, I can barely discern this between reality.</b>
+
+193
+02:14:24,233 --> 02:14:25,133
+<b>And you know, I got better at</b>
+
+194
+02:14:25,133 --> 02:14:27,133
+<b>it eventually, but it's getting</b>
+
+195
+02:14:27,833 --> 02:14:28,833
+<b>so good that it's scary.</b>
+
+196
+02:14:29,266 --> 02:14:30,433
+<b>And you know, that uncally</b>
+
+197
+02:14:30,433 --> 02:14:32,433
+<b>that uncanny Valley that we're in</b>
+
+198
+02:14:32,433 --> 02:14:35,100
+<b>right now, it's closing up, it's closing up.</b>
+
+199
+02:14:35,100 --> 02:14:35,800
+<b>So we're going to see some</b>
+
+200
+02:14:35,800 --> 02:14:38,000
+<b>pretty impossible things come out</b>
+
+201
+02:14:38,000 --> 02:14:39,366
+<b>probably within the next 10 years.</b>
+
+202
+02:14:40,833 --> 02:14:41,933
+<b>I want to be prepared for that.</b>
+
+203
+02:14:41,933 --> 02:14:42,766
+<b>I want to be one of the people</b>
+
+204
+02:14:42,766 --> 02:14:43,833
+<b>that understands that instead</b>
+
+205
+02:14:43,833 --> 02:14:44,699
+<b>of just a consumer.</b>
+
+206
+02:14:45,366 --> 02:14:48,166
+<b>Cause yeah, I'm, you know, one of my biggest fears is being</b>
+
+207
+02:14:48,233 --> 02:14:49,333
+<b>controlled by that kind of stuff.</b>
+
+208
+02:14:50,933 --> 02:14:54,133
+<b>But, you know, getting into this field has been like really</b>
+
+209
+02:14:54,233 --> 02:14:55,033
+<b>enlightening for me.</b>
+
+210
+02:14:55,800 --> 02:14:57,733
+<b>It's kind of erased a lot of fears that I have AI.</b>
+
+211
+02:14:57,733 --> 02:15:00,433
+<b>It's definitely opened up new ones as well, but I feel like</b>
+
+212
+02:15:00,500 --> 02:15:04,233
+<b>understanding it has been just really, really rewarding.</b>
+
+213
+02:15:04,600 --> 02:15:05,500
+<b>I feel like, yeah.</b>
+
+214
+02:15:07,033 --> 02:15:09,433
+<b>Anyway, Deep D would, yeah.</b>
+
+215
+02:15:09,433 --> 02:15:12,066
+<b>Would you like to kind of give an intro?</b>
+
+216
+02:15:12,533 --> 02:15:12,933
+<b>Oh sure.</b>
+
+217
+02:15:13,833 --> 02:15:14,399
+<b>Thank you.</b>
+
+218
+02:15:15,000 --> 02:15:15,733
+<b>Hi everyone.</b>
+
+219
+02:15:16,666 --> 02:15:17,699
+<b>I am Deep D.</b>
+
+220
+02:15:18,100 --> 02:15:20,033
+<b>I'm from Georgia, USA.</b>
+
+221
+02:15:20,933 --> 02:15:26,766
+<b>And I have experienced in multiple areas in software</b>
+
+222
+02:15:26,933 --> 02:15:32,000
+<b>development recently and technical program management,</b>
+
+223
+02:15:32,199 --> 02:15:34,066
+<b>program management, engineering management.</b>
+
+224
+02:15:34,699 --> 02:15:39,800
+<b>Right now I'm working as a data scientist and I love data,</b>
+
+225
+02:15:40,100 --> 02:15:45,233
+<b>but I've also done a lot of AI ML programs,</b>
+
+226
+02:15:46,399 --> 02:15:48,333
+<b>but not gen AI.</b>
+
+227
+02:15:48,633 --> 02:15:54,066
+<b>So this is a great competition, the gen AI,</b>
+
+228
+02:15:54,399 --> 02:15:58,899
+<b>and glad to find Josh on the team.</b>
+
+229
+02:15:59,133 --> 02:16:01,600
+<b>You know, he has done some great work,</b>
+
+230
+02:16:01,600 --> 02:16:06,100
+<b>which I read through about contextual debt and looking</b>
+
+231
+02:16:06,233 --> 02:16:10,000
+<b>forward to working with all of you on this,</b>
+
+232
+02:16:10,933 --> 02:16:12,566
+<b>in this competition and in this team.</b>
+
+233
+02:16:13,666 --> 02:16:22,300
+<b>So I have done a lot of AI ML, like supervised learning,</b>
+
+234
+02:16:22,300 --> 02:16:29,433
+<b>unsupervised learning, NLP, and also neural networks,</b>
+
+235
+02:16:30,000 --> 02:16:32,200
+<b>but mostly on the applied sciences side,</b>
+
+236
+02:16:32,466 --> 02:16:35,433
+<b>not on the research, but gen</b>
+
+237
+02:16:35,433 --> 02:16:37,200
+<b>AI is totally different, right?</b>
+
+238
+02:16:37,466 --> 02:16:41,299
+<b>They've just gone miles ahead in,</b>
+
+239
+02:16:43,100 --> 02:16:43,533
+<b>everything.</b>
+
+240
+02:16:43,899 --> 02:16:47,899
+<b>So, but it's not tough once you understand the basics.</b>
+
+241
+02:16:48,333 --> 02:16:53,000
+<b>Yeah, this is, yeah, but this document, the contextual debt</b>
+
+242
+02:16:53,133 --> 02:16:57,133
+<b>and how we take it forward by implementing the metrics</b>
+
+243
+02:16:57,433 --> 02:17:01,266
+<b>and making the best and then taking it out,</b>
+
+244
+02:17:02,200 --> 02:17:03,399
+<b>you know, in the competition,</b>
+
+245
+02:17:03,700 --> 02:17:06,433
+<b>that would be a big, big thing for us to do.</b>
+
+246
+02:17:06,433 --> 02:17:08,033
+<b>So thank you everyone.</b>
+
+247
+02:17:08,333 --> 02:17:08,899
+<b>Thank you, Josh.</b>
+
+248
+02:17:11,966 --> 02:17:15,766
+<b>And I sent LinkedIn request to every one of you.</b>
+
+249
+02:17:16,633 --> 02:17:18,299
+<b>I think I already sent you a request.</b>
+
+250
+02:17:18,299 --> 02:17:20,399
+<b>Yes, yes, you are already connected.</b>
+
+251
+02:17:20,899 --> 02:17:23,433
+<b>Yes, I got your request a few days ago, I think.</b>
+
+252
+02:17:24,899 --> 02:17:25,566
+<b>Josh sends yours.</b>
+
+253
+02:17:26,399 --> 02:17:26,600
+<b>Yes.</b>
+
+254
+02:17:27,000 --> 02:17:27,200
+<b>Yeah.</b>
+
+255
+02:17:28,366 --> 02:17:29,366
+<b>Oh, okay, okay.</b>
+
+256
+02:17:29,366 --> 02:17:29,633
+<b>Thank you.</b>
+
+257
+02:17:30,233 --> 02:17:32,500
+<b>Oh, and Gira, I think we actually have another person</b>
+
+258
+02:17:32,700 --> 02:17:33,399
+<b>in Germany too.</b>
+
+259
+02:17:34,366 --> 02:17:36,733
+<b>I put his LinkedIn in the chat a few minutes ago.</b>
+
+260
+02:17:36,733 --> 02:17:37,466
+<b>Oh, another one?</b>
+
+261
+02:17:38,133 --> 02:17:38,333
+<b>Oh.</b>
+
+262
+02:17:39,433 --> 02:17:43,399
+<b>Allah, so I'm gonna meet with him potentially late tonight</b>
+
+263
+02:17:43,399 --> 02:17:47,833
+<b>if I'm not too tired when he wakes up.</b>
+
+264
+02:17:48,233 --> 02:17:49,399
+<b>Cause it says he's in Germany.</b>
+
+265
+02:17:49,866 --> 02:17:52,533
+<b>So I was hoping maybe you could connect with him</b>
+
+266
+02:17:52,533 --> 02:17:54,433
+<b>and kind of pick his brain.</b>
+
+267
+02:17:55,200 --> 02:17:57,333
+<b>He seemed pretty interested in the project.</b>
+
+268
+02:17:59,733 --> 02:18:00,866
+<b>He had some kind of,</b>
+
+269
+02:18:01,566 --> 02:18:03,633
+<b>oh, he actually had some questions for us.</b>
+
+270
+02:18:04,833 --> 02:18:07,500
+<b>So if you guys want like later in the meeting,</b>
+
+271
+02:18:08,066 --> 02:18:10,100
+<b>we can kind of cover those.</b>
+
+272
+02:18:12,500 --> 02:18:14,933
+<b>Okay, I'll just give a quick intro as well.</b>
+
+273
+02:18:15,966 --> 02:18:16,433
+<b>Just overall.</b>
+
+274
+02:18:16,899 --> 02:18:17,933
+<b>So I'm Samuel.</b>
+
+275
+02:18:18,299 --> 02:18:20,899
+<b>I'm actually a year for</b>
+
+276
+02:18:22,133 --> 02:18:24,533
+<b>biomedical engineering student in NUS.</b>
+
+277
+02:18:25,700 --> 02:18:28,333
+<b>But I've been working in like, on like,</b>
+
+278
+02:18:28,333 --> 02:18:30,899
+<b>AI, ML stuff, self-taught for about like five years.</b>
+
+279
+02:18:31,533 --> 02:18:35,166
+<b>Done two internships at like two of the research labs</b>
+
+280
+02:18:35,333 --> 02:18:36,466
+<b>in Singapore.</b>
+
+281
+02:18:37,600 --> 02:18:41,033
+<b>One on like a kind of like signal propagation using AI, ML,</b>
+
+282
+02:18:41,533 --> 02:18:42,500
+<b>some computer vision stuff.</b>
+
+283
+02:18:43,299 --> 02:18:46,233
+<b>And similarly, I also did computer vision with</b>
+
+284
+02:18:47,700 --> 02:18:50,299
+<b>some A star, so science research lab.</b>
+
+285
+02:18:50,966 --> 02:18:51,166
+<b>Yeah.</b>
+
+286
+02:18:51,733 --> 02:18:54,700
+<b>And after that, I spent one year in Silicon Valley.</b>
+
+287
+02:18:55,333 --> 02:18:58,500
+<b>Basically first I was with data science.</b>
+
+288
+02:18:59,299 --> 02:19:01,299
+<b>I was doing data science with a battery company.</b>
+
+289
+02:19:01,866 --> 02:19:02,700
+<b>They're called Q-Burg.</b>
+
+290
+02:19:02,700 --> 02:19:05,000
+<b>They were trying to put batteries on planes, basically.</b>
+
+291
+02:19:05,833 --> 02:19:07,733
+<b>The problem now is that batteries are too heavy.</b>
+
+292
+02:19:08,266 --> 02:19:10,200
+<b>So they were trying to make this like really energy dense</b>
+
+293
+02:19:10,333 --> 02:19:14,466
+<b>battery that could like basically be on planes</b>
+
+294
+02:19:14,466 --> 02:19:15,166
+<b>and power planes.</b>
+
+295
+02:19:17,066 --> 02:19:19,066
+<b>But I was on the data science team for that.</b>
+
+296
+02:19:19,899 --> 02:19:21,833
+<b>And, but they closed down.</b>
+
+297
+02:19:22,333 --> 02:19:23,600
+<b>So I had to find another job.</b>
+
+298
+02:19:26,200 --> 02:19:27,466
+<b>Which was actually a good thing.</b>
+
+299
+02:19:27,799 --> 02:19:31,233
+<b>Because the next company I worked at basically was</b>
+
+300
+02:19:32,600 --> 02:19:35,633
+<b>this company working on Gen. AI for manufacturing firms.</b>
+
+301
+02:19:36,533 --> 02:19:39,533
+<b>So basically they were trying to automate a lot of like</b>
+
+302
+02:19:39,533 --> 02:19:42,399
+<b>the sales processes for these legacy manufacturing firms.</b>
+
+303
+02:19:42,633 --> 02:19:45,566
+<b>Because the current process is really manual.</b>
+
+304
+02:19:46,100 --> 02:19:50,366
+<b>They do like basically customer sending purchase orders</b>
+
+305
+02:19:50,600 --> 02:19:51,733
+<b>like in all sorts of formats.</b>
+
+306
+02:19:52,333 --> 02:19:55,100
+<b>And the salesperson will have to look through each format.</b>
+
+307
+02:19:55,766 --> 02:19:57,466
+<b>And there's a central database,</b>
+
+308
+02:19:57,566 --> 02:19:58,799
+<b>but the customers don't follow that.</b>
+
+309
+02:19:59,433 --> 02:20:02,000
+<b>So they just try their best to match</b>
+
+310
+02:20:02,200 --> 02:20:03,266
+<b>based on the customer's request.</b>
+
+311
+02:20:03,500 --> 02:20:05,500
+<b>And it takes up a lot of the sales people's time.</b>
+
+312
+02:20:05,966 --> 02:20:08,399
+<b>So we were basically using like OCR,</b>
+
+313
+02:20:09,366 --> 02:20:11,533
+<b>optical character condition,</b>
+
+314
+02:20:11,799 --> 02:20:14,333
+<b>and like a few of like the cutting edge models</b>
+
+315
+02:20:14,533 --> 02:20:16,333
+<b>to like kind of pass the information</b>
+
+316
+02:20:16,666 --> 02:20:19,033
+<b>and fit that into like a table basically.</b>
+
+317
+02:20:19,566 --> 02:20:21,633
+<b>So that, and do some semantics such as to basically</b>
+
+318
+02:20:21,633 --> 02:20:23,700
+<b>get up like the best information.</b>
+
+319
+02:20:24,399 --> 02:20:27,100
+<b>So I was with them for like three months.</b>
+
+320
+02:20:27,899 --> 02:20:28,700
+<b>Very interesting.</b>
+
+321
+02:20:28,700 --> 02:20:31,600
+<b>It was like five of us in a house,</b>
+
+322
+02:20:32,399 --> 02:20:35,066
+<b>a five-person house working day and night</b>
+
+323
+02:20:35,299 --> 02:20:36,633
+<b>and shipping products.</b>
+
+324
+02:20:37,433 --> 02:20:41,533
+<b>So that, and then I've also done like,</b>
+
+325
+02:20:42,500 --> 02:20:44,066
+<b>I think a lot of hackathons,</b>
+
+326
+02:20:44,766 --> 02:20:47,000
+<b>maybe one like 10 plus different hackathons.</b>
+
+327
+02:20:48,500 --> 02:20:51,299
+<b>But yeah, so okay, that's just a bit about me.</b>
+
+328
+02:20:52,033 --> 02:20:54,266
+<b>I think it's cool that Josh has self-thought</b>
+
+329
+02:20:54,266 --> 02:20:57,299
+<b>more so kind of self-thought still learning as well.</b>
+
+330
+02:20:57,299 --> 02:20:59,233
+<b>And I think it's always great to meet people</b>
+
+331
+02:20:59,233 --> 02:21:02,899
+<b>who are interested to learn and do new things,</b>
+
+332
+02:21:02,899 --> 02:21:03,933
+<b>which I think is all of you guys.</b>
+
+333
+02:21:04,333 --> 02:21:06,166
+<b>So exciting stuff.</b>
+
+334
+02:21:08,600 --> 02:21:08,866
+<b>Sweet.</b>
+
+335
+02:21:09,733 --> 02:21:10,600
+<b>That's awesome.</b>
+
+336
+02:21:12,133 --> 02:21:13,200
+<b>Yeah, it's really cool to know</b>
+
+337
+02:21:13,200 --> 02:21:16,033
+<b>that somebody else here is self-taught as well.</b>
+
+338
+02:21:16,799 --> 02:21:18,733
+<b>I definitely have a lot of imposter syndrome.</b>
+
+339
+02:21:18,733 --> 02:21:21,700
+<b>I'm getting over that, but I don't know,</b>
+
+340
+02:21:21,733 --> 02:21:24,733
+<b>just being able to kind of like build off</b>
+
+341
+02:21:24,733 --> 02:21:25,733
+<b>of each other's strengths.</b>
+
+342
+02:21:25,733 --> 02:21:29,100
+<b>It's just a great feeling.</b>
+
+343
+02:21:29,666 --> 02:21:29,899
+<b>Sorry.</b>
+
+344
+02:21:32,466 --> 02:21:32,666
+<b>Okay.</b>
+
+345
+02:21:34,100 --> 02:21:34,633
+<b>Yeah, okay.</b>
+
+346
+02:21:34,833 --> 02:21:39,633
+<b>So since we're kind of done with the icebreakers right now,</b>
+
+347
+02:21:40,299 --> 02:21:43,433
+<b>I was, let's see what kind of agenda that I had</b>
+
+348
+02:21:43,433 --> 02:21:44,433
+<b>for the rest of the meeting.</b>
+
+349
+02:21:44,433 --> 02:21:45,533
+<b>And it's, this is open.</b>
+
+350
+02:21:45,533 --> 02:21:47,633
+<b>This is totally like modular here.</b>
+
+351
+02:21:47,633 --> 02:21:50,233
+<b>We don't have to follow this through the T to the T.</b>
+
+352
+02:21:52,299 --> 02:21:54,000
+<b>But I just kind of wanted to give us a little bit</b>
+
+353
+02:21:54,000 --> 02:21:55,799
+<b>of a foundation to work with.</b>
+
+354
+02:21:57,799 --> 02:21:58,000
+<b>Okay.</b>
+
+355
+02:21:58,033 --> 02:22:00,533
+<b>So we all kind of like understand what contextual that is,</b>
+
+356
+02:22:01,000 --> 02:22:02,366
+<b>the code AI code that works,</b>
+
+357
+02:22:02,366 --> 02:22:04,500
+<b>but it lacks intent reasoning and safety</b>
+
+358
+02:22:04,500 --> 02:22:07,833
+<b>that it kind of parallels AI agents themselves.</b>
+
+359
+02:22:10,133 --> 02:22:12,066
+<b>LLMs, they kind of mimic reasoning.</b>
+
+360
+02:22:12,066 --> 02:22:13,133
+<b>They kind of simulate it,</b>
+
+361
+02:22:13,133 --> 02:22:15,433
+<b>but they're not exactly self-aware.</b>
+
+362
+02:22:16,399 --> 02:22:22,233
+<b>I kind of wanted to talk about the cyber-sensorial agent</b>
+
+363
+02:22:22,233 --> 02:22:23,299
+<b>a little bit.</b>
+
+364
+02:22:25,433 --> 02:22:29,000
+<b>Do you guys have any like takeaways</b>
+
+365
+02:22:29,500 --> 02:22:31,733
+<b>from the approach that's being used</b>
+
+366
+02:22:31,899 --> 02:22:35,233
+<b>in like the planning and documentation to describe that?</b>
+
+367
+02:22:36,033 --> 02:22:38,333
+<b>Does any aspect of it kind of seem like confusing</b>
+
+368
+02:22:39,433 --> 02:22:43,133
+<b>or do you guys feel like it's consistent</b>
+
+369
+02:22:43,433 --> 02:22:44,733
+<b>with like the rest of the code base?</b>
+
+370
+02:22:45,766 --> 02:22:50,833
+<b>(audio cuts out)</b>
+
+371
+02:22:50,833 --> 02:22:54,266
+<b>Like using the philosophy as like agent as a judge,</b>
+
+372
+02:22:54,500 --> 02:22:58,033
+<b>using AI to like evaluate other AI processes.</b>
+
+373
+02:23:01,033 --> 02:23:02,100
+<b>And like don't, you know, the whole thing</b>
+
+374
+02:23:02,100 --> 02:23:03,633
+<b>with the contextual integrity score,</b>
+
+375
+02:23:03,633 --> 02:23:05,333
+<b>I kind of wanted to talk about that too,</b>
+
+376
+02:23:05,333 --> 02:23:08,333
+<b>because the website, it gives like a very high level</b>
+
+377
+02:23:08,633 --> 02:23:11,166
+<b>overview, but more recently I</b>
+
+378
+02:23:11,166 --> 02:23:12,166
+<b>was trying to figure out like,</b>
+
+379
+02:23:12,933 --> 02:23:16,833
+<b>okay, like what kind of logic can we lay out for this?</b>
+
+380
+02:23:16,833 --> 02:23:19,233
+<b>Because that was one of Deepti's first questions</b>
+
+381
+02:23:19,233 --> 02:23:20,633
+<b>when she looked at the repository.</b>
+
+382
+02:23:21,333 --> 02:23:24,033
+<b>And I spent a bit of time chewing over it.</b>
+
+383
+02:23:24,799 --> 02:23:29,133
+<b>And I kind of came up with some solutions.</b>
+
+384
+02:23:30,366 --> 02:23:32,533
+<b>I linked to those in the strategic master log,</b>
+
+385
+02:23:33,299 --> 02:23:35,933
+<b>which is this, you know, it's that large document</b>
+
+386
+02:23:35,933 --> 02:23:38,933
+<b>that holds like all the overarching links to it.</b>
+
+387
+02:23:39,533 --> 02:23:43,466
+<b>I think the specific document that I'm talking about</b>
+
+388
+02:23:44,033 --> 02:23:49,666
+<b>is the, yeah, here it is, the strategic pivot plan,</b>
+
+389
+02:23:49,666 --> 02:23:52,266
+<b>CIS formation, because there's like,</b>
+
+390
+02:23:52,266 --> 02:23:54,100
+<b>did you see all those functions in there</b>
+
+391
+02:23:54,100 --> 02:23:55,033
+<b>and one of those documents?</b>
+
+392
+02:23:55,266 --> 02:23:57,133
+<b>Did any of you guys come across that?</b>
+
+393
+02:23:57,133 --> 02:23:59,500
+<b>If not, I can share my screen in just a second.</b>
+
+394
+02:24:02,266 --> 02:24:05,100
+<b>I'm sure you guys are like really advanced in math</b>
+
+395
+02:24:05,799 --> 02:24:08,066
+<b>and stuff like that, but it basically just lays out</b>
+
+396
+02:24:08,200 --> 02:24:09,700
+<b>the logic of like, okay, how do we measure</b>
+
+397
+02:24:09,700 --> 02:24:11,266
+<b>each aspect of the code?</b>
+
+398
+02:24:12,899 --> 02:24:15,333
+<b>So we can kind of cover that for a little bit.</b>
+
+399
+02:24:15,566 --> 02:24:16,933
+<b>It goes into vector embeddings,</b>
+
+400
+02:24:17,333 --> 02:24:19,000
+<b>like math theory a little bit.</b>
+
+401
+02:24:21,000 --> 02:24:22,700
+<b>But yeah, I don't know if you guys had any questions</b>
+
+402
+02:24:22,866 --> 02:24:23,633
+<b>about that or?</b>
+
+403
+02:24:25,799 --> 02:24:29,233
+<b>Yeah, Josh, I think I shared some like high level</b>
+
+404
+02:24:29,466 --> 02:24:31,366
+<b>notes I had with you over Discord.</b>
+
+405
+02:24:32,700 --> 02:24:40,133
+<b>And I can just, okay, so before anyone else has like stuff,</b>
+
+406
+02:24:40,133 --> 02:24:42,433
+<b>before I dive into that, yeah.</b>
+
+407
+02:24:43,700 --> 02:24:47,733
+<b>Okay, so I think in terms of like agent as a charge,</b>
+
+408
+02:24:48,899 --> 02:24:53,333
+<b>one of the ways that I have used to like some success</b>
+
+409
+02:24:53,333 --> 02:24:56,166
+<b>in the past to like evaluate scores is,</b>
+
+410
+02:24:56,700 --> 02:24:58,000
+<b>and I think you have some of this now,</b>
+
+411
+02:24:58,000 --> 02:25:00,633
+<b>which is basically you define like a set of bricks</b>
+
+412
+02:25:02,600 --> 02:25:04,766
+<b>and maybe each thing can be assigned a score</b>
+
+413
+02:25:05,466 --> 02:25:11,299
+<b>and basically use that to, use like different kinds</b>
+
+414
+02:25:11,299 --> 02:25:13,299
+<b>of rubrics, so like maybe you have five different</b>
+
+415
+02:25:14,299 --> 02:25:19,433
+<b>assessing criteria to kind of like aggregate scores</b>
+
+416
+02:25:19,433 --> 02:25:20,299
+<b>across those things.</b>
+
+417
+02:25:21,233 --> 02:25:25,700
+<b>So that's been useful rather than just telling the agent</b>
+
+418
+02:25:25,700 --> 02:25:26,899
+<b>to like straight away give a score,</b>
+
+419
+02:25:28,333 --> 02:25:30,866
+<b>like just aggregating across different benchmarks,</b>
+
+420
+02:25:31,166 --> 02:25:32,733
+<b>getting the reason over those things</b>
+
+421
+02:25:33,299 --> 02:25:34,866
+<b>and then aggregating the score based on that,</b>
+
+422
+02:25:35,566 --> 02:25:36,833
+<b>if that's clear, yeah.</b>
+
+423
+02:25:37,233 --> 02:25:39,733
+<b>So I think in terms of like getting agent as a charge,</b>
+
+424
+02:25:39,733 --> 02:25:42,566
+<b>I mean, LMM as a judge, that's quite reasonable.</b>
+
+425
+02:25:43,200 --> 02:25:44,533
+<b>Maybe it's been done in quite a few papers.</b>
+
+426
+02:25:44,799 --> 02:25:46,933
+<b>I implemented one paper that was doing that</b>
+
+427
+02:25:47,200 --> 02:25:48,566
+<b>when I was in my previous company as well.</b>
+
+428
+02:25:49,333 --> 02:25:51,066
+<b>So yeah, on the contextual scoring thing,</b>
+
+429
+02:25:51,066 --> 02:25:52,200
+<b>I think that's fine.</b>
+
+430
+02:25:53,399 --> 02:25:57,500
+<b>For vector embeddings, and anyone else that has like</b>
+
+431
+02:25:57,500 --> 02:26:00,133
+<b>kind of experience working with like vectors and stuff</b>
+
+432
+02:26:00,266 --> 02:26:05,533
+<b>and also timing here, I think the scoring itself,</b>
+
+433
+02:26:06,500 --> 02:26:11,833
+<b>like there's the approach that we actually can take</b>
+
+434
+02:26:12,666 --> 02:26:14,966
+<b>to actually get like some core similarity between intent</b>
+
+435
+02:26:15,600 --> 02:26:18,366
+<b>and like code diffs, for example, like the changes,</b>
+
+436
+02:26:18,600 --> 02:26:19,633
+<b>which you can get from Git.</b>
+
+437
+02:26:21,033 --> 02:26:22,833
+<b>That's something we can do, but I don't think</b>
+
+438
+02:26:22,833 --> 02:26:24,799
+<b>there's a specific model that is trained for that.</b>
+
+439
+02:26:25,399 --> 02:26:28,100
+<b>And from my experience, if you do like similarity search</b>
+
+440
+02:26:28,299 --> 02:26:32,433
+<b>for embeddings, for example, it doesn't do very well</b>
+
+441
+02:26:32,833 --> 02:26:36,166
+<b>if you do like top one, if that makes sense.</b>
+
+442
+02:26:36,166 --> 02:26:38,566
+<b>Like basically you try and get like the first result,</b>
+
+443
+02:26:38,566 --> 02:26:42,200
+<b>but probably the result is like top 20.</b>
+
+444
+02:26:42,433 --> 02:26:44,200
+<b>So in terms of like encoding intent,</b>
+
+445
+02:26:45,799 --> 02:26:48,000
+<b>I think it will be useful as a metric,</b>
+
+446
+02:26:48,000 --> 02:26:49,600
+<b>but probably not a BOR and all,</b>
+
+447
+02:26:50,133 --> 02:26:51,399
+<b>even though I think that would be helpful</b>
+
+448
+02:26:51,399 --> 02:26:53,600
+<b>to help us encode it in a mathematical sense.</b>
+
+449
+02:26:54,433 --> 02:26:56,500
+<b>Yeah, so that's another thing.</b>
+
+450
+02:26:57,200 --> 02:26:59,100
+<b>And for the graph side of things,</b>
+
+451
+02:26:59,799 --> 02:27:02,633
+<b>okay, I don't wanna talk too much in detail</b>
+
+452
+02:27:02,633 --> 02:27:04,766
+<b>on this part first, but just focusing on the contextual</b>
+
+453
+02:27:05,700 --> 02:27:08,299
+<b>portion, like contextual debt, I think vectors</b>
+
+454
+02:27:08,633 --> 02:27:10,899
+<b>and using LMS to judge, makes sense,</b>
+
+455
+02:27:10,899 --> 02:27:14,000
+<b>but probably the vectors will just be like a helping</b>
+
+456
+02:27:14,100 --> 02:27:16,500
+<b>mechanism rather than like the main mechanism.</b>
+
+457
+02:27:19,299 --> 02:27:19,700
+<b>That's sweet.</b>
+
+458
+02:27:21,000 --> 02:27:22,500
+<b>Yeah, I hope that's clear.</b>
+
+459
+02:27:22,966 --> 02:27:25,500
+<b>At least let me know if like, I'm not,</b>
+
+460
+02:27:26,966 --> 02:27:28,899
+<b>yeah, if anything is confusing</b>
+
+461
+02:27:28,899 --> 02:27:32,766
+<b>cause I think different, maybe I'm not communicating</b>
+
+462
+02:27:32,933 --> 02:27:34,200
+<b>as well as I could, yeah.</b>
+
+463
+02:27:36,433 --> 02:27:39,700
+<b>I think that's, yeah, that's kind of coming across to me,</b>
+
+464
+02:27:39,899 --> 02:27:43,533
+<b>but does anybody else have questions about that?</b>
+
+465
+02:27:44,833 --> 02:27:45,933
+<b>Like, are we on the same page?</b>
+
+466
+02:27:49,200 --> 02:27:50,799
+<b>It's okay if we're not, because I'm gonna be,</b>
+
+467
+02:27:50,833 --> 02:27:53,399
+<b>so I'm gonna be providing the transcript</b>
+
+468
+02:27:53,399 --> 02:27:55,100
+<b>of this meeting afterwards to everybody</b>
+
+469
+02:27:55,100 --> 02:27:56,233
+<b>so that we can kind of review,</b>
+
+470
+02:27:56,233 --> 02:27:57,666
+<b>cause I know we're covering a lot today.</b>
+
+471
+02:27:58,733 --> 02:28:00,600
+<b>I'm definitely gonna need stuff simplified to me.</b>
+
+472
+02:28:01,133 --> 02:28:02,766
+<b>So I'm just kind of rolling with the punches here.</b>
+
+473
+02:28:03,766 --> 02:28:06,333
+<b>But that sounded good to me.</b>
+
+474
+02:28:08,366 --> 02:28:11,899
+<b>So I kind of wanted to cover this document.</b>
+
+475
+02:28:11,899 --> 02:28:14,399
+<b>I don't know if you guys, do you guys all have access</b>
+
+476
+02:28:14,399 --> 02:28:16,133
+<b>to the GitHub repository right now?</b>
+
+477
+02:28:19,766 --> 02:28:20,899
+<b>Okay, everybody, okay.</b>
+
+478
+02:28:21,299 --> 02:28:25,166
+<b>So this one specifically goes into,</b>
+
+479
+02:28:25,566 --> 02:28:28,600
+<b>did what you were talking about kind of reference</b>
+
+480
+02:28:29,600 --> 02:28:30,700
+<b>any of this stuff, Samuel?</b>
+
+481
+02:28:31,333 --> 02:28:34,066
+<b>Because this stuff like throws out a bunch of stuff</b>
+
+482
+02:28:34,333 --> 02:28:39,299
+<b>on like basically like, oh man, how do I simplify this?</b>
+
+483
+02:28:39,600 --> 02:28:47,166
+<b>I guess semantic density.</b>
+
+484
+02:28:47,966 --> 02:28:50,166
+<b>Is that a familiar term for you guys, semantic density?</b>
+
+485
+02:28:55,299 --> 02:28:58,500
+<b>I have a guess, but I have one, we'll see.</b>
+
+486
+02:28:59,100 --> 02:29:00,733
+<b>Okay, this is definitely gonna be a--</b>
+
+487
+02:29:01,233 --> 02:29:03,466
+<b>Let me check if my guess is correct.</b>
+
+488
+02:29:06,700 --> 02:29:07,299
+<b>I also wanted to say it sounds familiar,</b>
+
+489
+02:29:07,299 --> 02:29:11,033
+<b>but I think it's a good question. Yeah, I think it's a good question. Yeah, I think it's a good question. It sounds familiar, but you wouldn't be sure.</b>
+
+490
+02:29:11,333 --> 02:29:13,933
+<b>What I'm guessing it means too is that it's like</b>
+
+491
+02:29:14,233 --> 02:29:20,433
+<b>how much detail is in the structure of words, right?</b>
+
+492
+02:29:20,733 --> 02:29:24,933
+<b>Because like, I'm guessing an example of like loose,</b>
+
+493
+02:29:25,733 --> 02:29:28,799
+<b>like something that isn't semantically dense would be like,</b>
+
+494
+02:29:29,200 --> 02:29:31,033
+<b>you know, the boy crossed the street.</b>
+
+495
+02:29:32,333 --> 02:29:34,500
+<b>Something that would be semantically dense would be</b>
+
+496
+02:29:35,533 --> 02:29:39,733
+<b>like the male age six to eight years old, Brown hair.</b>
+
+497
+02:29:41,333 --> 02:29:43,866
+<b>He stepped with his right foot</b>
+
+498
+02:29:43,866 --> 02:29:45,333
+<b>and then step with his left foot</b>
+
+499
+02:29:45,899 --> 02:29:48,733
+<b>from the North side of the asphalt,</b>
+
+500
+02:29:49,000 --> 02:29:50,500
+<b>all the way, you know, stuff like that, right?</b>
+
+501
+02:29:51,233 --> 02:29:52,899
+<b>That's what I'm guessing semantic density is</b>
+
+502
+02:29:52,899 --> 02:29:56,866
+<b>like a very compressed nutshell of how it's used</b>
+
+503
+02:29:57,133 --> 02:29:59,333
+<b>in like LLM systems.</b>
+
+504
+02:29:59,333 --> 02:30:00,233
+<b>But anyway, this document,</b>
+
+505
+02:30:00,733 --> 02:30:04,066
+<b>it goes into some really complicated to me functions.</b>
+
+506
+02:30:06,600 --> 02:30:06,799
+<b>Okay.</b>
+
+507
+02:30:07,366 --> 02:30:09,633
+<b>It talks about like vector embeddings and stuff like that.</b>
+
+508
+02:30:09,633 --> 02:30:13,333
+<b>And I was just hoping like maybe you guys would be able to</b>
+
+509
+02:30:14,733 --> 02:30:16,733
+<b>like not exactly tell me what it means,</b>
+
+510
+02:30:18,333 --> 02:30:20,700
+<b>but whether or not it has any relevance</b>
+
+511
+02:30:20,700 --> 02:30:22,100
+<b>to the ideas that you have.</b>
+
+512
+02:30:22,333 --> 02:30:23,899
+<b>And ironically, it's a</b>
+
+513
+02:30:23,899 --> 02:30:26,433
+<b>semantically dense document in itself.</b>
+
+514
+02:30:28,166 --> 02:30:31,066
+<b>I barely understand it, but from what I understand,</b>
+
+515
+02:30:31,366 --> 02:30:33,533
+<b>it's basically trying to come up with the logic</b>
+
+516
+02:30:33,766 --> 02:30:36,766
+<b>for each parts of the contextual integrity score.</b>
+
+517
+02:30:37,233 --> 02:30:38,500
+<b>Like going back to the website,</b>
+
+518
+02:30:38,733 --> 02:30:42,299
+<b>it kind of bases it on those three pillars.</b>
+
+519
+02:30:42,866 --> 02:30:45,566
+<b>I'm sure everybody's familiar with that too, right?</b>
+
+520
+02:30:46,566 --> 02:30:47,833
+<b>It's architectural integrity.</b>
+
+521
+02:30:48,933 --> 02:30:50,399
+<b>I think it's test integrity.</b>
+
+522
+02:30:50,733 --> 02:30:52,500
+<b>And then there's one more.</b>
+
+523
+02:30:54,200 --> 02:30:55,166
+<b>Let me see if we can.</b>
+
+524
+02:30:55,399 --> 02:30:55,766
+<b>Rationale?</b>
+
+525
+02:30:58,433 --> 02:31:01,866
+<b>Yes, it's rational integrity score, which is the Y.</b>
+
+526
+02:31:02,200 --> 02:31:06,299
+<b>And that kind of exists in the documentation</b>
+
+527
+02:31:06,766 --> 02:31:08,799
+<b>or at least even just code comments</b>
+
+528
+02:31:08,799 --> 02:31:10,833
+<b>in the functional requirement of the code itself.</b>
+
+529
+02:31:11,899 --> 02:31:14,333
+<b>So what this document, which contains like</b>
+
+530
+02:31:15,533 --> 02:31:17,633
+<b>a bunch of chicken scratch to me personally,</b>
+
+531
+02:31:18,433 --> 02:31:20,100
+<b>it kind of tries to find the rationale</b>
+
+532
+02:31:20,333 --> 02:31:21,500
+<b>for evaluating that stuff.</b>
+
+533
+02:31:23,766 --> 02:31:27,733
+<b>And honestly, I was hoping we could chew on it</b>
+
+534
+02:31:27,899 --> 02:31:29,366
+<b>over the next week and figure out</b>
+
+535
+02:31:30,299 --> 02:31:32,899
+<b>if it's something that we wanna pursue deeper</b>
+
+536
+02:31:33,833 --> 02:31:36,000
+<b>because it has a pretty big variance</b>
+
+537
+02:31:36,200 --> 02:31:39,799
+<b>from some of the plans that I have laid out</b>
+
+538
+02:31:39,799 --> 02:31:43,200
+<b>for this project, which don't exactly go into any detail</b>
+
+539
+02:31:43,733 --> 02:31:47,600
+<b>of how exactly we do evaluate using those three pillars.</b>
+
+540
+02:31:47,933 --> 02:31:50,233
+<b>Like, there's high level overviews</b>
+
+541
+02:31:50,233 --> 02:31:53,133
+<b>of how we use the structure of that</b>
+
+542
+02:31:53,299 --> 02:31:56,100
+<b>to come up with a weighted score at the end.</b>
+
+543
+02:31:57,033 --> 02:31:58,933
+<b>But this document, like it goes</b>
+
+544
+02:31:58,933 --> 02:32:01,399
+<b>into a proposed specific structure.</b>
+
+545
+02:32:03,399 --> 02:32:06,200
+<b>So yeah, I kind of just wanted to talk about that.</b>
+
+546
+02:32:07,133 --> 02:32:09,833
+<b>I'm sorry if it kind of got us off track a little bit,</b>
+
+547
+02:32:09,833 --> 02:32:12,399
+<b>but yeah, because this is pretty much one</b>
+
+548
+02:32:12,399 --> 02:32:15,333
+<b>of the most recent bits of research I've done.</b>
+
+549
+02:32:15,333 --> 02:32:17,600
+<b>And it's the first time that I've actually kind of</b>
+
+550
+02:32:18,166 --> 02:32:19,700
+<b>hit a brick wall in my understanding</b>
+
+551
+02:32:19,899 --> 02:32:21,600
+<b>because I'm not very good at math.</b>
+
+552
+02:32:21,766 --> 02:32:24,066
+<b>I'm not very good at like logic and functions like that.</b>
+
+553
+02:32:24,466 --> 02:32:25,266
+<b>It's not my forte.</b>
+
+554
+02:32:26,666 --> 02:32:28,033
+<b>So I was hoping that maybe you guys,</b>
+
+555
+02:32:28,299 --> 02:32:30,600
+<b>your PhD students, maybe you guys</b>
+
+556
+02:32:30,799 --> 02:32:32,933
+<b>had some familiarity with this.</b>
+
+557
+02:32:35,100 --> 02:32:37,500
+<b>It's okay if you don't, we can work with that.</b>
+
+558
+02:32:38,133 --> 02:32:40,000
+<b>This document started from some way.</b>
+
+559
+02:32:40,366 --> 02:32:47,466
+<b>Is it like, this is just focusing on the architecture?</b>
+
+560
+02:32:49,466 --> 02:32:54,000
+<b>Yeah, yeah, kind of just, sorry.</b>
+
+561
+02:32:56,399 --> 02:32:59,533
+<b>Yeah, this would kind of be the logic</b>
+
+562
+02:32:59,533 --> 02:33:02,866
+<b>that the architecture would be built to follow</b>
+
+563
+02:33:04,633 --> 02:33:06,333
+<b>for the contextual integrity score.</b>
+
+564
+02:33:08,200 --> 02:33:11,100
+<b>But honestly, it's really dense for me.</b>
+
+565
+02:33:12,033 --> 02:33:15,200
+<b>So I was just kind of hoping to see what you guys had</b>
+
+566
+02:33:15,433 --> 02:33:19,233
+<b>as an opinion on it, but it's okay if it's kind of,</b>
+
+567
+02:33:19,966 --> 02:33:22,533
+<b>like it's okay if it's like too distracting to cover today</b>
+
+568
+02:33:24,466 --> 02:33:25,799
+<b>because I haven't really had enough time</b>
+
+569
+02:33:25,799 --> 02:33:27,666
+<b>to compare it to the rest of the code base yet.</b>
+
+570
+02:33:31,766 --> 02:33:33,399
+<b>Like it's a lot, it's a lot.</b>
+
+571
+02:33:34,100 --> 02:33:36,433
+<b>You guys saw the link that I put in the chat, right?</b>
+
+572
+02:33:36,433 --> 02:33:37,799
+<b>Like are you guys looking at it right now?</b>
+
+573
+02:33:39,033 --> 02:33:42,933
+<b>Yeah, one of the things I looked at</b>
+
+574
+02:33:43,133 --> 02:33:48,733
+<b>was the copyright edition paper.</b>
+
+575
+02:33:50,166 --> 02:33:50,500
+<b>Oh yeah.</b>
+
+576
+02:33:52,799 --> 02:33:55,433
+<b>I haven't copyrighted anything yet.</b>
+
+577
+02:33:56,200 --> 02:33:56,899
+<b>Yeah, yeah, yeah.</b>
+
+578
+02:33:57,200 --> 02:33:58,100
+<b>That's just a suggestion.</b>
+
+579
+02:34:03,633 --> 02:34:06,233
+<b>So I'm on my phone now,</b>
+
+580
+02:34:06,233 --> 02:34:08,766
+<b>so it's a little difficult to like look at the code.</b>
+
+581
+02:34:10,233 --> 02:34:12,333
+<b>When you're referring to like semantic density,</b>
+
+582
+02:34:12,566 --> 02:34:13,766
+<b>there's a paper about it.</b>
+
+583
+02:34:14,233 --> 02:34:16,200
+<b>Is that like the thing you're talking about?</b>
+
+584
+02:34:16,733 --> 02:34:18,966
+<b>Like there's a paper that actually writes about</b>
+
+585
+02:34:19,566 --> 02:34:20,299
+<b>semantic density.</b>
+
+586
+02:34:21,100 --> 02:34:21,733
+<b>So I was--</b>
+
+587
+02:34:22,733 --> 02:34:25,000
+<b>Please, if you could share it though, that would be good.</b>
+
+588
+02:34:25,833 --> 02:34:26,666
+<b>Oh sure, yeah.</b>
+
+589
+02:34:27,233 --> 02:34:30,233
+<b>I definitely need an introduction to a lot of these terms</b>
+
+590
+02:34:30,233 --> 02:34:31,399
+<b>that are thrown around here.</b>
+
+591
+02:34:31,700 --> 02:34:31,899
+<b>Sure.</b>
+
+592
+02:34:34,100 --> 02:34:37,700
+<b>I would say what is contained in the paper might be,</b>
+
+593
+02:34:39,399 --> 02:34:42,500
+<b>like it could be useful, but I think in a,</b>
+
+594
+02:34:44,733 --> 02:34:48,200
+<b>okay like I need to look a little deeper at it</b>
+
+595
+02:34:48,200 --> 02:34:50,433
+<b>because I just skimmed it.</b>
+
+596
+02:34:50,766 --> 02:34:51,000
+<b>It's crazy.</b>
+
+597
+02:34:52,600 --> 02:34:56,533
+<b>Basically like the point is that it needs sampling.</b>
+
+598
+02:34:57,566 --> 02:35:01,000
+<b>So basically like what that means is you need to like</b>
+
+599
+02:35:01,033 --> 02:35:03,899
+<b>generate multiple responses from the LLM</b>
+
+600
+02:35:04,333 --> 02:35:05,333
+<b>in order to kind of get,</b>
+
+601
+02:35:05,700 --> 02:35:07,899
+<b>okay let me send over the paper before I start rambling.</b>
+
+602
+02:35:08,666 --> 02:35:12,233
+<b>Is it really with uncertainty quantification?</b>
+
+603
+02:35:13,133 --> 02:35:14,500
+<b>Yes, that's the one I think.</b>
+
+604
+02:35:15,366 --> 02:35:17,100
+<b>Should be the first one when you search semantic density.</b>
+
+605
+02:35:19,333 --> 02:35:21,733
+<b>Yeah, so in a real world use case,</b>
+
+606
+02:35:21,766 --> 02:35:23,600
+<b>I don't think we would do a lot of,</b>
+
+607
+02:35:24,666 --> 02:35:26,533
+<b>we could do multiple samples,</b>
+
+608
+02:35:28,100 --> 02:35:29,233
+<b>but I don't think we would,</b>
+
+609
+02:35:29,833 --> 02:35:31,433
+<b>but okay, we can look a bit more,</b>
+
+610
+02:35:31,433 --> 02:35:32,733
+<b>I'll look a bit more into it and see</b>
+
+611
+02:35:33,033 --> 02:35:34,566
+<b>and dive into some of like the equations,</b>
+
+612
+02:35:35,100 --> 02:35:41,500
+<b>but I would say for determining this,</b>
+
+613
+02:35:42,100 --> 02:35:45,133
+<b>some form of semantic similarity might be enough.</b>
+
+614
+02:35:46,133 --> 02:35:48,500
+<b>Nothing crazy, but I could be wrong</b>
+
+615
+02:35:48,766 --> 02:35:50,933
+<b>and I think definitely we should look more into like</b>
+
+616
+02:35:51,399 --> 02:35:53,399
+<b>some of these details that,</b>
+
+617
+02:35:54,333 --> 02:35:55,766
+<b>yeah, just off the top of my head,</b>
+
+618
+02:35:57,000 --> 02:36:00,200
+<b>we might not need to like overly complexify it,</b>
+
+619
+02:36:00,466 --> 02:36:01,899
+<b>but yeah, I think it'd be good</b>
+
+620
+02:36:02,100 --> 02:36:03,566
+<b>if people could look into the paper</b>
+
+621
+02:36:03,766 --> 02:36:05,533
+<b>and let me know if you have different thoughts.</b>
+
+622
+02:36:06,366 --> 02:36:08,266
+<b>And this just from my skimming anyway.</b>
+
+623
+02:36:09,000 --> 02:36:12,200
+<b>Yeah, so it depends on how we want to scope it</b>
+
+624
+02:36:12,533 --> 02:36:15,600
+<b>that might not be super necessary.</b>
+
+625
+02:36:16,133 --> 02:36:19,399
+<b>But it's an interesting concept in terms of how you get.</b>
+
+626
+02:36:20,966 --> 02:36:21,366
+<b>Okay, sweet.</b>
+
+627
+02:36:21,799 --> 02:36:23,700
+<b>Basically to figure out how uncertain, yeah.</b>
+
+628
+02:36:24,600 --> 02:36:26,899
+<b>Uncertain, certain responses of the LNN,</b>
+
+629
+02:36:27,166 --> 02:36:30,700
+<b>it's more of like confidence in the response.</b>
+
+630
+02:36:32,866 --> 02:36:33,433
+<b>Gotcha, okay.</b>
+
+631
+02:36:33,633 --> 02:36:34,733
+<b>Okay, that makes more sense.</b>
+
+632
+02:36:37,299 --> 02:36:37,766
+<b>Okay, sweet.</b>
+
+633
+02:36:38,500 --> 02:36:43,500
+<b>So yeah, I really didn't wanna get too much off track</b>
+
+634
+02:36:43,600 --> 02:36:45,533
+<b>because like we, you know, so far,</b>
+
+635
+02:36:45,533 --> 02:36:47,533
+<b>there's a pretty good solid plan in here.</b>
+
+636
+02:36:48,166 --> 02:36:52,266
+<b>And we have about, what's the deadline, December 19th?</b>
+
+637
+02:36:53,500 --> 02:36:54,799
+<b>We have a set amount of time</b>
+
+638
+02:36:54,799 --> 02:36:57,366
+<b>that we have to complete a purple agent.</b>
+
+639
+02:36:57,766 --> 02:37:00,566
+<b>So I do wanna be realistic with time management.</b>
+
+640
+02:37:01,399 --> 02:37:03,533
+<b>I don't wanna get too crazy in these deep rabbit holes</b>
+
+641
+02:37:03,533 --> 02:37:06,200
+<b>and like alter the plan to a certain point</b>
+
+642
+02:37:06,200 --> 02:37:08,866
+<b>where it becomes impossible for us to complete it</b>
+
+643
+02:37:08,866 --> 02:37:09,533
+<b>by the deadline.</b>
+
+644
+02:37:10,866 --> 02:37:12,133
+<b>That is a concern that I have.</b>
+
+645
+02:37:13,033 --> 02:37:17,666
+<b>So yeah, so I'm, but yeah, that's good.</b>
+
+646
+02:37:18,033 --> 02:37:19,866
+<b>I'm glad that we could kind of cover that today.</b>
+
+647
+02:37:21,299 --> 02:37:25,833
+<b>In terms of, I'm trying to find the onboarding agenda.</b>
+
+648
+02:37:26,066 --> 02:37:26,500
+<b>Here we go.</b>
+
+649
+02:37:27,566 --> 02:37:30,166
+<b>Okay, yeah, so has everybody cloned the repository</b>
+
+650
+02:37:30,500 --> 02:37:33,799
+<b>to like their personal computer and tried to, you know,</b>
+
+651
+02:37:33,799 --> 02:37:35,533
+<b>just poke around at the code a little bit,</b>
+
+652
+02:37:36,733 --> 02:37:39,733
+<b>you know, installed all the modules and stuff.</b>
+
+653
+02:37:40,233 --> 02:37:45,100
+<b>Did the Docker, did the Docker window work and all of that?</b>
+
+654
+02:37:48,633 --> 02:37:50,766
+<b>I'll be really straight.</b>
+
+655
+02:37:51,133 --> 02:37:52,799
+<b>I have not tried to run a Docker,</b>
+
+656
+02:37:54,100 --> 02:37:55,733
+<b>I've just been looking through the code</b>
+
+657
+02:37:55,733 --> 02:37:56,866
+<b>and some other documents.</b>
+
+658
+02:37:57,399 --> 02:37:58,100
+<b>Okay, okay.</b>
+
+659
+02:37:58,566 --> 02:38:00,299
+<b>So the Docker should be working.</b>
+
+660
+02:38:01,633 --> 02:38:04,533
+<b>I made sure it was all cleaned up, you know,</b>
+
+661
+02:38:05,200 --> 02:38:06,333
+<b>everything's up to spec.</b>
+
+662
+02:38:09,166 --> 02:38:13,100
+<b>So, yeah, so it's kind of,</b>
+
+663
+02:38:13,433 --> 02:38:15,933
+<b>because there's kind of a point of criticality.</b>
+
+664
+02:38:17,200 --> 02:38:20,433
+<b>There's like in terms of the project plan,</b>
+
+665
+02:38:20,433 --> 02:38:22,799
+<b>and then there's like that recovery plan</b>
+
+666
+02:38:22,933 --> 02:38:26,766
+<b>that I created on November 13th,</b>
+
+667
+02:38:26,833 --> 02:38:30,066
+<b>which was created after I compared the current plan</b>
+
+668
+02:38:30,799 --> 02:38:34,533
+<b>before that to a big paper that was done on like</b>
+
+669
+02:38:35,033 --> 02:38:36,399
+<b>what the judges are going to expect,</b>
+
+670
+02:38:36,399 --> 02:38:38,899
+<b>how our competition is going to be scored.</b>
+
+671
+02:38:40,433 --> 02:38:45,000
+<b>Stuff like the, I think it's Auth0,</b>
+
+672
+02:38:45,899 --> 02:38:48,399
+<b>that company that's sponsoring,</b>
+
+673
+02:38:48,399 --> 02:38:50,333
+<b>they're going to want to see some kind of compatibility</b>
+
+674
+02:38:50,533 --> 02:38:52,333
+<b>with our project and the integration with that.</b>
+
+675
+02:38:54,433 --> 02:38:57,500
+<b>The agent-agent kind of platform too,</b>
+
+676
+02:38:57,500 --> 02:38:59,333
+<b>for how agents are going to communicate with each other,</b>
+
+677
+02:38:59,566 --> 02:39:00,633
+<b>that kind of standard.</b>
+
+678
+02:39:01,600 --> 02:39:03,933
+<b>And then of course the agent meets</b>
+
+679
+02:39:04,833 --> 02:39:06,000
+<b>software developer kit too.</b>
+
+680
+02:39:06,799 --> 02:39:10,133
+<b>So I've kind of been working off that plan,</b>
+
+681
+02:39:10,133 --> 02:39:11,533
+<b>I've been building off of that plan,</b>
+
+682
+02:39:12,333 --> 02:39:14,766
+<b>the one that was formulated on November 13th,</b>
+
+683
+02:39:14,799 --> 02:39:16,033
+<b>it's called the recovery plan.</b>
+
+684
+02:39:17,299 --> 02:39:18,799
+<b>So I've been building off of that</b>
+
+685
+02:39:18,799 --> 02:39:21,299
+<b>and making sure that the code is good, it doesn't bug.</b>
+
+686
+02:39:23,633 --> 02:39:24,833
+<b>Been testing it, making sure</b>
+
+687
+02:39:24,833 --> 02:39:26,299
+<b>that the Docker loads properly.</b>
+
+688
+02:39:29,033 --> 02:39:32,733
+<b>But we really do need to formulate a blueprint</b>
+
+689
+02:39:33,299 --> 02:39:35,933
+<b>for the contextual integrity score,</b>
+
+690
+02:39:35,933 --> 02:39:40,933
+<b>because it has to be a rigorous formula.</b>
+
+691
+02:39:40,933 --> 02:39:43,433
+<b>It has to contain logic,</b>
+
+692
+02:39:44,333 --> 02:39:47,399
+<b>and it can't just be like a rubric how it's outlined now.</b>
+
+693
+02:39:47,833 --> 02:39:50,233
+<b>So I wanted to kind of give an update and be like,</b>
+
+694
+02:39:50,233 --> 02:39:53,333
+<b>well, I have to adapt the plan yet again</b>
+
+695
+02:39:53,333 --> 02:39:56,299
+<b>to accommodate those proposed formulas.</b>
+
+696
+02:39:56,733 --> 02:39:59,966
+<b>And then we can always tweak those formulas later on,</b>
+
+697
+02:40:00,333 --> 02:40:02,033
+<b>but there has to be logic there initially</b>
+
+698
+02:40:02,033 --> 02:40:03,433
+<b>for us to be able to work with.</b>
+
+699
+02:40:05,866 --> 02:40:08,500
+<b>So that's kind of why I was hoping</b>
+
+700
+02:40:08,500 --> 02:40:08,899
+<b>that we could prioritize finalizing</b>
+
+701
+02:40:08,933 --> 02:40:11,433
+<b>the research paper revisions.</b>
+
+702
+02:40:12,466 --> 02:40:16,399
+<b>I'm not gonna do any copywriting or stuff anymore.</b>
+
+703
+02:40:16,399 --> 02:40:18,000
+<b>It was suggested to me that I copyrighted</b>
+
+704
+02:40:18,000 --> 02:40:20,533
+<b>like this initial paper that I created,</b>
+
+705
+02:40:20,799 --> 02:40:24,799
+<b>but it's honestly just all AI generated.</b>
+
+706
+02:40:25,700 --> 02:40:27,033
+<b>The idea is valuable,</b>
+
+707
+02:40:27,033 --> 02:40:30,066
+<b>but I don't think we have to copyright anything right now.</b>
+
+708
+02:40:30,933 --> 02:40:32,433
+<b>Also, I've never written a</b>
+
+709
+02:40:32,433 --> 02:40:33,933
+<b>research paper or anything before,</b>
+
+710
+02:40:33,933 --> 02:40:36,399
+<b>so I could honestly really use your guys' advice</b>
+
+711
+02:40:36,399 --> 02:40:36,533
+<b>from an academic standpoint,</b>
+
+712
+02:40:36,566 --> 02:40:40,299
+<b>because I don't know the formal process for this.</b>
+
+713
+02:40:40,933 --> 02:40:42,600
+<b>But yeah, we do need to revise the paper</b>
+
+714
+02:40:42,600 --> 02:40:44,100
+<b>and kind of come to an understanding</b>
+
+715
+02:40:44,100 --> 02:40:48,333
+<b>of whether it's consistent and it's logic.</b>
+
+716
+02:40:50,000 --> 02:40:52,466
+<b>So I'm going to create a Discord server</b>
+
+717
+02:40:52,633 --> 02:40:55,899
+<b>and kind of put some key documents in there</b>
+
+718
+02:40:56,399 --> 02:40:58,933
+<b>when it comes to revising the research paper</b>
+
+719
+02:40:58,933 --> 02:41:02,266
+<b>and kind of explain what documentation we already have.</b>
+
+720
+02:41:03,399 --> 02:41:04,766
+<b>Of course, everything that it's referenced in that paper,</b>
+
+721
+02:41:04,799 --> 02:41:07,600
+<b>it's available in those documents.</b>
+
+722
+02:41:07,600 --> 02:41:09,000
+<b>So you can kind of rabbit hole.</b>
+
+723
+02:41:09,000 --> 02:41:11,133
+<b>You can see where claims are referencing</b>
+
+724
+02:41:11,133 --> 02:41:12,700
+<b>other research papers and all that.</b>
+
+725
+02:41:15,433 --> 02:41:21,399
+<b>And then when it comes to the workshop,</b>
+
+726
+02:41:21,966 --> 02:41:24,100
+<b>everything, so the foundation is set, okay?</b>
+
+727
+02:41:24,100 --> 02:41:25,933
+<b>The foundation is set in this repository.</b>
+
+728
+02:41:26,633 --> 02:41:27,733
+<b>Everything is just waiting for</b>
+
+729
+02:41:27,733 --> 02:41:29,000
+<b>those mathematical blueprints.</b>
+
+730
+02:41:29,799 --> 02:41:32,200
+<b>So that's gonna be the tricky stuff, especially for me.</b>
+
+731
+02:41:32,866 --> 02:41:35,466
+<b>But I think we can do it.</b>
+
+732
+02:41:35,466 --> 02:41:37,633
+<b>I think we can come to an understanding with it.</b>
+
+733
+02:41:39,200 --> 02:41:43,399
+<b>All of that document that I shared in the Google Meet chat,</b>
+
+734
+02:41:44,866 --> 02:41:49,966
+<b>that was generated by Google Gemini to propose an example.</b>
+
+735
+02:41:51,133 --> 02:41:53,200
+<b>So I think what we can do is we can take that logic</b>
+
+736
+02:41:53,200 --> 02:41:54,600
+<b>and use it as kind of a baseline,</b>
+
+737
+02:41:55,000 --> 02:41:56,899
+<b>come to understand what it's talking about</b>
+
+738
+02:41:56,899 --> 02:42:00,799
+<b>and what it means, and see if it would be a safe thing</b>
+
+739
+02:42:01,066 --> 02:42:04,433
+<b>to apply into what we're building</b>
+
+740
+02:42:04,600 --> 02:42:07,966
+<b>once we have a good understanding of what it's doing.</b>
+
+741
+02:42:10,266 --> 02:42:13,033
+<b>When it comes to the multi-agent system,</b>
+
+742
+02:42:13,033 --> 02:42:14,700
+<b>there's kind of like an orchestrator</b>
+
+743
+02:42:14,700 --> 02:42:17,333
+<b>delegating to worker structure there</b>
+
+744
+02:42:17,333 --> 02:42:19,899
+<b>that exists in the code base.</b>
+
+745
+02:42:20,433 --> 02:42:22,700
+<b>I think we need to just verify that the logic's good there,</b>
+
+746
+02:42:22,700 --> 02:42:24,299
+<b>but I think that's much simpler stuff.</b>
+
+747
+02:42:27,399 --> 02:42:28,899
+<b>And of course, there's also prototypes for the logic too,</b>
+
+748
+02:42:28,933 --> 02:42:29,899
+<b>I think.</b>
+
+749
+02:42:32,799 --> 02:42:34,433
+<b>So yeah, I just wanted to make sure</b>
+
+750
+02:42:34,433 --> 02:42:38,533
+<b>that we were kind of on the same page</b>
+
+751
+02:42:38,533 --> 02:42:41,233
+<b>when it comes to pivoting of the plan,</b>
+
+752
+02:42:41,233 --> 02:42:43,700
+<b>because I'm sure you guys have noticed the plan is kind of,</b>
+
+753
+02:42:44,366 --> 02:42:47,266
+<b>it's consistent in the documents that it's consistent,</b>
+
+754
+02:42:47,700 --> 02:42:50,299
+<b>but right now it needs to be consolidated.</b>
+
+755
+02:42:51,133 --> 02:42:53,100
+<b>And the first step to that would be consolidating</b>
+
+756
+02:42:53,100 --> 02:42:56,133
+<b>the research paper and updating it to make sure</b>
+
+757
+02:42:56,166 --> 02:42:57,399
+<b>that it goes into specifics</b>
+
+758
+02:42:57,399 --> 02:42:59,200
+<b>and proposed mathematical formulas.</b>
+
+759
+02:42:59,833 --> 02:43:01,166
+<b>And then we can adapt the plan</b>
+
+760
+02:43:01,166 --> 02:43:03,200
+<b>to mirror the research paper.</b>
+
+761
+02:43:04,700 --> 02:43:06,633
+<b>That's pretty much as simple as I can get things.</b>
+
+762
+02:43:08,299 --> 02:43:11,633
+<b>And then after that, we really just have to carry out</b>
+
+763
+02:43:11,633 --> 02:43:16,399
+<b>the plan and make sure that the code passes the test</b>
+
+764
+02:43:16,399 --> 02:43:18,333
+<b>to make sure that there's proper test structured</b>
+
+765
+02:43:19,033 --> 02:43:20,066
+<b>to evaluate the code,</b>
+
+766
+02:43:20,299 --> 02:43:22,433
+<b>and then everything should flow from there.</b>
+
+767
+02:43:22,899 --> 02:43:25,733
+<b>So right now we're basically just forming</b>
+
+768
+02:43:25,899 --> 02:43:28,733
+<b>the final foundation of the logic of the project,</b>
+
+769
+02:43:28,933 --> 02:43:31,566
+<b>which is those math formulas that I was talking about.</b>
+
+770
+02:43:32,466 --> 02:43:35,233
+<b>And then we should be good to go to start building.</b>
+
+771
+02:43:36,433 --> 02:43:37,700
+<b>Does that kind of make sense?</b>
+
+772
+02:43:40,733 --> 02:43:42,433
+<b>Do we have a good consensus on that?</b>
+
+773
+02:43:45,066 --> 02:43:47,333
+<b>To be honest, I feel like I'm kind of a little bit</b>
+
+774
+02:43:48,433 --> 02:43:51,700
+<b>behind the page or the plan,</b>
+
+775
+02:43:51,833 --> 02:43:54,833
+<b>because I think you guys already worked together</b>
+
+776
+02:43:54,833 --> 02:43:55,666
+<b>for a while, right?</b>
+
+777
+02:43:56,933 --> 02:44:01,399
+<b>And I don't know, because I just checked the GitHub</b>
+
+778
+02:44:01,533 --> 02:44:03,166
+<b>actually today a little bit,</b>
+
+779
+02:44:03,166 --> 02:44:05,633
+<b>so not really deep dive in all the section</b>
+
+780
+02:44:05,633 --> 02:44:06,433
+<b>and all the papers.</b>
+
+781
+02:44:07,533 --> 02:44:10,500
+<b>Is there any already kind of a detailed plan</b>
+
+782
+02:44:10,500 --> 02:44:13,933
+<b>or who is doing what or like toward the project?</b>
+
+783
+02:44:17,799 --> 02:44:18,633
+<b>Honestly, no.</b>
+
+784
+02:44:18,666 --> 02:44:23,033
+<b>This is the first time we've come together</b>
+
+785
+02:44:23,033 --> 02:44:23,866
+<b>to meet as a group.</b>
+
+786
+02:44:25,500 --> 02:44:28,233
+<b>I kind of just built out this foundation of the project</b>
+
+787
+02:44:28,233 --> 02:44:31,200
+<b>in my spare time.</b>
+
+788
+02:44:33,533 --> 02:44:35,233
+<b>So when it comes to the role,</b>
+
+789
+02:44:35,700 --> 02:44:38,500
+<b>I think here's what we should do.</b>
+
+790
+02:44:38,500 --> 02:44:40,399
+<b>I think we should start with what we know.</b>
+
+791
+02:44:40,799 --> 02:44:42,000
+<b>So anytime you recognize--</b>
+
+792
+02:44:42,000 --> 02:44:43,700
+<b>Sorry, have you looked at the project plan?</b>
+
+793
+02:44:44,133 --> 02:44:47,833
+<b>There is a skeletal organization that he made there.</b>
+
+794
+02:44:48,200 --> 02:44:51,299
+<b>I think that's good, starts you off.</b>
+
+795
+02:44:51,833 --> 02:44:53,700
+<b>Here, Garrett, let me send you...</b>
+
+796
+02:44:54,866 --> 02:44:57,299
+<b>So there's the document that I</b>
+
+797
+02:44:57,299 --> 02:44:58,299
+<b>think that you should look at</b>
+
+798
+02:44:58,299 --> 02:45:00,133
+<b>is called the strategic master log.</b>
+
+799
+02:45:00,133 --> 02:45:03,166
+<b>And I'm gonna send that to you in the Google Meet chat.</b>
+
+800
+02:45:05,633 --> 02:45:10,633
+<b>And it's basically a bird's eye view of the documentation</b>
+
+801
+02:45:11,399 --> 02:45:12,933
+<b>and its structure in the repository.</b>
+
+802
+02:45:14,466 --> 02:45:19,200
+<b>And it gives kind of like a very simple explanation</b>
+
+803
+02:45:19,533 --> 02:45:21,066
+<b>of each document.</b>
+
+804
+02:45:22,233 --> 02:45:24,799
+<b>And what I'm going to do this next week is kind of just</b>
+
+805
+02:45:27,399 --> 02:45:31,933
+<b>come up with a plan on how to consolidate all of that.</b>
+
+806
+02:45:32,600 --> 02:45:34,899
+<b>Because everything's in all of these different locations.</b>
+
+807
+02:45:35,433 --> 02:45:36,466
+<b>Everything's timestamped,</b>
+
+808
+02:45:36,466 --> 02:45:38,066
+<b>so you can tell when everything was created.</b>
+
+809
+02:45:39,466 --> 02:45:41,200
+<b>But honestly, I agree with Garrett.</b>
+
+810
+02:45:41,866 --> 02:45:43,600
+<b>It's all the documentation.</b>
+
+811
+02:45:43,866 --> 02:45:46,333
+<b>It may be consistent and it may be evolving,</b>
+
+812
+02:45:46,633 --> 02:45:48,933
+<b>but it's all over the place in the repository.</b>
+
+813
+02:45:50,033 --> 02:45:51,799
+<b>And it's confusing.</b>
+
+814
+02:45:52,133 --> 02:45:53,700
+<b>It's confusing even for me.</b>
+
+815
+02:45:54,033 --> 02:45:56,100
+<b>I'm barely able to hold it all together myself.</b>
+
+816
+02:45:56,600 --> 02:45:59,600
+<b>So like I said, I think it's</b>
+
+817
+02:45:59,600 --> 02:46:00,799
+<b>good that we're kind of getting</b>
+
+818
+02:46:00,799 --> 02:46:02,299
+<b>this confusion out here in the open,</b>
+
+819
+02:46:02,333 --> 02:46:05,633
+<b>because it's just a little hill that we're gonna get over.</b>
+
+820
+02:46:06,133 --> 02:46:07,399
+<b>I'm sorry, I'm talking too much.</b>
+
+821
+02:46:07,399 --> 02:46:08,299
+<b>I have to share the link.</b>
+
+822
+02:46:09,600 --> 02:46:10,933
+<b>Yeah, it's okay.</b>
+
+823
+02:46:12,433 --> 02:46:17,299
+<b>I also created, this is something that helped me</b>
+
+824
+02:46:17,600 --> 02:46:19,733
+<b>and just see everything like a little nicer.</b>
+
+825
+02:46:20,233 --> 02:46:23,500
+<b>I created a, it's under a branch called feed slash docs.</b>
+
+826
+02:46:24,466 --> 02:46:25,366
+<b>You guys can take a look.</b>
+
+827
+02:46:25,366 --> 02:46:28,233
+<b>Basically it just adds a docs for an onboarding folder</b>
+
+828
+02:46:28,633 --> 02:46:30,000
+<b>with like a HTML file.</b>
+
+829
+02:46:30,666 --> 02:46:35,233
+<b>I just prefer looking at that than a Markdown file.</b>
+
+830
+02:46:36,000 --> 02:46:37,399
+<b>HTML file with like all the links.</b>
+
+831
+02:46:37,433 --> 02:46:38,933
+<b>It's basically the master log,</b>
+
+832
+02:46:38,933 --> 02:46:41,433
+<b>but with like links and summaries to each thing.</b>
+
+833
+02:46:42,033 --> 02:46:44,566
+<b>So it just helped me like kind of understand</b>
+
+834
+02:46:44,866 --> 02:46:46,133
+<b>the interconnections faster.</b>
+
+835
+02:46:46,866 --> 02:46:50,033
+<b>Yeah, so you guys can take a look at that as well.</b>
+
+836
+02:46:50,433 --> 02:46:51,299
+<b>Yeah, basically just--</b>
+
+837
+02:46:51,799 --> 02:46:53,133
+<b>Sorry, where can I find that again?</b>
+
+838
+02:46:53,600 --> 02:46:54,833
+<b>Yeah, so there's a branch.</b>
+
+839
+02:46:55,700 --> 02:46:56,799
+<b>I hope I pushed it.</b>
+
+840
+02:46:56,833 --> 02:46:59,299
+<b>Oh, I actually, I merged it with the master branch today.</b>
+
+841
+02:46:59,533 --> 02:47:00,733
+<b>So we're using the master now.</b>
+
+842
+02:47:01,266 --> 02:47:03,399
+<b>Yeah, it's just an onboarding folder.</b>
+
+843
+02:47:04,033 --> 02:47:05,600
+<b>Yeah, onboard, yeah, yeah, yeah, here it is.</b>
+
+844
+02:47:05,600 --> 02:47:06,533
+<b>It's in the root folder.</b>
+
+845
+02:47:06,899 --> 02:47:10,666
+<b>Just open the index.html, then there's like summaries</b>
+
+846
+02:47:10,666 --> 02:47:11,200
+<b>and links.</b>
+
+847
+02:47:11,866 --> 02:47:13,500
+<b>It might have missed like maybe some stuff,</b>
+
+848
+02:47:13,500 --> 02:47:16,533
+<b>but like I think it's helpful just to really quickly get</b>
+
+849
+02:47:17,500 --> 02:47:19,500
+<b>onboarded, what's what's been happening.</b>
+
+850
+02:47:20,399 --> 02:47:22,833
+<b>Yeah, it's just basic should be the same thing</b>
+
+851
+02:47:22,833 --> 02:47:25,833
+<b>as like the Markdown just like, just prettier.</b>
+
+852
+02:47:27,133 --> 02:47:29,133
+<b>Yeah, so I think that helped me get onboard.</b>
+
+853
+02:47:29,766 --> 02:47:32,133
+<b>I actually only looked at a repository yesterday as well,</b>
+
+854
+02:47:33,133 --> 02:47:34,033
+<b>because I just got access,</b>
+
+855
+02:47:34,533 --> 02:47:36,799
+<b>but that helped me like kind of understand a little bit</b>
+
+856
+02:47:36,799 --> 02:47:39,233
+<b>of like the history and what's been going on.</b>
+
+857
+02:47:39,333 --> 02:47:40,033
+<b>Yeah. Oh, here,</b>
+
+858
+02:47:40,033 --> 02:47:41,566
+<b>I'll share my screen and we can also--</b>
+
+859
+02:47:42,066 --> 02:47:43,500
+<b>Which one is that, Samuel?</b>
+
+860
+02:47:43,700 --> 02:47:45,000
+<b>Is it in onboarding folder?</b>
+
+861
+02:47:45,899 --> 02:47:48,533
+<b>Yes, and then just open the index.html in your browser.</b>
+
+862
+02:47:49,833 --> 02:47:51,333
+<b>And then you can click into the front stuff.</b>
+
+863
+02:47:52,133 --> 02:47:52,899
+<b>Okay, thank you. Yeah.</b>
+
+864
+02:47:52,899 --> 02:47:53,333
+<b>Here we go.</b>
+
+865
+02:47:54,933 --> 02:47:56,566
+<b>Oh, okay, thank you. Yeah, so this is it.</b>
+
+866
+02:47:56,566 --> 02:47:57,433
+<b>This is really nice.</b>
+
+867
+02:47:58,299 --> 02:47:59,399
+<b>Yeah, and then if you scroll down,</b>
+
+868
+02:47:59,399 --> 02:48:03,299
+<b>there's like links to each different kind of summaries</b>
+
+869
+02:48:03,433 --> 02:48:05,899
+<b>of each document, and if you want, you can type in.</b>
+
+870
+02:48:06,666 --> 02:48:07,933
+<b>Oh, this is perfect. So you just--</b>
+
+871
+02:48:08,299 --> 02:48:09,833
+<b>Thank you. Yeah, yeah.</b>
+
+872
+02:48:12,633 --> 02:48:14,433
+<b>This is so good. I'm onboarding.</b>
+
+873
+02:48:14,733 --> 02:48:15,899
+<b>We should have started with this.</b>
+
+874
+02:48:18,633 --> 02:48:18,766
+<b>(laughing)</b>
+
+875
+02:48:21,933 --> 02:48:25,100
+<b>Okay, yeah, I'm hoping this is gonna clear stuff up too.</b>
+
+876
+02:48:27,233 --> 02:48:31,933
+<b>Yeah, I really appreciate you guys bearing with this,</b>
+
+877
+02:48:32,100 --> 02:48:34,000
+<b>because I know it's kind of a big undertaking.</b>
+
+878
+02:48:34,433 --> 02:48:35,733
+<b>It's a lot to take in.</b>
+
+879
+02:48:37,333 --> 02:48:39,233
+<b>But I think as soon as we figure out</b>
+
+880
+02:48:40,266 --> 02:48:47,133
+<b>how to incorporate the logic that's in the research folders</b>
+
+881
+02:48:47,700 --> 02:48:49,066
+<b>of the documentation folder,</b>
+
+882
+02:48:50,833 --> 02:48:54,433
+<b>as soon as we incorporate that into a consistent document,</b>
+
+883
+02:48:55,600 --> 02:48:58,700
+<b>and then we can be ready to incorporate that document</b>
+
+884
+02:49:00,299 --> 02:49:02,133
+<b>and adjust the plan.</b>
+
+885
+02:49:02,433 --> 02:49:07,033
+<b>So what I typically do is whenever I create a plan</b>
+
+886
+02:49:07,033 --> 02:49:09,066
+<b>for coding anything in the repository,</b>
+
+887
+02:49:10,066 --> 02:49:12,533
+<b>I come up with a high level idea, and I take that idea,</b>
+
+888
+02:49:12,799 --> 02:49:15,466
+<b>and I come up with a gap analysis.</b>
+
+889
+02:49:15,899 --> 02:49:18,133
+<b>And I usually take an AI agent,</b>
+
+890
+02:49:18,133 --> 02:49:24,600
+<b>and I prompt it to review all of the core foundational code</b>
+
+891
+02:49:25,233 --> 02:49:27,766
+<b>in the repository and compare it to the plan</b>
+
+892
+02:49:28,100 --> 02:49:28,766
+<b>that I have in mind.</b>
+
+893
+02:49:29,399 --> 02:49:32,133
+<b>And I have a come up with a gap analysis document.</b>
+
+894
+02:49:32,633 --> 02:49:35,366
+<b>So it usually tells me where things connect,</b>
+
+895
+02:49:35,366 --> 02:49:36,933
+<b>where things are already formed and created,</b>
+
+896
+02:49:37,533 --> 02:49:39,133
+<b>where things contradict each other</b>
+
+897
+02:49:39,600 --> 02:49:41,399
+<b>from the plan that I want to implement</b>
+
+898
+02:49:41,700 --> 02:49:43,899
+<b>into what I'm building compared to what exists.</b>
+
+899
+02:49:45,100 --> 02:49:48,899
+<b>So when I come up with further research</b>
+
+900
+02:49:49,066 --> 02:49:51,299
+<b>that comes up with math functions</b>
+
+901
+02:49:51,533 --> 02:49:53,333
+<b>for the contextual integrity score,</b>
+
+902
+02:49:53,899 --> 02:49:55,533
+<b>and it comes up with all of this logic,</b>
+
+903
+02:49:56,933 --> 02:49:59,033
+<b>the logic itself may be consistent,</b>
+
+904
+02:49:59,500 --> 02:50:03,433
+<b>and it may fit well into the high level view of the plan.</b>
+
+905
+02:50:04,399 --> 02:50:06,666
+<b>But when it comes to the,</b>
+
+906
+02:50:06,933 --> 02:50:09,200
+<b>if you go to section three of the navigation guide,</b>
+
+907
+02:50:10,533 --> 02:50:14,733
+<b>you'll find, I'm sorry, section two of the website.</b>
+
+908
+02:50:14,733 --> 02:50:16,933
+<b>Is everybody on the HTML page,</b>
+
+909
+02:50:16,933 --> 02:50:18,299
+<b>or can they at least see my screen?</b>
+
+910
+02:50:20,600 --> 02:50:20,933
+<b>Yeah.</b>
+
+911
+02:50:21,500 --> 02:50:21,700
+<b>Okay.</b>
+
+912
+02:50:21,700 --> 02:50:22,399
+<b>Okay, screen now.</b>
+
+913
+02:50:22,766 --> 02:50:24,166
+<b>Right, so if we go to section two,</b>
+
+914
+02:50:24,433 --> 02:50:26,933
+<b>here's the workshop, the historical technical plan, right?</b>
+
+915
+02:50:27,533 --> 02:50:30,100
+<b>We have this thing titled the recovery plan.</b>
+
+916
+02:50:30,799 --> 02:50:33,700
+<b>This is a plan that I've created from a gap analysis</b>
+
+917
+02:50:35,200 --> 02:50:40,100
+<b>between a very large research document of previous</b>
+
+918
+02:50:40,899 --> 02:50:43,966
+<b>and current agent beats guidelines rules,</b>
+
+919
+02:50:45,133 --> 02:50:49,299
+<b>kind of implied rules in terms of like sponsorships</b>
+
+920
+02:50:49,299 --> 02:50:49,866
+<b>and all that.</b>
+
+921
+02:50:50,333 --> 02:50:52,633
+<b>So I came up with this plan earlier</b>
+
+922
+02:50:53,100 --> 02:50:56,600
+<b>about almost 10 days ago on the 13th.</b>
+
+923
+02:50:56,600 --> 02:50:58,466
+<b>And I started enacting that plan</b>
+
+924
+02:51:00,433 --> 02:51:02,033
+<b>and putting it into the code base.</b>
+
+925
+02:51:02,433 --> 02:51:05,266
+<b>And I stopped at a certain point of the plan.</b>
+
+926
+02:51:06,333 --> 02:51:08,833
+<b>And then I started realizing, yeah, there's no logic</b>
+
+927
+02:51:09,066 --> 02:51:11,200
+<b>in how we're actually going to evaluate</b>
+
+928
+02:51:11,700 --> 02:51:13,233
+<b>with the contextual integrity score.</b>
+
+929
+02:51:13,933 --> 02:51:15,600
+<b>When I met with Deep D last week,</b>
+
+930
+02:51:15,600 --> 02:51:16,633
+<b>she kind of brought that up.</b>
+
+931
+02:51:16,633 --> 02:51:19,466
+<b>She was like, well, how are we going to structure</b>
+
+932
+02:51:19,866 --> 02:51:23,166
+<b>each pillar of the contextual integrity score?</b>
+
+933
+02:51:23,166 --> 02:51:24,966
+<b>Like what tools are we going to use?</b>
+
+934
+02:51:24,966 --> 02:51:26,033
+<b>What logic are we going to use?</b>
+
+935
+02:51:26,033 --> 02:51:27,299
+<b>And I was like, wow, that's a good question.</b>
+
+936
+02:51:27,866 --> 02:51:30,500
+<b>Because everything in that is still high level.</b>
+
+937
+02:51:30,500 --> 02:51:33,366
+<b>It hasn't been cut out into logic yet.</b>
+
+938
+02:51:33,733 --> 02:51:37,700
+<b>So I went and I came up with some logic using AI</b>
+
+939
+02:51:38,233 --> 02:51:39,899
+<b>and AI proposed some stuff to me.</b>
+
+940
+02:51:40,399 --> 02:51:42,600
+<b>That's that really complicated document</b>
+
+941
+02:51:42,600 --> 02:51:43,733
+<b>that I shared with you guys</b>
+
+942
+02:51:43,733 --> 02:51:47,333
+<b>like 20 minutes ago, that GitHub.</b>
+
+943
+02:51:48,133 --> 02:51:54,433
+<b>It's called the 20251118 proposed section 2.2.md.</b>
+
+944
+02:51:54,733 --> 02:51:58,466
+<b>That link, it's basically eligible for me.</b>
+
+945
+02:52:00,299 --> 02:52:03,399
+<b>So what I need to do, and that's in the,</b>
+
+946
+02:52:05,600 --> 02:52:10,000
+<b>you can find that in the cutting edge section,</b>
+
+947
+02:52:10,833 --> 02:52:11,700
+<b>strategic pivots.</b>
+
+948
+02:52:12,333 --> 02:52:13,566
+<b>That's where all the research is.</b>
+
+949
+02:52:13,600 --> 02:52:17,700
+<b>So if you want to see like research that goes deeper</b>
+
+950
+02:52:17,833 --> 02:52:22,399
+<b>into the base level ideas, you go to the docs folder,</b>
+
+951
+02:52:22,399 --> 02:52:25,299
+<b>you go to the strategy and IP folder within that,</b>
+
+952
+02:52:25,566 --> 02:52:27,733
+<b>and then you'll find some papers.</b>
+
+953
+02:52:28,200 --> 02:52:31,366
+<b>And those papers get into more detailed logic.</b>
+
+954
+02:52:32,100 --> 02:52:36,033
+<b>So that logic has not been incorporated into the plan yet.</b>
+
+955
+02:52:36,566 --> 02:52:38,466
+<b>So what I have to do this</b>
+
+956
+02:52:38,466 --> 02:52:40,133
+<b>upcoming week is I have to come up</b>
+
+957
+02:52:40,133 --> 02:52:41,933
+<b>with another gap analysis.</b>
+
+958
+02:52:42,600 --> 02:52:45,500
+<b>I have to analyze the entire state of the current state</b>
+
+959
+02:52:45,500 --> 02:52:47,333
+<b>of the repository, which is well-documented.</b>
+
+960
+02:52:47,733 --> 02:52:49,899
+<b>It's been rigorously tested and reviewed.</b>
+
+961
+02:52:50,633 --> 02:52:52,866
+<b>I have to do the same thing for the recovery plan,</b>
+
+962
+02:52:52,866 --> 02:52:54,000
+<b>which was on the 13th.</b>
+
+963
+02:52:54,000 --> 02:52:54,933
+<b>That's in section two.</b>
+
+964
+02:52:55,233 --> 02:52:56,866
+<b>That's the plan that I was carrying out.</b>
+
+965
+02:52:58,333 --> 02:53:00,833
+<b>And then I have to figure out where the gaps are</b>
+
+966
+02:53:00,833 --> 02:53:02,966
+<b>and whether there's contradictions in the plan</b>
+
+967
+02:53:03,399 --> 02:53:08,399
+<b>compared to the proposed logic that's been discovered.</b>
+
+968
+02:53:09,233 --> 02:53:14,500
+<b>And then the strategic pivot plan is highlighted</b>
+
+969
+02:53:14,500 --> 02:53:15,666
+<b>in section three.</b>
+
+970
+02:53:17,700 --> 02:53:20,433
+<b>It's basically just trying to figure out how we can</b>
+
+971
+02:53:20,433 --> 02:53:22,200
+<b>incorporate that into the current plan.</b>
+
+972
+02:53:22,899 --> 02:53:24,366
+<b>And it shouldn't be too hard.</b>
+
+973
+02:53:24,566 --> 02:53:26,100
+<b>I think we all just need to take on roles</b>
+
+974
+02:53:26,100 --> 02:53:30,899
+<b>of what we're most familiar with in terms of these plans.</b>
+
+975
+02:53:32,100 --> 02:53:33,366
+<b>Definitely pick your strengths.</b>
+
+976
+02:53:33,600 --> 02:53:38,033
+<b>My strength is organization and comparing whether documents</b>
+
+977
+02:53:38,433 --> 02:53:41,100
+<b>are relevant to each other, whether ideas align</b>
+
+978
+02:53:41,100 --> 02:53:43,299
+<b>with each other, where they contradict, where they differ.</b>
+
+979
+02:53:44,200 --> 02:53:45,833
+<b>So I'm good at that high level stuff.</b>
+
+980
+02:53:46,399 --> 02:53:50,666
+<b>If you guys find terms or anything that kind of peak out</b>
+
+981
+02:53:50,666 --> 02:53:53,033
+<b>to you that you have personal experience with,</b>
+
+982
+02:53:53,533 --> 02:53:55,533
+<b>focus on those and present your findings</b>
+
+983
+02:53:56,899 --> 02:53:58,866
+<b>in a form that best suits you.</b>
+
+984
+02:53:58,866 --> 02:54:02,966
+<b>You can either, when I create our group Discord server,</b>
+
+985
+02:54:03,399 --> 02:54:05,166
+<b>you can either just put it straight in the Discord server</b>
+
+986
+02:54:05,399 --> 02:54:08,200
+<b>and I can format it into log documents</b>
+
+987
+02:54:08,533 --> 02:54:09,966
+<b>and put those into the repository.</b>
+
+988
+02:54:10,799 --> 02:54:12,200
+<b>Or you can create your own evaluation</b>
+
+989
+02:54:12,500 --> 02:54:13,766
+<b>and you can create your own findings.</b>
+
+990
+02:54:14,466 --> 02:54:15,799
+<b>You can create your own subfolder</b>
+
+991
+02:54:15,799 --> 02:54:18,200
+<b>in the logs folder of the repository.</b>
+
+992
+02:54:18,566 --> 02:54:21,566
+<b>And you can use that just for your own needs</b>
+
+993
+02:54:21,566 --> 02:54:22,799
+<b>and organize it how you want.</b>
+
+994
+02:54:23,799 --> 02:54:27,533
+<b>So that less of your time is spent trying to understand</b>
+
+995
+02:54:27,533 --> 02:54:28,733
+<b>how to fit the form at it.</b>
+
+996
+02:54:29,500 --> 02:54:31,633
+<b>So when you guys kind of review this,</b>
+
+997
+02:54:32,100 --> 02:54:33,500
+<b>if you guys need to take personal notes</b>
+
+998
+02:54:33,666 --> 02:54:34,700
+<b>and put it in the repository,</b>
+
+999
+02:54:35,299 --> 02:54:37,533
+<b>just make your own folder wherever you wanna make it</b>
+
+1000
+02:54:37,700 --> 02:54:43,000
+<b>and tell me so that I can make sure that that's clear</b>
+
+1001
+02:54:43,000 --> 02:54:43,933
+<b>where to find your stuff.</b>
+
+1002
+02:54:45,866 --> 02:54:48,833
+<b>I know this is like a really general kind of suggestion</b>
+
+1003
+02:54:49,133 --> 02:54:51,966
+<b>that I'm making right now, but it works</b>
+
+1004
+02:54:52,333 --> 02:54:55,166
+<b>because we can always kind of connect our findings together</b>
+
+1005
+02:54:55,666 --> 02:54:58,033
+<b>in these weekly meetings and</b>
+
+1006
+02:54:58,033 --> 02:55:00,633
+<b>through our group messages too.</b>
+
+1007
+02:55:00,833 --> 02:55:07,233
+<b>So yeah, we basically need to just put things together.</b>
+
+1008
+02:55:07,533 --> 02:55:09,966
+<b>Ideas are consistent in all these different sections</b>
+
+1009
+02:55:09,966 --> 02:55:13,466
+<b>of the repository, but the logic that's been recently</b>
+
+1010
+02:55:13,466 --> 02:55:14,866
+<b>discovered on how to organize</b>
+
+1011
+02:55:14,866 --> 02:55:17,100
+<b>the contextual integrity best score,</b>
+
+1012
+02:55:17,799 --> 02:55:20,833
+<b>that needs to be incorporated into the current plan</b>
+
+1013
+02:55:21,366 --> 02:55:23,566
+<b>that the repository has been based off of</b>
+
+1014
+02:55:23,566 --> 02:55:25,133
+<b>so that when we continue to work,</b>
+
+1015
+02:55:25,666 --> 02:55:26,666
+<b>we're making sure that we have specific logic</b>
+
+1016
+02:55:26,933 --> 02:55:31,333
+<b>for each way that we're taking our evaluation.</b>
+
+1017
+02:55:33,899 --> 02:55:37,799
+<b>I'm hoping that that kind of provides an explanation.</b>
+
+1018
+02:55:39,100 --> 02:55:42,266
+<b>You can always continue to ask me questions about it</b>
+
+1019
+02:55:42,266 --> 02:55:46,799
+<b>and it's my fault that the documentation is so crazy.</b>
+
+1020
+02:55:47,833 --> 02:55:49,633
+<b>So I'm going to spend this next week</b>
+
+1021
+02:55:49,633 --> 02:55:51,933
+<b>kind of just helping take that on.</b>
+
+1022
+02:55:51,933 --> 02:55:58,200
+<b>But yeah, if like my top recommendation is definitely</b>
+
+1023
+02:55:58,200 --> 02:56:00,533
+<b>take a look at the current plan</b>
+
+1024
+02:56:00,533 --> 02:56:04,666
+<b>that just has the high level stuff in it, right?</b>
+
+1025
+02:56:04,666 --> 02:56:08,433
+<b>That's the one that was created on the 13th, section two,</b>
+
+1026
+02:56:08,766 --> 02:56:11,100
+<b>right, that's the historical technical plan.</b>
+
+1027
+02:56:13,100 --> 02:56:16,133
+<b>I've updated the code base up to task 1.2 of that plan.</b>
+
+1028
+02:56:16,799 --> 02:56:19,533
+<b>So that may not be completely clear,</b>
+
+1029
+02:56:19,533 --> 02:56:20,633
+<b>but you can find in the logs folder</b>
+
+1030
+02:56:21,100 --> 02:56:24,200
+<b>under my co-pilot subfolder</b>
+
+1031
+02:56:24,200 --> 02:56:27,200
+<b>that I've completed task 1.2 of this plan.</b>
+
+1032
+02:56:29,899 --> 02:56:36,333
+<b>But where the logic deviates is currently unknown.</b>
+
+1033
+02:56:36,733 --> 02:56:40,433
+<b>So I do have a gap analysis I think that currently exists,</b>
+
+1034
+02:56:40,899 --> 02:56:44,000
+<b>but yeah, so I recommend like this upcoming week,</b>
+
+1035
+02:56:44,000 --> 02:56:47,500
+<b>just try and understand each aspect of the repository.</b>
+
+1036
+02:56:47,933 --> 02:56:52,000
+<b>The documents or the documentation</b>
+
+1037
+02:56:52,000 --> 02:56:55,666
+<b>are as accurate as I can make it.</b>
+
+1038
+02:56:57,366 --> 02:56:59,133
+<b>Also try and run the code too.</b>
+
+1039
+02:56:59,133 --> 02:57:01,533
+<b>Try and use the readme file in the folder</b>
+
+1040
+02:57:01,533 --> 02:57:04,266
+<b>to just see if you're able to install</b>
+
+1041
+02:57:04,266 --> 02:57:05,700
+<b>all the modules on your computer.</b>
+
+1042
+02:57:06,033 --> 02:57:09,633
+<b>You'll have to install Visual Studio Code.</b>
+
+1043
+02:57:09,633 --> 02:57:11,466
+<b>It's all the instructions are outlined in the readme</b>
+
+1044
+02:57:11,466 --> 02:57:13,600
+<b>for just setting up the code base itself.</b>
+
+1045
+02:57:14,666 --> 02:57:15,666
+<b>So that should be too difficult.</b>
+
+1046
+02:57:15,666 --> 02:57:22,866
+<b>If you guys run into issues with it, please tell me and yeah,</b>
+
+1047
+02:57:22,866 --> 02:57:25,266
+<b>I'm just gonna open it up to further questions</b>
+
+1048
+02:57:25,266 --> 02:57:26,200
+<b>and comments now,</b>
+
+1049
+02:57:26,200 --> 02:57:28,433
+<b>because I feel like I've been talking for too long.</b>
+
+1050
+02:57:28,733 --> 02:57:28,933
+<b>So.</b>
+
+1051
+02:57:36,500 --> 02:57:38,399
+<b>Yeah, thanks Josh.</b>
+
+1052
+02:57:38,833 --> 02:57:39,866
+<b>Thanks, Sansu.</b>
+
+1053
+02:57:39,866 --> 02:57:42,833
+<b>Yeah, I really need to go through the plan</b>
+
+1054
+02:57:42,833 --> 02:57:45,933
+<b>and all the stuff and try to run it by myself. So I think that's a good question. And all the stuff and try to run it by myself first</b>
+
+1055
+02:57:45,933 --> 02:57:49,033
+<b>so that I can understood or understand</b>
+
+1056
+02:57:49,433 --> 02:57:55,366
+<b>how exactly it works and then to give my output there.</b>
+
+1057
+02:57:56,899 --> 02:57:57,166
+<b>Sure.</b>
+
+1058
+02:57:58,399 --> 02:58:01,233
+<b>And I, like I said, I know this is a lot to take in.</b>
+
+1059
+02:58:01,233 --> 02:58:02,333
+<b>It's okay to be confused.</b>
+
+1060
+02:58:04,500 --> 02:58:07,366
+<b>It's really the way that we all work together</b>
+
+1061
+02:58:07,733 --> 02:58:09,266
+<b>with our own understanding of the project</b>
+
+1062
+02:58:10,100 --> 02:58:13,200
+<b>and how we specialize in our own areas of the project</b>
+
+1063
+02:58:13,666 --> 02:58:15,600
+<b>and how this project is gonna develop well.</b>
+
+1064
+02:58:16,033 --> 02:58:18,133
+<b>So don't worry if you don't understand everything,</b>
+
+1065
+02:58:18,433 --> 02:58:20,600
+<b>just try and stick with what you know first,</b>
+
+1066
+02:58:20,600 --> 02:58:22,433
+<b>find things that are recognizable for you</b>
+
+1067
+02:58:22,933 --> 02:58:24,733
+<b>and make your own connections from there.</b>
+
+1068
+02:58:25,799 --> 02:58:28,433
+<b>And that's probably gonna be the easiest way for you</b>
+
+1069
+02:58:28,433 --> 02:58:31,233
+<b>to kind of discover how our project.</b>
+
+1070
+02:58:33,733 --> 02:58:36,466
+<b>But yeah, I'm really, dude,</b>
+
+1071
+02:58:36,700 --> 02:58:39,000
+<b>Samuel, thank you again for making this website</b>
+
+1072
+02:58:39,333 --> 02:58:43,633
+<b>because it's just way more organized</b>
+
+1073
+02:58:43,899 --> 02:58:48,266
+<b>than that Markdown file that I made.</b>
+
+1074
+02:58:48,266 --> 02:58:49,833
+<b>I mean, you could just see where everything is.</b>
+
+1075
+02:58:49,833 --> 02:58:51,033
+<b>The summaries help so much.</b>
+
+1076
+02:58:52,733 --> 02:58:53,899
+<b>So I really appreciate that.</b>
+
+1077
+02:58:54,133 --> 02:58:55,066
+<b>That was a huge help.</b>
+
+1078
+02:58:56,266 --> 02:58:57,766
+<b>Did you do this in just one day?</b>
+
+1079
+02:58:59,600 --> 02:59:00,266
+<b>Yeah, I did that.</b>
+
+1080
+02:59:01,733 --> 02:59:02,799
+<b>(indistinct) Yeah.</b>
+
+1081
+02:59:05,233 --> 02:59:06,466
+<b>So, okay.</b>
+
+1082
+02:59:06,899 --> 02:59:08,200
+<b>I think I have a few questions.</b>
+
+1083
+02:59:09,600 --> 02:59:12,200
+<b>Actually it's mainly admin related and that's what's new.</b>
+
+1084
+02:59:12,500 --> 02:59:15,399
+<b>So I think that's a couple of things.</b>
+
+1085
+02:59:15,399 --> 02:59:16,200
+<b>So it's really like,</b>
+
+1086
+02:59:16,200 --> 02:59:18,166
+<b>is there a theme size limit for this hackathon?</b>
+
+1087
+02:59:19,066 --> 02:59:19,633
+<b>I think that's one.</b>
+
+1088
+02:59:20,066 --> 02:59:21,233
+<b>There is, it's eight people.</b>
+
+1089
+02:59:23,066 --> 02:59:23,533
+<b>Okay, okay.</b>
+
+1090
+02:59:23,733 --> 02:59:24,666
+<b>That's slightly interesting.</b>
+
+1091
+02:59:25,299 --> 02:59:26,833
+<b>Okay, so that's the first question.</b>
+
+1092
+02:59:27,200 --> 02:59:28,333
+<b>The second question is,</b>
+
+1093
+02:59:29,466 --> 02:59:33,500
+<b>I saw that there is some like,</b>
+
+1094
+02:59:35,766 --> 02:59:37,333
+<b>I mean, there's some requirements for the hackathon.</b>
+
+1095
+02:59:37,833 --> 02:59:40,100
+<b>I think, like creating a benchmark</b>
+
+1096
+02:59:40,500 --> 02:59:42,133
+<b>or evaluating some region.</b>
+
+1097
+02:59:43,033 --> 02:59:45,633
+<b>So specifically like kind of what,</b>
+
+1098
+02:59:46,299 --> 02:59:49,100
+<b>what are we pushing for for the hackathon specifically?</b>
+
+1099
+02:59:49,600 --> 02:59:50,500
+<b>So if you don't have a,</b>
+
+1100
+02:59:50,500 --> 02:59:51,133
+<b>if you ask them now,</b>
+
+1101
+02:59:51,133 --> 02:59:51,399
+<b>just like,</b>
+
+1102
+02:59:51,799 --> 02:59:52,533
+<b>(indistinct)</b>
+
+1103
+02:59:54,266 --> 02:59:55,166
+<b>really into the hackathon,</b>
+
+1104
+02:59:55,399 --> 02:59:56,133
+<b>I guess to be honest,</b>
+
+1105
+02:59:57,066 --> 02:59:58,100
+<b>why is it we're pushing for now?</b>
+
+1106
+02:59:58,333 --> 03:00:00,500
+<b>So that we can be very clear what we should optimize for.</b>
+
+1107
+03:00:00,866 --> 03:00:02,833
+<b>Yeah, we will smash the second question.</b>
+
+1108
+03:00:04,933 --> 03:00:07,733
+<b>Sorry, let me try and rephrase that.</b>
+
+1109
+03:00:07,733 --> 03:00:10,500
+<b>So like you're asking what we're pushing for now,</b>
+
+1110
+03:00:10,500 --> 03:00:11,899
+<b>what we're hoping to have achieved</b>
+
+1111
+03:00:11,899 --> 03:00:14,366
+<b>by the deadline of the green agent phase.</b>
+
+1112
+03:00:14,366 --> 03:00:15,000
+<b>Is that what you're asking?</b>
+
+1113
+03:00:16,233 --> 03:00:16,766
+<b>Exactly, yeah.</b>
+
+1114
+03:00:17,100 --> 03:00:17,666
+<b>Okay, sweet.</b>
+
+1115
+03:00:20,100 --> 03:00:22,299
+<b>So yeah,</b>
+
+1116
+03:00:22,299 --> 03:00:24,500
+<b>cause you know the website that I created,</b>
+
+1117
+03:00:24,500 --> 03:00:26,799
+<b>it's very generalized, right?</b>
+
+1118
+03:00:27,366 --> 03:00:28,633
+<b>So here's what I'm hoping.</b>
+
+1119
+03:00:28,633 --> 03:00:31,566
+<b>I'm hoping that our project,</b>
+
+1120
+03:00:31,866 --> 03:00:32,533
+<b>first of all,</b>
+
+1121
+03:00:32,700 --> 03:00:33,933
+<b>like let's start with baseline, right?</b>
+
+1122
+03:00:34,266 --> 03:00:38,000
+<b>We want our project to be easy to install to,</b>
+
+1123
+03:00:39,299 --> 03:00:41,200
+<b>so that's why I had the Docker,</b>
+
+1124
+03:00:42,000 --> 03:00:44,333
+<b>so that like all the packages are just in modules</b>
+
+1125
+03:00:44,333 --> 03:00:46,100
+<b>are just easy to install, right?</b>
+
+1126
+03:00:47,766 --> 03:00:48,000
+<b>Not,</b>
+
+1127
+03:00:49,866 --> 03:00:50,500
+<b>what do you call it?</b>
+
+1128
+03:00:51,333 --> 03:00:53,566
+<b>There's nothing gate kept about the project in the terms,</b>
+
+1129
+03:00:53,933 --> 03:00:56,333
+<b>in the sense of everything that you need</b>
+
+1130
+03:00:56,333 --> 03:00:59,000
+<b>to run the project is easily accessible.</b>
+
+1131
+03:00:59,700 --> 03:01:02,200
+<b>I feel like I'm rephrasing what I just said.</b>
+
+1132
+03:01:03,233 --> 03:01:03,733
+<b>Number three,</b>
+
+1133
+03:01:04,133 --> 03:01:06,366
+<b>it has to follow the agent to agent protocol number four,</b>
+
+1134
+03:01:06,833 --> 03:01:08,533
+<b>the contextual integrity score,</b>
+
+1135
+03:01:08,533 --> 03:01:10,933
+<b>it has to be consistent in the sense that</b>
+
+1136
+03:01:11,766 --> 03:01:13,500
+<b>when we evaluate the same code base,</b>
+
+1137
+03:01:13,899 --> 03:01:16,299
+<b>I'm hoping that our end product is going to</b>
+
+1138
+03:01:17,466 --> 03:01:20,233
+<b>provide a detailed scoring system</b>
+
+1139
+03:01:20,566 --> 03:01:21,633
+<b>that can tell us what,</b>
+
+1140
+03:01:21,633 --> 03:01:25,200
+<b>where exactly the code base that we're evaluating</b>
+
+1141
+03:01:25,500 --> 03:01:26,700
+<b>or potentially,</b>
+
+1142
+03:01:28,500 --> 03:01:29,766
+<b>or the purple agent, I'm sorry,</b>
+
+1143
+03:01:30,033 --> 03:01:31,433
+<b>the purple agent that we're evaluating,</b>
+
+1144
+03:01:32,600 --> 03:01:34,833
+<b>where exactly it falls short in certain areas,</b>
+
+1145
+03:01:35,433 --> 03:01:37,799
+<b>maybe in terms of like documentation</b>
+
+1146
+03:01:38,500 --> 03:01:40,633
+<b>or the logic behind the code,</b>
+
+1147
+03:01:41,066 --> 03:01:42,899
+<b>so it has to be consistent, right?</b>
+
+1148
+03:01:43,299 --> 03:01:45,799
+<b>So when we put something into the evaluation system,</b>
+
+1149
+03:01:46,200 --> 03:01:48,700
+<b>we want to make sure that if we run it several times</b>
+
+1150
+03:01:48,700 --> 03:01:49,666
+<b>on the same thing,</b>
+
+1151
+03:01:49,666 --> 03:01:51,799
+<b>it's not going to spit out a bunch of different stuff.</b>
+
+1152
+03:01:52,633 --> 03:01:54,500
+<b>I feel like that's kind of a simple goal,</b>
+
+1153
+03:01:55,966 --> 03:01:59,766
+<b>but other than that, I feel like everything is,</b>
+
+1154
+03:02:00,733 --> 03:02:03,633
+<b>would you feel like,</b>
+
+1155
+03:02:05,266 --> 03:02:06,399
+<b>like for example, the,</b>
+
+1156
+03:02:07,600 --> 03:02:10,166
+<b>like let's look at the recovery plan here, right?</b>
+
+1157
+03:02:14,600 --> 03:02:16,666
+<b>Let's just skip it really quick, right?</b>
+
+1158
+03:02:17,399 --> 03:02:19,133
+<b>So we have the core analyzer logic,</b>
+
+1159
+03:02:22,333 --> 03:02:27,366
+<b>each part of the logic has to output valid complexity</b>
+
+1160
+03:02:27,799 --> 03:02:29,033
+<b>and maintainability scores.</b>
+
+1161
+03:02:29,500 --> 03:02:32,966
+<b>So in terms of like maintaining</b>
+
+1162
+03:02:34,200 --> 03:02:35,399
+<b>what I'm assuming is the code base,</b>
+
+1163
+03:02:36,133 --> 03:02:38,799
+<b>it has to output, I'm sorry,</b>
+
+1164
+03:02:38,799 --> 03:02:40,766
+<b>I'm starting to lose my train of thought here a little bit.</b>
+
+1165
+03:02:43,266 --> 03:02:46,633
+<b>First of all, I know I don't have to answer your question,</b>
+
+1166
+03:02:46,633 --> 03:02:48,433
+<b>but does it seem like I understood your question</b>
+
+1167
+03:02:48,433 --> 03:02:50,566
+<b>in the first place in terms of like,</b>
+
+1168
+03:02:51,200 --> 03:02:53,433
+<b>so you're talking about our end vision, right?</b>
+
+1169
+03:02:53,966 --> 03:02:54,633
+<b>For the green agent?</b>
+
+1170
+03:02:54,933 --> 03:02:55,133
+<b>Yeah.</b>
+
+1171
+03:02:55,666 --> 03:02:55,866
+<b>Okay.</b>
+
+1172
+03:02:56,600 --> 03:02:57,933
+<b>So I think it's like,</b>
+
+1173
+03:02:58,799 --> 03:03:02,933
+<b>would you say that there's kind of a gap in documentation</b>
+
+1174
+03:03:03,433 --> 03:03:06,133
+<b>of like where our agent envision is?</b>
+
+1175
+03:03:06,633 --> 03:03:09,066
+<b>Because, you know, I feel like there's some,</b>
+
+1176
+03:03:10,166 --> 03:03:11,000
+<b>there's some like general</b>
+
+1177
+03:03:11,000 --> 03:03:13,833
+<b>visions for what our green agent is.</b>
+
+1178
+03:03:14,633 --> 03:03:16,233
+<b>And you can kind of decipher it based on</b>
+
+1179
+03:03:16,500 --> 03:03:18,233
+<b>what the recovery plan has us enact,</b>
+
+1180
+03:03:19,066 --> 03:03:21,299
+<b>but you're saying that we should probably come up</b>
+
+1181
+03:03:21,299 --> 03:03:23,799
+<b>with a document that envisions the green agent</b>
+
+1182
+03:03:23,799 --> 03:03:25,133
+<b>on a more detailed level, right?</b>
+
+1183
+03:03:26,399 --> 03:03:29,899
+<b>Yeah, I think my name is</b>
+
+1184
+03:03:29,899 --> 03:03:30,766
+<b>actually missing a little bit more.</b>
+
+1185
+03:03:31,100 --> 03:03:32,733
+<b>So like there's nothing at the start of it,</b>
+
+1186
+03:03:33,000 --> 03:03:33,533
+<b>I think it's like here,</b>
+
+1187
+03:03:34,000 --> 03:03:35,100
+<b>I think that's quite a bit of focus</b>
+
+1188
+03:03:35,100 --> 03:03:36,299
+<b>on creating a job smart.</b>
+
+1189
+03:03:37,299 --> 03:03:41,033
+<b>So it's not just like creating an agent that does,</b>
+
+1190
+03:03:41,033 --> 03:03:43,733
+<b>and it does balance and it adds,</b>
+
+1191
+03:03:43,733 --> 03:03:44,333
+<b>but we need to,</b>
+
+1192
+03:03:46,133 --> 03:03:47,933
+<b>and if any of you have a different understanding,</b>
+
+1193
+03:03:48,166 --> 03:03:48,799
+<b>please keep with me.</b>
+
+1194
+03:03:50,000 --> 03:03:51,833
+<b>We need to create like a benchmark</b>
+
+1195
+03:03:52,066 --> 03:03:53,100
+<b>that kind of can be really,</b>
+
+1196
+03:03:54,233 --> 03:03:57,633
+<b>like different kind of,</b>
+
+1197
+03:03:57,633 --> 03:03:59,866
+<b>like basically so that,</b>
+
+1198
+03:03:59,866 --> 03:04:01,933
+<b>like what you mentioned, like you predicted the key,</b>
+
+1199
+03:04:01,933 --> 03:04:03,500
+<b>but I just had to do a little bit more about</b>
+
+1200
+03:04:03,500 --> 03:04:05,566
+<b>like how we have to learn about building this,</b>
+
+1201
+03:04:05,566 --> 03:04:07,333
+<b>but it's like, no, we're telling you.</b>
+
+1202
+03:04:07,733 --> 03:04:10,133
+<b>So like, sorry, the content of like a benchmark here,</b>
+
+1203
+03:04:10,133 --> 03:04:11,000
+<b>like it's like,</b>
+
+1204
+03:04:12,200 --> 03:04:16,399
+<b>in, it's just so that like every time someone has a new,</b>
+
+1205
+03:04:16,399 --> 03:04:18,299
+<b>at least like how every time there's a new LLM,</b>
+
+1206
+03:04:18,299 --> 03:04:19,866
+<b>they're always saying that they are keeping the top score.</b>
+
+1207
+03:04:20,399 --> 03:04:22,666
+<b>So the top scores is just in like different,</b>
+
+1208
+03:04:22,799 --> 03:04:23,533
+<b>they're all different types.</b>
+
+1209
+03:04:23,533 --> 03:04:25,100
+<b>So in our case, they will be like,</b>
+
+1210
+03:04:25,366 --> 03:04:27,766
+<b>basically something that we can always make</b>
+
+1211
+03:04:27,766 --> 03:04:28,899
+<b>not for the content,</b>
+
+1212
+03:04:28,966 --> 03:04:31,433
+<b>but for like different use cases.</b>
+
+1213
+03:04:32,233 --> 03:04:32,433
+<b>Yeah.</b>
+
+1214
+03:04:33,766 --> 03:04:35,600
+<b>So you're talking like,</b>
+
+1215
+03:04:36,500 --> 03:04:41,966
+<b>like baseline things that we can use to give to agents</b>
+
+1216
+03:04:42,533 --> 03:04:47,066
+<b>in order to evaluate their output.</b>
+
+1217
+03:04:47,066 --> 03:04:47,899
+<b>Is that what you're talking about?</b>
+
+1218
+03:04:49,633 --> 03:04:50,100
+<b>Yes, correct.</b>
+
+1219
+03:04:50,933 --> 03:04:55,399
+<b>So like an example is like,</b>
+
+1220
+03:04:56,433 --> 03:04:58,066
+<b>for example, Gemini 3.0 just released</b>
+
+1221
+03:04:58,366 --> 03:05:00,166
+<b>and then they're saying, oh, it's touching the benchmark.</b>
+
+1222
+03:05:01,200 --> 03:05:04,166
+<b>Or it's like, of course those things can always be king,</b>
+
+1223
+03:05:04,899 --> 03:05:06,466
+<b>but it does give like a baseline understanding</b>
+
+1224
+03:05:06,466 --> 03:05:07,866
+<b>of how good it can be said,</b>
+
+1225
+03:05:07,866 --> 03:05:10,266
+<b>a specific class, let's say a software development,</b>
+
+1226
+03:05:10,933 --> 03:05:12,966
+<b>that have three bench or software development.</b>
+
+1227
+03:05:13,433 --> 03:05:17,399
+<b>That's a class that is commonly like very useful</b>
+
+1228
+03:05:17,399 --> 03:05:18,266
+<b>for like coding agents,</b>
+
+1229
+03:05:19,133 --> 03:05:20,700
+<b>like a Google Junes or whatever it is.</b>
+
+1230
+03:05:21,433 --> 03:05:24,100
+<b>And similarly for us,</b>
+
+1231
+03:05:24,533 --> 03:05:27,133
+<b>we wanna be able to evaluate the contextual integrity.</b>
+
+1232
+03:05:27,899 --> 03:05:31,066
+<b>So we wanna kind of create a benchmark for that.</b>
+
+1233
+03:05:31,066 --> 03:05:32,366
+<b>And this is my understanding of like,</b>
+
+1234
+03:05:32,366 --> 03:05:34,200
+<b>what is the impact upon part of this</b>
+
+1235
+03:05:34,200 --> 03:05:35,299
+<b>to the data system we've been on,</b>
+
+1236
+03:05:35,600 --> 03:05:37,433
+<b>which is like something that should be done.</b>
+
+1237
+03:05:37,566 --> 03:05:38,666
+<b>And for our own use case,</b>
+
+1238
+03:05:39,299 --> 03:05:40,933
+<b>as we like work on this agent,</b>
+
+1239
+03:05:41,700 --> 03:05:43,000
+<b>and we evaluate like different elements,</b>
+
+1240
+03:05:43,233 --> 03:05:46,000
+<b>like we can kind of see how well like different elements</b>
+
+1241
+03:05:46,633 --> 03:05:47,366
+<b>work on this benchmark.</b>
+
+1242
+03:05:47,799 --> 03:05:48,899
+<b>So I get them this one,</b>
+
+1243
+03:05:48,899 --> 03:05:50,533
+<b>like different about map,</b>
+
+1244
+03:05:51,500 --> 03:05:53,533
+<b>if that's all the panel, yeah.</b>
+
+1245
+03:05:53,933 --> 03:05:55,133
+<b>That's good. Like how we get doing it.</b>
+
+1246
+03:05:55,399 --> 03:05:55,799
+<b>Yeah, that's good.</b>
+
+1247
+03:05:56,033 --> 03:05:59,399
+<b>Okay, well, since we're kind of coming out of this</b>
+
+1248
+03:05:59,766 --> 03:06:01,799
+<b>with a bit of a cybersecurity angle,</b>
+
+1249
+03:06:01,799 --> 03:06:03,833
+<b>I was thinking maybe we could come up</b>
+
+1250
+03:06:03,833 --> 03:06:08,466
+<b>with a few benchmark ideas for like cybersecurity apps</b>
+
+1251
+03:06:08,733 --> 03:06:11,066
+<b>or maybe I wanna say environments.</b>
+
+1252
+03:06:11,666 --> 03:06:13,600
+<b>I don't have any specific ideas yet,</b>
+
+1253
+03:06:13,766 --> 03:06:16,833
+<b>but I'm really glad that you brought that up.</b>
+
+1254
+03:06:17,700 --> 03:06:21,266
+<b>Did you happen to have any ideas for that yet?</b>
+
+1255
+03:06:21,266 --> 03:06:22,899
+<b>Or maybe we could set a time later</b>
+
+1256
+03:06:22,966 --> 03:06:25,866
+<b>to kind of hone that a little bit.</b>
+
+1257
+03:06:26,200 --> 03:06:26,733
+<b>Sure, yeah.</b>
+
+1258
+03:06:27,799 --> 03:06:30,133
+<b>I think that is, sorry, yeah.</b>
+
+1259
+03:06:30,200 --> 03:06:30,600
+<b>Oh, sorry.</b>
+
+1260
+03:06:31,033 --> 03:06:32,033
+<b>And then in terms of like</b>
+
+1261
+03:06:33,000 --> 03:06:37,600
+<b>how we present those baseline evaluation prompts</b>
+
+1262
+03:06:37,600 --> 03:06:40,633
+<b>would be, in terms of like,</b>
+
+1263
+03:06:41,733 --> 03:06:43,200
+<b>okay, it's tough because it's like,</b>
+
+1264
+03:06:44,433 --> 03:06:45,700
+<b>are you talking about like prompts</b>
+
+1265
+03:06:45,933 --> 03:06:47,100
+<b>that we would give the out,</b>
+
+1266
+03:06:47,600 --> 03:06:50,866
+<b>the proposed purple agent, right?</b>
+
+1267
+03:06:52,000 --> 03:06:53,899
+<b>We would give the purple agent prompts</b>
+
+1268
+03:06:53,899 --> 03:06:55,566
+<b>that we've already pre-structured</b>
+
+1269
+03:06:56,066 --> 03:06:58,799
+<b>that we would eventually use to see</b>
+
+1270
+03:06:58,799 --> 03:07:02,100
+<b>if the agent has completed those tasks in a way</b>
+
+1271
+03:07:02,399 --> 03:07:04,500
+<b>that doesn't accumulate contextual debt,</b>
+
+1272
+03:07:04,799 --> 03:07:06,333
+<b>which relates back to those prompts.</b>
+
+1273
+03:07:07,033 --> 03:07:08,366
+<b>Is that kind of--</b>
+
+1274
+03:07:08,399 --> 03:07:09,433
+<b>Yeah, something like that.</b>
+
+1275
+03:07:09,899 --> 03:07:11,000
+<b>Something like that. So prompts, yeah.</b>
+
+1276
+03:07:11,000 --> 03:07:12,933
+<b>So prompts for the purple agent to build something,</b>
+
+1277
+03:07:13,866 --> 03:07:15,733
+<b>and then we wait for the purple agent to build something,</b>
+
+1278
+03:07:16,100 --> 03:07:19,233
+<b>and then we evaluate what it builds against the prompts</b>
+
+1279
+03:07:19,533 --> 03:07:22,500
+<b>and the why and the what behind those prompts, right?</b>
+
+1280
+03:07:24,233 --> 03:07:26,566
+<b>Yeah, I think we need to think a bit more</b>
+
+1281
+03:07:26,566 --> 03:07:28,333
+<b>about how to flesh out the benchmark.</b>
+
+1282
+03:07:29,200 --> 03:07:30,533
+<b>I had people like kind of</b>
+
+1283
+03:07:30,533 --> 03:07:33,100
+<b>discuss this another time as well,</b>
+
+1284
+03:07:33,100 --> 03:07:36,500
+<b>but like just wanted to get some clarity on</b>
+
+1285
+03:07:37,033 --> 03:07:37,700
+<b>where we're at.</b>
+
+1286
+03:07:38,399 --> 03:07:43,833
+<b>But I sent some of the benchmark,</b>
+
+1287
+03:07:44,100 --> 03:07:45,333
+<b>I think they are looking at</b>
+
+1288
+03:07:45,333 --> 03:07:49,299
+<b>as the competition in the group.</b>
+
+1289
+03:07:50,033 --> 03:07:51,166
+<b>It's in the Discord somewhere,</b>
+
+1290
+03:07:51,166 --> 03:07:52,433
+<b>if you are, but I sent it in the chat.</b>
+
+1291
+03:07:53,833 --> 03:07:57,633
+<b>And that's just some standard like benchmarks</b>
+
+1292
+03:07:57,899 --> 03:07:59,799
+<b>that people use to evaluate like this.</b>
+
+1293
+03:08:00,433 --> 03:08:01,633
+<b>Sweet, that's kind of different,</b>
+
+1294
+03:08:02,333 --> 03:08:03,600
+<b>different types of agents for different tasks,</b>
+
+1295
+03:08:04,166 --> 03:08:07,000
+<b>but what we are doing is slightly different,</b>
+
+1296
+03:08:07,500 --> 03:08:08,799
+<b>and I'm actually not super sure</b>
+
+1297
+03:08:08,799 --> 03:08:13,133
+<b>how we're gonna frame the engine itself.</b>
+
+1298
+03:08:13,633 --> 03:08:15,266
+<b>So I think some, from the benchmark itself,</b>
+
+1299
+03:08:15,933 --> 03:08:17,233
+<b>I don't know if any of you have experienced</b>
+
+1300
+03:08:17,233 --> 03:08:18,899
+<b>like building these kind of benchmarks</b>
+
+1301
+03:08:18,899 --> 03:08:21,933
+<b>in a different field of trying,</b>
+
+1302
+03:08:23,000 --> 03:08:26,200
+<b>but the idea is that we wanna make a task</b>
+
+1303
+03:08:26,899 --> 03:08:30,033
+<b>that we can evaluate like any agent on,</b>
+
+1304
+03:08:30,733 --> 03:08:31,299
+<b>if that makes sense.</b>
+
+1305
+03:08:31,633 --> 03:08:34,100
+<b>It's like a test, yeah.</b>
+
+1306
+03:08:34,600 --> 03:08:35,866
+<b>It's a test that you can just run</b>
+
+1307
+03:08:36,466 --> 03:08:37,333
+<b>without putting in a yes,</b>
+
+1308
+03:08:37,600 --> 03:08:40,133
+<b>but yeah, like just run different agents on</b>
+
+1309
+03:08:40,133 --> 03:08:41,233
+<b>and then see if I can do it.</b>
+
+1310
+03:08:41,233 --> 03:08:44,333
+<b>So we need like some kind of any real life,</b>
+
+1311
+03:08:44,733 --> 03:08:48,933
+<b>we need some sort of rubric to figure out what always,</b>
+
+1312
+03:08:48,933 --> 03:08:50,700
+<b>how we're measuring the content for that.</b>
+
+1313
+03:08:51,700 --> 03:08:53,500
+<b>So yeah, the one,</b>
+
+1314
+03:08:55,100 --> 03:08:57,033
+<b>yeah, just throwing some new thoughts.</b>
+
+1315
+03:08:57,033 --> 03:08:58,633
+<b>So like, we think about it and like,</b>
+
+1316
+03:08:58,633 --> 03:09:00,799
+<b>think if we put the discuss some,</b>
+
+1317
+03:09:01,700 --> 03:09:02,833
+<b>how we really wanna put that,</b>
+
+1318
+03:09:03,066 --> 03:09:05,299
+<b>because I'm still looking through the rubrics,</b>
+
+1319
+03:09:05,399 --> 03:09:06,966
+<b>I think that's like one of the things</b>
+
+1320
+03:09:06,966 --> 03:09:08,700
+<b>that they do that specifically for this,</b>
+
+1321
+03:09:09,366 --> 03:09:11,799
+<b>which is like creating a benchmark,</b>
+
+1322
+03:09:12,000 --> 03:09:13,299
+<b>extend it and our benchmark,</b>
+
+1323
+03:09:14,666 --> 03:09:17,566
+<b>the ideas that they want things to be that,</b>
+
+1324
+03:09:18,299 --> 03:09:19,533
+<b>basically help the community to like,</b>
+
+1325
+03:09:20,100 --> 03:09:21,233
+<b>evaluate agents in the formulas.</b>
+
+1326
+03:09:22,166 --> 03:09:25,466
+<b>Yeah, so maybe like next time,</b>
+
+1327
+03:09:25,466 --> 03:09:26,700
+<b>they'll have to try and evaluate</b>
+
+1328
+03:09:26,700 --> 03:09:28,533
+<b>how good they are on our contextual</b>
+
+1329
+03:09:29,033 --> 03:09:30,600
+<b>information score, like,</b>
+
+1330
+03:09:32,133 --> 03:09:34,033
+<b>and specifically for security,</b>
+
+1331
+03:09:34,399 --> 03:09:36,233
+<b>I think I have some questions on that,</b>
+
+1332
+03:09:36,233 --> 03:09:38,933
+<b>like how we're gonna link like this content</b>
+
+1333
+03:09:38,933 --> 03:09:42,033
+<b>for that here with like security wise,</b>
+
+1334
+03:09:42,033 --> 03:09:44,000
+<b>because I think that's like in different concept as well.</b>
+
+1335
+03:09:45,500 --> 03:09:50,133
+<b>But yeah, so I think that's about it,</b>
+
+1336
+03:09:50,133 --> 03:09:51,033
+<b>just like some thoughts,</b>
+
+1337
+03:09:51,266 --> 03:09:52,600
+<b>some questions I have on that,</b>
+
+1338
+03:09:52,866 --> 03:09:54,100
+<b>but like direction wise,</b>
+
+1339
+03:09:54,100 --> 03:09:55,733
+<b>it would be good specifically for this type of problem</b>
+
+1340
+03:09:55,733 --> 03:09:59,366
+<b>to figure out what's, what everyone is, yeah.</b>
+
+1341
+03:10:00,366 --> 03:10:01,200
+<b>Okay, okay.</b>
+
+1342
+03:10:02,433 --> 03:10:06,000
+<b>Anybody else wanna add on to that first time or?</b>
+
+1343
+03:10:09,933 --> 03:10:11,899
+<b>I don't think I know anything so much.</b>
+
+1344
+03:10:15,000 --> 03:10:17,933
+<b>Okay, okay, but I see what you're getting at,</b>
+
+1345
+03:10:17,933 --> 03:10:20,233
+<b>and I agree, I think it's really important.</b>
+
+1346
+03:10:21,000 --> 03:10:22,066
+<b>I would appreciate it,</b>
+
+1347
+03:10:22,066 --> 03:10:25,500
+<b>so once I get a group server up and running,</b>
+
+1348
+03:10:25,733 --> 03:10:29,133
+<b>which will be like whenever this meeting wraps up,</b>
+
+1349
+03:10:29,133 --> 03:10:30,299
+<b>I'll invite all you guys to it,</b>
+
+1350
+03:10:31,066 --> 03:10:34,200
+<b>if you could rephrase that question</b>
+
+1351
+03:10:35,500 --> 03:10:37,600
+<b>or basically goal for us</b>
+
+1352
+03:10:37,600 --> 03:10:39,766
+<b>and just put it as a message into the chat,</b>
+
+1353
+03:10:39,766 --> 03:10:41,433
+<b>that would be really helpful.</b>
+
+1354
+03:10:42,299 --> 03:10:43,700
+<b>And then I'll provide the script,</b>
+
+1355
+03:10:43,700 --> 03:10:44,899
+<b>the transcript too,</b>
+
+1356
+03:10:44,899 --> 03:10:46,833
+<b>and kind of format that as an agenda.</b>
+
+1357
+03:10:47,466 --> 03:10:50,166
+<b>Hopefully it will get picked up on that too, so.</b>
+
+1358
+03:10:51,799 --> 03:10:52,899
+<b>But yeah, that's good,</b>
+
+1359
+03:10:52,899 --> 03:10:55,100
+<b>we have to figure out whether or not</b>
+
+1360
+03:10:55,166 --> 03:10:59,033
+<b>the plan currently addresses any aspect of that.</b>
+
+1361
+03:11:00,133 --> 03:11:03,366
+<b>I feel like it hopefully touches on a little bit of that,</b>
+
+1362
+03:11:03,600 --> 03:11:05,399
+<b>but maybe not so much in the specifics.</b>
+
+1363
+03:11:07,033 --> 03:11:09,533
+<b>Yeah, yeah.</b>
+
+1364
+03:11:11,033 --> 03:11:12,666
+<b>And then I guess the last,</b>
+
+1365
+03:11:12,666 --> 03:11:15,299
+<b>another admin is on like commitment wise,</b>
+
+1366
+03:11:15,966 --> 03:11:19,466
+<b>I like, I'll be able to pick another paper here.</b>
+
+1367
+03:11:20,366 --> 03:11:21,933
+<b>Yeah, how much?</b>
+
+1368
+03:11:23,266 --> 03:11:25,966
+<b>Sorry, it's just, sure, sorry,</b>
+
+1369
+03:11:25,966 --> 03:11:26,933
+<b>can you hear me now? Yeah.</b>
+
+1370
+03:11:28,433 --> 03:11:31,966
+<b>Yeah, so I think it's like commitment wise.</b>
+
+1371
+03:11:32,799 --> 03:11:35,100
+<b>And we can also discuss this like,</b>
+
+1372
+03:11:35,500 --> 03:11:36,533
+<b>after we look through the,</b>
+
+1373
+03:11:37,533 --> 03:11:39,399
+<b>like just how we commit and then,</b>
+
+1374
+03:11:39,799 --> 03:11:43,233
+<b>and I guess if we're having between meetings,</b>
+
+1375
+03:11:43,533 --> 03:11:44,833
+<b>like when's it gonna be,</b>
+
+1376
+03:11:44,833 --> 03:11:46,633
+<b>and I also like stuff like that.</b>
+
+1377
+03:11:47,566 --> 03:11:47,733
+<b>(laughing)</b>
+
+1378
+03:11:48,366 --> 03:11:49,600
+<b>Just so we can have a view of that, yeah.</b>
+
+1379
+03:11:50,000 --> 03:11:51,799
+<b>So when you say the word commit,</b>
+
+1380
+03:11:51,799 --> 03:11:53,899
+<b>are you talking about like committing to the repository</b>
+
+1381
+03:11:54,200 --> 03:11:55,399
+<b>or your time commitment?</b>
+
+1382
+03:11:55,833 --> 03:11:56,033
+<b>Which one?</b>
+
+1383
+03:11:57,333 --> 03:11:58,899
+<b>I mean, for repositories, I don't know,</b>
+
+1384
+03:11:58,899 --> 03:12:01,733
+<b>it's pretty standard, we just make a branch and stuff.</b>
+
+1385
+03:12:02,399 --> 03:12:05,299
+<b>I think we should all kind of be a bit familiar with that,</b>
+
+1386
+03:12:05,666 --> 03:12:08,366
+<b>but talking more of like working.</b>
+
+1387
+03:12:09,000 --> 03:12:09,799
+<b>Like team commitment.</b>
+
+1388
+03:12:10,500 --> 03:12:11,633
+<b>How much time, yeah, exactly.</b>
+
+1389
+03:12:11,633 --> 03:12:13,000
+<b>How much time can you put into this?</b>
+
+1390
+03:12:13,466 --> 03:12:15,066
+<b>And what kind of what stuff</b>
+
+1391
+03:12:15,066 --> 03:12:16,299
+<b>are you interested in working on?</b>
+
+1392
+03:12:16,866 --> 03:12:18,333
+<b>And if the stuff you're interested in working on</b>
+
+1393
+03:12:18,333 --> 03:12:19,466
+<b>is not given out,</b>
+
+1394
+03:12:19,466 --> 03:12:23,299
+<b>like then like think about it.</b>
+
+1395
+03:12:24,000 --> 03:12:24,100
+<b>(mumbles)</b>
+
+1396
+03:12:27,333 --> 03:12:27,566
+<b>That's good.</b>
+
+1397
+03:12:28,666 --> 03:12:29,833
+<b>Yeah, if we can all outline</b>
+
+1398
+03:12:31,600 --> 03:12:34,566
+<b>what our interests are in this repository,</b>
+
+1399
+03:12:35,399 --> 03:12:37,866
+<b>in the group chat, they'll create later,</b>
+
+1400
+03:12:39,133 --> 03:12:40,899
+<b>that will kind of help with the baseline commitment.</b>
+
+1401
+03:12:41,233 --> 03:12:45,100
+<b>I think, I would say don't overexert yourself.</b>
+
+1402
+03:12:46,933 --> 03:12:49,899
+<b>I think part of the commitment is going to be in,</b>
+
+1403
+03:12:52,066 --> 03:12:53,533
+<b>sorry, I'm losing my train of thought again.</b>
+
+1404
+03:12:54,133 --> 03:12:56,033
+<b>But yeah, I agree with everything that you said.</b>
+
+1405
+03:12:56,899 --> 03:12:59,266
+<b>I think that we should definitely come up with</b>
+
+1406
+03:12:59,500 --> 03:13:02,166
+<b>some kind of like team consensus document</b>
+
+1407
+03:13:02,333 --> 03:13:04,366
+<b>of what aspects of the project</b>
+
+1408
+03:13:04,366 --> 03:13:06,633
+<b>that we're personally committing ourselves to,</b>
+
+1409
+03:13:07,200 --> 03:13:10,700
+<b>to ensure that there are no gaps in the repository</b>
+
+1410
+03:13:11,100 --> 03:13:14,733
+<b>and that nothing is being kind of just looked past.</b>
+
+1411
+03:13:16,433 --> 03:13:20,066
+<b>Hopefully that kind of just rephrased what you said, right?</b>
+
+1412
+03:13:20,500 --> 03:13:21,000
+<b>Is that what you said?</b>
+
+1413
+03:13:21,333 --> 03:13:22,766
+<b>Yeah, Facebook.</b>
+
+1414
+03:13:25,266 --> 03:13:26,100
+<b>Yeah, I agree.</b>
+
+1415
+03:13:27,200 --> 03:13:29,433
+<b>And I feel like maybe like first,</b>
+
+1416
+03:13:29,666 --> 03:13:34,233
+<b>I think we all go through the repository by ourself.</b>
+
+1417
+03:13:35,200 --> 03:13:36,899
+<b>And I think that because I mean,</b>
+
+1418
+03:13:37,233 --> 03:13:39,600
+<b>when I checked the submission requirement,</b>
+
+1419
+03:13:40,100 --> 03:13:41,700
+<b>I mean, or the judging criteria,</b>
+
+1420
+03:13:42,600 --> 03:13:44,333
+<b>I think that the core is about</b>
+
+1421
+03:13:44,633 --> 03:13:45,933
+<b>how do we define the benchmark</b>
+
+1422
+03:13:46,333 --> 03:13:48,000
+<b>and benchmarking and all the stuff.</b>
+
+1423
+03:13:48,333 --> 03:13:50,899
+<b>But other than that, there's still many minor stuff.</b>
+
+1424
+03:13:51,133 --> 03:13:52,933
+<b>Like for example, you need to prepare</b>
+
+1425
+03:13:53,133 --> 03:13:55,200
+<b>a clean repository, clear instruction,</b>
+
+1426
+03:13:56,033 --> 03:13:57,700
+<b>or even a three minute video.</b>
+
+1427
+03:13:58,166 --> 03:14:00,566
+<b>And I think all those minor things we also need to plan.</b>
+
+1428
+03:14:00,899 --> 03:14:03,899
+<b>So I think maybe after everyone go through the repository</b>
+
+1429
+03:14:04,266 --> 03:14:05,366
+<b>and if we meet next time,</b>
+
+1430
+03:14:05,366 --> 03:14:08,466
+<b>or we just commute in the discord or in the chat,</b>
+
+1431
+03:14:08,866 --> 03:14:12,133
+<b>then we can also write down maybe who to do what.</b>
+
+1432
+03:14:13,100 --> 03:14:16,433
+<b>Because I feel like maybe we can have one person,</b>
+
+1433
+03:14:16,433 --> 03:14:19,933
+<b>maybe Josh or Sam you, you can deep dive more</b>
+
+1434
+03:14:20,133 --> 03:14:23,000
+<b>in the benchmarking part.</b>
+
+1435
+03:14:23,533 --> 03:14:27,100
+<b>But I think for me, at least for the moment,</b>
+
+1436
+03:14:27,299 --> 03:14:29,200
+<b>I feel like I would like to have</b>
+
+1437
+03:14:29,200 --> 03:14:31,333
+<b>a like grounding understanding of it.</b>
+
+1438
+03:14:31,799 --> 03:14:35,799
+<b>But then maybe I can also focus on more the coding quality</b>
+
+1439
+03:14:36,033 --> 03:14:37,333
+<b>or how can we make it better?</b>
+
+1440
+03:14:37,733 --> 03:14:40,066
+<b>So I think we can also make like kind of</b>
+
+1441
+03:14:40,433 --> 03:14:41,766
+<b>like specific for everyone</b>
+
+1442
+03:14:41,766 --> 03:14:45,100
+<b>so that we can all contribute to the project as a team</b>
+
+1443
+03:14:45,433 --> 03:14:46,366
+<b>then when we submit it.</b>
+
+1444
+03:14:46,733 --> 03:14:46,933
+<b>So.</b>
+
+1445
+03:14:48,433 --> 03:14:49,033
+<b>Okay, perfect.</b>
+
+1446
+03:14:50,200 --> 03:14:50,399
+<b>Yeah.</b>
+
+1447
+03:14:51,399 --> 03:14:52,433
+<b>Sorry, go ahead Finzi.</b>
+
+1448
+03:14:53,399 --> 03:14:55,066
+<b>Yeah, I just wanted to add to that.</b>
+
+1449
+03:14:56,033 --> 03:14:57,700
+<b>That's really, really necessary</b>
+
+1450
+03:14:58,033 --> 03:15:01,533
+<b>because I think we have like four weeks or something</b>
+
+1451
+03:15:03,833 --> 03:15:06,633
+<b>for the whole thing to be done.</b>
+
+1452
+03:15:07,200 --> 03:15:09,133
+<b>I thought I had a theoretical understanding</b>
+
+1453
+03:15:09,133 --> 03:15:11,100
+<b>when I went through the repo,</b>
+
+1454
+03:15:11,366 --> 03:15:15,899
+<b>but I need to run it on my, yeah.</b>
+
+1455
+03:15:16,899 --> 03:15:20,299
+<b>Now I see that there was a lot that I didn't really look at</b>
+
+1456
+03:15:21,333 --> 03:15:23,566
+<b>just like Garret says.</b>
+
+1457
+03:15:24,433 --> 03:15:28,233
+<b>So it's important if we know</b>
+
+1458
+03:15:28,233 --> 03:15:30,566
+<b>if we are going to be meeting every week and when,</b>
+
+1459
+03:15:30,766 --> 03:15:32,000
+<b>maybe even from now.</b>
+
+1460
+03:15:32,399 --> 03:15:35,833
+<b>But if we are not even able to talk about it now,</b>
+
+1461
+03:15:35,833 --> 03:15:38,100
+<b>we should do that like as soon as</b>
+
+1462
+03:15:38,333 --> 03:15:42,299
+<b>because of time constraint.</b>
+
+1463
+03:15:43,833 --> 03:15:44,033
+<b>Yeah.</b>
+
+1464
+03:15:45,399 --> 03:15:45,700
+<b>Sure.</b>
+
+1465
+03:15:47,500 --> 03:15:48,633
+<b>Yeah, that's really good.</b>
+
+1466
+03:15:48,666 --> 03:15:50,600
+<b>And I was hoping,</b>
+
+1467
+03:15:50,833 --> 03:15:53,033
+<b>so when we do kind of pick out our roles</b>
+
+1468
+03:15:53,033 --> 03:15:55,566
+<b>and make sure that like what you said,</b>
+
+1469
+03:15:56,200 --> 03:15:58,000
+<b>even just making the presentation video</b>
+
+1470
+03:15:58,600 --> 03:16:00,333
+<b>and the clean repository and the instructions,</b>
+
+1471
+03:16:01,733 --> 03:16:04,966
+<b>there's kind of, there's a little bit of a table,</b>
+
+1472
+03:16:05,166 --> 03:16:08,866
+<b>a role table for that in the project plan,</b>
+
+1473
+03:16:09,333 --> 03:16:11,166
+<b>markdown document for that.</b>
+
+1474
+03:16:11,633 --> 03:16:13,766
+<b>But I feel like we could totally tweak those roles</b>
+
+1475
+03:16:13,766 --> 03:16:14,666
+<b>to make sure that,</b>
+
+1476
+03:16:15,500 --> 03:16:17,500
+<b>you can just take inspiration from that table.</b>
+
+1477
+03:16:19,233 --> 03:16:21,333
+<b>And yeah, when it comes to just like discovery</b>
+
+1478
+03:16:21,333 --> 03:16:24,500
+<b>of the repository, yeah, please, please clone it.</b>
+
+1479
+03:16:24,700 --> 03:16:26,933
+<b>And just to make sure that everything runs</b>
+
+1480
+03:16:27,066 --> 03:16:29,933
+<b>without any module install errors and stuff.</b>
+
+1481
+03:16:31,066 --> 03:16:34,133
+<b>From then on, you can do some little testing with that.</b>
+
+1482
+03:16:34,366 --> 03:16:36,500
+<b>But I guess main priority is like,</b>
+
+1483
+03:16:36,500 --> 03:16:37,833
+<b>I know what runs on my machine.</b>
+
+1484
+03:16:38,066 --> 03:16:40,933
+<b>I have a Windows 10 desktop,</b>
+
+1485
+03:16:40,933 --> 03:16:43,133
+<b>you know, 64 bit or whatever.</b>
+
+1486
+03:16:44,500 --> 03:16:47,633
+<b>But yeah, try and just make sure it runs on your stuff too.</b>
+
+1487
+03:16:48,466 --> 03:16:49,799
+<b>If you guys run into any issues,</b>
+
+1488
+03:16:50,100 --> 03:16:52,333
+<b>just please, please document them.</b>
+
+1489
+03:16:53,233 --> 03:16:54,333
+<b>Yeah, I really agree.</b>
+
+1490
+03:16:54,333 --> 03:16:55,666
+<b>That's really good that you're following the rules.</b>
+
+1491
+03:16:56,600 --> 03:16:57,899
+<b>Are you guys good?</b>
+
+1492
+03:16:58,166 --> 03:16:59,399
+<b>So I know that you guys are in</b>
+
+1493
+03:16:59,399 --> 03:17:00,733
+<b>kind of in different time zones.</b>
+
+1494
+03:17:01,166 --> 03:17:03,533
+<b>Like Garrett, you're here at 3 a.m.</b>
+
+1495
+03:17:04,799 --> 03:17:10,000
+<b>So depending on what you're gonna be doing later today,</b>
+
+1496
+03:17:10,000 --> 03:17:11,633
+<b>I don't know if you're gonna go back to sleep,</b>
+
+1497
+03:17:11,633 --> 03:17:13,533
+<b>take a nap or it's like, it's okay.</b>
+
+1498
+03:17:14,200 --> 03:17:18,299
+<b>So it's 7.30 my time.</b>
+
+1499
+03:17:18,333 --> 03:17:19,566
+<b>What time is it for you?</b>
+
+1500
+03:17:21,100 --> 03:17:22,233
+<b>Now it's 4.30.</b>
+
+1501
+03:17:23,500 --> 03:17:25,133
+<b>Dude, thank you.</b>
+
+1502
+03:17:25,133 --> 03:17:27,200
+<b>I think we should let the man get to sleep.</b>
+
+1503
+03:17:27,466 --> 03:17:27,966
+<b>Yeah, dude.</b>
+
+1504
+03:17:28,866 --> 03:17:33,133
+<b>So I was thinking like, okay, every Friday we can do,</b>
+
+1505
+03:17:33,899 --> 03:17:37,899
+<b>I think it would be good for us to potentially pair up</b>
+
+1506
+03:17:38,100 --> 03:17:39,633
+<b>depending on time zones.</b>
+
+1507
+03:17:40,033 --> 03:17:40,899
+<b>So if you guys are like,</b>
+
+1508
+03:17:41,233 --> 03:17:43,466
+<b>if it's really late in the night for some of you guys,</b>
+
+1509
+03:17:43,466 --> 03:17:47,433
+<b>maybe a little bit earlier on this Friday.</b>
+
+1510
+03:17:48,899 --> 03:17:51,166
+<b>For you, Garrett, I was hoping potentially</b>
+
+1511
+03:17:51,166 --> 03:17:53,966
+<b>maybe you could meet with me in a few hours.</b>
+
+1512
+03:17:53,966 --> 03:17:56,633
+<b>This would be one in the morning my time.</b>
+
+1513
+03:17:56,633 --> 03:18:00,666
+<b>So 7.30, 8.30, 9.30, 10.30, 11, 12.</b>
+
+1514
+03:18:01,633 --> 03:18:04,066
+<b>And then so in five and a half hours,</b>
+
+1515
+03:18:04,066 --> 03:18:05,899
+<b>would you be free in five and a half hours</b>
+
+1516
+03:18:05,899 --> 03:18:07,100
+<b>because I have a teammate</b>
+
+1517
+03:18:07,100 --> 03:18:11,133
+<b>who's in Germany as well, I think.</b>
+
+1518
+03:18:12,600 --> 03:18:14,000
+<b>It would be around.</b>
+
+1519
+03:18:14,299 --> 03:18:14,633
+<b>Okay, so.</b>
+
+1520
+03:18:15,433 --> 03:18:18,266
+<b>I think that would be around 10 in the morning for you.</b>
+
+1521
+03:18:19,666 --> 03:18:21,633
+<b>So how many hours after?</b>
+
+1522
+03:18:22,866 --> 03:18:25,133
+<b>So five and a half hours from now,</b>
+
+1523
+03:18:25,500 --> 03:18:28,200
+<b>I'm going to be meeting with somebody else</b>
+
+1524
+03:18:28,200 --> 03:18:29,899
+<b>who I think lives in Germany too.</b>
+
+1525
+03:18:31,500 --> 03:18:36,433
+<b>Okay, I think that would be about 10 or 11, right?</b>
+
+1526
+03:18:37,566 --> 03:18:42,500
+<b>So yeah, I need to check if I could still wake up,</b>
+
+1527
+03:18:43,566 --> 03:18:43,899
+<b>to be honest.</b>
+
+1528
+03:18:44,433 --> 03:18:46,000
+<b>It's okay, no worries, no worries.</b>
+
+1529
+03:18:46,500 --> 03:18:48,333
+<b>But I'm saying like next week.</b>
+
+1530
+03:18:49,299 --> 03:18:50,266
+<b>Ah yeah, I mean.</b>
+
+1531
+03:18:50,533 --> 03:18:51,366
+<b>Next week, do that instead.</b>
+
+1532
+03:18:52,166 --> 03:18:55,033
+<b>And then, because that would help for eight,</b>
+
+1533
+03:18:55,866 --> 03:18:56,799
+<b>I'm a night owl, right?</b>
+
+1534
+03:18:57,133 --> 03:19:00,466
+<b>I like to stay up until 10 or 11 AM your time.</b>
+
+1535
+03:19:00,466 --> 03:19:02,066
+<b>So I can always just meet with you then.</b>
+
+1536
+03:19:03,500 --> 03:19:06,566
+<b>And then just record other,</b>
+
+1537
+03:19:06,566 --> 03:19:09,233
+<b>I think if we meet asynchronously,</b>
+
+1538
+03:19:09,233 --> 03:19:10,933
+<b>I think everybody should record their meetings.</b>
+
+1539
+03:19:11,633 --> 03:19:13,833
+<b>And then I can help with transcript organization</b>
+
+1540
+03:19:13,833 --> 03:19:14,633
+<b>and all that.</b>
+
+1541
+03:19:14,933 --> 03:19:16,500
+<b>We can all be on the same page that way.</b>
+
+1542
+03:19:16,500 --> 03:19:19,200
+<b>We don't have to meet everybody at once.</b>
+
+1543
+03:19:19,966 --> 03:19:24,333
+<b>But yeah, are Fridays slash Saturday mornings</b>
+
+1544
+03:19:24,333 --> 03:19:27,033
+<b>a good day for you guys to do?</b>
+
+1545
+03:19:28,766 --> 03:19:30,666
+<b>For me, this time works,</b>
+
+1546
+03:19:31,000 --> 03:19:33,200
+<b>but even later in the night works.</b>
+
+1547
+03:19:33,466 --> 03:19:37,433
+<b>But during the day, during the weekdays,</b>
+
+1548
+03:19:37,700 --> 03:19:39,266
+<b>I don't have time.</b>
+
+1549
+03:19:39,600 --> 03:19:42,866
+<b>But I'm also a night person like you are.</b>
+
+1550
+03:19:44,133 --> 03:19:47,566
+<b>Yeah, so most of the nights I'm able to do extra,</b>
+
+1551
+03:19:48,100 --> 03:19:52,600
+<b>other works other than my PhD work here.</b>
+
+1552
+03:19:52,899 --> 03:19:53,100
+<b>So.</b>
+
+1553
+03:19:54,233 --> 03:19:54,833
+<b>Okay, sweet.</b>
+
+1554
+03:19:55,766 --> 03:19:58,600
+<b>Yeah, and don't burn yourselves out.</b>
+
+1555
+03:19:59,033 --> 03:20:01,833
+<b>You can commit to as much as you feel comfortable doing.</b>
+
+1556
+03:20:02,600 --> 03:20:04,299
+<b>The gaps will get filled some ways.</b>
+
+1557
+03:20:04,633 --> 03:20:06,100
+<b>It's gonna be, it'll work out.</b>
+
+1558
+03:20:08,200 --> 03:20:09,799
+<b>Yeah, I agree with scheduling.</b>
+
+1559
+03:20:10,799 --> 03:20:12,100
+<b>So we can try and figure out</b>
+
+1560
+03:20:13,633 --> 03:20:15,200
+<b>how people can kind of pair up.</b>
+
+1561
+03:20:15,500 --> 03:20:17,399
+<b>And then we can just do asynchronous meetings</b>
+
+1562
+03:20:19,100 --> 03:20:21,200
+<b>and then just consolidate the updates</b>
+
+1563
+03:20:21,333 --> 03:20:23,700
+<b>into some kind of channel,</b>
+
+1564
+03:20:24,100 --> 03:20:27,766
+<b>some kind of log folder just for team updates.</b>
+
+1565
+03:20:29,833 --> 03:20:30,700
+<b>Yeah, that makes sense, right?</b>
+
+1566
+03:20:32,399 --> 03:20:35,500
+<b>Yeah, I think asynchronous meeting</b>
+
+1567
+03:20:35,666 --> 03:20:37,833
+<b>and also add like, I think more importantly,</b>
+
+1568
+03:20:37,833 --> 03:20:39,133
+<b>we have kind of team channel.</b>
+
+1569
+03:20:39,833 --> 03:20:41,833
+<b>I think GitHub is actually also good</b>
+
+1570
+03:20:41,833 --> 03:20:44,066
+<b>that we can make use of it.</b>
+
+1571
+03:20:44,333 --> 03:20:45,600
+<b>But like, for example,</b>
+
+1572
+03:20:45,933 --> 03:20:48,066
+<b>I think there's some Microsoft planners</b>
+
+1573
+03:20:48,333 --> 03:20:50,500
+<b>we can also use to plan up the task</b>
+
+1574
+03:20:51,066 --> 03:20:52,833
+<b>and with the deadline or kind of stuff.</b>
+
+1575
+03:20:54,500 --> 03:20:58,899
+<b>Yeah, then we can kind of also send with chat and yeah.</b>
+
+1576
+03:20:59,100 --> 03:21:03,966
+<b>So not really need to do it like every time</b>
+
+1577
+03:21:03,966 --> 03:21:07,899
+<b>it face to like on a call,</b>
+
+1578
+03:21:08,566 --> 03:21:09,766
+<b>but maybe once a week,</b>
+
+1579
+03:21:10,266 --> 03:21:14,533
+<b>but then we will like frequently talk in a team chat.</b>
+
+1580
+03:21:15,233 --> 03:21:16,766
+<b>So yeah, that would be great.</b>
+
+1581
+03:21:18,433 --> 03:21:19,200
+<b>Okay, perfect.</b>
+
+1582
+03:21:21,299 --> 03:21:22,833
+<b>Okay, let's see.</b>
+
+1583
+03:21:23,899 --> 03:21:25,533
+<b>Wow, we've met for an hour and a half now.</b>
+
+1584
+03:21:26,100 --> 03:21:28,433
+<b>So I'm gonna invite all of you guys</b>
+
+1585
+03:21:28,633 --> 03:21:32,733
+<b>to this server that I just created.</b>
+
+1586
+03:21:33,066 --> 03:21:34,933
+<b>Well, I created the server for months ago</b>
+
+1587
+03:21:34,933 --> 03:21:36,033
+<b>but there's nobody in it.</b>
+
+1588
+03:21:36,333 --> 03:21:39,100
+<b>And I'm just making sure,</b>
+
+1589
+03:21:39,633 --> 03:21:41,600
+<b>see if I can find everybody here.</b>
+
+1590
+03:21:44,200 --> 03:21:46,733
+<b>Okay, let's see.</b>
+
+1591
+03:21:47,933 --> 03:21:52,833
+<b>I'm having trouble seeing all of the usernames here.</b>
+
+1592
+03:21:56,299 --> 03:21:58,633
+<b>Encarceron, is that you Samuel?</b>
+
+1593
+03:21:59,700 --> 03:22:00,433
+<b>Yeah, that's me.</b>
+
+1594
+03:22:00,600 --> 03:22:01,299
+<b>Okay, sweet.</b>
+
+1595
+03:22:01,299 --> 03:22:02,633
+<b>I just sent you an invite.</b>
+
+1596
+03:22:03,833 --> 03:22:03,899
+<b>Yeah.</b>
+
+1597
+03:22:06,299 --> 03:22:07,566
+<b>Oh, come on.</b>
+
+1598
+03:22:11,200 --> 03:22:13,433
+<b>Sorry Hadiza, do you know your Discord username?</b>
+
+1599
+03:22:14,666 --> 03:22:16,166
+<b>Yeah, I think you should be hadix.</b>
+
+1600
+03:22:19,000 --> 03:22:20,233
+<b>I found it.</b>
+
+1601
+03:22:20,266 --> 03:22:20,566
+<b>Hadiza.</b>
+
+1602
+03:22:21,200 --> 03:22:21,733
+<b>There we go.</b>
+
+1603
+03:22:22,299 --> 03:22:23,299
+<b>Same thing, yeah.</b>
+
+1604
+03:22:23,399 --> 03:22:26,133
+<b>Okay, so I think I just sent everybody an invite.</b>
+
+1605
+03:22:26,833 --> 03:22:30,433
+<b>If you haven't received an invite, please let me know now.</b>
+
+1606
+03:22:32,200 --> 03:22:33,833
+<b>Deep T, I think I sent you a name.</b>
+
+1607
+03:22:34,299 --> 03:22:35,000
+<b>All right.</b>
+
+1608
+03:22:37,899 --> 03:22:39,433
+<b>So, and then I'll give you all of you guys</b>
+
+1609
+03:22:39,533 --> 03:22:40,433
+<b>moderator access.</b>
+
+1610
+03:22:40,666 --> 03:22:44,633
+<b>So if you want to create channels, change channel names</b>
+
+1611
+03:22:44,633 --> 03:22:47,299
+<b>or do whatever you want with the server, that's fine.</b>
+
+1612
+03:22:49,933 --> 03:22:51,233
+<b>That'll be a good balancing point</b>
+
+1613
+03:22:51,700 --> 03:22:55,633
+<b>for how we can better organize the GitHub repository</b>
+
+1614
+03:22:56,000 --> 03:22:58,766
+<b>to accommodate our needs and preferences.</b>
+
+1615
+03:23:01,200 --> 03:23:02,299
+<b>Like I said, logs are a mess.</b>
+
+1616
+03:23:02,733 --> 03:23:04,866
+<b>So we'll work with what we got now,</b>
+
+1617
+03:23:05,033 --> 03:23:09,633
+<b>but what's come to a consensus on how we will</b>
+
+1618
+03:23:10,833 --> 03:23:13,899
+<b>organize our logs and documentation in the repository</b>
+
+1619
+03:23:14,899 --> 03:23:15,600
+<b>through the server.</b>
+
+1620
+03:23:16,433 --> 03:23:20,200
+<b>And then we can figure it out from there.</b>
+
+1621
+03:23:20,766 --> 03:23:22,066
+<b>Is it, am I missing anything?</b>
+
+1622
+03:23:25,600 --> 03:23:26,133
+<b>Does that make sense?</b>
+
+1623
+03:23:29,299 --> 03:23:30,366
+<b>Yeah, it does.</b>
+
+1624
+03:23:32,799 --> 03:23:35,200
+<b>I know the task right now is still in chunks.</b>
+
+1625
+03:23:37,266 --> 03:23:39,833
+<b>I don't know if before or by the next time we meet,</b>
+
+1626
+03:23:39,833 --> 03:23:41,799
+<b>we're able to break them down.</b>
+
+1627
+03:23:42,066 --> 03:23:44,866
+<b>Maybe we all have gone through the repository</b>
+
+1628
+03:23:45,100 --> 03:23:47,133
+<b>and have understood everything in there.</b>
+
+1629
+03:23:47,533 --> 03:23:49,899
+<b>Yeah, because what we call in the end</b>
+
+1630
+03:23:49,899 --> 03:23:51,466
+<b>is very high level.</b>
+
+1631
+03:23:52,766 --> 03:23:57,166
+<b>Yes, if we could break it together into smaller chunks,</b>
+
+1632
+03:23:57,433 --> 03:23:59,200
+<b>that would be less.</b>
+
+1633
+03:24:01,333 --> 03:24:02,133
+<b>I don't know how to put it.</b>
+
+1634
+03:24:02,133 --> 03:24:05,600
+<b>It would be less the way it works on the brain.</b>
+
+1635
+03:24:06,600 --> 03:24:08,133
+<b>I don't know the English word, but.</b>
+
+1636
+03:24:08,633 --> 03:24:09,033
+<b>It's okay.</b>
+
+1637
+03:24:09,633 --> 03:24:12,399
+<b>So when it is small, small, small, small like this,</b>
+
+1638
+03:24:12,899 --> 03:24:13,700
+<b>it's yeah.</b>
+
+1639
+03:24:15,200 --> 03:24:15,433
+<b>It's-</b>
+
+1640
+03:24:15,733 --> 03:24:17,633
+<b>We were able to achieve that before</b>
+
+1641
+03:24:17,799 --> 03:24:19,066
+<b>or by the next time we meet.</b>
+
+1642
+03:24:19,899 --> 03:24:20,533
+<b>Yeah, for sure.</b>
+
+1643
+03:24:21,233 --> 03:24:24,633
+<b>And I was thinking maybe we could make</b>
+
+1644
+03:24:24,633 --> 03:24:27,200
+<b>like one channel for each thing.</b>
+
+1645
+03:24:28,533 --> 03:24:30,933
+<b>It's okay if we have a ton of channels.</b>
+
+1646
+03:24:32,600 --> 03:24:33,433
+<b>We can do channel.</b>
+
+1647
+03:24:33,766 --> 03:24:35,333
+<b>I don't know if you guys use Discord a lot,</b>
+
+1648
+03:24:35,333 --> 03:24:36,200
+<b>but there's this thing where</b>
+
+1649
+03:24:36,200 --> 03:24:38,133
+<b>you can group channels together.</b>
+
+1650
+03:24:40,333 --> 03:24:41,899
+<b>So, we could have a,</b>
+
+1651
+03:24:43,133 --> 03:24:45,100
+<b>just a document organization section</b>
+
+1652
+03:24:45,100 --> 03:24:47,433
+<b>and then a channel for each, whatever.</b>
+
+1653
+03:24:48,366 --> 03:24:51,100
+<b>Or a, and then we can have a planning section</b>
+
+1654
+03:24:51,100 --> 03:24:52,766
+<b>and then a channel just for planning</b>
+
+1655
+03:24:52,766 --> 03:24:54,833
+<b>the contextual integrity score</b>
+
+1656
+03:24:55,433 --> 03:24:57,666
+<b>and the math logic behind that</b>
+
+1657
+03:24:57,666 --> 03:25:00,600
+<b>and how we're comparing that to the code base</b>
+
+1658
+03:25:00,600 --> 03:25:02,333
+<b>and just a couple of examples there.</b>
+
+1659
+03:25:03,633 --> 03:25:05,399
+<b>But yeah, we have a really good starting off point.</b>
+
+1660
+03:25:06,266 --> 03:25:10,333
+<b>And yeah, I think it'll take us kind of a week</b>
+
+1661
+03:25:10,333 --> 03:25:14,200
+<b>to come to a general consensus on how to move forward.</b>
+
+1662
+03:25:14,799 --> 03:25:19,433
+<b>So I'm not expecting any code to be updated</b>
+
+1663
+03:25:19,899 --> 03:25:22,933
+<b>unless you guys find bugs in the code.</b>
+
+1664
+03:25:23,566 --> 03:25:25,600
+<b>So right now it's kind of just discovery,</b>
+
+1665
+03:25:26,133 --> 03:25:28,299
+<b>making sure we're all on the same page with the code</b>
+
+1666
+03:25:29,000 --> 03:25:33,733
+<b>and figuring out how to organize the documents</b>
+
+1667
+03:25:33,966 --> 03:25:37,766
+<b>and the current logs to better sync our understanding.</b>
+
+1668
+03:25:38,266 --> 03:25:41,933
+<b>And then we can move forward with refactoring the plan</b>
+
+1669
+03:25:42,100 --> 03:25:45,000
+<b>and getting all that benchmark logic out there.</b>
+
+1670
+03:25:46,833 --> 03:25:51,066
+<b>So, oh, before, I feel like this is a good time</b>
+
+1671
+03:25:51,166 --> 03:25:53,100
+<b>for us to start to wrap up.</b>
+
+1672
+03:25:53,700 --> 03:25:55,633
+<b>Before I let you guys go, I wanna see if,</b>
+
+1673
+03:25:57,433 --> 03:26:00,966
+<b>because I know that somebody had some questions</b>
+
+1674
+03:26:00,966 --> 03:26:02,600
+<b>that they wanted to ask us.</b>
+
+1675
+03:26:04,100 --> 03:26:04,633
+<b>Here we go.</b>
+
+1676
+03:26:06,566 --> 03:26:07,066
+<b>Here we go.</b>
+
+1677
+03:26:07,066 --> 03:26:09,600
+<b>It was, yeah, it was Allah.</b>
+
+1678
+03:26:09,833 --> 03:26:11,899
+<b>So he also lives in Germany.</b>
+
+1679
+03:26:12,133 --> 03:26:14,266
+<b>Maybe next week you can meet him, Garrett,</b>
+
+1680
+03:26:15,100 --> 03:26:16,833
+<b>but he'll see the recording from this meeting.</b>
+
+1681
+03:26:18,299 --> 03:26:20,233
+<b>Yeah, so he had some questions over.</b>
+
+1682
+03:26:21,166 --> 03:26:22,700
+<b>He had some pretty specific questions.</b>
+
+1683
+03:26:24,000 --> 03:26:27,033
+<b>If we've discussed the choice of LLMs for the evaluator</b>
+
+1684
+03:26:27,033 --> 03:26:29,500
+<b>and the evaluated agents, you know what?</b>
+
+1685
+03:26:29,500 --> 03:26:32,733
+<b>I'm just going to, I'll invite him to the Discord server</b>
+
+1686
+03:26:32,733 --> 03:26:35,899
+<b>and then I'll paste his questions in the chat.</b>
+
+1687
+03:26:36,933 --> 03:26:39,700
+<b>Because I feel like if I read them now,</b>
+
+1688
+03:26:39,700 --> 03:26:42,000
+<b>we would just kind of go into discussion</b>
+
+1689
+03:26:42,233 --> 03:26:44,133
+<b>and I don't wanna do that right now, tired.</b>
+
+1690
+03:26:46,566 --> 03:26:49,266
+<b>But yeah, guys, thanks for coming to this meeting.</b>
+
+1691
+03:26:51,200 --> 03:26:52,833
+<b>This was a lot.</b>
+
+1692
+03:26:53,566 --> 03:26:58,366
+<b>So I will save this recording</b>
+
+1693
+03:26:58,799 --> 03:27:02,200
+<b>and I'll have a transcript summary of the meeting</b>
+
+1694
+03:27:03,033 --> 03:27:04,566
+<b>in about an hour from now.</b>
+
+1695
+03:27:05,333 --> 03:27:06,500
+<b>And I'll just put it in the Discord.</b>
+
+1696
+03:27:07,200 --> 03:27:12,799
+<b>I'll put, I'll invite Allah to the Discord too.</b>
+
+1697
+03:27:13,833 --> 03:27:16,133
+<b>And I think we should be good to go for that.</b>
+
+1698
+03:27:16,133 --> 03:27:18,733
+<b>There were a couple people that were interested in coming</b>
+
+1699
+03:27:19,733 --> 03:27:20,933
+<b>and they didn't make it.</b>
+
+1700
+03:27:22,666 --> 03:27:24,799
+<b>I don't know if it's because they didn't understand</b>
+
+1701
+03:27:24,799 --> 03:27:26,700
+<b>that it was gonna be in this time zone or not.</b>
+
+1702
+03:27:27,399 --> 03:27:29,100
+<b>Cause I heard from them earlier today,</b>
+
+1703
+03:27:29,100 --> 03:27:30,966
+<b>but I think there were two people</b>
+
+1704
+03:27:30,966 --> 03:27:32,200
+<b>that couldn't make this meeting.</b>
+
+1705
+03:27:34,000 --> 03:27:36,766
+<b>So I'll try and get them up to date too</b>
+
+1706
+03:27:37,200 --> 03:27:38,799
+<b>and assume that they're still interested.</b>
+
+1707
+03:27:39,033 --> 03:27:43,866
+<b>Other than that, I think we have a good solid team of five.</b>
+
+1708
+03:27:44,166 --> 03:27:45,833
+<b>So this has been really exciting.</b>
+
+1709
+03:27:46,333 --> 03:27:47,633
+<b>And hey, I just wanted to say thank you</b>
+
+1710
+03:27:47,633 --> 03:27:49,233
+<b>for bearing with me on this, okay?</b>
+
+1711
+03:27:49,299 --> 03:27:54,100
+<b>Because like, I'm really ambitious,</b>
+
+1712
+03:27:54,433 --> 03:27:58,200
+<b>but it takes, I'm sure you guys have noticed,</b>
+
+1713
+03:27:58,433 --> 03:27:59,700
+<b>like you guys asked me something</b>
+
+1714
+03:28:00,233 --> 03:28:01,733
+<b>and it takes me a couple of times</b>
+
+1715
+03:28:01,733 --> 03:28:03,233
+<b>to really understand what you're saying.</b>
+
+1716
+03:28:04,633 --> 03:28:05,833
+<b>That's why I'm recording everything.</b>
+
+1717
+03:28:06,266 --> 03:28:10,033
+<b>So yeah, I just wanna say, like, thank you.</b>
+
+1718
+03:28:10,033 --> 03:28:11,733
+<b>Thank you for participating in this.</b>
+
+1719
+03:28:12,299 --> 03:28:14,799
+<b>And yeah, that's it.</b>
+
+1720
+03:28:16,433 --> 03:28:17,700
+<b>Thank you for putting it together.</b>
+
+1721
+03:28:18,066 --> 03:28:21,700
+<b>I think it's going to be a running process for me.</b>
+
+1722
+03:28:23,600 --> 03:28:23,799
+<b>Yeah.</b>
+
+1723
+03:28:24,299 --> 03:28:24,799
+<b>So thank you.</b>
+
+1724
+03:28:27,633 --> 03:28:30,899
+<b>Yeah, if you guys have like, like, I don't know,</b>
+
+1725
+03:28:30,899 --> 03:28:32,100
+<b>like I guess I'll do it.</b>
+
+1726
+03:28:32,100 --> 03:28:34,799
+<b>I haven't had much experience with like events and stuff.</b>
+
+1727
+03:28:35,033 --> 03:28:38,333
+<b>Like if you have questions, like I'm up with stuff,</b>
+
+1728
+03:28:38,566 --> 03:28:42,433
+<b>like I can probably like answer more questions, I think.</b>
+
+1729
+03:28:42,833 --> 03:28:45,066
+<b>So that's like, feel free to ping me when you can.</b>
+
+1730
+03:28:46,266 --> 03:28:48,333
+<b>Yeah, okay.</b>
+
+1731
+03:28:49,333 --> 03:28:50,000
+<b>I don't know everything.</b>
+
+1732
+03:28:50,433 --> 03:28:51,000
+<b>I'm still learning.</b>
+
+1733
+03:28:51,733 --> 03:28:54,533
+<b>So if I don't know, I can also learn a few things.</b>
+
+1734
+03:28:54,966 --> 03:28:57,033
+<b>So feel free to like this in the channel,</b>
+
+1735
+03:28:57,033 --> 03:29:00,633
+<b>ping you, you know, like figure this out,</b>
+
+1736
+03:29:00,633 --> 03:29:02,633
+<b>try to like learn as quickly as possible</b>
+
+1737
+03:29:02,633 --> 03:29:04,133
+<b>and like really build something.</b>
+
+1738
+03:29:04,866 --> 03:29:05,000
+<b>Yeah.</b>
+
+1739
+03:29:06,666 --> 03:29:07,399
+<b>Thank you, Samu.</b>
+
+1740
+03:29:09,700 --> 03:29:12,200
+<b>Thank you, Samu.</b>
+
+1741
+03:29:12,200 --> 03:29:13,266
+<b>Can we call you Sam?</b>
+
+1742
+03:29:15,566 --> 03:29:16,533
+<b>Feel free, feel free.</b>
+
+1743
+03:29:17,100 --> 03:29:17,299
+<b>Yeah.</b>
+
+1744
+03:29:17,333 --> 03:29:17,600
+<b>Okay.</b>
+
+1745
+03:29:17,600 --> 03:29:17,899
+<b>Sweet.</b>
+
+1746
+03:29:18,600 --> 03:29:18,799
+<b>Yeah.</b>
+
+1747
+03:29:19,100 --> 03:29:19,933
+<b>Yeah, thanks, Sam.</b>
+
+1748
+03:29:20,266 --> 03:29:21,433
+<b>Thanks, Samu.</b>
+
+1749
+03:29:22,033 --> 03:29:22,100
+<b>Okay.</b>
+
+1750
+03:29:24,333 --> 03:29:24,466
+<b>Great.</b>
+
+1751
+03:29:24,733 --> 03:29:27,000
+<b>So yeah, I'll catch you guys later.</b>
+
+1752
+03:29:28,299 --> 03:29:30,600
+<b>Just feel free to look out for that transcript summary</b>
+
+1753
+03:29:30,600 --> 03:29:31,299
+<b>and all that.</b>
+
+1754
+03:29:31,700 --> 03:29:33,600
+<b>I'll pace the questions from now on.</b>
+
+1755
+03:29:34,066 --> 03:29:37,433
+<b>And yeah, I guess that's it for tonight.</b>
+
+1756
+03:29:38,433 --> 03:29:39,299
+<b>Garrett, get some sleep.</b>
+
+1757
+03:29:39,733 --> 03:29:40,966
+<b>Thank you so much for staying up.</b>
+
+1758
+03:29:41,333 --> 03:29:42,966
+<b>It was so nice meeting all you guys.</b>
+
+1759
+03:29:42,966 --> 03:29:43,799
+<b>Nice meeting you, Hadiza.</b>
+
+1760
+03:29:44,766 --> 03:29:46,200
+<b>Nice meeting you also.</b>
+
+1761
+03:29:46,233 --> 03:29:48,033
+<b>Yeah, thank you.</b>
+
+1762
+03:29:48,533 --> 03:29:49,033
+<b>It's Samu.</b>
+
+1763
+03:29:49,033 --> 03:29:50,000
+<b>Nice meeting you, Dan.</b>
+
+1764
+03:29:50,533 --> 03:29:51,500
+<b>Have a good one, Dan.</b>
+
+1765
+03:29:51,933 --> 03:29:52,333
+<b>See you.</b>
+
+1766
+03:29:53,000 --> 03:29:53,666
+<b>Bye everyone.</b>
+
+1767
+03:29:54,266 --> 03:29:54,466
+<b>Bye.</b>
+

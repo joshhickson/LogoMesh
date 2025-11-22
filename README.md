@@ -1,3 +1,16 @@
+> **🚀 Onboarding Start Here**
+>
+> **For the best onboarding experience, please start by viewing our interactive documentation hub.**
+>
+> 1.  Navigate to the `onboarding` directory in your terminal:
+>     ```bash
+>     cd onboarding
+>     ```
+> 2.  Follow the instructions in that directory's `README.md` file to start the local web server.
+> 3.  Open the site in your browser (usually at `http://localhost:3000`).
+>
+> This will give you a guided tour of the project's strategy, architecture, and current priorities.
+
 # LogoMesh: An Open Platform for Agent-on-Agent Evaluation
 
 Welcome, and thanks for jumping in. This repo contains the LogoMesh monorepo: a TypeScript-based platform for evaluating AI agents and measuring our core metric, "Contextual Debt." The codebase is organized as pnpm workspaces and includes the API server, worker processes, and test harness used during development and evaluation.

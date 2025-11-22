@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  esbuild: 0.25.0
-
 importers:
 
   .:
@@ -86,6 +83,12 @@ importers:
       vitest-tsconfig-paths:
         specifier: ^3.4.1
         version: 3.4.1
+
+  onboarding:
+    dependencies:
+      express:
+        specifier: ^4.19.2
+        version: 4.21.2
 
   packages/contracts: {}
 

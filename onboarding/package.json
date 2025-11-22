@@ -1,0 +1,15 @@
+{
+  "name": "onboarding-site",
+  "version": "1.0.0",
+  "description": "A simple server to host the onboarding static site, ensuring that only the 'onboarding' directory is exposed.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "postinstall": "echo 'Dependencies installed. Run `pnpm start` to launch the server.'"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
