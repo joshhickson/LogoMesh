@@ -1,4 +1,4 @@
-# 20251124-Contextual-Discovery-Plan
+# 20251124-Contextual-Discovery-Plan (Revised)
 
 ## 1. Objective: The Discovery Sprint
 
@@ -9,32 +9,37 @@ Success for this sprint is defined as **Risk Reduction via Falsification**. We w
 ## 2. Discovery Track 1: The "Derivative Trap" (Validation of Rationale Integrity)
 
 **Context:** The pivot proposes using Vector Embeddings and Cosine Similarity to measure the alignment between intent and code.
-**The Core Question:** Is our approach genuinely novel, or are we inadvertently cloning existing solutions like DeepEval?
+**The Core Question:** Is our approach genuinely novel from both a product and mathematical standpoint?
 
-*   **Experiment 1.1: The Novelty Audit**
-    *   **Assignee:** The Auditor (Alaa), supported by Applied DS (Deepti).
-    *   **Task:** Produce a "Novelty Memo" that rigorously differentiates our proposed "Compounding Debt" logic from standard RAG and QA metrics. The analysis must go beyond surface-level claims and provide a defensible argument for our unique value proposition.
-    *   **Deliverable:** A 1-page memo containing a comparative table ("DeepEval Metrics vs. Our Metrics") and a concise mathematical or logical proof of our novelty.
+*   **Experiment 1.1: The Product Novelty Audit**
+    *   **Assignee:** Product/Applied DS (Deepti).
+    *   **Task:** Produce a "Product Novelty Memo" that rigorously differentiates our project from a market perspective against competitors like DeepEval. The focus is on features, use cases, and defensible product claims.
+    *   **Deliverable:** A 1-page memo containing a comparative table ("DeepEval Features vs. Our Proposed Features") and a clear argument for our unique value proposition.
 
 *   **Experiment 1.2: The Embedding Feasibility Spike**
-    *   **Assignee:** Applied DS (Deepti).
-    *   **Task:** Create a proof-of-concept (POC) in a Jupyter notebook to generate vector embeddings for a representative code diff and a related requirements document. The goal is to uncover practical constraints.
+    *   **Assignee:** Product/Applied DS (Deepti).
+    *   **Task:** Create a proof-of-concept (POC) in a Jupyter notebook to generate vector embeddings for a representative code diff and a related requirements document to uncover practical constraints.
     *   **Deliverable:** A working notebook and a short summary answering: What embedding models are suitable? What are the token limits? What are the potential costs and performance bottlenecks?
+
+*   **Experiment 1.3: The Mathematical Proof of Novelty**
+    *   **Assignee:** The Auditor (Alaa).
+    *   **Task:** Produce a formal mathematical proof demonstrating that our proposed CIS formulas are distinct from standard cosine similarity and other common RAG/QA metrics. Leverage background in bias quantification to analyze potential failure modes.
+    *   **Deliverable:** A formal proof document (e.g., LaTeX PDF or markdown with embedded equations) that can be reviewed by other experts.
 
 ## 3. Discovery Track 2: The "Vaporware" Risk (Validation of Security Architecture)
 
-**Context:** The strategic paper promises a cryptographic "Decision Bill of Materials" (DBOM) and verifiable digital signatures for code changes.
-**The Core Question:** Can we actually generate and verify a cryptographic signature for a code change, or is this feature currently beyond our technical reach?
+**Context:** The strategic paper promises a cryptographic "Decision Bill of Materials" (DBOM). We will use a "spec-first" approach to validate this.
+**The Core Question:** Can we formally specify and then successfully implement a forensically useful, signed artifact for a code change?
 
-*   **Experiment 2.1: The Crypto-Signature POC**
-    *   **Assignee:** The Verifiable Product-Builder (Samuel), advised by The Safety Architect (Hadiza).
-    *   **Task:** Investigate and demonstrate the ability to cryptographically sign a piece of data representing a code change (e.g., a git commit hash). Evaluate at least two potential libraries or services (e.g., Auth0, `node-forge`, `jose`).
-    *   **Deliverable:** A "Crypto Feasibility Report" (1-2 pages) with a clear recommendation, accompanied by a minimal, working script that generates and verifies a signature.
-
-*   **Experiment 2.2: The Minimal DBOM Schema**
+*   **Experiment 2.1 (Spec-First): The Minimal DBOM Schema**
     *   **Assignee:** The Safety Architect (Hadiza).
-    *   **Task:** Define the minimal data structure for the DBOM. What is the absolute minimum set of fields (e.g., `commitHash`, `authorId`, `requirementId`, `timestamp`, `signature`) that must be included in the signed payload to make it forensically useful?
-    *   **Deliverable:** A simple, well-documented JSON schema file representing the proposed DBOM structure.
+    *   **Task:** Define the minimal, formal data structure for the DBOM. As a formal verification expert, specify the absolute minimum set of fields required for the payload to be cryptographically sound and forensically useful.
+    *   **Deliverable:** A simple, well-documented, and formally structured JSON schema file representing the required DBOM structure. This schema is the official constraint for Experiment 2.2.
+
+*   **Experiment 2.2 (Implementation): The Crypto-Signature POC**
+    *   **Assignee:** The Verifiable Product-Builder (Samuel).
+    *   **Task:** Build a proof-of-concept that implements Hadiza's DBOM schema. The task is to prove that a real-world cryptographic library (e.g., Auth0, `jose`) can be used to generate a verifiable signature for an artifact that strictly adheres to the schema from Experiment 2.1.
+    *   **Deliverable:** A "Crypto Implementation Report" with a working script that ingests the DBOM schema, validates a sample payload against it, and successfully generates/verifies a signature.
 
 ## 4. Discovery Track 3: The "Math Gap" (Bridging Team Knowledge)
 
@@ -53,18 +58,18 @@ Success for this sprint is defined as **Risk Reduction via Falsification**. We w
 
 ## 5. Discovery Track 4: Documentation Graphing (The Meta-Layer)
 
-**Context:** Our `working-log.md` proposes visualizing the repository's documentation as a graph to understand its structure.
-**The Core Question:** Is it technically feasible for our existing web server to access and parse the necessary `docs/` and `logs/` files?
+**Context:** We aim to treat our documentation repository as a mission-critical, auditable system of record.
+**The Core Question:** Can we model our documentation workflow as an event-driven system to ensure its integrity and traceability?
 
-*   **Experiment 4.1: The Data Connectivity Spike**
+*   **Experiment 4.1: The Document Event Schema**
     *   **Assignee:** The Logistics Architect (Aron).
-    *   **Task:** Create a minimal technical spike to determine if the `onboarding/` web server can programmatically access and read files from the root `logs/` and `docs/` directories. This is a file system and permissions check, not a UI task.
-    *   **Deliverable:** A simple script (`.js` or `.ts`) that successfully reads a test file from each directory and a one-paragraph report detailing any challenges (e.g., pathing, sandboxing, permissions).
+    *   **Task:** Leveraging expertise in warehouse management and event-driven systems, design an event schema for our documentation repository. Model the repository as a "warehouse" and define the immutable events that track "inventory movements" (e.g., `file.created`, `file.renamed`, `link.updated`).
+    *   **Deliverable:** A formal schema (e.g., in JSON Schema or Avro) for the key events that would allow us to reconstruct the state of the documentation graph at any point in time.
 
 *   **Experiment 4.2: The Node-and-Edge Schema**
     *   **Assignee:** The TPM (Deepti).
-    *   **Task:** Define a simple, clear data model for the documentation graph. What constitutes a "node" (e.g., a file, a section header)? What constitutes an "edge" (e.g., an explicit markdown link, a mention of another file's name)?
-    *   **Deliverable:** A JSON schema or TypeScript interface definition that Aron can use as the target data structure for his connectivity spike.
+    *   **Task:** Define a simple, clear data model for the documentation graph itself, which would be the consumer of the events defined by Aron. What constitutes a "node" (e.g., a file, a section header)? What constitutes an "edge" (e.g., an explicit markdown link)?
+    *   **Deliverable:** A JSON schema or TypeScript interface definition that represents the target data structure of the graph.
 
 ## 6. Knowledge Gaps
 
