@@ -22,6 +22,9 @@ The core idea is to visualize the contextual relationships between all documents
 - **SUPERSEDED:** The results of this analysis should be viewable in the `onboarding/` website.
 - **NEW (2025-11-23):** The new foundational step is to connect the log summary to the existing simple web server and graph implementation in the `onboarding/` folder. The logic of connecting nodes is the priority; the UI is secondary and should be simple (e.g., click a node to open the document in a new tab).
 
+> [!NOTE] Contradiction with Discovery Plan
+> This task jumps directly to implementation. The authoritative `../../../20251124-Contextual-Discovery-Plan.md` prioritizes a "Hypothesis & Discovery" approach. Per Experiment 4.3 in that plan, the immediate goal is only to validate data accessibility and link extraction, not to implement any UI or connection logic.
+
 ## 3. Core Problem: Documentation Management & Unanswered Questions
 
 ### 3.1. Documentation Organization
