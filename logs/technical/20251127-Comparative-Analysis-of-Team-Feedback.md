@@ -82,3 +82,28 @@ The key strategic implications are:
 *   **A Practical Path to Development:** The info session includes a step-by-step checklist, information on the AgentBeats SDK, and case studies of successful benchmarks (`CyberGym`, `τ-bench`). This provides a practical, immediate starting point for development, shifting the focus from "what to build" to "how to build it on their platform."
 
 In essence, the document signals that the entire project plan should be re-evaluated and re-anchored based on the official guidelines and technical requirements provided by the competition organizers.
+
+---
+
+## 4. Mathematical Viability & Discovery Plan Updates (2025-11-27)
+
+Following the completion of the "Math Viability and Novelty Analysis" (`logs/technical/josh-temp/20251127-Math-Viability-and-Novelty-Analysis.md`), we have confirmed that the project's proposed mathematical approach is both viable for the Dec 19 deadline and sufficiently novel for the research paper. This requires specific updates to the `20251124-Contextual-Discovery-Plan.md`.
+
+### 4.1. Key Findings
+*   **Viability:** The core mathematical components (Cosine Similarity for Rationale, Graph Centrality for Architecture) can be implemented rapidly using **OpenAI's Embeddings API** and **dependency-cruiser**, avoiding the need for complex custom model training.
+*   **Novelty:** The "groundbreaking" aspect of the project is confirmed to be the **Application and Synthesis** (the Contextual Integrity Score composite), rather than the raw mathematical formulas. The approach aligns with the state-of-the-art "Deep Learning Era" of traceability research, superior to the outdated VSM/LSI methods.
+
+### 4.2. Required Plan Updates
+The `20251124-Contextual-Discovery-Plan.md` must be updated to reflect these certainties:
+
+*   **Update Track 1 (The "Derivative Trap"):**
+    *   *Shift:* From validating "Mathematical Uniqueness" to validating "Application Novelty."
+    *   *Action:* Explicitly adopt "Vector Embeddings" as the standard. The "Product Novelty Audit" (Experiment 1.1) should focus on how our *Composite Score* (CIS) differs from competitors, not just the underlying embedding technology.
+
+*   **Update Track 3 (The "Math Gap"):**
+    *   *Shift:* From abstract "Computability Audits" to concrete "API Integration Specs."
+    *   *Action:* Replace "Experiment 3.1: The Formal Formula Audit" with a task to define the JSON schemas for the `RationaleWorker` (using OpenAI API) and `ArchitecturalWorker` (using dependency-cruiser).
+    *   *Action:* "Experiment 3.2: The Computability Explainer" is effectively complete/superseded by the implementation decision to use APIs. It should be repurposed into a "Technical Implementation Guide" for the Green Agent.
+
+*   **New Strategic Directive:**
+    *   **"Rebrand" the Math:** In the academic paper and documentation, explicitly reference **BERTScore** and **Transformer-based embeddings** to anchor our work in modern research, distancing it from older keyword-based approaches.
