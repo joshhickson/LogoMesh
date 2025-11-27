@@ -64,3 +64,21 @@ The importance of clear, accessible documentation for team alignment was reinfor
 A new research task was identified to further solidify the novelty of the project's core concepts.
 
 *   **Action Item (Josh):** Use Google Scholar Labs AI (Gemini integration) to perform a literature search for papers similar to the project's. The goal is to clearly identify and articulate the unique contributions of the CIS.
+
+---
+
+## 3. Strategic Pivot: The AgentBeats Info Session as the New Blueprint
+
+Samuel's contribution of the "AgentBeats Competition Info Session" document marks a critical strategic pivot for the project, especially following the invalidation of the Auth0 sponsorship assumption. This document should be viewed as the new **ground truth** and the primary blueprint for all subsequent technical and strategic planning.
+
+The key strategic implications are:
+
+*   **A Shift from Speculation to Official Guidance:** The document represents a move away from internal speculation and towards aligning with the competition's explicit framework. It provides a clear, mandatory technical standard to build against.
+
+*   **The Official Technical Standard is A2A/MCP:** All architectural and implementation planning must now be compatible with the Agent-to-Agent (A2A) and Mission Control Protocol (MCP) standards detailed in the presentation.
+
+*   **The Judging Rubric is Now Explicit:** The presentation provides clear judging criteria for both new and existing benchmarks. This directly answers the team's earlier questions about what the judges are looking for and provides a concrete path to a successful submission.
+
+*   **A Practical Path to Development:** The info session includes a step-by-step checklist, information on the AgentBeats SDK, and case studies of successful benchmarks (`CyberGym`, `τ-bench`). This provides a practical, immediate starting point for development, shifting the focus from "what to build" to "how to build it on their platform."
+
+In essence, the document signals that the entire project plan should be re-evaluated and re-anchored based on the official guidelines and technical requirements provided by the competition organizers.
