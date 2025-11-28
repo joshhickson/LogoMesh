@@ -25,11 +25,30 @@ function walkDir(dir, callback) {
     }
 }
 
+// 1. Build a Census of ALL Markdown files in the repo
+const validFilePaths = new Set();
+
+console.log('Building Census...');
+TARGET_DIRS.forEach(targetDir => {
+    const absTargetDir = path.join(ROOT_DIR, targetDir);
+    walkDir(absTargetDir, (filePath) => {
+        if (path.extname(filePath) === '.md') {
+            const relPath = getRelativePath(filePath);
+            validFilePaths.add(relPath);
+        }
+    });
+});
+
+// Add root files manually
+if (fs.existsSync(path.join(ROOT_DIR, 'PROJECT_PLAN.md'))) validFilePaths.add('PROJECT_PLAN.md');
+if (fs.existsSync(path.join(ROOT_DIR, 'README.md'))) validFilePaths.add('README.md');
+
+console.log(`Indexed ${validFilePaths.size} valid targets.`);
+
 const results = [];
-// Header
 results.push('SourceFile,Line,LinkText,RawTarget,ResolvedTarget,Status,Type');
 
-console.log('Starting All-Intensive Link Audit...');
+console.log('Starting All-Intensive Link Audit (v2.1 - Implicit Support)...');
 
 TARGET_DIRS.forEach(targetDir => {
     const absTargetDir = path.join(ROOT_DIR, targetDir);
@@ -43,67 +62,55 @@ TARGET_DIRS.forEach(targetDir => {
         lines.forEach((line, index) => {
             const lineNum = index + 1;
 
-            // Regex for [text](url) - Improved to be less greedy and handle some edge cases
-            // Note: This is still a heuristic regex and might fail on nested brackets
+            // --- Pass 1: Explicit Markdown Links ---
             const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
             let match;
-
             while ((match = linkRegex.exec(line)) !== null) {
-                const text = match[1].replace(/"/g, '""'); // Escape quotes for CSV
+                const text = match[1].replace(/"/g, '""');
                 const rawTarget = match[2].trim();
 
                 let resolvedTarget = '';
                 let status = 'UNKNOWN';
                 let type = 'INTERNAL';
 
-                // 1. Check External
                 if (rawTarget.startsWith('http') || rawTarget.startsWith('mailto:')) {
                     type = 'EXTERNAL';
                     status = 'IGNORED';
                     resolvedTarget = rawTarget;
-                }
-                // 2. Check Anchors
-                else if (rawTarget.startsWith('#')) {
+                } else if (rawTarget.startsWith('#')) {
                     type = 'ANCHOR';
                     status = 'SKIPPED';
                     resolvedTarget = rawTarget;
-                }
-                // 3. Internal Links
-                else {
-                    // Strip anchor from target for file check
+                } else {
                     const targetWithoutAnchor = rawTarget.split('#')[0];
-
                     if (targetWithoutAnchor.startsWith('/')) {
-                        // Root relative (rare in MD, but possible)
-                        resolvedTarget = targetWithoutAnchor.substring(1); // Remove leading slash
-                        // Assuming relative to project root
-                        const absTarget = path.join(ROOT_DIR, resolvedTarget);
-                         if (fs.existsSync(absTarget)) {
-                            status = 'OK';
-                        } else {
-                            status = 'BROKEN';
-                        }
+                        resolvedTarget = targetWithoutAnchor.substring(1);
+                        if (fs.existsSync(path.join(ROOT_DIR, resolvedTarget))) status = 'OK';
+                        else status = 'BROKEN';
                     } else {
-                        // Relative to current file
                         const currentDir = path.dirname(filePath);
                         const absTarget = path.resolve(currentDir, targetWithoutAnchor);
                         resolvedTarget = getRelativePath(absTarget);
-
-                        if (fs.existsSync(absTarget)) {
-                            status = 'OK';
-                        } else {
-                            status = 'BROKEN';
-                        }
+                        if (fs.existsSync(absTarget)) status = 'OK';
+                        else status = 'BROKEN';
                     }
                 }
-
-                // CSV Row
                 results.push(`"${sourceRelPath}",${lineNum},"${text}","${rawTarget}","${resolvedTarget}",${status},${type}`);
             }
+
+            // --- Pass 2: Implicit Links (Plaintext Paths) ---
+            validFilePaths.forEach(validPath => {
+                if (line.includes(validPath)) {
+                    // Filter explicit links (heuristic)
+                    if (line.includes(`](${validPath}`)) return;
+                    if (line.includes(`] (/${validPath}`)) return;
+
+                    results.push(`"${sourceRelPath}",${lineNum},"${validPath}","${validPath}","${validPath}",OK,IMPLICIT`);
+                }
+            });
         });
     });
 });
 
 console.log(`Audit complete. Found ${results.length - 1} links.`);
 fs.writeFileSync(OUTPUT_FILE, results.join('\n'));
-console.log(`Results written to: ${OUTPUT_FILE}`);
