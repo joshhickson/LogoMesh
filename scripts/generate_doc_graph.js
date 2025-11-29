@@ -52,11 +52,18 @@ TARGET_DIRS.forEach(targetDir => {
     });
 });
 
-// Add root files to census (but maybe not as nodes if we only want docs/logs graph?
-// The original plan said "docs/ and logs/". But links TO root files exist.
-// Let's add them as nodes if they are linked, but for now just add to census for detection.)
-if (fs.existsSync(path.join(ROOT_DIR, 'PROJECT_PLAN.md'))) validFilePaths.add('PROJECT_PLAN.md');
-if (fs.existsSync(path.join(ROOT_DIR, 'README.md'))) validFilePaths.add('README.md');
+// Add root files to census AND nodes array because they are link targets
+['PROJECT_PLAN.md', 'README.md'].forEach(fileName => {
+    if (fs.existsSync(path.join(ROOT_DIR, fileName))) {
+        validFilePaths.add(fileName);
+        nodes.push({
+            id: fileName,
+            label: fileName,
+            path: fileName,
+            type: 'file'
+        });
+    }
+});
 
 
 console.log(`Found ${nodes.length} Nodes.`);
@@ -119,17 +126,30 @@ nodes.forEach(node => {
     });
 });
 
-console.log(`Found ${edges.length} Edges.`);
+// 2.5 Filter Edges (Remove Dangling Links)
+// D3.js crashes if an edge points to a node ID that doesn't exist in the nodes array.
+const nodeIds = new Set(nodes.map(n => n.id));
+const validEdges = edges.filter(edge => {
+    if (nodeIds.has(edge.target)) {
+        return true;
+    }
+    // Optional: Log broken links
+    // console.warn(`Dropped dangling edge: ${edge.source} -> ${edge.target}`);
+    return false;
+});
+
+console.log(`Found ${edges.length} Edges (Raw).`);
+console.log(`Retained ${validEdges.length} Valid Edges (Target Exists).`);
 
 // 3. Write Output
 const outputData = {
     metadata: {
         generatedAt: new Date().toISOString(),
         nodeCount: nodes.length,
-        edgeCount: edges.length
+        edgeCount: validEdges.length
     },
     nodes: nodes,
-    edges: edges
+    edges: validEdges
 };
 
 fs.writeFileSync(OUTPUT_FILE, JSON.stringify(outputData, null, 2));
