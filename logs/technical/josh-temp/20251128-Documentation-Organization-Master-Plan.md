@@ -26,7 +26,7 @@ To systematically map, visualize, and eventually consolidate the `docs/` and `lo
     *   *Logic:*
         1.  Recursively walk all directories.
         2.  Identify all `.md` files (Nodes).
-        3.  Parse content for Markdown links `[Title](path)` (Edges).
+        3.  Parse content for Markdown links [Title](path) (Edges).
         4.  Resolve all relative paths (e.g., `../foo.md`) to a canonical project-root path (e.g., `docs/foo.md`).
     *   *Output:* A JSON file (e.g., `onboarding/src/data/doc_graph_raw.json`) containing Nodes and Edges.
 

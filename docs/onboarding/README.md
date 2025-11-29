@@ -4,7 +4,7 @@
 
 This document outlines our phased, step-by-step plan for creating comprehensive documentation for our project. The goal is to onboard every team member, regardless of their initial skill level, and provide a central source of truth that is accessible to both technical experts and complete novices.
 
-This plan is a living document and will be executed by the **Documentation & Project Coordinator** in collaboration with the entire team, as outlined in our main `[PROJECT_PLAN.md](PROJECT_PLAN.md)`.
+This plan is a living document and will be executed by the **Documentation & Project Coordinator** in collaboration with the entire team, as outlined in our main [PROJECT_PLAN.md](PROJECT_PLAN.md).
 
 ---
 
@@ -17,12 +17,12 @@ This plan is a living document and will be executed by the **Documentation & Pro
 ### Step-by-Step Tasks:
 
 1.  **Read: "The Project Plan" (HIGH PRIORITY)**
-    *   **Task:** Read the main `[PROJECT_PLAN.md](PROJECT_PLAN.md)` in the root of the repository.
+    *   **Task:** Read the main [PROJECT_PLAN.md](PROJECT_PLAN.md) in the root of the repository.
     *   **Content:** This is our team's single source of truth for our mission, roles, architecture, and timeline. Understanding this document is the most important first step.
     *   **Owner:** All Team Members.
 
 2.  **Understand: "How We Work: The Intent Logging Framework" (HIGH PRIORITY)**
-    *   **Task:** Read the rulebook for our Intent Logging framework in `[docs/intent_log/README.md](docs/intent_log/README.md)`.
+    *   **Task:** Read the rulebook for our Intent Logging framework in [docs/intent_log/README.md](docs/intent_log/README.md).
     *   **Content:** This document explains how we record our decisions, questions, and actions to prevent contextual debt. This is a core practice for our team.
     *   **Owner:** All Team Members.
 
@@ -32,7 +32,7 @@ This plan is a living document and will be executed by the **Documentation & Pro
     *   **Owner:** Narrative & Pitch Strategist.
 
 4.  **Document: "Our Mission: The Cyber-Sentinel Agent"**
-    *   **Task:** Create a document (`mission_overview.md`) that summarizes the project's narrative as defined in the `[PROJECT_PLAN.md](PROJECT_PLAN.md)`.
+    *   **Task:** Create a document (`mission_overview.md`) that summarizes the project's narrative as defined in the [PROJECT_PLAN.md](PROJECT_PLAN.md).
     *   **Content:** Explain *why* we are focusing on the cybersecurity domain. Detail the story of our agent and the high-stakes problem it solves. This will be the foundation for our final pitch.
     *   **Owner:** Narrative & Pitch Strategist.
 

@@ -22,7 +22,7 @@ The following documents were evaluated as candidates for the "Contextual Debt" G
 3.  **`03_INVESTOR_PITCH.md`**
     *   **Current State:** "Alarmist" tone ("Ticking time bomb").
     *   **Critique Alignment:** **Moderate.** Acceptable as a distinct "Business Voice" document, provided the Paper pivots to "Technical Voice."
-4.  **`[logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md)`** (Source Material)
+4.  **[logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md)** (Source Material)
     *   **Current State:** Contains the Math and Logic requested by the Critique.
     *   **Action:** Content must be extracted and integrated into the Primary Asset.
 

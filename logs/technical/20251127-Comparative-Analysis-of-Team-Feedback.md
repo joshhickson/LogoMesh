@@ -87,7 +87,7 @@ In essence, the document signals that the entire project plan should be re-evalu
 
 ## 4. Mathematical Viability & Discovery Plan Updates (2025-11-27)
 
-Following the completion of the "Math Viability and Novelty Analysis" (`[logs/technical/josh-temp/20251127-Math-Viability-and-Novelty-Analysis.md](logs/technical/josh-temp/20251127-Math-Viability-and-Novelty-Analysis.md)`), we have confirmed that the project's proposed mathematical approach is both viable for the Dec 19 deadline and sufficiently novel for the research paper. This requires specific updates to the `20251124-Contextual-Discovery-Plan.md`.
+Following the completion of the "Math Viability and Novelty Analysis" ([logs/technical/josh-temp/20251127-Math-Viability-and-Novelty-Analysis.md](logs/technical/josh-temp/20251127-Math-Viability-and-Novelty-Analysis.md)), we have confirmed that the project's proposed mathematical approach is both viable for the Dec 19 deadline and sufficiently novel for the research paper. This requires specific updates to the `20251124-Contextual-Discovery-Plan.md`.
 
 ### 4.1. Key Findings
 *   **Viability:** The core mathematical components (Cosine Similarity for Rationale, Graph Centrality for Architecture) can be implemented rapidly using **OpenAI's Embeddings API** and **dependency-cruiser**, avoiding the need for complex custom model training.

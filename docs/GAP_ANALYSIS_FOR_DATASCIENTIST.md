@@ -22,9 +22,9 @@ Files / locations you will use frequently
 - `packages/server` — API server; integration surface for e2e tests.
 - `packages/workers` — worker entrypoints and job handlers (rationale, architectural, testing analyzers).
 - `logs/` — runtime logs and e2e run captures. Example: `logs/2025-11-13_docker_compose_logs.log`.
-- `[docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md](docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md)` — this doc.
-- `[docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md)` — high-level project context and verified status.
-- `[docs/EVAL_OUTPUT_SCHEMA.md](docs/EVAL_OUTPUT_SCHEMA.md)` — schema for evaluation JSON and a short example.
+- [docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md](docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md) — this doc.
+- [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md) — high-level project context and verified status.
+- [docs/EVAL_OUTPUT_SCHEMA.md](docs/EVAL_OUTPUT_SCHEMA.md) — schema for evaluation JSON and a short example.
 - `docs/onboarding/example-evaluation-report.json` — concrete example JSON that you can open in a notebook.
 - `notebooks/01-explore-sample-eval.ipynb` — example notebook that loads the example JSON and produces simple plots (histogram + bar chart).
 - `tools/convert_eval_to_csv.py` — small CLI to convert evaluation JSON(s) into a CSV (one row per analyzer).
@@ -33,18 +33,18 @@ Files / locations you will use frequently
 
 Top-level gaps (prioritized for a Data Scientist)
 -------------------------------------------------
-1. Output format & example dataset: Addressed — `[docs/EVAL_OUTPUT_SCHEMA.md](docs/EVAL_OUTPUT_SCHEMA.md)` and `docs/onboarding/example-evaluation-report.json` now exist.
+1. Output format & example dataset: Addressed — [docs/EVAL_OUTPUT_SCHEMA.md](docs/EVAL_OUTPUT_SCHEMA.md) and `docs/onboarding/example-evaluation-report.json` now exist.
 2. Interactive exploration: Partially addressed — `notebooks/01-explore-sample-eval.ipynb` scaffold was added (basic plots). A richer notebook with multiple example runs would be helpful.
 3. Reproducible experiments: Partially addressed — `tools/convert_eval_to_csv.py` and `tools/run_single_analyzer.py` help with faster iteration. A TypeScript harness that invokes analyzers directly (from `packages/core`) could further speed iteration for engineering-driven experiments.
 4. Data export & analytics tooling: Addressed — `tools/convert_eval_to_csv.py` converts JSON -> CSV; `tools/[README.md](README.md)` documents usage.
-5. Metrics definitions: Addressed — `[docs/CONTEXTUAL_DEBT_SPEC.md](docs/CONTEXTUAL_DEBT_SPEC.md)` documents the current aggregation logic and includes a worked example.
+5. Metrics definitions: Addressed — [docs/CONTEXTUAL_DEBT_SPEC.md](docs/CONTEXTUAL_DEBT_SPEC.md) documents the current aggregation logic and includes a worked example.
 
 Actionable, prioritized tasks (first 7-day sprint for a data scientist)
 ------------------------------------------------------------------------
-1. Add an evaluation-output schema document (short): `[docs/EVAL_OUTPUT_SCHEMA.md](docs/EVAL_OUTPUT_SCHEMA.md)` — DONE.
+1. Add an evaluation-output schema document (short): [docs/EVAL_OUTPUT_SCHEMA.md](docs/EVAL_OUTPUT_SCHEMA.md) — DONE.
 2. Create a sample notebook: `notebooks/01-explore-sample-eval.ipynb` — scaffolded (loads example JSON and produces simple charts). Consider expanding to handle multiple-run aggregation.
 3. Implement a small script: `tools/run_single_analyzer.py` — DONE (dry-run scaffold to iterate locally).
-4. Draft a short metric spec: `[docs/CONTEXTUAL_DEBT_SPEC.md](docs/CONTEXTUAL_DEBT_SPEC.md)` — DONE (concise algorithm + worked example).
+4. Draft a short metric spec: [docs/CONTEXTUAL_DEBT_SPEC.md](docs/CONTEXTUAL_DEBT_SPEC.md) — DONE (concise algorithm + worked example).
 5. Add `README` section "Quick experiments" with the exact commands (pnpm/pnpm run build + docker compose or local harness) — README includes a Data Scientist onboarding block with commands.
 6. Add a conversion script: `tools/convert_eval_to_csv.py` — DONE.
 7. (Optional) Create a minimal dashboard (Streamlit or Observable) to show one-run summaries — still optional.
@@ -74,7 +74,7 @@ python tools/run_single_analyzer.py -a rationale -i docs/onboarding/example-eval
 
 Suggested small helpers to add (I scaffolded most of these)
 ---------------------------------------------------------
-- `[docs/EVAL_OUTPUT_SCHEMA.md](docs/EVAL_OUTPUT_SCHEMA.md)` (short doc + example JSON) — added.
+- [docs/EVAL_OUTPUT_SCHEMA.md](docs/EVAL_OUTPUT_SCHEMA.md) (short doc + example JSON) — added.
 - `notebooks/01-explore-sample-eval.ipynb` (loads the example JSON and visualizes) — scaffolded.
 - `tools/convert_eval_to_csv.py` (JSON -> CSV) — added.
 - `tools/run_single_analyzer.py` (invokes analyzer code path without running entire Compose stack) — added (dry-run heuristics).
@@ -96,7 +96,7 @@ If all boxes are checked, answer to "Will the data scientist be confused?" can b
 Artifacts created in this pass
 -----------------------------
 
-- `[docs/EVAL_OUTPUT_SCHEMA.md](docs/EVAL_OUTPUT_SCHEMA.md)` — evaluation JSON schema and example.
+- [docs/EVAL_OUTPUT_SCHEMA.md](docs/EVAL_OUTPUT_SCHEMA.md) — evaluation JSON schema and example.
 - `notebooks/01-explore-sample-eval.ipynb` — notebook scaffold with simple visualizations.
 - `tools/convert_eval_to_csv.py` — converter script.
 - `tools/run_single_analyzer.py` — single-analyzer scaffold (dry-run heuristics).
@@ -114,14 +114,14 @@ You can hand this repository to a data scientist now without them getting stuck 
 
 Key artifacts (created / updated)
 --------------------------------
-- `[docs/EVAL_OUTPUT_SCHEMA.md](docs/EVAL_OUTPUT_SCHEMA.md)` — canonical evaluation JSON schema + example.
+- [docs/EVAL_OUTPUT_SCHEMA.md](docs/EVAL_OUTPUT_SCHEMA.md) — canonical evaluation JSON schema + example.
 - `docs/onboarding/example-evaluation-report.json` — concrete example JSON.
-- `[docs/CONTEXTUAL_DEBT_SPEC.md](docs/CONTEXTUAL_DEBT_SPEC.md)` — exact aggregation algorithm and worked example.
+- [docs/CONTEXTUAL_DEBT_SPEC.md](docs/CONTEXTUAL_DEBT_SPEC.md) — exact aggregation algorithm and worked example.
 - `notebooks/01-explore-sample-eval.ipynb` — starter notebook that loads the example JSON and plots per-analyzer scores.
 - `tools/convert_eval_to_csv.py` — CLI: JSON → CSV (one row per analyzer).
 - `tools/run_single_analyzer.py` — scaffold to run a single analyzer locally (dry-run heuristics).
 - `tools/[README.md](README.md)` — usage notes for the tools.
-- `[README.md](README.md)` — updated with a "Data Scientist onboarding" quick links & commands block.
+- [README.md](README.md) — updated with a "Data Scientist onboarding" quick links & commands block.
 
 Minimal Quickstart for a data scientist
 --------------------------------------
@@ -148,9 +148,9 @@ jupyter notebook notebooks/01-explore-sample-eval.ipynb
 
 Short checklist (ready-to-hand-off)
 ----------------------------------
-- [x] Environment & build instructions present in `[README.md](README.md)` (Node v16, pnpm, Docker notes).
-- [x] Gap-analysis & onboarding doc (`[docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md](docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md)`) is reachable from the README.
-- [x] Metric spec present (`[docs/CONTEXTUAL_DEBT_SPEC.md](docs/CONTEXTUAL_DEBT_SPEC.md)`).
+- [x] Environment & build instructions present in [README.md](README.md) (Node v16, pnpm, Docker notes).
+- [x] Gap-analysis & onboarding doc ([docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md](docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md)) is reachable from the README.
+- [x] Metric spec present ([docs/CONTEXTUAL_DEBT_SPEC.md](docs/CONTEXTUAL_DEBT_SPEC.md)).
 - [x] Canonical example JSON available (`docs/onboarding/example-evaluation-report.json`).
 - [x] Quick EDA helpers present: `tools/convert_eval_to_csv.py` and `tools/run_single_analyzer.py`.
 - [x] Starter notebook present (`notebooks/01-explore-sample-eval.ipynb`).
@@ -158,7 +158,7 @@ Short checklist (ready-to-hand-off)
 Remaining high-value work (not blocking)
 ----------------------------------------
 1. Expand the notebook to load multiple JSONs from `logs/` and produce aggregated views (histogram over many runs, time series, per-analyzer distributions).
-2. Add `[docs/CONTEXTUAL_DEBT_SPEC.md](docs/CONTEXTUAL_DEBT_SPEC.md)` enhancements: uncertainty propagation and weighting experiments (optional but useful for research-grade analysis).
+2. Add [docs/CONTEXTUAL_DEBT_SPEC.md](docs/CONTEXTUAL_DEBT_SPEC.md) enhancements: uncertainty propagation and weighting experiments (optional but useful for research-grade analysis).
 3. Add tests for the tools: `tests/test_convert_eval_to_csv.py` and `tests/test_run_single_analyzer.py`.
 4. (Optional) Implement a TypeScript harness or `--mode node` in `tools/run_single_analyzer.py` to call the real analyzers when Node is available.
 

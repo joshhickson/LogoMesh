@@ -98,6 +98,6 @@ To provide a robust and secure way to view the onboarding site, a self-contained
 
 3.  **Updated Documentation:**
     *   **`onboarding/[README.md](README.md)`:** This file was updated with detailed instructions on how to install dependencies (`pnpm install`) and run the local server (`pnpm start`).
-    *   **Root `[README.md](README.md)`:** A prominent note was added to the top of the main project `[README.md](README.md)`, directing new users to start in the `onboarding` directory for a guided experience.
+    *   **Root [README.md](README.md):** A prominent note was added to the top of the main project [README.md](README.md), directing new users to start in the `onboarding` directory for a guided experience.
 
 This completes the setup of a secure, documented, and easy-to-use system for accessing the interactive onboarding documentation.

@@ -13,9 +13,9 @@ Upload the following files. Ensure they are converted to PDF format if required 
 
 | # | File Path | Registration Title (Enter in eCO) | Description |
 | :--- | :--- | :--- | :--- |
-| 1 | `[docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md](docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md)` | **Contextual Debt Protocol: Measuring Software Liability** | The core research paper defining the problem, the CIS math, and the Glass Box protocol. |
-| 2 | `[docs/strategy_and_ip/01_CORE_IP_DEFINITION.md](docs/strategy_and_ip/01_CORE_IP_DEFINITION.md)` | **Core Definitions: Contextual Integrity Score & Agent-as-a-Judge** | The specific technical definitions and formulas for the patentable methods. |
-| 3 | `[docs/strategy_and_ip/03_INVESTOR_PITCH.md](docs/strategy_and_ip/03_INVESTOR_PITCH.md)` | **Contextual Debt: Commercial Strategy & Pitch** | The business narrative and "Consult-to-Product" flywheel model. |
+| 1 | [docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md](docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md) | **Contextual Debt Protocol: Measuring Software Liability** | The core research paper defining the problem, the CIS math, and the Glass Box protocol. |
+| 2 | [docs/strategy_and_ip/01_CORE_IP_DEFINITION.md](docs/strategy_and_ip/01_CORE_IP_DEFINITION.md) | **Core Definitions: Contextual Integrity Score & Agent-as-a-Judge** | The specific technical definitions and formulas for the patentable methods. |
+| 3 | [docs/strategy_and_ip/03_INVESTOR_PITCH.md](docs/strategy_and_ip/03_INVESTOR_PITCH.md) | **Contextual Debt: Commercial Strategy & Pitch** | The business narrative and "Consult-to-Product" flywheel model. |
 
 ## 2. Verification Checklist
 

@@ -4,10 +4,10 @@
 
 This plan synthesizes and extends the strategic direction outlined in the following core documents. It is recommended to review them for full context:
 
-- **The New Pivot:** `[logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md)`
-- **Math Viability Analysis:** `[logs/technical/josh-temp/20251127-Math-Viability-and-Novelty-Analysis.md](logs/technical/josh-temp/20251127-Math-Viability-and-Novelty-Analysis.md)` (Confirms API viability)
-- **The Team Feedback:** `[logs/technical/20251127-Comparative-Analysis-of-Team-Feedback.md](logs/technical/20251127-Comparative-Analysis-of-Team-Feedback.md)` (Confirms A2A Pivot)
-- **Competition Strategy:** `[docs/20251102-AgentX AgentBeats Competition Analysis.md](docs/20251102-AgentX AgentBeats Competition Analysis.md)`
+- **The New Pivot:** [logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md)
+- **Math Viability Analysis:** [logs/technical/josh-temp/20251127-Math-Viability-and-Novelty-Analysis.md](logs/technical/josh-temp/20251127-Math-Viability-and-Novelty-Analysis.md) (Confirms API viability)
+- **The Team Feedback:** [logs/technical/20251127-Comparative-Analysis-of-Team-Feedback.md](logs/technical/20251127-Comparative-Analysis-of-Team-Feedback.md) (Confirms A2A Pivot)
+- **Competition Strategy:** [docs/20251102-AgentX AgentBeats Competition Analysis.md](docs/20251102-AgentX AgentBeats Competition Analysis.md)
 
 ## 2. Objective: The Discovery Sprint (Updated)
 
@@ -84,7 +84,7 @@ Our goal is to produce concrete "Decision Records" and "Implementation Specs" th
     *   **Assignee:** Team Lead (Josh).
     *   **Task:** This experiment has two parts:
         1.  **Accessibility Test:** Verify that the Node.js server in `onboarding/` can be configured to safely read file contents from the root `docs/` and `logs/` directories to prove the data connection is possible.
-        2.  **Link Extraction Spike:** Write a script (e.g., Python or Node.js) that can traverse the `docs/` and `logs/` directories and extract all explicit markdown links (`[text](./path/to/file.md)`) to build a preliminary adjacency list of the documentation graph. This validates the core mechanism needed to combat "reference rot."
+        2.  **Link Extraction Spike:** Write a script (e.g., Python or Node.js) that can traverse the `docs/` and `logs/` directories and extract all explicit markdown links ([text](./path/to/file.md)) to build a preliminary adjacency list of the documentation graph. This validates the core mechanism needed to combat "reference rot."
     *   **Deliverable:** A brief report summarizing the findings. It should include a "Pass/Fail" for the accessibility test and the proof-of-concept script for link extraction.
 
 ## 7. Discovery Track 5: Competition & Go-to-Market Alignment
@@ -94,7 +94,7 @@ Our goal is to produce concrete "Decision Records" and "Implementation Specs" th
 
 *   **Experiment 5.1: The "Winning Narrative" Blueprint**
     *   **Assignee:** The TPM (Deepti).
-    *   **Task:** Synthesize the `[docs/20251102-AgentX AgentBeats Competition Analysis.md](docs/20251102-AgentX AgentBeats Competition Analysis.md)` document with our CIS concept to produce a "Narrative & Strategy Memo." This document must explicitly articulate the end-to-end story for the judges, connecting our "Green Agent" (CIS as a benchmark) and our "Purple Agent" (an agent that excels on it) to the sponsor's goals (especially Auth0's security focus).
+    *   **Task:** Synthesize the [docs/20251102-AgentX AgentBeats Competition Analysis.md](docs/20251102-AgentX AgentBeats Competition Analysis.md) document with our CIS concept to produce a "Narrative & Strategy Memo." This document must explicitly articulate the end-to-end story for the judges, connecting our "Green Agent" (CIS as a benchmark) and our "Purple Agent" (an agent that excels on it) to the sponsor's goals (especially Auth0's security focus).
     *   **Deliverable:** A 2-page memo outlining the proposed narrative, the key talking points for the pitch, and how our project embodies the "powerful *and* trustworthy" archetype.
 
 *   **Experiment 5.2: The SDK & Auth0 Integration Spike**

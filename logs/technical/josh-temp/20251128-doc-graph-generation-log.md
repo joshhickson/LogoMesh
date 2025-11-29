@@ -10,7 +10,7 @@
 - Logic:
     - Recursively walk `docs/` and `logs/`.
     - Identify `.md` files as Nodes.
-    - Parse Markdown links `[Label](path)` as Edges.
+    - Parse Markdown links [Label](path) as Edges.
     - Resolve relative paths to canonical project-root paths.
     - Output JSON to `onboarding/doc_graph/doc_graph_raw.json`.
 

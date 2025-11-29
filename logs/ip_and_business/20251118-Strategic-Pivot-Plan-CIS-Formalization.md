@@ -4,7 +4,7 @@
 
 This document outlines a detailed, phased implementation plan for the strategic pivot from a rubric-based implementation of the Contextual Integrity Score (CIS) to a formal, mathematically-defensible, algorithm-based model.
 
-The previous implementation, as detailed in `[logs/technical/20251113_RECOVERY_PLAN.md](logs/technical/20251113_RECOVERY_PLAN.md)`, relied on simpler mechanisms (e.g., complexity metrics, basic pass/fail test capture). This new approach elevates our core intellectual property by grounding each component of the CIS in hard technology: vector-based semantic analysis, graph theory, and semantic test coverage.
+The previous implementation, as detailed in [logs/technical/20251113_RECOVERY_PLAN.md](logs/technical/20251113_RECOVERY_PLAN.md), relied on simpler mechanisms (e.g., complexity metrics, basic pass/fail test capture). This new approach elevates our core intellectual property by grounding each component of the CIS in hard technology: vector-based semantic analysis, graph theory, and semantic test coverage.
 
 This pivot is critical for moving our project from a "consulting framework" to a "hard tech" product. This document will serve as the primary technical roadmap for this transition and as a core onboarding document for new team members.
 
@@ -12,7 +12,7 @@ This pivot is critical for moving our project from a "consulting framework" to a
 
 The technical and mathematical foundations for this pivot are detailed in the proposed revision to the Contextual Debt paper. This document will be uploaded by the project lead to the following location after this plan is merged:
 
-`[docs/strategy_and_ip/DOC-REVISIONS/20251118-proposed-Section-2.2.md](docs/strategy_and_ip/DOC-REVISIONS/20251118-proposed-Section-2.2.md)`
+[docs/strategy_and_ip/DOC-REVISIONS/20251118-proposed-Section-2.2.md](docs/strategy_and_ip/DOC-REVISIONS/20251118-proposed-Section-2.2.md)
 
 All implementation work should refer to this document as the source of truth for the new logic.
 
@@ -20,7 +20,7 @@ All implementation work should refer to this document as the source of truth for
 
 To execute this pivot, "Workstream 1" of the existing `RECOVERY_PLAN.md` will be deprecated and replaced. The tasks related to `escomplex` integration and simple sandbox test capture are no longer relevant.
 
-**Action Item:** The `[logs/technical/20251113_RECOVERY_PLAN.md](logs/technical/20251113_RECOVERY_PLAN.md)` will be updated to replace the contents of "Workstream 1: Harden Core Analyzer Logic" with the following:
+**Action Item:** The [logs/technical/20251113_RECOVERY_PLAN.md](logs/technical/20251113_RECOVERY_PLAN.md) will be updated to replace the contents of "Workstream 1: Harden Core Analyzer Logic" with the following:
 
 ---
 

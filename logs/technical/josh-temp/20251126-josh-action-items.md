@@ -23,5 +23,5 @@ This document lists the specific action items assigned to Josh, consolidated fro
 ### Technical Feasibility & Discovery (From Revision Plan)
 - [ ] **[From Discovery Plan Revision]: Experiment 4.3: The Data Accessibility & Link Extraction POC**
   - **Task:** Verify that the Node.js server in `onboarding/` can be configured to safely read file contents from the root `docs/` and `logs/` directories.
-  - **Task:** Write a script (e.g., Python or Node.js) that can traverse the `docs/` and `logs/` directories and extract all explicit markdown links (`[text](./path/to/file.md)`) to build a preliminary adjacency list.
+  - **Task:** Write a script (e.g., Python or Node.js) that can traverse the `docs/` and `logs/` directories and extract all explicit markdown links ([text](./path/to/file.md)) to build a preliminary adjacency list.
   - **Deliverable:** A brief report summarizing the findings (Pass/Fail) and the POC script.

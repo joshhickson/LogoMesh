@@ -10,7 +10,7 @@ This section identifies where the paper makes abstract claims that are already b
     *   **Gap:** The paper should use the project's core mission—building a "Contextual Debt Evaluator"—as the primary case study for how to proactively manage this debt. The entire repository is a tangible example of this principle in action.
 
 *   **Claim:** The section "The Ticking Time Bomb: Contextual Debt as a Security Threat Multiplier" makes a strong theoretical case for the link between contextual debt and security.
-    *   **Gap:** It should use the project's "Cyber-Sentinel Agent" narrative from `[PROJECT_PLAN.md](PROJECT_PLAN.md)` as its leading example. This narrative reframes the abstract security risk into a high-stakes, commercially relevant problem domain, making the threat immediate and understandable.
+    *   **Gap:** It should use the project's "Cyber-Sentinel Agent" narrative from [PROJECT_PLAN.md](PROJECT_PLAN.md) as its leading example. This narrative reframes the abstract security risk into a high-stakes, commercially relevant problem domain, making the threat immediate and understandable.
 
 *   **Claim:** The paper's conclusion calls for elevating contextual debt to a "C-suite-level risk" and a matter of "corporate governance."
     *   **Gap:** The paper should directly cite the `Workstream 2: Implement Production-Grade Security (Auth0)` from the `RECOVERY_PLAN.md`. This workstream, with its focus on Fine-Grained Authorization (FGA), is a perfect real-world example of treating agent security not as a feature, but as a non-negotiable aspect of corporate risk management.
@@ -28,14 +28,14 @@ This section identifies where the paper makes abstract claims that are already b
 
 This section identifies new, high-potential research avenues for the paper, based on the project's strategic plans.
 
-*   **The "Agent-as-a-Judge" Philosophy:** The `[PROJECT_PLAN.md](PROJECT_PLAN.md)` introduces the "Agent-as-a-Judge" concept.
+*   **The "Agent-as-a-Judge" Philosophy:** The [PROJECT_PLAN.md](PROJECT_PLAN.md) introduces the "Agent-as-a-Judge" concept.
     *   **Suggestion:** The paper needs a new section on "Agentic Auditing and Automated Governance." It should explore how multi-agent systems can be designed to audit each other, moving beyond human-led governance to a model where specialized "Green Agents" act as automated checks and balances on other AI systems. This aligns with the project's core architecture and elevates the paper's scope from problem identification to solution-oriented design patterns.
 
-*   **Auth0 Security Specialist Role:** The `[PROJECT_PLAN.md](PROJECT_PLAN.md)` defines a role for an "Auth0 Security Specialist."
+*   **Auth0 Security Specialist Role:** The [PROJECT_PLAN.md](PROJECT_PLAN.md) defines a role for an "Auth0 Security Specialist."
     *   **Suggestion:** The paper needs a new section on "Contextual Debt as a Core Security & Access-Control Liability." This would explore how a lack of intent in code directly leads to flawed identity and access management (IAM) models. It's a powerful vector that aligns perfectly with the "Cyber-Sentinel" narrative and the deep integration with a major security provider like Auth0. The paper could argue that securing AI agents is the next frontier of IAM.
 
 *   **Developer Experience (DevEx) Bridge:** `Workstream 4` of the `RECOVERY_PLAN.md` focuses on creating a GitHub Action to integrate the benchmark into a developer workflow.
     *   **Suggestion:** The paper should add a section titled "From Abstract Liability to Developer-Centric Tooling." This would explore the practical business case for managing contextual debt. Instead of just being a risk-management tool, the paper could argue that contextual debt analyzers can become a new category of "developer productivity" or "code quality" tool, directly integrating into CI/CD pipelines to provide real-time feedback. This makes the concept more tangible and commercially viable.
 
-*   **Benchmark Design and Scoring:** The `[PROJECT_PLAN.md](PROJECT_PLAN.md)` mentions the need to create a "detailed scoring rubric for each analyzer."
+*   **Benchmark Design and Scoring:** The [PROJECT_PLAN.md](PROJECT_PLAN.md) mentions the need to create a "detailed scoring rubric for each analyzer."
     *   **Suggestion:** The paper could propose a new, standardized "Contextual Integrity Score" (CIS) for AI-generated code. This would be a composite metric derived from the three analyzers (Rationale, Architectural, Testing). Proposing a new, quantifiable industry benchmark would be a significant academic contribution and would position the project as a thought leader in the space.

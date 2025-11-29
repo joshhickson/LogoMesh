@@ -50,4 +50,4 @@ Tags: [#tag1, #tag2, #tag3]
 ## 6. Related Logs
 *(**What other context is relevant?** Provide relative links to any other log entries that are prerequisites, follow-ups, or are otherwise connected to this one.)*
 
-*   See also: `[YYYYMMDDHHMMSS-TYPE-description.md](./YYYYMMDDHHMMSS-TYPE-description.md)`
+*   See also: [YYYYMMDDHHMMSS-TYPE-description.md](./YYYYMMDDHHMMSS-TYPE-description.md)

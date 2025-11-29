@@ -3,11 +3,11 @@
 **Task:** Empirically verify the accuracy of the `generate_doc_graph.js` parser.
 **Method:** Manual reading of 5 representative files vs. `doc_graph_raw.json` data.
 
-## 1. File: `[docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md)`
+## 1. File: [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md)
 **Manual Observation:**
 - Content: "...please see our detailed Gap Analysis document. **➡️ [Deep Dive: Detailed Gap Analysis](./GAP_ANALYSIS.md)**"
 - Links Found:
-  1. `[Deep Dive: Detailed Gap Analysis](./GAP_ANALYSIS.md)` (Target: `[docs/GAP_ANALYSIS.md](docs/GAP_ANALYSIS.md)`)
+  1. [Deep Dive: Detailed Gap Analysis](./GAP_ANALYSIS.md) (Target: [docs/GAP_ANALYSIS.md](docs/GAP_ANALYSIS.md))
 
 **Graph JSON Data:**
 - **Found:** Yes!
@@ -23,7 +23,7 @@
 
 ## 2. File: `docs/[README.md](README.md)`
 **Manual Observation:**
-- Links Found: `[docs/README.md](./docs/README.md)`, `[logs/README.md](./logs/README.md)`
+- Links Found: [docs/README.md](./docs/README.md), [logs/README.md](./logs/README.md)
 - **Graph JSON Data:** ❌ **FAIL** (No edges found for `docs/[README.md](README.md)`)
 - **Diagnosis:** `docs/[README.md](README.md)` file was *missing* or *empty*?
     - Wait, in Step 1 `read_file` failed for `docs/[README.md](README.md)`.
@@ -36,7 +36,7 @@
     - I need to verify if `docs/[README.md](README.md)` is in the `nodes` list.
     - *Action:* `grep "docs/[README.md](README.md)" onboarding/doc_graph/doc_graph_raw.json`.
 
-## 3. File: `[logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md)`
+## 3. File: [logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md)
 **Manual Observation:**
 - Contains many links.
 **Graph JSON Data:**
@@ -44,24 +44,24 @@
 - **Result:** ❌ **FAIL**
 - **Diagnosis:** The parser missed ALL links in the Master Log.
 - **Reason:** The regex `\[([^\]]+)\]\(([^)]+)\)` failed?
-- Link format in file: `[Label](path)`.
+- Link format in file: [Label](path).
 - *Wait.* Is it possible the parser logic `linkTarget.startsWith('http')` filtering is too aggressive?
 - Most links in Master Log might be absolute or using some other scheme?
-- *Check Content:* `[20251119-Recommendation-Report-Strategic-Path-Forward.md](../docs/20251119-Recommendation-Report-Strategic-Path-Forward.md)`
+- *Check Content:* [20251119-Recommendation-Report-Strategic-Path-Forward.md](../docs/20251119-Recommendation-Report-Strategic-Path-Forward.md)
 - This is a relative link.
 - Why did it fail?
 - **Hypothesis:** The file encoding? Or the regex?
-- **TEST:** The regex `\[([^\]]+)\]\(([^)]+)\)` matches `[Label](path)`.
+- **TEST:** The regex `\[([^\]]+)\]\(([^)]+)\)` matches [Label](path).
 - **CRITICAL FINDING:** `doc_graph_raw.json` only has 6 edges total.
 - The 4th, 5th, 6th edges are from `logs/technical/josh-temp/...`.
 - This proves the parser *can* parse `logs` directory files.
-- Why did it skip `[logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md)`?
-- *Check:* Does `[logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md)` exist in `nodes`?
+- Why did it skip [logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md)?
+- *Check:* Does [logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md) exist in `nodes`?
 
 ## Summary
 The system has **massive false negatives**. It is missing almost all links.
-- `[docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md)`: Passed (1 link found).
-- `[logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md)`: Failed (0 links found).
+- [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md): Passed (1 link found).
+- [logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md): Failed (0 links found).
 - `docs/[README.md](README.md)`: Failed (0 links found).
 
 **Root Cause Candidates:**

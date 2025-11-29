@@ -2,13 +2,13 @@
 
 ## 1. Introduction & Acknowledgment of Current Plan
 
-This document is a tactical supplement to the strategic `[PROJECT_PLAN.md](PROJECT_PLAN.md)`. While the `[PROJECT_PLAN.md](PROJECT_PLAN.md)` outlines the "what" and "why," this recovery plan details the "how"—providing a concrete, actionable roadmap to address the remaining gaps identified in the `2025-11-13_GAP_ANALYSIS_REPORT.md`.
+This document is a tactical supplement to the strategic [PROJECT_PLAN.md](PROJECT_PLAN.md). While the [PROJECT_PLAN.md](PROJECT_PLAN.md) outlines the "what" and "why," this recovery plan details the "how"—providing a concrete, actionable roadmap to address the remaining gaps identified in the `2025-11-13_GAP_ANALYSIS_REPORT.md`.
 
 Our strategy is sound, but execution is paramount. This plan breaks down the remaining high-level goals into specific, verifiable tasks required to create a competition-winning submission.
 
 ## 2. Recovery Workstreams
 
-The following workstreams are designed to run in parallel, aligning with the roles and weekly milestones established in the `[PROJECT_PLAN.md](PROJECT_PLAN.md)`.
+The following workstreams are designed to run in parallel, aligning with the roles and weekly milestones established in the [PROJECT_PLAN.md](PROJECT_PLAN.md).
 
 ### Workstream 1: Harden Core Analyzer Logic
 
