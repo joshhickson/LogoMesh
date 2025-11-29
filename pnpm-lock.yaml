@@ -87,7 +87,7 @@ importers:
   onboarding:
     dependencies:
       express:
-        specifier: ^4.19.2
+        specifier: ^4.21.2
         version: 4.21.2
 
   packages/contracts: {}
