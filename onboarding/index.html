@@ -973,8 +973,9 @@ graph TD
         }
 
         // Create the graphs
-        createGraph('doc_graph/documentation_graph.json', '#doc-graph-svg');
-        createGraph('log_graph/logs_graph.json', '#log-graph-svg');
+        // Updated 2025-11-28: Loading the unified 'doc_graph_raw.json' which covers both docs and logs
+        createGraph('doc_graph/doc_graph_raw.json', '#doc-graph-svg');
+        // createGraph('log_graph/logs_graph.json', '#log-graph-svg'); // Deprecated: Unified into doc_graph
     </script>
 </body>
 </html>
