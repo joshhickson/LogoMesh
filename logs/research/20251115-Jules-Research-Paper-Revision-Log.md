@@ -1,7 +1,7 @@
 # Session Log: 2025-11-15 - Research Paper Revision
 
 ## User: Jules
-## Task: Strategic revision of `docs/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md`.
+## Task: Strategic revision of `[docs/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md](docs/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md)`.
 
 ### 1. Objective & Deep Planning
 

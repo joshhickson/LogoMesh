@@ -37,18 +37,18 @@ This log details the setup of the foundational files for creating a knowledge gr
         },
         {
           "source": "onboarding/index.html",
-          "target": "logs/20251119-Strategic-Master-Log.md",
+          "target": "[logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md)",
           "label": "visualizes",
           "weight": 0.8
         },
         {
-          "source": "logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md",
-          "target": "docs/CONTEXTUAL_DEBT_SPEC.md",
+          "source": "[logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md)",
+          "target": "[docs/CONTEXTUAL_DEBT_SPEC.md](docs/CONTEXTUAL_DEBT_SPEC.md)",
           "label": "refines",
           "weight": 0.7
         },
         {
-          "source": "docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md",
+          "source": "[docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md](docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md)",
           "target": "docs/strategy_and_ip/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md",
           "label": "revises",
           "weight": 0.9
@@ -83,7 +83,7 @@ With the visualization in place, the next priority is to make the onboarding sit
 3.  **Recommended Tools:**
     *   **Node.js:** Use a simple package like `http-server` or `serve` with a command explicitly pointing to the `onboarding` directory (e.g., `npx serve onboarding`).
     *   **Python:** Use Python's built-in `http.server` module, ensuring the command is run from within the `onboarding` directory itself (e.g., `cd onboarding && python -m http.server`).
-4.  **Documentation:** Document the chosen method and provide clear instructions in `onboarding/README.md` for team members to start the server.
+4.  **Documentation:** Document the chosen method and provide clear instructions in `onboarding/[README.md](README.md)` for team members to start the server.
 
 ## Update: November 22, 2025 (Part 2)
 
@@ -97,7 +97,7 @@ To provide a robust and secure way to view the onboarding site, a self-contained
     *   The `express` dependency was installed locally within the `onboarding` directory, creating an `onboarding/node_modules` folder. This isolates the site's dependencies from the main project.
 
 3.  **Updated Documentation:**
-    *   **`onboarding/README.md`:** This file was updated with detailed instructions on how to install dependencies (`pnpm install`) and run the local server (`pnpm start`).
-    *   **Root `README.md`:** A prominent note was added to the top of the main project `README.md`, directing new users to start in the `onboarding` directory for a guided experience.
+    *   **`onboarding/[README.md](README.md)`:** This file was updated with detailed instructions on how to install dependencies (`pnpm install`) and run the local server (`pnpm start`).
+    *   **Root `[README.md](README.md)`:** A prominent note was added to the top of the main project `[README.md](README.md)`, directing new users to start in the `onboarding` directory for a guided experience.
 
 This completes the setup of a secure, documented, and easy-to-use system for accessing the interactive onboarding documentation.

@@ -16,8 +16,8 @@ The main objective is to clarify the direction for the LogoMesh team by creating
 
 The core idea is to visualize the contextual relationships between all documents in the `docs/` and `logs/` directories using simple graph theory.
 
-- **Initial Plan:** This is outlined in the work-in-progress file: `logs/technical/20251122-Documentation-Graph-Setup.md`.
-- **Logic Application:** The plan is to apply the proposed logic for the "Contextual Integrity Score" (CIS) to this documentation graph. The logic for the CIS is detailed in: `docs/strategy_and_ip/DOC-REVISIONS/20251118-proposed-Section-2.2.md`.
+- **Initial Plan:** This is outlined in the work-in-progress file: `[logs/technical/20251122-Documentation-Graph-Setup.md](logs/technical/20251122-Documentation-Graph-Setup.md)`.
+- **Logic Application:** The plan is to apply the proposed logic for the "Contextual Integrity Score" (CIS) to this documentation graph. The logic for the CIS is detailed in: `[docs/strategy_and_ip/DOC-REVISIONS/20251118-proposed-Section-2.2.md](docs/strategy_and_ip/DOC-REVISIONS/20251118-proposed-Section-2.2.md)`.
 - **Goal:** The immediate goal is not to generate a "contextual debt" score but to visualize the connections and understand which documents reference each other.
 - **SUPERSEDED:** The results of this analysis should be viewable in the `onboarding/` website.
 - **NEW (2025-11-23):** The new foundational step is to connect the log summary to the existing simple web server and graph implementation in the `onboarding/` folder. The logic of connecting nodes is the priority; the UI is secondary and should be simple (e.g., click a node to open the document in a new tab).
@@ -59,6 +59,6 @@ A clear plan is needed to manage the documentation itself before implementing th
 
 ### Phase 2: Planning for the Future
 
-- **Beyond the Recovery Plan:** The current `logs/technical/20251113_RECOVERY_PLAN.md` is a good start, but a more comprehensive plan is needed.
+- **Beyond the Recovery Plan:** The current `[logs/technical/20251113_RECOVERY_PLAN.md](logs/technical/20251113_RECOVERY_PLAN.md)` is a good start, but a more comprehensive plan is needed.
 - **New Plan Requirements:** The next version of the plan must address the currently unanswered questions and incorporate a clearer vision for the "Green Agent" and "Cyber Sentinel Agent" concepts, connecting them to the high-level project goals. It must also consider the constraints and use cases of the AgentBeats SDK for developers and judges.
 - **Standardize Processes:** To keep documentation up-to-date, consider standardizing workflows, such as requiring team members to follow a simple pattern every time they open the repository.

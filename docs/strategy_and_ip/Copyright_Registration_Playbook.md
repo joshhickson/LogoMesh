@@ -13,13 +13,13 @@
 
 Based on the initial inventory, the following documents are candidates for the group. Note that **all works must be unpublished** at the time of registration.
 
-1.  **The Primary Protocol:** `docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md`
+1.  **The Primary Protocol:** `[docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md](docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md)`
     *   *Description:* The foundational research paper defining "Contextual Debt" and the "Contextual Integrity Score."
-2.  **The Core Definitions:** `docs/strategy_and_ip/01_CORE_IP_DEFINITION.md`
+2.  **The Core Definitions:** `[docs/strategy_and_ip/01_CORE_IP_DEFINITION.md](docs/strategy_and_ip/01_CORE_IP_DEFINITION.md)`
     *   *Description:* The specific definitions for the patentable methods (CIS and Agent-as-a-Judge).
-3.  **The Business Narrative:** `docs/strategy_and_ip/03_INVESTOR_PITCH.md`
+3.  **The Business Narrative:** `[docs/strategy_and_ip/03_INVESTOR_PITCH.md](docs/strategy_and_ip/03_INVESTOR_PITCH.md)`
     *   *Description:* The commercial script outlining the market problem and solution.
-4.  **The Technical Specification:** `logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md`
+4.  **The Technical Specification:** `[logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md)`
     *   *Description:* The detailed mathematical and architectural specifications for the CIS. (Consider registering this as a separate technical addendum if not fully merged into the Paper).
 
 ---
@@ -28,7 +28,7 @@ Based on the initial inventory, the following documents are candidates for the g
 
 **Goal:** Ensure the works are "finished" and strategically aligned before registration. A registration fixes the work in time; we must ensure the "v1.0" we register is the strongest possible version.
 
-**Critical Action:** Address the findings in the **Gap Analysis Report** (`docs/strategy_and_ip/DOC-REVISIONS/20251119-Gap-Analysis-Critique-vs-IP-Assets.md`).
+**Critical Action:** Address the findings in the **Gap Analysis Report** (`[docs/strategy_and_ip/DOC-REVISIONS/20251119-Gap-Analysis-Critique-vs-IP-Assets.md](docs/strategy_and_ip/DOC-REVISIONS/20251119-Gap-Analysis-Critique-vs-IP-Assets.md)`).
 
 *   **[x] 1. Formalize the Math:** Transfer the mathematical formulas for the Contextual Integrity Score (from the Technical Specification log) into the Research Paper. The registered paper must define a *protocol*, not just a rubric.
 *   **[x] 2. Adjust the Tone:** Update the Research Paper to reflect the "Passive Authority" voice recommended in the Strategic Critique.

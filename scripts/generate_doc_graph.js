@@ -5,9 +5,6 @@ const ROOT_DIR = process.cwd();
 const TARGET_DIRS = ['docs', 'logs'];
 const OUTPUT_FILE = path.join(ROOT_DIR, 'onboarding/doc_graph/doc_graph_raw.json');
 
-const nodes = [];
-const edges = [];
-
 // Helper to get relative path from root
 function getRelativePath(absolutePath) {
     return path.relative(ROOT_DIR, absolutePath).split(path.sep).join('/');
@@ -28,80 +25,101 @@ function walkDir(dir, callback) {
     }
 }
 
-console.log('Starting Documentation Graph Generation...');
+console.log('Starting Documentation Graph Generation (v2 - Implicit Support)...');
 
-// 1. Identify Nodes (Files)
+const nodes = [];
+const edges = [];
+const validFilePaths = new Set();
+
+// 1. Identify Nodes (Files) & Build Census
 TARGET_DIRS.forEach(targetDir => {
     const absTargetDir = path.join(ROOT_DIR, targetDir);
     walkDir(absTargetDir, (filePath) => {
         if (path.extname(filePath) === '.md') {
             const relPath = getRelativePath(filePath);
+
+            // Add Node
             nodes.push({
                 id: relPath,
                 label: path.basename(filePath),
                 path: relPath,
                 type: 'file'
             });
+
+            // Add to Census
+            validFilePaths.add(relPath);
         }
     });
 });
 
-console.log(`Found ${nodes.length} Markdown files (Nodes).`);
+// Add root files to census (but maybe not as nodes if we only want docs/logs graph?
+// The original plan said "docs/ and logs/". But links TO root files exist.
+// Let's add them as nodes if they are linked, but for now just add to census for detection.)
+if (fs.existsSync(path.join(ROOT_DIR, 'PROJECT_PLAN.md'))) validFilePaths.add('PROJECT_PLAN.md');
+if (fs.existsSync(path.join(ROOT_DIR, 'README.md'))) validFilePaths.add('README.md');
+
+
+console.log(`Found ${nodes.length} Nodes.`);
 
 // 2. Parse Edges (Links)
 nodes.forEach(node => {
     const absoluteFilePath = path.join(ROOT_DIR, node.path);
     const content = fs.readFileSync(absoluteFilePath, 'utf8');
+    const lines = content.split('\n');
 
-    // Regex for [Label](Path)
-    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-    let match;
+    lines.forEach((line, lineIndex) => {
+        // --- Pass 1: Explicit Links ---
+        const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+        let match;
+        while ((match = linkRegex.exec(line)) !== null) {
+            const label = match[1];
+            const linkTarget = match[2];
 
-    while ((match = linkRegex.exec(content)) !== null) {
-        const label = match[1];
-        const linkTarget = match[2];
+            // Ignore external/anchors
+            if (linkTarget.startsWith('http') || linkTarget.startsWith('mailto:') || linkTarget.startsWith('#')) {
+                continue;
+            }
 
-        // Ignore external links
-        if (linkTarget.startsWith('http') || linkTarget.startsWith('mailto:')) {
-            continue;
+            let resolvedTarget = null;
+            if (linkTarget.startsWith('/')) {
+                resolvedTarget = linkTarget.substring(1);
+            } else {
+                const targetWithoutAnchor = linkTarget.split('#')[0];
+                const currentDir = path.dirname(absoluteFilePath);
+                const absoluteTarget = path.resolve(currentDir, targetWithoutAnchor);
+                resolvedTarget = getRelativePath(absoluteTarget);
+            }
+
+            // Clean up
+            resolvedTarget = resolvedTarget.split('#')[0].split('?')[0];
+
+            edges.push({
+                source: node.id,
+                target: resolvedTarget,
+                label: 'explicit_link',
+                text: label
+            });
         }
 
-        // Ignore anchors
-        if (linkTarget.startsWith('#')) {
-            continue;
-        }
+        // --- Pass 2: Implicit Links ---
+        validFilePaths.forEach(validPath => {
+            if (line.includes(validPath)) {
+                // Filter if already part of explicit link
+                if (line.includes(`](${validPath}`)) return;
+                if (line.includes(`] (/${validPath}`)) return;
 
-        // Resolve Path
-        let resolvedTarget = null;
-        if (linkTarget.startsWith('/')) {
-            // Root-relative (treat as relative to project root)
-            // Remove leading slash
-             resolvedTarget = linkTarget.substring(1);
-        } else {
-            // Relative to current file
-            const currentDir = path.dirname(absoluteFilePath);
-            const absoluteTarget = path.resolve(currentDir, linkTarget);
-            resolvedTarget = getRelativePath(absoluteTarget);
-        }
-
-        // Clean up resolved target (remove query params or anchors if any)
-        resolvedTarget = resolvedTarget.split('#')[0].split('?')[0];
-
-        // Only add edge if target is inside docs or logs (and is md?)
-        // The plan says "all documentation", so we assume target should exist in nodes list to be valid 'internal' link
-        // But for "raw" graph, we might want to keep all internal links even if broken?
-        // Let's keep all, the visualizer can flag broken ones.
-
-        edges.push({
-            source: node.id,
-            target: resolvedTarget,
-            label: 'links_to', // Generic label for now
-            text: label // The text of the link
+                edges.push({
+                    source: node.id,
+                    target: validPath,
+                    label: 'implicit_link',
+                    text: validPath
+                });
+            }
         });
-    }
+    });
 });
 
-console.log(`Found ${edges.length} Links (Edges).`);
+console.log(`Found ${edges.length} Edges.`);
 
 // 3. Write Output
 const outputData = {
