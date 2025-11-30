@@ -765,17 +765,17 @@
 
                 <h4 style="color: white; margin-top: 20px; margin-bottom: 10px;">For Data Scientists:</h4>
                 <ul>
-                    <li>Gap Analysis & Onboarding Plan: <code>docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md</code></li>
-                    <li>Metric Specification: <code>docs/CONTEXTUAL_DEBT_SPEC.md</code></li>
-                    <li>Evaluation Output Schema: <code>docs/EVAL_OUTPUT_SCHEMA.md</code></li>
+                    <li>Gap Analysis: <code>docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md</code></li>
+                    <li>Metric Spec: <code>docs/01-Architecture/Specs/Contextual-Debt-Spec.md</code></li>
+                    <li>Output Schema: <code>docs/01-Architecture/Specs/Evaluation-Output-Schema.md</code></li>
                     <li>Example Notebook: <code>notebooks/01-explore-sample-eval.ipynb</code></li>
                     <li>Helper Scripts: <code>tools/</code></li>
                 </ul>
 
                 <h4 style="color: white; margin-top: 20px; margin-bottom: 10px;">For Engineers:</h4>
                 <ul>
-                    <li>Project Status: <code>docs/PROJECT_STATUS.md</code></li>
-                    <li>CI/CD Workflow: <code>docs/CI_COMPOSE_E2E_WORKFLOW.md</code></li>
+                    <li>Project Status: <code>docs/02-Engineering/Setup/Project_Status.md</code></li>
+                    <li>CI/CD Workflow: <code>docs/01-Architecture/Diagrams/CI-Workflow.md</code></li>
                 </ul>
             </div>
 
@@ -906,6 +906,16 @@ graph TD
                 .force("center", d3.forceCenter(width / 2, height / 2));
 
             d3.json(graphPath).then(function(graph) {
+                // Color scale based on Pillars
+                function getNodeColor(path) {
+                    if (path.includes('00-Strategy')) return '#e74c3c'; // Red
+                    if (path.includes('01-Architecture')) return '#f39c12'; // Orange
+                    if (path.includes('02-Engineering')) return '#27ae60'; // Green
+                    if (path.includes('03-Research')) return '#9b59b6'; // Purple
+                    if (path.includes('04-Operations')) return '#7f8c8d'; // Grey
+                    return '#3498db'; // Default Blue
+                }
+
                 const link = svg.append("g")
                     .attr("class", "links")
                     .selectAll("line")
@@ -921,7 +931,7 @@ graph TD
 
                 const circles = node.append("circle")
                     .attr("r", 10)
-                    .attr("fill", "#3498db")
+                    .attr("fill", d => getNodeColor(d.id))
                     .call(d3.drag()
                         .on("start", dragstarted)
                         .on("drag", dragged)

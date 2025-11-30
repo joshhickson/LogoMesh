@@ -1,7 +1,3 @@
-
-> onboarding-site@1.0.0 start /app/onboarding
-> node server.js
-
 Onboarding server listening at http://localhost:3000
 Serving files from: /app/onboarding
 Press Ctrl+C to stop the server.

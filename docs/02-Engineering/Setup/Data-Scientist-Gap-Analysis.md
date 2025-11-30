@@ -29,14 +29,14 @@ Files / locations you will use frequently
 - `notebooks/01-explore-sample-eval.ipynb` — example notebook that loads the example JSON and produces simple plots (histogram + bar chart).
 - `tools/convert_eval_to_csv.py` — small CLI to convert evaluation JSON(s) into a CSV (one row per analyzer).
 - `tools/run_single_analyzer.py` — lightweight scaffold to run a single analyzer locally (dry-run heuristics).
-- `tools/[README.md](../tools/README.md)` — short usage notes for the tools.
+- `tools/[README.md](../../../tools/README.md)` — short usage notes for the tools.
 
 Top-level gaps (prioritized for a Data Scientist)
 -------------------------------------------------
 1. Output format & example dataset: Addressed — [docs/EVAL_OUTPUT_SCHEMA.md](../../01-Architecture/Specs/Evaluation-Output-Schema.md) and `docs/onboarding/example-evaluation-report.json` now exist.
 2. Interactive exploration: Partially addressed — `notebooks/01-explore-sample-eval.ipynb` scaffold was added (basic plots). A richer notebook with multiple example runs would be helpful.
 3. Reproducible experiments: Partially addressed — `tools/convert_eval_to_csv.py` and `tools/run_single_analyzer.py` help with faster iteration. A TypeScript harness that invokes analyzers directly (from `packages/core`) could further speed iteration for engineering-driven experiments.
-4. Data export & analytics tooling: Addressed — `tools/convert_eval_to_csv.py` converts JSON -> CSV; `tools/[README.md](../tools/README.md)` documents usage.
+4. Data export & analytics tooling: Addressed — `tools/convert_eval_to_csv.py` converts JSON -> CSV; `tools/[README.md](../../../tools/README.md)` documents usage.
 5. Metrics definitions: Addressed — [docs/CONTEXTUAL_DEBT_SPEC.md](../../01-Architecture/Specs/Contextual-Debt-Spec.md) documents the current aggregation logic and includes a worked example.
 
 Actionable, prioritized tasks (first 7-day sprint for a data scientist)
@@ -89,7 +89,7 @@ Before handing the repo to the data scientist, ensure the following are true:
 - [x] There is an example Jupyter notebook that reads a real evaluation JSON and produces interpretable plots (scaffold added at `notebooks/01-explore-sample-eval.ipynb`).
 - [x] There is a small helper script that converts JSON outputs into a DataFrame/CSV for quick EDA (`tools/convert_eval_to_csv.py`).
 - [x] There is a lightweight single-analyzer scaffold (`tools/run_single_analyzer.py`) for fast iteration.
-- [x] Tools README (`tools/[README.md](../tools/README.md)`) documents the converter usage.
+- [x] Tools README (`tools/[README.md](../../../tools/README.md)`) documents the converter usage.
 
 If all boxes are checked, answer to "Will the data scientist be confused?" can be confidently "No". Right now the repo is in a state where the data scientist will not be blocked by environment setup (the Quickstart in README ensures that), and there are now basic helpers and examples for quick EDA. Remaining optional work (dashboard, richer notebook, CI wiring) will further improve productivity.
 
@@ -120,7 +120,7 @@ Key artifacts (created / updated)
 - `notebooks/01-explore-sample-eval.ipynb` — starter notebook that loads the example JSON and plots per-analyzer scores.
 - `tools/convert_eval_to_csv.py` — CLI: JSON → CSV (one row per analyzer).
 - `tools/run_single_analyzer.py` — scaffold to run a single analyzer locally (dry-run heuristics).
-- `tools/[README.md](../tools/README.md)` — usage notes for the tools.
+- `tools/[README.md](../../../tools/README.md)` — usage notes for the tools.
 - [README.md](./README.md) — updated with a "Data Scientist onboarding" quick links & commands block.
 
 Minimal Quickstart for a data scientist
