@@ -1,10 +1,442 @@
 {
   "metadata": {
-    "generatedAt": "2025-11-29T09:06:59.807Z",
-    "nodeCount": 125,
-    "edgeCount": 29
+    "generatedAt": "2025-11-30T03:03:57.430Z",
+    "nodeCount": 127,
+    "edgeCount": 83
   },
   "nodes": [
+    {
+      "id": "docs/00-Strategy/Business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md",
+      "label": "20251116-IP-and-Business-Strategy-for-Contextual Debt.md",
+      "path": "docs/00-Strategy/Business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/Business/20251116-Strategy-Doc-Creation-Log.md",
+      "label": "20251116-Strategy-Doc-Creation-Log.md",
+      "path": "docs/00-Strategy/Business/20251116-Strategy-Doc-Creation-Log.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md",
+      "label": "20251118-Strategic-Pivot-Plan-CIS-Formalization.md",
+      "path": "docs/00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/Competition/20251103-GAP_ANALYSIS_REPORT.md",
+      "label": "20251103-GAP_ANALYSIS_REPORT.md",
+      "path": "docs/00-Strategy/Competition/20251103-GAP_ANALYSIS_REPORT.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/Competition/20251113_GAP_ANALYSIS_REPORT.md",
+      "label": "20251113_GAP_ANALYSIS_REPORT.md",
+      "path": "docs/00-Strategy/Competition/20251113_GAP_ANALYSIS_REPORT.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/Competition/20251116-Competition Analysis For Project Success.md",
+      "label": "20251116-Competition Analysis For Project Success.md",
+      "path": "docs/00-Strategy/Competition/20251116-Competition Analysis For Project Success.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/01_CORE_IP_DEFINITION.md",
+      "label": "01_CORE_IP_DEFINITION.md",
+      "path": "docs/00-Strategy/IP/01_CORE_IP_DEFINITION.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/02_LEGAL_CHECKLIST.md",
+      "label": "02_LEGAL_CHECKLIST.md",
+      "path": "docs/00-Strategy/IP/02_LEGAL_CHECKLIST.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/03_INVESTOR_PITCH.md",
+      "label": "03_INVESTOR_PITCH.md",
+      "path": "docs/00-Strategy/IP/03_INVESTOR_PITCH.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/04_PHASE_1_CLIENTS.md",
+      "label": "04_PHASE_1_CLIENTS.md",
+      "path": "docs/00-Strategy/IP/04_PHASE_1_CLIENTS.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md",
+      "label": "20251118-Copyright-Edition-Contextual-Debt-Paper.md",
+      "path": "docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md",
+      "label": "20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md",
+      "path": "docs/00-Strategy/IP/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/20251118-proposed-Section-2.2.md",
+      "label": "20251118-proposed-Section-2.2.md",
+      "path": "docs/00-Strategy/IP/20251118-proposed-Section-2.2.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md",
+      "label": "20251119-Gap-Analysis-Critique-vs-IP-Assets.md",
+      "path": "docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/20251119-Transformation-Map.md",
+      "label": "20251119-Transformation-Map.md",
+      "path": "docs/00-Strategy/IP/20251119-Transformation-Map.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/20251119-deprecated0-Continuing The Next Section.md",
+      "label": "20251119-deprecated0-Continuing The Next Section.md",
+      "path": "docs/00-Strategy/IP/20251119-deprecated0-Continuing The Next Section.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/20251119-deprecated1-The Unknowable Code_ A Protocol for Contextual Integrity.md",
+      "label": "20251119-deprecated1-The Unknowable Code_ A Protocol for Contextual Integrity.md",
+      "path": "docs/00-Strategy/IP/20251119-deprecated1-The Unknowable Code_ A Protocol for Contextual Integrity.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/20251119-deprecated2-The Unknowable Code_ A Protocol for Measurable Contextual Integrity.md",
+      "label": "20251119-deprecated2-The Unknowable Code_ A Protocol for Measurable Contextual Integrity.md",
+      "path": "docs/00-Strategy/IP/20251119-deprecated2-The Unknowable Code_ A Protocol for Measurable Contextual Integrity.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/20251119-proposed-Section-2.3.md",
+      "label": "20251119-proposed-Section-2.3.md",
+      "path": "docs/00-Strategy/IP/20251119-proposed-Section-2.3.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/Copyright_Registration_Playbook.md",
+      "label": "Copyright_Registration_Playbook.md",
+      "path": "docs/00-Strategy/IP/Copyright_Registration_Playbook.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/README.md",
+      "label": "README.md",
+      "path": "docs/00-Strategy/IP/README.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/README_dup.md",
+      "label": "README_dup.md",
+      "path": "docs/00-Strategy/IP/README_dup.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/REGISTRATION_MANIFEST.md",
+      "label": "REGISTRATION_MANIFEST.md",
+      "path": "docs/00-Strategy/IP/REGISTRATION_MANIFEST.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/01-Architecture/Diagrams/CI-Workflow.md",
+      "label": "CI-Workflow.md",
+      "path": "docs/01-Architecture/Diagrams/CI-Workflow.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/01-Architecture/Specs/Contextual-Debt-Spec.md",
+      "label": "Contextual-Debt-Spec.md",
+      "path": "docs/01-Architecture/Specs/Contextual-Debt-Spec.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/01-Architecture/Specs/Evaluation-Output-Schema.md",
+      "label": "Evaluation-Output-Schema.md",
+      "path": "docs/01-Architecture/Specs/Evaluation-Output-Schema.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "label": "Data-Scientist-Gap-Analysis.md",
+      "path": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/02-Engineering/Setup/Onboarding_Guide.md",
+      "label": "Onboarding_Guide.md",
+      "path": "docs/02-Engineering/Setup/Onboarding_Guide.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/02-Engineering/Setup/Project_Status.md",
+      "label": "Project_Status.md",
+      "path": "docs/02-Engineering/Setup/Project_Status.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/02-Engineering/Verification/20251114_VERIFICATION_REPORT.md",
+      "label": "20251114_VERIFICATION_REPORT.md",
+      "path": "docs/02-Engineering/Verification/20251114_VERIFICATION_REPORT.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/02-Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md",
+      "label": "20251114_VERIFICATION_REPORT_TASK_1.1.md",
+      "path": "docs/02-Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md",
+      "label": "20251119-Recommendation-Report-Strategic-Path-Forward.md",
+      "path": "docs/02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/03-Research/Theory/20251115-1-Agentic_Auditing_and_Automated_Governance.md",
+      "label": "20251115-1-Agentic_Auditing_and_Automated_Governance.md",
+      "path": "docs/03-Research/Theory/20251115-1-Agentic_Auditing_and_Automated_Governance.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/03-Research/Theory/20251115-2-AI Code_Contextual Debt_and_Security.md",
+      "label": "20251115-2-AI Code_Contextual Debt_and_Security.md",
+      "path": "docs/03-Research/Theory/20251115-2-AI Code_Contextual Debt_and_Security.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/03-Research/Theory/20251115-3-Contextual Debt_ Developer Tooling Opportunity.md",
+      "label": "20251115-3-Contextual Debt_ Developer Tooling Opportunity.md",
+      "path": "docs/03-Research/Theory/20251115-3-Contextual Debt_ Developer Tooling Opportunity.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/03-Research/Theory/20251115-4-Proposing Contextual Integrity Score.md",
+      "label": "20251115-4-Proposing Contextual Integrity Score.md",
+      "path": "docs/03-Research/Theory/20251115-4-Proposing Contextual Integrity Score.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/03-Research/Theory/20251115-Contextual_Debt_Paper-Gap_Analysis.md",
+      "label": "20251115-Contextual_Debt_Paper-Gap_Analysis.md",
+      "path": "docs/03-Research/Theory/20251115-Contextual_Debt_Paper-Gap_Analysis.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/03-Research/Theory/20251115-Gemini_Research_Prompts.md",
+      "label": "20251115-Gemini_Research_Prompts.md",
+      "path": "docs/03-Research/Theory/20251115-Gemini_Research_Prompts.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/03-Research/Theory/20251115-Jules-Research-Paper-Revision-Log.md",
+      "label": "20251115-Jules-Research-Paper-Revision-Log.md",
+      "path": "docs/03-Research/Theory/20251115-Jules-Research-Paper-Revision-Log.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md",
+      "label": "20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md",
+      "path": "docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/03-Research/Theory/20251116-Vinyals's Perspective On Embedding Geometry.md",
+      "label": "20251116-Vinyals's Perspective On Embedding Geometry.md",
+      "path": "docs/03-Research/Theory/20251116-Vinyals's Perspective On Embedding Geometry.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/03-Research/Theory/20251116-[import]-Corrected_Contextual_Debt_Analysis.md",
+      "label": "20251116-[import]-Corrected_Contextual_Debt_Analysis.md",
+      "path": "docs/03-Research/Theory/20251116-[import]-Corrected_Contextual_Debt_Analysis.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/03-Research/Theory/20251121-Memory Theory_Vector-Motor Encoding.md",
+      "label": "20251121-Memory Theory_Vector-Motor Encoding.md",
+      "path": "docs/03-Research/Theory/20251121-Memory Theory_Vector-Motor Encoding.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/README.md",
+      "label": "README.md",
+      "path": "docs/04-Operations/Intent-Log/README.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251107_refactor_summary.md",
+      "label": "20251107_refactor_summary.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251107_refactor_summary.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251108_docker_build_failure_analysis.md",
+      "label": "20251108_docker_build_failure_analysis.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251108_docker_build_failure_analysis.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md",
+      "label": "20251113_RECOVERY_PLAN.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251113_verification_checkpoint.md",
+      "label": "20251113_verification_checkpoint.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251113_verification_checkpoint.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251114_TASK_1.1_COMPLETION.md",
+      "label": "20251114_TASK_1.1_COMPLETION.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251114_TASK_1.1_COMPLETION.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251116_build_fix_and_vitest_error.md",
+      "label": "20251116_build_fix_and_vitest_error.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251116_build_fix_and_vitest_error.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251118-Gap-Analysis-Recovery-vs-Pivot.md",
+      "label": "20251118-Gap-Analysis-Recovery-vs-Pivot.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251118-Gap-Analysis-Recovery-vs-Pivot.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251120-IP-Refactoring-Log.md",
+      "label": "20251120-IP-Refactoring-Log.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251120-IP-Refactoring-Log.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251122-Documentation-Graph-Setup.md",
+      "label": "20251122-Documentation-Graph-Setup.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251122-Documentation-Graph-Setup.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251123-working-log.md",
+      "label": "20251123-working-log.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251123-working-log.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251126-AgentBeats-Competition-Info-Session-PDF.md",
+      "label": "20251126-AgentBeats-Competition-Info-Session-PDF.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251126-AgentBeats-Competition-Info-Session-PDF.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251126-josh-action-items.md",
+      "label": "20251126-josh-action-items.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251126-josh-action-items.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251127-Comparative-Analysis-of-Team-Feedback.md",
+      "label": "20251127-Comparative-Analysis-of-Team-Feedback.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251127-Comparative-Analysis-of-Team-Feedback.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md",
+      "label": "20251127-Contextual-Discovery-Plan-Revision.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251127-Math-Viability-and-Novelty-Analysis.md",
+      "label": "20251127-Math-Viability-and-Novelty-Analysis.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251127-Math-Viability-and-Novelty-Analysis.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251127-Research Paper-Comparison-Request.md",
+      "label": "20251127-Research Paper-Comparison-Request.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251127-Research Paper-Comparison-Request.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251128-Consolidated-Context-and-Actions.md",
+      "label": "20251128-Consolidated-Context-and-Actions.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251128-Consolidated-Context-and-Actions.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251128-Documentation-Organization-Master-Plan.md",
+      "label": "20251128-Documentation-Organization-Master-Plan.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251128-Documentation-Organization-Master-Plan.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251128-doc-access-probe-log.md",
+      "label": "20251128-doc-access-probe-log.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251128-doc-access-probe-log.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251128-doc-graph-generation-log.md",
+      "label": "20251128-doc-graph-generation-log.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251128-doc-graph-generation-log.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251128-manual-link-verification.md",
+      "label": "20251128-manual-link-verification.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251128-manual-link-verification.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251129-Dangling-Edge-Analysis-Log.md",
+      "label": "20251129-Dangling-Edge-Analysis-Log.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251129-Dangling-Edge-Analysis-Log.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
+      "label": "20251129-Restructure-Proposal-CIS-Driven.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/log_entry_template.md",
+      "label": "log_entry_template.md",
+      "path": "docs/04-Operations/Intent-Log/log_entry_template.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Team/20251115-!Meeting 1 Minutes.md",
+      "label": "20251115-!Meeting 1 Minutes.md",
+      "path": "docs/04-Operations/Team/20251115-!Meeting 1 Minutes.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Team/20251120-Team-Onboarding-Agenda.md",
+      "label": "20251120-Team-Onboarding-Agenda.md",
+      "path": "docs/04-Operations/Team/20251120-Team-Onboarding-Agenda.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Team/20251121-LogoMesh-Onboarding-Meeting-2-Summary.md",
+      "label": "20251121-LogoMesh-Onboarding-Meeting-2-Summary.md",
+      "path": "docs/04-Operations/Team/20251121-LogoMesh-Onboarding-Meeting-2-Summary.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Team/20251122-LogoMesh-Meeting-3-Summary.md",
+      "label": "20251122-LogoMesh-Meeting-3-Summary.md",
+      "path": "docs/04-Operations/Team/20251122-LogoMesh-Meeting-3-Summary.md",
+      "type": "file"
+    },
     {
       "id": "docs/20250910-Agentic Coding Debt Management Research.md",
       "label": "20250910-Agentic Coding Debt Management Research.md",
@@ -36,39 +468,123 @@
       "type": "file"
     },
     {
-      "id": "docs/CI_COMPOSE_E2E_WORKFLOW.md",
-      "label": "CI_COMPOSE_E2E_WORKFLOW.md",
-      "path": "docs/CI_COMPOSE_E2E_WORKFLOW.md",
+      "id": "docs/Archive/Legacy-Logs/20251027-011617.md",
+      "label": "20251027-011617.md",
+      "path": "docs/Archive/Legacy-Logs/20251027-011617.md",
       "type": "file"
     },
     {
-      "id": "docs/CONTEXTUAL_DEBT_SPEC.md",
-      "label": "CONTEXTUAL_DEBT_SPEC.md",
-      "path": "docs/CONTEXTUAL_DEBT_SPEC.md",
+      "id": "docs/Archive/Legacy-Logs/20251027-013438.md",
+      "label": "20251027-013438.md",
+      "path": "docs/Archive/Legacy-Logs/20251027-013438.md",
       "type": "file"
     },
     {
-      "id": "docs/EVAL_OUTPUT_SCHEMA.md",
-      "label": "EVAL_OUTPUT_SCHEMA.md",
-      "path": "docs/EVAL_OUTPUT_SCHEMA.md",
+      "id": "docs/Archive/Legacy-Logs/20251027-214944.md",
+      "label": "20251027-214944.md",
+      "path": "docs/Archive/Legacy-Logs/20251027-214944.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251027.md",
+      "label": "20251027.md",
+      "path": "docs/Archive/Legacy-Logs/20251027.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251028-032235.md",
+      "label": "20251028-032235.md",
+      "path": "docs/Archive/Legacy-Logs/20251028-032235.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251029-084528.md",
+      "label": "20251029-084528.md",
+      "path": "docs/Archive/Legacy-Logs/20251029-084528.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251030-064413.md",
+      "label": "20251030-064413.md",
+      "path": "docs/Archive/Legacy-Logs/20251030-064413.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251030-064424.md",
+      "label": "20251030-064424.md",
+      "path": "docs/Archive/Legacy-Logs/20251030-064424.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251030-065552.md",
+      "label": "20251030-065552.md",
+      "path": "docs/Archive/Legacy-Logs/20251030-065552.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251030-065607.md",
+      "label": "20251030-065607.md",
+      "path": "docs/Archive/Legacy-Logs/20251030-065607.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251030-105405.md",
+      "label": "20251030-105405.md",
+      "path": "docs/Archive/Legacy-Logs/20251030-105405.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251030-110951.md",
+      "label": "20251030-110951.md",
+      "path": "docs/Archive/Legacy-Logs/20251030-110951.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251030-165713.md",
+      "label": "20251030-165713.md",
+      "path": "docs/Archive/Legacy-Logs/20251030-165713.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251117-Strategic-Master-Log.md",
+      "label": "20251117-Strategic-Master-Log.md",
+      "path": "docs/Archive/Legacy-Logs/20251117-Strategic-Master-Log.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/LOGS_README.md",
+      "label": "LOGS_README.md",
+      "path": "docs/Archive/Legacy-Logs/LOGS_README.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "label": "20251119-Strategic-Master-Log.md",
+      "path": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Unsorted/CoPilot/20251117-Task-1.2-Completion-Summary.md",
+      "label": "20251117-Task-1.2-Completion-Summary.md",
+      "path": "docs/Archive/Unsorted/CoPilot/20251117-Task-1.2-Completion-Summary.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Unsorted/CoPilot/20251117-Task-1.2-Plan.md",
+      "label": "20251117-Task-1.2-Plan.md",
+      "path": "docs/Archive/Unsorted/CoPilot/20251117-Task-1.2-Plan.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Unsorted/CoPilot/README.md",
+      "label": "README.md",
+      "path": "docs/Archive/Unsorted/CoPilot/README.md",
       "type": "file"
     },
     {
       "id": "docs/GAP_ANALYSIS.md",
       "label": "GAP_ANALYSIS.md",
       "path": "docs/GAP_ANALYSIS.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md",
-      "label": "GAP_ANALYSIS_FOR_DATASCIENTIST.md",
-      "path": "docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/PROJECT_STATUS.md",
-      "label": "PROJECT_STATUS.md",
-      "path": "docs/PROJECT_STATUS.md",
       "type": "file"
     },
     {
@@ -234,513 +750,9 @@
       "type": "file"
     },
     {
-      "id": "docs/intent_log/README.md",
-      "label": "README.md",
-      "path": "docs/intent_log/README.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/intent_log/templates/log_entry_template.md",
-      "label": "log_entry_template.md",
-      "path": "docs/intent_log/templates/log_entry_template.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/onboarding/README.md",
-      "label": "README.md",
-      "path": "docs/onboarding/README.md",
-      "type": "file"
-    },
-    {
       "id": "docs/onboarding/system-architecture.md",
       "label": "system-architecture.md",
       "path": "docs/onboarding/system-architecture.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/01_CORE_IP_DEFINITION.md",
-      "label": "01_CORE_IP_DEFINITION.md",
-      "path": "docs/strategy_and_ip/01_CORE_IP_DEFINITION.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/02_LEGAL_CHECKLIST.md",
-      "label": "02_LEGAL_CHECKLIST.md",
-      "path": "docs/strategy_and_ip/02_LEGAL_CHECKLIST.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/03_INVESTOR_PITCH.md",
-      "label": "03_INVESTOR_PITCH.md",
-      "path": "docs/strategy_and_ip/03_INVESTOR_PITCH.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/04_PHASE_1_CLIENTS.md",
-      "label": "04_PHASE_1_CLIENTS.md",
-      "path": "docs/strategy_and_ip/04_PHASE_1_CLIENTS.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md",
-      "label": "20251118-Copyright-Edition-Contextual-Debt-Paper.md",
-      "path": "docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/Copyright_Registration_Playbook.md",
-      "label": "Copyright_Registration_Playbook.md",
-      "path": "docs/strategy_and_ip/Copyright_Registration_Playbook.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/DOC-REVISIONS/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md",
-      "label": "20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md",
-      "path": "docs/strategy_and_ip/DOC-REVISIONS/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/DOC-REVISIONS/20251118-proposed-Section-2.2.md",
-      "label": "20251118-proposed-Section-2.2.md",
-      "path": "docs/strategy_and_ip/DOC-REVISIONS/20251118-proposed-Section-2.2.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/DOC-REVISIONS/20251119-Gap-Analysis-Critique-vs-IP-Assets.md",
-      "label": "20251119-Gap-Analysis-Critique-vs-IP-Assets.md",
-      "path": "docs/strategy_and_ip/DOC-REVISIONS/20251119-Gap-Analysis-Critique-vs-IP-Assets.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/DOC-REVISIONS/20251119-Transformation-Map.md",
-      "label": "20251119-Transformation-Map.md",
-      "path": "docs/strategy_and_ip/DOC-REVISIONS/20251119-Transformation-Map.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/DOC-REVISIONS/20251119-deprecated0-Continuing The Next Section.md",
-      "label": "20251119-deprecated0-Continuing The Next Section.md",
-      "path": "docs/strategy_and_ip/DOC-REVISIONS/20251119-deprecated0-Continuing The Next Section.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/DOC-REVISIONS/20251119-deprecated1-The Unknowable Code_ A Protocol for Contextual Integrity.md",
-      "label": "20251119-deprecated1-The Unknowable Code_ A Protocol for Contextual Integrity.md",
-      "path": "docs/strategy_and_ip/DOC-REVISIONS/20251119-deprecated1-The Unknowable Code_ A Protocol for Contextual Integrity.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/DOC-REVISIONS/20251119-deprecated2-The Unknowable Code_ A Protocol for Measurable Contextual Integrity.md",
-      "label": "20251119-deprecated2-The Unknowable Code_ A Protocol for Measurable Contextual Integrity.md",
-      "path": "docs/strategy_and_ip/DOC-REVISIONS/20251119-deprecated2-The Unknowable Code_ A Protocol for Measurable Contextual Integrity.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/DOC-REVISIONS/20251119-proposed-Section-2.3.md",
-      "label": "20251119-proposed-Section-2.3.md",
-      "path": "docs/strategy_and_ip/DOC-REVISIONS/20251119-proposed-Section-2.3.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/DOC-REVISIONS/README.md",
-      "label": "README.md",
-      "path": "docs/strategy_and_ip/DOC-REVISIONS/README.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/README.md",
-      "label": "README.md",
-      "path": "docs/strategy_and_ip/README.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/strategy_and_ip/REGISTRATION_MANIFEST.md",
-      "label": "REGISTRATION_MANIFEST.md",
-      "path": "docs/strategy_and_ip/REGISTRATION_MANIFEST.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/20251119-Strategic-Master-Log.md",
-      "label": "20251119-Strategic-Master-Log.md",
-      "path": "logs/20251119-Strategic-Master-Log.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/CoPilot/20251117-Task-1.2-Completion-Summary.md",
-      "label": "20251117-Task-1.2-Completion-Summary.md",
-      "path": "logs/CoPilot/20251117-Task-1.2-Completion-Summary.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/CoPilot/20251117-Task-1.2-Plan.md",
-      "label": "20251117-Task-1.2-Plan.md",
-      "path": "logs/CoPilot/20251117-Task-1.2-Plan.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/CoPilot/README.md",
-      "label": "README.md",
-      "path": "logs/CoPilot/README.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/README.md",
-      "label": "README.md",
-      "path": "logs/README.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/archive/20251027-011617.md",
-      "label": "20251027-011617.md",
-      "path": "logs/archive/20251027-011617.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/archive/20251027-013438.md",
-      "label": "20251027-013438.md",
-      "path": "logs/archive/20251027-013438.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/archive/20251027-214944.md",
-      "label": "20251027-214944.md",
-      "path": "logs/archive/20251027-214944.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/archive/20251027.md",
-      "label": "20251027.md",
-      "path": "logs/archive/20251027.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/archive/20251028-032235.md",
-      "label": "20251028-032235.md",
-      "path": "logs/archive/20251028-032235.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/archive/20251029-084528.md",
-      "label": "20251029-084528.md",
-      "path": "logs/archive/20251029-084528.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/archive/20251030-064413.md",
-      "label": "20251030-064413.md",
-      "path": "logs/archive/20251030-064413.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/archive/20251030-064424.md",
-      "label": "20251030-064424.md",
-      "path": "logs/archive/20251030-064424.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/archive/20251030-065552.md",
-      "label": "20251030-065552.md",
-      "path": "logs/archive/20251030-065552.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/archive/20251030-065607.md",
-      "label": "20251030-065607.md",
-      "path": "logs/archive/20251030-065607.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/archive/20251030-105405.md",
-      "label": "20251030-105405.md",
-      "path": "logs/archive/20251030-105405.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/archive/20251030-110951.md",
-      "label": "20251030-110951.md",
-      "path": "logs/archive/20251030-110951.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/archive/20251030-165713.md",
-      "label": "20251030-165713.md",
-      "path": "logs/archive/20251030-165713.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/archive/20251117-Strategic-Master-Log.md",
-      "label": "20251117-Strategic-Master-Log.md",
-      "path": "logs/archive/20251117-Strategic-Master-Log.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/competition/20251103-GAP_ANALYSIS_REPORT.md",
-      "label": "20251103-GAP_ANALYSIS_REPORT.md",
-      "path": "logs/competition/20251103-GAP_ANALYSIS_REPORT.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/competition/20251113_GAP_ANALYSIS_REPORT.md",
-      "label": "20251113_GAP_ANALYSIS_REPORT.md",
-      "path": "logs/competition/20251113_GAP_ANALYSIS_REPORT.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/competition/20251116-Competition Analysis For Project Success.md",
-      "label": "20251116-Competition Analysis For Project Success.md",
-      "path": "logs/competition/20251116-Competition Analysis For Project Success.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/ip_and_business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md",
-      "label": "20251116-IP-and-Business-Strategy-for-Contextual Debt.md",
-      "path": "logs/ip_and_business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/ip_and_business/20251116-Strategy-Doc-Creation-Log.md",
-      "label": "20251116-Strategy-Doc-Creation-Log.md",
-      "path": "logs/ip_and_business/20251116-Strategy-Doc-Creation-Log.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md",
-      "label": "20251118-Strategic-Pivot-Plan-CIS-Formalization.md",
-      "path": "logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/onboarding-logs/20251115-!Meeting 1 Minutes.md",
-      "label": "20251115-!Meeting 1 Minutes.md",
-      "path": "logs/onboarding-logs/20251115-!Meeting 1 Minutes.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/onboarding-logs/20251120-Team-Onboarding-Agenda.md",
-      "label": "20251120-Team-Onboarding-Agenda.md",
-      "path": "logs/onboarding-logs/20251120-Team-Onboarding-Agenda.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/onboarding-logs/20251121-LogoMesh-Onboarding-Meeting-2-Summary.md",
-      "label": "20251121-LogoMesh-Onboarding-Meeting-2-Summary.md",
-      "path": "logs/onboarding-logs/20251121-LogoMesh-Onboarding-Meeting-2-Summary.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/onboarding-logs/20251122-LogoMesh-Meeting-3-Summary.md",
-      "label": "20251122-LogoMesh-Meeting-3-Summary.md",
-      "path": "logs/onboarding-logs/20251122-LogoMesh-Meeting-3-Summary.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/research/20251115-1-Agentic_Auditing_and_Automated_Governance.md",
-      "label": "20251115-1-Agentic_Auditing_and_Automated_Governance.md",
-      "path": "logs/research/20251115-1-Agentic_Auditing_and_Automated_Governance.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/research/20251115-2-AI Code_Contextual Debt_and_Security.md",
-      "label": "20251115-2-AI Code_Contextual Debt_and_Security.md",
-      "path": "logs/research/20251115-2-AI Code_Contextual Debt_and_Security.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/research/20251115-3-Contextual Debt_ Developer Tooling Opportunity.md",
-      "label": "20251115-3-Contextual Debt_ Developer Tooling Opportunity.md",
-      "path": "logs/research/20251115-3-Contextual Debt_ Developer Tooling Opportunity.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/research/20251115-4-Proposing Contextual Integrity Score.md",
-      "label": "20251115-4-Proposing Contextual Integrity Score.md",
-      "path": "logs/research/20251115-4-Proposing Contextual Integrity Score.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/research/20251115-Contextual_Debt_Paper-Gap_Analysis.md",
-      "label": "20251115-Contextual_Debt_Paper-Gap_Analysis.md",
-      "path": "logs/research/20251115-Contextual_Debt_Paper-Gap_Analysis.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/research/20251115-Gemini_Research_Prompts.md",
-      "label": "20251115-Gemini_Research_Prompts.md",
-      "path": "logs/research/20251115-Gemini_Research_Prompts.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/research/20251115-Jules-Research-Paper-Revision-Log.md",
-      "label": "20251115-Jules-Research-Paper-Revision-Log.md",
-      "path": "logs/research/20251115-Jules-Research-Paper-Revision-Log.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/research/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md",
-      "label": "20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md",
-      "path": "logs/research/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/research/20251116-Vinyals's Perspective On Embedding Geometry.md",
-      "label": "20251116-Vinyals's Perspective On Embedding Geometry.md",
-      "path": "logs/research/20251116-Vinyals's Perspective On Embedding Geometry.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/research/20251116-[import]-Corrected_Contextual_Debt_Analysis.md",
-      "label": "20251116-[import]-Corrected_Contextual_Debt_Analysis.md",
-      "path": "logs/research/20251116-[import]-Corrected_Contextual_Debt_Analysis.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/research/20251121-Memory Theory_Vector-Motor Encoding.md",
-      "label": "20251121-Memory Theory_Vector-Motor Encoding.md",
-      "path": "logs/research/20251121-Memory Theory_Vector-Motor Encoding.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/20251107_refactor_summary.md",
-      "label": "20251107_refactor_summary.md",
-      "path": "logs/technical/20251107_refactor_summary.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/20251108_docker_build_failure_analysis.md",
-      "label": "20251108_docker_build_failure_analysis.md",
-      "path": "logs/technical/20251108_docker_build_failure_analysis.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/20251113_RECOVERY_PLAN.md",
-      "label": "20251113_RECOVERY_PLAN.md",
-      "path": "logs/technical/20251113_RECOVERY_PLAN.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/20251113_verification_checkpoint.md",
-      "label": "20251113_verification_checkpoint.md",
-      "path": "logs/technical/20251113_verification_checkpoint.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/20251114_TASK_1.1_COMPLETION.md",
-      "label": "20251114_TASK_1.1_COMPLETION.md",
-      "path": "logs/technical/20251114_TASK_1.1_COMPLETION.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/20251114_VERIFICATION_REPORT.md",
-      "label": "20251114_VERIFICATION_REPORT.md",
-      "path": "logs/technical/20251114_VERIFICATION_REPORT.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/20251114_VERIFICATION_REPORT_TASK_1.1.md",
-      "label": "20251114_VERIFICATION_REPORT_TASK_1.1.md",
-      "path": "logs/technical/20251114_VERIFICATION_REPORT_TASK_1.1.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/20251116_build_fix_and_vitest_error.md",
-      "label": "20251116_build_fix_and_vitest_error.md",
-      "path": "logs/technical/20251116_build_fix_and_vitest_error.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/20251118-Gap-Analysis-Recovery-vs-Pivot.md",
-      "label": "20251118-Gap-Analysis-Recovery-vs-Pivot.md",
-      "path": "logs/technical/20251118-Gap-Analysis-Recovery-vs-Pivot.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/20251119-Recommendation-Report-Strategic-Path-Forward.md",
-      "label": "20251119-Recommendation-Report-Strategic-Path-Forward.md",
-      "path": "logs/technical/20251119-Recommendation-Report-Strategic-Path-Forward.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/20251120-IP-Refactoring-Log.md",
-      "label": "20251120-IP-Refactoring-Log.md",
-      "path": "logs/technical/20251120-IP-Refactoring-Log.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/20251122-Documentation-Graph-Setup.md",
-      "label": "20251122-Documentation-Graph-Setup.md",
-      "path": "logs/technical/20251122-Documentation-Graph-Setup.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/20251127-Comparative-Analysis-of-Team-Feedback.md",
-      "label": "20251127-Comparative-Analysis-of-Team-Feedback.md",
-      "path": "logs/technical/20251127-Comparative-Analysis-of-Team-Feedback.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/20251127-Contextual-Discovery-Plan-Revision.md",
-      "label": "20251127-Contextual-Discovery-Plan-Revision.md",
-      "path": "logs/technical/20251127-Contextual-Discovery-Plan-Revision.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/josh-temp/20251123-working-log.md",
-      "label": "20251123-working-log.md",
-      "path": "logs/technical/josh-temp/20251123-working-log.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/josh-temp/20251126-AgentBeats-Competition-Info-Session-PDF.md",
-      "label": "20251126-AgentBeats-Competition-Info-Session-PDF.md",
-      "path": "logs/technical/josh-temp/20251126-AgentBeats-Competition-Info-Session-PDF.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/josh-temp/20251126-josh-action-items.md",
-      "label": "20251126-josh-action-items.md",
-      "path": "logs/technical/josh-temp/20251126-josh-action-items.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/josh-temp/20251127-Math-Viability-and-Novelty-Analysis.md",
-      "label": "20251127-Math-Viability-and-Novelty-Analysis.md",
-      "path": "logs/technical/josh-temp/20251127-Math-Viability-and-Novelty-Analysis.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/josh-temp/20251127-Research Paper-Comparison-Request.md",
-      "label": "20251127-Research Paper-Comparison-Request.md",
-      "path": "logs/technical/josh-temp/20251127-Research Paper-Comparison-Request.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/josh-temp/20251128-Consolidated-Context-and-Actions.md",
-      "label": "20251128-Consolidated-Context-and-Actions.md",
-      "path": "logs/technical/josh-temp/20251128-Consolidated-Context-and-Actions.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/josh-temp/20251128-Documentation-Organization-Master-Plan.md",
-      "label": "20251128-Documentation-Organization-Master-Plan.md",
-      "path": "logs/technical/josh-temp/20251128-Documentation-Organization-Master-Plan.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/josh-temp/20251128-doc-access-probe-log.md",
-      "label": "20251128-doc-access-probe-log.md",
-      "path": "logs/technical/josh-temp/20251128-doc-access-probe-log.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/josh-temp/20251128-doc-graph-generation-log.md",
-      "label": "20251128-doc-graph-generation-log.md",
-      "path": "logs/technical/josh-temp/20251128-doc-graph-generation-log.md",
-      "type": "file"
-    },
-    {
-      "id": "logs/technical/josh-temp/20251128-manual-link-verification.md",
-      "label": "20251128-manual-link-verification.md",
-      "path": "logs/technical/josh-temp/20251128-manual-link-verification.md",
       "type": "file"
     },
     {
@@ -758,16 +770,466 @@
   ],
   "edges": [
     {
+      "source": "docs/00-Strategy/Business/20251116-Strategy-Doc-Creation-Log.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/00-Strategy/Competition/20251116-Competition Analysis For Project Success.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/00-Strategy/Competition/20251116-Competition Analysis For Project Success.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/00-Strategy/IP/Copyright_Registration_Playbook.md",
+      "target": "docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md",
+      "label": "explicit_link",
+      "text": "docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md"
+    },
+    {
+      "source": "docs/00-Strategy/IP/Copyright_Registration_Playbook.md",
+      "target": "docs/00-Strategy/IP/01_CORE_IP_DEFINITION.md",
+      "label": "explicit_link",
+      "text": "docs/strategy_and_ip/01_CORE_IP_DEFINITION.md"
+    },
+    {
+      "source": "docs/00-Strategy/IP/Copyright_Registration_Playbook.md",
+      "target": "docs/00-Strategy/IP/03_INVESTOR_PITCH.md",
+      "label": "explicit_link",
+      "text": "docs/strategy_and_ip/03_INVESTOR_PITCH.md"
+    },
+    {
+      "source": "docs/00-Strategy/IP/Copyright_Registration_Playbook.md",
+      "target": "docs/00-Strategy/IP/20251118-proposed-Section-2.2.md",
+      "label": "explicit_link",
+      "text": "docs/strategy_and_ip/DOC-REVISIONS/20251118-proposed-Section-2.2.md"
+    },
+    {
+      "source": "docs/00-Strategy/IP/Copyright_Registration_Playbook.md",
+      "target": "docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md",
+      "label": "explicit_link",
+      "text": "docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md"
+    },
+    {
+      "source": "docs/00-Strategy/IP/Copyright_Registration_Playbook.md",
+      "target": "docs/00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md",
+      "label": "explicit_link",
+      "text": "logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md"
+    },
+    {
+      "source": "docs/00-Strategy/IP/Copyright_Registration_Playbook.md",
+      "target": "docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md",
+      "label": "explicit_link",
+      "text": "docs/strategy_and_ip/DOC-REVISIONS/20251119-Gap-Analysis-Critique-vs-IP-Assets.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "label": "explicit_link",
+      "text": "docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "docs/02-Engineering/Setup/Project_Status.md",
+      "label": "explicit_link",
+      "text": "docs/PROJECT_STATUS.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "docs/01-Architecture/Specs/Evaluation-Output-Schema.md",
+      "label": "explicit_link",
+      "text": "docs/EVAL_OUTPUT_SCHEMA.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "docs/01-Architecture/Specs/Evaluation-Output-Schema.md",
+      "label": "explicit_link",
+      "text": "docs/EVAL_OUTPUT_SCHEMA.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "docs/01-Architecture/Specs/Contextual-Debt-Spec.md",
+      "label": "explicit_link",
+      "text": "docs/CONTEXTUAL_DEBT_SPEC.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "docs/01-Architecture/Specs/Evaluation-Output-Schema.md",
+      "label": "explicit_link",
+      "text": "docs/EVAL_OUTPUT_SCHEMA.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "docs/01-Architecture/Specs/Contextual-Debt-Spec.md",
+      "label": "explicit_link",
+      "text": "docs/CONTEXTUAL_DEBT_SPEC.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "docs/01-Architecture/Specs/Evaluation-Output-Schema.md",
+      "label": "explicit_link",
+      "text": "docs/EVAL_OUTPUT_SCHEMA.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "docs/01-Architecture/Specs/Evaluation-Output-Schema.md",
+      "label": "explicit_link",
+      "text": "docs/EVAL_OUTPUT_SCHEMA.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "docs/01-Architecture/Specs/Evaluation-Output-Schema.md",
+      "label": "explicit_link",
+      "text": "docs/EVAL_OUTPUT_SCHEMA.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "docs/01-Architecture/Specs/Contextual-Debt-Spec.md",
+      "label": "explicit_link",
+      "text": "docs/CONTEXTUAL_DEBT_SPEC.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "label": "explicit_link",
+      "text": "docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "docs/01-Architecture/Specs/Contextual-Debt-Spec.md",
+      "label": "explicit_link",
+      "text": "docs/CONTEXTUAL_DEBT_SPEC.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "target": "docs/01-Architecture/Specs/Contextual-Debt-Spec.md",
+      "label": "explicit_link",
+      "text": "docs/CONTEXTUAL_DEBT_SPEC.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Onboarding_Guide.md",
+      "target": "PROJECT_PLAN.md",
+      "label": "implicit_link",
+      "text": "PROJECT_PLAN.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Onboarding_Guide.md",
+      "target": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "label": "explicit_link",
+      "text": "logs/20251119-Strategic-Master-Log.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Onboarding_Guide.md",
+      "target": "docs/02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md",
+      "label": "explicit_link",
+      "text": "logs/technical/20251119-Recommendation-Report-Strategic-Path-Forward.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Onboarding_Guide.md",
+      "target": "PROJECT_PLAN.md",
+      "label": "implicit_link",
+      "text": "PROJECT_PLAN.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Onboarding_Guide.md",
+      "target": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "label": "explicit_link",
+      "text": "logs/20251119-Strategic-Master-Log.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Onboarding_Guide.md",
+      "target": "docs/04-Operations/Intent-Log/README.md",
+      "label": "explicit_link",
+      "text": "docs/intent_log/README.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Onboarding_Guide.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Project_Status.md",
+      "target": "docs/GAP_ANALYSIS.md",
+      "label": "explicit_link",
+      "text": "Deep Dive: Detailed Gap Analysis"
+    },
+    {
+      "source": "docs/04-Operations/Intent-Log/Technical/20251128-Consolidated-Context-and-Actions.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/04-Operations/Intent-Log/Technical/20251128-manual-link-verification.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
+      "target": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "label": "implicit_link",
+      "text": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md"
+    },
+    {
+      "source": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
+      "target": "docs/01-Architecture/Specs/Evaluation-Output-Schema.md",
+      "label": "implicit_link",
+      "text": "docs/01-Architecture/Specs/Evaluation-Output-Schema.md"
+    },
+    {
+      "source": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
+      "target": "PROJECT_PLAN.md",
+      "label": "implicit_link",
+      "text": "PROJECT_PLAN.md"
+    },
+    {
+      "source": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
+      "target": "docs/Archive/Legacy-Logs/LOGS_README.md",
+      "label": "implicit_link",
+      "text": "docs/Archive/Legacy-Logs/LOGS_README.md"
+    },
+    {
+      "source": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
+      "target": "docs/02-Engineering/Setup/Onboarding_Guide.md",
+      "label": "implicit_link",
+      "text": "docs/02-Engineering/Setup/Onboarding_Guide.md"
+    },
+    {
+      "source": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
       "source": "docs/20251107-LogoMesh AgentX Judge Evaluation Simulation.md",
       "target": "README.md",
       "label": "implicit_link",
       "text": "README.md"
     },
     {
-      "source": "docs/PROJECT_STATUS.md",
-      "target": "docs/GAP_ANALYSIS.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/00-Strategy/Competition/20251116-Competition Analysis For Project Success.md",
       "label": "explicit_link",
-      "text": "Deep Dive: Detailed Gap Analysis"
+      "text": "logs/competition/20251116-Competition Analysis For Project Success.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md",
+      "label": "explicit_link",
+      "text": "logs/technical/20251113_RECOVERY_PLAN.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md",
+      "label": "explicit_link",
+      "text": "docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/Archive/Legacy-Logs/20251117-Strategic-Master-Log.md",
+      "label": "explicit_link",
+      "text": "logs/archive/20251117-Strategic-Master-Log.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md",
+      "label": "explicit_link",
+      "text": "docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/00-Strategy/IP/03_INVESTOR_PITCH.md",
+      "label": "explicit_link",
+      "text": "docs/strategy_and_ip/03_INVESTOR_PITCH.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/00-Strategy/IP/01_CORE_IP_DEFINITION.md",
+      "label": "explicit_link",
+      "text": "docs/strategy_and_ip/01_CORE_IP_DEFINITION.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md",
+      "label": "explicit_link",
+      "text": "logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/00-Strategy/IP/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md",
+      "label": "explicit_link",
+      "text": "docs/strategy_and_ip/DOC-REVISIONS/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/04-Operations/Intent-Log/Technical/20251116_build_fix_and_vitest_error.md",
+      "label": "explicit_link",
+      "text": "logs/technical/20251116_build_fix_and_vitest_error.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/Archive/Unsorted/CoPilot/20251117-Task-1.2-Completion-Summary.md",
+      "label": "explicit_link",
+      "text": "logs/CoPilot/20251117-Task-1.2-Completion-Summary.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/00-Strategy/Competition/20251116-Competition Analysis For Project Success.md",
+      "label": "explicit_link",
+      "text": "logs/competition/20251116-Competition Analysis For Project Success.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "PROJECT_PLAN.md",
+      "label": "implicit_link",
+      "text": "PROJECT_PLAN.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "README.md",
+      "label": "implicit_link",
+      "text": "README.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/00-Strategy/IP/01_CORE_IP_DEFINITION.md",
+      "label": "explicit_link",
+      "text": "01_CORE_IP_DEFINITION.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/00-Strategy/IP/02_LEGAL_CHECKLIST.md",
+      "label": "explicit_link",
+      "text": "02_LEGAL_CHECKLIST.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/00-Strategy/IP/03_INVESTOR_PITCH.md",
+      "label": "explicit_link",
+      "text": "03_INVESTOR_PITCH.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/00-Strategy/IP/04_PHASE_1_CLIENTS.md",
+      "label": "explicit_link",
+      "text": "04_PHASE_1_CLIENTS.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md",
+      "label": "explicit_link",
+      "text": "20251119-Recommendation-Report-Strategic-Path-Forward.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md",
+      "label": "explicit_link",
+      "text": "20251113_RECOVERY_PLAN.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/02-Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md",
+      "label": "explicit_link",
+      "text": "20251114_VERIFICATION_REPORT_TASK_1.1.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "label": "explicit_link",
+      "text": "GAP_ANALYSIS_FOR_DATASCIENTIST.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/01-Architecture/Specs/Contextual-Debt-Spec.md",
+      "label": "explicit_link",
+      "text": "CONTEXTUAL_DEBT_SPEC.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/01-Architecture/Specs/Evaluation-Output-Schema.md",
+      "label": "explicit_link",
+      "text": "EVAL_OUTPUT_SCHEMA.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/02-Engineering/Setup/Project_Status.md",
+      "label": "explicit_link",
+      "text": "PROJECT_STATUS.md"
+    },
+    {
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/01-Architecture/Diagrams/CI-Workflow.md",
+      "label": "explicit_link",
+      "text": "CI_COMPOSE_E2E_WORKFLOW.md"
     },
     {
       "source": "docs/archive-pre-refactor/IMPLEMENTATION_PLAN.md",
@@ -776,72 +1238,6 @@
       "text": "Future Vision"
     },
     {
-      "source": "docs/onboarding/README.md",
-      "target": "README.md",
-      "label": "implicit_link",
-      "text": "README.md"
-    },
-    {
-      "source": "logs/20251119-Strategic-Master-Log.md",
-      "target": "logs/README.md",
-      "label": "explicit_link",
-      "text": "README.md"
-    },
-    {
-      "source": "logs/20251119-Strategic-Master-Log.md",
-      "target": "logs/README.md",
-      "label": "explicit_link",
-      "text": "README.md"
-    },
-    {
-      "source": "logs/20251119-Strategic-Master-Log.md",
-      "target": "logs/README.md",
-      "label": "explicit_link",
-      "text": "README.md"
-    },
-    {
-      "source": "logs/20251119-Strategic-Master-Log.md",
-      "target": "logs/README.md",
-      "label": "explicit_link",
-      "text": "README.md"
-    },
-    {
-      "source": "logs/competition/20251116-Competition Analysis For Project Success.md",
-      "target": "README.md",
-      "label": "implicit_link",
-      "text": "README.md"
-    },
-    {
-      "source": "logs/competition/20251116-Competition Analysis For Project Success.md",
-      "target": "README.md",
-      "label": "implicit_link",
-      "text": "README.md"
-    },
-    {
-      "source": "logs/ip_and_business/20251116-Strategy-Doc-Creation-Log.md",
-      "target": "README.md",
-      "label": "implicit_link",
-      "text": "README.md"
-    },
-    {
-      "source": "logs/technical/josh-temp/20251128-Consolidated-Context-and-Actions.md",
-      "target": "logs/20251119-Strategic-Master-Log.md",
-      "label": "implicit_link",
-      "text": "logs/20251119-Strategic-Master-Log.md"
-    },
-    {
-      "source": "logs/technical/josh-temp/20251128-manual-link-verification.md",
-      "target": "logs/README.md",
-      "label": "implicit_link",
-      "text": "logs/README.md"
-    },
-    {
-      "source": "logs/technical/josh-temp/20251128-manual-link-verification.md",
-      "target": "README.md",
-      "label": "implicit_link",
-      "text": "README.md"
-    },
-    {
       "source": "PROJECT_PLAN.md",
       "target": "PROJECT_PLAN.md",
       "label": "implicit_link",
@@ -854,34 +1250,10 @@
       "text": "README.md"
     },
     {
-      "source": "PROJECT_PLAN.md",
-      "target": "docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md",
-      "label": "implicit_link",
-      "text": "docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md"
-    },
-    {
-      "source": "PROJECT_PLAN.md",
-      "target": "docs/CONTEXTUAL_DEBT_SPEC.md",
-      "label": "implicit_link",
-      "text": "docs/CONTEXTUAL_DEBT_SPEC.md"
-    },
-    {
-      "source": "PROJECT_PLAN.md",
-      "target": "docs/EVAL_OUTPUT_SCHEMA.md",
-      "label": "implicit_link",
-      "text": "docs/EVAL_OUTPUT_SCHEMA.md"
-    },
-    {
       "source": "README.md",
       "target": "README.md",
       "label": "implicit_link",
       "text": "README.md"
-    },
-    {
-      "source": "README.md",
-      "target": "logs/20251119-Strategic-Master-Log.md",
-      "label": "implicit_link",
-      "text": "logs/20251119-Strategic-Master-Log.md"
     },
     {
       "source": "README.md",
@@ -891,45 +1263,9 @@
     },
     {
       "source": "README.md",
-      "target": "docs/CI_COMPOSE_E2E_WORKFLOW.md",
-      "label": "implicit_link",
-      "text": "docs/CI_COMPOSE_E2E_WORKFLOW.md"
-    },
-    {
-      "source": "README.md",
-      "target": "docs/EVAL_OUTPUT_SCHEMA.md",
-      "label": "implicit_link",
-      "text": "docs/EVAL_OUTPUT_SCHEMA.md"
-    },
-    {
-      "source": "README.md",
-      "target": "docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md",
-      "label": "implicit_link",
-      "text": "docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md"
-    },
-    {
-      "source": "README.md",
-      "target": "docs/CONTEXTUAL_DEBT_SPEC.md",
-      "label": "implicit_link",
-      "text": "docs/CONTEXTUAL_DEBT_SPEC.md"
-    },
-    {
-      "source": "README.md",
-      "target": "docs/EVAL_OUTPUT_SCHEMA.md",
-      "label": "implicit_link",
-      "text": "docs/EVAL_OUTPUT_SCHEMA.md"
-    },
-    {
-      "source": "README.md",
       "target": "README.md",
       "label": "implicit_link",
       "text": "README.md"
-    },
-    {
-      "source": "README.md",
-      "target": "docs/PROJECT_STATUS.md",
-      "label": "implicit_link",
-      "text": "docs/PROJECT_STATUS.md"
     }
   ]
 }

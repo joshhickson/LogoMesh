@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT_DIR = process.cwd();
-const TARGET_DIRS = ['docs', 'logs'];
-const OUTPUT_FILE = path.join(ROOT_DIR, 'logs/technical/josh-temp/20251129-dangling-edges.csv');
+const TARGET_DIRS = ['docs']; // logs/ is gone
+const OUTPUT_FILE = path.join(ROOT_DIR, 'docs/04-Operations/Intent-Log/Technical/20251129-dangling-edges.csv');
 
 // Helper to get relative path from root
 function getRelativePath(absolutePath) {

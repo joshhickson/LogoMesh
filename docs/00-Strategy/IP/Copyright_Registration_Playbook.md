@@ -46,7 +46,7 @@ We have selected the following 3 key assets for the initial bundle. These must b
 - Pay the fee ($85).
 
 ## 4. Supporting Documents
-- **Proposed Section 2.2**: [docs/strategy_and_ip/DOC-REVISIONS/20251118-proposed-Section-2.2.md](./DOC-REVISIONS/20251118-proposed-Section-2.2.md)
+- **Proposed Section 2.2**: [docs/strategy_and_ip/DOC-REVISIONS/20251118-proposed-Section-2.2.md](./20251118-proposed-Section-2.2.md)
 - **Draft 3.0 Paper**: [docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md](./20251118-Copyright-Edition-Contextual-Debt-Paper.md)
-- **Strategic Pivot Plan**: [logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](../../logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md)
-- **Gap Analysis (Critique)**: [docs/strategy_and_ip/DOC-REVISIONS/20251119-Gap-Analysis-Critique-vs-IP-Assets.md](./DOC-REVISIONS/20251119-Gap-Analysis-Critique-vs-IP-Assets.md)
+- **Strategic Pivot Plan**: [logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](../Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md)
+- **Gap Analysis (Critique)**: [docs/strategy_and_ip/DOC-REVISIONS/20251119-Gap-Analysis-Critique-vs-IP-Assets.md](./20251119-Gap-Analysis-Critique-vs-IP-Assets.md)
