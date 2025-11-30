@@ -62,12 +62,37 @@ docs/
 *   Move remaining timestamped/junk logs to `docs/Archive/Legacy-Logs/`.
 *   Delete the root `logs/` directory.
 
-## 4. Verification Strategy
-1.  **Pre-Move Snapshot:** Run `node scripts/analyze_dangling_edges.js` to confirm 0 errors.
-2.  **Execute Move:** Run the migration script.
-3.  **Post-Move Audit:** Run `node scripts/analyze_dangling_edges.js` again.
-    *   *Success Criterion:* 0 Dangling Edges.
-4.  **Visual Check:** Verify the `onboarding` graph renders the new clusters correctly.
+### Phase 4: Onboarding Hub Revision
+**Objective:** Evolve the `onboarding/` directory into the "Meta-Layer" described in Track 4 of the Discovery Plan.
+*   **Update App Logic:** Modify `onboarding/server.js` and `scripts/generate_doc_graph.js` to index the new `docs/` structure (Strategy, Engineering, etc.) instead of the flat `docs/` vs `logs/` dichotomy.
+*   **New Visuals:** Update the D3 graph to color-code nodes by their new "Pillar" (e.g., Strategy = Blue, Engineering = Green).
+*   **Team Access:** Ensure `docs/04-Operations/Team/Onboarding.md` points explicitly to the local `http://localhost:3000` instance.
 
-## 5. Request for Decision
-Does this folder structure (`00-Strategy` to `04-Operations`) accurately reflect the "Contextual Integrity" model you want to present to the public/judges?
+## 4. Safety Analysis & Conflict Resolution
+A "Heavy Investigation" of the proposed move reveals the following risks and mitigations:
+
+### 4.1. Name Collisions (The "README" Problem)
+**Risk:** Both `logs/` and `docs/` contain generic filenames like `README.md` or `PROJECT_PLAN.md`.
+*   *Census:* `logs/README.md` vs `docs/strategy_and_ip/README.md`.
+**Mitigation:**
+*   **Rule:** Target filenames must be explicit.
+*   **Action:**
+    *   `logs/README.md` -> `docs/Archive/Legacy-Logs/LOGS_README.md`.
+    *   `docs/strategy_and_ip/README.md` -> `docs/00-Strategy/IP/IP_Strategy_Index.md`.
+    *   `docs/onboarding/README.md` -> `docs/02-Engineering/Setup/Onboarding_Guide.md`.
+
+### 4.2. Orphaned Files
+**Risk:** Files not matching the regex rules (e.g., `.txt` transcripts or hidden `.dotfiles`) might be left behind.
+**Mitigation:**
+*   **The "Sweeper" Script:** The migration script will have a final step: `find logs -type f`. Any remaining files will be moved to `docs/Archive/Unsorted/` to ensure **Zero Data Loss**.
+
+## 5. Verification Strategy
+1.  **Pre-Move Snapshot:** Run `node scripts/analyze_dangling_edges.js` to confirm 0 errors.
+2.  **Dry Run:** Execute the migration script in `--dry-run` mode to generate a CSV of planned moves (`source` -> `target`).
+3.  **Execute Move:** Run the migration script.
+4.  **Post-Move Audit:** Run `node scripts/analyze_dangling_edges.js` again.
+    *   *Success Criterion:* 0 Dangling Edges.
+5.  **Visual Check:** Verify the `onboarding` graph renders the new clusters correctly.
+
+## 6. Request for Decision
+Does this folder structure (`00-Strategy` to `04-Operations`) and the Safety Plan accurately reflect the "Contextual Integrity" model you want to present to the public/judges?
