@@ -1,5 +1,5 @@
 
-> onboarding-site@1.0.0 start
+> onboarding-site@1.0.0 start /app/onboarding
 > node server.js
 
 Onboarding server listening at http://localhost:3000
