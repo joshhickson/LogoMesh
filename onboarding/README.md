@@ -1,5 +1,11 @@
 # LogoMesh Onboarding Hub
 
+**🚨 Important Notice (November 30, 2025) 🚨**
+
+**The project has entered a "Discovery Sprint." The `PROJECT_PLAN.md` is now a historical artifact.**
+
+**Please use the [Strategic Master Log](index.html) as the single source of truth for the project's current status, priorities, and documentation.** It contains the most up-to-date information and links to the relevant planning documents for the current sprint.
+
 Welcome to the LogoMesh onboarding documentation system! This folder contains interactive HTML guides to help you quickly understand the project's strategy, architecture, and current priorities.
 
 ## 🎯 Start Here
@@ -61,20 +67,20 @@ onboarding/
 This directory contains a standalone web server to properly display the interactive documentation and knowledge graphs.
 
 **Why is this necessary?**
-The `index.html` page loads graph data from local JSON files (`documentation_graph.json`, `logs_graph.json`). For security reasons, modern web browsers block these kinds of file requests (known as `fetch` or AJAX requests) when you open an HTML file directly from your local filesystem. This server provides the correct environment to allow these requests.
+The `index.html` page loads graph data from local files. For security reasons, modern web browsers block these kinds of file requests when you open an HTML file directly from your local filesystem. This server provides the correct environment to allow these requests.
 
 **It is specifically configured to ONLY serve files from within this `onboarding` directory, ensuring that no other project files or source code are exposed.**
 
 ### Running the Server
 
-1.  **Navigate to this directory:**
-    Open a terminal and change your directory to `onboarding`:
+1.  **Navigate to the onboarding directory:**
+    From the workspace root, open a terminal and change your directory:
     ```bash
     cd onboarding
     ```
 
 2.  **Install Dependencies (First Time Only):**
-    If you haven't run this server before, you need to install its dependencies. The dependencies are managed by `pnpm` and will be installed inside `onboarding/node_modules/`.
+    If you haven't run this server before, you need to install its dependencies using `pnpm`.
     ```bash
     pnpm install
     ```
@@ -85,9 +91,22 @@ The `index.html` page loads graph data from local JSON files (`documentation_gra
     ```
 
 4.  **View the Site:**
-    Once the server is running, it will print a URL to the console. Open this URL in your web browser to view the site. It will typically be:
-    [http://localhost:3000](http://localhost:3000)
+    Open the URL shown in the terminal, which is typically [http://localhost:3000](http://localhost:3000).
+
+### Generating the Documentation Graph
+
+The `index.html` page displays a documentation graph rendered using Mermaid. To regenerate the graph from the latest documentation structure, run the following command from the **root of the workspace**:
+
+```bash
+node scripts/generate_mermaid_list.js
+```
+This script will:
+1. Read the raw graph data from `onboarding/doc_graph/doc_graph_raw.json`.
+2. Generate a static Mermaid.js graph definition.
+3. Highlight any files modified in the last 24 hours.
+4. Update `index.html` to render the new graph.
+
 
 ## 📅 Last Updated
 
-November 22, 2025
+November 30, 2025

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogoMesh: Discovery Sprint Hub</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* ... existing styles from original file ... */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin: 50px 0 20px 0;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #3498db;
+        }
+
+        .critical-alert {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 30px 40px;
+            margin: 0;
+            border-top: 5px solid #ffd700;
+            border-bottom: 5px solid #ffd700;
+        }
+
+        .critical-alert h2 {
+            color: white;
+            border: none;
+        }
+
+        .doc-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .file-path {
+            background: #2c3e50;
+            color: #2ecc71;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            margin: 10px 0;
+            display: inline-block;
+        }
+
+        .graph-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 20px;
+            position: relative;
+            background-color: #f9f9f9;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Discovery Sprint Hub</h1>
+            <div class="subtitle">Central Command for the Contextual Integrity Score Initiative</div>
+            <div class="version">Last Updated: November 30, 2025</div>
+        </header>
+
+        <div class="critical-alert">
+            <h2>CURRENT STATUS: Discovery Sprint In Progress</h2>
+            <p>
+                <strong>Attention Team:</strong> We are in the middle of a focused "Discovery Sprint." The goal is to validate our core technical assumptions and produce concrete specifications for the Green Agent Evaluator.
+            </p>
+            <div class="action">
+                <strong>🎯 Your Source of Truth:</strong><br>
+                All tasks, assignments, and deliverables for this sprint are defined in the revised plan:
+                <code>docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md</code>
+            </div>
+            <p>
+                This hub provides a high-level overview, but that document contains the details.
+            </p>
+        </div>
+
+        <div class="content">
+            <h2 id="sprint-overview">Sprint Overview & Key Documents</h2>
+
+            <div class="doc-card">
+                <h4>
+                    <span>The Master Plan: Contextual Discovery Plan (Revised)</span>
+                    <span class="doc-badge badge-current">CURRENT PRIORITY</span>
+                </h4>
+                <div class="file-path">docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md</div>
+                <div class="doc-description">
+                    <strong>This is the definitive guide for the current sprint.</strong> It outlines the 5 discovery tracks, the experiments within each, and the assigned owners. All team members should align their work with the tasks defined in this document.
+                </div>
+            </div>
+
+            <div class="doc-card">
+                <h4>
+                    <span>The Next Step: Documentation Restructuring</span>
+                </h4>
+                <div class="file-path">docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md</div>
+                <div class="doc-description">
+                    Based on the successful completion of the "Documentation Graphing" track (Experiment 4.3), this proposal outlines the plan to consolidate the <code>docs/</code> and <code>logs/</code> directories into a new, unified structure. This is the next major operational task following the discovery sprint.
+                </div>
+            </div>
+
+            <div class="doc-card">
+                <h4>
+                    <span>The North Star: Consolidated Context & Actions</span>
+                </h4>
+                <div class="file-path">docs/04-Operations/Intent-Log/Technical/20251128-Consolidated-Context-and-Actions.md</div>
+                <div class="doc-description">
+                    This document provides a high-level summary of our strategic goals, the status of major initiatives, and a list of active and pending action items. Use it to quickly understand the big picture and where the project is headed.
+                </div>
+            </div>
+
+            <h2 id="graph">Live Documentation Graph</h2>
+            <div class="graph-container">
+                <div class="graph-note">
+                    <strong>Note:</strong> This graph is now generated from the unified <code>doc_graph_raw.json</code> file. It reflects the successful audit and remediation of dangling links. The next step is to update this visualization to color-code nodes based on the new CIS-driven hierarchy proposed in the restructuring plan.
+                </div>
+                <svg id="doc-graph-svg"></svg>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>LogoMesh Project</strong> | Discovery Sprint Hub</p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+
+        function createGraph(graphPath, svgId) {
+            const svg = d3.select(svgId);
+            const container = d3.select(svgId).node().parentNode;
+            const width = container.getBoundingClientRect().width;
+            const height = 800;
+            svg.attr('width', width).attr('height', height);
+
+            const simulation = d3.forceSimulation()
+                .force("link", d3.forceLink().id(d => d.id).distance(120))
+                .force("charge", d3.forceManyBody().strength(-400))
+                .force("center", d3.forceCenter(width / 2, height / 2));
+
+            d3.json(graphPath).then(function(graph) {
+                function getNodeColor(path) {
+                    if (path.includes('00-Strategy')) return '#e74c3c';
+                    if (path.includes('01-Architecture')) return '#f39c12';
+                    if (path.includes('02-Engineering')) return '#27ae60';
+                    if (path.includes('03-Research')) return '#9b59b6';
+                    if (path.includes('04-Operations')) return '#7f8c8d';
+                    return '#3498db';
+                }
+
+                const link = svg.append("g")
+                    .attr("class", "links")
+                    .selectAll("line")
+                    .data(graph.edges)
+                    .enter().append("line")
+                    .attr("stroke-width", 1);
+
+                const node = svg.append("g")
+                    .attr("class", "nodes")
+                    .selectAll("g")
+                    .data(graph.nodes)
+                    .enter().append("g");
+
+                const circles = node.append("circle")
+                    .attr("r", 8)
+                    .attr("fill", d => getNodeColor(d.id));
+
+                const labels = node.append("text")
+                    .text(d => d.label.split('/').pop()) // Show only filename
+                    .attr('x', 12)
+                    .attr('y', 4)
+                    .attr("class", "node-label")
+                    .style("font-size", "9px");
+
+                node.append("title")
+                    .text(d => d.id);
+
+                simulation
+                    .nodes(graph.nodes)
+                    .on("tick", ticked);
+
+                simulation.force("link")
+                    .links(graph.edges);
+
+                function ticked() {
+                    link
+                        .attr("x1", d => d.source.x)
+                        .attr("y1", d => d.source.y)
+                        .attr("x2", d => d.target.x)
+                        .attr("y2", d => d.target.y);
+                    node
+                        .attr("transform", d => `translate(${d.x},${d.y})`);
+                }
+            }).catch(function(error) {
+                console.error("Error loading graph data:", error);
+                const svgElement = document.querySelector(svgId);
+                svgElement.parentElement.innerHTML += `<p style='color: red; padding: 20px;'>Error loading graph data from: ${graphPath}. Please check the file path and JSON format.</p>`;
+            });
+        }
+
+        createGraph('doc_graph/doc_graph_raw.json', '#doc-graph-svg');
+    </script>
+</body>
+</html>
