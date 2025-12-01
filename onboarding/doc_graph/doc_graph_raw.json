@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "generatedAt": "2025-12-01T06:30:53.719Z",
-    "nodeCount": 128,
-    "edgeCount": 83
+    "generatedAt": "2025-12-01T06:46:52.818Z",
+    "nodeCount": 130,
+    "edgeCount": 90
   },
   "nodes": [
     {
@@ -72,15 +72,27 @@
       "type": "file"
     },
     {
+      "id": "docs/00-Strategy/IP/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md",
+      "label": "20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md",
+      "path": "docs/00-Strategy/IP/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md",
+      "type": "file"
+    },
+    {
       "id": "docs/00-Strategy/IP/20251118-proposed-Section-2.2.md",
       "label": "20251118-proposed-Section-2.2.md",
       "path": "docs/00-Strategy/IP/20251118-proposed-Section-2.2.md",
       "type": "file"
     },
     {
-      "id": "docs/00-Strategy/IP/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md",
-      "label": "20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md",
-      "path": "docs/00-Strategy/IP/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md",
+      "id": "docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md",
+      "label": "20251119-Gap-Analysis-Critique-vs-IP-Assets.md",
+      "path": "docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/00-Strategy/IP/20251119-Transformation-Map.md",
+      "label": "20251119-Transformation-Map.md",
+      "path": "docs/00-Strategy/IP/20251119-Transformation-Map.md",
       "type": "file"
     },
     {
@@ -102,21 +114,9 @@
       "type": "file"
     },
     {
-      "id": "docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md",
-      "label": "20251119-Gap-Analysis-Critique-vs-IP-Assets.md",
-      "path": "docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md",
-      "type": "file"
-    },
-    {
       "id": "docs/00-Strategy/IP/20251119-proposed-Section-2.3.md",
       "label": "20251119-proposed-Section-2.3.md",
       "path": "docs/00-Strategy/IP/20251119-proposed-Section-2.3.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/00-Strategy/IP/20251119-Transformation-Map.md",
-      "label": "20251119-Transformation-Map.md",
-      "path": "docs/00-Strategy/IP/20251119-Transformation-Map.md",
       "type": "file"
     },
     {
@@ -264,15 +264,15 @@
       "type": "file"
     },
     {
-      "id": "docs/04-Operations/Intent-Log/20251130-session-log-onboarding-update.md",
-      "label": "20251130-session-log-onboarding-update.md",
-      "path": "docs/04-Operations/Intent-Log/20251130-session-log-onboarding-update.md",
+      "id": "docs/04-Operations/Intent-Log/20251130-session-log-interactive-graph-dashboard.md",
+      "label": "20251130-session-log-interactive-graph-dashboard.md",
+      "path": "docs/04-Operations/Intent-Log/20251130-session-log-interactive-graph-dashboard.md",
       "type": "file"
     },
     {
-      "id": "docs/04-Operations/Intent-Log/log_entry_template.md",
-      "label": "log_entry_template.md",
-      "path": "docs/04-Operations/Intent-Log/log_entry_template.md",
+      "id": "docs/04-Operations/Intent-Log/20251130-session-log-onboarding-update.md",
+      "label": "20251130-session-log-onboarding-update.md",
+      "path": "docs/04-Operations/Intent-Log/20251130-session-log-onboarding-update.md",
       "type": "file"
     },
     {
@@ -384,6 +384,12 @@
       "type": "file"
     },
     {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251128-Documentation-Organization-Master-Plan.md",
+      "label": "20251128-Documentation-Organization-Master-Plan.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251128-Documentation-Organization-Master-Plan.md",
+      "type": "file"
+    },
+    {
       "id": "docs/04-Operations/Intent-Log/Technical/20251128-doc-access-probe-log.md",
       "label": "20251128-doc-access-probe-log.md",
       "path": "docs/04-Operations/Intent-Log/Technical/20251128-doc-access-probe-log.md",
@@ -393,12 +399,6 @@
       "id": "docs/04-Operations/Intent-Log/Technical/20251128-doc-graph-generation-log.md",
       "label": "20251128-doc-graph-generation-log.md",
       "path": "docs/04-Operations/Intent-Log/Technical/20251128-doc-graph-generation-log.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/04-Operations/Intent-Log/Technical/20251128-Documentation-Organization-Master-Plan.md",
-      "label": "20251128-Documentation-Organization-Master-Plan.md",
-      "path": "docs/04-Operations/Intent-Log/Technical/20251128-Documentation-Organization-Master-Plan.md",
       "type": "file"
     },
     {
@@ -417,6 +417,18 @@
       "id": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
       "label": "20251129-Restructure-Proposal-CIS-Driven.md",
       "path": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/Technical/20251130-Mermaid-Fix-and-Graph-Analysis.md",
+      "label": "20251130-Mermaid-Fix-and-Graph-Analysis.md",
+      "path": "docs/04-Operations/Intent-Log/Technical/20251130-Mermaid-Fix-and-Graph-Analysis.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/04-Operations/Intent-Log/log_entry_template.md",
+      "label": "log_entry_template.md",
+      "path": "docs/04-Operations/Intent-Log/log_entry_template.md",
       "type": "file"
     },
     {
@@ -474,6 +486,126 @@
       "type": "file"
     },
     {
+      "id": "docs/Archive/Legacy-Logs/20251027-011617.md",
+      "label": "20251027-011617.md",
+      "path": "docs/Archive/Legacy-Logs/20251027-011617.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251027-013438.md",
+      "label": "20251027-013438.md",
+      "path": "docs/Archive/Legacy-Logs/20251027-013438.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251027-214944.md",
+      "label": "20251027-214944.md",
+      "path": "docs/Archive/Legacy-Logs/20251027-214944.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251027.md",
+      "label": "20251027.md",
+      "path": "docs/Archive/Legacy-Logs/20251027.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251028-032235.md",
+      "label": "20251028-032235.md",
+      "path": "docs/Archive/Legacy-Logs/20251028-032235.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251029-084528.md",
+      "label": "20251029-084528.md",
+      "path": "docs/Archive/Legacy-Logs/20251029-084528.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251030-064413.md",
+      "label": "20251030-064413.md",
+      "path": "docs/Archive/Legacy-Logs/20251030-064413.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251030-064424.md",
+      "label": "20251030-064424.md",
+      "path": "docs/Archive/Legacy-Logs/20251030-064424.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251030-065552.md",
+      "label": "20251030-065552.md",
+      "path": "docs/Archive/Legacy-Logs/20251030-065552.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251030-065607.md",
+      "label": "20251030-065607.md",
+      "path": "docs/Archive/Legacy-Logs/20251030-065607.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251030-105405.md",
+      "label": "20251030-105405.md",
+      "path": "docs/Archive/Legacy-Logs/20251030-105405.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251030-110951.md",
+      "label": "20251030-110951.md",
+      "path": "docs/Archive/Legacy-Logs/20251030-110951.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251030-165713.md",
+      "label": "20251030-165713.md",
+      "path": "docs/Archive/Legacy-Logs/20251030-165713.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/20251117-Strategic-Master-Log.md",
+      "label": "20251117-Strategic-Master-Log.md",
+      "path": "docs/Archive/Legacy-Logs/20251117-Strategic-Master-Log.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Legacy-Logs/LOGS_README.md",
+      "label": "LOGS_README.md",
+      "path": "docs/Archive/Legacy-Logs/LOGS_README.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "label": "20251119-Strategic-Master-Log.md",
+      "path": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Unsorted/CoPilot/20251117-Task-1.2-Completion-Summary.md",
+      "label": "20251117-Task-1.2-Completion-Summary.md",
+      "path": "docs/Archive/Unsorted/CoPilot/20251117-Task-1.2-Completion-Summary.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Unsorted/CoPilot/20251117-Task-1.2-Plan.md",
+      "label": "20251117-Task-1.2-Plan.md",
+      "path": "docs/Archive/Unsorted/CoPilot/20251117-Task-1.2-Plan.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/Archive/Unsorted/CoPilot/README.md",
+      "label": "README.md",
+      "path": "docs/Archive/Unsorted/CoPilot/README.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/GAP_ANALYSIS.md",
+      "label": "GAP_ANALYSIS.md",
+      "path": "docs/GAP_ANALYSIS.md",
+      "type": "file"
+    },
+    {
       "id": "docs/archive/2025-11-07_Judge_Simulation_Prompt.md",
       "label": "2025-11-07_Judge_Simulation_Prompt.md",
       "path": "docs/archive/2025-11-07_Judge_Simulation_Prompt.md",
@@ -498,129 +630,9 @@
       "type": "file"
     },
     {
-      "id": "docs/archive/Legacy-Logs/20251027-011617.md",
-      "label": "20251027-011617.md",
-      "path": "docs/archive/Legacy-Logs/20251027-011617.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Legacy-Logs/20251027-013438.md",
-      "label": "20251027-013438.md",
-      "path": "docs/archive/Legacy-Logs/20251027-013438.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Legacy-Logs/20251027-214944.md",
-      "label": "20251027-214944.md",
-      "path": "docs/archive/Legacy-Logs/20251027-214944.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Legacy-Logs/20251027.md",
-      "label": "20251027.md",
-      "path": "docs/archive/Legacy-Logs/20251027.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Legacy-Logs/20251028-032235.md",
-      "label": "20251028-032235.md",
-      "path": "docs/archive/Legacy-Logs/20251028-032235.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Legacy-Logs/20251029-084528.md",
-      "label": "20251029-084528.md",
-      "path": "docs/archive/Legacy-Logs/20251029-084528.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Legacy-Logs/20251030-064413.md",
-      "label": "20251030-064413.md",
-      "path": "docs/archive/Legacy-Logs/20251030-064413.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Legacy-Logs/20251030-064424.md",
-      "label": "20251030-064424.md",
-      "path": "docs/archive/Legacy-Logs/20251030-064424.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Legacy-Logs/20251030-065552.md",
-      "label": "20251030-065552.md",
-      "path": "docs/archive/Legacy-Logs/20251030-065552.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Legacy-Logs/20251030-065607.md",
-      "label": "20251030-065607.md",
-      "path": "docs/archive/Legacy-Logs/20251030-065607.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Legacy-Logs/20251030-105405.md",
-      "label": "20251030-105405.md",
-      "path": "docs/archive/Legacy-Logs/20251030-105405.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Legacy-Logs/20251030-110951.md",
-      "label": "20251030-110951.md",
-      "path": "docs/archive/Legacy-Logs/20251030-110951.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Legacy-Logs/20251030-165713.md",
-      "label": "20251030-165713.md",
-      "path": "docs/archive/Legacy-Logs/20251030-165713.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Legacy-Logs/20251117-Strategic-Master-Log.md",
-      "label": "20251117-Strategic-Master-Log.md",
-      "path": "docs/archive/Legacy-Logs/20251117-Strategic-Master-Log.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Legacy-Logs/LOGS_README.md",
-      "label": "LOGS_README.md",
-      "path": "docs/archive/Legacy-Logs/LOGS_README.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
-      "label": "20251119-Strategic-Master-Log.md",
-      "path": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Unsorted/CoPilot/20251117-Task-1.2-Completion-Summary.md",
-      "label": "20251117-Task-1.2-Completion-Summary.md",
-      "path": "docs/archive/Unsorted/CoPilot/20251117-Task-1.2-Completion-Summary.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Unsorted/CoPilot/20251117-Task-1.2-Plan.md",
-      "label": "20251117-Task-1.2-Plan.md",
-      "path": "docs/archive/Unsorted/CoPilot/20251117-Task-1.2-Plan.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive/Unsorted/CoPilot/README.md",
-      "label": "README.md",
-      "path": "docs/archive/Unsorted/CoPilot/README.md",
-      "type": "file"
-    },
-    {
       "id": "docs/archive-pre-refactor/06.26.2025 architecture-diagram.md",
       "label": "06.26.2025 architecture-diagram.md",
       "path": "docs/archive-pre-refactor/06.26.2025 architecture-diagram.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive-pre-refactor/backend/REPLIT_BACKEND_SETUP.md",
-      "label": "REPLIT_BACKEND_SETUP.md",
-      "path": "docs/archive-pre-refactor/backend/REPLIT_BACKEND_SETUP.md",
       "type": "file"
     },
     {
@@ -633,6 +645,30 @@
       "id": "docs/archive-pre-refactor/ESLINT_CONFIGURATION_GUIDE.md",
       "label": "ESLINT_CONFIGURATION_GUIDE.md",
       "path": "docs/archive-pre-refactor/ESLINT_CONFIGURATION_GUIDE.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/archive-pre-refactor/IMPLEMENTATION_PLAN.md",
+      "label": "IMPLEMENTATION_PLAN.md",
+      "path": "docs/archive-pre-refactor/IMPLEMENTATION_PLAN.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/archive-pre-refactor/IMPLEMENTATION_PLAN_CHART.md",
+      "label": "IMPLEMENTATION_PLAN_CHART.md",
+      "path": "docs/archive-pre-refactor/IMPLEMENTATION_PLAN_CHART.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/archive-pre-refactor/SYSTEMATIC_ESLINT_FIXING_PLAN.md",
+      "label": "SYSTEMATIC_ESLINT_FIXING_PLAN.md",
+      "path": "docs/archive-pre-refactor/SYSTEMATIC_ESLINT_FIXING_PLAN.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/archive-pre-refactor/backend/REPLIT_BACKEND_SETUP.md",
+      "label": "REPLIT_BACKEND_SETUP.md",
+      "path": "docs/archive-pre-refactor/backend/REPLIT_BACKEND_SETUP.md",
       "type": "file"
     },
     {
@@ -678,18 +714,6 @@
       "type": "file"
     },
     {
-      "id": "docs/archive-pre-refactor/IMPLEMENTATION_PLAN.md",
-      "label": "IMPLEMENTATION_PLAN.md",
-      "path": "docs/archive-pre-refactor/IMPLEMENTATION_PLAN.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/archive-pre-refactor/IMPLEMENTATION_PLAN_CHART.md",
-      "label": "IMPLEMENTATION_PLAN_CHART.md",
-      "path": "docs/archive-pre-refactor/IMPLEMENTATION_PLAN_CHART.md",
-      "type": "file"
-    },
-    {
       "id": "docs/archive-pre-refactor/investigations/2025-09-24_AddThoughtModal_Test_Investigation.md",
       "label": "2025-09-24_AddThoughtModal_Test_Investigation.md",
       "path": "docs/archive-pre-refactor/investigations/2025-09-24_AddThoughtModal_Test_Investigation.md",
@@ -732,12 +756,6 @@
       "type": "file"
     },
     {
-      "id": "docs/archive-pre-refactor/SYSTEMATIC_ESLINT_FIXING_PLAN.md",
-      "label": "SYSTEMATIC_ESLINT_FIXING_PLAN.md",
-      "path": "docs/archive-pre-refactor/SYSTEMATIC_ESLINT_FIXING_PLAN.md",
-      "type": "file"
-    },
-    {
       "id": "docs/archive-pre-refactor/technical-debt-report.md",
       "label": "technical-debt-report.md",
       "path": "docs/archive-pre-refactor/technical-debt-report.md",
@@ -747,12 +765,6 @@
       "id": "docs/archive-pre-refactor/unused-variables-report.md",
       "label": "unused-variables-report.md",
       "path": "docs/archive-pre-refactor/unused-variables-report.md",
-      "type": "file"
-    },
-    {
-      "id": "docs/GAP_ANALYSIS.md",
-      "label": "GAP_ANALYSIS.md",
-      "path": "docs/GAP_ANALYSIS.md",
       "type": "file"
     },
     {
@@ -969,6 +981,18 @@
     },
     {
       "source": "docs/02-Engineering/Setup/Onboarding_Guide.md",
+      "target": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "label": "explicit_link",
+      "text": "logs/20251119-Strategic-Master-Log.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Onboarding_Guide.md",
+      "target": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "label": "implicit_link",
+      "text": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Onboarding_Guide.md",
       "target": "docs/02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md",
       "label": "explicit_link",
       "text": "logs/technical/20251119-Recommendation-Report-Strategic-Path-Forward.md"
@@ -984,6 +1008,18 @@
       "target": "PROJECT_PLAN.md",
       "label": "implicit_link",
       "text": "PROJECT_PLAN.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Onboarding_Guide.md",
+      "target": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "label": "explicit_link",
+      "text": "logs/20251119-Strategic-Master-Log.md"
+    },
+    {
+      "source": "docs/02-Engineering/Setup/Onboarding_Guide.md",
+      "target": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "label": "implicit_link",
+      "text": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md"
     },
     {
       "source": "docs/02-Engineering/Setup/Onboarding_Guide.md",
@@ -1053,6 +1089,12 @@
     },
     {
       "source": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
+      "target": "docs/Archive/Legacy-Logs/LOGS_README.md",
+      "label": "implicit_link",
+      "text": "docs/Archive/Legacy-Logs/LOGS_README.md"
+    },
+    {
+      "source": "docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md",
       "target": "README.md",
       "label": "implicit_link",
       "text": "README.md"
@@ -1076,163 +1118,175 @@
       "text": "README.md"
     },
     {
+      "source": "docs/04-Operations/Intent-Log/Technical/20251130-Mermaid-Fix-and-Graph-Analysis.md",
+      "target": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
+      "label": "implicit_link",
+      "text": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md"
+    },
+    {
+      "source": "docs/04-Operations/Intent-Log/Technical/20251130-Mermaid-Fix-and-Graph-Analysis.md",
+      "target": "docs/Archive/Legacy-Logs/20251117-Strategic-Master-Log.md",
+      "label": "implicit_link",
+      "text": "docs/Archive/Legacy-Logs/20251117-Strategic-Master-Log.md"
+    },
+    {
       "source": "docs/20251107-LogoMesh AgentX Judge Evaluation Simulation.md",
       "target": "README.md",
       "label": "implicit_link",
       "text": "README.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/00-Strategy/Competition/20251116-Competition Analysis For Project Success.md",
       "label": "explicit_link",
       "text": "logs/competition/20251116-Competition Analysis For Project Success.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md",
       "label": "explicit_link",
       "text": "logs/technical/20251113_RECOVERY_PLAN.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md",
       "label": "explicit_link",
       "text": "docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
-      "target": "docs/archive/Legacy-Logs/20251117-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/Archive/Legacy-Logs/20251117-Strategic-Master-Log.md",
       "label": "explicit_link",
       "text": "logs/archive/20251117-Strategic-Master-Log.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md",
       "label": "explicit_link",
       "text": "docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/00-Strategy/IP/03_INVESTOR_PITCH.md",
       "label": "explicit_link",
       "text": "docs/strategy_and_ip/03_INVESTOR_PITCH.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/00-Strategy/IP/01_CORE_IP_DEFINITION.md",
       "label": "explicit_link",
       "text": "docs/strategy_and_ip/01_CORE_IP_DEFINITION.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md",
       "label": "explicit_link",
       "text": "logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/00-Strategy/IP/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md",
       "label": "explicit_link",
       "text": "docs/strategy_and_ip/DOC-REVISIONS/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/04-Operations/Intent-Log/Technical/20251116_build_fix_and_vitest_error.md",
       "label": "explicit_link",
       "text": "logs/technical/20251116_build_fix_and_vitest_error.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
-      "target": "docs/archive/Unsorted/CoPilot/20251117-Task-1.2-Completion-Summary.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "target": "docs/Archive/Unsorted/CoPilot/20251117-Task-1.2-Completion-Summary.md",
       "label": "explicit_link",
       "text": "logs/CoPilot/20251117-Task-1.2-Completion-Summary.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/00-Strategy/Competition/20251116-Competition Analysis For Project Success.md",
       "label": "explicit_link",
       "text": "logs/competition/20251116-Competition Analysis For Project Success.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "PROJECT_PLAN.md",
       "label": "implicit_link",
       "text": "PROJECT_PLAN.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "README.md",
       "label": "implicit_link",
       "text": "README.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/00-Strategy/IP/01_CORE_IP_DEFINITION.md",
       "label": "explicit_link",
       "text": "01_CORE_IP_DEFINITION.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/00-Strategy/IP/02_LEGAL_CHECKLIST.md",
       "label": "explicit_link",
       "text": "02_LEGAL_CHECKLIST.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/00-Strategy/IP/03_INVESTOR_PITCH.md",
       "label": "explicit_link",
       "text": "03_INVESTOR_PITCH.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/00-Strategy/IP/04_PHASE_1_CLIENTS.md",
       "label": "explicit_link",
       "text": "04_PHASE_1_CLIENTS.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md",
       "label": "explicit_link",
       "text": "20251119-Recommendation-Report-Strategic-Path-Forward.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md",
       "label": "explicit_link",
       "text": "20251113_RECOVERY_PLAN.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/02-Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md",
       "label": "explicit_link",
       "text": "20251114_VERIFICATION_REPORT_TASK_1.1.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md",
       "label": "explicit_link",
       "text": "GAP_ANALYSIS_FOR_DATASCIENTIST.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/01-Architecture/Specs/Contextual-Debt-Spec.md",
       "label": "explicit_link",
       "text": "CONTEXTUAL_DEBT_SPEC.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/01-Architecture/Specs/Evaluation-Output-Schema.md",
       "label": "explicit_link",
       "text": "EVAL_OUTPUT_SCHEMA.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/02-Engineering/Setup/Project_Status.md",
       "label": "explicit_link",
       "text": "PROJECT_STATUS.md"
     },
     {
-      "source": "docs/archive/Unsorted/20251119-Strategic-Master-Log.md",
+      "source": "docs/Archive/Unsorted/20251119-Strategic-Master-Log.md",
       "target": "docs/01-Architecture/Diagrams/CI-Workflow.md",
       "label": "explicit_link",
       "text": "CI_COMPOSE_E2E_WORKFLOW.md"

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LogoMesh: Discovery Sprint Hub</title>
-    <script src="mermaid.min.js"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
@@ -71,25 +70,27 @@
             font-family: 'Courier New', Courier, monospace;
             font-size: 0.9em;
         }
-        .graph-container {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin-top: 20px;
-            position: relative;
-            background-color: #f9f9f9;
-            padding: 20px;
-            min-height: 500px; /* Ensure container has a minimum height */
+        .dashboard-link-container {
+            text-align: center;
+            margin: 40px 0;
+            padding: 40px;
+            background: #e8f6f3;
+            border: 2px dashed #1abc9c;
+            border-radius: 10px;
         }
-        .graph-note {
-            padding: 15px;
-            background: #fcf8e3;
-            border-bottom: 1px solid #faebcc;
-            color: #8a6d3b;
-            margin-bottom: 20px;
+        .dashboard-btn {
+            display: inline-block;
+            background-color: #1abc9c;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-weight: bold;
         }
-        .mermaid svg {
-            width: 100%;
-            height: auto;
+        .dashboard-btn:hover {
+            background-color: #16a085;
         }
         footer {
             text-align: center;
@@ -126,7 +127,7 @@
             <div class="subtitle">Central Command for the Contextual Integrity Score Initiative</div>
             <div class="version">Last Updated: November 30, 2025</div>
             <nav class="navbar">
-                <a href="graph_dashboard.html" target="_blank">Interactive Graph</a>
+                <a href="graph_dashboard.html" target="_blank">Open Interactive Graph Dashboard</a>
             </nav>
         </header>
 
@@ -163,12 +164,9 @@
             </div>
 
             <h2 id="graph">Live Documentation Graph</h2>
-            <div class="graph-container">
-                <div class="graph-note">
-                    <strong>Note:</strong> This is a static analysis of the documentation graph. Nodes in green have been modified in the last 24 hours.
-                </div>
-                <div class="mermaid" id="mermaid-container">
-                </div>
+            <div class="dashboard-link-container">
+                <p>Explore the relationships between our documentation, logs, and strategies in the interactive dashboard.</p>
+                <a href="graph_dashboard.html" class="dashboard-btn" target="_blank">Launch Interactive Graph Dashboard</a>
             </div>
         </div>
 
@@ -176,24 +174,5 @@
             <p><strong>LogoMesh Project</strong> | Discovery Sprint Hub</p>
         </footer>
     </div>
-
-    <script>
-        mermaid.initialize({ startOnLoad: false });
-        fetch('doc_graph/mermaid_list.md')
-            .then(response => response.text())
-            .then(text => {
-                const mermaidContainer = document.getElementById('mermaid-container');
-                mermaidContainer.innerHTML = text;
-                mermaid.run({
-                    nodes: [mermaidContainer]
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching or rendering mermaid diagram:', error);
-                const mermaidContainer = document.getElementById('mermaid-container');
-                mermaidContainer.innerHTML = '<div style="color:red; padding:10px; border:1px solid red;">' +
-                    '<h3>Failed to load diagram</h3><pre>' + error.message + '</pre></div>';
-            });
-    </script>
 </body>
 </html>
