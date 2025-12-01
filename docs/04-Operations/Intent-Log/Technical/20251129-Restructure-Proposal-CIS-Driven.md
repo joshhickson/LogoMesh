@@ -6,7 +6,7 @@
 ## 1. The Problem (Contextual Debt)
 The current repository structure reflects the project's *history*, not its *intent*.
 *   **Split Knowledge:** Critical technical decisions are buried in `logs/technical/josh-temp/`, while formal specs live in `docs/`.
-*   **Ambiguous Authority:** Is `logs/20251119-Strategic-Master-Log.md` more authoritative than `docs/PROJECT_STATUS.md`? (Yes, but the folder structure implies otherwise).
+*   **Ambiguous Authority:** Is `../../../Archive/Unsorted/20251119-Strategic-Master-Log.md` more authoritative than `docs/PROJECT_STATUS.md`? (Yes, but the folder structure implies otherwise).
 *   **Dangling Edges:** Moving files manually has historically broken links (fixed in the recent sprint, but a risk for future moves).
 
 ## 2. The Solution (Target Architecture)

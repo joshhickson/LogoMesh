@@ -7,14 +7,14 @@
 **Manual Observation:**
 - Content: "...please see our detailed Gap Analysis document. **➡️ [Deep Dive: Detailed Gap Analysis](./GAP_ANALYSIS.md)**"
 - Links Found:
-  1. [Deep Dive: Detailed Gap Analysis](./GAP_ANALYSIS.md) (Target: [docs/GAP_ANALYSIS.md](docs/GAP_ANALYSIS.md))
+  1. [Deep Dive: Detailed Gap Analysis](./GAP_ANALYSIS.md) (Target: [../../../GAP_ANALYSIS.md](../../../GAP_ANALYSIS.md))
 
 **Graph JSON Data:**
 - **Found:** Yes!
   ```json
   {
     "source": "[docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md)",
-    "target": "[docs/GAP_ANALYSIS.md](docs/GAP_ANALYSIS.md)",
+    "target": "[../../../GAP_ANALYSIS.md](../../../GAP_ANALYSIS.md)",
     "label": "links_to",
     "text": "Deep Dive: Detailed Gap Analysis"
   }
@@ -36,7 +36,7 @@
     - I need to verify if `docs/[README.md](README.md)` is in the `nodes` list.
     - *Action:* `grep "docs/[README.md](README.md)" onboarding/doc_graph/doc_graph_raw.json`.
 
-## 3. File: [logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md)
+## 3. File: [../../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../../Archive/Unsorted/20251119-Strategic-Master-Log.md)
 **Manual Observation:**
 - Contains many links.
 **Graph JSON Data:**
@@ -55,13 +55,13 @@
 - **CRITICAL FINDING:** `doc_graph_raw.json` only has 6 edges total.
 - The 4th, 5th, 6th edges are from `logs/technical/josh-temp/...`.
 - This proves the parser *can* parse `logs` directory files.
-- Why did it skip [logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md)?
-- *Check:* Does [logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md) exist in `nodes`?
+- Why did it skip [../../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../../Archive/Unsorted/20251119-Strategic-Master-Log.md)?
+- *Check:* Does [../../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../../Archive/Unsorted/20251119-Strategic-Master-Log.md) exist in `nodes`?
 
 ## Summary
 The system has **massive false negatives**. It is missing almost all links.
 - [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md): Passed (1 link found).
-- [logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md): Failed (0 links found).
+- [../../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../../Archive/Unsorted/20251119-Strategic-Master-Log.md): Failed (0 links found).
 - `docs/[README.md](README.md)`: Failed (0 links found).
 
 **Root Cause Candidates:**

@@ -45,7 +45,7 @@ Results:
 Artifacts saved:
 
 - Compose logs (full capture): `logs/2025-11-13_docker_compose_logs.log`
-- Extracted `docker-entrypoint.sh` used for inspection: `logs/docker-entrypoint.sh`
+- Extracted `docker-entrypoint.sh` used for inspection: `../../../Archive/Unsorted/docker-entrypoint.sh`
 
 Post-verification hardening and re-check:
 

@@ -4,7 +4,7 @@ This document describes the JSON schema used for evaluation reports produced by 
 
 Location of an example JSON in this repository:
 
-- `docs/onboarding/example-evaluation-report.json`
+- `../../onboarding/example-evaluation-report.json`
 
 Top-level shape
 ----------------
@@ -20,7 +20,7 @@ Fields (brief):
 Example JSON
 ------------
 
-The following example is taken from `docs/onboarding/example-evaluation-report.json` and demonstrates a minimal, canonical output.
+The following example is taken from `../../onboarding/example-evaluation-report.json` and demonstrates a minimal, canonical output.
 
 ```json
 {

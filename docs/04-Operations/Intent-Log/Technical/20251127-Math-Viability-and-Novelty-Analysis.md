@@ -7,7 +7,7 @@
 
 ## 1. Executive Summary
 
-This analysis evaluates the mathematical logic proposed in [docs/strategy_and_ip/DOC-REVISIONS/20251118-proposed-Section-2.2.md](docs/strategy_and_ip/DOC-REVISIONS/20251118-proposed-Section-2.2.md) against the state-of-the-art literature ([logs/technical/josh-temp/20251127-Research Paper-Comparison-Request.md](logs/technical/josh-temp/20251127-Research Paper-Comparison-Request.md)) and the constraints of the AgentBeats competition deadline (Dec 19, 2025).
+This analysis evaluates the mathematical logic proposed in [../../../00-Strategy/IP/20251118-proposed-Section-2.2.md](../../../00-Strategy/IP/20251118-proposed-Section-2.2.md) against the state-of-the-art literature ([20251127-Research Paper-Comparison-Request.md](20251127-Research Paper-Comparison-Request.md)) and the constraints of the AgentBeats competition deadline (Dec 19, 2025).
 
 **Verdict:** The proposed mathematical framework is **VIABLE** and possesses **ARGUMENTATIVE NOVELTY**, though it is not mathematically groundbreaking in isolation.
 

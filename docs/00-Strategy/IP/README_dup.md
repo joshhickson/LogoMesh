@@ -4,7 +4,7 @@ This directory contains the core documentation for LogoMesh's business strategy,
 
 ## 🔑 Key Concepts in Plain English
 
-Here’s what the most recent IP report ('[logs/ip_and_business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md](logs/ip_and_business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md)') is telling you:
+Here’s what the most recent IP report ('[../Business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md](../Business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md)') is telling you:
 
 *   **Your "Customer" Isn't Who You Think It Is:** You're not just selling a developer tool to fix code. You are selling a Risk Management Platform to a company's lawyers (General Counsel) and executives (Chief Risk Officer).
 *   **The Problem Isn't "Bad Code," It's "Legal Liability":** The core pitch is that "Contextual Debt" makes a company's software "indefensible" in court. When their AI-generated code inevitably causes a data breach or a massive error, they will be sued. Your tool is the only thing that can prove they tried to prevent it. This makes your product a "must-have" (like cybersecurity) instead of a "nice-to-have" (like a code-cleaner).

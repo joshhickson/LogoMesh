@@ -2,7 +2,7 @@
 
 **Date:** November 21, 2025
 **Attendees:** Josh (Project Lead), Deepti (Existing Team Member), Garett, Samuel, Hadiza (New Team Members)
-**Transcript:** `logs/20251121-LogoMesh-Meeting-2.srt`
+**Transcript:** `../../Archive/Unsorted/20251121-LogoMesh-Meeting-2.srt`
 
 ## 1. Meeting Overview
 
@@ -28,13 +28,13 @@ The following files and directories were mentioned during the meeting. This list
 
 | Timestamp | Quote | Speaker | Assumed File/Directory |
 | --- | --- | --- | --- |
-| 02:23:30,366 | "I linked to those in the strategic master log..." | Josh | [logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md) |
-| 02:23:44,033 | "...the strategic pivot plan, CIS formation..." | Josh | Likely a document linked within the master log, possibly [docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md](docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md) or a related planning document. |
-| 02:33:43,133 | "...the copyright edition paper." | Samuel | [docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md](docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md) |
+| 02:23:30,366 | "I linked to those in the strategic master log..." | Josh | [../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../Archive/Unsorted/20251119-Strategic-Master-Log.md) |
+| 02:23:44,033 | "...the strategic pivot plan, CIS formation..." | Josh | Likely a document linked within the master log, possibly [../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md) or a related planning document. |
+| 02:33:43,133 | "...the copyright edition paper." | Samuel | [../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md) |
 | 02:37:25,833 | "...I'm trying to find the onboarding agenda." | Josh | Likely `onboarding/[README.md](README.md)` or a similar file. |
 | 02:38:45,000 | "Stuff like the, I think it's Auth0..." | Josh | `auth0-ai-samples/` |
-| 02:39:14,799 | "...the one that was formulated on November 13th, it's called the recovery plan." | Josh | A planning document, likely referenced in [logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md). A file search suggests [docs/archive/2025-11-11_build_issue_log.md](docs/archive/2025-11-11_build_issue_log.md) or [docs/archive-pre-refactor/IMPLEMENTATION_PLAN.md](docs/archive-pre-refactor/IMPLEMENTATION_PLAN.md) could be related. |
-| 02:40:00,333 | "...prioritize finalizing the research paper revisions." | Josh | `docs/strategy_and_ip/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md` or [docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md](docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md) |
+| 02:39:14,799 | "...the one that was formulated on November 13th, it's called the recovery plan." | Josh | A planning document, likely referenced in [../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../Archive/Unsorted/20251119-Strategic-Master-Log.md). A file search suggests [../../archive/2025-11-11_build_issue_log.md](../../archive/2025-11-11_build_issue_log.md) or [../../archive-pre-refactor/IMPLEMENTATION_PLAN.md](../../archive-pre-refactor/IMPLEMENTATION_PLAN.md) could be related. |
+| 02:40:00,333 | "...prioritize finalizing the research paper revisions." | Josh | `docs/strategy_and_ip/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md` or [../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md) |
 | 02:46:24,466 | "...it's under a branch called feed slash docs." | Samuel | A Git branch, which was since merged into `master`. |
 | 02:46:27,233 | "...it just adds a docs for an onboarding folder with like a HTML file." | Samuel | `onboarding/index.html` |
 | 02:52:22,399 | "...you go to the docs folder, you go to the strategy and IP folder within that..." | Josh | `docs/strategy_and_ip/` |

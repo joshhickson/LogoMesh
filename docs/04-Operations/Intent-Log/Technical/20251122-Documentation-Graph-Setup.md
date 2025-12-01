@@ -31,24 +31,24 @@ This log details the setup of the foundational files for creating a knowledge gr
       "edges": [
         {
           "source": "logs/20251121-LogoMesh-Onboarding-Meeting-2-Summary.md",
-          "target": "logs/20251121-LogoMesh-Meeting-2.srt",
+          "target": "../../../Archive/Unsorted/20251121-LogoMesh-Meeting-2.srt",
           "label": "summarizes",
           "weight": 0.9
         },
         {
           "source": "onboarding/index.html",
-          "target": "[logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md)",
+          "target": "[../../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../../Archive/Unsorted/20251119-Strategic-Master-Log.md)",
           "label": "visualizes",
           "weight": 0.8
         },
         {
-          "source": "[logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md)",
+          "source": "[../../../00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](../../../00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md)",
           "target": "[docs/CONTEXTUAL_DEBT_SPEC.md](docs/CONTEXTUAL_DEBT_SPEC.md)",
           "label": "refines",
           "weight": 0.7
         },
         {
-          "source": "[docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md](docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md)",
+          "source": "[../../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md)",
           "target": "docs/strategy_and_ip/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md",
           "label": "revises",
           "weight": 0.9

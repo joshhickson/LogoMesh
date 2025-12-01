@@ -2,7 +2,7 @@
 
 ## 1. Purpose
 
-This document provides a detailed gap analysis comparing the currently active technical roadmap, [logs/technical/20251113_RECOVERY_PLAN.md](logs/technical/20251113_RECOVERY_PLAN.md), with the proposed new direction outlined in [logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md).
+This document provides a detailed gap analysis comparing the currently active technical roadmap, [20251113_RECOVERY_PLAN.md](20251113_RECOVERY_PLAN.md), with the proposed new direction outlined in [../../../00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](../../../00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md).
 
 The goal is to clearly articulate the differences between the two plans to inform a strategic decision on whether to pivot the project's core technical implementation.
 
@@ -10,7 +10,7 @@ The goal is to clearly articulate the differences between the two plans to infor
 
 To ground this analysis, it is essential to define the project's current state. The development team has been executing "Workstream 1" from the `RECOVERY_PLAN`.
 
-*   **Completed Task:** Task 1.2, "Build Secure Sandbox for `testingDebtAnalyzer`," is **COMPLETE**. The successful implementation is documented in [logs/CoPilot/20251117-Task-1.2-Completion-Summary.md](logs/CoPilot/20251117-Task-1.2-Completion-Summary.md).
+*   **Completed Task:** Task 1.2, "Build Secure Sandbox for `testingDebtAnalyzer`," is **COMPLETE**. The successful implementation is documented in [../../../Archive/Unsorted/CoPilot/20251117-Task-1.2-Completion-Summary.md](../../../Archive/Unsorted/CoPilot/20251117-Task-1.2-Completion-Summary.md).
 *   **Pending Tasks:** Task 1.1 (`escomplex` integration) and Task 1.3 (compounding debt logic) have **NOT** been started.
 
 The repository is therefore in a state where the `testingDebtAnalyzer` has a functional sandbox, but the other analyzers remain in their prototype stage.

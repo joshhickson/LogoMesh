@@ -18,12 +18,12 @@ To audit the "Contextual Graph" for referential integrity. Before we can confide
 
 ### 2.2. Execution & Audit
 *   **Command:** `node scripts/analyze_dangling_edges.js`
-*   **Output:** `logs/technical/josh-temp/20251129-dangling-edges.csv`
+*   **Output:** `20251129-dangling-edges.csv`
 
 ## 3. Findings
 The audit identified a set of broken links. A common pattern observed in the CSV is recursive path duplication (e.g., `docs/docs/...`), likely introduced during previous bulk refactors or manual edits where the context root was misunderstood.
 
-*   **Artifact:** [logs/technical/josh-temp/20251129-dangling-edges.csv](./20251129-dangling-edges.csv)
+*   **Artifact:** [20251129-dangling-edges.csv](./20251129-dangling-edges.csv)
 
 ## 4. Next Steps
 1.  **Remediation:** Iterate through the CSV report and programmatically fix the broken links.

@@ -52,11 +52,11 @@ You must use the following documents as the complete and total context for your 
 
 ### **Document 3: The System Architecture Diagrams**
 
-**Filepath:** `./[docs/onboarding/system-architecture.md](docs/onboarding/system-architecture.md)`
+**Filepath:** `./[../onboarding/system-architecture.md](../onboarding/system-architecture.md)`
 
 ### **Document 4: Example Evaluation Report**
 
-**Filepath:** `./docs/onboarding/example-evaluation-report.json`
+**Filepath:** `./../onboarding/example-evaluation-report.json`
 
 ### **Document 5: Key Source Code Files**
 

@@ -30,7 +30,7 @@
 *   **The Decision:** We chose **Option A: Blueprint-First**.
     *   *Why?* Our core metric (Contextual Integrity Score) needs to be a rigorous mathematical formula (vector embeddings/graph theory), not just a rubric.
     *   *Immediate Priority:* We are pausing purely tactical coding to **finalize the Research Paper revisions**. This paper is now our technical spec.
-*   **Reference:** [logs/technical/20251119-Recommendation-Report-Strategic-Path-Forward.md](logs/technical/20251119-Recommendation-Report-Strategic-Path-Forward.md) (The definitive source of truth).
+*   **Reference:** [../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md](../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md) (The definitive source of truth).
 
 ### 4. Technical Overview & "The Workshop" (10 min)
 *   **The Stack:** TypeScript Monorepo (`@logomesh/*`), Node.js v20+, Docker, Redis.
@@ -43,14 +43,14 @@
 ### 5. Open Discussion & Next Steps (15 min)
 *   **Q&A:** Open floor for questions about the pivot or the codebase.
 *   **Action Items:**
-    1.  **Read:** [logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md) (Your map).
-    2.  **Read:** [logs/technical/20251119-Recommendation-Report-Strategic-Path-Forward.md](logs/technical/20251119-Recommendation-Report-Strategic-Path-Forward.md) (Your orders).
+    1.  **Read:** [../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../Archive/Unsorted/20251119-Strategic-Master-Log.md) (Your map).
+    2.  **Read:** [../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md](../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md) (Your orders).
     3.  **Setup:** Clone repo and run `pnpm install` & `pnpm run build`.
 
 ---
 
 ## Key Links for Reference
-*   **Strategic Map:** [logs/20251119-Strategic-Master-Log.md](logs/20251119-Strategic-Master-Log.md)
-*   **Current Orders:** [logs/technical/20251119-Recommendation-Report-Strategic-Path-Forward.md](logs/technical/20251119-Recommendation-Report-Strategic-Path-Forward.md)
+*   **Strategic Map:** [../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../Archive/Unsorted/20251119-Strategic-Master-Log.md)
+*   **Current Orders:** [../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md](../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md)
 *   **Vision:** [PROJECT_PLAN.md](PROJECT_PLAN.md)
 *   **Setup:** [README.md](README.md)

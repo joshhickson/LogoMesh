@@ -13,10 +13,10 @@
 
 2.  **Documentation Creation:**
     *   **[docs/strategy_and_ip/README.md](docs/strategy_and_ip/README.md):** Created a summary document explaining the purpose of the directory and providing a plain-English overview of the core IP concepts and the 3-phase "Consult-to-Product Flywheel" business model.
-    *   **[docs/strategy_and_ip/01_CORE_IP_DEFINITION.md](docs/strategy_and_ip/01_CORE_IP_DEFINITION.md):** Created a foundational document defining the v0.1 concepts for the "Contextual Integrity Score (CIS)" and the "Agent-as-a-Judge" system. This is the first step in filling the "gaps" identified in the IP report.
-    *   **[docs/strategy_and_ip/02_LEGAL_CHECKLIST.md](docs/strategy_and_ip/02_LEGAL_CHECKLIST.md):** Created a checklist of legal actions required to protect the project's IP, including copyrights, trademarks, patents, and company formation.
-    *   **[docs/strategy_and_ip/03_INVESTOR_PITCH.md](docs/strategy_and_ip/03_INVESTOR_PITCH.md):** Extracted the 7 key talking points from the investor narrative section of the `'[logs/ip_and_business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md](logs/ip_and_business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md)'` report and formatted them into a script for investor meetings.
-    *   **[docs/strategy_and_ip/04_PHASE_1_CLIENTS.md](docs/strategy_and_ip/04_PHASE_1_CLIENTS.md):** Created a target list of potential clients for the initial Phase 1 consulting engagements, focusing on high-risk, regulated industries.
+    *   **[../IP/01_CORE_IP_DEFINITION.md](../IP/01_CORE_IP_DEFINITION.md):** Created a foundational document defining the v0.1 concepts for the "Contextual Integrity Score (CIS)" and the "Agent-as-a-Judge" system. This is the first step in filling the "gaps" identified in the IP report.
+    *   **[../IP/02_LEGAL_CHECKLIST.md](../IP/02_LEGAL_CHECKLIST.md):** Created a checklist of legal actions required to protect the project's IP, including copyrights, trademarks, patents, and company formation.
+    *   **[../IP/03_INVESTOR_PITCH.md](../IP/03_INVESTOR_PITCH.md):** Extracted the 7 key talking points from the investor narrative section of the `'[20251116-IP-and-Business-Strategy-for-Contextual Debt.md](20251116-IP-and-Business-Strategy-for-Contextual Debt.md)'` report and formatted them into a script for investor meetings.
+    *   **[../IP/04_PHASE_1_CLIENTS.md](../IP/04_PHASE_1_CLIENTS.md):** Created a target list of potential clients for the initial Phase 1 consulting engagements, focusing on high-risk, regulated industries.
 
 **Outcome:**
 

@@ -14,17 +14,17 @@ We have selected the following 3 key assets for the initial bundle. These must b
 
 1. **Contextual Debt: A Software Liability** (The Research Paper)
    - *Status:* **Drafting** (v3.0)
-   - *Path:* [docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md](./20251118-Copyright-Edition-Contextual-Debt-Paper.md)
+   - *Path:* [20251118-Copyright-Edition-Contextual-Debt-Paper.md](./20251118-Copyright-Edition-Contextual-Debt-Paper.md)
    - *Action:* Finalize Section 2.2 (Novelty Claim) and Section 3 (Methodology).
 
 2. **Core IP Definition: The Contextual Integrity Score (CIS)** (The Spec)
    - *Status:* **Drafting**
-   - *Path:* [docs/strategy_and_ip/01_CORE_IP_DEFINITION.md](./01_CORE_IP_DEFINITION.md)
+   - *Path:* [01_CORE_IP_DEFINITION.md](./01_CORE_IP_DEFINITION.md)
    - *Action:* Ensure this document is distinct from the paper. It should read like a "Standard" (e.g., ISO spec).
 
 3. **Investor Pitch: The Consult-to-Product Flywheel** (The Business Model)
    - *Status:* **Drafting**
-   - *Path:* [docs/strategy_and_ip/03_INVESTOR_PITCH.md](./03_INVESTOR_PITCH.md)
+   - *Path:* [03_INVESTOR_PITCH.md](./03_INVESTOR_PITCH.md)
    - *Action:* Ensure the narrative matches the "Pivot" (Green Agent) strategy.
 
 ## 3. The Process (GRUW)
@@ -46,7 +46,7 @@ We have selected the following 3 key assets for the initial bundle. These must b
 - Pay the fee ($85).
 
 ## 4. Supporting Documents
-- **Proposed Section 2.2**: [docs/strategy_and_ip/DOC-REVISIONS/20251118-proposed-Section-2.2.md](./20251118-proposed-Section-2.2.md)
-- **Draft 3.0 Paper**: [docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md](./20251118-Copyright-Edition-Contextual-Debt-Paper.md)
-- **Strategic Pivot Plan**: [logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](../Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md)
-- **Gap Analysis (Critique)**: [docs/strategy_and_ip/DOC-REVISIONS/20251119-Gap-Analysis-Critique-vs-IP-Assets.md](./20251119-Gap-Analysis-Critique-vs-IP-Assets.md)
+- **Proposed Section 2.2**: [20251118-proposed-Section-2.2.md](./20251118-proposed-Section-2.2.md)
+- **Draft 3.0 Paper**: [20251118-Copyright-Edition-Contextual-Debt-Paper.md](./20251118-Copyright-Edition-Contextual-Debt-Paper.md)
+- **Strategic Pivot Plan**: [../Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](../Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md)
+- **Gap Analysis (Critique)**: [20251119-Gap-Analysis-Critique-vs-IP-Assets.md](./20251119-Gap-Analysis-Critique-vs-IP-Assets.md)

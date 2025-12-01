@@ -29,8 +29,8 @@ To validate the CIS concept internally, we are applying it to our own documentat
 *   **Explicit Links (Markdown):** ~774.
 *   **Dangling Edges (Fixed):** ~50+ critical errors resolved.
     *   Fixed `docs/docs/` recursion errors in `docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md`.
-    *   Fixed `logs/logs/` nesting errors in `logs/20251119-Strategic-Master-Log.md`.
-    *   Fixed broken relative paths in `docs/strategy_and_ip/Copyright_Registration_Playbook.md`.
+    *   Fixed `logs/logs/` nesting errors in `../../../Archive/Unsorted/20251119-Strategic-Master-Log.md`.
+    *   Fixed broken relative paths in `../../../00-Strategy/IP/Copyright_Registration_Playbook.md`.
     *   Fixed onboarding links in `docs/onboarding/README.md`.
 *   **Current State:** The "Dangling Edge" count has been drastically reduced. The documentation graph is now structurally sound enough to support accurate visualization and safe restructuring.
 
@@ -63,6 +63,6 @@ To validate the CIS concept internally, we are applying it to our own documentat
 
 Based on the completion of the "Link Remediation", the logical path is:
 
-1.  **Draft Restructure Plan:** Create `logs/technical/josh-temp/20251129-Restructure-Proposal-CIS-Driven.md` to map the specific moves (e.g., `logs/technical/` -> `docs/Engineering/`).
+1.  **Draft Restructure Plan:** Create `20251129-Restructure-Proposal-CIS-Driven.md` to map the specific moves (e.g., `logs/technical/` -> `docs/Engineering/`).
 2.  **Verify Visualization:** Ensure the `onboarding` server actually displays the new graph (now that we have valid data).
 3.  **Execute Move:** Move files and update links using a script (to maintain the 100% link integrity we just achieved).

@@ -10,10 +10,10 @@
 
 We are building the **Contextual Integrity System (CIS)** to measure the liability risk of AI-generated code. We are entering the AgentX AgentBeats competition not as a "Purple Agent" (who builds the app), but as the "Green Agent" (who grades the app).
 
-*   **Competition Strategy:** [logs/competition/20251116-Competition Analysis For Project Success.md](../../00-Strategy/Competition/20251116-Competition Analysis For Project Success.md)
-*   **Technical Recovery:** [logs/technical/20251113_RECOVERY_PLAN.md](../../04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md)
-*   **Research Paper (v3):** [docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md)
-*   **Previous Log:** [logs/archive/20251117-Strategic-Master-Log.md](../Legacy-Logs/20251117-Strategic-Master-Log.md)
+*   **Competition Strategy:** [../../00-Strategy/Competition/20251116-Competition Analysis For Project Success.md](../../00-Strategy/Competition/20251116-Competition Analysis For Project Success.md)
+*   **Technical Recovery:** [../../04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md](../../04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md)
+*   **Research Paper (v3):** [../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md)
+*   **Previous Log:** [../Legacy-Logs/20251117-Strategic-Master-Log.md](../Legacy-Logs/20251117-Strategic-Master-Log.md)
 
 ## 2. Executive Summary (The "Pivot" State)
 
@@ -31,12 +31,12 @@ As of Nov 19, the project has executed a **Strategic Pivot** based on the "Unkno
 We are currently refactoring our documentation into a clean asset bundle for copyright registration.
 
 *   **Core Assets:**
-    *   **The Paper:** [docs/strategy_and_ip/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md) (Drafting v3.1 for Legal Check).
-    *   **The Pitch:** [docs/strategy_and_ip/03_INVESTOR_PITCH.md](../../00-Strategy/IP/03_INVESTOR_PITCH.md) (Aligned with "Consult-to-Product" flywheel).
-    *   **The Definition:** [docs/strategy_and_ip/01_CORE_IP_DEFINITION.md](../../00-Strategy/IP/01_CORE_IP_DEFINITION.md) (Formalizing the "CIS" metric).
+    *   **The Paper:** [../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md) (Drafting v3.1 for Legal Check).
+    *   **The Pitch:** [../../00-Strategy/IP/03_INVESTOR_PITCH.md](../../00-Strategy/IP/03_INVESTOR_PITCH.md) (Aligned with "Consult-to-Product" flywheel).
+    *   **The Definition:** [../../00-Strategy/IP/01_CORE_IP_DEFINITION.md](../../00-Strategy/IP/01_CORE_IP_DEFINITION.md) (Formalizing the "CIS" metric).
 *   **Recent Actions:**
-    *   Created [logs/ip_and_business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](../../00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md) to guide the refactor.
-    *   Split the monolithic "Gap Analysis" into discrete critiques: [docs/strategy_and_ip/DOC-REVISIONS/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md](../../00-Strategy/IP/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md).
+    *   Created [../../00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](../../00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md) to guide the refactor.
+    *   Split the monolithic "Gap Analysis" into discrete critiques: [../../00-Strategy/IP/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md](../../00-Strategy/IP/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md).
 
 ## 4. Pillar 2: Technical Execution (The "How")
 
@@ -49,10 +49,10 @@ The build is fixed. We are now preparing the "Green Agent" implementation.
     *   `pnpm install` ✅
     *   `pnpm run build` ✅
     *   `pnpm test` ✅ (Unit tests passing)
-    *   **Log:** [logs/technical/20251116_build_fix_and_vitest_error.md](../../04-Operations/Intent-Log/Technical/20251116_build_fix_and_vitest_error.md)
+    *   **Log:** [../../04-Operations/Intent-Log/Technical/20251116_build_fix_and_vitest_error.md](../../04-Operations/Intent-Log/Technical/20251116_build_fix_and_vitest_error.md)
 *   **Task 1.2 (Verification):**
     *   Completed "Hello World" verification of the Orchestrator.
-    *   **Log:** [logs/CoPilot/20251117-Task-1.2-Completion-Summary.md](./CoPilot/20251117-Task-1.2-Completion-Summary.md).
+    *   **Log:** [CoPilot/20251117-Task-1.2-Completion-Summary.md](./CoPilot/20251117-Task-1.2-Completion-Summary.md).
 *   **Next Steps:**
     *   Implement the `RationaleDebtAnalyzer` (Worker).
     *   Integrate `isolated-vm` for the sandbox.
@@ -66,7 +66,7 @@ We have abandoned the "solve the hard coding problem" strategy. We are now the "
 
 *   **Role:** Green Agent (Evaluator).
 *   **Unique Value Prop:** "We don't just generate code; we certify it."
-*   **Log:** [logs/competition/20251116-Competition Analysis For Project Success.md](../../00-Strategy/Competition/20251116-Competition Analysis For Project Success.md).
+*   **Log:** [../../00-Strategy/Competition/20251116-Competition Analysis For Project Success.md](../../00-Strategy/Competition/20251116-Competition Analysis For Project Success.md).
 
 ## 6. Documentation Index (The "Map")
 

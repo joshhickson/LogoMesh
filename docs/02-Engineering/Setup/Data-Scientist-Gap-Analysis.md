@@ -25,7 +25,7 @@ Files / locations you will use frequently
 - [docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md](./Data-Scientist-Gap-Analysis.md) — this doc.
 - [docs/PROJECT_STATUS.md](./Project_Status.md) — high-level project context and verified status.
 - [docs/EVAL_OUTPUT_SCHEMA.md](../../01-Architecture/Specs/Evaluation-Output-Schema.md) — schema for evaluation JSON and a short example.
-- `docs/onboarding/example-evaluation-report.json` — concrete example JSON that you can open in a notebook.
+- `../../onboarding/example-evaluation-report.json` — concrete example JSON that you can open in a notebook.
 - `notebooks/01-explore-sample-eval.ipynb` — example notebook that loads the example JSON and produces simple plots (histogram + bar chart).
 - `tools/convert_eval_to_csv.py` — small CLI to convert evaluation JSON(s) into a CSV (one row per analyzer).
 - `tools/run_single_analyzer.py` — lightweight scaffold to run a single analyzer locally (dry-run heuristics).
@@ -33,7 +33,7 @@ Files / locations you will use frequently
 
 Top-level gaps (prioritized for a Data Scientist)
 -------------------------------------------------
-1. Output format & example dataset: Addressed — [docs/EVAL_OUTPUT_SCHEMA.md](../../01-Architecture/Specs/Evaluation-Output-Schema.md) and `docs/onboarding/example-evaluation-report.json` now exist.
+1. Output format & example dataset: Addressed — [docs/EVAL_OUTPUT_SCHEMA.md](../../01-Architecture/Specs/Evaluation-Output-Schema.md) and `../../onboarding/example-evaluation-report.json` now exist.
 2. Interactive exploration: Partially addressed — `notebooks/01-explore-sample-eval.ipynb` scaffold was added (basic plots). A richer notebook with multiple example runs would be helpful.
 3. Reproducible experiments: Partially addressed — `tools/convert_eval_to_csv.py` and `tools/run_single_analyzer.py` help with faster iteration. A TypeScript harness that invokes analyzers directly (from `packages/core`) could further speed iteration for engineering-driven experiments.
 4. Data export & analytics tooling: Addressed — `tools/convert_eval_to_csv.py` converts JSON -> CSV; `tools/[README.md](../../../tools/README.md)` documents usage.
@@ -66,10 +66,10 @@ If you want to explore a single analyzer output from an existing log (local quic
 
 ```bash
 # Convert example JSON -> CSV
-python tools/convert_eval_to_csv.py -i docs/onboarding/example-evaluation-report.json -o example-eval.csv
+python tools/convert_eval_to_csv.py -i ../../onboarding/example-evaluation-report.json -o example-eval.csv
 
 # Run a single analyzer locally (dry-run)
-python tools/run_single_analyzer.py -a rationale -i docs/onboarding/example-evaluation-report.json -o tmp/rationale-output.json
+python tools/run_single_analyzer.py -a rationale -i ../../onboarding/example-evaluation-report.json -o tmp/rationale-output.json
 ```
 
 Suggested small helpers to add (I scaffolded most of these)
@@ -115,7 +115,7 @@ You can hand this repository to a data scientist now without them getting stuck 
 Key artifacts (created / updated)
 --------------------------------
 - [docs/EVAL_OUTPUT_SCHEMA.md](../../01-Architecture/Specs/Evaluation-Output-Schema.md) — canonical evaluation JSON schema + example.
-- `docs/onboarding/example-evaluation-report.json` — concrete example JSON.
+- `../../onboarding/example-evaluation-report.json` — concrete example JSON.
 - [docs/CONTEXTUAL_DEBT_SPEC.md](../../01-Architecture/Specs/Contextual-Debt-Spec.md) — exact aggregation algorithm and worked example.
 - `notebooks/01-explore-sample-eval.ipynb` — starter notebook that loads the example JSON and plots per-analyzer scores.
 - `tools/convert_eval_to_csv.py` — CLI: JSON → CSV (one row per analyzer).
@@ -128,13 +128,13 @@ Minimal Quickstart for a data scientist
 1) Convert example JSON to CSV (quick EDA):
 
 ```bash
-python tools/convert_eval_to_csv.py -i docs/onboarding/example-evaluation-report.json -o example-eval.csv
+python tools/convert_eval_to_csv.py -i ../../onboarding/example-evaluation-report.json -o example-eval.csv
 ```
 
 2) Run a single analyzer locally (fast iteration without Docker Compose):
 
 ```bash
-python tools/run_single_analyzer.py -a rationale -i docs/onboarding/example-evaluation-report.json -o tmp/rationale-output.json
+python tools/run_single_analyzer.py -a rationale -i ../../onboarding/example-evaluation-report.json -o tmp/rationale-output.json
 ```
 
 3) Open the notebook and explore the CSV/JSON:
@@ -151,7 +151,7 @@ Short checklist (ready-to-hand-off)
 - [x] Environment & build instructions present in [README.md](./README.md) (Node v16, pnpm, Docker notes).
 - [x] Gap-analysis & onboarding doc ([docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md](./Data-Scientist-Gap-Analysis.md)) is reachable from the README.
 - [x] Metric spec present ([docs/CONTEXTUAL_DEBT_SPEC.md](../../01-Architecture/Specs/Contextual-Debt-Spec.md)).
-- [x] Canonical example JSON available (`docs/onboarding/example-evaluation-report.json`).
+- [x] Canonical example JSON available (`../../onboarding/example-evaluation-report.json`).
 - [x] Quick EDA helpers present: `tools/convert_eval_to_csv.py` and `tools/run_single_analyzer.py`.
 - [x] Starter notebook present (`notebooks/01-explore-sample-eval.ipynb`).
 
