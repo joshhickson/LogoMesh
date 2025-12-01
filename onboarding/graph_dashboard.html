@@ -18,6 +18,26 @@
             background-color: #1e1e1e;
             color: #d4d4d4;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+        }
+        #sidebar {
+            width: 350px;
+            height: 100%;
+            background: #252526;
+            border-right: 1px solid #333;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+        #graph-area {
+            flex-grow: 1;
+            position: relative;
+            height: 100%;
+            overflow: hidden;
         }
         #graph-container {
             width: 100%;
@@ -28,7 +48,7 @@
             height: 100%;
         }
         #controls {
-            position: fixed;
+            position: absolute;
             bottom: 20px;
             right: 20px;
             display: flex;
@@ -49,20 +69,10 @@
             background-color: #444;
         }
         /* Legend */
-        #legend {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(30, 30, 30, 0.9);
-            padding: 15px;
-            border: 1px solid #555;
-            border-radius: 5px;
-            pointer-events: none;
-        }
         .legend-item {
             display: flex;
             align-items: center;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-size: 14px;
         }
         .legend-color {
@@ -71,17 +81,106 @@
             margin-right: 10px;
             border: 1px solid #fff;
         }
+        h3 {
+            margin-top: 0;
+            border-bottom: 1px solid #555;
+            padding-bottom: 10px;
+            color: #fff;
+            font-size: 1.1em;
+        }
+        /* Orphan List */
+        #orphan-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        #orphan-list li {
+            margin-bottom: 8px;
+        }
+        #orphan-list a {
+            color: #F08080; /* Red color for red orphans */
+            text-decoration: none;
+            font-size: 0.85em;
+            word-break: break-all;
+            display: block;
+            padding: 2px 0;
+        }
+        #orphan-list a:hover {
+            text-decoration: underline;
+            color: #ff9999;
+        }
     </style>
 </head>
 <body>
-    <div id="legend">
-        <div class="legend-item"><div class="legend-color" style="background:#90ee90"></div>Recent (< 24h)</div>
-        <div class="legend-item"><div class="legend-color" style="background:#87CEEB"></div>Yesterday (24-48h)</div>
-        <div class="legend-item"><div class="legend-color" style="background:#FFA500"></div>This Week (2-7d)</div>
-        <div class="legend-item"><div class="legend-color" style="background:#F08080"></div>Older (> 7d)</div>
+    <div id="sidebar">
+        <div id="legend-container">
+            <h3>Legend</h3>
+            <div class="legend-item"><div class="legend-color" style="background:#90ee90"></div>Recent (< 24h)</div>
+            <div class="legend-item"><div class="legend-color" style="background:#87CEEB"></div>Yesterday (24-48h)</div>
+            <div class="legend-item"><div class="legend-color" style="background:#FFA500"></div>This Week (2-7d)</div>
+            <div class="legend-item"><div class="legend-color" style="background:#F08080"></div>Older (> 7d)</div>
+        </div>
+
+        <div id="orphan-list">
+            <h3>Archived Files (> 7 days)</h3>
+            <p style="font-size: 0.8em; color: #aaa; margin-bottom: 10px;">These files are older than a week and have no connections.</p>
+            <ul>
+                <li><a href="docs/00-Strategy/Business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md" target="_blank">20251116-IP-and-Business-Strategy-for-Contextual Debt.md</a></li>
+<li><a href="docs/00-Strategy/Competition/20251103-GAP_ANALYSIS_REPORT.md" target="_blank">20251103-GAP_ANALYSIS_REPORT.md</a></li>
+<li><a href="docs/00-Strategy/Competition/20251113_GAP_ANALYSIS_REPORT.md" target="_blank">20251113_GAP_ANALYSIS_REPORT.md</a></li>
+<li><a href="docs/00-Strategy/IP/20251119-Transformation-Map.md" target="_blank">20251119-Transformation-Map.md</a></li>
+<li><a href="docs/00-Strategy/IP/20251119-deprecated0-Continuing The Next Section.md" target="_blank">20251119-deprecated0-Continuing The Next Section.md</a></li>
+<li><a href="docs/00-Strategy/IP/20251119-deprecated1-The Unknowable Code_ A Protocol for Contextual Integrity.md" target="_blank">20251119-deprecated1-The Unknowable Code_ A Protocol for Contextual Integrity.md</a></li>
+<li><a href="docs/00-Strategy/IP/20251119-deprecated2-The Unknowable Code_ A Protocol for Measurable Contextual Integrity.md" target="_blank">20251119-deprecated2-The Unknowable Code_ A Protocol for Measurable Contextual Integrity.md</a></li>
+<li><a href="docs/00-Strategy/IP/20251119-proposed-Section-2.3.md" target="_blank">20251119-proposed-Section-2.3.md</a></li>
+<li><a href="docs/02-Engineering/Verification/20251114_VERIFICATION_REPORT.md" target="_blank">20251114_VERIFICATION_REPORT.md</a></li>
+<li><a href="docs/03-Research/Theory/20251115-1-Agentic_Auditing_and_Automated_Governance.md" target="_blank">20251115-1-Agentic_Auditing_and_Automated_Governance.md</a></li>
+<li><a href="docs/03-Research/Theory/20251115-2-AI Code_Contextual Debt_and_Security.md" target="_blank">20251115-2-AI Code_Contextual Debt_and_Security.md</a></li>
+<li><a href="docs/03-Research/Theory/20251115-3-Contextual Debt_ Developer Tooling Opportunity.md" target="_blank">20251115-3-Contextual Debt_ Developer Tooling Opportunity.md</a></li>
+<li><a href="docs/03-Research/Theory/20251115-4-Proposing Contextual Integrity Score.md" target="_blank">20251115-4-Proposing Contextual Integrity Score.md</a></li>
+<li><a href="docs/03-Research/Theory/20251115-Contextual_Debt_Paper-Gap_Analysis.md" target="_blank">20251115-Contextual_Debt_Paper-Gap_Analysis.md</a></li>
+<li><a href="docs/03-Research/Theory/20251115-Gemini_Research_Prompts.md" target="_blank">20251115-Gemini_Research_Prompts.md</a></li>
+<li><a href="docs/03-Research/Theory/20251115-Jules-Research-Paper-Revision-Log.md" target="_blank">20251115-Jules-Research-Paper-Revision-Log.md</a></li>
+<li><a href="docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md" target="_blank">20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md</a></li>
+<li><a href="docs/03-Research/Theory/20251116-Vinyals's Perspective On Embedding Geometry.md" target="_blank">20251116-Vinyals's Perspective On Embedding Geometry.md</a></li>
+<li><a href="docs/03-Research/Theory/20251116-[import]-Corrected_Contextual_Debt_Analysis.md" target="_blank">20251116-[import]-Corrected_Contextual_Debt_Analysis.md</a></li>
+<li><a href="docs/03-Research/Theory/20251121-Memory Theory_Vector-Motor Encoding.md" target="_blank">20251121-Memory Theory_Vector-Motor Encoding.md</a></li>
+<li><a href="docs/04-Operations/Intent-Log/Technical/20251107_refactor_summary.md" target="_blank">20251107_refactor_summary.md</a></li>
+<li><a href="docs/04-Operations/Intent-Log/Technical/20251108_docker_build_failure_analysis.md" target="_blank">20251108_docker_build_failure_analysis.md</a></li>
+<li><a href="docs/04-Operations/Intent-Log/Technical/20251113_verification_checkpoint.md" target="_blank">20251113_verification_checkpoint.md</a></li>
+<li><a href="docs/04-Operations/Intent-Log/Technical/20251114_TASK_1.1_COMPLETION.md" target="_blank">20251114_TASK_1.1_COMPLETION.md</a></li>
+<li><a href="docs/04-Operations/Intent-Log/Technical/20251118-Gap-Analysis-Recovery-vs-Pivot.md" target="_blank">20251118-Gap-Analysis-Recovery-vs-Pivot.md</a></li>
+<li><a href="docs/04-Operations/Intent-Log/Technical/20251120-IP-Refactoring-Log.md" target="_blank">20251120-IP-Refactoring-Log.md</a></li>
+<li><a href="docs/04-Operations/Intent-Log/Technical/20251122-Documentation-Graph-Setup.md" target="_blank">20251122-Documentation-Graph-Setup.md</a></li>
+<li><a href="docs/04-Operations/Intent-Log/Technical/20251123-working-log.md" target="_blank">20251123-working-log.md</a></li>
+<li><a href="docs/04-Operations/Team/20251115-!Meeting 1 Minutes.md" target="_blank">20251115-!Meeting 1 Minutes.md</a></li>
+<li><a href="docs/04-Operations/Team/20251120-Team-Onboarding-Agenda.md" target="_blank">20251120-Team-Onboarding-Agenda.md</a></li>
+<li><a href="docs/04-Operations/Team/20251121-LogoMesh-Onboarding-Meeting-2-Summary.md" target="_blank">20251121-LogoMesh-Onboarding-Meeting-2-Summary.md</a></li>
+<li><a href="docs/04-Operations/Team/20251122-LogoMesh-Meeting-3-Summary.md" target="_blank">20251122-LogoMesh-Meeting-3-Summary.md</a></li>
+<li><a href="docs/20250910-Agentic Coding Debt Management Research.md" target="_blank">20250910-Agentic Coding Debt Management Research.md</a></li>
+<li><a href="docs/20251102-AgentX AgentBeats Competition Analysis.md" target="_blank">20251102-AgentX AgentBeats Competition Analysis.md</a></li>
+<li><a href="docs/20251107-AgentX_Submission_Paper.md" target="_blank">20251107-AgentX_Submission_Paper.md</a></li>
+<li><a href="docs/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md" target="_blank">20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md</a></li>
+<li><a href="docs/Archive/Legacy-Logs/20251027-011617.md" target="_blank">20251027-011617.md</a></li>
+<li><a href="docs/Archive/Legacy-Logs/20251027-013438.md" target="_blank">20251027-013438.md</a></li>
+<li><a href="docs/Archive/Legacy-Logs/20251027-214944.md" target="_blank">20251027-214944.md</a></li>
+<li><a href="docs/Archive/Legacy-Logs/20251027.md" target="_blank">20251027.md</a></li>
+<li><a href="docs/Archive/Legacy-Logs/20251028-032235.md" target="_blank">20251028-032235.md</a></li>
+<li><a href="docs/Archive/Legacy-Logs/20251029-084528.md" target="_blank">20251029-084528.md</a></li>
+<li><a href="docs/Archive/Legacy-Logs/20251030-064413.md" target="_blank">20251030-064413.md</a></li>
+<li><a href="docs/Archive/Legacy-Logs/20251030-064424.md" target="_blank">20251030-064424.md</a></li>
+<li><a href="docs/Archive/Legacy-Logs/20251030-065552.md" target="_blank">20251030-065552.md</a></li>
+<li><a href="docs/Archive/Legacy-Logs/20251030-065607.md" target="_blank">20251030-065607.md</a></li>
+<li><a href="docs/Archive/Legacy-Logs/20251030-105405.md" target="_blank">20251030-105405.md</a></li>
+<li><a href="docs/Archive/Legacy-Logs/20251030-110951.md" target="_blank">20251030-110951.md</a></li>
+<li><a href="docs/Archive/Legacy-Logs/20251030-165713.md" target="_blank">20251030-165713.md</a></li>
+<li><a href="docs/Archive/Unsorted/CoPilot/20251117-Task-1.2-Plan.md" target="_blank">20251117-Task-1.2-Plan.md</a></li>
+            </ul>
+        </div>
     </div>
 
-    <div id="graph-container" class="mermaid">
+    <div id="graph-area">
+        <div id="graph-container" class="mermaid">
 graph TD
     classDef recent fill:#90ee90,stroke:#333,stroke-width:2px;
     classDef day_old fill:#87CEEB,stroke:#333,stroke-width:1px;
@@ -89,21 +188,12 @@ graph TD
     classDef ancient fill:#F08080,stroke:#333,stroke-width:1px;
     classDef normal fill:#add8e6,stroke:#333,stroke-width:1px;
 
-    N0["20251116-IP-and-Business-Strategy-for-Contextual Debt.md"];
-    click N0 href "docs/00-Strategy/Business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md" "_blank"
-    class N0 ancient;
     N1["20251116-Strategy-Doc-Creation-Log.md"];
     click N1 href "docs/00-Strategy/Business/20251116-Strategy-Doc-Creation-Log.md" "_blank"
     class N1 ancient;
     N2["20251118-Strategic-Pivot-Plan-CIS-Formalization.md"];
     click N2 href "docs/00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md" "_blank"
     class N2 ancient;
-    N3["20251103-GAP_ANALYSIS_REPORT.md"];
-    click N3 href "docs/00-Strategy/Competition/20251103-GAP_ANALYSIS_REPORT.md" "_blank"
-    class N3 ancient;
-    N4["20251113_GAP_ANALYSIS_REPORT.md"];
-    click N4 href "docs/00-Strategy/Competition/20251113_GAP_ANALYSIS_REPORT.md" "_blank"
-    class N4 ancient;
     N5["20251116-Competition Analysis For Project Success.md"];
     click N5 href "docs/00-Strategy/Competition/20251116-Competition Analysis For Project Success.md" "_blank"
     class N5 ancient;
@@ -131,21 +221,6 @@ graph TD
     N13["20251119-Gap-Analysis-Critique-vs-IP-Assets.md"];
     click N13 href "docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md" "_blank"
     class N13 ancient;
-    N14["20251119-Transformation-Map.md"];
-    click N14 href "docs/00-Strategy/IP/20251119-Transformation-Map.md" "_blank"
-    class N14 ancient;
-    N15["20251119-deprecated0-Continuing The Next Section.md"];
-    click N15 href "docs/00-Strategy/IP/20251119-deprecated0-Continuing The Next Section.md" "_blank"
-    class N15 ancient;
-    N16["20251119-deprecated1-The Unknowable Code_ A Protocol for Contextual Integrity.md"];
-    click N16 href "docs/00-Strategy/IP/20251119-deprecated1-The Unknowable Code_ A Protocol for Contextual Integrity.md" "_blank"
-    class N16 ancient;
-    N17["20251119-deprecated2-The Unknowable Code_ A Protocol for Measurable Contextual Integrity.md"];
-    click N17 href "docs/00-Strategy/IP/20251119-deprecated2-The Unknowable Code_ A Protocol for Measurable Contextual Integrity.md" "_blank"
-    class N17 ancient;
-    N18["20251119-proposed-Section-2.3.md"];
-    click N18 href "docs/00-Strategy/IP/20251119-proposed-Section-2.3.md" "_blank"
-    class N18 ancient;
     N19["Copyright_Registration_Playbook.md"];
     click N19 href "docs/00-Strategy/IP/Copyright_Registration_Playbook.md" "_blank"
     class N19 normal;
@@ -176,48 +251,12 @@ graph TD
     N28["Project_Status.md"];
     click N28 href "docs/02-Engineering/Setup/Project_Status.md" "_blank"
     class N28 normal;
-    N29["20251114_VERIFICATION_REPORT.md"];
-    click N29 href "docs/02-Engineering/Verification/20251114_VERIFICATION_REPORT.md" "_blank"
-    class N29 ancient;
     N30["20251114_VERIFICATION_REPORT_TASK_1.1.md"];
     click N30 href "docs/02-Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md" "_blank"
     class N30 ancient;
     N31["20251119-Recommendation-Report-Strategic-Path-Forward.md"];
     click N31 href "docs/02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md" "_blank"
     class N31 ancient;
-    N32["20251115-1-Agentic_Auditing_and_Automated_Governance.md"];
-    click N32 href "docs/03-Research/Theory/20251115-1-Agentic_Auditing_and_Automated_Governance.md" "_blank"
-    class N32 ancient;
-    N33["20251115-2-AI Code_Contextual Debt_and_Security.md"];
-    click N33 href "docs/03-Research/Theory/20251115-2-AI Code_Contextual Debt_and_Security.md" "_blank"
-    class N33 ancient;
-    N34["20251115-3-Contextual Debt_ Developer Tooling Opportunity.md"];
-    click N34 href "docs/03-Research/Theory/20251115-3-Contextual Debt_ Developer Tooling Opportunity.md" "_blank"
-    class N34 ancient;
-    N35["20251115-4-Proposing Contextual Integrity Score.md"];
-    click N35 href "docs/03-Research/Theory/20251115-4-Proposing Contextual Integrity Score.md" "_blank"
-    class N35 ancient;
-    N36["20251115-Contextual_Debt_Paper-Gap_Analysis.md"];
-    click N36 href "docs/03-Research/Theory/20251115-Contextual_Debt_Paper-Gap_Analysis.md" "_blank"
-    class N36 ancient;
-    N37["20251115-Gemini_Research_Prompts.md"];
-    click N37 href "docs/03-Research/Theory/20251115-Gemini_Research_Prompts.md" "_blank"
-    class N37 ancient;
-    N38["20251115-Jules-Research-Paper-Revision-Log.md"];
-    click N38 href "docs/03-Research/Theory/20251115-Jules-Research-Paper-Revision-Log.md" "_blank"
-    class N38 ancient;
-    N39["20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md"];
-    click N39 href "docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md" "_blank"
-    class N39 ancient;
-    N40["20251116-Vinyals's Perspective On Embedding Geometry.md"];
-    click N40 href "docs/03-Research/Theory/20251116-Vinyals's Perspective On Embedding Geometry.md" "_blank"
-    class N40 ancient;
-    N41["20251116-[import]-Corrected_Contextual_Debt_Analysis.md"];
-    click N41 href "docs/03-Research/Theory/20251116-[import]-Corrected_Contextual_Debt_Analysis.md" "_blank"
-    class N41 ancient;
-    N42["20251121-Memory Theory_Vector-Motor Encoding.md"];
-    click N42 href "docs/03-Research/Theory/20251121-Memory Theory_Vector-Motor Encoding.md" "_blank"
-    class N42 ancient;
     N43["20251130-session-log-interactive-graph-dashboard.md"];
     click N43 href "docs/04-Operations/Intent-Log/20251130-session-log-interactive-graph-dashboard.md" "_blank"
     class N43 recent;
@@ -227,36 +266,12 @@ graph TD
     N45["README.md"];
     click N45 href "docs/04-Operations/Intent-Log/README.md" "_blank"
     class N45 normal;
-    N46["20251107_refactor_summary.md"];
-    click N46 href "docs/04-Operations/Intent-Log/Technical/20251107_refactor_summary.md" "_blank"
-    class N46 ancient;
-    N47["20251108_docker_build_failure_analysis.md"];
-    click N47 href "docs/04-Operations/Intent-Log/Technical/20251108_docker_build_failure_analysis.md" "_blank"
-    class N47 ancient;
     N48["20251113_RECOVERY_PLAN.md"];
     click N48 href "docs/04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md" "_blank"
     class N48 ancient;
-    N49["20251113_verification_checkpoint.md"];
-    click N49 href "docs/04-Operations/Intent-Log/Technical/20251113_verification_checkpoint.md" "_blank"
-    class N49 ancient;
-    N50["20251114_TASK_1.1_COMPLETION.md"];
-    click N50 href "docs/04-Operations/Intent-Log/Technical/20251114_TASK_1.1_COMPLETION.md" "_blank"
-    class N50 ancient;
     N51["20251116_build_fix_and_vitest_error.md"];
     click N51 href "docs/04-Operations/Intent-Log/Technical/20251116_build_fix_and_vitest_error.md" "_blank"
     class N51 ancient;
-    N52["20251118-Gap-Analysis-Recovery-vs-Pivot.md"];
-    click N52 href "docs/04-Operations/Intent-Log/Technical/20251118-Gap-Analysis-Recovery-vs-Pivot.md" "_blank"
-    class N52 ancient;
-    N53["20251120-IP-Refactoring-Log.md"];
-    click N53 href "docs/04-Operations/Intent-Log/Technical/20251120-IP-Refactoring-Log.md" "_blank"
-    class N53 ancient;
-    N54["20251122-Documentation-Graph-Setup.md"];
-    click N54 href "docs/04-Operations/Intent-Log/Technical/20251122-Documentation-Graph-Setup.md" "_blank"
-    class N54 ancient;
-    N55["20251123-working-log.md"];
-    click N55 href "docs/04-Operations/Intent-Log/Technical/20251123-working-log.md" "_blank"
-    class N55 ancient;
     N56["20251126-AgentBeats-Competition-Info-Session-PDF.md"];
     click N56 href "docs/04-Operations/Intent-Log/Technical/20251126-AgentBeats-Competition-Info-Session-PDF.md" "_blank"
     class N56 week_old;
@@ -302,72 +317,9 @@ graph TD
     N70["log_entry_template.md"];
     click N70 href "docs/04-Operations/Intent-Log/log_entry_template.md" "_blank"
     class N70 normal;
-    N71["20251115-!Meeting 1 Minutes.md"];
-    click N71 href "docs/04-Operations/Team/20251115-!Meeting 1 Minutes.md" "_blank"
-    class N71 ancient;
-    N72["20251120-Team-Onboarding-Agenda.md"];
-    click N72 href "docs/04-Operations/Team/20251120-Team-Onboarding-Agenda.md" "_blank"
-    class N72 ancient;
-    N73["20251121-LogoMesh-Onboarding-Meeting-2-Summary.md"];
-    click N73 href "docs/04-Operations/Team/20251121-LogoMesh-Onboarding-Meeting-2-Summary.md" "_blank"
-    class N73 ancient;
-    N74["20251122-LogoMesh-Meeting-3-Summary.md"];
-    click N74 href "docs/04-Operations/Team/20251122-LogoMesh-Meeting-3-Summary.md" "_blank"
-    class N74 ancient;
-    N75["20250910-Agentic Coding Debt Management Research.md"];
-    click N75 href "docs/20250910-Agentic Coding Debt Management Research.md" "_blank"
-    class N75 ancient;
-    N76["20251102-AgentX AgentBeats Competition Analysis.md"];
-    click N76 href "docs/20251102-AgentX AgentBeats Competition Analysis.md" "_blank"
-    class N76 ancient;
-    N77["20251107-AgentX_Submission_Paper.md"];
-    click N77 href "docs/20251107-AgentX_Submission_Paper.md" "_blank"
-    class N77 ancient;
     N78["20251107-LogoMesh AgentX Judge Evaluation Simulation.md"];
     click N78 href "docs/20251107-LogoMesh AgentX Judge Evaluation Simulation.md" "_blank"
     class N78 ancient;
-    N79["20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md"];
-    click N79 href "docs/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md" "_blank"
-    class N79 ancient;
-    N80["20251027-011617.md"];
-    click N80 href "docs/Archive/Legacy-Logs/20251027-011617.md" "_blank"
-    class N80 ancient;
-    N81["20251027-013438.md"];
-    click N81 href "docs/Archive/Legacy-Logs/20251027-013438.md" "_blank"
-    class N81 ancient;
-    N82["20251027-214944.md"];
-    click N82 href "docs/Archive/Legacy-Logs/20251027-214944.md" "_blank"
-    class N82 ancient;
-    N83["20251027.md"];
-    click N83 href "docs/Archive/Legacy-Logs/20251027.md" "_blank"
-    class N83 ancient;
-    N84["20251028-032235.md"];
-    click N84 href "docs/Archive/Legacy-Logs/20251028-032235.md" "_blank"
-    class N84 ancient;
-    N85["20251029-084528.md"];
-    click N85 href "docs/Archive/Legacy-Logs/20251029-084528.md" "_blank"
-    class N85 ancient;
-    N86["20251030-064413.md"];
-    click N86 href "docs/Archive/Legacy-Logs/20251030-064413.md" "_blank"
-    class N86 ancient;
-    N87["20251030-064424.md"];
-    click N87 href "docs/Archive/Legacy-Logs/20251030-064424.md" "_blank"
-    class N87 ancient;
-    N88["20251030-065552.md"];
-    click N88 href "docs/Archive/Legacy-Logs/20251030-065552.md" "_blank"
-    class N88 ancient;
-    N89["20251030-065607.md"];
-    click N89 href "docs/Archive/Legacy-Logs/20251030-065607.md" "_blank"
-    class N89 ancient;
-    N90["20251030-105405.md"];
-    click N90 href "docs/Archive/Legacy-Logs/20251030-105405.md" "_blank"
-    class N90 ancient;
-    N91["20251030-110951.md"];
-    click N91 href "docs/Archive/Legacy-Logs/20251030-110951.md" "_blank"
-    class N91 ancient;
-    N92["20251030-165713.md"];
-    click N92 href "docs/Archive/Legacy-Logs/20251030-165713.md" "_blank"
-    class N92 ancient;
     N93["20251117-Strategic-Master-Log.md"];
     click N93 href "docs/Archive/Legacy-Logs/20251117-Strategic-Master-Log.md" "_blank"
     class N93 ancient;
@@ -380,9 +332,6 @@ graph TD
     N96["20251117-Task-1.2-Completion-Summary.md"];
     click N96 href "docs/Archive/Unsorted/CoPilot/20251117-Task-1.2-Completion-Summary.md" "_blank"
     class N96 ancient;
-    N97["20251117-Task-1.2-Plan.md"];
-    click N97 href "docs/Archive/Unsorted/CoPilot/20251117-Task-1.2-Plan.md" "_blank"
-    class N97 ancient;
     N98["README.md"];
     click N98 href "docs/Archive/Unsorted/CoPilot/README.md" "_blank"
     class N98 normal;
@@ -566,12 +515,13 @@ graph TD
     N128 --> N129;
     N129 --> N128;
 
-    </div>
+        </div>
 
-    <div id="controls">
-        <button id="zoom-in" title="Zoom In">+</button>
-        <button id="zoom-out" title="Zoom Out">-</button>
-        <button id="reset" title="Reset View">⟲</button>
+        <div id="controls">
+            <button id="zoom-in" title="Zoom In">+</button>
+            <button id="zoom-out" title="Zoom Out">-</button>
+            <button id="reset" title="Reset View">⟲</button>
+        </div>
     </div>
 
     <script>
@@ -589,23 +539,26 @@ graph TD
             async function renderGraph() {
                 const element = document.querySelector('.mermaid');
                 // Render mermaid to SVG
-                const { svg } = await mermaid.render('mermaid-svg', element.textContent);
-                element.innerHTML = svg;
+                try {
+                    const { svg } = await mermaid.render('mermaid-svg', element.textContent);
+                    element.innerHTML = svg;
 
-                // Initialize Pan-Zoom
-                // We target the SVG element ID generated by mermaid
-                const panZoom = svgPanZoom('#mermaid-svg', {
-                    zoomEnabled: true,
-                    controlIconsEnabled: false,
-                    fit: true,
-                    center: true,
-                    minZoom: 0.1,
-                    maxZoom: 10,
-                });
+                    // Initialize Pan-Zoom
+                    const panZoom = svgPanZoom('#mermaid-svg', {
+                        zoomEnabled: true,
+                        controlIconsEnabled: false,
+                        fit: true,
+                        center: true,
+                        minZoom: 0.1,
+                        maxZoom: 10,
+                    });
 
-                document.getElementById('zoom-in').addEventListener('click', () => panZoom.zoomIn());
-                document.getElementById('zoom-out').addEventListener('click', () => panZoom.zoomOut());
-                document.getElementById('reset').addEventListener('click', () => panZoom.resetZoom());
+                    document.getElementById('zoom-in').addEventListener('click', () => panZoom.zoomIn());
+                    document.getElementById('zoom-out').addEventListener('click', () => panZoom.zoomOut());
+                    document.getElementById('reset').addEventListener('click', () => panZoom.resetZoom());
+                } catch (e) {
+                    element.innerHTML = '<div style="color:red; padding:20px;">Error rendering graph: ' + e.message + '</div>';
+                }
             }
 
             renderGraph();
