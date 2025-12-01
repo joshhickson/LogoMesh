@@ -31,7 +31,10 @@ function generateMermaidSyntax() {
         }
     });
 
-    let mermaid = 'graph TD\n';
+    // Switch to LR (Left-Right) for the main graph.
+    // In Mermaid, unconnected subgraphs in an LR graph are typically stacked vertically,
+    // which prevents the "ultra-wide" layout issue.
+    let mermaid = 'graph LR\n';
 
     // --- Define Styles ---
     mermaid += '    classDef recent fill:#90ee90,stroke:#333,stroke-width:2px;\n';
@@ -40,13 +43,17 @@ function generateMermaidSyntax() {
     mermaid += '    classDef ancient fill:#F08080,stroke:#333,stroke-width:1px;\n';
     mermaid += '    classDef normal fill:#add8e6,stroke:#333,stroke-width:1px;\n\n';
 
-    const nodeMap = new Map();
+    // Clustering Logic
+    const clusterMap = new Map(); // ClusterName -> Array of Node Definitions
+    const nodeMap = new Map(); // ID -> Mermaid ID
 
-    // First Pass: Classify Nodes and Filter Red Orphans
     nodes.forEach((node, i) => {
+        const nodeId = `N${i}`;
+        nodeMap.set(node.id, nodeId);
+
+        // --- Orphan Filter Logic ---
         const basename = path.basename(node.id);
         const match = basename.match(/^(\d{8})/);
-
         let ageInHours = 0;
         let hasDate = false;
 
@@ -61,45 +68,72 @@ function generateMermaidSyntax() {
             ageInHours = (nowUTC - fileDateUTC) / (1000 * 60 * 60);
         }
 
-        // Check if Red Orphan (> 7 days (168h) AND not connected)
-        // Only classify as "Red" if it has a date AND is > 7 days old.
-        // If it has no date, it's "normal", so we don't hide it as a "red orphan".
         if (hasDate && ageInHours >= 168 && !connectedNodeIds.has(node.id)) {
             redOrphanNodes.push(node);
-            return; // SKIP adding to Mermaid
+            return; // Skip adding to graph
+        }
+        // ---------------------------
+
+        // Determine Cluster
+        let clusterName = 'Uncategorized';
+        // Check for specific top-level directories under docs/
+        // Matches: docs/00-Strategy, docs/01-Architecture, etc.
+        const pathParts = node.path.split('/');
+        if (pathParts[0] === 'docs' && pathParts.length >= 2) {
+            // Check if second part is one of the numbered pillars or archive
+            if (pathParts[1].match(/^\d{2}-/) || pathParts[1] === 'archive' || pathParts[1] === 'archive-pre-refactor') {
+                clusterName = pathParts[1];
+            } else if (pathParts[1] === 'Archive') { // Handle legacy case if it exists in JSON
+                 clusterName = 'Archive';
+            }
+        } else if (node.path === 'README.md' || node.path === 'PROJECT_PLAN.md') {
+            clusterName = 'Root';
         }
 
-        // Add to Mermaid
-        const nodeId = `N${i}`;
-        nodeMap.set(node.id, nodeId);
-
+        // Prepare Node Definition string
         const nodeLabel = escapeMermaidLabel(node.label);
-        mermaid += `    ${nodeId}["${nodeLabel}"];\n`;
-
-        // Add click event
         const filePath = node.path.replace(/\\/g, '/');
-        mermaid += `    click ${nodeId} href "${filePath}" "_blank"\n`;
+        let nodeDef = `    ${nodeId}["${nodeLabel}"];\n`;
+        nodeDef += `    click ${nodeId} href "${filePath}" "_blank"\n`;
 
-        // Apply Styles
+        // Style
+        let styleClass = 'normal';
         if (hasDate) {
-            if (ageInHours < 24) mermaid += `    class ${nodeId} recent;\n`;
-            else if (ageInHours < 48) mermaid += `    class ${nodeId} day_old;\n`;
-            else if (ageInHours < 168) mermaid += `    class ${nodeId} week_old;\n`;
-            else mermaid += `    class ${nodeId} ancient;\n`;
-        } else {
-            mermaid += `    class ${nodeId} normal;\n`;
+            if (ageInHours < 24) styleClass = 'recent';
+            else if (ageInHours < 48) styleClass = 'day_old';
+            else if (ageInHours < 168) styleClass = 'week_old';
+            else styleClass = 'ancient';
         }
+        nodeDef += `    class ${nodeId} ${styleClass};\n`;
+
+        // Add to map
+        if (!clusterMap.has(clusterName)) {
+            clusterMap.set(clusterName, []);
+        }
+        clusterMap.get(clusterName).push(nodeDef);
     });
 
-    mermaid += '\n';
+    // Generate Subgraphs
+    // Sort keys to have consistent order (00, 01, 02...)
+    const sortedClusters = Array.from(clusterMap.keys()).sort();
 
-    // --- Add Edges (Filter Self-Loops) ---
-    // Only add edges if both nodes are in the map (orphans were filtered out)
+    sortedClusters.forEach(cluster => {
+        mermaid += `subgraph ${cluster}\n`;
+        mermaid += `    direction TB\n`; // Keep internal cluster flow Top-Bottom
+        const nodesInCluster = clusterMap.get(cluster);
+        nodesInCluster.forEach(n => mermaid += n);
+        mermaid += `end\n\n`;
+    });
+
+    // Edges (must be outside subgraphs or they might break some renderers, though inside is usually fine too)
+    // We'll put them outside to be safe.
     edges.forEach(edge => {
-        if (edge.source === edge.target) return; // Filter self-loops
+        // Skip edges involving filtered orphans (though logic above should handle it, nodeMap won't have the key)
         const sourceNode = nodeMap.get(edge.source);
         const targetNode = nodeMap.get(edge.target);
-        if (sourceNode && targetNode) {
+
+        // Only add edge if both nodes exist in the graph (weren't filtered out)
+        if (sourceNode && targetNode && sourceNode !== targetNode) {
             mermaid += `    ${sourceNode} --> ${targetNode};\n`;
         }
     });

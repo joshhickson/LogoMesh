@@ -181,13 +181,15 @@
 
     <div id="graph-area">
         <div id="graph-container" class="mermaid">
-graph TD
+graph LR
     classDef recent fill:#90ee90,stroke:#333,stroke-width:2px;
     classDef day_old fill:#87CEEB,stroke:#333,stroke-width:1px;
     classDef week_old fill:#FFA500,stroke:#333,stroke-width:1px;
     classDef ancient fill:#F08080,stroke:#333,stroke-width:1px;
     classDef normal fill:#add8e6,stroke:#333,stroke-width:1px;
 
+subgraph 00-Strategy
+    direction TB
     N1["20251116-Strategy-Doc-Creation-Log.md"];
     click N1 href "docs/00-Strategy/Business/20251116-Strategy-Doc-Creation-Log.md" "_blank"
     class N1 ancient;
@@ -233,6 +235,10 @@ graph TD
     N22["REGISTRATION_MANIFEST.md"];
     click N22 href "docs/00-Strategy/IP/REGISTRATION_MANIFEST.md" "_blank"
     class N22 normal;
+end
+
+subgraph 01-Architecture
+    direction TB
     N23["CI-Workflow.md"];
     click N23 href "docs/01-Architecture/Diagrams/CI-Workflow.md" "_blank"
     class N23 normal;
@@ -242,6 +248,10 @@ graph TD
     N25["Evaluation-Output-Schema.md"];
     click N25 href "docs/01-Architecture/Specs/Evaluation-Output-Schema.md" "_blank"
     class N25 normal;
+end
+
+subgraph 02-Engineering
+    direction TB
     N26["Data-Scientist-Gap-Analysis.md"];
     click N26 href "docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md" "_blank"
     class N26 normal;
@@ -257,6 +267,10 @@ graph TD
     N31["20251119-Recommendation-Report-Strategic-Path-Forward.md"];
     click N31 href "docs/02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md" "_blank"
     class N31 ancient;
+end
+
+subgraph 04-Operations
+    direction TB
     N43["20251130-session-log-interactive-graph-dashboard.md"];
     click N43 href "docs/04-Operations/Intent-Log/20251130-session-log-interactive-graph-dashboard.md" "_blank"
     class N43 recent;
@@ -317,9 +331,10 @@ graph TD
     N70["log_entry_template.md"];
     click N70 href "docs/04-Operations/Intent-Log/log_entry_template.md" "_blank"
     class N70 normal;
-    N78["20251107-LogoMesh AgentX Judge Evaluation Simulation.md"];
-    click N78 href "docs/20251107-LogoMesh AgentX Judge Evaluation Simulation.md" "_blank"
-    class N78 ancient;
+end
+
+subgraph Archive
+    direction TB
     N93["20251117-Strategic-Master-Log.md"];
     click N93 href "docs/Archive/Legacy-Logs/20251117-Strategic-Master-Log.md" "_blank"
     class N93 ancient;
@@ -335,9 +350,33 @@ graph TD
     N98["README.md"];
     click N98 href "docs/Archive/Unsorted/CoPilot/README.md" "_blank"
     class N98 normal;
+end
+
+subgraph Root
+    direction TB
+    N128["PROJECT_PLAN.md"];
+    click N128 href "PROJECT_PLAN.md" "_blank"
+    class N128 normal;
+    N129["README.md"];
+    click N129 href "README.md" "_blank"
+    class N129 normal;
+end
+
+subgraph Uncategorized
+    direction TB
+    N78["20251107-LogoMesh AgentX Judge Evaluation Simulation.md"];
+    click N78 href "docs/20251107-LogoMesh AgentX Judge Evaluation Simulation.md" "_blank"
+    class N78 ancient;
     N99["GAP_ANALYSIS.md"];
     click N99 href "docs/GAP_ANALYSIS.md" "_blank"
     class N99 normal;
+    N127["system-architecture.md"];
+    click N127 href "docs/onboarding/system-architecture.md" "_blank"
+    class N127 normal;
+end
+
+subgraph archive
+    direction TB
     N100["2025-11-07_Judge_Simulation_Prompt.md"];
     click N100 href "docs/archive/2025-11-07_Judge_Simulation_Prompt.md" "_blank"
     class N100 normal;
@@ -350,6 +389,10 @@ graph TD
     N103["build_issue_log.md"];
     click N103 href "docs/archive/build_issue_log.md" "_blank"
     class N103 normal;
+end
+
+subgraph archive-pre-refactor
+    direction TB
     N104["06.26.2025 architecture-diagram.md"];
     click N104 href "docs/archive-pre-refactor/06.26.2025 architecture-diagram.md" "_blank"
     class N104 normal;
@@ -419,15 +462,7 @@ graph TD
     N126["unused-variables-report.md"];
     click N126 href "docs/archive-pre-refactor/unused-variables-report.md" "_blank"
     class N126 normal;
-    N127["system-architecture.md"];
-    click N127 href "docs/onboarding/system-architecture.md" "_blank"
-    class N127 normal;
-    N128["PROJECT_PLAN.md"];
-    click N128 href "PROJECT_PLAN.md" "_blank"
-    class N128 normal;
-    N129["README.md"];
-    click N129 href "README.md" "_blank"
-    class N129 normal;
+end
 
     N1 --> N129;
     N5 --> N129;
