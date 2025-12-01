@@ -1,0 +1,4908 @@
+1
+01:00:03,199 --> 01:00:08,433
+<b>Great. Hi, everyone. Thanks a lot for joining this info</b>
+
+2
+01:00:08,433 --> 01:00:11,433
+<b>session for Agent X, Agent B's competition</b>
+
+3
+01:00:12,533 --> 01:00:17,266
+<b>in conjunction with the Agencies AI MOOC, the Massive Open</b>
+
+4
+01:00:17,266 --> 01:00:20,133
+<b>Online Course. Thanks, everyone, for joining.</b>
+
+5
+01:00:22,500 --> 01:00:25,166
+<b>Yes, my name is Dong Song. I'm a professor in computer</b>
+
+6
+01:00:25,166 --> 01:00:27,766
+<b>science at UC Berkeley and also a co-director</b>
+
+7
+01:00:27,933 --> 01:00:31,766
+<b>of a campus-wide center, Berkeley Center for Responsible</b>
+
+8
+01:00:31,766 --> 01:00:33,533
+<b>Decentralized Intelligence, RDI.</b>
+
+9
+01:00:34,533 --> 01:00:37,533
+<b>And RDI is hosting both the Agent AI</b>
+
+10
+01:00:37,533 --> 01:00:39,800
+<b>MOOC and also this Agent B's competition.</b>
+
+11
+01:00:42,633 --> 01:00:50,566
+<b>Next slide. So first, we'll give some quick overview of why</b>
+
+12
+01:00:50,566 --> 01:00:51,733
+<b>we are doing this competition,</b>
+
+13
+01:00:52,033 --> 01:00:55,766
+<b>and then we'll go into more details about what you need to</b>
+
+14
+01:00:55,766 --> 01:00:57,633
+<b>do for the competition and the more</b>
+
+15
+01:00:57,666 --> 01:01:02,666
+<b>information and so on. So first, the competition focuses on</b>
+
+16
+01:01:02,666 --> 01:01:05,766
+<b>agent evaluation. So first, what is</b>
+
+17
+01:01:05,766 --> 01:01:10,133
+<b>evaluation for AI models and agents? So these evaluations</b>
+
+18
+01:01:10,133 --> 01:01:12,733
+<b>are essentially systematic and</b>
+
+19
+01:01:12,733 --> 01:01:17,166
+<b>repeatable measurements built using these benchmarks that</b>
+
+20
+01:01:17,166 --> 01:01:19,933
+<b>provides a structured way to measure</b>
+
+21
+01:01:19,966 --> 01:01:26,000
+<b>different aspects for models and agents. This includes</b>
+
+22
+01:01:26,000 --> 01:01:29,133
+<b>different types of capabilities,</b>
+
+23
+01:01:29,599 --> 01:01:40,866
+<b>as well as risk assessment as well. Next slide. So why are</b>
+
+24
+01:01:40,866 --> 01:01:42,433
+<b>we doing a competition on agent</b>
+
+25
+01:01:42,466 --> 01:01:45,766
+<b>evaluation? Because actually, agent evaluation is really</b>
+
+26
+01:01:45,766 --> 01:01:48,533
+<b>important. Agent evaluation is important</b>
+
+27
+01:01:48,633 --> 01:01:52,166
+<b>for a number of reasons. It provides important measurements</b>
+
+28
+01:01:52,166 --> 01:01:55,566
+<b>for across models and agents for</b>
+
+29
+01:01:55,566 --> 01:01:59,766
+<b>both capabilities and risk assessments. And it guides safe</b>
+
+30
+01:01:59,766 --> 01:02:02,500
+<b>and effective development as well as</b>
+
+31
+01:02:02,633 --> 01:02:05,866
+<b>deployment decisions and helps expose both</b>
+
+32
+01:02:05,866 --> 01:02:08,866
+<b>weaknesses and strengths and help compare</b>
+
+33
+01:02:09,033 --> 01:02:12,233
+<b>different models and agents as well to help make the best</b>
+
+34
+01:02:12,233 --> 01:02:15,833
+<b>decision in terms of how to both improve</b>
+
+35
+01:02:16,566 --> 01:02:19,933
+<b>models and agents as well as how to choose the best model</b>
+
+36
+01:02:19,933 --> 01:02:23,166
+<b>and agents to deploy for real world</b>
+
+37
+01:02:23,166 --> 01:02:28,900
+<b>applications as well. And hence, reliable and high quality</b>
+
+38
+01:02:28,900 --> 01:02:32,066
+<b>evaluation of models and agents is critical</b>
+
+39
+01:02:32,533 --> 01:02:36,866
+<b>for develop and deploy effective and safe agents in real</b>
+
+40
+01:02:36,866 --> 01:02:41,233
+<b>world applications. And also,</b>
+
+41
+01:02:42,466 --> 01:02:48,066
+<b>a really important part about evaluation is that</b>
+
+42
+01:02:48,066 --> 01:02:51,133
+<b>evaluations essentially help set</b>
+
+43
+01:02:51,500 --> 01:02:57,099
+<b>the goalposts for the community for developing better AI</b>
+
+44
+01:02:57,099 --> 01:02:59,900
+<b>models and agents. There's a saying,</b>
+
+45
+01:03:00,266 --> 01:03:03,566
+<b>you can only improve what you can measure. And essentially,</b>
+
+46
+01:03:03,833 --> 01:03:06,400
+<b>AI's revolution is upper bounded by</b>
+
+47
+01:03:06,466 --> 01:03:14,433
+<b>evaluation. And also, right, we have seen</b>
+
+48
+01:03:14,433 --> 01:03:17,133
+<b>essentially the history of AI development</b>
+
+49
+01:03:17,500 --> 01:03:21,166
+<b>essentially has been marked by the different types of</b>
+
+50
+01:03:21,166 --> 01:03:26,066
+<b>evaluations and so on. So one thing I want to</b>
+
+51
+01:03:26,066 --> 01:03:31,666
+<b>mention here is so far, actually, when you look at the</b>
+
+52
+01:03:31,666 --> 01:03:35,966
+<b>community, most of the evaluation has been</b>
+
+53
+01:03:36,000 --> 01:03:41,233
+<b>focused on the model evaluation. However, as we develop</b>
+
+54
+01:03:41,233 --> 01:03:45,400
+<b>agents, just evaluation that just focus</b>
+
+55
+01:03:45,433 --> 01:03:50,266
+<b>on at the model level is insufficient. So essentially, we</b>
+
+56
+01:03:50,266 --> 01:03:52,333
+<b>need to transition from model</b>
+
+57
+01:03:52,333 --> 01:03:57,699
+<b>evaluation to agent evaluation as we now move to develop</b>
+
+58
+01:03:57,699 --> 01:04:00,733
+<b>agents and also to perform evaluations</b>
+
+59
+01:04:01,033 --> 01:04:05,266
+<b>for agents. So there are a number of key differences</b>
+
+60
+01:04:05,266 --> 01:04:08,966
+<b>between model evaluations and</b>
+
+61
+01:04:08,966 --> 01:04:12,699
+<b>agent evaluations. So for models, for example, in these</b>
+
+62
+01:04:12,699 --> 01:04:18,133
+<b>large language models, they are static,</b>
+
+63
+01:04:19,533 --> 01:04:25,533
+<b>and they can be right. They are oftentimes just text to</b>
+
+64
+01:04:25,533 --> 01:04:27,566
+<b>text and they can be multimodal as well.</b>
+
+65
+01:04:27,833 --> 01:04:32,099
+<b>But in general, these model evaluations focuses on just</b>
+
+66
+01:04:32,099 --> 01:04:35,699
+<b>providing prompt input and evaluates the</b>
+
+67
+01:04:35,699 --> 01:04:40,033
+<b>outputs of the model. And it's relatively, in this case,</b>
+
+68
+01:04:40,833 --> 01:04:43,333
+<b>it's relatively straightforward to do the</b>
+
+69
+01:04:43,333 --> 01:04:47,166
+<b>evaluation given the benchmark. But however, when we look</b>
+
+70
+01:04:47,166 --> 01:04:49,099
+<b>at agent evaluation, it's much more complex.</b>
+
+71
+01:04:50,066 --> 01:04:55,199
+<b>As we have discussed in the Agented AI MOOC, agents, the</b>
+
+72
+01:04:55,199 --> 01:04:57,466
+<b>overall Agented AI system can be</b>
+
+73
+01:04:57,500 --> 01:05:05,699
+<b>very complex. They do use the model as key components to,</b>
+
+74
+01:05:06,266 --> 01:05:07,933
+<b>and then they use the model to do</b>
+
+75
+01:05:08,066 --> 01:05:15,766
+<b>there's planning to use and reasoning and so on. And also,</b>
+
+76
+01:05:15,766 --> 01:05:18,500
+<b>Agented AI systems have memory storage</b>
+
+77
+01:05:18,733 --> 01:05:20,833
+<b>as well. And agents operate in</b>
+
+78
+01:05:20,833 --> 01:05:24,900
+<b>dynamic environments. And all these factors</b>
+
+79
+01:05:26,866 --> 01:05:31,966
+<b>essentially require more complex evaluations when we do</b>
+
+80
+01:05:31,966 --> 01:05:35,000
+<b>agent evaluation than just a simple model</b>
+
+81
+01:05:35,033 --> 01:05:46,300
+<b>evaluation. Next slide. So now, since as I mentioned, most</b>
+
+82
+01:05:46,300 --> 01:05:50,566
+<b>previous approaches actually focus</b>
+
+83
+01:05:50,633 --> 01:05:56,933
+<b>on model evaluation. And as agent benchmarks have been</b>
+
+84
+01:05:56,933 --> 01:06:00,599
+<b>developed, actually most of the existing agent</b>
+
+85
+01:06:00,633 --> 01:06:06,400
+<b>benchmarks still carry the same paradigm</b>
+
+86
+01:06:06,400 --> 01:06:09,500
+<b>that they are actually these evaluations,</b>
+
+87
+01:06:09,966 --> 01:06:15,366
+<b>are an eccentric design and with fixed harnesses. So</b>
+
+88
+01:06:15,366 --> 01:06:19,433
+<b>essentially, most of today's agent benchmarks,</b>
+
+89
+01:06:20,400 --> 01:06:23,766
+<b>I would say they have the wrong separation points where</b>
+
+90
+01:06:23,766 --> 01:06:26,266
+<b>they actually combine the benchmark with</b>
+
+91
+01:06:27,033 --> 01:06:29,966
+<b>fixed harnesses and only expose the</b>
+
+92
+01:06:29,966 --> 01:06:34,333
+<b>model, the interface between the model and the</b>
+
+93
+01:06:34,766 --> 01:06:40,866
+<b>agent benchmark. And hence, in this case, one can easily</b>
+
+94
+01:06:40,866 --> 01:06:44,866
+<b>evaluate with the same fixed harness</b>
+
+95
+01:06:45,966 --> 01:06:48,099
+<b>the benchmark evaluation across different</b>
+
+96
+01:06:48,099 --> 01:06:50,000
+<b>models, but it's actually very difficult</b>
+
+97
+01:06:50,366 --> 01:06:53,566
+<b>when you want to evaluate different agents with different</b>
+
+98
+01:06:53,566 --> 01:06:56,333
+<b>harnesses. And hence, in this case,</b>
+
+99
+01:06:57,066 --> 01:07:03,199
+<b>one want to evaluate a new agent on today's existing agent</b>
+
+100
+01:07:03,199 --> 01:07:04,766
+<b>benchmarks, and there's a high</b>
+
+101
+01:07:04,766 --> 01:07:10,033
+<b>integration overhead. One has to figure out for each new</b>
+
+102
+01:07:10,033 --> 01:07:12,433
+<b>agent how to do the integration with</b>
+
+103
+01:07:12,433 --> 01:07:17,500
+<b>the current agent benchmarks. And also this causes an issue</b>
+
+104
+01:07:17,500 --> 01:07:19,433
+<b>with the test protection mismatch.</b>
+
+105
+01:07:20,666 --> 01:07:27,000
+<b>Where one has to often change the production agents to</b>
+
+106
+01:07:27,000 --> 01:07:29,699
+<b>adapt to the testing benchmark.</b>
+
+107
+01:07:30,233 --> 01:07:33,166
+<b>So you actually may not be able to actually evaluate the</b>
+
+108
+01:07:33,166 --> 01:07:36,699
+<b>production agents as is. Next slide, please.</b>
+
+109
+01:07:39,733 --> 01:07:44,599
+<b>So these are some examples of the key limitations of</b>
+
+110
+01:07:44,599 --> 01:07:46,833
+<b>existing agent benchmarks. As you can see,</b>
+
+111
+01:07:47,833 --> 01:07:51,366
+<b>in order to evaluate agents with</b>
+
+112
+01:07:51,366 --> 01:07:55,300
+<b>different benchmarks, if you have m benchmarks,</b>
+
+113
+01:07:55,599 --> 01:08:00,466
+<b>oftentimes you have to do m integration, adaptation to</b>
+
+114
+01:08:00,466 --> 01:08:03,033
+<b>integrate and adapt this agent</b>
+
+115
+01:08:03,099 --> 01:08:06,533
+<b>to the m different benchmarks. And if you have n different</b>
+
+116
+01:08:06,533 --> 01:08:08,433
+<b>agents, essentially you have this</b>
+
+117
+01:08:08,533 --> 01:08:14,366
+<b>multiplication m by m, the</b>
+
+118
+01:08:14,366 --> 01:08:18,399
+<b>integration efforts. Next slide, please.</b>
+
+119
+01:08:21,266 --> 01:08:26,933
+<b>So this motivated us to develop a new paradigm that we call</b>
+
+120
+01:08:26,933 --> 01:08:28,833
+<b>a gentrified agent assessments,</b>
+
+121
+01:08:29,500 --> 01:08:35,833
+<b>AAA. And this serves as a new paradigm for open,</b>
+
+122
+01:08:36,133 --> 01:08:39,266
+<b>reproducible, and standardized agent evaluation.</b>
+
+123
+01:08:40,433 --> 01:08:44,433
+<b>And in particular, the key point of a gentified agent</b>
+
+124
+01:08:44,433 --> 01:08:48,933
+<b>assessments paradigm is that we enable what</b>
+
+125
+01:08:48,933 --> 01:08:53,800
+<b>we call a gentified evaluation, where the benchmark</b>
+
+126
+01:08:53,800 --> 01:08:56,833
+<b>evaluation itself, the assessor,</b>
+
+127
+01:08:57,566 --> 01:09:05,033
+<b>is actually an agent itself. And this assessor agents will</b>
+
+128
+01:09:05,033 --> 01:09:07,033
+<b>then directly communicate with the</b>
+
+129
+01:09:07,033 --> 01:09:09,899
+<b>assessee agents, the agents that actually need to be</b>
+
+130
+01:09:09,899 --> 01:09:13,800
+<b>evaluated through standardized protocols,</b>
+
+131
+01:09:14,033 --> 01:09:19,533
+<b>such as A2A. And also we use MCP, the standard protocol for</b>
+
+132
+01:09:19,533 --> 01:09:22,766
+<b>two use in this new paradigm as well.</b>
+
+133
+01:09:23,500 --> 01:09:29,733
+<b>So using this approach, we enable standardization and</b>
+
+134
+01:09:29,733 --> 01:09:33,066
+<b>utilizing the existing standards such as A2A</b>
+
+135
+01:09:33,066 --> 01:09:37,399
+<b>and MCP. And also we enable reproducibility</b>
+
+136
+01:09:37,399 --> 01:09:43,233
+<b>by utilizing an assessment control protocol</b>
+
+137
+01:09:43,666 --> 01:09:47,100
+<b>that controls for the setup and the</b>
+
+138
+01:09:47,100 --> 01:09:49,000
+<b>environments for the agent evaluation.</b>
+
+139
+01:09:49,266 --> 01:09:54,433
+<b>And in this case, one way to think about this is this new</b>
+
+140
+01:09:54,433 --> 01:09:56,800
+<b>gentified agent assessment paradigm</b>
+
+141
+01:09:57,100 --> 01:10:01,633
+<b>enables the key separation and the right interface</b>
+
+142
+01:10:01,633 --> 01:10:04,766
+<b>separation between the evaluation</b>
+
+143
+01:10:04,866 --> 01:10:10,000
+<b>benchmark and the agents. So with this approach, it's very</b>
+
+144
+01:10:10,000 --> 01:10:12,033
+<b>easy to bring your existing agents</b>
+
+145
+01:10:12,533 --> 01:10:19,266
+<b>and then to just be evaluated by the assessor agents that</b>
+
+146
+01:10:19,266 --> 01:10:21,333
+<b>we actually call green agents in the</b>
+
+147
+01:10:21,333 --> 01:10:29,033
+<b>competition. And the assessee agents, the currency that we</b>
+
+148
+01:10:29,033 --> 01:10:31,399
+<b>call the purple agents in the</b>
+
+149
+01:10:31,833 --> 01:10:40,933
+<b>in-agent beats competition. So again, this enables the</b>
+
+150
+01:10:40,933 --> 01:10:44,266
+<b>assessee agent to easily run, be evaluated.</b>
+
+151
+01:10:44,933 --> 01:10:49,100
+<b>And also this enables different harnesses and different</b>
+
+152
+01:10:49,100 --> 01:10:51,399
+<b>models easily to be evaluated.</b>
+
+153
+01:10:52,466 --> 01:10:56,833
+<b>And when compared to traditional agent benchmarking, this</b>
+
+154
+01:10:56,833 --> 01:10:57,733
+<b>gentified agent assessment paradigm</b>
+
+155
+01:10:57,833 --> 01:11:03,333
+<b>has a number of advantages. In a traditional agent</b>
+
+156
+01:11:03,333 --> 01:11:07,166
+<b>benchmarking, it's again primarily focused on</b>
+
+157
+01:11:07,166 --> 01:11:11,800
+<b>LMs with fixed harnesses, whereas with the AAA paradigm,</b>
+
+158
+01:11:12,399 --> 01:11:14,666
+<b>any agent conforming to the A2A protocol</b>
+
+159
+01:11:14,666 --> 01:11:22,933
+<b>can be evaluated by the assessor agent. And in the</b>
+
+160
+01:11:22,933 --> 01:11:24,600
+<b>traditional agent benchmarking, it provides</b>
+
+161
+01:11:24,866 --> 01:11:30,066
+<b>benchmark specific implementation dependent interface,</b>
+
+162
+01:11:30,733 --> 01:11:33,600
+<b>whereas in the AAA paradigm, it provides</b>
+
+163
+01:11:33,600 --> 01:11:37,833
+<b>standardized A2A interface for test</b>
+
+164
+01:11:37,833 --> 01:11:41,933
+<b>management and MCP for two use and to access.</b>
+
+165
+01:11:44,233 --> 01:11:48,266
+<b>And in the traditional agent benchmarking, it's prone to</b>
+
+166
+01:11:48,266 --> 01:11:49,166
+<b>test production mismatch, as I mentioned</b>
+
+167
+01:11:50,133 --> 01:11:54,300
+<b>earlier, and as many use for reference, whereas in the AAA</b>
+
+168
+01:11:54,300 --> 01:11:56,433
+<b>paradigm, it directly reflects</b>
+
+169
+01:11:56,633 --> 01:11:59,866
+<b>production level performance using this evaluation</b>
+
+170
+01:11:59,866 --> 01:12:03,600
+<b>paradigm. And for multi-agent assessments,</b>
+
+171
+01:12:04,233 --> 01:12:06,433
+<b>in the traditional agent benchmarking, it's actually very</b>
+
+172
+01:12:06,433 --> 01:12:08,166
+<b>difficult and requires bespoke</b>
+
+173
+01:12:08,233 --> 01:12:15,333
+<b>integration, whereas the AAA method natively supports</b>
+
+174
+01:12:15,333 --> 01:12:17,966
+<b>multi-agent assessments through</b>
+
+175
+01:12:18,000 --> 01:12:20,266
+<b>standardized interfaces and platform level</b>
+
+176
+01:12:20,266 --> 01:12:25,300
+<b>coordination. So it's actually provided and</b>
+
+177
+01:12:25,300 --> 01:12:35,566
+<b>enabled natively. And so these are the advantages and the</b>
+
+178
+01:12:35,566 --> 01:12:38,699
+<b>motivation for providing this new paradigm</b>
+
+179
+01:12:38,933 --> 01:12:43,966
+<b>of identified agent assessments. And in addition to this</b>
+
+180
+01:12:43,966 --> 01:12:47,333
+<b>paradigm and the issues addressed by this</b>
+
+181
+01:12:47,366 --> 01:12:50,666
+<b>new paradigm, there are also additional obstacles for</b>
+
+182
+01:12:50,666 --> 01:12:52,300
+<b>building impactful agent evaluation.</b>
+
+183
+01:12:54,300 --> 01:12:57,866
+<b>The overall system implementation can be</b>
+
+184
+01:12:57,866 --> 01:13:00,800
+<b>complex, requiring integrating of multiple LMs,</b>
+
+185
+01:13:01,333 --> 01:13:05,100
+<b>navigate diverse agent frameworks, observability,</b>
+
+186
+01:13:05,533 --> 01:13:08,933
+<b>environment setup, and infrastructure for agent</b>
+
+187
+01:13:08,933 --> 01:13:12,766
+<b>deployment monitoring and leaderboard management. And also,</b>
+
+188
+01:13:12,766 --> 01:13:14,766
+<b>overall, there is a lack of openness and</b>
+
+189
+01:13:18,066 --> 01:13:22,033
+<b>there's a lot of fragmentation. Currently, there's no</b>
+
+190
+01:13:22,033 --> 01:13:24,266
+<b>unified platform that can transform</b>
+
+191
+01:13:24,266 --> 01:13:25,699
+<b>research prototypes into widely</b>
+
+192
+01:13:25,699 --> 01:13:27,866
+<b>accessible, reusable evaluations.</b>
+
+193
+01:13:35,333 --> 01:13:39,166
+<b>Xiaojian, are you starting?</b>
+
+194
+01:13:39,899 --> 01:13:40,666
+<b>Yes, sure.</b>
+
+195
+01:13:41,466 --> 01:13:45,166
+<b>So this essentially motivates our new open platform,</b>
+
+196
+01:13:45,433 --> 01:13:48,433
+<b>AgentBets, for open, standardized,</b>
+
+197
+01:13:49,166 --> 01:13:51,833
+<b>and reproducible agent evaluation and research assessments,</b>
+
+198
+01:13:52,199 --> 01:13:55,100
+<b>which Xiaojian will discuss more</b>
+
+199
+01:13:55,100 --> 01:14:01,133
+<b>details. Sure. So here, I'm very happy to introduce you to</b>
+
+200
+01:14:01,133 --> 01:14:02,833
+<b>our current ongoing effort for</b>
+
+201
+01:14:02,933 --> 01:14:06,466
+<b>doing this AgentBets platform. Essentially, it's a platform</b>
+
+202
+01:14:06,466 --> 01:14:08,766
+<b>compliant to the AAA standard that we</b>
+
+203
+01:14:08,766 --> 01:14:12,166
+<b>just mentioned. And the goal is to build, again, the</b>
+
+204
+01:14:12,166 --> 01:14:14,633
+<b>standardized open and also reproducible</b>
+
+205
+01:14:15,033 --> 01:14:18,699
+<b>platform that satisfies our previous assessment related</b>
+
+206
+01:14:18,699 --> 01:14:22,333
+<b>requirement. And for standardization,</b>
+
+207
+01:14:22,833 --> 01:14:26,399
+<b>in addition to using H1MCP, we'll also provide a unified</b>
+
+208
+01:14:26,399 --> 01:14:28,866
+<b>SDK as long as a consistent workflow</b>
+
+209
+01:14:28,866 --> 01:14:32,666
+<b>for managing agent assessment and also agent instantiation.</b>
+
+210
+01:14:33,433 --> 01:14:35,866
+<b>Also targeting openness, we plan</b>
+
+211
+01:14:35,899 --> 01:14:39,566
+<b>to use the platform for publishing public agent,</b>
+
+212
+01:14:40,433 --> 01:14:43,133
+<b>maintaining benchmark, and also provide a set of</b>
+
+213
+01:14:43,133 --> 01:14:47,466
+<b>hosted environments for open evaluation.</b>
+
+214
+01:14:48,633 --> 01:14:51,333
+<b>In terms of reproducibility, we support</b>
+
+215
+01:14:52,133 --> 01:14:55,500
+<b>new control protocol that allows the auto reset of the</b>
+
+216
+01:14:55,500 --> 01:14:58,366
+<b>environment and also allow the hosts to run</b>
+
+217
+01:14:58,399 --> 01:15:04,133
+<b>hosted runs of agents. And while the assessment is ongoing,</b>
+
+218
+01:15:04,333 --> 01:15:07,266
+<b>we also enable multi-level trace logging</b>
+
+219
+01:15:07,333 --> 01:15:11,033
+<b>for better observability. And the platform is easy to use.</b>
+
+220
+01:15:11,366 --> 01:15:13,333
+<b>Essentially, you can use one file to</b>
+
+221
+01:15:13,333 --> 01:15:18,366
+<b>instantiate a new agent. And also there will be both on</b>
+
+222
+01:15:18,366 --> 01:15:20,199
+<b>platform and self-hosted options, just in</b>
+
+223
+01:15:20,233 --> 01:15:24,866
+<b>case someone wants to host private computations. And to</b>
+
+224
+01:15:24,866 --> 01:15:27,833
+<b>just make the platform more extensible,</b>
+
+225
+01:15:28,133 --> 01:15:31,366
+<b>we also support rich integrations of different types of</b>
+
+226
+01:15:31,366 --> 01:15:33,233
+<b>agents, as well as different types of</b>
+
+227
+01:15:33,233 --> 01:15:38,166
+<b>scenarios. And below you can see a general workflow for how</b>
+
+228
+01:15:38,166 --> 01:15:40,933
+<b>agent-based SDK, as well as the</b>
+
+229
+01:15:40,933 --> 01:15:44,466
+<b>agent-based platform service, can simplify the overall</b>
+
+230
+01:15:44,466 --> 01:15:48,933
+<b>development and evaluation of agentic</b>
+
+231
+01:15:49,033 --> 01:15:55,100
+<b>systems. And the platform is targeting the use case for</b>
+
+232
+01:15:55,100 --> 01:15:59,466
+<b>evaluating the agents and also letting</b>
+
+233
+01:15:59,500 --> 01:16:03,566
+<b>different agents to compete on the comparable tasks. It</b>
+
+234
+01:16:03,566 --> 01:16:09,466
+<b>also encourages contributing new</b>
+
+235
+01:16:09,466 --> 01:16:12,633
+<b>environments and benchmarks, allow people to collaborate</b>
+
+236
+01:16:12,633 --> 01:16:15,633
+<b>using agents developed by others,</b>
+
+237
+01:16:15,833 --> 01:16:20,633
+<b>and also let the agent improve. We support mainly two types</b>
+
+238
+01:16:20,633 --> 01:16:23,266
+<b>of evaluation mode. One is the benchmarking</b>
+
+239
+01:16:23,266 --> 01:16:26,466
+<b>mode for a single agent. It's best for having a unified</b>
+
+240
+01:16:26,466 --> 01:16:30,366
+<b>scoring and leaderboard for a single</b>
+
+241
+01:16:30,366 --> 01:16:35,633
+<b>agent task. We also have an arena mode, which basically</b>
+
+242
+01:16:35,633 --> 01:16:37,399
+<b>means that you might have multiple</b>
+
+243
+01:16:37,433 --> 01:16:42,733
+<b>agents joining the same assessment. And based on the type</b>
+
+244
+01:16:42,733 --> 01:16:44,833
+<b>of the assessment, either it's one-on-one</b>
+
+245
+01:16:45,733 --> 01:16:51,233
+<b>or it's more of a multi-agent team fight style evaluation,</b>
+
+246
+01:16:52,133 --> 01:16:53,433
+<b>there might be different ways of</b>
+
+247
+01:16:53,433 --> 01:16:57,366
+<b>assigning score. And this is best for adversarial</b>
+
+248
+01:16:57,366 --> 01:17:00,533
+<b>multi-agent evaluation or collaborative conditions.</b>
+
+249
+01:17:02,966 --> 01:17:07,933
+<b>And just as a general concept walkthrough, any H2A</b>
+
+250
+01:17:07,933 --> 01:17:12,033
+<b>compatible agents would be also compatible to</b>
+
+251
+01:17:12,066 --> 01:17:15,566
+<b>the agent-based platform, as long as they support the basic</b>
+
+252
+01:17:15,566 --> 01:17:18,733
+<b>task fulfilling to using an optionally</b>
+
+253
+01:17:18,766 --> 01:17:21,966
+<b>memory and other component. There are in general like two</b>
+
+254
+01:17:21,966 --> 01:17:24,033
+<b>types of agent, the assessor agent and</b>
+
+255
+01:17:24,033 --> 01:17:28,466
+<b>the SSE agent as introduced earlier. And just for a quick</b>
+
+256
+01:17:28,466 --> 01:17:31,333
+<b>example, imagine that you have a chess game</b>
+
+257
+01:17:31,333 --> 01:17:35,899
+<b>between a GBT40 agent and also a GBT5 agent. Then these two</b>
+
+258
+01:17:35,899 --> 01:17:38,266
+<b>agents will be your SSE agent. Well,</b>
+
+259
+01:17:38,333 --> 01:17:42,766
+<b>the agent who actually judges the board will be your</b>
+
+260
+01:17:42,766 --> 01:17:46,333
+<b>assessor agent. And we organize the evaluation</b>
+
+261
+01:17:46,466 --> 01:17:50,866
+<b>in the format of assessment. Each assessment would be a</b>
+
+262
+01:17:50,866 --> 01:17:52,899
+<b>multi-agent procedure between one of</b>
+
+263
+01:17:52,899 --> 01:17:56,466
+<b>the assessor agent and the other agents. Each assessment</b>
+
+264
+01:17:56,466 --> 01:17:58,633
+<b>will reflect one or more matrix of all</b>
+
+265
+01:17:58,633 --> 01:18:02,666
+<b>the participating or SSE agents reflecting on their score</b>
+
+266
+01:18:02,666 --> 01:18:04,833
+<b>change on the leaderboard. And also,</b>
+
+267
+01:18:05,833 --> 01:18:09,066
+<b>the assessor agent is responsible for reporting the final</b>
+
+268
+01:18:09,066 --> 01:18:10,666
+<b>result to the platform in the end.</b>
+
+269
+01:18:13,233 --> 01:18:17,733
+<b>So the platform itself provides a basic feature of agent</b>
+
+270
+01:18:17,733 --> 01:18:20,233
+<b>registry for people to discover new agents.</b>
+
+271
+01:18:20,733 --> 01:18:24,566
+<b>It also provides the agent controller for the task state</b>
+
+272
+01:18:24,566 --> 01:18:26,466
+<b>management, as we'll be also introducing</b>
+
+273
+01:18:26,533 --> 01:18:30,566
+<b>later. It also provides a feature for assessment kickoff to</b>
+
+274
+01:18:30,566 --> 01:18:32,666
+<b>orchestrate the collaboration procedure</b>
+
+275
+01:18:32,766 --> 01:18:34,399
+<b>between different agents for getting the</b>
+
+276
+01:18:34,399 --> 01:18:37,833
+<b>assessment result. And there are also extensive</b>
+
+277
+01:18:37,833 --> 01:18:41,666
+<b>features and a way of using it for assessment tracing,</b>
+
+278
+01:18:42,233 --> 01:18:45,033
+<b>leaderboard, proxying the MCP calls for</b>
+
+279
+01:18:45,033 --> 01:18:49,699
+<b>access control, agent hosting, etc. And we'll be releasing</b>
+
+280
+01:18:49,699 --> 01:18:50,833
+<b>more details in the future blocks.</b>
+
+281
+01:18:59,766 --> 01:19:05,433
+<b>Thanks, Sian. So we welcome everyone in the community to</b>
+
+282
+01:19:05,433 --> 01:19:07,766
+<b>join this AsianX, AsianB's competition</b>
+
+283
+01:19:08,933 --> 01:19:13,433
+<b>in conjunction with the Agente KI MOOC.</b>
+
+284
+01:19:15,166 --> 01:19:20,633
+<b>And we are very honored and grateful to the</b>
+
+285
+01:19:20,866 --> 01:19:25,533
+<b>to have the sponsors provide. We have</b>
+
+286
+01:19:25,533 --> 01:19:29,600
+<b>over $1 million in prices and resources,</b>
+
+287
+01:19:30,366 --> 01:19:32,600
+<b>thanks to the different sponsors here.</b>
+
+288
+01:19:34,666 --> 01:19:40,000
+<b>And we hope that the community and the</b>
+
+289
+01:19:41,500 --> 01:19:47,633
+<b>participants can join the competition to both actually help</b>
+
+290
+01:19:47,633 --> 01:19:50,133
+<b>together build public goods for</b>
+
+291
+01:19:50,133 --> 01:19:52,566
+<b>agent evaluation and also be a</b>
+
+292
+01:19:52,566 --> 01:19:54,466
+<b>great learning experience for everyone.</b>
+
+293
+01:19:57,366 --> 01:20:00,733
+<b>And next slide. So now let's talk a</b>
+
+294
+01:20:00,733 --> 01:20:05,033
+<b>little bit about the detailed logistics</b>
+
+295
+01:20:05,833 --> 01:20:08,399
+<b>for the agent piece competition. So for</b>
+
+296
+01:20:08,399 --> 01:20:10,666
+<b>the competition, there will be two phases.</b>
+
+297
+01:20:10,699 --> 01:20:20,199
+<b>The first phase that is going on currently is to focus on</b>
+
+298
+01:20:20,199 --> 01:20:22,066
+<b>building the assessor agents,</b>
+
+299
+01:20:22,366 --> 01:20:26,000
+<b>also called the green agents here. So in</b>
+
+300
+01:20:26,000 --> 01:20:27,733
+<b>particular, for phase one, the participants</b>
+
+301
+01:20:28,466 --> 01:20:32,866
+<b>will be building these green agents that actually define</b>
+
+302
+01:20:32,866 --> 01:20:36,133
+<b>the assessments and automates the scoring.</b>
+
+303
+01:20:36,933 --> 01:20:41,699
+<b>And in particular here, we have several different tracks</b>
+
+304
+01:20:41,699 --> 01:20:44,333
+<b>and different contribution types.</b>
+
+305
+01:20:46,066 --> 01:20:56,533
+<b>So first, let's talk about the contribution type. So one</b>
+
+306
+01:20:56,533 --> 01:21:00,133
+<b>type is to actually port or identify and</b>
+
+307
+01:21:00,166 --> 01:21:04,800
+<b>extend an existing benchmark. So the goal here is to</b>
+
+308
+01:21:04,800 --> 01:21:08,766
+<b>transform an existing benchmark into a green</b>
+
+309
+01:21:08,766 --> 01:21:14,833
+<b>agent that actually runs end to end on agent beats. And on</b>
+
+310
+01:21:14,833 --> 01:21:17,366
+<b>the agent beats competition websites,</b>
+
+311
+01:21:17,766 --> 01:21:23,866
+<b>here you can also see more examples of benchmark ideas that</b>
+
+312
+01:21:23,866 --> 01:21:25,399
+<b>actually list out a number of</b>
+
+313
+01:21:25,433 --> 01:21:31,333
+<b>example existing benchmarks that you can go identify and</b>
+
+314
+01:21:31,333 --> 01:21:34,233
+<b>extend. So that's one contribution</b>
+
+315
+01:21:34,300 --> 01:21:38,133
+<b>type. Another contribution type is to create a new</b>
+
+316
+01:21:38,133 --> 01:21:41,033
+<b>benchmark. In this case, it's to design a brand</b>
+
+317
+01:21:41,033 --> 01:21:44,266
+<b>new assessment as a green agent with novel tasks,</b>
+
+318
+01:21:44,566 --> 01:21:48,166
+<b>environments, automation and scoring. And we in</b>
+
+319
+01:21:48,733 --> 01:21:51,866
+<b>particular welcome participants to</b>
+
+320
+01:21:51,866 --> 01:21:57,399
+<b>develop new assessments in diverse domains that</b>
+
+321
+01:21:59,333 --> 01:22:03,866
+<b>have sufficient difficulty levels and also are realistic.</b>
+
+322
+01:22:04,966 --> 01:22:06,933
+<b>In particular, for example, you can</b>
+
+323
+01:22:07,333 --> 01:22:12,433
+<b>take your model after your even daily workloads and so on</b>
+
+324
+01:22:12,433 --> 01:22:16,666
+<b>and develop these new assessments as</b>
+
+325
+01:22:16,699 --> 01:22:22,699
+<b>green agents to evaluate agent capabilities, in particular</b>
+
+326
+01:22:22,699 --> 01:22:25,833
+<b>in domains that you are familiar with.</b>
+
+327
+01:22:27,166 --> 01:22:31,699
+<b>And also we have a custom track, which we'll talk about in</b>
+
+328
+01:22:31,699 --> 01:22:34,766
+<b>a minute. So these are different</b>
+
+329
+01:22:34,766 --> 01:22:41,500
+<b>contribution types. And then we also welcome for each of</b>
+
+330
+01:22:41,500 --> 01:22:44,733
+<b>these types either for identifying</b>
+
+331
+01:22:46,133 --> 01:22:49,000
+<b>existing benchmarks or to create a new</b>
+
+332
+01:22:49,000 --> 01:22:51,666
+<b>benchmark. For each of these contribution types,</b>
+
+333
+01:22:52,399 --> 01:22:56,733
+<b>we welcome contributions across different very diverse</b>
+
+334
+01:22:56,733 --> 01:22:59,666
+<b>application domains. So these include</b>
+
+335
+01:23:00,766 --> 01:23:04,566
+<b>coding domains, web agents, computer use</b>
+
+336
+01:23:04,566 --> 01:23:07,966
+<b>agents, research agents, software testing,</b>
+
+337
+01:23:08,133 --> 01:23:17,000
+<b>and game agents. And in, for example, web 3, decentralized</b>
+
+338
+01:23:17,000 --> 01:23:19,533
+<b>finance, cybersecurity agents,</b>
+
+339
+01:23:19,533 --> 01:23:25,066
+<b>healthcare, finance, legal domain, and in general, for</b>
+
+340
+01:23:25,066 --> 01:23:29,066
+<b>agent safety and agent security and multi</b>
+
+341
+01:23:29,066 --> 01:23:33,133
+<b>agent evaluation, and also many other domains, which I</b>
+
+342
+01:23:33,133 --> 01:23:37,033
+<b>won't be able to exhaust this here.</b>
+
+343
+01:23:38,966 --> 01:23:43,666
+<b>So again, we welcome the participants to consider these</b>
+
+344
+01:23:43,666 --> 01:23:45,733
+<b>different domains. So pick a domain that</b>
+
+345
+01:23:45,733 --> 01:23:51,199
+<b>you are interested in and also ideally you are familiar</b>
+
+346
+01:23:51,199 --> 01:23:58,466
+<b>with. And so the registration</b>
+
+347
+01:23:59,500 --> 01:24:03,766
+<b>phase has started. So for all the participants, you need to</b>
+
+348
+01:24:03,766 --> 01:24:06,600
+<b>both register individually as a</b>
+
+349
+01:24:06,633 --> 01:24:11,166
+<b>participant and also the team signup has opened as well. So</b>
+
+350
+01:24:11,166 --> 01:24:13,533
+<b>we welcome you to form teams and do</b>
+
+351
+01:24:13,533 --> 01:24:21,333
+<b>the team signup as well. Next slide. So that's phase one</b>
+
+352
+01:24:21,333 --> 01:24:23,866
+<b>for developing the green agent, which</b>
+
+353
+01:24:23,866 --> 01:24:28,466
+<b>is the accessory agents. And this will run until end of</b>
+
+354
+01:24:28,466 --> 01:24:31,966
+<b>this year. And then after phase one, we'll</b>
+
+355
+01:24:32,000 --> 01:24:37,466
+<b>enter phase two in early spring next year. And phase two</b>
+
+356
+01:24:37,466 --> 01:24:40,000
+<b>focuses on developing the purple agent,</b>
+
+357
+01:24:40,000 --> 01:24:44,500
+<b>which is the accessory agent. So in particular, after phase</b>
+
+358
+01:24:44,500 --> 01:24:46,133
+<b>one, we'll select the top green</b>
+
+359
+01:24:46,133 --> 01:24:50,933
+<b>agents from phase one and have participants to compete on</b>
+
+360
+01:24:50,933 --> 01:24:53,433
+<b>the public leaderboard for the</b>
+
+361
+01:24:53,566 --> 01:25:01,933
+<b>selected top green agents from phase one. And can you go</b>
+
+362
+01:25:01,933 --> 01:25:05,100
+<b>back? So I'll also talk about the custom</b>
+
+363
+01:25:05,100 --> 01:25:10,266
+<b>tracks. So in particular here, currently we have two main</b>
+
+364
+01:25:10,266 --> 01:25:13,766
+<b>custom tracks. So in general, as I</b>
+
+365
+01:25:13,766 --> 01:25:18,000
+<b>mentioned in the previous slides, you are welcome to</b>
+
+366
+01:25:18,000 --> 01:25:21,399
+<b>develop green agents in different domains.</b>
+
+367
+01:25:22,133 --> 01:25:25,966
+<b>And in particular, thanks to the sponsors, we also have</b>
+
+368
+01:25:25,966 --> 01:25:28,833
+<b>particularly two custom tracks, if you are</b>
+
+369
+01:25:28,833 --> 01:25:33,666
+<b>interested in these two specific areas. So one is our agent</b>
+
+370
+01:25:33,666 --> 01:25:35,800
+<b>security developing, essentially,</b>
+
+371
+01:25:36,399 --> 01:25:39,433
+<b>benchmark evaluation for right teaming and automated</b>
+
+372
+01:25:39,433 --> 01:25:42,666
+<b>security testing. And this track</b>
+
+373
+01:25:42,733 --> 01:25:46,733
+<b>is sponsored by Lambda. And more details will be announced</b>
+
+374
+01:25:46,733 --> 01:25:51,733
+<b>soon. And the second current custom track</b>
+
+375
+01:25:52,233 --> 01:25:57,366
+<b>is to extend the talk to bench. This is sponsored by</b>
+
+376
+01:25:57,366 --> 01:26:01,600
+<b>Sierra. And you can again go to the website</b>
+
+377
+01:26:02,066 --> 01:26:08,266
+<b>to look at the the detailed information about total bench.</b>
+
+378
+01:26:08,966 --> 01:26:10,366
+<b>And also more details about this</b>
+
+379
+01:26:10,366 --> 01:26:15,000
+<b>custom track will be announced soon as well. Please stay</b>
+
+380
+01:26:15,000 --> 01:26:22,533
+<b>tuned. And thanks to our sponsors.</b>
+
+381
+01:26:23,666 --> 01:26:33,933
+<b>There's very rich resources and also prices provided by the</b>
+
+382
+01:26:33,933 --> 01:26:35,399
+<b>sponsors to the participants.</b>
+
+383
+01:26:36,133 --> 01:26:40,699
+<b>So for every participant, you can look at the resources</b>
+
+384
+01:26:40,699 --> 01:26:43,466
+<b>available here. So essentially,</b>
+
+385
+01:26:43,866 --> 01:26:48,566
+<b>every participant actually just by participating in the</b>
+
+386
+01:26:48,566 --> 01:26:51,966
+<b>competition, you can get close to $500,</b>
+
+387
+01:26:53,100 --> 01:26:59,466
+<b>at least worth of credits for just participating in the</b>
+
+388
+01:26:59,466 --> 01:27:02,233
+<b>competition. And we also have various prices</b>
+
+389
+01:27:02,633 --> 01:27:06,333
+<b>for the winners of the competition provided by the</b>
+
+390
+01:27:06,333 --> 01:27:10,633
+<b>different sponsors. And more resources and</b>
+
+391
+01:27:10,633 --> 01:27:16,033
+<b>prices will also be announced later as well. Next slide,</b>
+
+392
+01:27:16,033 --> 01:27:19,399
+<b>please. And also please check the</b>
+
+393
+01:27:19,566 --> 01:27:22,466
+<b>competition websites for more details on</b>
+
+394
+01:27:22,466 --> 01:27:28,766
+<b>the key dates. And we, yes, we hope everyone</b>
+
+395
+01:27:29,366 --> 01:27:34,466
+<b>have a great time enjoying first for the first one,</b>
+
+396
+01:27:34,766 --> 01:27:37,433
+<b>building the green agents, the assessor</b>
+
+397
+01:27:37,433 --> 01:27:40,899
+<b>agents. And also we have the discord. We welcome everyone</b>
+
+398
+01:27:40,899 --> 01:27:44,666
+<b>to join the discord. So if you have more</b>
+
+399
+01:27:44,666 --> 01:27:50,833
+<b>questions about the competition and agent beats and so on,</b>
+
+400
+01:27:51,133 --> 01:27:54,199
+<b>please post your questions in the discord</b>
+
+401
+01:27:54,300 --> 01:28:00,466
+<b>as well. Thank you.</b>
+
+402
+01:28:05,966 --> 01:28:09,100
+<b>Shall I? Okay, cool. So I guess for the</b>
+
+403
+01:28:09,100 --> 01:28:12,133
+<b>next part, I'll be walking through some of the</b>
+
+404
+01:28:12,133 --> 01:28:16,433
+<b>implementation details on how to use agent beats or</b>
+
+405
+01:28:16,433 --> 01:28:19,000
+<b>interpret agent beats for agent evaluation.</b>
+
+406
+01:28:19,533 --> 01:28:22,333
+<b>These have like two parts. The first part,</b>
+
+407
+01:28:22,333 --> 01:28:24,466
+<b>I'll be showing how in general we can make,</b>
+
+408
+01:28:25,066 --> 01:28:28,566
+<b>we can identify an existing benchmark by</b>
+
+409
+01:28:28,566 --> 01:28:32,933
+<b>trying to trying to customize this interface</b>
+
+410
+01:28:33,566 --> 01:28:36,733
+<b>and standardizing it towards like a two way. And for the</b>
+
+411
+01:28:36,733 --> 01:28:39,066
+<b>second part, I'll be talking about how</b>
+
+412
+01:28:39,066 --> 01:28:41,899
+<b>for a standardized like a two way or identify the</b>
+
+413
+01:28:41,899 --> 01:28:44,399
+<b>assessment, how we can integrate it with agent</b>
+
+414
+01:28:44,466 --> 01:28:52,100
+<b>beats to make it an object that can be used in a general</b>
+
+415
+01:28:52,100 --> 01:28:53,866
+<b>agent assessment in the collaborative way.</b>
+
+416
+01:28:55,000 --> 01:28:59,866
+<b>So first, there are general three steps for identifying</b>
+
+417
+01:28:59,866 --> 01:29:01,933
+<b>this benchmark. Oh, by the way,</b>
+
+418
+01:29:02,733 --> 01:29:07,033
+<b>feel free to scan the QR code here or go to the official</b>
+
+419
+01:29:07,033 --> 01:29:08,966
+<b>website to read more about in general</b>
+
+420
+01:29:09,033 --> 01:29:13,133
+<b>this example. So the first step for identifying an</b>
+
+421
+01:29:13,133 --> 01:29:15,766
+<b>assessment is to try to sort out the interface.</b>
+
+422
+01:29:16,333 --> 01:29:18,666
+<b>And there are two general principles that can be applied</b>
+
+423
+01:29:18,666 --> 01:29:21,433
+<b>here. The first one, in general,</b>
+
+424
+01:29:21,766 --> 01:29:24,633
+<b>just by the definition of the task, humans should be able</b>
+
+425
+01:29:24,633 --> 01:29:27,866
+<b>to also solve whatever is presented to the</b>
+
+426
+01:29:28,133 --> 01:29:35,100
+<b>agent and like for with the given information. And under</b>
+
+427
+01:29:35,100 --> 01:29:37,566
+<b>the assumption that is human solvable,</b>
+
+428
+01:29:39,033 --> 01:29:41,333
+<b>in general is recommended to make the</b>
+
+429
+01:29:41,333 --> 01:29:43,933
+<b>solving procedure as agent friendly as possible,</b>
+
+430
+01:29:44,633 --> 01:29:48,566
+<b>just so that the agent can solve it easily. And in general,</b>
+
+431
+01:29:48,566 --> 01:29:49,766
+<b>achieve more reasonable score.</b>
+
+432
+01:29:50,399 --> 01:29:53,133
+<b>Imagine that if you can make a question</b>
+
+433
+01:29:53,133 --> 01:29:56,933
+<b>to be a multi twice problem, do not make it</b>
+
+434
+01:29:57,166 --> 01:30:01,766
+<b>slot fielding or tax generation problem. And that might in</b>
+
+435
+01:30:01,766 --> 01:30:05,466
+<b>general, make the assessment more</b>
+
+436
+01:30:05,500 --> 01:30:12,066
+<b>compatible. And the general example for how to exam this or</b>
+
+437
+01:30:12,066 --> 01:30:13,533
+<b>how to practice these principles</b>
+
+438
+01:30:13,833 --> 01:30:17,533
+<b>include, for example, you know, web browsing agent, you</b>
+
+439
+01:30:17,533 --> 01:30:19,666
+<b>might have the option to provide</b>
+
+440
+01:30:19,733 --> 01:30:25,466
+<b>your SSC agent the URLs to access those web page, or you</b>
+
+441
+01:30:25,466 --> 01:30:27,833
+<b>can follow the same paradigm as,</b>
+
+442
+01:30:27,966 --> 01:30:31,133
+<b>say, the current days, like in browser gene, you provide a</b>
+
+443
+01:30:31,133 --> 01:30:32,833
+<b>bunch of tools for navigating through</b>
+
+444
+01:30:32,866 --> 01:30:36,333
+<b>the web page and get the standardized response. And in this</b>
+
+445
+01:30:36,333 --> 01:30:39,899
+<b>case, since in general, human would</b>
+
+446
+01:30:39,899 --> 01:30:43,033
+<b>prefer the URL version since you can just open it with your</b>
+
+447
+01:30:43,033 --> 01:30:46,466
+<b>customized browser and use your own</b>
+
+448
+01:30:46,466 --> 01:30:50,666
+<b>sort of way of like opening a website, then it's actually</b>
+
+449
+01:30:50,666 --> 01:30:53,899
+<b>recommended to organize it so that</b>
+
+450
+01:30:54,300 --> 01:30:57,633
+<b>your web browsing task is actually providing a URL rather</b>
+
+451
+01:30:57,633 --> 01:30:59,800
+<b>than just translating things into two</b>
+
+452
+01:31:00,066 --> 01:31:05,366
+<b>actions. And similarly, for coding agents, there's a</b>
+
+453
+01:31:05,366 --> 01:31:07,000
+<b>difference of providing a coding</b>
+
+454
+01:31:07,333 --> 01:31:10,666
+<b>environment versus if you just provide a repo to be changed</b>
+
+455
+01:31:10,666 --> 01:31:12,833
+<b>and expect the agents to write you the</b>
+
+456
+01:31:12,833 --> 01:31:17,666
+<b>patches. And in general, if you compare to the like the</b>
+
+457
+01:31:17,666 --> 01:31:19,833
+<b>human related assessment, just imagine</b>
+
+458
+01:31:19,833 --> 01:31:24,566
+<b>the first scenario to be you share your laptop with, let's</b>
+
+459
+01:31:24,566 --> 01:31:27,800
+<b>say like given SSE versus you just</b>
+
+460
+01:31:27,833 --> 01:31:32,633
+<b>provide a public GitHub repo link, and then just ask others</b>
+
+461
+01:31:32,633 --> 01:31:35,600
+<b>to do PR. In this case, I think too,</b>
+
+462
+01:31:36,500 --> 01:31:39,800
+<b>if you want to examine the agent's ability to interact</b>
+
+463
+01:31:39,800 --> 01:31:42,266
+<b>with, say, the code editor, then the</b>
+
+464
+01:31:42,266 --> 01:31:46,833
+<b>first way is preferred. Otherwise, the second way might be</b>
+
+465
+01:31:46,833 --> 01:31:52,433
+<b>more cleanly handled. And a recommended</b>
+
+466
+01:31:52,466 --> 01:31:54,233
+<b>way to sort out the interface would be</b>
+
+467
+01:31:54,233 --> 01:31:56,333
+<b>try to read the original paper if you are</b>
+
+468
+01:31:57,266 --> 01:32:01,366
+<b>migrating from an existing benchmark, or just think about a</b>
+
+469
+01:32:01,366 --> 01:32:04,066
+<b>task formulation for the new types</b>
+
+470
+01:32:04,066 --> 01:32:07,833
+<b>of benchmark. And in general, it's also recommended to read</b>
+
+471
+01:32:07,833 --> 01:32:10,300
+<b>the code base if you are migrating from</b>
+
+472
+01:32:10,300 --> 01:32:14,100
+<b>existing benchmark, and think about how to actually deliver</b>
+
+473
+01:32:14,100 --> 01:32:15,533
+<b>the same piece of information,</b>
+
+474
+01:32:15,899 --> 01:32:19,566
+<b>but within the A2A format with minimum code intrusion as</b>
+
+475
+01:32:19,566 --> 01:32:21,399
+<b>possible. So here we actually</b>
+
+476
+01:32:21,500 --> 01:32:24,866
+<b>provide example of using Talbench. And as you can probably</b>
+
+477
+01:32:24,866 --> 01:32:27,466
+<b>see the figure from the Talbench</b>
+
+478
+01:32:27,733 --> 01:32:31,399
+<b>paper actually clearly presents like what would be the</b>
+
+479
+01:32:31,399 --> 01:32:34,133
+<b>general interaction structure. And if you</b>
+
+480
+01:32:34,133 --> 01:32:37,399
+<b>go into the their code base, you will see that there is</b>
+
+481
+01:32:37,399 --> 01:32:39,566
+<b>this very clear interface of environment</b>
+
+482
+01:32:39,733 --> 01:32:44,266
+<b>and agent that you can extract. And what as long as you can</b>
+
+483
+01:32:44,266 --> 01:32:46,266
+<b>separate from this layer, it is possible</b>
+
+484
+01:32:46,399 --> 01:32:50,100
+<b>to actually make it A2A compatible. And</b>
+
+485
+01:32:50,100 --> 01:32:53,266
+<b>specifically for this Talbench example, there</b>
+
+486
+01:32:53,666 --> 01:32:57,300
+<b>remains like two key challenges for identifying it and</b>
+
+487
+01:32:57,300 --> 01:33:00,333
+<b>standardizing it with A2A. So the first is that</b>
+
+488
+01:33:01,033 --> 01:33:05,433
+<b>you will have a cross-agent two-use scenario. So first of</b>
+
+489
+01:33:05,433 --> 01:33:09,566
+<b>all, the Talbench is just for the context,</b>
+
+490
+01:33:09,566 --> 01:33:13,800
+<b>the Talbench is a two-use benchmark that the assessor will</b>
+
+491
+01:33:13,800 --> 01:33:15,399
+<b>have a bunch of tools, and the</b>
+
+492
+01:33:15,433 --> 01:33:19,133
+<b>assessor will be trying to use these tools to solve like</b>
+
+493
+01:33:19,133 --> 01:33:22,533
+<b>let's say a given problem. And in this</b>
+
+494
+01:33:22,533 --> 01:33:28,033
+<b>scenario, since we're identifying it and the assessor is</b>
+
+495
+01:33:28,033 --> 01:33:29,333
+<b>actually a separate, a different</b>
+
+496
+01:33:29,333 --> 01:33:33,066
+<b>agent from the assessor, you should figure out a way to</b>
+
+497
+01:33:33,066 --> 01:33:35,233
+<b>actually pass the two leads from the assessor</b>
+
+498
+01:33:35,233 --> 01:33:38,833
+<b>to the assessor just to make sure that the assessor can</b>
+
+499
+01:33:38,833 --> 01:33:40,600
+<b>respond in the expected format.</b>
+
+500
+01:33:41,433 --> 01:33:46,300
+<b>And in the original repl, the tool is directly provided to</b>
+
+501
+01:33:46,300 --> 01:33:48,366
+<b>the chat completion interface.</b>
+
+502
+01:33:49,133 --> 01:33:52,166
+<b>So there's, it actually doesn't need any sort of</b>
+
+503
+01:33:52,166 --> 01:33:55,266
+<b>separation. But since now we want to make this</b>
+
+504
+01:33:55,266 --> 01:33:57,833
+<b>compatible and standardized so that everyone can run this</b>
+
+505
+01:33:57,833 --> 01:34:00,600
+<b>evaluation, we need to think about how</b>
+
+506
+01:34:00,600 --> 01:34:03,533
+<b>we can pass these two leads from the assessor to assessee.</b>
+
+507
+01:34:03,766 --> 01:34:05,233
+<b>And there are in general three ways.</b>
+
+508
+01:34:05,566 --> 01:34:08,633
+<b>The first way being the simplest that you just expect a</b>
+
+509
+01:34:08,633 --> 01:34:11,866
+<b>participating assessee agent to have</b>
+
+510
+01:34:11,866 --> 01:34:14,733
+<b>the knowledge about these tools, and then just operate</b>
+
+511
+01:34:14,733 --> 01:34:17,433
+<b>based on this given format. However,</b>
+
+512
+01:34:17,433 --> 01:34:20,500
+<b>this actually defeats our purpose of identifying the</b>
+
+513
+01:34:20,500 --> 01:34:22,333
+<b>assessment and also is less standardized.</b>
+
+514
+01:34:23,866 --> 01:34:27,133
+<b>And the second way is to try to ask the assessor to explain</b>
+
+515
+01:34:27,133 --> 01:34:29,399
+<b>the two access requests to the white</b>
+
+516
+01:34:29,433 --> 01:34:33,466
+<b>agent and then ask for what two names that the assessor</b>
+
+517
+01:34:33,466 --> 01:34:36,500
+<b>want to call. So, well, this is achievable.</b>
+
+518
+01:34:36,899 --> 01:34:42,000
+<b>And also this is the way we use in our example. One of the</b>
+
+519
+01:34:42,000 --> 01:34:43,766
+<b>potential problem is that this cannot</b>
+
+520
+01:34:43,766 --> 01:34:48,333
+<b>leverage the agent internal tool call mechanism. Say, if</b>
+
+521
+01:34:48,333 --> 01:34:50,199
+<b>you have a hyper planning or organization</b>
+
+522
+01:34:50,300 --> 01:34:54,600
+<b>or some sort of harness regarding the two selection, then</b>
+
+523
+01:34:54,600 --> 01:34:57,466
+<b>this part cannot be properly evaluated.</b>
+
+524
+01:34:58,066 --> 01:35:02,766
+<b>There's also a third way of doing this, which is to ask the</b>
+
+525
+01:35:02,766 --> 01:35:04,466
+<b>green agent or the assessor agent to</b>
+
+526
+01:35:04,533 --> 01:35:10,033
+<b>provide an MCP server for accessing the tool and then just</b>
+
+527
+01:35:10,033 --> 01:35:13,166
+<b>get the connection or get the URL to the</b>
+
+528
+01:35:13,166 --> 01:35:17,066
+<b>assessee agent. And while this being the most general</b>
+
+529
+01:35:17,066 --> 01:35:20,899
+<b>approach, there will be some coding complexity</b>
+
+530
+01:35:21,100 --> 01:35:28,000
+<b>and also this requires a dynamic discovery ability of the</b>
+
+531
+01:35:28,000 --> 01:35:29,766
+<b>assessee agent. So, there are trade-offs.</b>
+
+532
+01:35:31,600 --> 01:35:34,566
+<b>And also, the second challenge is at where</b>
+
+533
+01:35:34,566 --> 01:35:37,333
+<b>you migrate the evaluation. The tool trace</b>
+
+534
+01:35:37,333 --> 01:35:39,500
+<b>might not be directly visible to your</b>
+
+535
+01:35:39,500 --> 01:35:42,366
+<b>assessor agent, thus grading can be problematic.</b>
+
+536
+01:35:44,633 --> 01:35:51,266
+<b>And in general, to just make sure that you have a rather</b>
+
+537
+01:35:51,266 --> 01:35:53,233
+<b>independent identified assessment,</b>
+
+538
+01:35:54,133 --> 01:35:57,199
+<b>there can be three parts. So first, you want to build the</b>
+
+539
+01:35:57,199 --> 01:35:58,899
+<b>green agent or the assessor agent and</b>
+
+540
+01:35:58,899 --> 01:36:05,666
+<b>the assessee agent or the white or the different like</b>
+
+541
+01:36:05,666 --> 01:36:08,933
+<b>participant in this multi-agent procedure.</b>
+
+542
+01:36:08,966 --> 01:36:13,500
+<b>And also, you would like a kickoff script, which sends a</b>
+
+543
+01:36:13,500 --> 01:36:16,533
+<b>message to the assessor agent to kick off</b>
+
+544
+01:36:16,766 --> 01:36:21,866
+<b>the whole procedure. And later within the agent's platform,</b>
+
+545
+01:36:22,133 --> 01:36:24,300
+<b>this can be simplified by having a</b>
+
+546
+01:36:24,466 --> 01:36:27,966
+<b>platform on the component to send this message. But just</b>
+
+547
+01:36:27,966 --> 01:36:29,566
+<b>for a complete example, you might want</b>
+
+548
+01:36:29,566 --> 01:36:33,666
+<b>to have this separate component. So, implementation-wise,</b>
+
+549
+01:36:33,666 --> 01:36:35,466
+<b>you would like a kickoff script that</b>
+
+550
+01:36:35,833 --> 01:36:38,266
+<b>looks like the following. So, you will try to send out this</b>
+
+551
+01:36:38,266 --> 01:36:40,399
+<b>kickoff message to the green agent,</b>
+
+552
+01:36:40,399 --> 01:36:46,566
+<b>and that's it. And then for implementing the green agent,</b>
+
+553
+01:36:47,000 --> 01:36:48,966
+<b>what you need to essentially do is to</b>
+
+554
+01:36:48,966 --> 01:36:52,399
+<b>implement an agent interface. And in this case, a</b>
+
+555
+01:36:52,399 --> 01:36:56,866
+<b>coding-based workflow would help, would actually</b>
+
+556
+01:36:56,866 --> 01:37:00,166
+<b>solve the problem that it just loads the corresponding</b>
+
+557
+01:37:00,166 --> 01:37:03,633
+<b>environment and then issue and simulate the</b>
+
+558
+01:37:03,666 --> 01:37:09,533
+<b>conversation with the assessee agent. And it might be</b>
+
+559
+01:37:09,533 --> 01:37:11,833
+<b>slightly different for MCP-based implementation</b>
+
+560
+01:37:11,899 --> 01:37:14,966
+<b>since you need to set up the separate MCP server, but the</b>
+
+561
+01:37:14,966 --> 01:37:17,066
+<b>general workflow remains the same.</b>
+
+562
+01:37:18,666 --> 01:37:22,066
+<b>And similarly, you will have a participant agent that can</b>
+
+563
+01:37:22,066 --> 01:37:25,300
+<b>be very simple, as simple as like just a</b>
+
+564
+01:37:25,300 --> 01:37:28,800
+<b>general agent, since they are the candidate to be tested.</b>
+
+565
+01:37:29,300 --> 01:37:31,399
+<b>And again, here, the purpose is that for</b>
+
+566
+01:37:31,433 --> 01:37:34,566
+<b>any agent, under any agent harness, you</b>
+
+567
+01:37:34,566 --> 01:37:36,733
+<b>can incorporate it in a standardized test.</b>
+
+568
+01:37:38,866 --> 01:37:43,866
+<b>So, once you have identified the</b>
+
+569
+01:37:43,866 --> 01:37:45,566
+<b>assessment and standardized your</b>
+
+570
+01:37:45,899 --> 01:37:50,566
+<b>agent interface, the next step is to leverage the</b>
+
+571
+01:37:50,566 --> 01:37:52,333
+<b>agent-based platform or the agent-based format</b>
+
+572
+01:37:52,333 --> 01:37:56,866
+<b>to make it reproducible. And there are also some</b>
+
+573
+01:37:56,866 --> 01:38:00,366
+<b>potentially helpful materials that may help you</b>
+
+574
+01:38:00,399 --> 01:38:02,266
+<b>with this overall development procedure.</b>
+
+575
+01:38:06,666 --> 01:38:10,100
+<b>So, for the second part regarding how to</b>
+
+576
+01:38:10,100 --> 01:38:13,300
+<b>integrate your each agent with the agent-based. So, now you</b>
+
+577
+01:38:13,300 --> 01:38:16,266
+<b>have the identified assessment and also</b>
+
+578
+01:38:17,033 --> 01:38:18,866
+<b>having the baseline agent and the launcher.</b>
+
+579
+01:38:19,866 --> 01:38:21,733
+<b>The integration just takes three steps. So,</b>
+
+580
+01:38:21,733 --> 01:38:24,466
+<b>the first step is to wrap your agent with what we call the</b>
+
+581
+01:38:24,466 --> 01:38:26,000
+<b>agent-based controller, which will be</b>
+
+582
+01:38:26,366 --> 01:38:29,266
+<b>also discussed a little bit later. And the second is to</b>
+
+583
+01:38:29,266 --> 01:38:30,833
+<b>deploy your agent to the cloud,</b>
+
+584
+01:38:30,833 --> 01:38:33,733
+<b>to some sort of cloud platform to obtain a public IP as</b>
+
+585
+01:38:33,733 --> 01:38:37,100
+<b>well as protected by PPLS. And at the last</b>
+
+586
+01:38:37,100 --> 01:38:39,933
+<b>step is to connect it to the agent-based platform so that</b>
+
+587
+01:38:39,933 --> 01:38:42,866
+<b>actors can actually leverage it for a</b>
+
+588
+01:38:42,866 --> 01:38:47,733
+<b>multi-agent assessment. So, for agent-based controller,</b>
+
+589
+01:38:48,300 --> 01:38:50,466
+<b>it's actually a lightweight component</b>
+
+590
+01:38:50,533 --> 01:38:53,166
+<b>that can help you manage your agent instance. It has</b>
+
+591
+01:38:53,166 --> 01:38:55,766
+<b>several key responsibilities. The first</b>
+
+592
+01:38:56,500 --> 01:38:59,133
+<b>actually exposes a service API for managing your agent</b>
+
+593
+01:38:59,133 --> 01:39:02,500
+<b>state. For example, for attracting the agent</b>
+
+594
+01:39:02,500 --> 01:39:07,333
+<b>live needs, restarting the agent, or checking the agent</b>
+
+595
+01:39:07,333 --> 01:39:10,366
+<b>log. It also detects and starts or</b>
+
+596
+01:39:10,366 --> 01:39:13,699
+<b>restarts your agent based on the API request. And</b>
+
+597
+01:39:13,699 --> 01:39:18,766
+<b>additionally, just for the purpose of maintaining,</b>
+
+598
+01:39:19,666 --> 01:39:23,333
+<b>making it friendly to a microservice architecture, you also</b>
+
+599
+01:39:23,333 --> 01:39:26,666
+<b>have a feature to a proxy order request</b>
+
+600
+01:39:26,766 --> 01:39:30,533
+<b>that is sent to the internal agent instance. And just for</b>
+
+601
+01:39:30,533 --> 01:39:33,066
+<b>human friendly, UI also provides a</b>
+
+602
+01:39:33,066 --> 01:39:37,333
+<b>management panel for both debugging and also checking the</b>
+
+603
+01:39:37,333 --> 01:39:39,666
+<b>internal status. And the reason</b>
+
+604
+01:39:39,666 --> 01:39:43,233
+<b>you need such a component is that other users can actually</b>
+
+605
+01:39:43,233 --> 01:39:44,766
+<b>test your agent result manually</b>
+
+606
+01:39:45,500 --> 01:39:51,566
+<b>restart your agent between runs or just reach out to you to</b>
+
+607
+01:39:51,566 --> 01:39:54,300
+<b>say your agent needs some state</b>
+
+608
+01:39:54,766 --> 01:39:58,833
+<b>reset. So the procedure is also simple. You install the</b>
+
+609
+01:39:58,833 --> 01:40:01,166
+<b>package, you set up an executable</b>
+
+610
+01:40:01,166 --> 01:40:06,466
+<b>named run.sh, which in general tells the system how you</b>
+
+611
+01:40:06,466 --> 01:40:08,666
+<b>would start your agent and also make that</b>
+
+612
+01:40:08,933 --> 01:40:12,333
+<b>script executable. And then you run the</b>
+
+613
+01:40:12,333 --> 01:40:15,066
+<b>controller from the package. And what you get</b>
+
+614
+01:40:15,566 --> 01:40:18,666
+<b>is that you will have first a local management page for</b>
+
+615
+01:40:18,666 --> 01:40:21,266
+<b>monitoring the agent status. You also</b>
+
+616
+01:40:21,266 --> 01:40:25,166
+<b>have a proxy URL for accessing your agent similar to the</b>
+
+617
+01:40:25,166 --> 01:40:26,866
+<b>one that is starting your local host.</b>
+
+618
+01:40:27,433 --> 01:40:31,266
+<b>And also, you will have you can test whether this is set up</b>
+
+619
+01:40:31,266 --> 01:40:32,600
+<b>by just checking the agent card.</b>
+
+620
+01:40:35,766 --> 01:40:37,733
+<b>And here is an example for what you will see if you're</b>
+
+621
+01:40:37,733 --> 01:40:39,500
+<b>using this controller. So essentially,</b>
+
+622
+01:40:39,500 --> 01:40:41,366
+<b>you will try to manage your agent instance</b>
+
+623
+01:40:41,366 --> 01:40:45,933
+<b>internally. And there's also like a ongoing</b>
+
+624
+01:40:45,966 --> 01:40:48,566
+<b>like scaling feature that might help you manage multiple</b>
+
+625
+01:40:48,566 --> 01:40:50,000
+<b>agent instance in the future.</b>
+
+626
+01:40:50,533 --> 01:40:57,699
+<b>And you can toggle reset just from a controller API. So</b>
+
+627
+01:40:57,699 --> 01:40:59,800
+<b>once you have this controller,</b>
+
+628
+01:40:59,966 --> 01:41:08,199
+<b>you might consider like deploy your agent with a public IP</b>
+
+629
+01:41:08,199 --> 01:41:11,399
+<b>and POS. And there are also like in</b>
+
+630
+01:41:11,399 --> 01:41:17,333
+<b>general, a few steps for deployment. Including like</b>
+
+631
+01:41:17,333 --> 01:41:19,866
+<b>provision of yam also installed a program</b>
+
+632
+01:41:19,866 --> 01:41:23,466
+<b>getting a certificate and for more than alternative. We like you might want to contain a</b>
+
+633
+01:41:24,233 --> 01:41:31,133
+<b>containerize your agent and potentially with some sort of</b>
+
+634
+01:41:31,133 --> 01:41:33,533
+<b>field packs or Docker file and also</b>
+
+635
+01:41:33,533 --> 01:41:38,899
+<b>deployed for a micro service or function plugin sort of</b>
+
+636
+01:41:38,899 --> 01:41:40,766
+<b>like service just for getting that</b>
+
+637
+01:41:40,766 --> 01:41:45,433
+<b>TLS and also like auto scaling automatically. So the steps</b>
+
+638
+01:41:45,433 --> 01:41:47,399
+<b>are also quite simple. Here's an example.</b>
+
+639
+01:41:48,366 --> 01:41:50,933
+<b>So for example, you can set up the profile and then just build with a few packs and then push</b>
+
+640
+01:41:50,966 --> 01:41:56,899
+<b>it to a Docker registry. And the benefit is that you don't</b>
+
+641
+01:41:56,899 --> 01:41:58,933
+<b>need to manually set up the HTTPS anymore.</b>
+
+642
+01:41:59,166 --> 01:42:03,933
+<b>And also the management of your agent. So the last step is</b>
+
+643
+01:42:03,933 --> 01:42:05,333
+<b>to actually publish your agents</b>
+
+644
+01:42:05,333 --> 01:42:08,133
+<b>on the agent based platform. And once</b>
+
+645
+01:42:08,133 --> 01:42:10,833
+<b>your agent is public accessible, others can</b>
+
+646
+01:42:10,833 --> 01:42:16,933
+<b>discover it and also including it in general assessment. And the procedure is also simple</b>
+
+647
+01:42:17,199 --> 01:42:22,866
+<b>within the website, in the form. And then the key</b>
+
+648
+01:42:22,866 --> 01:42:24,666
+<b>information you need to provide here is the</b>
+
+649
+01:42:24,666 --> 01:42:28,733
+<b>controller URL that you set up earlier with public IP. And</b>
+
+650
+01:42:28,733 --> 01:42:31,133
+<b>for a complete example, coding example of</b>
+
+651
+01:42:31,466 --> 01:42:36,699
+<b>what you need to change from identifying the assessment to</b>
+
+652
+01:42:36,699 --> 01:42:38,866
+<b>agent based integrated agent,</b>
+
+653
+01:42:39,133 --> 01:42:40,600
+<b>please feel free to take a look at this</b>
+
+654
+01:42:40,600 --> 01:42:46,766
+<b>code patch. And so once you have this set</b>
+
+655
+01:42:46,866 --> 01:42:48,666
+<b>up, you also have next step of writing an</b>
+
+656
+01:42:48,666 --> 01:42:51,566
+<b>assessment and viewing the result from the</b>
+
+657
+01:42:51,566 --> 01:42:55,866
+<b>agent based dashboard. And we also have some announced the</b>
+
+658
+01:42:55,866 --> 01:42:58,333
+<b>feature for hosting agent etc,</b>
+
+659
+01:42:58,333 --> 01:43:00,733
+<b>just to sort of like signify the workflow.</b>
+
+660
+01:43:01,433 --> 01:43:04,366
+<b>But in general, that would be the flow for</b>
+
+661
+01:43:04,399 --> 01:43:12,633
+<b>integrating with the agent for agents. Thank you.</b>
+
+662
+01:43:18,699 --> 01:43:22,500
+<b>Okay, yes, so now I can continue. So</b>
+
+663
+01:43:22,500 --> 01:43:25,800
+<b>let me actually let me share screen.</b>
+
+664
+01:43:26,133 --> 01:43:29,333
+<b>Oh, I just did.</b>
+
+665
+01:43:30,366 --> 01:43:34,600
+<b>If you would like to. Okay, I think it's easier. So instead</b>
+
+666
+01:43:34,600 --> 01:43:36,699
+<b>of I have to say next slide, I'll just,</b>
+
+667
+01:43:37,266 --> 01:43:38,833
+<b>I think it may be easier. Right.</b>
+
+668
+01:43:38,866 --> 01:44:00,066
+<b>Okay, so people can see right. Okay, great. Okay, so yeah,</b>
+
+669
+01:44:00,066 --> 01:44:02,766
+<b>thanks, everyone. So now you've</b>
+
+670
+01:44:02,800 --> 01:44:07,766
+<b>understood the motivation for this new paradigm for</b>
+
+671
+01:44:07,766 --> 01:44:10,033
+<b>evaluation, the identified agent assessments,</b>
+
+672
+01:44:10,633 --> 01:44:14,399
+<b>and also understand, have seen some examples of how to</b>
+
+673
+01:44:14,399 --> 01:44:17,600
+<b>build the assessor agent, the green agent.</b>
+
+674
+01:44:18,433 --> 01:44:20,433
+<b>So now, we'll also talk a little</b>
+
+675
+01:44:20,433 --> 01:44:24,533
+<b>bit about further competition, how the</b>
+
+676
+01:44:26,466 --> 01:44:27,933
+<b>how the submissions will be</b>
+
+677
+01:44:27,933 --> 01:44:30,366
+<b>evaluated. And so first, let's look at,</b>
+
+678
+01:44:31,333 --> 01:44:34,566
+<b>given that we are talking about agent evaluation, then</b>
+
+679
+01:44:34,566 --> 01:44:36,399
+<b>first, let's look at what is a good</b>
+
+680
+01:44:36,866 --> 01:44:41,199
+<b>evaluation system. So one key</b>
+
+681
+01:44:41,199 --> 01:44:46,733
+<b>question is, as we develop agent evaluation,</b>
+
+682
+01:44:47,966 --> 01:44:53,033
+<b>how do we make sure that it's a high quality? And there are</b>
+
+683
+01:44:53,033 --> 01:44:54,733
+<b>many different aspects to ensure</b>
+
+684
+01:44:54,966 --> 01:44:59,899
+<b>high quality evaluations. And so, as I mentioned earlier,</b>
+
+685
+01:45:01,266 --> 01:45:03,699
+<b>so you want the evaluation to have</b>
+
+686
+01:45:03,833 --> 01:45:08,366
+<b>actually to be to be challenging</b>
+
+687
+01:45:08,366 --> 01:45:11,533
+<b>enough, so that you can actually differentiate</b>
+
+688
+01:45:12,633 --> 01:45:16,366
+<b>strong models, weak models, strong agents versus weak</b>
+
+689
+01:45:16,366 --> 01:45:19,800
+<b>agents. And also we want the evaluation to</b>
+
+690
+01:45:19,833 --> 01:45:27,133
+<b>be realistic. Ideally, the evaluation is more mounted after</b>
+
+691
+01:45:27,133 --> 01:45:30,166
+<b>real world, you know, useful tasks,</b>
+
+692
+01:45:31,233 --> 01:45:37,066
+<b>and real world settings and, and so on. And also, the</b>
+
+693
+01:45:37,066 --> 01:45:41,033
+<b>evaluation, we hope that it can actually give</b>
+
+694
+01:45:41,166 --> 01:45:44,366
+<b>a fairly accurate assessment, and with</b>
+
+695
+01:45:44,366 --> 01:45:48,466
+<b>like, no bias or low bias, and so on. So,</b>
+
+696
+01:45:49,966 --> 01:45:53,733
+<b>so there are many different aspects that</b>
+
+697
+01:45:53,733 --> 01:45:56,433
+<b>one actually needs to pay attention to.</b>
+
+698
+01:45:56,866 --> 01:46:02,266
+<b>So in particular here, as one example of important aspects,</b>
+
+699
+01:46:03,033 --> 01:46:04,633
+<b>is that you want to make sure that,</b>
+
+700
+01:46:04,966 --> 01:46:09,533
+<b>as I mentioned, the evaluation, for example, your scoring</b>
+
+701
+01:46:09,533 --> 01:46:14,033
+<b>function, is actually high quality,</b>
+
+702
+01:46:14,066 --> 01:46:18,933
+<b>it gives the correct evaluation. So outcome validity is</b>
+
+703
+01:46:18,933 --> 01:46:21,566
+<b>very important for making a good evaluation.</b>
+
+704
+01:46:23,933 --> 01:46:28,566
+<b>And so given that they, depending on the different tasks,</b>
+
+705
+01:46:29,733 --> 01:46:33,733
+<b>they, there may be, you know, different</b>
+
+706
+01:46:34,533 --> 01:46:40,566
+<b>outputs. And this will require different ways to judge the</b>
+
+707
+01:46:40,566 --> 01:46:45,699
+<b>results. So depending on the tasks that</b>
+
+708
+01:46:45,699 --> 01:46:49,600
+<b>you are developing, then you will need to develop</b>
+
+709
+01:46:49,600 --> 01:46:53,666
+<b>appropriate methods, especially if you are building</b>
+
+710
+01:46:53,833 --> 01:46:59,000
+<b>a new benchmark assessment, you need to develop appropriate</b>
+
+711
+01:46:59,000 --> 01:47:01,766
+<b>judging methods. So this oftentimes</b>
+
+712
+01:47:01,833 --> 01:47:07,199
+<b>depends on the different types of the outputs that you need</b>
+
+713
+01:47:07,199 --> 01:47:10,466
+<b>to evaluate over. For example, for</b>
+
+714
+01:47:10,466 --> 01:47:18,533
+<b>text outputs, some may do stream matching. And there are</b>
+
+715
+01:47:18,533 --> 01:47:20,366
+<b>different things you need to be careful</b>
+
+716
+01:47:20,766 --> 01:47:23,666
+<b>if you are doing, for example, sub-stream matching. And</b>
+
+717
+01:47:23,666 --> 01:47:26,600
+<b>sometimes one may do LMS as a judge. However,</b>
+
+718
+01:47:27,566 --> 01:47:31,366
+<b>in general, it's really important to ensure that when LMS</b>
+
+719
+01:47:31,366 --> 01:47:33,466
+<b>is used as a judge, it actually does</b>
+
+720
+01:47:33,466 --> 01:47:44,199
+<b>provide high accuracy in the evaluation. And in general,</b>
+
+721
+01:47:44,199 --> 01:47:46,399
+<b>especially for this competition,</b>
+
+722
+01:47:47,166 --> 01:47:53,266
+<b>we do encourage participants to try to provide as much</b>
+
+723
+01:47:53,266 --> 01:47:57,266
+<b>ground truth, or rigorous rubrics</b>
+
+724
+01:47:57,966 --> 01:48:02,333
+<b>for the evaluation as possible, instead of using as a</b>
+
+725
+01:48:02,333 --> 01:48:04,466
+<b>judge, which oftentimes does not provide</b>
+
+726
+01:48:04,866 --> 01:48:13,233
+<b>high enough accuracy, depending on the tasks. So again,</b>
+
+727
+01:48:13,466 --> 01:48:15,433
+<b>outcome validity is a very important</b>
+
+728
+01:48:15,566 --> 01:48:20,366
+<b>aspect for evaluating your green agents.</b>
+
+729
+01:48:23,266 --> 01:48:27,500
+<b>So here, this is also another example for</b>
+
+730
+01:48:27,966 --> 01:48:31,633
+<b>if you are judging code generation, then</b>
+
+731
+01:48:31,633 --> 01:48:34,266
+<b>you can use different methods, including</b>
+
+732
+01:48:35,100 --> 01:48:40,566
+<b>unit testing or end-to-end testing, fast testing, and so</b>
+
+733
+01:48:40,566 --> 01:48:46,300
+<b>on. And you can also provide evaluation</b>
+
+734
+01:48:46,300 --> 01:48:50,566
+<b>based on environment state changes for a lot of task</b>
+
+735
+01:48:50,566 --> 01:48:54,533
+<b>environments. This actually can provide</b>
+
+736
+01:48:55,100 --> 01:49:02,733
+<b>a very good method for judging the outcome validity. For</b>
+
+737
+01:49:02,733 --> 01:49:04,533
+<b>example, it includes ground truth,</b>
+
+738
+01:49:05,333 --> 01:49:08,733
+<b>and that actually includes all states achievable after</b>
+
+739
+01:49:08,733 --> 01:49:12,199
+<b>success, and the check for relevant and</b>
+
+740
+01:49:12,233 --> 01:49:19,166
+<b>irrelevant states. And in general, so this</b>
+
+741
+01:49:19,166 --> 01:49:25,133
+<b>is in this case, providing good ground truth</b>
+
+742
+01:49:26,133 --> 01:49:28,600
+<b>based on environment state challenges and</b>
+
+743
+01:49:28,600 --> 01:49:32,666
+<b>state changes can be a very effective way</b>
+
+744
+01:49:33,566 --> 01:49:37,500
+<b>of performing high quality assessments.</b>
+
+745
+01:49:40,233 --> 01:49:43,399
+<b>And here are some examples to consider</b>
+
+746
+01:49:43,833 --> 01:49:46,566
+<b>for judging multi-step reasoning, depending</b>
+
+747
+01:49:46,566 --> 01:49:50,133
+<b>on the matching quality measures and so on.</b>
+
+748
+01:49:51,566 --> 01:49:54,866
+<b>And also, as you build these assessments, our green agents,</b>
+
+749
+01:49:55,766 --> 01:49:57,399
+<b>it's important to pay attention to</b>
+
+750
+01:49:58,366 --> 01:50:03,466
+<b>the different ways how the evaluation could go wrong. In</b>
+
+751
+01:50:03,466 --> 01:50:05,300
+<b>fact, building high-quality evaluation</b>
+
+752
+01:50:05,300 --> 01:50:08,766
+<b>can be very challenging. There are many different ways</b>
+
+753
+01:50:08,766 --> 01:50:11,566
+<b>things can go wrong. So for example, the data</b>
+
+754
+01:50:11,566 --> 01:50:16,666
+<b>can be noisy or biased. There can be data continuation</b>
+
+755
+01:50:16,666 --> 01:50:20,666
+<b>issues in the sense that maybe</b>
+
+756
+01:50:20,866 --> 01:50:26,800
+<b>somehow the model agents, if I'm using some existing tests,</b>
+
+757
+01:50:27,666 --> 01:50:31,766
+<b>the model may have already seen</b>
+
+758
+01:50:31,766 --> 01:50:34,933
+<b>the tests in training data, then</b>
+
+759
+01:50:34,933 --> 01:50:38,333
+<b>this can cause data contamination. And</b>
+
+760
+01:50:43,100 --> 01:50:47,633
+<b>also with agents, sometimes there can be shortcuts, in</b>
+
+761
+01:50:47,633 --> 01:50:49,866
+<b>which case the evaluation can be gamed.</b>
+
+762
+01:50:50,533 --> 01:50:53,366
+<b>You'll be surprised how smart these agents</b>
+
+763
+01:50:53,366 --> 01:50:56,866
+<b>can be, that can try to take shortcuts to</b>
+
+764
+01:50:57,333 --> 01:51:00,800
+<b>to gain the evaluation. And also, as I</b>
+
+765
+01:51:00,800 --> 01:51:05,466
+<b>mentioned, ideally the assessment benchmark</b>
+
+766
+01:51:05,733 --> 01:51:09,033
+<b>should be challenging enough. And also,</b>
+
+767
+01:51:09,266 --> 01:51:12,066
+<b>in particular, you want to build these</b>
+
+768
+01:51:12,366 --> 01:51:16,066
+<b>evaluations that are sufficiently challenging, not just for</b>
+
+769
+01:51:16,066 --> 01:51:18,466
+<b>today's models and agents, but also</b>
+
+770
+01:51:19,266 --> 01:51:25,333
+<b>for you want the evaluation to have sufficiently long shelf</b>
+
+771
+01:51:25,333 --> 01:51:29,766
+<b>life, so that it can still remain</b>
+
+772
+01:51:29,833 --> 01:51:36,433
+<b>relevant even in the coming near terms and even longer</b>
+
+773
+01:51:36,433 --> 01:51:39,866
+<b>terms as well. And also, ideally,</b>
+
+774
+01:51:39,899 --> 01:51:44,066
+<b>these evaluations should focus on high-impact tasks</b>
+
+775
+01:51:44,066 --> 01:51:48,666
+<b>environments and be realistic and practical.</b>
+
+776
+01:51:51,199 --> 01:51:54,433
+<b>And here, I want to briefly mention a few case studies of</b>
+
+777
+01:51:54,433 --> 01:51:57,466
+<b>some examples of good evaluation systems.</b>
+
+778
+01:52:00,533 --> 01:52:05,833
+<b>And again, so when you are considering what to build for</b>
+
+779
+01:52:05,833 --> 01:52:08,199
+<b>the assessor agents or the green</b>
+
+780
+01:52:08,233 --> 01:52:12,033
+<b>agent, there are a number of questions to consider. In</b>
+
+781
+01:52:12,033 --> 01:52:13,433
+<b>particular, what is a good benchmark</b>
+
+782
+01:52:13,433 --> 01:52:17,266
+<b>and how to construct it? You need to select the initial</b>
+
+783
+01:52:17,266 --> 01:52:19,399
+<b>goals. What is the goal and what</b>
+
+784
+01:52:19,433 --> 01:52:22,399
+<b>essentially what do you want to evaluate? What are the</b>
+
+785
+01:52:22,399 --> 01:52:25,300
+<b>tasks and what are the environments to run the</b>
+
+786
+01:52:25,300 --> 01:52:29,100
+<b>agent to achieve the goal? And how to build the data</b>
+
+787
+01:52:29,100 --> 01:52:30,666
+<b>collection pipeline, how to evaluate</b>
+
+788
+01:52:31,899 --> 01:52:36,166
+<b>the assessor agent. And again, you want</b>
+
+789
+01:52:36,166 --> 01:52:40,433
+<b>to prioritize real-world realistic tasks,</b>
+
+790
+01:52:40,833 --> 01:52:42,833
+<b>have sufficient difficulty levels, and</b>
+
+791
+01:52:42,833 --> 01:52:44,666
+<b>actually have different difficulty levels,</b>
+
+792
+01:52:45,899 --> 01:52:51,566
+<b>and now easy to get contaminated or saturated. Here are</b>
+
+793
+01:52:51,566 --> 01:52:53,766
+<b>some examples that I just want to briefly</b>
+
+794
+01:52:53,833 --> 01:52:58,533
+<b>mention. So, CyberGem is actually our recent work as a</b>
+
+795
+01:52:58,533 --> 01:53:01,233
+<b>benchmark to evaluate AI capabilities in</b>
+
+796
+01:53:01,233 --> 01:53:05,433
+<b>cybersecurity, in particular for evaluating agent</b>
+
+797
+01:53:05,433 --> 01:53:08,233
+<b>capabilities in identifying vulnerabilities,</b>
+
+798
+01:53:08,766 --> 01:53:10,833
+<b>both previous and normal vulnerabilities, as well as</b>
+
+799
+01:53:10,833 --> 01:53:12,666
+<b>previously unknown vulnerabilities, and also</b>
+
+800
+01:53:12,666 --> 01:53:16,000
+<b>generating what's called a POC, proof of concepts. These</b>
+
+801
+01:53:16,000 --> 01:53:17,733
+<b>are inputs that actually trigger vulnerability.</b>
+
+802
+01:53:18,699 --> 01:53:23,800
+<b>And CyberGem actually was started with the goal to be</b>
+
+803
+01:53:23,800 --> 01:53:26,300
+<b>realistic, and in particular, actually it</b>
+
+804
+01:53:26,300 --> 01:53:29,699
+<b>contains close to 200 large-scale widely distributed</b>
+
+805
+01:53:29,699 --> 01:53:32,800
+<b>real-world open source software</b>
+
+806
+01:53:33,733 --> 01:53:37,733
+<b>that contains over 1500 previously known</b>
+
+807
+01:53:37,733 --> 01:53:40,399
+<b>vulnerabilities. And CyberGem is constructed</b>
+
+808
+01:53:40,533 --> 01:53:49,166
+<b>using well-constructed environments that are continually</b>
+
+809
+01:53:49,500 --> 01:53:56,300
+<b>licensed sandboxes to run these programs. And CyberGem</b>
+
+810
+01:53:56,300 --> 01:53:59,333
+<b>actually has, as a benchmark,</b>
+
+811
+01:54:00,066 --> 01:54:03,833
+<b>has demonstrated that the AI capabilities in cybersecurity</b>
+
+812
+01:54:03,833 --> 01:54:06,366
+<b>has been improving really fast,</b>
+
+813
+01:54:07,033 --> 01:54:09,566
+<b>and also has been included in Anthrappix</b>
+
+814
+01:54:09,566 --> 01:54:12,366
+<b>system cards for its latest model release,</b>
+
+815
+01:54:13,166 --> 01:54:18,100
+<b>CERN 9.5, for evaluation of AI capabilities in</b>
+
+816
+01:54:18,100 --> 01:54:22,833
+<b>cybersecurity. And you can find out more</b>
+
+817
+01:54:22,833 --> 01:54:28,033
+<b>information about CyberGem and how it's constructed on the</b>
+
+818
+01:54:28,033 --> 01:54:31,166
+<b>CyberGem website and in the paper.</b>
+
+819
+01:54:31,833 --> 01:54:36,566
+<b>And as an example, in the paper it actually performs data</b>
+
+820
+01:54:36,566 --> 01:54:39,233
+<b>contamination analysis to show that</b>
+
+821
+01:54:40,866 --> 01:54:44,733
+<b>there is minimum data contamination issues</b>
+
+822
+01:54:44,733 --> 01:54:49,266
+<b>that need to be concerned in this benchmark.</b>
+
+823
+01:54:50,366 --> 01:54:56,933
+<b>And also, CyberGem construction focuses on</b>
+
+824
+01:54:56,933 --> 01:54:59,899
+<b>high-quality evaluation that actually has</b>
+
+825
+01:55:01,366 --> 01:55:06,433
+<b>high-quality ground truth built into the evaluation through</b>
+
+826
+01:55:06,433 --> 01:55:08,833
+<b>the use of runtime sandhazers,</b>
+
+827
+01:55:09,366 --> 01:55:12,166
+<b>which actually gives ground truth and</b>
+
+828
+01:55:12,166 --> 01:55:15,033
+<b>results to show that whether the construct is</b>
+
+829
+01:55:16,233 --> 01:55:20,633
+<b>input is an actual POC that triggers vulnerability and also</b>
+
+830
+01:55:21,500 --> 01:55:23,766
+<b>separates whether it triggers a previous known</b>
+
+831
+01:55:23,766 --> 01:55:25,733
+<b>vulnerability versus a new vulnerability.</b>
+
+832
+01:55:25,766 --> 01:55:32,333
+<b>So that's the CyberGem. Here's another example for</b>
+
+833
+01:55:32,333 --> 01:55:35,133
+<b>TalBench, which actually Xiaoyuan just</b>
+
+834
+01:55:36,866 --> 01:55:39,199
+<b>did a walkthrough in terms of how to</b>
+
+835
+01:55:39,199 --> 01:55:44,633
+<b>identify TalBench as an accessory agent.</b>
+
+836
+01:55:46,466 --> 01:55:52,033
+<b>And so again, yeah, welcome to look at the details of</b>
+
+837
+01:55:52,033 --> 01:55:55,166
+<b>TalBench in the TalBench paper,</b>
+
+838
+01:55:55,199 --> 01:55:58,033
+<b>as well as the open source</b>
+
+839
+01:55:58,033 --> 01:56:03,333
+<b>benchmark. As an example, TalBench provides</b>
+
+840
+01:56:03,333 --> 01:56:10,566
+<b>a very good example benchmark for</b>
+
+841
+01:56:10,566 --> 01:56:15,833
+<b>computer use agents that actually covers a fairly</b>
+
+842
+01:56:17,266 --> 01:56:19,833
+<b>diverse different types of</b>
+
+843
+01:56:19,833 --> 01:56:23,333
+<b>environments for different types of tasks.</b>
+
+844
+01:56:25,600 --> 01:56:32,333
+<b>And again, you can give the interest of time. We won't go</b>
+
+845
+01:56:32,333 --> 01:56:34,000
+<b>through the details. You are welcome</b>
+
+846
+01:56:34,133 --> 01:56:38,233
+<b>to go into detail to look at the construction of TalBench</b>
+
+847
+01:56:38,233 --> 01:56:40,866
+<b>and how it is evaluated, where it</b>
+
+848
+01:56:40,866 --> 01:56:44,166
+<b>actually provides different metrics for evaluation as well.</b>
+
+849
+01:56:44,766 --> 01:56:47,166
+<b>And I also wanted to quickly mention the</b>
+
+850
+01:56:47,266 --> 01:56:54,733
+<b>TalBench, which is a next generation from TalBench, which</b>
+
+851
+01:56:54,733 --> 01:56:59,633
+<b>includes more dynamic interaction</b>
+
+852
+01:57:00,233 --> 01:57:06,466
+<b>between users and agents. And also, as I</b>
+
+853
+01:57:06,466 --> 01:57:08,666
+<b>mentioned earlier, we have a custom track</b>
+
+854
+01:57:09,366 --> 01:57:11,933
+<b>for TalBench. And again, you can look</b>
+
+855
+01:57:11,933 --> 01:57:16,333
+<b>at the TalBench paper and the open source</b>
+
+856
+01:57:17,100 --> 01:57:25,233
+<b>repo for more information. And then there are some other</b>
+
+857
+01:57:25,233 --> 01:57:26,866
+<b>examples that you can take a look</b>
+
+858
+01:57:27,666 --> 01:57:34,199
+<b>as well, such as the GTP well, and also CIM arena. So these</b>
+
+859
+01:57:34,199 --> 01:57:37,333
+<b>are all very interesting examples to</b>
+
+860
+01:57:38,300 --> 01:57:44,733
+<b>take a look. And then I want to just quickly conclude by</b>
+
+861
+01:57:44,733 --> 01:57:47,633
+<b>talking about then what are the</b>
+
+862
+01:57:48,633 --> 01:57:50,333
+<b>judging criteria that you need to consider</b>
+
+863
+01:57:50,333 --> 01:57:54,899
+<b>as you build these two different types of</b>
+
+864
+01:57:55,266 --> 01:57:57,966
+<b>assessor agents or green agents. As I mentioned, there are</b>
+
+865
+01:57:57,966 --> 01:58:00,100
+<b>two contribution types. One is to</b>
+
+866
+01:58:00,100 --> 01:58:04,300
+<b>integrate and identify existing benchmark.</b>
+
+867
+01:58:04,533 --> 01:58:06,133
+<b>The other one is to build a new benchmark.</b>
+
+868
+01:58:07,100 --> 01:58:14,333
+<b>So the first one is to integrate and identify existing</b>
+
+869
+01:58:14,333 --> 01:58:16,633
+<b>benchmark. On the competition websites,</b>
+
+870
+01:58:17,266 --> 01:58:21,033
+<b>there are links, again, as we showed earlier, that you can</b>
+
+871
+01:58:21,033 --> 01:58:23,833
+<b>look at example ideas for existing</b>
+
+872
+01:58:23,833 --> 01:58:29,066
+<b>benchmarks that you can identify and extend. And in</b>
+
+873
+01:58:29,066 --> 01:58:31,166
+<b>general, the workflow goes as the following.</b>
+
+874
+01:58:31,600 --> 01:58:34,366
+<b>So you want to identify the existing</b>
+
+875
+01:58:34,366 --> 01:58:37,433
+<b>benchmark that you are interested in extending and</b>
+
+876
+01:58:37,433 --> 01:58:42,566
+<b>identifying. And then you want to then essentially follow</b>
+
+877
+01:58:42,566 --> 01:58:44,566
+<b>the kind of steps that Xiaoya has mentioned</b>
+
+878
+01:58:44,866 --> 01:58:46,966
+<b>through his examples with the TalBench.</b>
+
+879
+01:58:49,566 --> 01:58:56,100
+<b>That you want to then identify the benchmark</b>
+
+880
+01:58:56,933 --> 01:58:59,800
+<b>and build the assessor agents by</b>
+
+881
+01:58:59,800 --> 01:59:02,033
+<b>following the similar steps as Xiaoya showed.</b>
+
+882
+01:59:03,600 --> 01:59:09,100
+<b>And also after that, we also strongly recommend you to even</b>
+
+883
+01:59:09,100 --> 01:59:10,466
+<b>though this existing benchmark,</b>
+
+884
+01:59:10,466 --> 01:59:13,066
+<b>a lot of the existing benchmarks, they do have quality</b>
+
+885
+01:59:13,066 --> 01:59:16,033
+<b>issues and so on. So we do strongly</b>
+
+886
+01:59:16,033 --> 01:59:21,300
+<b>recommend you to also investigate and do your own quality</b>
+
+887
+01:59:21,300 --> 01:59:23,566
+<b>analysis for the existing benchmark</b>
+
+888
+01:59:23,766 --> 01:59:29,500
+<b>that you selected. And when you encounter issues, to then</b>
+
+889
+01:59:29,500 --> 01:59:32,633
+<b>take the next step to ideally help correct</b>
+
+890
+01:59:32,633 --> 01:59:36,399
+<b>some of these issues and potentially even further expand</b>
+
+891
+01:59:36,399 --> 01:59:38,233
+<b>the existing benchmark as well.</b>
+
+892
+01:59:41,366 --> 01:59:47,066
+<b>So for the benchmark quality analysis, you can do it</b>
+
+893
+01:59:47,066 --> 01:59:48,766
+<b>through several different methods. You can do</b>
+
+894
+01:59:48,800 --> 01:59:52,433
+<b>it through manual validation to sample and check data</b>
+
+895
+01:59:52,433 --> 01:59:54,833
+<b>correctness, clarity and difficulty.</b>
+
+896
+01:59:55,866 --> 02:00:03,066
+<b>You can check the evaluator to confirm for metrics and also</b>
+
+897
+02:00:03,066 --> 02:00:05,533
+<b>the judges that actually do align with</b>
+
+898
+02:00:05,533 --> 02:00:08,966
+<b>the true task success and also analyze for bias and</b>
+
+899
+02:00:08,966 --> 02:00:11,633
+<b>contamination and other potential issues and</b>
+
+900
+02:00:11,733 --> 02:00:18,300
+<b>limitations as well. And then once you identify issues in</b>
+
+901
+02:00:18,300 --> 02:00:19,899
+<b>these existing benchmarks, you can try</b>
+
+902
+02:00:19,899 --> 02:00:23,533
+<b>to correct the benchmark if there are errors and also you</b>
+
+903
+02:00:23,533 --> 02:00:25,533
+<b>can try to expand the benchmark to</b>
+
+904
+02:00:25,566 --> 02:00:30,133
+<b>further improve its quality, size and diversity as you see</b>
+
+905
+02:00:30,133 --> 02:00:34,733
+<b>fit. And in terms of identifying issues</b>
+
+906
+02:00:34,933 --> 02:00:37,433
+<b>and correcting issues, so this is a very good example for</b>
+
+907
+02:00:37,433 --> 02:00:39,466
+<b>you to take a look. So there's the</b>
+
+908
+02:00:39,533 --> 02:00:43,500
+<b>original suite bench which provides a very good starting</b>
+
+909
+02:00:43,500 --> 02:00:46,333
+<b>point but had a number of issues and</b>
+
+910
+02:00:46,333 --> 02:00:52,666
+<b>later on with the suite bench verified, later on people</b>
+
+911
+02:00:52,666 --> 02:00:55,933
+<b>corrected, identified issues and corrected</b>
+
+912
+02:00:55,966 --> 02:00:59,733
+<b>them. And so now in general suite bench verified is</b>
+
+913
+02:00:59,733 --> 02:01:03,966
+<b>actually more widely used now for as the</b>
+
+914
+02:01:04,866 --> 02:01:12,166
+<b>evaluation for coding agents. So that's the first type for</b>
+
+915
+02:01:12,166 --> 02:01:15,266
+<b>extending, identifying existing benchmark.</b>
+
+916
+02:01:15,899 --> 02:01:18,933
+<b>As I mentioned, the second contribution type is to build</b>
+
+917
+02:01:18,933 --> 02:01:21,133
+<b>your own like new benchmarks.</b>
+
+918
+02:01:23,266 --> 02:01:29,766
+<b>And in particular, in this case, you want to identify</b>
+
+919
+02:01:29,766 --> 02:01:32,133
+<b>realistic tasks. You want to first</b>
+
+920
+02:01:32,166 --> 02:01:36,133
+<b>identify what task you want to and the environment that you</b>
+
+921
+02:01:36,133 --> 02:01:38,899
+<b>want to evaluate your benchmarks in.</b>
+
+922
+02:01:39,800 --> 02:01:45,566
+<b>And ideally you want to develop tasks that</b>
+
+923
+02:01:45,566 --> 02:01:47,833
+<b>actually reflect useful real world scenarios.</b>
+
+924
+02:01:49,300 --> 02:01:53,000
+<b>And it's even better if it's a domain that you are familiar</b>
+
+925
+02:01:53,000 --> 02:01:55,100
+<b>with and even tasks from your</b>
+
+926
+02:01:55,533 --> 02:02:00,433
+<b>regular workload and so on. And for the</b>
+
+927
+02:02:00,433 --> 02:02:04,733
+<b>evaluation, you can develop different methods</b>
+
+928
+02:02:04,766 --> 02:02:08,000
+<b>either with ground truth with the menu</b>
+
+929
+02:02:08,000 --> 02:02:10,699
+<b>developed ground truth or you can have some</b>
+
+930
+02:02:11,166 --> 02:02:13,533
+<b>semi automatic automatic methods as well.</b>
+
+931
+02:02:14,833 --> 02:02:19,733
+<b>And also, so now we are seeing more and more</b>
+
+932
+02:02:19,733 --> 02:02:22,166
+<b>multi-agents being developed as well. So we do encourage</b>
+
+933
+02:02:22,166 --> 02:02:23,733
+<b>you to build multi-agent benchmarks</b>
+
+934
+02:02:24,366 --> 02:02:28,366
+<b>as well. So here's a quick step</b>
+
+935
+02:02:28,366 --> 02:02:30,600
+<b>by step checklist for building your</b>
+
+936
+02:02:31,100 --> 02:02:34,066
+<b>associations of green agents. Make sure that</b>
+
+937
+02:02:34,066 --> 02:02:36,466
+<b>you choose the task you want to evaluate on</b>
+
+938
+02:02:37,266 --> 02:02:40,300
+<b>and design the environments that the agents are being</b>
+
+939
+02:02:40,300 --> 02:02:44,333
+<b>tested and need to run in. And this includes</b>
+
+940
+02:02:44,333 --> 02:02:47,233
+<b>providing the set of tools that the agents can interact</b>
+
+941
+02:02:47,233 --> 02:02:49,233
+<b>with, the agents that the agent can,</b>
+
+942
+02:02:49,500 --> 02:02:52,233
+<b>the actions the agent can take and also the environment</b>
+
+943
+02:02:52,233 --> 02:02:54,766
+<b>feedback to the agents after each action.</b>
+
+944
+02:02:57,233 --> 02:03:00,466
+<b>And also then design the metrics that your green agents</b>
+
+945
+02:03:00,466 --> 02:03:04,233
+<b>will evaluate with. For example,</b>
+
+946
+02:03:04,500 --> 02:03:07,399
+<b>in this booking ticket setting, the success rate for</b>
+
+947
+02:03:07,399 --> 02:03:09,666
+<b>booking tickets, how cheap the ticket is,</b>
+
+948
+02:03:09,966 --> 02:03:12,766
+<b>what the ticket satisfies the user's requirements and so</b>
+
+949
+02:03:12,766 --> 02:03:15,866
+<b>on. And then you need to design the task</b>
+
+950
+02:03:15,933 --> 02:03:19,133
+<b>cases to evaluate your green agent. You need to think about</b>
+
+951
+02:03:19,133 --> 02:03:21,566
+<b>the different scenarios of your purple</b>
+
+952
+02:03:21,566 --> 02:03:25,033
+<b>agents trying to complete the tasks and design the various</b>
+
+953
+02:03:25,033 --> 02:03:28,466
+<b>test cases to evaluate your green</b>
+
+954
+02:03:28,466 --> 02:03:31,833
+<b>agents that can handle the different test cases where</b>
+
+955
+02:03:31,833 --> 02:03:34,666
+<b>different purple agents will try to be</b>
+
+956
+02:03:34,666 --> 02:03:40,699
+<b>evaluated by the green agents. And also I want to mention</b>
+
+957
+02:03:40,699 --> 02:03:45,066
+<b>that in general top AI machine learning</b>
+
+958
+02:03:45,133 --> 02:03:49,766
+<b>conferences now have data sets, benchmark tracks. So for</b>
+
+959
+02:03:49,766 --> 02:03:52,433
+<b>example, this is the New York's, the top</b>
+
+960
+02:03:52,433 --> 02:03:57,633
+<b>deep learning conference, top AI conference for year 2025.</b>
+
+961
+02:03:58,266 --> 02:04:01,166
+<b>This will happen in December. And it's</b>
+
+962
+02:04:01,166 --> 02:04:05,266
+<b>a cover paper for data sets and benchmarks. So ICML also</b>
+
+963
+02:04:05,266 --> 02:04:08,600
+<b>has its data sets benchmark track</b>
+
+964
+02:04:09,566 --> 02:04:14,100
+<b>that's actually with the deadline in January. So if you</b>
+
+965
+02:04:14,100 --> 02:04:17,166
+<b>built your accessory green agents,</b>
+
+966
+02:04:18,433 --> 02:04:22,633
+<b>it also can be helpful that you can</b>
+
+967
+02:04:22,633 --> 02:04:26,899
+<b>consider the work later on you can submit the work</b>
+
+968
+02:04:27,333 --> 02:04:30,566
+<b>to these conferences as well. And</b>
+
+969
+02:04:30,566 --> 02:04:36,300
+<b>also we do plan to offer certain example</b>
+
+970
+02:04:38,933 --> 02:04:41,433
+<b>tasks and evaluations. So for people</b>
+
+971
+02:04:41,433 --> 02:04:43,633
+<b>who are interested, you can join as well</b>
+
+972
+02:04:43,833 --> 02:04:49,100
+<b>and potentially even co-author papers as well. So finally,</b>
+
+973
+02:04:49,100 --> 02:04:51,666
+<b>for judging criteria, when you are</b>
+
+974
+02:04:51,666 --> 02:04:54,366
+<b>building your accessory agent and green agents, there are a</b>
+
+975
+02:04:54,366 --> 02:04:58,066
+<b>number of aspects to keep in mind.</b>
+
+976
+02:04:58,733 --> 02:05:01,533
+<b>Later on we'll provide more details for the judging</b>
+
+977
+02:05:01,533 --> 02:05:03,733
+<b>criteria, but these are in general the different</b>
+
+978
+02:05:04,366 --> 02:05:08,833
+<b>aspects that you can keep in mind. So this is an example</b>
+
+979
+02:05:08,833 --> 02:05:10,800
+<b>list of different aspects for you to</b>
+
+980
+02:05:10,800 --> 02:05:14,399
+<b>consider for building new benchmarks for the judging</b>
+
+981
+02:05:14,399 --> 02:05:17,399
+<b>criteria. For example, Goa normality is your</b>
+
+982
+02:05:17,566 --> 02:05:23,266
+<b>benchmark important novel and covers new capability space.</b>
+
+983
+02:05:24,300 --> 02:05:26,533
+<b>And how is the scope and scale?</b>
+
+984
+02:05:26,833 --> 02:05:29,766
+<b>It's a benchmark large and diverse enough to give reliable</b>
+
+985
+02:05:29,766 --> 02:05:32,133
+<b>results, evaluate your quality,</b>
+
+986
+02:05:32,866 --> 02:05:36,300
+<b>matrix clear is your job, your evaluator</b>
+
+987
+02:05:36,300 --> 02:05:38,899
+<b>high quality and consistent. For validation,</b>
+
+988
+02:05:39,266 --> 02:05:41,966
+<b>did you perform manual checks or spot validation on the</b>
+
+989
+02:05:41,966 --> 02:05:44,300
+<b>evaluation outputs from your green agents?</b>
+
+990
+02:05:45,600 --> 02:05:49,733
+<b>For reliability, do your evaluation scripts and green</b>
+
+991
+02:05:49,733 --> 02:05:52,633
+<b>agents run robustly on agent beats</b>
+
+992
+02:05:53,033 --> 02:05:55,033
+<b>and quality assurance and your bias or</b>
+
+993
+02:05:55,033 --> 02:05:57,533
+<b>contamination checks that you have done.</b>
+
+994
+02:05:57,966 --> 02:06:01,100
+<b>And realism is a benchmark realistic, for example, with</b>
+
+995
+02:06:01,100 --> 02:06:03,866
+<b>real world workloads instead of</b>
+
+996
+02:06:03,866 --> 02:06:07,333
+<b>toy or unrealistic settings. And impact is a benchmark</b>
+
+997
+02:06:07,333 --> 02:06:10,233
+<b>reusable, well documented and presents</b>
+
+998
+02:06:10,233 --> 02:06:15,333
+<b>it clearly. And then similarly, there are similar aspects</b>
+
+999
+02:06:15,333 --> 02:06:18,800
+<b>for the judging criteria when you are</b>
+
+1000
+02:06:19,566 --> 02:06:21,866
+<b>extending and identifying an existing</b>
+
+1001
+02:06:21,866 --> 02:06:26,266
+<b>benchmark as well. So here, in addition to</b>
+
+1002
+02:06:27,100 --> 02:06:32,199
+<b>successfully identifying the existing benchmark, you also</b>
+
+1003
+02:06:32,199 --> 02:06:34,366
+<b>want to analyze for quality issues for</b>
+
+1004
+02:06:34,366 --> 02:06:37,633
+<b>the original benchmark that you extended and try to find</b>
+
+1005
+02:06:37,633 --> 02:06:39,833
+<b>whether it has any issues, flaws.</b>
+
+1006
+02:06:41,166 --> 02:06:43,566
+<b>And for facefulness, is your implementation reproducing</b>
+
+1007
+02:06:43,566 --> 02:06:45,300
+<b>results from the original benchmark</b>
+
+1008
+02:06:45,433 --> 02:06:49,199
+<b>excludes excluding the flaws that you fixed? Quality</b>
+
+1009
+02:06:49,199 --> 02:06:51,000
+<b>assurance is your implementation</b>
+
+1010
+02:06:51,266 --> 02:06:53,433
+<b>correcting the flaws in the original</b>
+
+1011
+02:06:53,433 --> 02:06:55,466
+<b>benchmark and expanding the courage</b>
+
+1012
+02:06:56,066 --> 02:06:59,366
+<b>of the original benchmark. And</b>
+
+1013
+02:06:59,366 --> 02:07:05,100
+<b>evaluator quality and validation, reliability,</b>
+
+1014
+02:07:06,666 --> 02:07:10,966
+<b>and these are similar aspects that I mentioned in the</b>
+
+1015
+02:07:10,966 --> 02:07:13,800
+<b>previous slide as well. And also impact is</b>
+
+1016
+02:07:13,833 --> 02:07:17,333
+<b>your implementation reusable, well documented and presents</b>
+
+1017
+02:07:17,333 --> 02:07:22,366
+<b>it clearly. So I think that's all.</b>
+
+1018
+02:07:23,266 --> 02:07:33,566
+<b>So thanks everyone for joining this presentation. So now we</b>
+
+1019
+02:07:33,566 --> 02:07:37,000
+<b>also open up for some Q&A and Xiong</b>
+
+1020
+02:07:37,033 --> 02:07:49,166
+<b>will help answer questions as well. Xiong, can you just</b>
+
+1021
+02:07:49,166 --> 02:07:51,266
+<b>take the questions and you can</b>
+
+1022
+02:07:51,833 --> 02:07:55,933
+<b>start repeating the questions and then give the answers.</b>
+
+1023
+02:07:55,933 --> 02:08:00,033
+<b>Sure, of course. So I go through, I guess</b>
+
+1024
+02:08:00,233 --> 02:08:04,899
+<b>some of the questions that I previously, I guess I'll</b>
+
+1025
+02:08:04,899 --> 02:08:07,633
+<b>probably just start from those. And well,</b>
+
+1026
+02:08:07,633 --> 02:08:12,600
+<b>meantime, please feel free to send more questions in the</b>
+
+1027
+02:08:12,600 --> 02:08:15,433
+<b>chat. So there was this question for</b>
+
+1028
+02:08:16,300 --> 02:08:20,500
+<b>does this mean HWA and MCP need to be a part of agentic</b>
+
+1029
+02:08:20,500 --> 02:08:22,933
+<b>flow in order for AAA to work?</b>
+
+1030
+02:08:23,433 --> 02:08:28,633
+<b>Yeah, in general, the HWA is used for communicating single</b>
+
+1031
+02:08:28,633 --> 02:08:32,166
+<b>phase as the interface we incorporate for</b>
+
+1032
+02:08:33,433 --> 02:08:36,933
+<b>doing task management. And instead of</b>
+
+1033
+02:08:36,933 --> 02:08:40,100
+<b>just setting up like a custom customized one,</b>
+
+1034
+02:08:41,666 --> 02:08:44,033
+<b>like yet another standard, we're just</b>
+
+1035
+02:08:44,033 --> 02:08:47,233
+<b>using HWA based on is like data format and</b>
+
+1036
+02:08:48,233 --> 02:08:51,466
+<b>way of like managing tasks. And similarly, for to use,</b>
+
+1037
+02:08:51,466 --> 02:08:53,166
+<b>since MCP is already sort of a common</b>
+
+1038
+02:08:53,733 --> 02:08:58,233
+<b>protocol for everyone, we are just leveraging that for a</b>
+
+1039
+02:08:58,233 --> 02:09:00,566
+<b>green agent to provide necessary tools for</b>
+
+1040
+02:09:00,566 --> 02:09:14,866
+<b>agents to interact. And yeah, so</b>
+
+1041
+02:09:14,866 --> 02:09:16,633
+<b>there's also a second question that</b>
+
+1042
+02:09:18,233 --> 02:09:22,066
+<b>where's the assessor is coming for agent is coming from? Is</b>
+
+1043
+02:09:22,066 --> 02:09:23,566
+<b>it available somewhere we need to be</b>
+
+1044
+02:09:23,566 --> 02:09:26,633
+<b>written along with other agent? Yeah, great question. So</b>
+
+1045
+02:09:26,633 --> 02:09:28,533
+<b>the assessor agent or the great</b>
+
+1046
+02:09:28,533 --> 02:09:31,800
+<b>agent is actually the main deliverable for the first phase.</b>
+
+1047
+02:09:32,500 --> 02:09:35,399
+<b>That means that so first of all is</b>
+
+1048
+02:09:36,633 --> 02:09:40,633
+<b>equivalent to designing a new assessor</b>
+
+1049
+02:09:40,633 --> 02:09:42,766
+<b>agent is essentially deciding a new benchmark.</b>
+
+1050
+02:09:43,500 --> 02:09:45,966
+<b>But also like along with the</b>
+
+1051
+02:09:45,966 --> 02:09:49,033
+<b>standardized interface and also like reproducible</b>
+
+1052
+02:09:49,199 --> 02:09:54,766
+<b>sort of ability that so yes, like it</b>
+
+1053
+02:09:54,766 --> 02:09:57,399
+<b>should be coming from I guess like the</b>
+
+1054
+02:09:57,399 --> 02:10:01,233
+<b>submission for come as the submission for this competition.</b>
+
+1055
+02:10:04,866 --> 02:10:06,533
+<b>And I'm also going to go through</b>
+
+1056
+02:10:06,533 --> 02:10:07,333
+<b>some questions from other channel.</b>
+
+1057
+02:10:18,300 --> 02:10:21,199
+<b>So there was this question of</b>
+
+1058
+02:10:33,666 --> 02:10:36,933
+<b>you will not provide any API for white purple agent to use</b>
+
+1059
+02:10:36,933 --> 02:10:40,233
+<b>for testing for testing it without</b>
+
+1060
+02:10:40,399 --> 02:10:44,000
+<b>reagent. So we're not providing well, we are not providing</b>
+
+1061
+02:10:44,000 --> 02:10:47,466
+<b>a standardized white agent is</b>
+
+1062
+02:10:47,733 --> 02:10:50,533
+<b>currently like a most modern agent framework do have your</b>
+
+1063
+02:10:50,533 --> 02:10:54,333
+<b>eight way support. And in general,</b>
+
+1064
+02:10:54,366 --> 02:10:57,633
+<b>feel free to use those or like the off the shelf example as</b>
+
+1065
+02:10:57,633 --> 02:10:59,766
+<b>the general great agent to test against</b>
+
+1066
+02:10:59,766 --> 02:11:03,766
+<b>retargeting. In general, a good great agent, a good design</b>
+
+1067
+02:11:03,766 --> 02:11:05,399
+<b>like assessor agent should be able</b>
+
+1068
+02:11:06,233 --> 02:11:09,933
+<b>to be general enough to test any general assessor agent.</b>
+
+1069
+02:11:10,566 --> 02:11:11,766
+<b>However, well, that being said,</b>
+
+1070
+02:11:12,366 --> 02:11:15,433
+<b>we also recommend you to also build a better baseline</b>
+
+1071
+02:11:15,433 --> 02:11:17,500
+<b>assessor agent separately just to</b>
+
+1072
+02:11:17,500 --> 02:11:23,633
+<b>demonstrate that you're like like for certain improved</b>
+
+1073
+02:11:23,633 --> 02:11:26,600
+<b>agent that your benchmark or your</b>
+
+1074
+02:11:26,600 --> 02:11:30,533
+<b>your assessor agent can distinguish them and actually</b>
+
+1075
+02:11:30,533 --> 02:11:31,966
+<b>measure the ability. For example,</b>
+
+1076
+02:11:32,166 --> 02:11:34,933
+<b>if you're building a web browsing agent, a web browsing</b>
+
+1077
+02:11:34,933 --> 02:11:37,500
+<b>environment for like a web browsing</b>
+
+1078
+02:11:37,500 --> 02:11:41,233
+<b>green agent, then potentially you might want to use or</b>
+
+1079
+02:11:41,233 --> 02:11:44,666
+<b>incorporate other like agents with</b>
+
+1080
+02:11:44,666 --> 02:11:47,766
+<b>web browsing tools or with web browsing ability either from</b>
+
+1081
+02:11:47,766 --> 02:11:49,833
+<b>a visual version or a text version,</b>
+
+1082
+02:11:50,333 --> 02:11:56,133
+<b>or a visual input or text input to provide more baselines.</b>
+
+1083
+02:12:03,333 --> 02:12:07,366
+<b>So there was also a question about the some current, I</b>
+
+1084
+02:12:07,366 --> 02:12:09,833
+<b>would say that difficulty using the website.</b>
+
+1085
+02:12:11,366 --> 02:12:14,833
+<b>Well, the there will be a so first of all, there will be a</b>
+
+1086
+02:12:14,833 --> 02:12:17,199
+<b>different, actually, a different set of</b>
+
+1087
+02:12:17,199 --> 02:12:21,199
+<b>UIs and the upgraded version of the website for the</b>
+
+1088
+02:12:21,199 --> 02:12:23,033
+<b>official submission for this competition.</b>
+
+1089
+02:12:24,066 --> 02:12:27,199
+<b>So I would personally recommend to start with the identify</b>
+
+1090
+02:12:27,199 --> 02:12:29,633
+<b>example, or the like the top entry example</b>
+
+1091
+02:12:29,833 --> 02:12:34,533
+<b>for identifying the benchmark first. And then in terms of</b>
+
+1092
+02:12:34,533 --> 02:12:36,733
+<b>integration, we'll have like a new</b>
+
+1093
+02:12:36,733 --> 02:12:41,000
+<b>blog coming really soon, perhaps like within a week to help</b>
+
+1094
+02:12:41,000 --> 02:12:42,633
+<b>provide more information. Thanks.</b>
+
+1095
+02:12:46,966 --> 02:12:49,233
+<b>Another question from chat, how long do</b>
+
+1096
+02:12:49,233 --> 02:12:54,266
+<b>we expect the benchmark to be given that</b>
+
+1097
+02:12:54,466 --> 02:12:57,933
+<b>maybe there's only limited budget? So great question.</b>
+
+1098
+02:13:01,566 --> 02:13:05,866
+<b>So I'll start by I guess, like answering this part. So</b>
+
+1099
+02:13:05,866 --> 02:13:08,233
+<b>essentially, I think like the size of</b>
+
+1100
+02:13:08,233 --> 02:13:11,500
+<b>the benchmark is determined by two factors. So first, of</b>
+
+1101
+02:13:11,500 --> 02:13:13,333
+<b>course, the budget and second is also</b>
+
+1102
+02:13:13,966 --> 02:13:18,033
+<b>the question, the investigation scope. It's not always the</b>
+
+1103
+02:13:18,033 --> 02:13:19,733
+<b>case that the benchmark is as large</b>
+
+1104
+02:13:19,733 --> 02:13:24,166
+<b>as possible. I think as long as it is of a size that can</b>
+
+1105
+02:13:24,166 --> 02:13:28,133
+<b>truly do like a correct management in a</b>
+
+1106
+02:13:28,133 --> 02:13:32,399
+<b>rather stable format, and also sort of successfully support</b>
+
+1107
+02:13:32,399 --> 02:13:34,199
+<b>your evaluation target, then that should</b>
+
+1108
+02:13:34,199 --> 02:13:37,733
+<b>be fine. For example, just in general for like a web</b>
+
+1109
+02:13:37,733 --> 02:13:42,233
+<b>browsing, like a web browsing benchmark,</b>
+
+1110
+02:13:42,233 --> 02:13:45,333
+<b>depending on whether you are testing, say, a general web</b>
+
+1111
+02:13:45,333 --> 02:13:47,399
+<b>browsing ability, or say, if you are</b>
+
+1112
+02:13:47,433 --> 02:13:51,566
+<b>just testing for BI related like website, or for</b>
+
+1113
+02:13:51,566 --> 02:13:56,333
+<b>commercial, or for like in the financial or</b>
+
+1114
+02:13:56,366 --> 02:13:59,699
+<b>medical setting, sort of like website, depending on like</b>
+
+1115
+02:13:59,699 --> 02:14:01,766
+<b>the problem for scope, I think as long as</b>
+
+1116
+02:14:01,766 --> 02:14:05,166
+<b>the size of their site properly supports that scope, it</b>
+
+1117
+02:14:05,166 --> 02:14:11,466
+<b>should be fine. And another question is</b>
+
+1118
+02:14:12,066 --> 02:14:15,633
+<b>how the final assessment will be done as there are true</b>
+
+1119
+02:14:15,633 --> 02:14:19,000
+<b>assessments based on green agent and</b>
+
+1120
+02:14:19,000 --> 02:14:23,133
+<b>purple agent. So well, I guess like the standard will be</b>
+
+1121
+02:14:23,133 --> 02:14:27,466
+<b>provided for two phase like more on our</b>
+
+1122
+02:14:27,466 --> 02:14:34,066
+<b>official website. In general, those will be like assessed</b>
+
+1123
+02:14:34,066 --> 02:14:38,033
+<b>as like different tracks and assessed</b>
+
+1124
+02:14:38,066 --> 02:14:46,266
+<b>separately. Another question is, how can we extensively</b>
+
+1125
+02:14:46,266 --> 02:14:48,366
+<b>test our green agent with LAM API</b>
+
+1126
+02:14:48,366 --> 02:14:59,600
+<b>limitations? I see. So in terms of API limitations, so I'll</b>
+
+1127
+02:14:59,600 --> 02:15:02,266
+<b>encourage to explore, first of all,</b>
+
+1128
+02:15:02,300 --> 02:15:05,766
+<b>like different against like, platforms. And also in</b>
+
+1129
+02:15:05,766 --> 02:15:07,866
+<b>general, this, I think this sort of go in line</b>
+
+1130
+02:15:07,866 --> 02:15:11,133
+<b>with the previous question of the budget for creating a</b>
+
+1131
+02:15:11,133 --> 02:15:15,533
+<b>benchmark that I think the purpose</b>
+
+1132
+02:15:15,666 --> 02:15:19,199
+<b>is rather just a complete benchmark under the scope rather</b>
+
+1133
+02:15:19,199 --> 02:15:22,666
+<b>than just, I would say like make</b>
+
+1134
+02:15:22,666 --> 02:15:28,166
+<b>it as large or make it as like, necessarily repeat the</b>
+
+1135
+02:15:28,166 --> 02:15:29,766
+<b>experiment, multiple times as more as possible.</b>
+
+1136
+02:15:30,366 --> 02:15:33,933
+<b>So there are some like, I guess, like in general, public</b>
+
+1137
+02:15:33,933 --> 02:15:36,366
+<b>resource for getting more API requests from</b>
+
+1138
+02:15:36,366 --> 02:15:41,233
+<b>different, I guess, like LAM API provider. But in general,</b>
+
+1139
+02:15:41,233 --> 02:15:43,766
+<b>just, I guess the principle here is</b>
+
+1140
+02:15:43,899 --> 02:15:45,733
+<b>design the experiment more carefully.</b>
+
+1141
+02:15:46,399 --> 02:15:48,699
+<b>And also just look out for more resource.</b>
+
+1142
+02:16:14,766 --> 02:16:18,266
+<b>Another question from the chat that are we doing encourage</b>
+
+1143
+02:16:18,266 --> 02:16:20,966
+<b>new benchmark or identifying existing</b>
+
+1144
+02:16:21,266 --> 02:16:24,266
+<b>benchmark, I think there'll be measured as first of all,</b>
+
+1145
+02:16:24,733 --> 02:16:26,600
+<b>just what we measured under different tracks.</b>
+
+1146
+02:16:27,166 --> 02:16:32,333
+<b>So we in general, like encourage both of them as like both</b>
+
+1147
+02:16:32,333 --> 02:16:33,799
+<b>of them will be significantly</b>
+
+1148
+02:16:33,799 --> 02:16:38,266
+<b>contributing a rather standardized agent evaluation future.</b>
+
+1149
+02:16:39,700 --> 02:16:42,000
+<b>And overall, the assessment will be made</b>
+
+1150
+02:16:42,033 --> 02:16:47,399
+<b>based on both the effort and also</b>
+
+1151
+02:16:47,399 --> 02:16:51,966
+<b>the final outcome for the benchmark.</b>
+
+1152
+02:16:52,500 --> 02:16:54,833
+<b>Say for example, there are some like, currently there are</b>
+
+1153
+02:16:54,833 --> 02:16:55,733
+<b>some like benchmarks that are</b>
+
+1154
+02:16:55,733 --> 02:16:59,466
+<b>originally quite simple, but non standardized, can really</b>
+
+1155
+02:16:59,466 --> 02:17:00,899
+<b>make them like really general,</b>
+
+1156
+02:17:01,166 --> 02:17:04,333
+<b>really flexible for different types of like agent, and also</b>
+
+1157
+02:17:04,333 --> 02:17:08,233
+<b>provide a, let's say like a logging</b>
+
+1158
+02:17:08,233 --> 02:17:13,866
+<b>interface or some like helpful agent separation that could</b>
+
+1159
+02:17:13,866 --> 02:17:16,133
+<b>potentially lead to very interesting</b>
+
+1160
+02:17:16,133 --> 02:17:21,299
+<b>findings or very high utility, then those will be like also</b>
+
+1161
+02:17:21,299 --> 02:17:22,600
+<b>significantly contribution and</b>
+
+1162
+02:17:22,700 --> 02:17:28,000
+<b>counted in the in the in the general assessment. And also,</b>
+
+1163
+02:17:29,299 --> 02:17:31,299
+<b>for new benchmark is the same story,</b>
+
+1164
+02:17:31,500 --> 02:17:34,766
+<b>like it doesn't have to be marking the previous question,</b>
+
+1165
+02:17:34,766 --> 02:17:35,866
+<b>it doesn't have to be super large.</b>
+
+1166
+02:17:37,233 --> 02:17:40,966
+<b>And as long as it's like novel and satisfied, like most of</b>
+
+1167
+02:17:40,966 --> 02:17:42,166
+<b>the criteria that is mentioned in the</b>
+
+1168
+02:17:42,166 --> 02:17:46,833
+<b>earlier part of this info session, then you should be like</b>
+
+1169
+02:17:46,833 --> 02:17:48,933
+<b>a good candidate for submission.</b>
+
+1170
+02:18:52,633 --> 02:19:03,433
+<b>[no audio]</b>
+
+1171
+02:19:06,600 --> 02:19:08,200
+<b>Okay, here's another question.</b>
+
+1172
+02:19:08,533 --> 02:19:11,066
+<b>So why is the evaluator for the agent</b>
+
+1173
+02:19:11,166 --> 02:19:15,133
+<b>won't it be just an LM evaluator, not LM agent?</b>
+
+1174
+02:19:16,066 --> 02:19:16,799
+<b>Good question.</b>
+
+1175
+02:19:17,033 --> 02:19:19,633
+<b>So actually one of the core part</b>
+
+1176
+02:19:19,633 --> 02:19:23,933
+<b>for agent B's is that we are treating,</b>
+
+1177
+02:19:24,466 --> 02:19:26,766
+<b>we are trying to unify the</b>
+
+1178
+02:19:26,766 --> 02:19:30,733
+<b>abstraction here by also making the evaluator,</b>
+
+1179
+02:19:30,966 --> 02:19:33,266
+<b>or what we call the assessor, an agent entity.</b>
+
+1180
+02:19:34,066 --> 02:19:35,866
+<b>And in this way, they actually follow the</b>
+
+1181
+02:19:35,866 --> 02:19:39,700
+<b>same set of interface as a general agent</b>
+
+1182
+02:19:39,733 --> 02:19:40,933
+<b>based on A2A.</b>
+
+1183
+02:19:41,766 --> 02:19:42,866
+<b>So you can actually manage</b>
+
+1184
+02:19:42,866 --> 02:19:45,066
+<b>the, think of it as the following,</b>
+
+1185
+02:19:45,100 --> 02:19:46,799
+<b>can manage the benchmark the same way</b>
+
+1186
+02:19:46,799 --> 02:19:49,833
+<b>as you might manage agent themselves.</b>
+
+1187
+02:19:50,533 --> 02:19:52,766
+<b>And that will actually simplify the system development as</b>
+
+1188
+02:19:52,766 --> 02:19:55,033
+<b>well as just conceptually a lot.</b>
+
+1189
+02:19:56,233 --> 02:19:58,966
+<b>And here, I'd want to note that</b>
+
+1190
+02:19:58,966 --> 02:20:02,299
+<b>the evaluators or the assessors</b>
+
+1191
+02:20:02,533 --> 02:20:04,633
+<b>is not necessarily driven by LM.</b>
+
+1192
+02:20:04,933 --> 02:20:07,433
+<b>So they might be agent, but more</b>
+
+1193
+02:20:07,433 --> 02:20:10,466
+<b>towards the, I guess, original concept of like</b>
+
+1194
+02:20:10,799 --> 02:20:12,233
+<b>agents in reinforcement learning</b>
+
+1195
+02:20:12,233 --> 02:20:14,666
+<b>that you would react to the environment,</b>
+
+1196
+02:20:15,766 --> 02:20:17,333
+<b>which is also like the platform for</b>
+
+1197
+02:20:17,333 --> 02:20:19,166
+<b>the request for evaluating other agent.</b>
+
+1198
+02:20:20,633 --> 02:20:22,733
+<b>And it's not necessarily driven,</b>
+
+1199
+02:20:22,933 --> 02:20:25,600
+<b>or at least for this assessor agent,</b>
+
+1200
+02:20:25,600 --> 02:20:27,133
+<b>it's not necessarily driven by LM.</b>
+
+1201
+02:20:27,799 --> 02:20:28,933
+<b>However, I also do want to</b>
+
+1202
+02:20:28,933 --> 02:20:31,133
+<b>point out that most of the, well,</b>
+
+1203
+02:20:32,166 --> 02:20:34,633
+<b>significant amount of recent agent</b>
+
+1204
+02:20:34,633 --> 02:20:37,233
+<b>evaluation is based on LM as a charge,</b>
+
+1205
+02:20:37,799 --> 02:20:39,666
+<b>which means that the LM component is</b>
+
+1206
+02:20:39,666 --> 02:20:42,166
+<b>already somehow within the evaluation procedure.</b>
+
+1207
+02:20:42,733 --> 02:20:45,733
+<b>And under this assumption, we are seeing that in the</b>
+
+1208
+02:20:45,733 --> 02:20:47,799
+<b>future, more and more agents will be</b>
+
+1209
+02:20:48,700 --> 02:20:51,466
+<b>judged by or evaluated by other agents.</b>
+
+1210
+02:20:51,466 --> 02:20:54,833
+<b>And thus, we are making the concept or the</b>
+
+1211
+02:20:54,833 --> 02:20:57,966
+<b>abstraction to be consistent at this stage.</b>
+
+1212
+02:20:58,000 --> 02:21:04,466
+<b>And for the questions, please feel</b>
+
+1213
+02:21:04,466 --> 02:21:07,866
+<b>free to leave them in the Discord channel,</b>
+
+1214
+02:21:07,866 --> 02:21:09,766
+<b>which is the preferred channel. Thank you.</b>
+
+1215
+02:21:13,266 --> 02:21:14,833
+<b>Oh, and for the second part of the earlier</b>
+
+1216
+02:21:14,833 --> 02:21:18,100
+<b>question, yes, there will be LM evaluator,</b>
+
+1217
+02:21:18,333 --> 02:21:21,433
+<b>and there will also be the evaluator</b>
+
+1218
+02:21:21,433 --> 02:21:22,933
+<b>agents, so there are also evaluators.</b>
+
+1219
+02:21:38,533 --> 02:21:40,533
+<b>Okay, so given the time reason,</b>
+
+1220
+02:21:40,833 --> 02:21:42,100
+<b>thanks for the wonderful questions.</b>
+
+1221
+02:21:42,633 --> 02:21:45,799
+<b>And while you're working on here, for more questions,</b>
+
+1222
+02:21:45,799 --> 02:21:46,933
+<b>please feel free to leave them in</b>
+
+1223
+02:21:46,933 --> 02:21:49,633
+<b>Discord and we'll be replying</b>
+
+1224
+02:21:49,633 --> 02:21:51,566
+<b>in a synchronous manner later.</b>
+
+1225
+02:21:52,366 --> 02:21:53,866
+<b>Thank you all again for joining</b>
+
+1226
+02:21:53,866 --> 02:21:57,766
+<b>today's session and hope you had fun,</b>
+
+1227
+02:21:57,899 --> 02:22:03,166
+<b>have fun in building your next agent evaluation. Thank you.</b>
+
