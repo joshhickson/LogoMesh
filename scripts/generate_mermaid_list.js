@@ -4,16 +4,26 @@ const path = require('path');
 const workspaceRoot = path.resolve(__dirname, '..');
 const graphDataPath = path.join(workspaceRoot, 'onboarding', 'doc_graph', 'doc_graph_raw.json');
 const outputMermaidPath = path.join(workspaceRoot, 'onboarding', 'doc_graph', 'mermaid_list.md');
-const indexPath = path.join(workspaceRoot, 'onboarding', 'index.html');
 
 function getFileTimestamp(filePath) {
     try {
         const stats = fs.statSync(path.join(workspaceRoot, filePath));
         return stats.mtime;
     } catch (e) {
-        // Return a very old date if file not found, so it's not highlighted
         return new Date(0);
     }
+}
+
+// Robust escaping function for Mermaid
+function escapeMermaidLabel(label) {
+    if (!label) return 'Untitled';
+    // 1. Replace quotes " with equivalent HTML entity or single quotes
+    // 2. Escape other Mermaid special chars if necessary
+    // 3. Ensure no newlines break the syntax
+    return label
+        .replace(/"/g, '&quot;')
+        .replace(/#/g, '&#35;') // Hash can start comments in some contexts
+        .replace(/[\n\r]+/g, ' '); // Remove newlines
 }
 
 function generateMermaidSyntax() {
@@ -36,7 +46,8 @@ function generateMermaidSyntax() {
         const nodeId = `N${i}`;
         nodeMap.set(node.id, nodeId);
         const fileTimestamp = getFileTimestamp(node.id);
-        const nodeLabel = node.label.replace(/"/g, '#quot;'); // Escape quotes for mermaid
+
+        const nodeLabel = escapeMermaidLabel(node.label);
         
         mermaid += `    ${nodeId}["${nodeLabel}"];\n`;
         
@@ -58,6 +69,13 @@ function generateMermaidSyntax() {
         }
     });
 
+    mermaid += '\n';
+
+    // --- Force Vertical Layout (Spine) ---
+    for (let i = 0; i < nodes.length - 1; i++) {
+        mermaid += `    N${i} ~~~ N${i+1};\n`;
+    }
+
     return mermaid;
 }
 
@@ -67,42 +85,8 @@ try {
     
     console.log(`Writing Mermaid syntax to ${outputMermaidPath}...`);
     fs.writeFileSync(outputMermaidPath, mermaidSyntax);
-
-    console.log('Updating index.html...');
-    let indexContent = fs.readFileSync(indexPath, 'utf8');
-
-    const replacementHtml = `
-            <div class="graph-note">
-                <strong>Note:</strong> This is a static analysis of the documentation graph. Nodes in green have been modified in the last 24 hours.
-            </div>
-            <div class="mermaid" id="mermaid-container">
-            </div>
-    `;
-
-    const d3ScriptRegex = /<script>[\s\S]*?createGraph\('doc_graph\/doc_graph_raw\.json'[\s\S]*?<\/script>/;
-    const mermaidFetchScript = `
-    <script>
-        mermaid.initialize({ startOnLoad: true });
-        fetch('doc_graph/mermaid_list.md')
-            .then(response => response.text())
-            .then(text => {
-                const mermaidContainer = document.getElementById('mermaid-container');
-                mermaidContainer.innerHTML = text;
-                mermaid.init(undefined, mermaidContainer);
-            });
-    </script>
-    `;
-
-    // Replace D3 SVG with Mermaid container
-    indexContent = indexContent.replace(/<div class="graph-container">[\s\S]*?<\/div>/, `<div class="graph-container">${replacementHtml}</div>`);
-    
-    // Replace D3 script with Mermaid fetch script
-    indexContent = indexContent.replace(d3ScriptRegex, mermaidFetchScript);
-
-    fs.writeFileSync(indexPath, indexContent);
-
-    console.log('Successfully updated index.html with Mermaid graph.');
+    console.log('Successfully generated Mermaid graph.');
 
 } catch (error) {
-    console.error('Failed to generate or update graph:', error);
+    console.error('Failed to generate graph:', error);
 }

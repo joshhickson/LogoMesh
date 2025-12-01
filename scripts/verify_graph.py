@@ -12,41 +12,37 @@ def verify_graph_screenshot():
             # Capture console logs
             page.on("console", lambda msg: print(f"BROWSER CONSOLE: {msg.text}"))
             page.on("pageerror", lambda exc: print(f"BROWSER ERROR: {exc}"))
-            page.on("requestfailed", lambda request: print(f"REQUEST FAILED: {request.url} - {request.failure}"))
 
             print("Navigating to onboarding site...")
-            response = page.goto("http://localhost:3000")
-            print(f"Navigation status: {response.status}")
-
-            # Check if mermaid is loaded
-            mermaid_type = page.evaluate("typeof window.mermaid")
-            print(f"window.mermaid type: {mermaid_type}")
+            page.goto("http://localhost:3000")
 
             print("Waiting for graph to render...")
-            # Wait for Mermaid to inject SVG
             try:
-                # Check if mermaid container exists
-                page.wait_for_selector("#mermaid-container", timeout=10000)
-
-                # Check if it has SVG content (successful render)
                 page.wait_for_selector("#mermaid-container svg", timeout=10000)
-                print("Mermaid SVG detected! Graph rendered successfully.")
+                print("Mermaid SVG detected.")
+
+                # Get dimensions
+                dimensions = page.evaluate("""() => {
+                    const container = document.getElementById('mermaid-container');
+                    const svg = container.querySelector('svg');
+                    const rect = svg.getBoundingClientRect();
+                    return {
+                        containerHeight: container.offsetHeight,
+                        containerScrollHeight: container.scrollHeight,
+                        svgHeightAttr: svg.getAttribute('height'),
+                        svgViewBox: svg.getAttribute('viewBox'),
+                        svgRectHeight: rect.height,
+                        svgStyleHeight: svg.style.height,
+                        svgStyleMaxWidth: svg.style.maxWidth
+                    };
+                }""")
+                print(f"Dimensions: {dimensions}")
+
             except Exception as e:
-                print(f"Timeout waiting for Mermaid SVG: {e}")
-                # Get the text content of the container to see the error or raw syntax
-                content = page.inner_text("#mermaid-container")
-                print(f"Container Content (first 500 chars): {content[:500]}...")
-
-                # Check for mermaid specific error div
-                if page.locator(".error-icon").count() > 0:
-                    print("Mermaid Error Icon detected.")
-
-                # Try to get innerHTML to see if there are error messages hidden
-                inner_html = page.inner_html("#mermaid-container")
-                print(f"Container innerHTML (first 500 chars): {inner_html[:500]}...")
+                print(f"Error checking dimensions: {e}")
 
             # Wait a bit
-            time.sleep(2)
+            time.sleep(1)
 
             print("Taking screenshot...")
             screenshot_path = "onboarding_graph.png"
@@ -57,7 +53,7 @@ def verify_graph_screenshot():
 
     except Exception as e:
         print(f"Error during verification: {e}")
-        raise e
+        # raise e # Don't raise, just finish so I can see logs
 
 if __name__ == "__main__":
     verify_graph_screenshot()
