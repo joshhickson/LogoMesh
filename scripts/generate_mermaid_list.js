@@ -5,15 +5,6 @@ const workspaceRoot = path.resolve(__dirname, '..');
 const graphDataPath = path.join(workspaceRoot, 'onboarding', 'doc_graph', 'doc_graph_raw.json');
 const outputMermaidPath = path.join(workspaceRoot, 'onboarding', 'doc_graph', 'mermaid_list.md');
 
-function getFileTimestamp(filePath) {
-    try {
-        const stats = fs.statSync(path.join(workspaceRoot, filePath));
-        return stats.mtime;
-    } catch (e) {
-        return new Date(0);
-    }
-}
-
 // Robust escaping function for Mermaid
 function escapeMermaidLabel(label) {
     if (!label) return 'Untitled';
@@ -34,25 +25,50 @@ function generateMermaidSyntax() {
     let mermaid = 'graph TD\n';
 
     // --- Define Styles ---
-    mermaid += '    classDef recent fill:#90ee90,stroke:#333,stroke-width:2px;\n';
-    mermaid += '    classDef normal fill:#add8e6,stroke:#333,stroke-width:1px;\n\n';
+    mermaid += '    classDef recent fill:#90ee90,stroke:#333,stroke-width:2px;  /* Green < 24h */\n';
+    mermaid += '    classDef day_old fill:#87CEEB,stroke:#333,stroke-width:1px; /* Blue 24-48h */\n';
+    mermaid += '    classDef week_old fill:#FFA500,stroke:#333,stroke-width:1px;/* Orange 2-7 days */\n';
+    mermaid += '    classDef ancient fill:#F08080,stroke:#333,stroke-width:1px; /* Red > 7 days */\n';
+    mermaid += '    classDef normal fill:#add8e6,stroke:#333,stroke-width:1px;   /* Default */\n\n';
+
 
     const now = new Date();
-    const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
 
     // --- Add Nodes and Apply Styles ---
     const nodeMap = new Map();
     nodes.forEach((node, i) => {
         const nodeId = `N${i}`;
         nodeMap.set(node.id, nodeId);
-        const fileTimestamp = getFileTimestamp(node.id);
 
         const nodeLabel = escapeMermaidLabel(node.label);
-        
         mermaid += `    ${nodeId}["${nodeLabel}"];\n`;
-        
-        if (fileTimestamp > twentyFourHoursAgo) {
-            mermaid += `    class ${nodeId} recent;\n`;
+
+        const basename = path.basename(node.id);
+        const match = basename.match(/^(\d{8})/);
+
+        if (match) {
+            const dateStr = match[1];
+            const year = parseInt(dateStr.substring(0, 4), 10);
+            const month = parseInt(dateStr.substring(4, 6), 10) - 1; // JS months are 0-indexed
+            const day = parseInt(dateStr.substring(6, 8), 10);
+
+            // Use UTC for all date calculations to avoid timezone issues.
+            // Set the file time to noon to avoid DST edge cases.
+            const fileDateUTC = Date.UTC(year, month, day, 12, 0, 0);
+            const nowUTC = Date.now(); // Date.now() is already UTC
+
+            const ageInMillis = nowUTC - fileDateUTC;
+            const ageInHours = ageInMillis / (1000 * 60 * 60);
+
+            if (ageInHours < 24) {
+                mermaid += `    class ${nodeId} recent;\n`;
+            } else if (ageInHours < 48) {
+                mermaid += `    class ${nodeId} day_old;\n`;
+            } else if (ageInHours < 168) { // 7 * 24 = 168
+                mermaid += `    class ${nodeId} week_old;\n`;
+            } else {
+                mermaid += `    class ${nodeId} ancient;\n`;
+            }
         } else {
             mermaid += `    class ${nodeId} normal;\n`;
         }

@@ -78,6 +78,7 @@
             position: relative;
             background-color: #f9f9f9;
             padding: 20px;
+            min-height: 500px; /* Ensure container has a minimum height */
         }
         .graph-note {
             padding: 15px;
@@ -85,6 +86,10 @@
             border-bottom: 1px solid #faebcc;
             color: #8a6d3b;
             margin-bottom: 20px;
+        }
+        .mermaid svg {
+            width: 100%;
+            height: auto;
         }
         footer {
             text-align: center;
@@ -95,6 +100,23 @@
             border-bottom-left-radius: 8px;
             border-bottom-right-radius: 8px;
         }
+        .navbar {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .navbar a {
+            color: white;
+            background-color: #3498db;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
 <body>
@@ -103,6 +125,9 @@
             <h1>🚀 Discovery Sprint Hub</h1>
             <div class="subtitle">Central Command for the Contextual Integrity Score Initiative</div>
             <div class="version">Last Updated: November 30, 2025</div>
+            <nav class="navbar">
+                <a href="graph_dashboard.html" target="_blank">Interactive Graph</a>
+            </nav>
         </header>
 
         <div class="critical-alert">
@@ -156,16 +181,18 @@
         mermaid.initialize({ startOnLoad: false });
         fetch('doc_graph/mermaid_list.md')
             .then(response => response.text())
-            .then(async text => {
+            .then(text => {
                 const mermaidContainer = document.getElementById('mermaid-container');
-                try {
-                    const { svg } = await mermaid.render('rendered-graph', text);
-                    mermaidContainer.innerHTML = svg;
-                } catch (error) {
-                    console.error('Mermaid rendering failed:', error);
-                    mermaidContainer.innerHTML = '<div style="color:red; padding:10px; border:1px solid red;">' +
-                        '<h3>Mermaid Rendering Error</h3><pre>' + error.message + '</pre></div>';
-                }
+                mermaidContainer.innerHTML = text;
+                mermaid.run({
+                    nodes: [mermaidContainer]
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching or rendering mermaid diagram:', error);
+                const mermaidContainer = document.getElementById('mermaid-container');
+                mermaidContainer.innerHTML = '<div style="color:red; padding:10px; border:1px solid red;">' +
+                    '<h3>Failed to load diagram</h3><pre>' + error.message + '</pre></div>';
             });
     </script>
 </body>

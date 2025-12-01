@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const ROOT_DIR = process.cwd();
+const ROOT_DIR = path.resolve(__dirname, '..');
 const TARGET_DIRS = ['docs', 'logs'];
 const OUTPUT_FILE = path.join(ROOT_DIR, 'onboarding/doc_graph/doc_graph_raw.json');
 
