@@ -11,18 +11,12 @@ function escapeMermaidLabel(label) {
     return label.replace(/"/g, '&quot;').replace(/#/g, '&#35;').replace(/[\n\r]+/g, ' ');
 }
 
-// Global variable to store Red Orphans
-let redOrphanNodes = [];
-
 function generateMermaidSyntax() {
     const graphData = JSON.parse(fs.readFileSync(graphDataPath, 'utf8'));
     const nodes = graphData.nodes;
     const edges = graphData.edges;
 
-    // Reset list
-    redOrphanNodes = [];
-
-    // Identify Connected Nodes
+    // Identify Connected Nodes (optional now, but useful if needed later)
     const connectedNodeIds = new Set();
     edges.forEach(edge => {
         if (edge.source !== edge.target) {
@@ -51,7 +45,7 @@ function generateMermaidSyntax() {
         const nodeId = `N${i}`;
         nodeMap.set(node.id, nodeId);
 
-        // --- Orphan Filter Logic ---
+        // --- Age Logic ---
         const basename = path.basename(node.id);
         const match = basename.match(/^(\d{8})/);
         let ageInHours = 0;
@@ -67,12 +61,6 @@ function generateMermaidSyntax() {
             const nowUTC = Date.now();
             ageInHours = (nowUTC - fileDateUTC) / (1000 * 60 * 60);
         }
-
-        if (hasDate && ageInHours >= 168 && !connectedNodeIds.has(node.id)) {
-            redOrphanNodes.push(node);
-            return; // Skip adding to graph
-        }
-        // ---------------------------
 
         // Determine Cluster
         let clusterName = 'Uncategorized';
@@ -125,14 +113,11 @@ function generateMermaidSyntax() {
         mermaid += `end\n\n`;
     });
 
-    // Edges (must be outside subgraphs or they might break some renderers, though inside is usually fine too)
-    // We'll put them outside to be safe.
+    // Edges
     edges.forEach(edge => {
-        // Skip edges involving filtered orphans (though logic above should handle it, nodeMap won't have the key)
         const sourceNode = nodeMap.get(edge.source);
         const targetNode = nodeMap.get(edge.target);
 
-        // Only add edge if both nodes exist in the graph (weren't filtered out)
         if (sourceNode && targetNode && sourceNode !== targetNode) {
             mermaid += `    ${sourceNode} --> ${targetNode};\n`;
         }
@@ -142,12 +127,6 @@ function generateMermaidSyntax() {
 }
 
 function generateDashboardHTML(mermaidSyntax) {
-    // Generate Orphan List HTML
-    const orphanListItems = redOrphanNodes.map(node => {
-        const filePath = node.path.replace(/\\/g, '/');
-        return `<li><a href="${filePath}" target="_blank">${node.label}</a></li>`;
-    }).join('\n');
-
     return `
 <!DOCTYPE html>
 <html lang="en">
@@ -171,7 +150,7 @@ function generateDashboardHTML(mermaidSyntax) {
             display: flex;
         }
         #sidebar {
-            width: 350px;
+            width: 250px; /* Reduced width since we removed the list */
             height: 100%;
             background: #252526;
             border-right: 1px solid #333;
@@ -181,7 +160,7 @@ function generateDashboardHTML(mermaidSyntax) {
             display: flex;
             flex-direction: column;
             gap: 20px;
-            flex-shrink: 0; /* Prevent shrinking */
+            flex-shrink: 0;
         }
         #graph-area {
             flex-grow: 1;
@@ -238,27 +217,6 @@ function generateDashboardHTML(mermaidSyntax) {
             color: #fff;
             font-size: 1.1em;
         }
-        /* Orphan List */
-        #orphan-list ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        #orphan-list li {
-            margin-bottom: 8px;
-        }
-        #orphan-list a {
-            color: #F08080; /* Red color for red orphans */
-            text-decoration: none;
-            font-size: 0.85em;
-            word-break: break-all;
-            display: block;
-            padding: 2px 0;
-        }
-        #orphan-list a:hover {
-            text-decoration: underline;
-            color: #ff9999;
-        }
     </style>
 </head>
 <body>
@@ -269,14 +227,6 @@ function generateDashboardHTML(mermaidSyntax) {
             <div class="legend-item"><div class="legend-color" style="background:#87CEEB"></div>Yesterday (24-48h)</div>
             <div class="legend-item"><div class="legend-color" style="background:#FFA500"></div>This Week (2-7d)</div>
             <div class="legend-item"><div class="legend-color" style="background:#F08080"></div>Older (> 7d)</div>
-        </div>
-
-        <div id="orphan-list">
-            <h3>Archived Files (> 7 days)</h3>
-            <p style="font-size: 0.8em; color: #aaa; margin-bottom: 10px;">These files are older than a week and have no connections.</p>
-            <ul>
-                ${orphanListItems}
-            </ul>
         </div>
     </div>
 
@@ -340,7 +290,6 @@ ${mermaidSyntax}
 try {
     console.log('Generating Mermaid syntax for dashboard...');
     const mermaidSyntax = generateMermaidSyntax();
-    console.log(`Found ${redOrphanNodes.length} red orphan nodes.`);
     
     console.log('Generating dashboard HTML...');
     const dashboardHtml = generateDashboardHTML(mermaidSyntax);
