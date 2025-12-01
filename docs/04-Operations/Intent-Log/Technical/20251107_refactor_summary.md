@@ -58,7 +58,7 @@ Overhauled the testing suite to validate the new architecture and fix critical c
 
 Revised all public-facing documentation to align with the new strategic narrative.
 - **Action:** Updated the main project README.
-- **File Modified:** [README.md](README.md)
+- **File Modified:** [README.md](../../../../README.md)
 - **Outcome:** The project is now framed as a "scalable evaluation platform," and the "Quick Start" instructions were updated to run the new, robust E2E test.
 
 - **Action:** Added a "Related Work" section to the submission paper.

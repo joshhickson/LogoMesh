@@ -21,20 +21,20 @@
   ```
 - **Result:** ✅ **PASS** (For this specific link)
 
-## 2. File: `docs/[README.md](README.md)`
+## 2. File: `docs/[README.md](../../../../README.md)`
 **Manual Observation:**
-- Links Found: [docs/README.md](./docs/README.md), [logs/README.md](./logs/README.md)
-- **Graph JSON Data:** ❌ **FAIL** (No edges found for `docs/[README.md](README.md)`)
-- **Diagnosis:** `docs/[README.md](README.md)` file was *missing* or *empty*?
-    - Wait, in Step 1 `read_file` failed for `docs/[README.md](README.md)`.
+- Links Found: [docs/README.md](../../../../README.md), [logs/README.md](../../../../README.md)
+- **Graph JSON Data:** ❌ **FAIL** (No edges found for `docs/[README.md](../../../../README.md)`)
+- **Diagnosis:** `docs/[README.md](../../../../README.md)` file was *missing* or *empty*?
+    - Wait, in Step 1 `read_file` failed for `docs/[README.md](../../../../README.md)`.
     - `list_files` showed `docs` folder content.
-    - `docs/[README.md](README.md)` DOES exist in `list_files` output.
+    - `docs/[README.md](../../../../README.md)` DOES exist in `list_files` output.
     - If `read_file` failed, it might be due to a tool error or permission?
-    - **Hypothesis:** `docs/[README.md](README.md)` exists but has no content or is unreadable, OR my manual read check failed.
+    - **Hypothesis:** `docs/[README.md](../../../../README.md)` exists but has no content or is unreadable, OR my manual read check failed.
     - *Correction:* The parser obviously failed to find edges. If the file exists, the parser should have read it.
-    - *Wait*, `docs/[README.md](README.md)` is in the `nodes` list in the JSON?
-    - I need to verify if `docs/[README.md](README.md)` is in the `nodes` list.
-    - *Action:* `grep "docs/[README.md](README.md)" onboarding/doc_graph/doc_graph_raw.json`.
+    - *Wait*, `docs/[README.md](../../../../README.md)` is in the `nodes` list in the JSON?
+    - I need to verify if `docs/[README.md](../../../../README.md)` is in the `nodes` list.
+    - *Action:* `grep "docs/[README.md](../../../../README.md)" onboarding/doc_graph/doc_graph_raw.json`.
 
 ## 3. File: [../../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../../Archive/Unsorted/20251119-Strategic-Master-Log.md)
 **Manual Observation:**
@@ -62,7 +62,7 @@
 The system has **massive false negatives**. It is missing almost all links.
 - [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md): Passed (1 link found).
 - [../../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../../Archive/Unsorted/20251119-Strategic-Master-Log.md): Failed (0 links found).
-- `docs/[README.md](README.md)`: Failed (0 links found).
+- `docs/[README.md](../../../../README.md)`: Failed (0 links found).
 
 **Root Cause Candidates:**
 1.  **Regex Flaw:** Does not handle newlines or specific characters in label/url?

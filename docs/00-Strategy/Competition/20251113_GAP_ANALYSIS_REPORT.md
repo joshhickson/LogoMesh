@@ -82,7 +82,7 @@ The simulation report concluded with five critical questions that the judges wer
 ### 4.5. The E2E Question
 
 *   **Predicted Question:** "How can you claim your system is 'reproducible' when you haven't provided a test that validates the *entire* asynchronous orchestration and analysis pipeline?"
-*   **Current Answer:** The [README.md](README.md) now includes instructions for running an end-to-end test using `docker-compose`. This is a significant improvement over the simple API mock.
+*   **Current Answer:** The [README.md](../../../README.md) now includes instructions for running an end-to-end test using `docker-compose`. This is a significant improvement over the simple API mock.
 *   **Assessment:** The project has a much stronger reproducibility story. The `docker-compose` setup provides a credible way to run the entire system in a controlled, reproducible environment.
 
 ## 5. Summary and Recommendations

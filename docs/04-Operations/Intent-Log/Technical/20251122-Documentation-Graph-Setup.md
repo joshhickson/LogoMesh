@@ -83,7 +83,7 @@ With the visualization in place, the next priority is to make the onboarding sit
 3.  **Recommended Tools:**
     *   **Node.js:** Use a simple package like `http-server` or `serve` with a command explicitly pointing to the `onboarding` directory (e.g., `npx serve onboarding`).
     *   **Python:** Use Python's built-in `http.server` module, ensuring the command is run from within the `onboarding` directory itself (e.g., `cd onboarding && python -m http.server`).
-4.  **Documentation:** Document the chosen method and provide clear instructions in `onboarding/[README.md](README.md)` for team members to start the server.
+4.  **Documentation:** Document the chosen method and provide clear instructions in `onboarding/[README.md](../../../../README.md)` for team members to start the server.
 
 ## Update: November 22, 2025 (Part 2)
 
@@ -97,7 +97,7 @@ To provide a robust and secure way to view the onboarding site, a self-contained
     *   The `express` dependency was installed locally within the `onboarding` directory, creating an `onboarding/node_modules` folder. This isolates the site's dependencies from the main project.
 
 3.  **Updated Documentation:**
-    *   **`onboarding/[README.md](README.md)`:** This file was updated with detailed instructions on how to install dependencies (`pnpm install`) and run the local server (`pnpm start`).
-    *   **Root [README.md](README.md):** A prominent note was added to the top of the main project [README.md](README.md), directing new users to start in the `onboarding` directory for a guided experience.
+    *   **`onboarding/[README.md](../../../../README.md)`:** This file was updated with detailed instructions on how to install dependencies (`pnpm install`) and run the local server (`pnpm start`).
+    *   **Root [README.md](../../../../README.md):** A prominent note was added to the top of the main project [README.md](../../../../README.md), directing new users to start in the `onboarding` directory for a guided experience.
 
 This completes the setup of a secure, documented, and easy-to-use system for accessing the interactive onboarding documentation.

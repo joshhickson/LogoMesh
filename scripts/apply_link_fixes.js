@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const MANIFEST_PATH = 'docs/04-Operations/Intent-Log/Technical/Link_Repair_Manifest_20251201.md';
+const MANIFEST_PATH = process.argv[2] || 'docs/04-Operations/Intent-Log/Technical/Link_Repair_Manifest_20251201.md';
 
 function parseCSV(content) {
     const lines = content.split('\n');
@@ -54,7 +54,7 @@ function parseCSV(content) {
                  headers = row;
              }
         } else {
-            if (row.length === headers.length) {
+            if (row.length >= headers.length) { // Allow extra cols if loose
                 const rowObj = {};
                 for (let h = 0; h < headers.length; h++) {
                     rowObj[headers[h]] = row[h];
@@ -72,24 +72,29 @@ function applyFixes() {
         process.exit(1);
     }
 
+    console.log(`Applying fixes from ${MANIFEST_PATH}...`);
     const manifestContent = fs.readFileSync(MANIFEST_PATH, 'utf8');
     const records = parseCSV(manifestContent);
 
     // Group by file
     const fixesByFile = new Map();
-    let highConfCount = 0;
+    let count = 0;
 
     for (const record of records) {
-        if (record.Confidence !== 'High') continue;
+        // We apply ALL records in the input manifest.
+        // For Phase 1, we filtered by Confidence=High.
+        // For Phase 2, the manifest ONLY contains approved proposed fixes.
+        // So we skip the Confidence check if it's not strictly "High".
+        // Or we assume the input manifest is "approved".
 
         if (!fixesByFile.has(record['Source File'])) {
             fixesByFile.set(record['Source File'], []);
         }
         fixesByFile.get(record['Source File']).push(record);
-        highConfCount++;
+        count++;
     }
 
-    console.log(`Found ${highConfCount} high-confidence fixes across ${fixesByFile.size} files.`);
+    console.log(`Found ${count} fixes across ${fixesByFile.size} files.`);
 
     for (const [filepath, fixes] of fixesByFile) {
         if (!fs.existsSync(filepath)) {
@@ -100,7 +105,6 @@ function applyFixes() {
         let content = fs.readFileSync(filepath, 'utf8');
         let modified = false;
 
-        // Sort fixes: Explicit Links first, then longest strings first
         fixes.sort((a, b) => {
             if (a.Type === 'Explicit Link' && b.Type !== 'Explicit Link') return -1;
             if (a.Type !== 'Explicit Link' && b.Type === 'Explicit Link') return 1;
@@ -113,11 +117,6 @@ function applyFixes() {
 
             if (content.includes(broken)) {
                 if (fix.Type === 'Explicit Link') {
-                    // Extract label from broken string "[Label](path)"
-                    // Note: 'broken' in CSV is correctly escaped, so we can use it directly
-                    // Regex is safer to extract label than manual index if brackets are nested?
-                    // Assuming standard markdown links without nested brackets in label for now.
-
                     const openBracket = broken.indexOf('[');
                     const closeBracket = broken.lastIndexOf('](');
                     const closeParen = broken.lastIndexOf(')');
@@ -126,18 +125,18 @@ function applyFixes() {
                         const label = broken.substring(openBracket + 1, closeBracket);
                         const newString = `[${label}](${replacementPath})`;
 
-                        // Replace ALL occurrences
                         const parts = content.split(broken);
                         if (parts.length > 1) {
                             content = parts.join(newString);
                             modified = true;
                         }
                     } else {
-                        console.warn(`Could not parse explicit link format for: ${broken}`);
+                        // Fallback for weird formats, just try exact replace if possible?
+                        // But usually broken string is exactly what we want to replace.
+                         console.warn(`Could not parse explicit link format for: ${broken}`);
                     }
 
                 } else {
-                    // Plaintext Path
                     const parts = content.split(broken);
                     if (parts.length > 1) {
                         content = parts.join(replacementPath);
@@ -145,7 +144,6 @@ function applyFixes() {
                     }
                 }
             } else {
-                // Warning only if it's truly missing (might have been fixed by a previous overlapping fix?)
                 // console.warn(`Broken string not found in ${filepath}: ${broken}`);
             }
         }

@@ -38,7 +38,7 @@
 *   **Current Status:**
     *   *Infrastructure:* Solid (Monorepo builds, Docker Compose works).
     *   *Logic:* Prototypes exist, but the "Brain" (Analyzers) is waiting for the mathematical blueprint from the paper.
-*   **Getting Started:** Follow the [README.md](README.md) for local setup.
+*   **Getting Started:** Follow the [README.md](../../../README.md) for local setup.
 
 ### 5. Open Discussion & Next Steps (15 min)
 *   **Q&A:** Open floor for questions about the pivot or the codebase.
@@ -53,4 +53,4 @@
 *   **Strategic Map:** [../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../Archive/Unsorted/20251119-Strategic-Master-Log.md)
 *   **Current Orders:** [../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md](../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md)
 *   **Vision:** [PROJECT_PLAN.md](PROJECT_PLAN.md)
-*   **Setup:** [README.md](README.md)
+*   **Setup:** [README.md](../../../README.md)

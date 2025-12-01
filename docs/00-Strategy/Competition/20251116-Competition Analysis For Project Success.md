@@ -376,7 +376,7 @@ This checklist provides a final go/no-go test for a "zero-to-one" project's stra
 * \[ \] **Phase 1 Focus:** Is 100% of the project's effort focused on building a "Green Agent"? 1  
 * \[ \] **Technical Compliance:** Does the Green Agent *perfectly* implement the A2A server-orchestrator protocol as defined in the agentbeats/tutorial? 1  
 * \[ \] **RDI Faculty Alignment:** Does the project *directly* target a core research area of Song (Security/Safety) 4, Parlour (DeFi/Finance) 5, or Seshia (Verification)?23  
-* \[ \] **RDI Mission Alignment:** Does the [README.md](README.md) and submission narrative frame the project as "responsible," "robust," "decentralized," and a "public good"? 1
+* \[ \] **RDI Mission Alignment:** Does the [README.md](../../../README.md) and submission narrative frame the project as "responsible," "robust," "decentralized," and a "public good"? 1
 * \[ \] **Ecosystem Awareness:** Does the project target a "triple-alignment" track (e.g., "Agent Safety") 1, a "double-alignment" track (e.g., "DeFi Agent") 1, or a "blue ocean" gap (e.g., "Legal Domain Agent")?36  
 * \[ \] **Entrepreneurial Vision:** Is the project built like a *startup prototype* that would be eligible for the RDI Xcelerator?  
 * \[ \] **Community Engagement:** Has the project team joined the Discord 1 and reviewed the Agentic AI MOOC 1 to build visibility and network with the 32,000+ community members?

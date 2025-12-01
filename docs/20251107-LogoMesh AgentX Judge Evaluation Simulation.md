@@ -76,11 +76,11 @@ Applying the "Composite Judge" persona, we can perform a critical review of the 
 
 ### **2.1 First Impressions: The 5-Minute "Clone and Run" Test (README.md)**
 
-* **Clarity of Purpose:** The name "Green Agent" is excellent; it aligns perfectly with the competition's "green agent" (evaluator) terminology.1 However, the core concept, "Contextual Debt," is *not* self-explanatory. The [README.md](README.md)'s first paragraph must define this in one sentence (e.g., "A benchmark for quantifying how irrelevant context in an agent's memory degrades its future reasoning steps").
+* **Clarity of Purpose:** The name "Green Agent" is excellent; it aligns perfectly with the competition's "green agent" (evaluator) terminology.1 However, the core concept, "Contextual Debt," is *not* self-explanatory. The [README.md](../README.md)'s first paragraph must define this in one sentence (e.g., "A benchmark for quantifying how irrelevant context in an agent's memory degrades its future reasoning steps").
 * **"Quick Start" Professionalism:** The judge will git clone and npm install.  
   * **Red Flag 1:** The repository *must* have a package-lock.json file. If not, npm install may fail or produce different dependency versions, *immediately* failing the crucial "reproducibility" test.1  
   * **Red Flag 2:** The "Quick Start" must be a single, foolproof command, such as npm run start:dev.  
-  * **Red Flag 3:** The *proof* of functionality is the end-to-end test. The [README.md](README.md) *must* instruct the judge to run npm run test:e2e (from evaluation.e2e.test.ts). The output of this test must be clean and *explicitly* state that the "Contextual Debt" calculation was successful. A simple "Tests Passed" is insufficient. It should log a miniature version of the example-evaluation-report.json.
+  * **Red Flag 3:** The *proof* of functionality is the end-to-end test. The [README.md](../README.md) *must* instruct the judge to run npm run test:e2e (from evaluation.e2e.test.ts). The output of this test must be clean and *explicitly* state that the "Contextual Debt" calculation was successful. A simple "Tests Passed" is insufficient. It should log a miniature version of the example-evaluation-report.json.
 
 ### **2.2 The Core Concept: Is "Contextual Debt" a True Contribution? (AgentX\_Submission\_Paper.md)**
 
@@ -128,7 +128,7 @@ This is the final actionable synthesis, simulating the judges' room.
 ### **3.1 The Step-by-Step Evaluation Process (Mock Judging Report)**
 
 * **Phase 1: The 10-Minute Filter (Repo & README).**  
-  * The judge clones the repo. npm install works. The [README.md](README.md) is clear.
+  * The judge clones the repo. npm install works. The [README.md](../README.md) is clear.
   * The judge runs npm run test:e2e. It passes.  
   * *Check 1: Reproducibility.* The judge opens evaluation.e2e.test.ts. They see it's a simple API mock, not a true end-to-end test. *First checkmark (Reproducibility) is now a question mark.*  
 * **Phase 2: The Concept Review (Paper vs. Prior Art).**  

@@ -39,6 +39,6 @@ Despite the successful build, all attempts to run tests via `vitest` failed with
 3.  **Enforced Node.js Version**: To prevent this issue for future contributors, the following changes were made:
     - **`package.json`**: An `engines` field was added to require `node >=20.0.0`.
     - **`.nvmrc`**: A new file was created in the root directory with the content `20.19.5` to allow for easy version switching with `nvm use`.
-    - **[README.md](README.md)**: The documentation was updated with new instructions and direct links for installing the required Node.js version, C++ Build Tools, and Docker Desktop.
+    - **[README.md](../../../../README.md)**: The documentation was updated with new instructions and direct links for installing the required Node.js version, C++ Build Tools, and Docker Desktop.
 
 **Result**: After upgrading Node.js and re-enabling `corepack`, the `pnpm test` command ran successfully, and all tests passed. The development environment is now stable and correctly configured. Appropriate documentation was updated to reflect these changes.

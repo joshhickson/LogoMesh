@@ -12,7 +12,7 @@
     *   Created the directory `docs/strategy_and_ip/` to house all new documentation related to strategy and IP.
 
 2.  **Documentation Creation:**
-    *   **[docs/strategy_and_ip/README.md](docs/strategy_and_ip/README.md):** Created a summary document explaining the purpose of the directory and providing a plain-English overview of the core IP concepts and the 3-phase "Consult-to-Product Flywheel" business model.
+    *   **[docs/strategy_and_ip/README.md](../../../README.md):** Created a summary document explaining the purpose of the directory and providing a plain-English overview of the core IP concepts and the 3-phase "Consult-to-Product Flywheel" business model.
     *   **[../IP/01_CORE_IP_DEFINITION.md](../IP/01_CORE_IP_DEFINITION.md):** Created a foundational document defining the v0.1 concepts for the "Contextual Integrity Score (CIS)" and the "Agent-as-a-Judge" system. This is the first step in filling the "gaps" identified in the IP report.
     *   **[../IP/02_LEGAL_CHECKLIST.md](../IP/02_LEGAL_CHECKLIST.md):** Created a checklist of legal actions required to protect the project's IP, including copyrights, trademarks, patents, and company formation.
     *   **[../IP/03_INVESTOR_PITCH.md](../IP/03_INVESTOR_PITCH.md):** Extracted the 7 key talking points from the investor narrative section of the `'[20251116-IP-and-Business-Strategy-for-Contextual Debt.md](20251116-IP-and-Business-Strategy-for-Contextual Debt.md)'` report and formatted them into a script for investor meetings.

@@ -31,7 +31,7 @@ The following files and directories were mentioned during the meeting. This list
 | 02:23:30,366 | "I linked to those in the strategic master log..." | Josh | [../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../Archive/Unsorted/20251119-Strategic-Master-Log.md) |
 | 02:23:44,033 | "...the strategic pivot plan, CIS formation..." | Josh | Likely a document linked within the master log, possibly [../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md) or a related planning document. |
 | 02:33:43,133 | "...the copyright edition paper." | Samuel | [../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md) |
-| 02:37:25,833 | "...I'm trying to find the onboarding agenda." | Josh | Likely `onboarding/[README.md](README.md)` or a similar file. |
+| 02:37:25,833 | "...I'm trying to find the onboarding agenda." | Josh | Likely `onboarding/[README.md](../../../README.md)` or a similar file. |
 | 02:38:45,000 | "Stuff like the, I think it's Auth0..." | Josh | `auth0-ai-samples/` |
 | 02:39:14,799 | "...the one that was formulated on November 13th, it's called the recovery plan." | Josh | A planning document, likely referenced in [../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../Archive/Unsorted/20251119-Strategic-Master-Log.md). A file search suggests [../../archive/2025-11-11_build_issue_log.md](../../archive/2025-11-11_build_issue_log.md) or [../../archive-pre-refactor/IMPLEMENTATION_PLAN.md](../../archive-pre-refactor/IMPLEMENTATION_PLAN.md) could be related. |
 | 02:40:00,333 | "...prioritize finalizing the research paper revisions." | Josh | `docs/strategy_and_ip/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md` or [../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md) |
@@ -39,7 +39,7 @@ The following files and directories were mentioned during the meeting. This list
 | 02:46:27,233 | "...it just adds a docs for an onboarding folder with like a HTML file." | Samuel | `onboarding/index.html` |
 | 02:52:22,399 | "...you go to the docs folder, you go to the strategy and IP folder within that..." | Josh | `docs/strategy_and_ip/` |
 | 02:56:21,100 | "...you can find in the logs folder under my co-pilot subfolder..." | Josh | `logs/CoPilot/` |
-| 02:56:59,133 | "...use the readme file in the folder to just see if you're able to install all the modules..." | Josh | [README.md](README.md) |
+| 02:56:59,133 | "...use the readme file in the folder to just see if you're able to install all the modules..." | Josh | [README.md](../../../README.md) |
 
 ## 4. Team Dynamics: Alignments, Blind Spots & Confusion
 
@@ -58,7 +58,7 @@ The following files and directories were mentioned during the meeting. This list
 ## 5. Action Items & Next Steps
 
 1.  **Discord Setup:** Josh to create a Discord server and invite all team members.
-2.  **Repository Exploration:** All team members to clone the repository, install dependencies as per the [README.md](README.md), and familiarize themselves with the project structure, using Samuel's `onboarding/index.html` as a guide.
+2.  **Repository Exploration:** All team members to clone the repository, install dependencies as per the [README.md](../../../README.md), and familiarize themselves with the project structure, using Samuel's `onboarding/index.html` as a guide.
 3.  **Clarify Project Goals:** The team needs to define and document a clear, achievable vision for the "green agent" phase of the competition, with a special focus on the benchmark requirement.
 4.  **Tackle the CIS Logic:** The team must collectively review the "semantic density" document and decide on a practical, understandable, and implementable logic for the Contextual Integrity Score.
 5.  **Define Roles & Commitments:** In the new Discord, team members will outline their areas of interest and time commitment to establish clear roles and responsibilities.

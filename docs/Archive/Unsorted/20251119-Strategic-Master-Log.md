@@ -72,7 +72,7 @@ We have abandoned the "solve the hard coding problem" strategy. We are now the "
 
 ### Root
 *   [PROJECT_PLAN.md](../PROJECT_PLAN.md) (The Master Plan - *Needs Update to reflect Pivot*)
-*   [README.md](../README.md) (The Entry Point)
+*   [README.md](../../../README.md) (The Entry Point)
 
 ### Strategy & IP (`docs/strategy_and_ip/`)
 *   [01_CORE_IP_DEFINITION.md](../../00-Strategy/IP/01_CORE_IP_DEFINITION.md)
