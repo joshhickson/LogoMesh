@@ -54,7 +54,7 @@ function parseCSV(content) {
                  headers = row;
              }
         } else {
-            if (row.length >= headers.length) { // Allow extra cols if loose
+            if (row.length >= headers.length) {
                 const rowObj = {};
                 for (let h = 0; h < headers.length; h++) {
                     rowObj[headers[h]] = row[h];
@@ -81,12 +81,6 @@ function applyFixes() {
     let count = 0;
 
     for (const record of records) {
-        // We apply ALL records in the input manifest.
-        // For Phase 1, we filtered by Confidence=High.
-        // For Phase 2, the manifest ONLY contains approved proposed fixes.
-        // So we skip the Confidence check if it's not strictly "High".
-        // Or we assume the input manifest is "approved".
-
         if (!fixesByFile.has(record['Source File'])) {
             fixesByFile.set(record['Source File'], []);
         }
@@ -113,33 +107,44 @@ function applyFixes() {
 
         for (const fix of fixes) {
             const broken = fix['Broken String'];
-            const replacementPath = fix['Proposed Replacement'];
+            const replacement = fix['Proposed Replacement'];
 
             if (content.includes(broken)) {
                 if (fix.Type === 'Explicit Link') {
-                    const openBracket = broken.indexOf('[');
-                    const closeBracket = broken.lastIndexOf('](');
-                    const closeParen = broken.lastIndexOf(')');
-
-                    if (openBracket !== -1 && closeBracket !== -1 && closeParen !== -1) {
-                        const label = broken.substring(openBracket + 1, closeBracket);
-                        const newString = `[${label}](${replacementPath})`;
-
-                        const parts = content.split(broken);
-                        if (parts.length > 1) {
-                            content = parts.join(newString);
-                            modified = true;
-                        }
+                    // Check if replacement is a FULL markdown link (starts with '[')
+                    if (replacement.trim().startsWith('[')) {
+                         // Full replacement strategy (Phase 3)
+                         const parts = content.split(broken);
+                         if (parts.length > 1) {
+                             content = parts.join(replacement);
+                             modified = true;
+                         }
                     } else {
-                        // Fallback for weird formats, just try exact replace if possible?
-                        // But usually broken string is exactly what we want to replace.
-                         console.warn(`Could not parse explicit link format for: ${broken}`);
+                        // Standard strategy: Preserve Label (Phase 1 & 2)
+                        // broken: [Label](path) -> replacement: newPath
+                        const openBracket = broken.indexOf('[');
+                        const closeBracket = broken.lastIndexOf('](');
+                        const closeParen = broken.lastIndexOf(')');
+
+                        if (openBracket !== -1 && closeBracket !== -1 && closeParen !== -1) {
+                            const label = broken.substring(openBracket + 1, closeBracket);
+                            const newString = `[${label}](${replacement})`;
+
+                            const parts = content.split(broken);
+                            if (parts.length > 1) {
+                                content = parts.join(newString);
+                                modified = true;
+                            }
+                        } else {
+                             console.warn(`Could not parse explicit link format for: ${broken}`);
+                        }
                     }
 
                 } else {
+                    // Plaintext Path
                     const parts = content.split(broken);
                     if (parts.length > 1) {
-                        content = parts.join(replacementPath);
+                        content = parts.join(replacement);
                         modified = true;
                     }
                 }

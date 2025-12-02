@@ -33,7 +33,7 @@ This document serves as a centralized, high-level reference sheet for the LogoMe
 
 **Key Documents:**
 *   **Strategic Analysis:** [../../00-Strategy/Competition/20251116-Competition Analysis For Project Success.md](../../00-Strategy/Competition/20251116-Competition Analysis For Project Success.md) - The detailed analysis of the competition, its organizers, and a recommended strategy for aligning the project to win.
-*   **Project Vision:** [PROJECT_PLAN.md](PROJECT_PLAN.md) - Outlines the high-level competition vision, the "Cyber-Sentinel" narrative, team roles, and the multi-agent architectural goals.
+*   **Project Vision:** [PROJECT_PLAN.md (Outdated)](../../../PROJECT_PLAN.md) - Outlines the high-level competition vision, the "Cyber-Sentinel" narrative, team roles, and the multi-agent architectural goals.
 *   **Tactical Roadmap:** [../../04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md](../../04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md) - Translates the high-level vision into specific, actionable engineering tasks required for the competition submission.
 
 ---
@@ -45,7 +45,7 @@ This document serves as a centralized, high-level reference sheet for the LogoMe
 **Key Documents:**
 *   **Current Status:** [../../04-Operations/Intent-Log/Technical/20251116_build_fix_and_vitest_error.md](../../04-Operations/Intent-Log/Technical/20251116_build_fix_and_vitest_error.md) - Confirms the project now builds successfully and the test environment is operational.
 *   **Previous Blocker:** [../../02-Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md](../../02-Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md) - Details the critical `isolated-vm` installation failure that was the primary technical obstacle.
-*   **Target Architecture:** [PROJECT_PLAN.md](PROJECT_PLAN.md) - Describes the target multi-agent "Orchestrator-Worker" architecture with Mermaid diagrams.
+*   **Target Architecture:** [PROJECT_PLAN.md (Outdated)](../../../PROJECT_PLAN.md) - Describes the target multi-agent "Orchestrator-Worker" architecture with Mermaid diagrams.
 *   **Detailed Tasks:** [../../04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md](../../04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md) - Provides the specific, actionable workstreams and engineering tasks for the development team.
 
 ---
