@@ -23,7 +23,7 @@ Files / locations you will use frequently
 - `packages/workers` — worker entrypoints and job handlers (rationale, architectural, testing analyzers).
 - `logs/` — runtime logs and e2e run captures. Example: `logs/2025-11-13_docker_compose_logs.log`.
 - [docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md](./Data-Scientist-Gap-Analysis.md) — this doc.
-- [docs/PROJECT_STATUS.md](./Project_Status.md) — high-level project context and verified status.
+- [docs/PROJECT_STATUS.md](../../../PROJECT_STATUS.md) — high-level project context and verified status.
 - [docs/EVAL_OUTPUT_SCHEMA.md](../../01-Architecture/Specs/Evaluation-Output-Schema.md) — schema for evaluation JSON and a short example.
 - `../../onboarding/example-evaluation-report.json` — concrete example JSON that you can open in a notebook.
 - `notebooks/01-explore-sample-eval.ipynb` — example notebook that loads the example JSON and produces simple plots (histogram + bar chart).
@@ -121,7 +121,7 @@ Key artifacts (created / updated)
 - `tools/convert_eval_to_csv.py` — CLI: JSON → CSV (one row per analyzer).
 - `tools/run_single_analyzer.py` — scaffold to run a single analyzer locally (dry-run heuristics).
 - `tools/[README.md](../../../tools/README.md)` — usage notes for the tools.
-- [README.md](./README.md) — updated with a "Data Scientist onboarding" quick links & commands block.
+- [README.md](../../../README.md) — updated with a "Data Scientist onboarding" quick links & commands block.
 
 Minimal Quickstart for a data scientist
 --------------------------------------
@@ -148,7 +148,7 @@ jupyter notebook notebooks/01-explore-sample-eval.ipynb
 
 Short checklist (ready-to-hand-off)
 ----------------------------------
-- [x] Environment & build instructions present in [README.md](./README.md) (Node v16, pnpm, Docker notes).
+- [x] Environment & build instructions present in [README.md](../../../README.md) (Node v16, pnpm, Docker notes).
 - [x] Gap-analysis & onboarding doc ([docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md](./Data-Scientist-Gap-Analysis.md)) is reachable from the README.
 - [x] Metric spec present ([docs/CONTEXTUAL_DEBT_SPEC.md](../../01-Architecture/Specs/Contextual-Debt-Spec.md)).
 - [x] Canonical example JSON available (`../../onboarding/example-evaluation-report.json`).
