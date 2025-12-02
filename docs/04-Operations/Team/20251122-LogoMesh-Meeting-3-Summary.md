@@ -28,7 +28,7 @@ The following files and directories were mentioned during the meeting. This list
 | Timestamp | Quote | Speaker | Assumed File/Directory |
 | --- | --- | --- | --- |
 | 04:10:37,966 | "...I have a document I can share with you in the repository that goes deeper into this..." | Josh | [../../03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md](../../03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md) |
-| 04:11:20,533 | "...Here it is, proposed section 2.2..." | Josh | This likely refers to a section within the dense, math-heavy paper on CIS formation, possibly [docs/CONTEXTUAL_DEBT_SPEC.md](docs/CONTEXTUAL_DEBT_SPEC.md) or a related research document. |
+| 04:11:20,533 | "...Here it is, proposed section 2.2..." | Josh | This likely refers to a section within the dense, math-heavy paper on CIS formation, possibly [docs/CONTEXTUAL_DEBT_SPEC.md](../../01-Architecture/Specs/Contextual-Debt-Spec.md) or a related research document. |
 | 04:14:02,566 | "...This is my draft kind of research paper..." | Josh | [../../03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md](../../03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md) |
 
 ## 4. Team Dynamics: Alignments, Blind Spots & Contradictions

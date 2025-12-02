@@ -43,7 +43,7 @@ This log details the setup of the foundational files for creating a knowledge gr
         },
         {
           "source": "[../../../00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](../../../00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md)",
-          "target": "[docs/CONTEXTUAL_DEBT_SPEC.md](docs/CONTEXTUAL_DEBT_SPEC.md)",
+          "target": "[docs/CONTEXTUAL_DEBT_SPEC.md](../../../01-Architecture/Specs/Contextual-Debt-Spec.md)",
           "label": "refines",
           "weight": 0.7
         },

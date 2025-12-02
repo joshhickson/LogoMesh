@@ -5,9 +5,9 @@
 
 ## 1. File: [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md)
 **Manual Observation:**
-- Content: "...please see our detailed Gap Analysis document. **➡️ [Deep Dive: Detailed Gap Analysis](./GAP_ANALYSIS.md)**"
+- Content: "...please see our detailed Gap Analysis document. **➡️ [Deep Dive: Detailed Gap Analysis (Outdated)](../../../GAP_ANALYSIS.md)**"
 - Links Found:
-  1. [Deep Dive: Detailed Gap Analysis](./GAP_ANALYSIS.md) (Target: [../../../GAP_ANALYSIS.md](../../../GAP_ANALYSIS.md))
+  1. [Deep Dive: Detailed Gap Analysis (Outdated)](../../../GAP_ANALYSIS.md) (Target: [../../../GAP_ANALYSIS.md](../../../GAP_ANALYSIS.md))
 
 **Graph JSON Data:**
 - **Found:** Yes!
