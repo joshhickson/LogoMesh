@@ -4,7 +4,7 @@ Welcome to the **LogoMesh Onboarding Hub**. This folder contains the tools and d
 
 ## 1. Quick Links
 
-- **Strategic Plan:** [PROJECT_PLAN.md](../../../PROJECT_PLAN.md)
+- **Strategic Plan:** [PROJECT_PLAN.md (Outdated)](../../Archive/PROJECT_PLAN.md)
 - **Status Log:** [../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../../docs/Archive/Unsorted/20251119-Strategic-Master-Log.md)
 - **Technical Log:** [../Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md](../Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md)
 
@@ -15,7 +15,7 @@ Welcome to the **LogoMesh Onboarding Hub**. This folder contains the tools and d
     *   `cd onboarding && pnpm install`
 
 2.  **Understand the "Why" (Strategy):**
-    *   Read [PROJECT_PLAN.md](../../../PROJECT_PLAN.md) (The Vision).
+    *   Read [PROJECT_PLAN.md (Outdated)](../../Archive/PROJECT_PLAN.md) (The Vision).
     *   Read [../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../../docs/Archive/Unsorted/20251119-Strategic-Master-Log.md) (The Pivot).
     *   Read [../../04-Operations/Intent-Log/README.md](../../04-Operations/Intent-Log/README.md) (How we work).
 

@@ -17,7 +17,7 @@ Welcome, and thanks for jumping in. This repo contains the LogoMesh monorepo: a 
 
 Quick links:
 - 2025-11-19 Strategic Master Log `logs/20251119-Strategic-Master-Log.md`
-- Project Plan: `PROJECT_PLAN.md`
+- Project Plan: `docs/Archive/PROJECT_PLAN.md`
 - CI guidance for running e2e in GitHub Actions: `docs/CI_COMPOSE_E2E_WORKFLOW.md`
 
 Who this README is for

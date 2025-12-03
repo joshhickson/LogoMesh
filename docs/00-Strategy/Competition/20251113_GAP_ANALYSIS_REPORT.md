@@ -24,7 +24,7 @@ This section breaks down the specific areas for improvement and evaluates the pr
 ### 3.1. Gap: Lack of Sponsor Alignment (Auth0)
 
 *   **Initial State:** The project had no meaningful connection to the competition's lead sponsor, Auth0. The simulation predicted that the project's naive credential handling would be a "catastrophic security flaw" and a "disqualification" in the eyes of an Auth0 judge.
-*   **Current State:** The project has made Auth0 integration a central pillar of its strategy. The [PROJECT_PLAN.md (Outdated)](../../../PROJECT_PLAN.md) outlines a clear plan to use Auth0 for AI Agents to secure the benchmark, transforming a critical weakness into a major strength.
+*   **Current State:** The project has made Auth0 integration a central pillar of its strategy. The [PROJECT_PLAN.md (Outdated)](../../Archive/PROJECT_PLAN.md) outlines a clear plan to use Auth0 for AI Agents to secure the benchmark, transforming a critical weakness into a major strength.
 *   **Assessment:** This is the most significant and successful pivot. By embracing the sponsor's technology, the project not only mitigates a major risk but also dramatically increases its chances of winning the Auth0-sponsored prize track.
 
 ### 3.2. Gap: Weak Problem Domain
@@ -36,13 +36,13 @@ This section breaks down the specific areas for improvement and evaluates the pr
 ### 3.3. Gap: Insufficient Architectural Innovation
 
 *   **Initial State:** The project's architecture was a simple, single-agent system. The simulation predicted that this would be seen as "uninspired" and would fail to impress the judges, who have a demonstrated preference for sophisticated, multi-agent systems.
-*   **Current State:** The project has been redesigned around a modern, scalable Orchestrator-Worker architecture. This is evident in the new `packages/` directory structure, which includes distinct `core`, `server`, and `workers` components. The [PROJECT_PLAN.md (Outdated)](../../../PROJECT_PLAN.md) further details this multi-agent design.
+*   **Current State:** The project has been redesigned around a modern, scalable Orchestrator-Worker architecture. This is evident in the new `packages/` directory structure, which includes distinct `core`, `server`, and `workers` components. The [PROJECT_PLAN.md (Outdated)](../../Archive/PROJECT_PLAN.md) further details this multi-agent design.
 *   **Assessment:** The new architecture is a massive improvement. It aligns with industry best practices, demonstrates a deep understanding of agentic design, and directly addresses the judges' preference for scalable, resilient systems.
 
 ### 3.4. Gap: Incomplete Implementation
 
 *   **Initial State:** Key components of the analysis logic were either missing or mocked. The simulation warned that this would lead to a devastating critique: "The paper's claims and the code do not match."
-*   **Current State:** The [PROJECT_PLAN.md (Outdated)](../../../PROJECT_PLAN.md) includes a detailed, week-by-week plan for the full implementation of all core logic. While the implementation is not yet complete, the plan is credible and demonstrates a clear path to a fully functional system.
+*   **Current State:** The [PROJECT_PLAN.md (Outdated)](../../Archive/PROJECT_PLAN.md) includes a detailed, week-by-week plan for the full implementation of all core logic. While the implementation is not yet complete, the plan is credible and demonstrates a clear path to a fully functional system.
 *   **Assessment:** The project has a clear and realistic plan to close the implementation gap. The new modular architecture will make it easier to build and test each component independently, increasing the likelihood of success.
 
 ## 4. Red Team Analysis: Addressing the Predicted Judicial Q&A
@@ -60,7 +60,7 @@ The simulation report concluded with five critical questions that the judges wer
 ### 4.2. The Security Question (Auth0)
 
 *   **Predicted Question:** "Can you walk me through the *exact* data flow for how a third-party API key is provisioned, stored, and accessed during an evaluation?"
-*   **Current Answer:** The [PROJECT_PLAN.md (Outdated)](../../../PROJECT_PLAN.md) directly addresses this by making Auth0 integration a core feature. The answer is now:
+*   **Current Answer:** The [PROJECT_PLAN.md (Outdated)](../../Archive/PROJECT_PLAN.md) directly addresses this by making Auth0 integration a core feature. The answer is now:
     *   "We agree that naive credential handling is a critical flaw in many agent systems. That's why we're building our benchmark around Auth0 for AI Agents. The 'Purple Agent' will be treated as an untrusted identity, and will be required to request and use short-lived, scoped tokens to access any secure resources. This is the correct, 'Zero Trust' model for agent security."
 *   **Assessment:** This is another strong answer that turns a potential weakness into a demonstration of expertise.
 
@@ -69,7 +69,7 @@ The simulation report concluded with five critical questions that the judges wer
 *   **Predicted Question:** "What specific safeguards have you implemented to ensure a 'Purple Agent's' non-determinism, hallucinations, or prompt-injection attacks don't crash the 'Green Agent' evaluator?"
 *   **Current Answer:** The new multi-agent architecture provides a solid foundation for robustness.
     *   **Isolation:** The Orchestrator-Worker pattern naturally isolates the core evaluation logic from the untrusted "Purple Agent."
-    *   **Explicit Plan:** The [PROJECT_PLAN.md (Outdated)](../../../PROJECT_PLAN.md) includes "sandboxing" as a key task for the `testingDebtAnalyzer`. This demonstrates an awareness of the need to safely execute untrusted agent code.
+    *   **Explicit Plan:** The [PROJECT_PLAN.md (Outdated)](../../Archive/PROJECT_PLAN.md) includes "sandboxing" as a key task for the `testingDebtAnalyzer`. This demonstrates an awareness of the need to safely execute untrusted agent code.
 *   **Assessment:** While the implementation is not yet complete, the architectural choices and the explicit plan provide a convincing answer.
 
 ### 4.4. The Integration Question (EvoGit Precedent)
@@ -93,6 +93,6 @@ The project has undergone a remarkable transformation. The team has demonstrated
 
 **Recommendations:**
 
-1.  **Execute the Plan:** The [PROJECT_PLAN.md (Outdated)](../../../PROJECT_PLAN.md) is an excellent roadmap. The team's top priority should be to execute this plan, focusing on the full implementation of the core logic.
+1.  **Execute the Plan:** The [PROJECT_PLAN.md (Outdated)](../../Archive/PROJECT_PLAN.md) is an excellent roadmap. The team's top priority should be to execute this plan, focusing on the full implementation of the core logic.
 2.  **Strengthen the DevEx Story:** While the core platform is the priority, the team should consider a small, "quick win" to improve the developer experience story. A simple GitHub Action or a script to post results to a pull request would make the project's real-world utility much more tangible.
 3.  **Prepare for the Pitch:** The team should begin preparing their final pitch, using the answers to the "Predicted Judicial Q&A" as the foundation. The pitch should lead with the project's strengths: the robust, scalable architecture, the compelling "Cyber-Sentinel" narrative, and the deep, meaningful integration of Auth0.
