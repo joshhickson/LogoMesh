@@ -15,7 +15,7 @@
 
 ### 1. Welcome & Introductions (10 min)
 *   **Icebreaker:** Name, background, and one thing you're excited to build.
-*   **Role Confirmation:** Brief review of the 8 roles outlined in [PROJECT_PLAN.md (Outdated)](../../../PROJECT_PLAN.md) (Section 4).
+*   **Role Confirmation:** Brief review of the 8 roles outlined in [PROJECT_PLAN.md (Outdated)](../../Archive/PROJECT_PLAN.md) (Section 4).
     *   *Team Lead, Narrative Strategist, Documentation Coord, UX Designer, Auth0 Specialist, Core Logic (Arch), Core Logic (Testing), Agent Engineer.*
 
 ### 2. Mission & Vision: The "Cyber-Sentinel" (10 min)
@@ -23,7 +23,7 @@
 *   **The Solution:** A "Green Agent" (Evaluator) for the AgentX competition.
     *   **Narrative:** "Cyber-Sentinel Agent"—focusing on cybersecurity to make the problem high-stakes and concrete.
     *   **Core Philosophy:** "Agent-as-a-Judge"—using AI to evaluate the *process* of other AIs.
-*   **Reference:** [PROJECT_PLAN.md (Outdated)](../../../PROJECT_PLAN.md)
+*   **Reference:** [PROJECT_PLAN.md (Outdated)](../../Archive/PROJECT_PLAN.md)
 
 ### 3. **CRITICAL UPDATE:** The Strategic Pivot (15 min)
 *   **The Situation:** We considered two paths: "Build immediately" vs. "Formalize the Science first."
@@ -52,5 +52,5 @@
 ## Key Links for Reference
 *   **Strategic Map:** [../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../Archive/Unsorted/20251119-Strategic-Master-Log.md)
 *   **Current Orders:** [../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md](../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md)
-*   **Vision:** [PROJECT_PLAN.md (Outdated)](../../../PROJECT_PLAN.md)
+*   **Vision:** [PROJECT_PLAN.md (Outdated)](../../Archive/PROJECT_PLAN.md)
 *   **Setup:** [README.md](../../../README.md)

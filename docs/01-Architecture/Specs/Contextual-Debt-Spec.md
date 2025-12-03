@@ -1,5 +1,9 @@
 # Contextual Debt: Technical Specification
 
+**Related Documents:**
+*   **Theory & Research:** [Contextual Debt: A Software Liability](../../03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md) (The theoretical basis for this metric)
+*   **Output Schema:** [Evaluation Output Schema](Evaluation-Output-Schema.md)
+
 Last updated: 2025-11-13
 
 Purpose

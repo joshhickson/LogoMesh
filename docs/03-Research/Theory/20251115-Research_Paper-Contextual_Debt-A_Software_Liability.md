@@ -2,6 +2,10 @@
 
 # **The Unknowable Code: An Analysis of Contextual Debt as the Next Frontier of Software Liability**
 
+**Related Documents:**
+*   **Technical Implementation:** [Contextual Debt Metric Spec](../../01-Architecture/Specs/Contextual-Debt-Spec.md) (The exact algorithm used to compute the score)
+*   **Evaluation Output:** [Evaluation Output Schema](../../01-Architecture/Specs/Evaluation-Output-Schema.md)
+
 ## **Executive Summary: The Emerging Crisis of Intent**
 
 A new and insidious form of liability is silently accumulating within the digital infrastructure of the global economy. This report advances the hypothesis that the greatest source of liability in the next decade of software will be the unmanageable accumulation of **Contextual Debt**.

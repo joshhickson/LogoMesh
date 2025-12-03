@@ -10,9 +10,14 @@ Welcome to the LogoMesh onboarding documentation system! This folder contains in
 
 ## 🎯 Start Here
 
-**→ [Strategic Master Log](index.html)** - Your complete navigation guide to all project documentation
+**→ [Strategic Master Log](index.html)** - Your complete navigation guide to all project documentation.
+   - Complete navigation guide to all project documentation
+   - Interactive flowcharts showing how documents relate
+   - Color-coded document cards with status badges
 
-**→ [Strategic Gaps Analysis](gaps-analysis.html)** - Comprehensive breakdown of what needs to be done
+**→ [Strategic Gaps Analysis](gaps-analysis.html)** - Comprehensive breakdown of what needs to be done.
+   - Organized by priority and skill set
+   - Perfect for finding where you can contribute
 
 ## 📚 Quick Access to Document Summaries
 
