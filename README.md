@@ -10,7 +10,7 @@
 > 3.  Open the site in your browser (usually at `http://localhost:3000`).
 >
 > **Don't want to run a server?**
-> *   **Strategy:** Read the [Strategic Master Log](docs/04-Operations/Intent-Log/Technical/20251128-Consolidated-Context-and-Actions.md)
+> *   **Current Roadmap:** Read the [Discovery Sprint Plan](docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md)
 > *   **Theory:** Read the [Contextual Debt Research Paper](docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md)
 
 # LogoMesh: An Open Platform for Agent-on-Agent Evaluation
@@ -78,10 +78,11 @@ Follow these steps if you need to develop features or debug the Node.js source d
 
 ## 📚 Documentation Map
 
-*   **Strategy & Status:** [Strategic Master Log](docs/04-Operations/Intent-Log/Technical/20251128-Consolidated-Context-and-Actions.md)
+*   **Current Roadmap (Active):** [Discovery Sprint Dashboard](docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md)
 *   **Core Concept:** [Contextual Debt Research Paper](docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md)
 *   **Technical Spec:** [Contextual Debt Metric Spec](docs/01-Architecture/Specs/Contextual-Debt-Spec.md)
 *   **Evaluation Output:** [Schema Definition](docs/01-Architecture/Specs/Evaluation-Output-Schema.md)
+*   **Project Context:** [Strategic Master Log](docs/04-Operations/Intent-Log/Technical/20251128-Consolidated-Context-and-Actions.md) (Background & Status)
 
 ## 🏗️ Repository Structure
 
