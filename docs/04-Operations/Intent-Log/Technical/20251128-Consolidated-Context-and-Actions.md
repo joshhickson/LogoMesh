@@ -15,9 +15,9 @@ The project is in a transition phase. We are moving away from a purely prototype
 *   **Primary Goal:** To create a "Contextual Debt" benchmark that is mathematically sound and copyrightable.
 
 ### 1.2. The "Contextual Graph" Initiative (Nov 22 - Present)
-To validate the CIS concept internally, we are applying it to our own documentation.
-*   **Hypothesis:** If we can graph our own docs, we can measure our own "Contextual Debt" (disconnected or "dead" knowledge).
-*   **Status:** We are building the tooling (`onboarding/` server + scripts) to map, visualize, and then restructure the `docs/` and `logs/` directories.
+**Status:** ✅ COMPLETED
+*   **Note:** This was a personal assignment for Josh. The graph infrastructure is now live in `onboarding/`.
+*   **Outcome:** We successfully built the tooling (`onboarding/` server + scripts) to map, visualize, and restructure the `docs/` and `logs/` directories. This validates the CIS concept internally.
 
 ---
 
@@ -42,12 +42,15 @@ To validate the CIS concept internally, we are applying it to our own documentat
 *   **[Documentation] Restructure Folders:** Consolidate `logs/` and `docs/` based on the graph analysis.
     *   *Source:* `20251123-working-log.md`.
     *   *Status:* **READY TO START**. The graph integrity is now sufficient.
-*   **[Documentation] Visualize the Graph:** Update the `onboarding/` web app to load and display the new `doc_graph_raw.json` data.
-    *   *Source:* `Documentation-Organization-Master-Plan.md` (Phase 4).
-    *   *Owner:* Jules/Josh.
 *   **[Research] Experiment 1.3 (Composite Score):** Write a report contrasting "Composite Score" vs. BLEU/CodeBERT.
     *   *Source:* `20251126-josh-action-items.md`.
     *   *Owner:* Josh/Alaa.
+
+### ✅ Completed
+*   **[Documentation] Visualize the Graph:** Update the `onboarding/` web app to load and display the new `doc_graph_raw.json` data.
+    *   *Source:* `Documentation-Organization-Master-Plan.md` (Phase 4).
+    *   *Owner:* Jules/Josh.
+    *   *Note:* Graph is live and functional.
 
 ### 🟡 Pending / Deferred
 *   **[Ops] Benchmark Research:** Investigate existing benchmarks (HumanEval, SWE-bench) for adaptation.
