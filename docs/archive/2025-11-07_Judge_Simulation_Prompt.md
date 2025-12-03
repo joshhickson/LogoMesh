@@ -23,7 +23,7 @@ To answer this, your report must address the following sub-questions:
 
 Based *only* on the provided source material below, perform a "red team" analysis of our project as if you were a judge. Identify the strengths a judge would praise and, more importantly, the weaknesses or questions they would raise.
 
-*   **First Impressions:** Based on the `README.md`, how easy is it to understand the project's purpose and verify its functionality? Are the "Quick Start" instructions clear, professional, and effective?
+*   **First Impressions:** Based on the [README.md](../../README.md), how easy is it to understand the project's purpose and verify its functionality? Are the "Quick Start" instructions clear, professional, and effective?
 *   **Novelty and Impact:** Does the core concept of "Contextual Debt," as explained in the submission paper, represent a truly novel and important contribution to agent evaluation? Is it a "Zero to One" benchmark, or an incremental improvement?
 *   **Technical Rigor:** Does the architecture, as shown in the diagram, appear robust, scalable, and well-designed for its purpose? Are there any obvious architectural flaws a judge might question?
 *   **Meeting the Criteria:** How well does the project align with the stated goals of the "Benchmarks Track," which are to "enable meaningful cross-agent comparisons and offer insights into efficiency, accuracy, and generalization"?
@@ -42,9 +42,9 @@ Synthesize your external research and internal analysis into a final, actionable
 
 You must use the following documents as the complete and total context for your analysis of our project.
 
-### **Document 1: The `README.md` (Quick Start Guide)**
+### **Document 1: The [README.md](../../README.md) (Quick Start Guide)**
 
-**Filepath:** `./README.md`
+**Filepath:** `./[README.md](../../README.md)`
 
 ### **Document 2: The `AgentX_Submission_Paper.md`**
 
@@ -52,11 +52,11 @@ You must use the following documents as the complete and total context for your 
 
 ### **Document 3: The System Architecture Diagrams**
 
-**Filepath:** `./docs/onboarding/system-architecture.md`
+**Filepath:** `./[../onboarding/system-architecture.md](../onboarding/system-architecture.md)`
 
 ### **Document 4: Example Evaluation Report**
 
-**Filepath:** `./docs/onboarding/example-evaluation-report.json`
+**Filepath:** `./../onboarding/example-evaluation-report.json`
 
 ### **Document 5: Key Source Code Files**
 

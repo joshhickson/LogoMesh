@@ -1,0 +1,78 @@
+# Log: Project Readiness & Next Steps
+**Date:** 2025-11-12
+
+This document summarizes the recent work done to improve the repository's onboarding experience, clean up the codebase, and fix the critical `EPIPE` build error. It concludes with a clear set of instructions for you to verify the fix on your local machine.
+
+---
+
+## 1. Summary of Changes
+
+### 1.1. Documentation Overhaul & Repository Cleanup
+*   **New Onboarding Flow:** The `README.md` has been rewritten to be a welcoming entry point for new team members. It now directs them to a new, high-level `docs/PROJECT_STATUS.md` document.
+*   **New Strategic Documents:**
+    *   `docs/PROJECT_STATUS.md`: Provides a transparent overview of the project's vision, current technical state, and the status of key technologies like Auth0.
+    *   `docs/Archive/GAP_ANALYSIS.md`: A detailed, scaffolded document to guide the new team member's in-depth evaluation of the project.
+*   **Cleanup:** Stray log files and documents have been moved from the root directory into `docs/archive/` to reduce clutter. The `.gitignore` has also been updated.
+
+### 1.2. Critical Bug Fix: Redis `EPIPE` Race Condition
+*   **Root Cause:** A race condition was identified where the application would attempt to use the Redis connection before it was fully established, causing a "Broken Pipe" error that blocked the build.
+*   **The Fix:**
+    1.  A new, centralized asynchronous service was created at `packages/core/src/services/redis.ts`. This service's `getRedisConnection()` function returns a Promise that only resolves when the Redis client is fully connected and ready.
+    2.  The `EvaluationOrchestrator` was refactored to use an async factory pattern (`.create()`).
+    3.  All application entry points (the API server and all three workers) were updated to `await` the new asynchronous initialization, ensuring a stable startup order.
+
+---
+
+## 2. Instructions for Verification
+
+The primary goal is to confirm that the `EPIPE` error is resolved and the application can now build and run successfully.
+
+### 2.1. Local Environment Setup (CRITICAL)
+The project's native dependency, `isolated-vm`, has very strict environmental requirements. The build will fail if these are not met. Please ensure your local environment is configured as follows:
+
+1.  **Node.js Version:** You **must** use Node.js v16. I recommend using `nvm` to manage this:
+    ```bash
+    nvm install 16
+    nvm use 16
+    ```
+
+2.  **pnpm (via corepack):** Ensure `corepack` is enabled to manage `pnpm`:
+    ```bash
+    corepack enable
+    ```
+
+3.  **Python Build Tools:** The `node-gyp` tool used for native builds requires `distutils`. If you are on a modern version of Python (3.12+), you will need to install `setuptools`:
+    ```bash
+    pip install setuptools
+    ```
+
+4.  **C++ Compiler Standard:** The build may require you to explicitly set the C++ standard. If the `pnpm install` command fails with C++ errors, run it with this prefix:
+    ```bash
+    CXXFLAGS="-std=c++14" pnpm install
+    ```
+
+### 2.2. Installation & Build
+Once your environment is configured, run the following commands from the root of the repository:
+
+1.  **Install Dependencies:**
+    ```bash
+    pnpm install
+    ```
+    *(If this fails, try the C++14 flag shown above.)*
+
+2.  **Run the Build:**
+    ```bash
+    pnpm run build
+    ```
+
+### 2.3. Running the End-to-End Test
+This is the final verification step. This test will start the entire application stack via Docker Compose and run a test against the API.
+
+1.  **Start the Application:**
+    ```bash
+    docker-compose up --build
+    ```
+
+2.  **Expected Test Result:** In a separate terminal, you can monitor the logs. You are looking for the `e2e-tester` service to exit with a code 0. A successful run will show the server and workers starting up, followed by the test runner making API calls and logging a "pass" message. Most importantly, you should **not** see any `EPIPE` or "Broken Pipe" errors in the logs from the `api-server` or any of the workers.
+
+A successful test run will confirm that the race condition is resolved and the application is in a stable, runnable state.

@@ -5,9 +5,13 @@ const port = 3000;
 
 // Define the absolute path to the onboarding directory
 const onboardingDir = __dirname;
+const projectRoot = path.join(__dirname, '..');
 
 // Serve static files (HTML, CSS, JS, JSON) from the onboarding directory
 app.use(express.static(onboardingDir));
+
+// Serve the 'docs' directory so files can be accessed/linked
+app.use('/docs', express.static(path.join(projectRoot, 'docs')));
 
 // Optional: A simple API endpoint to confirm the server is running
 app.get('/api/status', (req, res) => {

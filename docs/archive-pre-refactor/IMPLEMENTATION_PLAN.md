@@ -230,7 +230,7 @@ Once the **hardened spine** ships, Phase 2b will add:
 
 Week 1-4 creates the **foundation** that Phase 2b can safely build upon. No enterprise fantasies, no scope creep, just **survival and growth**.
 
-For a glimpse into the long-term vision beyond Phase 2, see the [Future Vision](future-vision.md) document.
+For a glimpse into the long-term vision beyond Phase 2, see the [Future Vision](./future-vision.md) document.
 
 ---
 

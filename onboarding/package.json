@@ -4,12 +4,12 @@
   "description": "A simple server to host the onboarding static site, ensuring that only the 'onboarding' directory is exposed.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node ../scripts/generate_doc_graph.js && node ../scripts/generate_dashboard.js && node server.js",
     "postinstall": "echo 'Dependencies installed. Run `pnpm start` to launch the server.'"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.21.2"
   }
 }
