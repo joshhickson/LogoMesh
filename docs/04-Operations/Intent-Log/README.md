@@ -1,4 +1,4 @@
-* **This folder has been temporarily abandoned due to lack of implementation and time constraints. Please refer to `/logs/` for the majority of logs as of 2025-11-16.**
+* **This README.md has been temporarily abandoned due to lack of implementation and time constraints. -2025-11-16.**
 
 # The Intent Logging Framework: A Rulebook
 
