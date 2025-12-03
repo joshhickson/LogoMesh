@@ -19,7 +19,7 @@
 
 **Output Summary:**
 - Successfully accessed `docs/` (Found 17 items).
-- Successfully read file [../../../20250910-Agentic Coding Debt Management Research.md](../../../20250910-Agentic Coding Debt Management Research.md).
+- Successfully read file [../../../Archive/20250910-Agentic Coding Debt Management Research.md](../../../Archive/20250910-Agentic Coding Debt Management Research.md).
 - Successfully accessed `logs/` (Found 12 items).
 - Successfully read file [../../../Archive/Unsorted/20251119-Strategic-Master-Log.md](../../../Archive/Unsorted/20251119-Strategic-Master-Log.md).
 
