@@ -71,7 +71,7 @@ We have abandoned the "solve the hard coding problem" strategy. We are now the "
 ## 6. Documentation Index (The "Map")
 
 ### Root
-*   [PROJECT_PLAN.md (Outdated)](../../PROJECT_PLAN.md) (The Master Plan - *Needs Update to reflect Pivot*)
+*   [PROJECT_PLAN.md (Outdated)](../PROJECT_PLAN.md) (The Master Plan - *Needs Update to reflect Pivot*)
 *   [README.md](../../../README.md) (The Entry Point)
 
 ### Strategy & IP (`docs/strategy_and_ip/`)
