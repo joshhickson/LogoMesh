@@ -37,7 +37,7 @@ You are joining at the perfect moment to make a massive impact. Your role is not
 
 This table provides a high-level summary of the key opportunity areas. For a more in-depth analysis and a structured set of questions to guide your evaluation, please see our detailed Gap Analysis document.
 
-**➡️ [Deep Dive: Detailed Gap Analysis](../../GAP_ANALYSIS.md)**
+**➡️ [Deep Dive: Detailed Gap Analysis (Outdated)](../../Archive/GAP_ANALYSIS.md)**
 
 | Area of Opportunity | Description | Your Potential Impact |
 | :--- | :--- | :--- |

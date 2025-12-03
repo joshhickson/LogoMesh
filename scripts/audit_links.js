@@ -2,8 +2,9 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT_DIR = process.cwd();
-const TARGET_DIRS = ['docs', 'logs'];
-const OUTPUT_FILE = path.join(ROOT_DIR, 'logs/technical/josh-temp/20251128-link-audit.csv');
+// Removing 'logs' as it has been deprecated/deleted.
+const TARGET_DIRS = ['docs'];
+const OUTPUT_FILE = path.join(ROOT_DIR, 'docs/04-Operations/Intent-Log/Technical/reference_manifest.csv');
 
 // Helper to get relative path from root
 function getRelativePath(absolutePath) {
@@ -42,13 +43,15 @@ TARGET_DIRS.forEach(targetDir => {
 // Add root files manually
 if (fs.existsSync(path.join(ROOT_DIR, 'PROJECT_PLAN.md'))) validFilePaths.add('PROJECT_PLAN.md');
 if (fs.existsSync(path.join(ROOT_DIR, 'README.md'))) validFilePaths.add('README.md');
+// Add root docs if they exist (though they should be caught by TARGET_DIRS if inside docs/)
+// But explicit root files might be needed if they are not in docs/ or TARGET_DIRS.
 
 console.log(`Indexed ${validFilePaths.size} valid targets.`);
 
 const results = [];
 results.push('SourceFile,Line,LinkText,RawTarget,ResolvedTarget,Status,Type');
 
-console.log('Starting All-Intensive Link Audit (v2.1 - Implicit Support)...');
+console.log('Starting All-Intensive Link Audit (v3.0 - Reference Manifest)...');
 
 TARGET_DIRS.forEach(targetDir => {
     const absTargetDir = path.join(ROOT_DIR, targetDir);
@@ -112,5 +115,12 @@ TARGET_DIRS.forEach(targetDir => {
     });
 });
 
+// Create directory if it doesn't exist
+const outputDir = path.dirname(OUTPUT_FILE);
+if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+}
+
 console.log(`Audit complete. Found ${results.length - 1} links.`);
 fs.writeFileSync(OUTPUT_FILE, results.join('\n'));
+console.log(`Reference Manifest written to: ${OUTPUT_FILE}`);

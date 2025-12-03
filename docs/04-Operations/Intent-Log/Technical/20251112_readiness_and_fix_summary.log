@@ -11,7 +11,7 @@ This document summarizes the recent work done to improve the repository's onboar
 *   **New Onboarding Flow:** The `README.md` has been rewritten to be a welcoming entry point for new team members. It now directs them to a new, high-level `docs/PROJECT_STATUS.md` document.
 *   **New Strategic Documents:**
     *   `docs/PROJECT_STATUS.md`: Provides a transparent overview of the project's vision, current technical state, and the status of key technologies like Auth0.
-    *   `docs/GAP_ANALYSIS.md`: A detailed, scaffolded document to guide the new team member's in-depth evaluation of the project.
+    *   `docs/Archive/GAP_ANALYSIS.md`: A detailed, scaffolded document to guide the new team member's in-depth evaluation of the project.
 *   **Cleanup:** Stray log files and documents have been moved from the root directory into `docs/archive/` to reduce clutter. The `.gitignore` has also been updated.
 
 ### 1.2. Critical Bug Fix: Redis `EPIPE` Race Condition
