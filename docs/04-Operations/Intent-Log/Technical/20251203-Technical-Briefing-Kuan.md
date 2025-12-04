@@ -28,8 +28,9 @@ This index is curated to get you up to speed on the *current* technical state wi
 ### Pillar 1: Mission & Strategy (The "Why")
 *Start here to understand the competition constraints and our pivot.*
 
-*   [**The North Star (Consolidated Context)**](20251128-Consolidated-Context-and-Actions.md)
-    *   *What it is:* The central source of truth for the current project state, recent decisions, and active action items.
+*   [**Technical Implementation Plan (CIS v2)**](../../../00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md)
+    *   *What it is:* The architectural roadmap defining the "Workstreams" for our vector-based pivot.
+    *   *Note:* Ignore the folder name ("Business") and the "Phase 1" commercial framing. Focus strictly on Section 3 (Revised Workstream 1) which defines the technical implementation of the Green Agent components.
 *   [**Competition Rules (AgentBeats)**](20251126-AgentBeats-Competition-Info-Session-PDF.md)
     *   *What it is:* The official constraints for the "Green Agent" track.
 *   [**Pivot Rationale (Recommendation Report)**](../../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md)
@@ -39,7 +40,8 @@ This index is curated to get you up to speed on the *current* technical state wi
 *The mathematical and theoretical foundation of the CIS.*
 
 *   [**The Core Theory (Research Paper)**](../../../03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md)
-    *   *What it is:* The academic definition of "Contextual Debt" and the "Decay Theorem."
+    *   *What it is:* The academic definition of "Contextual Debt," the "Decay Theorem" (Section 3.4), and the "DBOM" (Section 4.2).
+    *   *Note:* This version contains the latest math and protocol logic (synced with the Nov 19 proposals).
 *   [**Math Validation (Novelty Analysis)**](20251127-Math-Viability-and-Novelty-Analysis.md)
     *   *What it is:* Confirmation that our vector/graph approach is a viable and novel application for the competition.
 
