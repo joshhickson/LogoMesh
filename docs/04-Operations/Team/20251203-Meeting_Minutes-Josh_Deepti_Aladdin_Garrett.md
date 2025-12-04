@@ -4,7 +4,7 @@
 
 **Status:** PROGRESSIVE REVIEW
 
-**Reference Document:** docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md
+**Reference Document:** 'docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md'
 
 **Trigger Event:** Post-Thanksgiving review for a series of adjustments in the most recent planning document.
 
@@ -39,21 +39,21 @@ The current "Contextual Discovery Plan" (Revision Nov 27\) is partially compromi
 * **Correction:** The Dockerfile must be downgraded/pinned to **Node v20 or v22** to ensure cross-platform compatibility.  
 * **Status:** Garrett has fixed this locally but changes need to be pushed to master.
 
-### **3.3. Security & Sponsorship (The Auth0 Error)**
+### **3.3. Retrospective Review Plan (Nov 19 \- Dec 3\)**
 
-* **The Gap:** Plan allocates resources to integrating Auth0, operating under the false assumption that it is a sponsor requirement.  
-* **The Reality:** Josh confirmed this was a mistake based on outdated data from the previous Spring competition.  
-* **Correction:** Strip all Auth0 tasks from the backlog.
-
-### **3.4. Retrospective Review Plan (Nov 19 \- Dec 3\)**
-
-* **Objective:** Audit the integrity of all documentation created in the last 2 weeks.  
+* **Objective:** Audit the integrity of all documentation created in the last 2 weeks. Revise the currently existing plan for this ('docs/04-Operations/Intent-Log/Technical/20251203-Gap-Analysis-Recent-Docs.md')
 * **Scope:** All files created or modified between **November 19, 2025** and **December 3, 2025**.  
 * **Method:**  
   1. List all files from this date range.  
   2. Check for contradictions against the *Critical Discrepancies Matrix* (Section 2).  
   3. Tag files as \[VALID\], \[NEEDS REVISION\], or \[DEPRECATED\].  
   4. Specifically verify if the "Methodology" section in these docs references the invalid "Experiment 1.2" (Embeddings).
+
+### **3.4. Security & Sponsorship (The Auth0 Error)**
+
+* **The Gap:** Plan allocates resources to integrating Auth0, operating under the false assumption that it is a sponsor requirement.  
+* **The Reality:** Josh confirmed this was a mistake based on outdated data from the previous Spring competition.  
+* **Correction:** Strip all Auth0 tasks from the backlog as part of the plan outlined in 'docs/04-Operations/Intent-Log/Technical/20251203-Gap-Analysis-Recent-Docs.md' (which now must be revised).
 
 ## **4\. Role Assignment Alignment**
 
