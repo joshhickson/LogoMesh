@@ -68,5 +68,6 @@ This index is curated to get you up to speed on the *current* technical state wi
 **Note:** Josh and Deepti are currently performing a "Deep Consolidation" of the remaining technical docs. The following areas are currently in flux or missing and will be defined shortly:
 
 1.  **Green Agent Implementation Details:** The specific architecture for the Green Agent (being worked on by Alaa and Garrett) is not yet fully documented.
+    *   *Competition Resources:* We are referencing the official [AgentBeats Repository](https://github.com/agentbeats/agentbeats) and [Agent Text Tutorial](https://github.com/agentbeats/tutorial) for the baseline architecture.
 2.  **Code Comparison Methodology:** The exact method for comparing code against requirements (Embeddings vs. Direct Diff) is under active debate and being resolved.
 3.  **Consolidated Technical Manual:** A single, unified technical manual is being assembled to replace the scattered log files.

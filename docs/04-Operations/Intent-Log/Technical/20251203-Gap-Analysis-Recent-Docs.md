@@ -88,7 +88,7 @@ Create `docs/04-Operations/Intent-Log/Technical/20251203-Technical-Briefing-Kuan
 **Proposed Document List for Briefing Index:**
 
 *   **Pillar 1: Mission & Strategy (The "Why")**
-    *   [docs/04-Operations/Intent-Log/Technical/20251128-Consolidated-Context-and-Actions.md](20251128-Consolidated-Context-and-Actions.md) (The "North Star" - Start Here)
+    *   [docs/00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](../../../00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md) (Technical Implementation Plan - CIS v2)
     *   [docs/04-Operations/Intent-Log/Technical/20251126-AgentBeats-Competition-Info-Session-PDF.md](20251126-AgentBeats-Competition-Info-Session-PDF.md) (Competition Rules)
     *   [docs/02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md](../../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md) (Pivot Rationale - *Verify strictly for Technical content*)
 
