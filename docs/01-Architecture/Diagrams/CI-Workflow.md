@@ -95,7 +95,11 @@ jobs:
 - Add a `matrix` to run on multiple Node versions if needed.
 - Add an `on: schedule:` trigger if you want nightly regression tests.
 
-## Next steps
+## Next steps I can take
 - Create `.github/workflows/e2e-compose.yml` and open a PR for your review.
 - Add caching for `pnpm` in the Docker build to speed CI.
 - Add a status badge to the README to show CI health.
+
+---
+
+If you want, I can create the workflow file and open a PR now. If you prefer to review the document first, tell me and I'll hold off on the PR.
