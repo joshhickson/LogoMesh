@@ -16,7 +16,7 @@ The current "Contextual Discovery Plan" (Revision Nov 27\) is partially compromi
 
 | Feature/Topic | Current Plan (Hallucinated/Outdated) | Actual Requirement (Ground Truth) | Severity | Source |
 | :---- | :---- | :---- | :---- | :---- |
-| **Authentication** | Requires implementation of **Auth0** for scoring purposes. | **Auth0 is irrelevant.** The sponsorship was for the *Spring* competition. No scoring benefit exists for using it. | **High** (Wasted Dev Time) | Josh |
+| **Authentication** | Requires implementation of **Auth0** for scoring purposes. | **Auth0 is irrelevant.** The sponsorship was for the *Spring* competition. No scoring benefit exists for using it. | **High** (Would waste Dev Time) | Josh |
 | **Submission Deadline** | **December 19, 2025** | **January 15, 2026**. The deadline was extended for all teams. | **High** (Strategic) | Josh |
 | **Methodology** | **Experiment 1.2:** Generate vector embeddings for code diffs via Jupyter Notebook to uncover constraints. | **Invalid Methodology.** Deepti suggested code diffs should be performed at the code level; embeddings add unnecessary complexity and cost without value.  | **Medium** (Technical Debt) | Deepti |
 | **Submission Artifacts** | Codebase \+ Green Agent \+ Benchmarks. | **Missing Artifact:** A recording/demo video of the clean repository is explicitly required for submission. | **Medium** (Compliance) | Garrett |
