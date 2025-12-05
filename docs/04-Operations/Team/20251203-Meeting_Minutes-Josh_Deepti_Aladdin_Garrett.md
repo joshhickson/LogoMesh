@@ -93,3 +93,8 @@ The previous plan randomly assigned tasks via a coding agent. The following manu
 * **Compute:** Lambda Labs ($400 credit), Google Cloud ($300 credit).  
 * **Potential New Teammate:** Quan (https://kuanzhou.online/) \- specialized in Agentic Security (AWS).  
 * **Reference News:** AWS Agentic Security launch (https://www.perplexity.ai/page/aws-unveils-ai-agents-that-cod-LI9PQ\_N2TNuW.fj.zYwQdA).
+
+## **7\. Addendum (Post-Meeting Note)**
+
+* **Samuel:** Suggested keeping the documentation system simple based on rules, maintaining a single source of truth for current project tasks that everyone refers to.
+* **Josh:** Agreed. The single source of truth should be kept in the root `docs/` directory for easy access.
