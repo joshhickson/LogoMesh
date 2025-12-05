@@ -19,7 +19,7 @@ We are building a **Green Agent** (The Evaluator) that measures this debt using 
 3.  **Testing Integrity:** Semantic coverage analysis (Embeddings + Coverage Reports).
 
 **Strategic Note:**
-You may see older documents referencing "Copyrights," "LLC Formation," or "SaaS Products." **Ignore them.** As of Nov 19, we have pivoted entirely to a non-commercial, open-source focus to win the competition.
+You may see older documents referencing "Copyrights," "LLC Formation," or "SaaS Products." **Ignore them.** As of Dec 3, we have pivoted entirely to a non-commercial, open-source focus to win the competition.
 
 ## 2. Working Index: Keystone Documents
 
