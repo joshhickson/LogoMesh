@@ -1,3 +1,7 @@
+> **Status:** DRAFT
+> **Type:** Guide
+> **Context:** Onboarding, Technical Briefing
+
 # Technical Briefing: Kuan Zhou (System Architect / Security)
 
 **Date:** 2025-12-03
