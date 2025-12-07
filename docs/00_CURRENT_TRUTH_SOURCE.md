@@ -43,11 +43,14 @@ All files in the `docs/` directory must start with a standardized header block t
 ### 🟢 Golden Standards (Immutable Constraints)
 *Files that define the rules we cannot break.*
 *   [Competition Rules (AgentBeats)](04-Operations/Intent-Log/Technical/20251126-AgentBeats-Competition-Info-Session-PDF.md) (Check for updates)
+*   [AgentBeats SDK Reference](05-Competition/AgentBeats-SDK-Reference.md) - SDK documentation and green agent requirements
 
 ### 🔵 Active Roadmap (Execution)
 *The single plan we are currently following.*
 *   *Current Plan:* [Contextual Discovery Plan Revision](04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md)
     *   **Warning:** See [Gap Analysis](04-Operations/Team/20251203-Meeting_Minutes-Josh_Deepti_Aladdin_Garrett.md) for known discrepancies (Auth0, etc).
+*   *Green Agent:* [Green Agent Implementation Plan](05-Competition/Green-Agent-Implementation-Plan.md) - 7-phase incremental build plan
+    *   **Phase 1 Complete:** `packages/green-agent/` scaffolded with pyproject.toml, agent_card.toml, scenario.toml, and stub tools
 
 ### 🟣 Core Technical Specs (The Implementation)
 *The definitive "What" and "How".*

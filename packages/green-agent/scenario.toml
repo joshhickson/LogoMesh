@@ -1,0 +1,31 @@
+[scenario]
+name = "contextual_debt"
+description = "LogoMesh Contextual Debt Evaluation - Assess coding agents on code quality metrics"
+version = "1.0.0"
+
+# Green Agent Configuration
+[[agents]]
+name = "Green Agent"
+card = "agent_card.toml"
+launcher_host = "0.0.0.0"
+launcher_port = 9039
+agent_host = "0.0.0.0"
+agent_port = 9040
+model_type = "openai"
+model_name = "gpt-4o-mini"
+tools = ["src/logomesh_green/tools.py"]
+mcp_servers = ["http://localhost:9001/sse"]
+is_green = true
+
+# Participant Requirements - Purple Agent (Coding Agent)
+[[agents.participant_requirements]]
+  role = "purple_agent"
+  name = "Coding Agent"
+  required = true
+  # participant_agent is not specified - will be matched dynamically by AgentBeats
+
+# Launch Configuration
+[launch]
+mode = "separate"
+startup_interval = 2
+wait_for_services = true
