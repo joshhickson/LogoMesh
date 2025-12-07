@@ -42,8 +42,17 @@ USE_MCP_TOOLS           # "true" to use MCP server tools
 ## Known Issues / TODOs
 
 - [ ] `/v1/internal/analyze` endpoint not implemented in LogoMesh server yet
-- [ ] Dockerfile vendor path needs fixing (use multi-stage build)
+- [x] ~~Dockerfile vendor path needs fixing~~ - Resolved: removed submodule, install from GitHub
 - [ ] Task bank is hardcoded (create `tasks/task_bank.json`)
+
+## Dependency: AgentBeats SDK
+
+AgentBeats is installed directly from GitHub (not vendored as submodule):
+```bash
+pip install git+https://github.com/agentbeats/agentbeats.git
+```
+
+**Why not submodule?** For competition context, we're consumers of the SDK, not contributors. Direct pip install is simpler and avoids multi-stage Docker build complexity.
 
 ## Testing
 

@@ -62,3 +62,4 @@ All files in the `docs/` directory must start with a standardized header block t
 *Major strategic changes to be aware of.*
 *   **Auth0:** Sponsorship invalid. Do not implement.
 *   **Embeddings for Diffs:** Methodology rejected. Use direct code diffs.
+*   **AgentBeats Submodule (`vendor/agentbeats`):** Removed. Install from GitHub via pip instead (`pip install git+https://github.com/agentbeats/agentbeats.git`). Submodule added unnecessary complexity for competition context where we're not modifying the SDK itself.

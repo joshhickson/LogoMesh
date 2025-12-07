@@ -1,3 +1,0 @@
-[submodule "vendor/agentbeats"]
-	path = vendor/agentbeats
-	url = https://github.com/agentbeats/agentbeats.git

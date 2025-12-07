@@ -16,19 +16,13 @@ services:
   # AgentBeats MCP Server - provides battle logging tools
   mcp-server:
     build:
-      context: ./vendor/agentbeats
-      dockerfile: ../../packages/green-agent/Dockerfile.mcp
+      context: ./packages/green-agent
+      dockerfile: Dockerfile.mcp
     ports:
       - '9001:9001'
     environment:
       - MCP_PORT=9001
-      - BACKEND_URL=http://agentbeats-backend:9000
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9001/health"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-      start_period: 10s
+      - BACKEND_URL=http://api-server:3001
     networks:
       - logomesh-network
 
@@ -41,7 +35,7 @@ services:
       - '9040:9040'
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - LOGOMESH_SERVER_URL=http://api-server:3001
+      - LOGOMESH_SERVER_URL=http://api-server:3000
       - MCP_SERVER_URL=http://mcp-server:9001/sse
     depends_on:
       - api-server
@@ -51,9 +45,9 @@ services:
 
   api-server:
     build: .
-    command: pnpm --filter @logomesh/server start
+    command: node /app/packages/server/dist/index.js
     ports:
-      - '3001:3001'
+      - '3000:3000'
     depends_on:
       redis:
         condition: service_healthy
@@ -61,6 +55,7 @@ services:
       - NODE_ENV=test
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - PORT=3000
     networks:
       - logomesh-network
 

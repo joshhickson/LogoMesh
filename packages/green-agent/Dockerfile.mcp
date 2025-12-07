@@ -1,5 +1,4 @@
 # AgentBeats MCP Server Dockerfile
-# This builds the MCP server from the vendor/agentbeats SDK
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -7,6 +6,7 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies for MCP server
@@ -15,21 +15,18 @@ RUN pip install --no-cache-dir \
     requests>=2.31.0 \
     httpx>=0.27.0
 
-# Copy the MCP server code from agentbeats
-# Note: Build context is vendor/agentbeats
-COPY src/backend/mcp/mcp_server.py /app/mcp_server.py
+# Clone just the MCP server file we need
+RUN git clone --depth 1 https://github.com/agentbeats/agentbeats.git /tmp/agentbeats && \
+    cp /tmp/agentbeats/src/backend/mcp/mcp_server.py /app/ && \
+    rm -rf /tmp/agentbeats
 
 # Default environment variables
 ENV MCP_PORT=9001
-ENV BACKEND_URL=http://agentbeats-backend:9000
+ENV BACKEND_URL=http://localhost:9000
 ENV MCP_HOST=0.0.0.0
 
 # Expose MCP port
 EXPOSE 9001
-
-# Health check - MCP servers respond to /health on their SSE endpoint
-HEALTHCHECK --interval=10s --timeout=5s --start-period=10s --retries=3 \
-    CMD curl -f http://localhost:${MCP_PORT}/health || exit 1
 
 # Run the MCP server
 CMD python mcp_server.py --mcp_port ${MCP_PORT} --backend_url ${BACKEND_URL} --host ${MCP_HOST}
