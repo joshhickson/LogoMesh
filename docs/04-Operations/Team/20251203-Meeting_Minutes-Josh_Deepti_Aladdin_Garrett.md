@@ -1,3 +1,7 @@
+> **Status:** SNAPSHOT
+> **Type:** Minutes
+> **Context:** Gap Analysis, Pivot Record
+
 # **Meeting Minutes \- Josh, Deepti, Aladdin, Garrett**
 
 **Date:** December 3, 2025
