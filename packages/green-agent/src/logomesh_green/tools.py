@@ -21,7 +21,12 @@ import agentbeats as ab
 
 # Configuration
 LOGOMESH_SERVER_URL = os.getenv("LOGOMESH_SERVER_URL", "http://localhost:3000")
+AGENTBEATS_BACKEND_URL = os.getenv("AGENTBEATS_BACKEND_URL", "http://localhost:9000")
 REQUEST_TIMEOUT = 300.0  # 5 minutes for code generation tasks
+
+# Flag to determine if we should use local implementations or rely on MCP
+# When running with MCP server, set USE_MCP_TOOLS=true
+USE_MCP_TOOLS = os.getenv("USE_MCP_TOOLS", "false").lower() == "true"
 
 
 # ============================================================================
@@ -191,6 +196,11 @@ async def evaluate_solution(
 # ============================================================================
 # Battle Management Tools (MCP)
 # ============================================================================
+#
+# NOTE: When running with MCP server connected (USE_MCP_TOOLS=true), these tools
+# are provided by the MCP server and our local implementations are fallbacks.
+# When running standalone (USE_MCP_TOOLS=false), we call the AgentBeats backend directly.
+# ============================================================================
 
 @ab.tool
 async def update_battle_process(
@@ -202,7 +212,9 @@ async def update_battle_process(
     """
     Log intermediate steps and information during the battle.
 
-    This tool communicates with the AgentBeats MCP server to log progress.
+    This tool communicates with the AgentBeats backend to log progress.
+    When connected to MCP server, the MCP server handles this.
+    When standalone, we call the backend directly.
 
     Args:
         battle_id: The current battle ID
@@ -213,16 +225,44 @@ async def update_battle_process(
     Returns:
         Confirmation message
     """
-    # Log locally for debugging
+    from datetime import datetime
+
+    # Always log locally for debugging
     print(f"[Battle {battle_id}] {reported_by}: {message}")
     if detail:
         print(f"  Detail: {json.dumps(detail, indent=2)[:200]}...")
 
-    # TODO: Implement actual MCP server communication
-    # The MCP server URL is configured in scenario.toml
-    # For now, just log locally
+    # If MCP tools are enabled, the MCP server handles this
+    # Our local implementation is just a fallback
+    if USE_MCP_TOOLS:
+        return f"Logged via MCP: {message}"
 
-    return f"Logged: {message}"
+    # Call AgentBeats backend directly
+    try:
+        event_data = {
+            "is_result": False,
+            "message": message,
+            "reported_by": reported_by,
+            "timestamp": datetime.utcnow().isoformat(),
+            "detail": detail or {}
+        }
+
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            response = await client.post(
+                f"{AGENTBEATS_BACKEND_URL}/battles/{battle_id}",
+                json=event_data,
+                headers={"Content-Type": "application/json"}
+            )
+            # 204 No Content is success
+            if response.status_code in (200, 204):
+                return f"Logged: {message}"
+            else:
+                print(f"  Warning: Backend returned {response.status_code}")
+                return f"Logged locally (backend returned {response.status_code}): {message}"
+
+    except Exception as e:
+        print(f"  Warning: Failed to log to backend: {e}")
+        return f"Logged locally (backend error): {message}"
 
 
 @ab.tool
@@ -234,6 +274,10 @@ async def report_on_battle_end(
     """
     Report the final battle result to the AgentBeats backend.
 
+    This tool communicates with the AgentBeats backend to report results.
+    When connected to MCP server, the MCP server handles this.
+    When standalone, we call the backend directly.
+
     Args:
         battle_id: The battle ID
         winner: The winning agent (for single-agent eval, always "purple_agent")
@@ -242,20 +286,44 @@ async def report_on_battle_end(
     Returns:
         Confirmation message
     """
-    result = {
-        "battle_id": battle_id,
-        "winner": winner,
-        "detail": detail or {}
-    }
+    from datetime import datetime
 
+    # Always log locally
     print(f"[Battle {battle_id}] COMPLETE")
     print(f"  Winner: {winner}")
     if detail:
         print(f"  Contextual Debt Score: {detail.get('contextualDebtScore', 'N/A')}")
 
-    # TODO: Implement actual MCP server communication to report result
+    # If MCP tools are enabled, the MCP server handles this
+    if USE_MCP_TOOLS:
+        return f"Reported via MCP: Battle {battle_id} complete. Winner: {winner}"
 
-    return f"Battle {battle_id} complete. Winner: {winner}"
+    # Call AgentBeats backend directly
+    try:
+        event_data = {
+            "is_result": True,
+            "message": f"Battle complete. Winner: {winner}",
+            "winner": winner,
+            "reported_by": "green_agent",
+            "timestamp": datetime.utcnow().isoformat(),
+            "detail": detail or {}
+        }
+
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            response = await client.post(
+                f"{AGENTBEATS_BACKEND_URL}/battles/{battle_id}",
+                json=event_data,
+                headers={"Content-Type": "application/json"}
+            )
+            if response.status_code in (200, 204):
+                return f"Battle {battle_id} complete. Winner: {winner}"
+            else:
+                print(f"  Warning: Backend returned {response.status_code}")
+                return f"Battle {battle_id} complete (local only). Winner: {winner}"
+
+    except Exception as e:
+        print(f"  Warning: Failed to report to backend: {e}")
+        return f"Battle {battle_id} complete (local only). Winner: {winner}"
 
 
 # ============================================================================

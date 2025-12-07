@@ -10,6 +10,44 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
+    networks:
+      - logomesh-network
+
+  # AgentBeats MCP Server - provides battle logging tools
+  mcp-server:
+    build:
+      context: ./vendor/agentbeats
+      dockerfile: ../../packages/green-agent/Dockerfile.mcp
+    ports:
+      - '9001:9001'
+    environment:
+      - MCP_PORT=9001
+      - BACKEND_URL=http://agentbeats-backend:9000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9001/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+    networks:
+      - logomesh-network
+
+  # Green Agent - Contextual Debt Evaluator
+  green-agent:
+    build:
+      context: ./packages/green-agent
+      dockerfile: Dockerfile
+    ports:
+      - '9040:9040'
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LOGOMESH_SERVER_URL=http://api-server:3001
+      - MCP_SERVER_URL=http://mcp-server:9001/sse
+    depends_on:
+      - api-server
+      - mcp-server
+    networks:
+      - logomesh-network
 
   api-server:
     build: .
@@ -23,6 +61,8 @@ services:
       - NODE_ENV=test
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+    networks:
+      - logomesh-network
 
   safe-workers:
     build: .
@@ -36,6 +76,8 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+    networks:
+      - logomesh-network
 
   testing-worker:
     build: .
@@ -46,6 +88,8 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+    networks:
+      - logomesh-network
 
   e2e-tester:
     build: .
@@ -58,3 +102,9 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - API_SERVER_URL=http://api-server:3001
+    networks:
+      - logomesh-network
+
+networks:
+  logomesh-network:
+    driver: bridge
