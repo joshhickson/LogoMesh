@@ -49,8 +49,9 @@ All files in the `docs/` directory must start with a standardized header block t
 *The single plan we are currently following.*
 *   *Current Plan:* [Contextual Discovery Plan Revision](04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md)
     *   **Warning:** See [Gap Analysis](04-Operations/Team/20251203-Meeting_Minutes-Josh_Deepti_Aladdin_Garrett.md) for known discrepancies (Auth0, etc).
-*   *Green Agent:* [Green Agent Implementation Plan](05-Competition/Green-Agent-Implementation-Plan.md) - 7-phase incremental build plan
-    *   **Phase 1 Complete:** `packages/green-agent/` scaffolded with pyproject.toml, agent_card.toml, scenario.toml, and stub tools
+*   *Green Agent:* [Green Agent Implementation Plan](05-Competition/Green-Agent-Implementation-Plan.md) - Master checklist
+    *   [Green Agent Status](05-Competition/Green-Agent-Status.md) - Quick reference & architecture
+    *   **Progress:** Phases 1-4 complete, Phase 5-7 partial
 
 ### 🟣 Core Technical Specs (The Implementation)
 *The definitive "What" and "How".*
