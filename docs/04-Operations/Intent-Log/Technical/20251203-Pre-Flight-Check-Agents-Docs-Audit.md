@@ -50,3 +50,13 @@ Additionally, `CLAUDE.md` appears to be a direct copy of `AGENTS.md` (including 
 *   **Type Tags:** Consistent across all files.
 *   **Directory Structure:** Consistent.
 *   **Truth Source Pointer:** Consistent.
+
+## 5. Strategic Recommendations (Future Work)
+
+### 5.1. Migration to Read the Docs (Kuan Zhou)
+*   **Recommendation:** "One good way I can think of is rst files with deployed read the docs."
+*   **Context:** This workflow involves using **reStructuredText (.rst)** as the source format, **Sphinx** as the build engine, and **Read the Docs** for automated hosting.
+    *   **.rst Files:** Powerful plain-text markup standard for Python projects, supporting complex cross-referencing.
+    *   **Sphinx:** Compiles .rst files into a static HTML website.
+    *   **Read the Docs:** Automates the build-and-deploy process via git webhooks.
+*   **Assessment:** This would represent a significant upgrade from the current Markdown-based system, offering better versioning and searchability, but would require a migration effort.

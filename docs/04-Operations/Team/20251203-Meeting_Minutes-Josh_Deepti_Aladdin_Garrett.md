@@ -102,3 +102,5 @@ The previous plan randomly assigned tasks via a coding agent. The following manu
 
 * **Samuel:** Suggested keeping the documentation system simple based on rules, maintaining a single source of truth for current project tasks that everyone refers to.
 * **Josh:** Agreed. The single source of truth should be kept in the root `docs/` directory for easy access.
+* **Aladdin (Correction):** **AgentBeats is the name of the framework** (https://github.com/agentbeats/agentbeats, https://github.com/agentbeats/tutorial).
+* **Kuan (Recommendation):** "Sounds good. One good way I can think of is rst files with deployed read the docs."
