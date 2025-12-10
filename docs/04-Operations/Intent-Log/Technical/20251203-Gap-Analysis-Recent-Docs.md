@@ -1,8 +1,8 @@
-# Gap Analysis: Recent Documentation (2025-11-19 to 2025-12-03)
+# Gap Analysis: Recent Documentation (2025-11-19 to 2025-12-09)
 
 **Status:** DRAFT
 **Date:** 2025-12-03
-**Objective:** Identify and remediate contradictions, outdated assumptions, and "Contextual Debt" within the documentation created during the recent strategic pivot (Nov 19 - Dec 3). Specifically focusing on the status of Auth0, the "Agent-to-Agent" pivot, the "Contextual Graph" initiative, and the shift from "Commercial Strategy" to "Public Good".
+**Objective:** Identify and remediate contradictions, outdated assumptions, and "Contextual Debt" within the documentation created during the recent strategic pivot (Nov 19 - Dec 9). Specifically focusing on the status of Auth0, the "Agent-to-Agent" pivot, the "Contextual Graph" initiative, and the shift from "Commercial Strategy" to "Public Good".
 
 ## 0. Pre-Flight Check (Audit Summary)
 
@@ -17,8 +17,14 @@ A preliminary audit of the "System Integrity Files" (`AGENTS.md`, `CLAUDE.md`, `
 
 ## 1. Scope of Analysis
 
-The following documents (timestamped 20251119 - 20251203) are within the scope of this review:
+The following documents (timestamped 20251119 - 20251209) are within the scope of this review:
 
+*   [docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md](../../../00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md)
+*   [docs/00-Strategy/IP/20251119-Transformation-Map.md](../../../00-Strategy/IP/20251119-Transformation-Map.md)
+*   [docs/00-Strategy/IP/20251119-deprecated0-Continuing The Next Section.md](../../../00-Strategy/IP/20251119-deprecated0-Continuing%20The%20Next%20Section.md)
+*   [docs/00-Strategy/IP/20251119-deprecated1-The Unknowable Code_ A Protocol for Contextual Integrity.md](../../../00-Strategy/IP/20251119-deprecated1-The%20Unknowable%20Code_%20A%20Protocol%20for%20Contextual%20Integrity.md)
+*   [docs/00-Strategy/IP/20251119-deprecated2-The Unknowable Code_ A Protocol for Measurable Contextual Integrity.md](../../../00-Strategy/IP/20251119-deprecated2-The%20Unknowable%20Code_%20A%20Protocol%20for%20Measurable%20Contextual%20Integrity.md)
+*   [docs/00-Strategy/IP/20251119-proposed-Section-2.3.md](../../../00-Strategy/IP/20251119-proposed-Section-2.3.md)
 *   [docs/02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md](../../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md)
 *   [docs/04-Operations/Intent-Log/Technical/20251120-IP-Refactoring-Log.md](20251120-IP-Refactoring-Log.md)
 *   [docs/04-Operations/Team/20251120-Team-Onboarding-Agenda.md](../../../04-Operations/Team/20251120-Team-Onboarding-Agenda.md)
@@ -36,9 +42,18 @@ The following documents (timestamped 20251119 - 20251203) are within the scope o
 *   [docs/04-Operations/Intent-Log/Technical/20251127-Research Paper-Comparison-Request.md](20251127-Research%20Paper-Comparison-Request.md)
 *   [docs/04-Operations/Intent-Log/Technical/20251128-Consolidated-Context-and-Actions.md](20251128-Consolidated-Context-and-Actions.md)
 *   [docs/04-Operations/Intent-Log/Technical/20251128-Documentation-Organization-Master-Plan.md](20251128-Documentation-Organization-Master-Plan.md)
+*   [docs/04-Operations/Intent-Log/Technical/20251128-doc-access-probe-log.md](20251128-doc-access-probe-log.md)
+*   [docs/04-Operations/Intent-Log/Technical/20251128-doc-graph-generation-log.md](20251128-doc-graph-generation-log.md)
+*   [docs/04-Operations/Intent-Log/Technical/20251129-Dangling-Edge-Analysis-Log.md](20251129-Dangling-Edge-Analysis-Log.md)
 *   [docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md](20251129-Restructure-Proposal-CIS-Driven.md)
+*   [docs/04-Operations/Intent-Log/Technical/20251130-Mermaid-Fix-and-Graph-Analysis.md](20251130-Mermaid-Fix-and-Graph-Analysis.md)
+*   [docs/04-Operations/Intent-Log/20251130-session-log-interactive-graph-dashboard.md](../../20251130-session-log-interactive-graph-dashboard.md)
+*   [docs/04-Operations/Intent-Log/20251130-session-log-onboarding-update.md](../../20251130-session-log-onboarding-update.md)
 *   [docs/04-Operations/Intent-Log/Technical/20251202-Reference-Repair-Log.md](20251202-Reference-Repair-Log.md)
 *   [docs/04-Operations/Intent-Log/Technical/20251203-Plan-Draft-Refinement.md](20251203-Plan-Draft-Refinement.md)
+*   [docs/04-Operations/Intent-Log/Technical/20251203-Pre-Flight-Check-Agents-Docs-Audit.md](20251203-Pre-Flight-Check-Agents-Docs-Audit.md)
+*   [docs/04-Operations/Intent-Log/Technical/20251203-Technical-Briefing-Kuan.md](20251203-Technical-Briefing-Kuan.md)
+*   [docs/04-Operations/Team/20251203-Meeting_Minutes-Josh_Deepti_Aladdin_Garrett.md](../../../04-Operations/Team/20251203-Meeting_Minutes-Josh_Deepti_Aladdin_Garrett.md)
 
 ## 2. Key Contradictions to Verify
 
@@ -68,7 +83,15 @@ The following documents (timestamped 20251119 - 20251203) are within the scope o
 
 1.  **Grep Analysis:** Scan all in-scope documents for keywords: `Auth0`, `Pivot`, `Math`, `Sponsorship`, `jose`, `Copyright`, `LLC`, `Revenue`, `SaaS`.
 2.  **Semantic Review:** Read the context of each match.
-3.  **Cross-Reference:** Compare against the [docs/04-Operations/Intent-Log/Technical/20251128-Consolidated-Context-and-Actions.md](20251128-Consolidated-Context-and-Actions.md) (The North Star).
+3.  **Source of Truth Compilation:**
+    *   **Objective:** Compile a definitive "Source of Truth" from the most recent documents, resolving all conflicting claims.
+    *   **Process:**
+        1.  **Extraction:** Create a temporary working document. Document every single claim found in the scope, linking to its file source.
+        2.  **Independence:** Treat all claims as independent entities. If a claim appears in multiple docs, list each instance separately to track evolution.
+        3.  **Classification:** Identify the "Primary Source" for each claim. If a claim links to another doc, classify that linked doc as a "Secondary Source."
+        4.  **Evolution:** Use the primary/secondary relationships and timestamps to determine the "most evolved" version of each claim.
+        5.  **Compilation:** Assemble the evolved claims into a final "Source of Truth" document.
+    *   **Checkpoint:** Submit the working document and the final draft for human review between steps.
 
 ## 4. Findings [TEMPLATE]
 
