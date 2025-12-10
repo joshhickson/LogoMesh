@@ -138,9 +138,6 @@ Execute a "Commercial Deprecation" audit.
 **Context:**
 Kuan Zhou recommended migrating the project documentation to a workflow using **reStructuredText (.rst)** files, **Sphinx**, and **Read the Docs** for better long-term management, versioning, and searchability.
 
-**Gap:**
-The current `docs/` and `onboarding/` directories are structured for Markdown/HTML. A migration strategy is needed to determine the effort and structural changes required.
-
 **Remediation Action:**
 Evaluate the current structure of the `docs` and `onboarding` directories for migration to RST/ReadTheDocs.
 
