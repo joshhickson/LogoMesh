@@ -19,6 +19,8 @@ A preliminary audit of the "System Integrity Files" (`AGENTS.md`, `CLAUDE.md`, `
 
 The following documents (timestamped 20251119 - 20251209) are within the scope of this review:
 
+**Note:** The list of files below requires verification to ensure it covers all documents within the expanded scope (up to 20251209).
+
 *   [docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md](../../../00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md)
 *   [docs/00-Strategy/IP/20251119-Transformation-Map.md](../../../00-Strategy/IP/20251119-Transformation-Map.md)
 *   [docs/00-Strategy/IP/20251119-deprecated0-Continuing The Next Section.md](../../../00-Strategy/IP/20251119-deprecated0-Continuing%20The%20Next%20Section.md)
@@ -81,17 +83,22 @@ The following documents (timestamped 20251119 - 20251209) are within the scope o
 
 ## 3. Methodology
 
-1.  **Grep Analysis:** Scan all in-scope documents for keywords: `Auth0`, `Pivot`, `Math`, `Sponsorship`, `jose`, `Copyright`, `LLC`, `Revenue`, `SaaS`.
-2.  **Semantic Review:** Read the context of each match.
-3.  **Source of Truth Compilation:**
-    *   **Objective:** Compile a definitive "Source of Truth" from the most recent documents, resolving all conflicting claims.
-    *   **Process:**
-        1.  **Extraction:** Create a temporary working document. Document every single claim found in the scope, linking to its file source.
-        2.  **Independence:** Treat all claims as independent entities. If a claim appears in multiple docs, list each instance separately to track evolution.
-        3.  **Classification:** Identify the "Primary Source" for each claim. If a claim links to another doc, classify that linked doc as a "Secondary Source."
-        4.  **Evolution:** Use the primary/secondary relationships and timestamps to determine the "most evolved" version of each claim.
-        5.  **Compilation:** Assemble the evolved claims into a final "Source of Truth" document.
-    *   **Checkpoint:** Submit the working document and the final draft for human review between steps.
+**Objective:** Compile a definitive "Source of Truth" from the most recent documents, resolving all conflicting claims.
+
+1.  **Extraction:**
+    *   Document every single claim found in the in-scope documents into a formatted table in a temporary working document: [Temp-Claims-Matrix.md](Temp-Claims-Matrix.md).
+    *   **Focus Categories:** Initially focus on extracting claims related to **Strategic Goals**, **Technical Specs**, **Deadlines**, and **Competition Rules**.
+    *   **Independence:** Treat all claims and plans as independent of each other, even if they are similar or verbatim to other discovered claims. Only one claim can have one "Primary Source".
+    *   **Primary vs. Secondary:** If a claim in a document already contains a link to another document source, classify the current document as the "Primary Source" of the *claim*, but note the linked document as a "Secondary Source".
+
+2.  **Evolution Analysis:**
+    *   Use the relationship between the independent claims, their primary/secondary sources, and their timestamps to determine the "most evolved" version of each claim.
+
+3.  **Compilation:**
+    *   Compile all "most evolved" claims into a final "Source of Truth" document.
+    *   This document will serve as the basis for manually updating all project documents (via the Contextual Header System) from the `docs/00_CURRENT_TRUTH_SOURCE.md`.
+
+**Checkpoint:** Pause to submit the branch for human review after the "Extraction" step is populated, before proceeding to Evolution and Compilation.
 
 ## 4. Findings [TEMPLATE]
 
