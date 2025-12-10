@@ -60,8 +60,9 @@ The following documents (timestamped 20251119 - 20251203) are within the scope o
 ### 2.4. The Business Strategy Pivot (Commercial vs. Public Good)
 *   **Source A:** `20251118-Strategic-Pivot-Plan-CIS-Formalization.md` and `20251118-Copyright-Edition-Contextual-Debt-Paper.md` (Discuss "Copyright Registration", "Hard Tech Product", "Consulting Framework").
 *   **Source B:** Current Competition Strategy (Dec 3).
-*   **Contradiction:** The project has abandoned the commercial/copyright strategy in favor of creating a "Public Good" open-source benchmark for the competition.
-*   **Goal:** Deprecate all documentation suggesting the goal is to form a business, register IP, or sell a product.
+*   **Contradiction:** The project is focusing on a "Public Good" open-source benchmark for the competition, but Samuel advises against abandoning commercial strategies to avoid "selling the project short."
+*   **Goal:** **Do not deprecate.** Instead, clearly distinguish between the "Commercial Tier" and the "Public Good Tier" of documentation.
+*   **Action:** In a separate Jules session, audit the documentation to create two distinct lists (Commercial vs. Public Good) and save them in a new log file. **Do not modify the source documents.**
 
 ## 3. Methodology
 
