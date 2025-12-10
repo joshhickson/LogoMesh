@@ -132,3 +132,37 @@ Execute a "Commercial Deprecation" audit.
     > **[DEPRECATED: Commercial Strategy]**
     > *This document references a commercial business strategy (Copyright/SaaS) that has been abandoned as of Dec 3, 2025. The technical content (CIS logic) remains valid, but the strategic context should be ignored in favor of the 'Public Good' competition mission.*
 3.  **Update Index:** Ensure the "Kuan Briefing" and other indices do not link to these documents without a warning.
+
+## 8. Strategic Gap: Documentation Infrastructure (RST/ReadTheDocs Evaluation)
+
+**Context:**
+Kuan Zhou recommended migrating the project documentation to a workflow using **reStructuredText (.rst)** files, **Sphinx**, and **Read the Docs** for better long-term management, versioning, and searchability.
+
+**Gap:**
+The current `docs/` and `onboarding/` directories are structured for Markdown/HTML. A migration strategy is needed to determine the effort and structural changes required.
+
+**Remediation Action:**
+Evaluate the current structure of the `docs` and `onboarding` directories for migration to RST/ReadTheDocs.
+
+**Plan:**
+1.  **Analyze:** Map the current Markdown files to equivalent RST structures.
+2.  **Prototype:** Test a small subset of docs with Sphinx.
+3.  **Constraint:** This high-level evaluation must be performed in a **separate Jules session** to allow a "fresh context window" and avoid context pollution.
+
+## 9. Strategic Gap: System Integrity (Pre-Requisite for General Audit)
+
+**Context:**
+Before executing the general documentation audit (Section 3), the "System Integrity Files" (the tools used to enforce standards) must themselves be correct. A pre-flight check (`20251203-Pre-Flight-Check-Agents-Docs-Audit.md`) identified inconsistencies.
+
+**Gap:**
+*   **Template Error:** `docs/TEMPLATE_DOC.md` is missing the mandatory `Superseded By` field, risking future compliance.
+*   **Instruction Divergence:** `AGENTS.md` and `docs/00_CURRENT_TRUTH_SOURCE.md` have slightly different definitions for the "Context" field.
+*   **Redundancy:** `CLAUDE.md` and `AGENTS.md` are duplicates.
+
+**Remediation Action:**
+Update the System Integrity Files **immediately** to serve as the reliable standard for the subsequent gap analysis.
+
+**Plan:**
+1.  **Fix Template:** Add `> **Superseded By:** [Link] (if SUPERSEDED)` to `docs/TEMPLATE_DOC.md`.
+2.  **Harmonize Agents:** Update **both** `AGENTS.md` and `CLAUDE.md` to match `00_CURRENT_TRUTH_SOURCE.md`.
+3.  **Baseline:** Use the aligned files as the strict standard for the audit.
