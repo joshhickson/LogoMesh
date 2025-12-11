@@ -1,3 +1,5 @@
+# **Warning: This research report was generated in an unrelated session on a whim and may hold some relativity to the LogoMesh project, but is largely unrelated and was not made to help advance any specific aspect of the LogoMesh project. - Josh**
+
 # **The "Vector-Motor" Theory of Human Memory: Semantic Coordinate Systems and Kinematic Encoding**
 
 ## **1\. Introduction: The Geometric Architecture of Thought**
