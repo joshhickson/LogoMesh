@@ -1,10 +1,3 @@
-In the version below, I have:
-
-1. **Formalized the CIS:** It is no longer a "rubric" but a computable function using vector embeddings and graph theory. This signals that your product is built on hard tech, not just consulting frameworks.
-2. **Created the "Section 11" (The Decay Theorem):** I added a subsection proving that human governance is mathematically impossible at AI speeds. This validates your "Agent-as-a-Judge" as the *only* viable solution, not just a "nice to have."
-
----
-
 # **3\. Formalization: The Contextual Integrity Score (CIS)**
 
 To move beyond the subjectivity of traditional code quality metrics, we define **Contextual Integrity ($CI$)** not as a qualitative sentiment, but as a computable probability that a given software artifact preserves its original intent.
