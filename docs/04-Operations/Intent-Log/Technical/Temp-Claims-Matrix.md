@@ -36,3 +36,14 @@
 | Strategic Goals | Goal of "Discovery Sprint" (Nov 27 - Dec 3) is risk reduction through falsification. | docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md | | 2025-11-27 | |
 | Technical Specs | Use `jose` library for DBOM signing, but NOT Auth0 Identity Provider for login. | docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md | | 2025-11-27 | Clarifies the "Auth0" contradiction |
 | Strategic Goals | The "Novelty" is the Protocol/Application (Composite Score), not the equations themselves. | docs/04-Operations/Intent-Log/Technical/20251127-Math-Viability-and-Novelty-Analysis.md | | 2025-11-27 | |
+| Strategic Goals | The "Contextual Graph" initiative is now live and functional; focus shifts to restructuring. | docs/04-Operations/Intent-Log/Technical/20251128-Consolidated-Context-and-Actions.md | | 2025-11-28 | |
+| Strategic Goals | "Dangling Edges" (broken links) must be fixed before restructuring to ensure graph integrity. | docs/04-Operations/Intent-Log/Technical/20251129-Dangling-Edge-Analysis-Log.md | | 2025-11-29 | |
+| Strategic Goals | The folder structure will be reorganized based on CIS pillars (Rationale, Architecture, Testing, Context). | docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md | | 2025-11-29 | |
+| Technical Specs | Onboarding dashboard must use "Left-Right" (LR) tree layout for better hierarchy visualization. | docs/04-Operations/Intent-Log/20251130-session-log-interactive-graph-dashboard.md | | 2025-11-30 | |
+| Technical Specs | Docker is the primary execution environment; local `pnpm` setup is deprecated for general users. | docs/04-Operations/Intent-Log/20251130-session-log-onboarding-update.md | | 2025-11-30 | |
+| Strategic Goals | Documentation "Time Machine" functionality (accessing old logs via restored links) is a required feature. | docs/04-Operations/Intent-Log/Technical/20251202-Reference-Repair-Log.md | | 2025-12-02 | |
+| Strategic Goals | Gap Analysis must include a "Source of Truth Compilation" step to create a "Keystone" document. | docs/04-Operations/Intent-Log/Technical/20251203-Plan-Draft-Refinement.md | | 2025-12-03 | |
+| Technical Specs | `TEMPLATE_DOC.md` must include a `Superseded By` field. | docs/04-Operations/Intent-Log/Technical/20251203-Pre-Flight-Check-Agents-Docs-Audit.md | | 2025-12-03 | |
+| Strategic Goals | Project is explicitly "Public Good"; all "Commercial SaaS" strategies are rejected. | docs/04-Operations/Intent-Log/Technical/20251203-Technical-Briefing-Kuan.md | | 2025-12-03 | |
+| Strategic Goals | Commercial Deprecation is confirmed; focus 100% on AgentX competition. | docs/04-Operations/Team/20251203-Meeting_Minutes-Josh_Deepti_Aladdin_Garrett.md | | 2025-12-03 | |
+| Deadlines | Sprint Goal: Working "Rationale Worker" by Dec 9. | docs/04-Operations/Team/20251203-Meeting_Minutes-Josh_Deepti_Aladdin_Garrett.md | | 2025-12-03 | |
