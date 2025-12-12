@@ -96,7 +96,7 @@ The following documents (timestamped 20251119 - 20251209) are within the scope o
 
 1.  **Extraction:**
     *   Document every single claim found in the in-scope documents into a formatted table in a temporary working document: [Temp-Claims-Matrix.md](Temp-Claims-Matrix.md).
-    *   **Focus Categories:** Initially focus on extracting claims related to **Strategic Goals**, **Technical Specs**, **Deadlines**, and **Competition Rules**.
+    *   **Focus Categories:** Initially focus on extracting claims related to **Strategic Goals**, **Technical Specs**, **Deadlines**, **Competition Rules**, **Theories**, and **Open Questions**.
     *   **Independence:** Treat all claims and plans as independent of each other, even if they are similar or verbatim to other discovered claims. Only one claim can have one "Primary Source".
     *   **Primary vs. Secondary:** If a claim in a document already contains a link to another document source, classify the current document as the "Primary Source" of the *claim*, but note the linked document as a "Secondary Source".
 
