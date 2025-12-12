@@ -1,6 +1,7 @@
 > **Status:** DRAFT
 > **Type:** [Plan | Spec | Log | Minutes | Research | Guide]
-> **Context:** [Optional Keywords]
+> **Context:** [Brief description of strategic context or "why"]
+> **Superseded By:** [Link] (if SUPERSEDED)
 
 # Document Title
 
