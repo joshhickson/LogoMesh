@@ -19,6 +19,8 @@ A preliminary audit of the "System Integrity Files" (`AGENTS.md`, `CLAUDE.md`, `
 
 The following documents (timestamped 20251119 - 20251209) are within the scope of this review:
 
+**Note:** The list of files below requires verification to ensure it covers all documents within the expanded scope (up to 20251209).
+
 *   [20251119-Gap-Analysis-Critique-vs-IP-Assets.md](../../../00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md)
 *   [20251119-Transformation-Map.md](../../../00-Strategy/IP/20251119-Transformation-Map.md)
 *   [20251119-deprecated0-Continuing The Next Section.md](../../../00-Strategy/IP/20251119-deprecated0-Continuing%20The%20Next%20Section.md)
