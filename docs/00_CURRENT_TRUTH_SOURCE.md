@@ -42,12 +42,28 @@
     4.  Clean Repository.
 *   **Sprint Goal:** A working "Rationale Worker" by **December 9, 2025**.
 
-## 5. Known Unknowns (Open Questions)
+## 5. Risk Register (Top Threats)
+1.  **Dependency Hell:** `pnpm` on CI is unstable with `node-gyp` for `isolated-vm`.
+2.  **Market Confusion:** Mixed messages (Tool vs Benchmark) in old docs may confuse judges.
+3.  **Consistency:** IP Assets must match the new "Protocol" style before registration.
+
+## 6. Execution Backlog (High Level)
+*   **Immediate (Owner: Josh/Garrett):**
+    *   Fix Dockerfile for Mac/Node v20.
+    *   Finalize "Contextual Discovery Plan" revision.
+*   **Sprint Goal (Owner: Garrett/Samuel):**
+    *   Working "Rationale Worker" (Chain of Thought).
+    *   Mock Purple Agent POC.
+*   **Documentation (Owner: Deepti):**
+    *   Product Novelty Audit (vs DeepEval).
+    *   Consolidate technical designs.
+
+## 7. Known Unknowns (Open Questions)
 *   **Testing Integrity:** What is the formal definition of "Semantic Coverage"? (Assigned to Kuan).
 *   **Metrics:** Is Cosine Similarity ($I_r$) sufficient, or do we strictly need Graph RAG? (Evidence suggests Cosine is "too basic" but may be V1).
 *   **Paper Structure:** Can we model the research paper on "The Google File System"?
 
-## 6. Contextual Header System
+## 8. Contextual Header System
 All markdown files in `docs/` must start with this header:
 
 ```markdown
