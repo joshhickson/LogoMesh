@@ -94,20 +94,20 @@ The following documents (timestamped 20251119 - 20251209) are within the scope o
 
 **Objective:** Compile a definitive "Source of Truth" from the most recent documents, resolving all conflicting claims.
 
-1.  **Extraction:**
+1.  **Extraction:** (COMPLETED)
     *   Document every single claim found in the in-scope documents into a formatted table in a temporary working document: [Temp-Claims-Matrix.md](Temp-Claims-Matrix.md).
     *   **Focus Categories:** Initially focus on extracting claims related to **Strategic Goals**, **Technical Specs**, **Deadlines**, **Competition Rules**, **Theories**, and **Open Questions**.
     *   **Independence:** Treat all claims and plans as independent of each other, even if they are similar or verbatim to other discovered claims. Only one claim can have one "Primary Source".
     *   **Primary vs. Secondary:** If a claim in a document already contains a link to another document source, classify the current document as the "Primary Source" of the *claim*, but note the linked document as a "Secondary Source".
 
-2.  **Evolution Analysis:**
+2.  **Evolution Analysis:** (COMPLETED)
     *   Use the relationship between the independent claims, their primary/secondary sources, and their timestamps to determine the "most evolved" version of each claim.
 
-3.  **Compilation:**
+3.  **Compilation:** (COMPLETED)
     *   Compile all "most evolved" claims into a final "Source of Truth" document.
     *   This document will serve as the basis for manually updating all project documents (via the Contextual Header System) from the `docs/00_CURRENT_TRUTH_SOURCE.md`.
 
-4.  **Verification:**
+4.  **Verification:** (COMPLETED)
     *   Empirically verify all `Status` column entries in the `Temp-Claims-Matrix.md` against the finalized `docs/00_CURRENT_TRUTH_SOURCE.md`.
     *   Ensure that every claim marked `ACTIVE` is present in the North Star, and every claim marked `DEPRECATED` or `SUPERSEDED` is contradicted or omitted by it.
 
