@@ -107,6 +107,10 @@ The following documents (timestamped 20251119 - 20251209) are within the scope o
     *   Compile all "most evolved" claims into a final "Source of Truth" document.
     *   This document will serve as the basis for manually updating all project documents (via the Contextual Header System) from the `docs/00_CURRENT_TRUTH_SOURCE.md`.
 
+4.  **Verification:**
+    *   Empirically verify all `Status` column entries in the `Temp-Claims-Matrix.md` against the finalized `docs/00_CURRENT_TRUTH_SOURCE.md`.
+    *   Ensure that every claim marked `ACTIVE` is present in the North Star, and every claim marked `DEPRECATED` or `SUPERSEDED` is contradicted or omitted by it.
+
 **Checkpoint:** Pause to submit the branch for human review after the "Extraction" step is populated, before proceeding to Evolution and Compilation.
 
 ## 4. Findings [TEMPLATE]
