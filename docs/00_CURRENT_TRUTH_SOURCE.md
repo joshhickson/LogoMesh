@@ -1,60 +1,74 @@
-# Current Truth Source & Document Integrity System
-
 > **Status:** ACTIVE
-> **Type:** Guide
-> **Context:** System Root, Single Source of Truth
+> **Type:** System of Record
+> **Context:** Single Source of Truth (Post-Gap Analysis)
+> **Last Updated:** 2025-12-03
 
-## 1. The Document Integrity System (Legend)
+# Current Truth Source
 
-All files in the `docs/` directory must start with a standardized header block to indicate their current state and reliability.
+## 1. Strategic Pillars
+*   **The Mission:** We are building **AgentBeats**, an open-source **benchmark** for the AgentX competition.
+*   **The Pivot:** We have explicitly rejected the "Commercial SaaS" (LogoMesh as a product) strategy in favor of a "Public Good" research instrument.
+*   **The Core Innovation:** **Contextual Integrity**, a measurable protocol for "Agent Safety" and "Cybersecurity".
 
-### Header Format
+## 2. Core Definitions (Terminology)
+*   **Contextual Debt:** The accumulating probability that a software system’s behavior has drifted from its human intent.
+*   **AgentBeats:** The framework/benchmark repository (`github.com/agentbeats/agentbeats`).
+*   **LogoMesh:** The team/entity building the framework.
+*   **Green Agent:** The "Evaluator" (The Good/Safety Agent) responsible for checking code.
+*   **Purple Agent:** The "Target" (The Competitor/Risky Agent) being evaluated.
+*   **Glass Box Protocol:** A transparent "Orchestrator-Worker" architecture where intent is visible.
+*   **DBOM (Decision Bill of Materials):** A cryptographically signed record of the "Why" behind code.
+*   **Unknowable Code:** Code where AI generation velocity exceeds human review velocity ($v \to \infty$).
+
+## 3. Technical Specifications
+*   **The Math ($CIS$):** Contextual Integrity Score is a composite function:
+    $$ CIS(c) = w_r I_r + w_a I_a + w_t I_t $$
+    *   **$I_r$ (Rationale):** Vector Cosine Similarity (Implementation vs Intent).
+    *   **$I_a$ (Architecture):** Graph Centrality/Veto (Structural Risk).
+    *   **$I_t$ (Testing):** Semantic Alignment (Implementation vs Specs).
+*   **Infrastructure:**
+    *   **Runtime:** Docker (Required).
+    *   **Language:** Node.js v20/v22 (Downgraded from v24 for Mac/Docker compatibility).
+    *   **Communication:** Redis Message Queue (Mission Control Protocol).
+    *   **Security:** `isolated-vm` for sandboxing.
+    *   **Authentication:** **None.** Auth0 is DEAD. Use `jose` library only for DBOM signing.
+
+## 4. Execution Constraints (Competition Rules)
+*   **Hard Deadline:** **December 19, 2025.** (Note: Jan 15 extension mentioned in minutes, but Dec 19 remains the target for "Green Phase").
+*   **Required Artifacts:**
+    1.  Working Codebase (AgentBeats).
+    2.  Green Agent (Evaluator).
+    3.  Video Demo.
+    4.  Clean Repository.
+*   **Sprint Goal:** A working "Rationale Worker" by **December 9, 2025**.
+
+## 5. Risk Register (Top Threats)
+1.  **Dependency Hell:** `pnpm` on CI is unstable with `node-gyp` for `isolated-vm`.
+2.  **Market Confusion:** Mixed messages (Tool vs Benchmark) in old docs may confuse judges.
+3.  **Consistency:** IP Assets must match the new "Protocol" style before registration.
+
+## 6. Execution Backlog (High Level)
+*   **Immediate (Owner: Josh/Garrett):**
+    *   Fix Dockerfile for Mac/Node v20.
+    *   Finalize "Contextual Discovery Plan" revision.
+*   **Sprint Goal (Owner: Garrett/Samuel):**
+    *   Working "Rationale Worker" (Chain of Thought).
+    *   Mock Purple Agent POC.
+*   **Documentation (Owner: Deepti):**
+    *   Product Novelty Audit (vs DeepEval).
+    *   Consolidate technical designs.
+
+## 7. Known Unknowns (Open Questions)
+*   **Testing Integrity:** What is the formal definition of "Semantic Coverage"? (Assigned to Kuan).
+*   **Metrics:** Is Cosine Similarity ($I_r$) sufficient, or do we strictly need Graph RAG? (Evidence suggests Cosine is "too basic" but may be V1).
+*   **Paper Structure:** Can we model the research paper on "The Google File System"?
+
+## 8. Contextual Header System
+All markdown files in `docs/` must start with this header:
+
 ```markdown
-> **Status:** [TAG]
-> **Type:** [TAG]
-> **Context:** [Optional Context / Keywords]
-> **Superseded By:** [Link] (Required if SUPERSEDED)
+> **Status:** [ACTIVE | DRAFT | REVIEW | SNAPSHOT | DEPRECATED | SUPERSEDED]
+> **Type:** [Plan | Spec | Log | Minutes | Research | Guide]
+> **Context:** [Brief description of strategic context or "why"]
+> **Superseded By:** [Link] (if SUPERSEDED)
 ```
-
-### Status Tags (Mandatory)
-| Tag | Definition | Usage Rule |
-| :--- | :--- | :--- |
-| **ACTIVE** | The current, authoritative truth. | Safe to execute from. |
-| **DRAFT** | Work in progress. | Do not execute yet. Subject to change. |
-| **REVIEW** | Completed draft pending final sign-off. | Review only. |
-| **SNAPSHOT** | A true record of a specific moment in time (e.g., Meeting Minutes, Daily Logs). | **Static.** Never update these files. They are historical facts. |
-| **DEPRECATED** | Known to be false, invalid, or abandoned. | **STOP.** Do not use. Reference for "what not to do" only. |
-| **SUPERSEDED**| Replaced by a newer version. | Must include a link to the new file. |
-
-### Type Tags (Mandatory)
-| Tag | Definition |
-| :--- | :--- |
-| **Plan** | Forward-looking strategy, roadmap, or execution list. |
-| **Spec** | Technical definition, schema, or architectural standard. |
-| **Log** | Personal record of work, thought process, or daily activity. |
-| **Minutes** | Record of a collaborative meeting. |
-| **Research** | Theory, analysis, academic papers, or novelty audits. |
-| **Guide** | Instructions, onboarding, manuals, or "How-To"s. |
-
----
-
-## 2. The Master Index (Single Source of Truth)
-
-### 🟢 Golden Standards (Immutable Constraints)
-*Files that define the rules we cannot break.*
-*   [Competition Rules (AgentBeats)](04-Operations/Intent-Log/Technical/20251126-AgentBeats-Competition-Info-Session-PDF.md) (Check for updates)
-
-### 🔵 Active Roadmap (Execution)
-*The single plan we are currently following.*
-*   *Current Plan:* [Contextual Discovery Plan Revision](04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md)
-    *   **Warning:** See [Gap Analysis](04-Operations/Team/20251203-Meeting_Minutes-Josh_Deepti_Aladdin_Garrett.md) for known discrepancies (Auth0, etc).
-
-### 🟣 Core Technical Specs (The Implementation)
-*The definitive "What" and "How".*
-*   [Contextual Debt Spec](01-Architecture/Specs/Contextual-Debt-Spec.md)
-*   [Evaluation Output Schema](01-Architecture/Specs/Evaluation-Output-Schema.md)
-
-### 🔴 Deprecation & Pivot Log (What NOT To Do)
-*Major strategic changes to be aware of.*
-*   **Auth0:** Sponsorship invalid. Do not implement.
-*   **Embeddings for Diffs:** Methodology rejected. Use direct code diffs.
