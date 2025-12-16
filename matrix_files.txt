@@ -1,0 +1,36 @@
+docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md
+docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md
+docs/00-Strategy/IP/20251119-Transformation-Map.md
+docs/00-Strategy/IP/20251119-deprecated1-The Unknowable Code_ A Protocol for Contextual Integrity.md
+docs/00-Strategy/IP/20251119-deprecated2-The Unknowable Code_ A Protocol for Measurable Contextual Integrity.md
+docs/00-Strategy/IP/20251119-proposed-Section-2.3.md
+docs/00-Strategy/IP/Copyright_Registration_Playbook.md
+docs/02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md
+docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md
+docs/03-Research/Theory/20251121-Memory Theory_Vector-Motor Encoding.md
+docs/04-Operations/Intent-Log/20251130-session-log-interactive-graph-dashboard.md
+docs/04-Operations/Intent-Log/20251130-session-log-onboarding-update.md
+docs/04-Operations/Intent-Log/Technical/20251120-IP-Refactoring-Log.md
+docs/04-Operations/Intent-Log/Technical/20251122-Documentation-Graph-Setup.md
+docs/04-Operations/Intent-Log/Technical/20251123-working-log.md
+docs/04-Operations/Intent-Log/Technical/20251126-AgentBeats-Competition-Info-Session-PDF.md
+docs/04-Operations/Intent-Log/Technical/20251126-josh-action-items.md
+docs/04-Operations/Intent-Log/Technical/20251127-Comparative-Analysis-of-Team-Feedback.md
+docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md
+docs/04-Operations/Intent-Log/Technical/20251127-Math-Viability-and-Novelty-Analysis.md
+docs/04-Operations/Intent-Log/Technical/20251127-Research Paper-Comparison-Request.md
+docs/04-Operations/Intent-Log/Technical/20251128-Consolidated-Context-and-Actions.md
+docs/04-Operations/Intent-Log/Technical/20251128-doc-graph-generation-log.md
+docs/04-Operations/Intent-Log/Technical/20251129-Dangling-Edge-Analysis-Log.md
+docs/04-Operations/Intent-Log/Technical/20251129-Restructure-Proposal-CIS-Driven.md
+docs/04-Operations/Intent-Log/Technical/20251202-Reference-Repair-Log.md
+docs/04-Operations/Intent-Log/Technical/20251203-Plan-Draft-Refinement.md
+docs/04-Operations/Intent-Log/Technical/20251203-Pre-Flight-Check-Agents-Docs-Audit.md
+docs/04-Operations/Intent-Log/Technical/20251203-Technical-Briefing-Kuan.md
+docs/04-Operations/Team/20251120-Team-Onboarding-Agenda.md
+docs/04-Operations/Team/20251121-LogoMesh-Onboarding-Meeting-2-Summary.md
+docs/04-Operations/Team/20251122-LogoMesh-Meeting-3-Summary.md
+docs/04-Operations/Team/20251203-Meeting_Minutes-Josh_Deepti_Aladdin_Garrett.md
+docs/` based on graph analysis.
+docs/strategy_and_ip/20251118-Strategic-Pivot-Plan-CIS-Formalization.md
+docs/strategy_and_ip/`).
