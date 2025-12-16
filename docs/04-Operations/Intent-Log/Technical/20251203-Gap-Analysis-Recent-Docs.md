@@ -207,3 +207,22 @@ Update the System Integrity Files **immediately** to serve as the reliable stand
 1.  **Fix Template:** Add `> **Superseded By:** [Link] (if SUPERSEDED)` to `docs/TEMPLATE_DOC.md`.
 2.  **Harmonize Agents:** Update **both** `AGENTS.md` and `CLAUDE.md` to match `00_CURRENT_TRUTH_SOURCE.md`.
 3.  **Baseline:** Use the aligned files as the strict standard for the audit.
+
+## 10. Execution Plan: Header Application (Pending)
+
+**Context:**
+A "Proposed Headers Manifest" (`docs/04-Operations/Intent-Log/Technical/Proposed-Headers-Manifest.md`) has been generated and reviewed. It lists the correct `Status`, `Type`, and `Context` for over 100 files, including legacy documents. The next step is to programmatically apply these headers.
+
+**Execution Guide:**
+To apply the headers safely, a future agent must:
+
+1.  **Create Script:** Create `scripts/apply_headers.js`.
+2.  **Logic:**
+    *   Read `Proposed-Headers-Manifest.md` to get the list of targets.
+    *   For each file:
+        *   Extract the existing body content (everything after the header block).
+        *   Construct the new header using the manifest data (Date: 2025-12-15).
+        *   Overwrite the file with `New Header + Original Body`.
+        *   **Safety Check:** Ensure the body checksum is identical before and after.
+3.  **Log:** Record all changes in `docs/04-Operations/Intent-Log/Technical/Header-Application-Log.md`.
+4.  **Verify:** Spot check 3 random files to ensure content integrity.
