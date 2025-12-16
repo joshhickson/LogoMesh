@@ -46,3 +46,12 @@ docs/
 > *   [YYYY-MM-DD]: [Brief description of strategic context or "why"]
 > **Superseded By:** [Link] (if SUPERSEDED)
 ```
+
+## Protocol: Large-Scale Refactoring (Session Contract)
+
+When initiating complex changes involving 10+ files, adhere to this 4-step contract:
+
+1.  **Scope Definition (Inventory):** First, list all target files. Do not generate artifacts yet. Get user sign-off on the list.
+2.  **Contextual Rules:** Define the Global Date (e.g., `2025-12-15`) and Strategic Stance (e.g., "Commercial Paused") for the session.
+3.  **Artifact Staging (Manifest):** Generate a single control file (e.g., `Manifest_Draft.md`) proposing the changes. Do not edit source files until the Manifest is approved.
+4.  **Batch Execution:** Apply changes in small batches to ensure recoverability.
