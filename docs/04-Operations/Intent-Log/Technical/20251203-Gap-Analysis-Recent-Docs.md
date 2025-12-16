@@ -159,23 +159,23 @@ There is no single "Technical Briefing" document that consolidates the recent st
 *   **Pillar 4: Execution Plan (The "When")**
     *   [docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md](20251127-Contextual-Discovery-Plan-Revision.md) (Roadmap - *Note: Contains outdated items per this Gap Analysis*)
 
-## 7. Strategic Gap: Deprecation of Commercial Intent
+## 7. Strategic Gap: Pausing of Commercial Strategy
 
 **Context:**
-The project has formally abandoned its "Business Strategy" (Copyrights, LLC Formation, SaaS Product) to focus entirely on winning the AgentX competition by creating a "Public Good" benchmark. The documentation currently contains numerous references to the abandoned strategy.
+The project has **paused** its "Business Strategy" (Copyrights, LLC Formation, SaaS Product) to focus entirely on winning the AgentX competition by creating a "Public Good" benchmark. The documentation currently contains numerous references to the temporarily deferred strategy.
 
 **Gap:**
-Documents from Nov 15-20 heavily reference "Copyright Registration," "Commercialization," and "Hard Tech Product," which contradicts the current mission.
+Documents from Nov 15-20 heavily reference "Copyright Registration," "Commercialization," and "Hard Tech Product." These initiatives are not abandoned, but are deprioritized until after the competition.
 
 **Remediation Action:**
-Execute a "Commercial Deprecation" audit.
+Execute a "Commercial Pivot" audit to clarify the status.
 
 **Plan:**
 1.  **Search:** Grep the entire `docs/` tree for: "Copyright", "LLC", "SaaS", "Revenue", "Business Strategy".
-2.  **Tag:** Add a standard deprecation header to identified files (e.g., `20251118-Strategic-Pivot-Plan-CIS-Formalization.md`):
-    > **[DEPRECATED: Commercial Strategy]**
-    > *This document references a commercial business strategy (Copyright/SaaS) that has been abandoned as of Dec 3, 2025. The technical content (CIS logic) remains valid, but the strategic context should be ignored in favor of the 'Public Good' competition mission.*
-3.  **Update Index:** Ensure the "Kuan Briefing" and other indices do not link to these documents without a warning.
+2.  **Tag:** Add a standard Context Note to identified files (e.g., `20251118-Strategic-Pivot-Plan-CIS-Formalization.md`) using the new datemarked header format:
+    > **Context:**
+    > *   [2025-12-15]: Commercial strategies (Copyright/SaaS) are **PAUSED** to focus on the AgentX competition ("Public Good"). Technical content remains valid.
+3.  **Update Index:** Ensure the "Kuan Briefing" and other indices reflect that these strategies are deferred, not dead.
 
 ## 8. Strategic Gap: Documentation Infrastructure (RST/ReadTheDocs Evaluation)
 

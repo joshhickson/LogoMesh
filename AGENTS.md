@@ -42,6 +42,7 @@ docs/
 ```markdown
 > **Status:** [ACTIVE | DRAFT | REVIEW | SNAPSHOT | DEPRECATED | SUPERSEDED]
 > **Type:** [Plan | Spec | Log | Minutes | Research | Guide]
-> **Context:** [Keywords]
+> **Context:**
+> *   [YYYY-MM-DD]: [Brief description of strategic context or "why"]
 > **Superseded By:** [Link] (if SUPERSEDED)
 ```
