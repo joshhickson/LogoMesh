@@ -57,6 +57,9 @@
 | `docs/04-Operations/Team/20251203-Meeting_Minutes-Josh_Deepti_Aladdin_Garrett.md` | SNAPSHOT | Minutes | `* [2025-12-17]: Meeting minutes.` | |
 | **Archive/Unsorted/** | | | | |
 | `docs/Archive/Unsorted/20251119-Strategic-Master-Log.md` | SNAPSHOT | Log | `* [2025-12-17]: Archived strategic log.` | |
+| `docs/Archive/Unsorted/CoPilot/20251117-Task-1.2-Completion-Summary.md` | SNAPSHOT | Log | `* [2025-12-17]: Key record of code structure implementation (Task 1.2).` | |
+| `docs/Archive/Unsorted/CoPilot/20251117-Task-1.2-Plan.md` | SNAPSHOT | Plan | `* [2025-12-17]: Plan for Task 1.2 implementation.` | |
+| `docs/Archive/Legacy-Logs/20251117-Strategic-Master-Log.md` | SNAPSHOT | Log | `* [2025-12-17]: Historical strategic log.` | |
 | **Legacy Backfill (Pre-Nov 19 & Undated)** | | | | |
 | `docs/00_CURRENT_TRUTH_SOURCE.md` | ACTIVE | Source | `* [2025-12-17]: The definitive Single Source of Truth for the project state.` | |
 | `docs/00-Strategy/Business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md` | DEPRECATED | Plan | `* [2025-12-17]: Strategy DEPRECATED (Commercial Paused).` | |
