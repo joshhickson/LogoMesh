@@ -72,3 +72,6 @@ All markdown files in `docs/` must start with this header:
 > **Context:** [Brief description of strategic context or "why"]
 > **Superseded By:** [Link] (if SUPERSEDED)
 ```
+
+## 9. Recent Meeting Minutes
+*   [LogoMesh Meeting Summary - 2025-12-14](./04-Operations/Team/2025-12-14-logomesh-meeting-summary.md)
