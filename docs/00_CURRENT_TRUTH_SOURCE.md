@@ -74,4 +74,4 @@ All markdown files in `docs/` must start with this header:
 ```
 
 ## 9. LogoMesh Development Team Meeting Minutes Folder
-*   [docs/04-Operations/Team](/04-Operations/Team)
+*   [docs/04-Operations/Team](/docs/04-Operations/Team)
