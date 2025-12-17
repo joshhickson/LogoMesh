@@ -182,13 +182,19 @@ Execute a "Commercial Pivot" audit to clarify the status.
 **Context:**
 Kuan Zhou recommended migrating the project documentation to a workflow using **reStructuredText (.rst)** files, **Sphinx**, and **Read the Docs** for better long-term management, versioning, and searchability.
 
+**Current State Assessment (2025-12-17):**
+*   The custom onboarding dashboard (`onboarding/`) is fragile, relying on ad-hoc Node.js scripts (`scripts/generate_doc_graph.js`) and local dependencies (`mermaid.min.js`).
+*   The interactive graph visualization is currently unstable/broken.
+*   **Decision:** Do not invest effort in fixing the custom `onboarding/` stack. Treat it as "Legacy" until replaced by Sphinx.
+
 **Remediation Action:**
 Evaluate the current structure of the `docs` and `onboarding` directories for migration to RST/ReadTheDocs.
 
 **Plan:**
 1.  **Analyze:** Map the current Markdown files to equivalent RST structures.
 2.  **Prototype:** Test a small subset of docs with Sphinx.
-3.  **Constraint:** This high-level evaluation must be performed in a **separate Jules session** to allow a "fresh context window" and avoid context pollution.
+3.  **Replacement:** Plan to replace the `onboarding` web server with standard Sphinx extensions (e.g., `sphinxcontrib-mermaid`) for graph visualization.
+4.  **Constraint:** This high-level evaluation must be performed in a **separate Jules session** to allow a "fresh context window" and avoid context pollution.
 
 ## 9. Strategic Gap: System Integrity (Pre-Requisite for General Audit)
 
