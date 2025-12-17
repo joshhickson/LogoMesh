@@ -210,35 +210,41 @@ Update the System Integrity Files **immediately** to serve as the reliable stand
 
 ## 10. Execution Plan: Header Application (Pending)
 
-**Context:**
-A "Proposed Headers Manifest" (`docs/04-Operations/Intent-Log/Technical/Proposed-Headers-Manifest.md`) has been generated and reviewed. However, before modifying files, the project's "Reference Integrity System" (the toolchain that maps links between files) must be upgraded to ensure it captures *all* types of connections (Wiki-links, code references, etc.).
-
-**Execution Guide:**
+**Status:** APPROVED (Waiting for Execution)
+**Context:** This plan was approved on 2025-12-15. The "Proposed Headers Manifest" (`docs/04-Operations/Intent-Log/Technical/Proposed-Headers-Manifest.md`) is the authorized source of truth for the changes. The strategy is "Commercial Paused."
 
 ### Phase 0: Upgrade Reference Integrity Tools (Pre-Requisite)
 Before touching any content, improve the "Cartographer" scripts to ensure we have a perfect map of the project.
 
 1.  **Create Link Parser Library:**
-    *   Create `scripts/lib/link_parser.js`.
-    *   Implement robust regex to detect: Standard Markdown links `[label](url)`, Reference links `[label][id]`, Wiki links `[[Page]]`, and HTML anchors `<a href="...">`.
-    *   Implement logic to **ignore** links inside code blocks (backticks) to prevent false positives.
+    *   **Target:** `scripts/lib/link_parser.js`.
+    *   **Spec:** Must handle Standard Markdown `[l](u)`, Reference `[l][id]`, Wiki `[[Page]]`, and HTML `<a href>`.
+    *   **Constraint:** Must strip code blocks (```...```) before parsing to eliminate false positives.
 2.  **Refactor Audit Script:**
-    *   Update `scripts/audit_links.js` to import and use `link_parser.js`.
-    *   Refine "Implicit Link" detection: Only match text that looks like a filename (e.g., CamelCase or specific extensions) to reduce noise.
+    *   **Target:** `scripts/audit_links.js`.
+    *   **Logic:** Import `link_parser.js`. Replace fuzzy implicit matching (`line.includes`) with strict matching (CamelCase or known extensions `.md|.ts`).
 3.  **Regenerate Manifest:**
-    *   Run the new script to overwrite `docs/04-Operations/Intent-Log/Technical/reference_manifest.csv`.
-    *   Verify the new CSV is cleaner and more comprehensive.
+    *   **Command:** `node scripts/audit_links.js`.
+    *   **Output:** `docs/04-Operations/Intent-Log/Technical/reference_manifest.csv`.
+    *   **Verification:** Check that the CSV size is reasonable and implicit matches are not "noisy".
 
 ### Phase 1: Header Application
-Once the map is accurate, proceed with applying the new headers.
+Once the reference map is accurate, proceed with applying the new headers.
 
-1.  **Create Script:** Create `scripts/apply_headers.js`.
+1.  **Create Script:**
+    *   **Target:** `scripts/apply_headers.js`.
 2.  **Logic:**
-    *   Read `Proposed-Headers-Manifest.md` to get the list of targets.
-    *   For each file:
-        *   Extract the existing body content (everything after the header block).
-        *   Construct the new header using the manifest data (Date: 2025-12-15).
-        *   Overwrite the file with `New Header + Original Body`.
-        *   **Safety Check:** Ensure the body checksum is identical before and after.
-3.  **Log:** Record all changes in `docs/04-Operations/Intent-Log/Technical/Header-Application-Log.md`.
-4.  **Verify:** Spot check 3 random files to ensure content integrity.
+    *   **Input:** Read `docs/04-Operations/Intent-Log/Technical/Proposed-Headers-Manifest.md`.
+    *   **Loop:** For each file in the manifest:
+        1.  Read file content.
+        2.  **Preserve Body:** Use Regex to separate the existing Header (if any) from the Body. Save the Body.
+        3.  **Construct Header:** Use the Manifest data (`Status`, `Type`, `Context`) to build the new YAML-style header.
+        4.  **Assemble:** `New Content = New Header + "\n\n" + Saved Body`.
+        5.  **Safety Check:** `assert(hash(OldBody) === hash(NewBody))`. Abort if false.
+        6.  Write file.
+3.  **Log:** Append actions to `docs/04-Operations/Intent-Log/Technical/Header-Application-Log.md`.
+4.  **Verify:** Manually check `docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md` to ensure the header is updated and text is intact.
+
+### Phase 2: Onboarding Graph Verification
+1.  **Check:** Run `node onboarding/server.js` (or inspect `scripts/generate_doc_graph.js`).
+2.  **Verify:** Ensure the new headers do not break the graph generation logic (which might parse metadata).
