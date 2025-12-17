@@ -73,5 +73,5 @@ All markdown files in `docs/` must start with this header:
 > **Superseded By:** [Link] (if SUPERSEDED)
 ```
 
-## 9. Recent Meeting Minutes
-*   [LogoMesh Meeting Summary - 2025-12-14](./04-Operations/Team/2025-12-14-logomesh-meeting-summary.md)
+## 9. LogoMesh Development Team Meeting Minutes Folder
+*   [docs/04-Operations/Team](docs/04-Operations/Team)
