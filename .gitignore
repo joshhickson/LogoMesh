@@ -7,3 +7,4 @@ dist/
 *.tsbuildinfo
 coverage/
 .turbo/
+.env
