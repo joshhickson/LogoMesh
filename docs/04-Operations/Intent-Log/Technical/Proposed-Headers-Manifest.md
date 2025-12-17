@@ -58,6 +58,7 @@
 | **Archive/Unsorted/** | | | | |
 | `docs/Archive/Unsorted/20251119-Strategic-Master-Log.md` | SNAPSHOT | Log | `* [2025-12-17]: Archived strategic log.` | |
 | **Legacy Backfill (Pre-Nov 19 & Undated)** | | | | |
+| `docs/00_CURRENT_TRUTH_SOURCE.md` | ACTIVE | Source | `* [2025-12-17]: The definitive Single Source of Truth for the project state.` | |
 | `docs/00-Strategy/Business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md` | DEPRECATED | Plan | `* [2025-12-17]: Strategy DEPRECATED (Commercial Paused).` | |
 | `docs/00-Strategy/Business/20251116-Strategy-Doc-Creation-Log.md` | SNAPSHOT | Log | `* [2025-12-17]: Historical creation log.` | |
 | `docs/00-Strategy/Competition/20251102-AgentX AgentBeats Competition Analysis.md` | ACTIVE | Research | `* [2025-12-17]: Critical competition rules.` | |
@@ -66,7 +67,7 @@
 | `docs/00-Strategy/Competition/20251116-Competition Analysis For Project Success.md` | SNAPSHOT | Research | `* [2025-12-17]: Early analysis.` | |
 | `docs/00-Strategy/IP/01_CORE_IP_DEFINITION.md` | ACTIVE | Spec | `* [2025-12-17]: Defines DBOM and Core IP (Keep Active).` | |
 | `docs/00-Strategy/IP/02_LEGAL_CHECKLIST.md` | DEPRECATED | Guide | `* [2025-12-17]: Commercial legal checklist PAUSED.` | |
-| `docs/00-Strategy/IP/03_INVESTOR_PITCH.md` | DEPRECATED | Guide | `* [2025-12-17]: Investor pitch PAUSED.` | |
+| `docs/00-Strategy/IP/03_INVESTOR_PITCH.md` | SNAPSHOT | Guide | `* [2025-12-17]: Snapshot of the commercial strategy (PAUSED). Defines core business entities referenced in the code.` | |
 | `docs/00-Strategy/IP/04_PHASE_1_CLIENTS.md` | DEPRECATED | Plan | `* [2025-12-17]: Client acquisition PAUSED.` | |
 | `docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md` | DEPRECATED | Research | `* [2025-12-17]: Copyright-specific version PAUSED.` | `docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md` |
 | `docs/00-Strategy/IP/20251118-Strategic Critique_ 'The Unknowable Code' vs. Seminal Technical Literature.md` | ACTIVE | Research | `* [2025-12-17]: Valuable critique of the theory.` | |
@@ -114,4 +115,4 @@
 | `docs/Archive/20251107-AgentX_Submission_Paper.md` | SNAPSHOT | Research | `* [2025-12-17]: Historical submission draft.` | |
 | `docs/Archive/20251203-PRE-GAP-ANALYSIS-TRUTH-SOURCE.md` | SNAPSHOT | Log | `* [2025-12-17]: Snapshot of Truth Source before analysis.` | |
 | `docs/Archive/GAP_ANALYSIS.md` | SNAPSHOT | Log | `* [2025-12-17]: Ancient gap analysis.` | |
-| `docs/Archive/PROJECT_PLAN.md` | DEPRECATED | Plan | `* [2025-12-17]: Superseded by Contextual Discovery Plan.` | |
+| `docs/Archive/PROJECT_PLAN.md` | ARCHIVED | Plan | `* [2025-12-17]: Structurally critical historical reference. Superseded by Contextual Discovery Plan, but retained for referential integrity.` | |
