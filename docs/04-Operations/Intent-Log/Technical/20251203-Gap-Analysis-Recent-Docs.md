@@ -211,10 +211,26 @@ Update the System Integrity Files **immediately** to serve as the reliable stand
 ## 10. Execution Plan: Header Application (Pending)
 
 **Context:**
-A "Proposed Headers Manifest" (`docs/04-Operations/Intent-Log/Technical/Proposed-Headers-Manifest.md`) has been generated and reviewed. It lists the correct `Status`, `Type`, and `Context` for over 100 files, including legacy documents. The next step is to programmatically apply these headers.
+A "Proposed Headers Manifest" (`docs/04-Operations/Intent-Log/Technical/Proposed-Headers-Manifest.md`) has been generated and reviewed. However, before modifying files, the project's "Reference Integrity System" (the toolchain that maps links between files) must be upgraded to ensure it captures *all* types of connections (Wiki-links, code references, etc.).
 
 **Execution Guide:**
-To apply the headers safely, a future agent must:
+
+### Phase 0: Upgrade Reference Integrity Tools (Pre-Requisite)
+Before touching any content, improve the "Cartographer" scripts to ensure we have a perfect map of the project.
+
+1.  **Create Link Parser Library:**
+    *   Create `scripts/lib/link_parser.js`.
+    *   Implement robust regex to detect: Standard Markdown links `[label](url)`, Reference links `[label][id]`, Wiki links `[[Page]]`, and HTML anchors `<a href="...">`.
+    *   Implement logic to **ignore** links inside code blocks (backticks) to prevent false positives.
+2.  **Refactor Audit Script:**
+    *   Update `scripts/audit_links.js` to import and use `link_parser.js`.
+    *   Refine "Implicit Link" detection: Only match text that looks like a filename (e.g., CamelCase or specific extensions) to reduce noise.
+3.  **Regenerate Manifest:**
+    *   Run the new script to overwrite `docs/04-Operations/Intent-Log/Technical/reference_manifest.csv`.
+    *   Verify the new CSV is cleaner and more comprehensive.
+
+### Phase 1: Header Application
+Once the map is accurate, proceed with applying the new headers.
 
 1.  **Create Script:** Create `scripts/apply_headers.js`.
 2.  **Logic:**
