@@ -4,6 +4,33 @@
 
 | Category | Status | Claim Description | Primary Source File | Secondary/Linked Sources | Timestamp | Notes |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **New Batch (Legacy)** | | | | | | |
+| Strategic Goals | DEPRECATED | The project is a "Venture" focusing on GRC (Governance, Risk, Compliance) for C-Suite/CROs. | docs/00-Strategy/Business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md | | 2025-11-16 | Commercial Strategy (Paused/Deprecated). |
+| Strategic Goals | DEPRECATED | Strategy is "Consult-to-Product Flywheel": Phase 1 Consulting -> Phase 2 SaaS -> Phase 3 API. | docs/00-Strategy/Business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md | | 2025-11-16 | Paused. |
+| Strategic Goals | DEPRECATED | Immediate Goal: File Provisional Patents and Trademarks (Contextual Debt, CIS). | docs/00-Strategy/Business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md | | 2025-11-16 | Paused. |
+| Technical Specs | ACTIVE | "Contextual Integrity Score" (CIS) is the core "quantitative benchmark". | docs/00-Strategy/Business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md | | 2025-11-16 | Core IP, still active in Public Good strategy. |
+| Terminology | ACTIVE | **Amnesiac System**: A system that has "forgotten why it was built". | docs/00-Strategy/Business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md | | 2025-11-16 | Powerful metaphor, likely reusable. |
+| Strategic Goals | SNAPSHOT | Log 20251116 documents the creation of the `strategy_and_ip` folder and 5 core documents. | docs/00-Strategy/Business/20251116-Strategy-Doc-Creation-Log.md | | 2025-11-16 | Historical Record. |
+| Strategic Goals | DEPRECATED | The "Consult-to-Product Flywheel" business model is the primary roadmap. | docs/00-Strategy/IP/README.md | | 2025-11-16 | "Phase 1: Consulting" is explicitly PAUSED. |
+| Action Item | DEPRECATED | Legal Checklist: Form LLC, File Trademarks, Draft Contracts. | docs/00-Strategy/IP/02_LEGAL_CHECKLIST.md | | 2025-11-16 | Paused. |
+| Action Item | DEPRECATED | Investor Pitch: Prepare 7-point script for VCs. | docs/00-Strategy/IP/03_INVESTOR_PITCH.md | | 2025-11-16 | Paused. |
+| Action Item | DEPRECATED | Phase 1 Clients: Target 5-10 "Lighthouse" clients in regulated industries. | docs/00-Strategy/IP/04_PHASE_1_CLIENTS.md | | 2025-11-16 | Paused. |
+| Competition | ACTIVE | Evaluation criteria: "Cybersecurity Agent" and "Agent Safety" are primary; "Coding Agent" is secondary. | docs/00-Strategy/Competition/20251102-AgentX AgentBeats Competition Analysis.md | | 2025-11-02 | Key constraint for Green Agent. |
+| Competition | ACTIVE | Submission Deadline: Dec 19, 2025 (Green Phase). | docs/00-Strategy/Competition/20251102-AgentX AgentBeats Competition Analysis.md | | 2025-11-02 | Confirms the "Hard Deadline". |
+| Terminology | ACTIVE | **DBOM** (Decision Bill of Materials): "A cryptographic record of intent." | docs/00-Strategy/IP/01_CORE_IP_DEFINITION.md | | Undated | Defines the core artifact. |
+| Technical Specs | ACTIVE | The DBOM must link "Code" (Implementation) to "Intent" (Rationale) to "Auth" (Identity). | docs/00-Strategy/IP/01_CORE_IP_DEFINITION.md | | Undated | |
+| Strategic Goals | DEPRECATED | "Copyright Registration" of the Research Paper is a primary defensive moat. | docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md | | 2025-11-18 | Paused. |
+| Technical Specs | ACTIVE | **Glass Box Protocol**: "An architecture that makes intent visible." | docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md | | 2025-11-18 | |
+| Theory | DEPRECATED | The "Agent-as-a-Judge" philosophy is defined as "formative evaluation" (coaching) vs "summative" (grading). | docs/03-Research/Theory/20251115-1-Agentic_Auditing_and_Automated_Governance.md | | 2025-11-15 | Merged into main paper. |
+| Technical Specs | ACTIVE | **Agent-to-Agent Collusion** is a primary risk in multi-agent systems ("The corrupt audit"). | docs/03-Research/Theory/20251115-1-Agentic_Auditing_and_Automated_Governance.md | | 2025-11-15 | Core adversarial model. |
+| Technical Specs | ACTIVE | The "Orchestrator-Worker" pattern is the implementation of the "Glass Box" principle. | docs/03-Research/Theory/20251115-1-Agentic_Auditing_and_Automated_Governance.md | | 2025-11-15 | |
+| Open Question | DEPRECATED | "How do we calculate the CIS?" (Undocumented gap identified in early theory). | docs/03-Research/Theory/20251115-4-Proposing Contextual Integrity Score.md | | 2025-11-15 | Resolved by later specs. |
+| Theory | ACTIVE | Embedding Geometry (Vinyals): Vector space can encode "meaning" and "intent" distance. | docs/03-Research/Theory/20251116-Vinyals's Perspective On Embedding Geometry.md | | 2025-11-16 | Justifies use of Cosine Similarity ($I_r$). |
+| Action Item | ACTIVE | Data Scientist Gap Analysis: Provide Jupyter notebook (`01-explore-sample-eval.ipynb`) and JSON-to-CSV converter. | docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md | | 2025-11-13 | Critical for onboarding Kuan/Data Scientists. |
+| Evidence | SNAPSHOT | Verification Report (Nov 14): "Task 1.1 Complete" - Rationale Analyzer runs end-to-end. | docs/02-Engineering/Verification/20251114_VERIFICATION_REPORT.md | | 2025-11-14 | Historical proof of milestone completion. |
+| Evidence | SNAPSHOT | Simulation Log (Nov 07): "Judge Evaluation Simulation" - Early "Green Agent" concept testing. | docs/04-Operations/Intent-Log/Technical/20251107-LogoMesh AgentX Judge Evaluation Simulation.md | | 2025-11-07 | Historical log. |
+| Strategic Goals | DEPRECATED | "Recovery Plan" (Nov 18): Focus on fixing the broken build before pivoting. | docs/04-Operations/Intent-Log/Technical/20251118-Gap-Analysis-Recovery-vs-Pivot.md | | 2025-11-18 | Superseded by the Pivot Plan. |
+| **Existing Scope** | | | | | | |
 | Strategic Goals | ACTIVE | The strategy has pivoted to a "Protocol" approach (rigorous, mathematical) from a "Manifesto" approach. | docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md | docs/strategy_and_ip/20251118-Strategic-Pivot-Plan-CIS-Formalization.md | 2025-11-19 | "The 'Solution' exists... but is currently trapped in the Logs" |
 | Strategic Goals | ACTIVE | The solution must be moved from Logs (`logs/ip_and_business/`) to Assets (`docs/strategy_and_ip/`). | docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md | | 2025-11-19 | |
 | Technical Specs | ACTIVE | Rationale Integrity ($I_r$) must be formalized as Vector Cosine Similarity (not link presence). | docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md | docs/strategy_and_ip/20251118-Strategic-Pivot-Plan-CIS-Formalization.md | 2025-11-19 | |

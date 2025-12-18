@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Research
+> **Context:**
+> * [2025-12-17]: Historical submission draft.
+
 # A Benchmark for Agentic Quality: Measuring and Managing Contextual Debt
 
 ## Abstract

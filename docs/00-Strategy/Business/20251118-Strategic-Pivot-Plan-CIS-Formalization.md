@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Plan
+> **Context:**
+> * [2025-12-17]: Commercial strategies (Copyright/SaaS) are PAUSED. Technical CIS implementation remains VALID.
+
 # Strategic Pivot Plan: CIS Formalization (2025-11-18)
 
 ## 1. Executive Summary

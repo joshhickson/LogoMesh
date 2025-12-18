@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Spec
+> **Context:**
+> * [2025-12-17]: Defines DBOM and Core IP (Keep Active).
+
 # Core IP Definition (v0.2 - Protocol Edition)
 
 This document defines the core intellectual property of LogoMesh. These definitions serve as the basis for patent applications and the "Contextual Debt" copyright registration.

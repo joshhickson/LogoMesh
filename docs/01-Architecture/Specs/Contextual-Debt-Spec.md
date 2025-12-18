@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Spec
+> **Context:**
+> * [2025-12-17]: The Core Algorithm Spec.
+
 # Contextual Debt: Technical Specification
 
 **Related Documents:**

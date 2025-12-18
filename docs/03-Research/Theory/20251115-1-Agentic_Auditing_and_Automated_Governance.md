@@ -1,4 +1,7 @@
-
+> **Status:** DEPRECATED
+> **Type:** Research
+> **Context:**
+> * [2025-12-17]: Merged into Research Paper.
 
 # **Agentic Auditing and Automated Governance**
 

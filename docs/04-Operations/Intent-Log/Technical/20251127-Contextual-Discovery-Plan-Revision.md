@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Plan
+> **Context:**
+> * [2025-12-17]: Current Execution Plan.
+
 # 20251127-Contextual-Discovery-Plan-Revision (DASHBOARD)
 
 ## 1. Context & Rationale

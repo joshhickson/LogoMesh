@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Historical strategic log.
+
 > ***Note:*** *This document was archived on 2025-11-18. It is preserved for historical context. For the most current version, please see `logs/20251118-Strategic-Master-Log.md`.*
 
 # Strategic Master Log (2025-11-17)

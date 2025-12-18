@@ -1,3 +1,8 @@
+> **Status:** ARCHIVED
+> **Type:** Plan
+> **Context:**
+> * [2025-12-17]: Structurally critical historical reference. Superseded by Contextual Discovery Plan, but retained for referential integrity.
+
 # Project Plan: The Contextual Debt Evaluator - AgentBeats Green Phase
 
 Welcome, team! This document is our strategic guide to winning the AgentBeats Green Phase. It outlines our vision, our plan to address critical gaps in our project, our new architecture, our roles, and our week-by-week timeline to the submission deadline. Let's build something amazing together.

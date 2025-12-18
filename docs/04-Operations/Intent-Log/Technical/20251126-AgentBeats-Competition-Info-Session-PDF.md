@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Research
+> **Context:**
+> * [2025-12-17]: Critical source for Competition Rules.
+
 # Agentbeats Competition Info Session - 11.6
 
 ## AgentX-AgentBeats

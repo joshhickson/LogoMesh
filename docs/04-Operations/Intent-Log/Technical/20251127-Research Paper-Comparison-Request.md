@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Research
+> **Context:**
+> * [2025-12-17]: Comparison request log.
+
 # **Advancements in Automated Software Traceability and Program Comprehension: A Comprehensive Comparative Analysis of Information Retrieval, Deep Learning, and Semantic Evaluation Methodologies**
 
 ## **Executive Summary**

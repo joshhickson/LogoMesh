@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Working log. Contains outdated Auth0 references (Auth0 is REJECTED).
+
 # Working Log - 2025-11-23 (Updated 2025-11-24)
 
 *Source Transcriptions:*

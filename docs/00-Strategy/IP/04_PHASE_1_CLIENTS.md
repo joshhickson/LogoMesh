@@ -1,3 +1,8 @@
+> **Status:** DEPRECATED
+> **Type:** Plan
+> **Context:**
+> * [2025-12-17]: Client acquisition PAUSED.
+
 # Phase 1 Target Clients
 
 This document lists the "dream" clients for our initial "Contextual Debt Audit" consulting engagements (Phase 1 of the "Consult-to-Product Flywheel").

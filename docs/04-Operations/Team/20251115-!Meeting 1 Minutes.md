@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Minutes
+> **Context:**
+> * [2025-12-17]: Meeting minutes.
+
 ## **11.15.2025 - LogoMesh First Meeting Notes:**
 
 Here is a summary of the meeting between Josh and Deepti, organized for strategic review.

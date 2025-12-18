@@ -1,4 +1,8 @@
-
+> **Status:** DEPRECATED
+> **Type:** Research
+> **Context:**
+> * [2025-12-17]: Superseded by the new Contextual Debt Specification.
+> **Superseded By:** [docs/01-Architecture/Specs/Contextual-Debt-Spec.md](docs/01-Architecture/Specs/Contextual-Debt-Spec.md)
 
 # **Architecting Autonomous Intelligence: A Comprehensive Analysis of Deep Research Agents, Dynamic Memory Systems, and Adaptive Orchestration**
 

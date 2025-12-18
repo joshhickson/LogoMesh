@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Historical action items.
+
 # Josh's Action Items (Consolidated 2025-11-26)
 
 This document lists the specific action items assigned to Josh, consolidated from the team feedback analysis log and the **Revised Contextual Discovery Plan (2025-11-27)**.

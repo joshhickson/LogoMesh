@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Fix log for Mermaid graph.
+
 # Session Log: Mermaid Diagram Fix and Graph Analysis
 
 **Date:** November 30, 2025

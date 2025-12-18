@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Research
+> **Context:**
+> * [2025-12-17]: Critical competition rules.
+
 # **Strategic Analysis of the AgentX AgentBeats Competition: A Roadmap to Victory and Commercialization**
 
 ## **I. Executive Summary: The AgentBeats Strategic Calculus**

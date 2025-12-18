@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Setup log for the documentation graph.
+
 # Log: Documentation Graph Setup
 
 **Date:** November 22, 2025

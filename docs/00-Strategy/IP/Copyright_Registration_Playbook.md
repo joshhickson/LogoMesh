@@ -1,3 +1,8 @@
+> **Status:** DEPRECATED
+> **Type:** Guide
+> **Context:**
+> * [2025-12-17]: Copyright registration is PAUSED to focus on AgentX competition ("Public Good").
+
 # Copyright Registration Playbook: Group Registration of Unpublished Works (GRUW)
 
 **Date:** 2025-11-20

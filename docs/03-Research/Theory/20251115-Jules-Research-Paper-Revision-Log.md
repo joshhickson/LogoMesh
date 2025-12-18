@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Revision log.
+
 # Session Log: 2025-11-15 - Research Paper Revision
 
 ## User: Jules

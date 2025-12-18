@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Repair manifest.
+
 Source File,Type,Broken String,Proposed Replacement,Algorithm
 "docs/00-Strategy/Business/20251116-Strategy-Doc-Creation-Log.md",Explicit Link,"[docs/strategy_and_ip/README.md](docs/strategy_and_ip/README.md)","../../../README.md",Default to Root README
 "docs/00-Strategy/Competition/20251113_GAP_ANALYSIS_REPORT.md",Explicit Link,"[README.md](README.md)","../../../README.md",Default to Root README

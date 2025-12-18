@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Snapshot of Truth Source before analysis.
+
 # Current Truth Source & Document Integrity System
 
 > **Status:** ACTIVE

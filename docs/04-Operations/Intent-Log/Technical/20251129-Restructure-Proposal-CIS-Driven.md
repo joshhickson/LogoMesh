@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Plan
+> **Context:**
+> * [2025-12-17]: Executed proposal for current folder structure.
+
 # Restructure Proposal: CIS-Driven Documentation Hierarchy
 **Date:** November 29, 2025
 **Status:** PROPOSAL (Draft)

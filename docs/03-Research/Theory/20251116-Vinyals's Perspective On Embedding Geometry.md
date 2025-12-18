@@ -1,4 +1,7 @@
-
+> **Status:** ACTIVE
+> **Type:** Research
+> **Context:**
+> * [2025-12-17]: Key theoretical basis.
 
 # **A Vinyals-Centric Critique: The "Universal Geometry of Embeddings" and its Implications for Generalist AI**
 

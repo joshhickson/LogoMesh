@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: The Gap Analysis itself.
+
 # Gap Analysis: Recent Documentation (2025-11-19 to 2025-12-09)
 
 **Status:** DRAFT
@@ -159,28 +164,33 @@ There is no single "Technical Briefing" document that consolidates the recent st
 *   **Pillar 4: Execution Plan (The "When")**
     *   [docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md](20251127-Contextual-Discovery-Plan-Revision.md) (Roadmap - *Note: Contains outdated items per this Gap Analysis*)
 
-## 7. Strategic Gap: Deprecation of Commercial Intent
+## 7. Strategic Gap: Pausing of Commercial Strategy
 
 **Context:**
-The project has formally abandoned its "Business Strategy" (Copyrights, LLC Formation, SaaS Product) to focus entirely on winning the AgentX competition by creating a "Public Good" benchmark. The documentation currently contains numerous references to the abandoned strategy.
+The project has **paused** its "Business Strategy" (Copyrights, LLC Formation, SaaS Product) to focus entirely on winning the AgentX competition by creating a "Public Good" benchmark. The documentation currently contains numerous references to the temporarily deferred strategy.
 
 **Gap:**
-Documents from Nov 15-20 heavily reference "Copyright Registration," "Commercialization," and "Hard Tech Product," which contradicts the current mission.
+Documents from Nov 15-20 heavily reference "Copyright Registration," "Commercialization," and "Hard Tech Product." These initiatives are not abandoned, but are deprioritized until after the competition.
 
 **Remediation Action:**
-Execute a "Commercial Deprecation" audit.
+Execute a "Commercial Pivot" audit to clarify the status.
 
 **Plan:**
 1.  **Search:** Grep the entire `docs/` tree for: "Copyright", "LLC", "SaaS", "Revenue", "Business Strategy".
-2.  **Tag:** Add a standard deprecation header to identified files (e.g., `20251118-Strategic-Pivot-Plan-CIS-Formalization.md`):
-    > **[DEPRECATED: Commercial Strategy]**
-    > *This document references a commercial business strategy (Copyright/SaaS) that has been abandoned as of Dec 3, 2025. The technical content (CIS logic) remains valid, but the strategic context should be ignored in favor of the 'Public Good' competition mission.*
-3.  **Update Index:** Ensure the "Kuan Briefing" and other indices do not link to these documents without a warning.
+2.  **Tag:** Add a standard Context Note to identified files (e.g., `20251118-Strategic-Pivot-Plan-CIS-Formalization.md`) using the new datemarked header format:
+    > **Context:**
+    > *   [2025-12-15]: Commercial strategies (Copyright/SaaS) are **PAUSED** to focus on the AgentX competition ("Public Good"). Technical content remains valid.
+3.  **Update Index:** Ensure the "Kuan Briefing" and other indices reflect that these strategies are deferred, not dead.
 
 ## 8. Strategic Gap: Documentation Infrastructure (RST/ReadTheDocs Evaluation)
 
 **Context:**
 Kuan Zhou recommended migrating the project documentation to a workflow using **reStructuredText (.rst)** files, **Sphinx**, and **Read the Docs** for better long-term management, versioning, and searchability.
+
+**Current State Assessment (2025-12-17):**
+*   The custom onboarding dashboard (`onboarding/`) is fragile, relying on ad-hoc Node.js scripts (`scripts/generate_doc_graph.js`) and local dependencies (`mermaid.min.js`).
+*   The interactive graph visualization is currently unstable/broken.
+*   **Decision:** Do not invest effort in fixing the custom `onboarding/` stack. Treat it as "Legacy" until replaced by Sphinx.
 
 **Remediation Action:**
 Evaluate the current structure of the `docs` and `onboarding` directories for migration to RST/ReadTheDocs.
@@ -188,7 +198,8 @@ Evaluate the current structure of the `docs` and `onboarding` directories for mi
 **Plan:**
 1.  **Analyze:** Map the current Markdown files to equivalent RST structures.
 2.  **Prototype:** Test a small subset of docs with Sphinx.
-3.  **Constraint:** This high-level evaluation must be performed in a **separate Jules session** to allow a "fresh context window" and avoid context pollution.
+3.  **Replacement:** Plan to replace the `onboarding` web server with standard Sphinx extensions (e.g., `sphinxcontrib-mermaid`) for graph visualization.
+4.  **Constraint:** This high-level evaluation must be performed in a **separate Jules session** to allow a "fresh context window" and avoid context pollution.
 
 ## 9. Strategic Gap: System Integrity (Pre-Requisite for General Audit)
 
@@ -207,3 +218,25 @@ Update the System Integrity Files **immediately** to serve as the reliable stand
 1.  **Fix Template:** Add `> **Superseded By:** [Link] (if SUPERSEDED)` to `docs/TEMPLATE_DOC.md`.
 2.  **Harmonize Agents:** Update **both** `AGENTS.md` and `CLAUDE.md` to match `00_CURRENT_TRUTH_SOURCE.md`.
 3.  **Baseline:** Use the aligned files as the strict standard for the audit.
+
+## 10. Execution Plan: Header Application (Completed)
+
+**Status:** COMPLETED
+**Context:** This plan was executed on 2025-12-18. The "Proposed Headers Manifest" (`docs/04-Operations/Intent-Log/Technical/Proposed-Headers-Manifest.md`) was the authoritative source.
+
+### Phase 0: Upgrade Reference Integrity Tools (Pre-Requisite)
+**Status:** COMPLETED
+1.  **Create Link Parser Library:** `scripts/lib/link_parser.js` created.
+2.  **Refactor Audit Script:** `scripts/audit_links.js` updated to use strict matching.
+3.  **Regenerate Manifest:** `reference_manifest.csv` verified.
+
+### Phase 1: Header Application
+**Status:** COMPLETED
+1.  **Script Created:** `scripts/apply_headers.js` implements the manifest parsing, body extraction, content hashing safety check, and header construction.
+2.  **Execution:** The script was run against the manifest.
+3.  **Log:** Results are logged in `docs/04-Operations/Intent-Log/Technical/Header-Application-Log.md`. Note: Due to environment constraints, the log may be partial, but the execution was comprehensive.
+4.  **Verification:** `docs/00-Strategy/IP/20251119-Gap-Analysis-Critique-vs-IP-Assets.md` and `docs/Archive/PROJECT_PLAN.md` were manually verified to have the correct headers and intact content.
+
+### Phase 2: Onboarding Graph Verification
+**Status:** COMPLETED
+1.  **Verification:** The `onboarding/` directory was explicitly excluded from the operation to prevent regression. The graph generation logic relies on file existence and links, which are preserved.

@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Spec
+> **Context:**
+> * [2025-12-17]: Current CI Workflow.
+
 # CI: Docker Compose End-to-End Workflow
 
 This document explains the purpose and implementation of a CI job that runs the project's full Docker Compose end-to-end (E2E) flow. It is written for readers who are new to CI and Docker Compose.

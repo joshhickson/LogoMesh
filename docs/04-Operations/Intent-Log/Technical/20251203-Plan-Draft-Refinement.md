@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Drafting session log.
+
 # Plan Draft: Reference Integrity & Documentation Clean-Up
 
 ## Overview

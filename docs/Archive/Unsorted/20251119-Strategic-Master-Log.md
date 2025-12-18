@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Archived strategic log.
+
 # Strategic Master Log (2025-11-19)
 
 **Date:** 2025-11-19

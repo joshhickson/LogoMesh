@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Repair manifest.
+
 Source File,Type,Broken String,Proposed Replacement,Algorithm
 "docs/00-Strategy/Competition/20251113_GAP_ANALYSIS_REPORT.md",Explicit Link,"[PROJECT_PLAN.md](PROJECT_PLAN.md)","[PROJECT_PLAN.md (Outdated)](../../../PROJECT_PLAN.md)","Redirect to Root + Add Disclaimer"
 "docs/03-Research/Theory/20251115-Contextual_Debt_Paper-Gap_Analysis.md",Explicit Link,"[PROJECT_PLAN.md](PROJECT_PLAN.md)","[PROJECT_PLAN.md (Outdated)](../../../PROJECT_PLAN.md)","Redirect to Root + Add Disclaimer"

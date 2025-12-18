@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Spec
+> **Context:**
+> * [2025-12-17]: The Core Data Model Spec.
+
 # Evaluation Output Schema
 
 This document describes the JSON schema used for evaluation reports produced by the LogoMesh evaluation pipeline and provides a small example you can use while developing analysis notebooks.

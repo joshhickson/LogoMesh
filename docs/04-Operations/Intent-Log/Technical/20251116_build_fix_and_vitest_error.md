@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Build fix log.
+
 # Log: Build and Test Environment Fixes (2025-11-16)
 
 ## 1. Summary

@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Historical report.
+
 # Verification Report (2025-11-14)
 
 ## 1. Introduction

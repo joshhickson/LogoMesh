@@ -1,3 +1,9 @@
+> **Status:** DEPRECATED
+> **Type:** Spec
+> **Context:**
+> * [2025-12-17]: Merged into Contextual Debt Spec.
+> **Superseded By:** [docs/01-Architecture/Specs/Contextual-Debt-Spec.md](docs/01-Architecture/Specs/Contextual-Debt-Spec.md)
+
 Based on the "Solutionist" strategy established in our previous steps, we have compressed the background (Section 2.1) and formalized the mathematical proof (Section 2.2).
 
 The next logical component of a seminal paper—following the **Bitcoin** and **Transformer** archetypes—is the **System Architecture**. In your original draft, this was scattered across "Defining Contextual Debt" and "Automated Governance."

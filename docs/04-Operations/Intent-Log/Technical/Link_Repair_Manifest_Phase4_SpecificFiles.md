@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Repair manifest.
+
 Source File,Type,Broken String,Proposed Replacement,Algorithm
 "docs/04-Operations/Intent-Log/Technical/20251122-Documentation-Graph-Setup.md",Explicit Link,"[docs/CONTEXTUAL_DEBT_SPEC.md](docs/CONTEXTUAL_DEBT_SPEC.md)","[docs/CONTEXTUAL_DEBT_SPEC.md](../../../01-Architecture/Specs/Contextual-Debt-Spec.md)","Target: CONTEXTUAL_DEBT_SPEC.md"
 "docs/04-Operations/Intent-Log/Technical/20251128-manual-link-verification.md",Explicit Link,"[Deep Dive: Detailed Gap Analysis](./GAP_ANALYSIS.md)","[Deep Dive: Detailed Gap Analysis (Outdated)](../../../GAP_ANALYSIS.md)","Target: GAP_ANALYSIS.md"

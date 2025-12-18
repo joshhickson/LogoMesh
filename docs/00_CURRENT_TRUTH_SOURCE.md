@@ -1,4 +1,8 @@
 > **Status:** ACTIVE
+> **Type:** Source
+> **Context:**
+> * [2025-12-17]: The definitive Single Source of Truth for the project state.
+=======
 > **Type:** System of Record
 > **Context:** Single Source of Truth (Post-Gap Analysis)
 > **Last Updated:** 2025-12-17
@@ -90,7 +94,8 @@ All markdown files in `docs/` must start with this header:
 ```markdown
 > **Status:** [ACTIVE | DRAFT | REVIEW | SNAPSHOT | DEPRECATED | SUPERSEDED]
 > **Type:** [Plan | Spec | Log | Minutes | Research | Guide]
-> **Context:** [Brief description of strategic context or "why"]
+> **Context:**
+> *   [YYYY-MM-DD]: [Brief description of strategic context or "why"]
 > **Superseded By:** [Link] (if SUPERSEDED)
 ```
 

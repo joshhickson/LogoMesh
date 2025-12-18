@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Recommendation report capturing the pivot moment.
+
 # Recommendation Report: Strategic Path Forward (2025-11-19)
 
 ## 1. Executive Summary

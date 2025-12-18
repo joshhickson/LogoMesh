@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Research prompts log.
+
 # Gemini 2.5 Pro Research Prompts for "Contextual Debt" Paper Expansion (2025-11-15)
 
 This document contains a series of detailed, self-contained research prompts for Gemini 2.5 Pro. Each prompt is designed to expand upon the foundational research paper, "The Unknowable Code: An Analysis of Contextual Debt as the Next Frontier of Software Liability."

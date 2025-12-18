@@ -1,3 +1,9 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Historical status.
+> **Superseded By:** [docs/00_CURRENT_TRUTH_SOURCE.md](docs/00_CURRENT_TRUTH_SOURCE.md)
+
 # Project Status & Strategic Overview
 
 Welcome to the team! We're thrilled to have you on board. This document provides a high-level overview of our project's current status, our strategic vision, and the key areas where your expertise will be invaluable.
