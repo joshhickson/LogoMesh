@@ -1,7 +1,7 @@
 > **Status:** ACTIVE
 > **Type:** System of Record
 > **Context:** Single Source of Truth (Post-Gap Analysis)
-> **Last Updated:** 2025-12-03
+> **Last Updated:** 2025-12-17
 
 # Current Truth Source
 
@@ -63,7 +63,28 @@
 *   **Metrics:** Is Cosine Similarity ($I_r$) sufficient, or do we strictly need Graph RAG? (Evidence suggests Cosine is "too basic" but may be V1).
 *   **Paper Structure:** Can we model the research paper on "The Google File System"?
 
-## 8. Contextual Header System
+## 8. Active Documentation
+
+### Competition Implementation
+| Document | Description | Status |
+|----------|-------------|--------|
+| [Agent-Architecture.md](05-Competition/Agent-Architecture.md) | Green/Purple agent system architecture, tool usage, A2A protocol, limitations & future work | ACTIVE |
+| [green-agent/QUICKSTART.md](../green-agent/QUICKSTART.md) | Quick start guide for running both agents | ACTIVE |
+
+### Agent Implementations
+| Agent | Location | Port | Purpose |
+|-------|----------|------|---------|
+| Green Agent (Assessor) | `green-agent/` | 9040 | Sends coding tasks, evaluates using Contextual Debt framework |
+| Purple Agent (Assessee) | `purple-agent/` | 9050 | Receives tasks, generates code solutions |
+
+### Known Limitations (Current Implementation)
+- Single-file tasks only (no multi-file codebases)
+- No file system access for Purple Agent
+- No actual code execution/test running
+- Static task pool (3 hardcoded tasks)
+- See [Agent-Architecture.md § Limitations](05-Competition/Agent-Architecture.md#10-limitations--future-work) for full details
+
+## 9. Contextual Header System
 All markdown files in `docs/` must start with this header:
 
 ```markdown
