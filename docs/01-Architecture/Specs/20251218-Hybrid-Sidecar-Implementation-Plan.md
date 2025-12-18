@@ -69,8 +69,8 @@ graph TD
 
     subgraph "Inference Plane (Sidecar)"
         vLLM[vLLM Container]
-        AdapterA[Green LoRA (Cyber-Sentinel)]
-        AdapterB[Red LoRA (Context-Breaker)]
+        AdapterA[Green LoRA - Cyber Sentinel]
+        AdapterB[Red LoRA - Context Breaker]
         vLLM -.-> |Load| AdapterA
         vLLM -.-> |Load| AdapterB
     end
