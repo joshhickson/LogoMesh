@@ -1,4 +1,7 @@
-
+> **Status:** SNAPSHOT
+> **Type:** Research
+> **Context:**
+> * [2025-12-17]: Historical snapshot of early theory. Commercial strategies PAUSED.
 
 # **The Unknowable Code: A Protocol for Contextual Integrity in AI-Generated Software**
 

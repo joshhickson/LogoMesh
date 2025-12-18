@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Minutes
+> **Context:**
+> * [2025-12-17]: Meeting summary.
+
 # Intensive Summary: LogoMesh Onboarding Meeting 2
 
 **Date:** November 21, 2025

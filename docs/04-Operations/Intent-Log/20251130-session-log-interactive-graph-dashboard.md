@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Session log.
+
 # Session Log: November 30, 2025
 
 ## Goal

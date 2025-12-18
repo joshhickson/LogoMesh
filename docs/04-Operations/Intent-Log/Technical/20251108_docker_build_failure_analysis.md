@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Build failure log.
+
 # Docker Build Failure Analysis Log - 2025-11-08
 
 ## 1. Executive Summary

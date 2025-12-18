@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Historical creation log.
+
 # Log: 20251116 - Formalized IP and Business Strategy
 
 **Date:** 2025-11-16

@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Plan
+> **Context:**
+> * [2025-12-17]: Master plan for doc structure.
+
 # Documentation Organization & Contextual Graph - Master Plan
 **Date:** November 28, 2025
 **Author:** Jules (Agent)

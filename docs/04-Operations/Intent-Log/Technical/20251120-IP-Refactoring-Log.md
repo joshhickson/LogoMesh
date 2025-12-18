@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Log of IP refactoring session.
+
 # Technical Log: IP Strategy Refactoring (2025-11-20)
 
 ## 1. Overview

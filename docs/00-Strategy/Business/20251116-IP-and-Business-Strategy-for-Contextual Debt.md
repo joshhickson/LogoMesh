@@ -1,3 +1,8 @@
+> **Status:** DEPRECATED
+> **Type:** Plan
+> **Context:**
+> * [2025-12-17]: Strategy DEPRECATED (Commercial Paused).
+
 # **Strategic Analysis and Pre-Investment IP Portfolio: The "Contextual Debt" Venture**
 
 ## **I. Strategic Analysis: From Foundational Concept to Defensible Enterprise**

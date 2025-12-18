@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Guide
+> **Context:**
+> * [2025-12-17]: Reference integrity standards.
+
 # Reference Integrity Guide
 
 **Purpose:** This guide defines the workflow for maintaining link integrity within the LogoMesh documentation. It serves as the manual for the "Link Integrity System" (the Reference Manifest).

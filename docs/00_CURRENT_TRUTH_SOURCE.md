@@ -1,7 +1,7 @@
 > **Status:** ACTIVE
-> **Type:** System of Record
-> **Context:** Single Source of Truth (Post-Gap Analysis)
-> **Last Updated:** 2025-12-03
+> **Type:** Source
+> **Context:**
+> * [2025-12-17]: The definitive Single Source of Truth for the project state.
 
 # Current Truth Source
 

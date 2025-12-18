@@ -1,6 +1,7 @@
 > **Status:** SNAPSHOT
 > **Type:** Minutes
-> **Context:** Gap Analysis, Pivot Record
+> **Context:**
+> * [2025-12-17]: Meeting minutes.
 
 # **Meeting Minutes \- Josh, Deepti, Aladdin, Garrett**
 

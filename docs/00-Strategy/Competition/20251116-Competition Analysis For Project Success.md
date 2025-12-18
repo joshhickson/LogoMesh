@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Research
+> **Context:**
+> * [2025-12-17]: Early analysis.
+
 # **AgentX-AgentBeats: A Strategic Due Diligence Report for Foundational Innovation**
 
 This report provides a strategic, expert-level analysis of the AgentX-AgentBeats Competition and its organizers, the Berkeley Center for Responsible, Decentralized Intelligence (RDI). It is prepared for an intelligent participant with a "zero-to-one" project idea. The analysis moves beyond a simple summary of the rules to deconstruct the underlying philosophies, technical preferences, and strategic objectives of the organizers. The goal is to provide a comprehensive competitive intelligence briefing, enabling a novel project to be positioned for maximum impact and success.

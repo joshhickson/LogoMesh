@@ -1,6 +1,7 @@
-> **Status:** DRAFT
+> **Status:** ACTIVE
 > **Type:** Guide
-> **Context:** Onboarding, Technical Briefing
+> **Context:**
+> * [2025-12-17]: Onboarding guide for new Systems Architect.
 
 # Technical Briefing: Kuan Zhou (System Architect / Security)
 

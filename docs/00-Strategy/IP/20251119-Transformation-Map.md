@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Plan
+> **Context:**
+> * [2025-12-17]: Commercial strategies (Copyright/SaaS) mentioned are PAUSED to focus on AgentX competition.
+
 # Transformation Map: Paper Refactoring (2025-11-19)
 
 **Objective:** Transform the Research Paper from a "Manifesto" to a "Protocol" by injecting mathematical formalization and architectural definitions.

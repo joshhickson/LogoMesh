@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Guide
+> **Context:**
+> * [2025-12-17]: Snapshot of the commercial strategy (PAUSED). Defines core business entities referenced in the code.
+
 # Investor Pitch Script v2 (Protocol Edition)
 
 This document contains the core talking points for investor meetings, aligned with the "Hard Tech" strategy defined in the `Contextual Debt Protocol` paper.

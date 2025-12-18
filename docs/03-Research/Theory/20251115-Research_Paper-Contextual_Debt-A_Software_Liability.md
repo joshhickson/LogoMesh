@@ -1,4 +1,7 @@
-
+> **Status:** ACTIVE
+> **Type:** Research
+> **Context:**
+> * [2025-12-17]: The Definitive Research Paper (Core IP).
 
 # **The Unknowable Code: An Analysis of Contextual Debt as the Next Frontier of Software Liability**
 

@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Guide
+> **Context:**
+> * [2025-12-17]: Directory index.
+
 * **This README.md has been temporarily abandoned due to lack of implementation and time constraints. -2025-11-16.**
 
 # The Intent Logging Framework: A Rulebook

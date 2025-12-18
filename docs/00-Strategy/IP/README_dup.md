@@ -1,3 +1,9 @@
+> **Status:** DEPRECATED
+> **Type:** Guide
+> **Context:**
+> * [2025-12-17]: Duplicate file.
+> **Superseded By:** [docs/00-Strategy/IP/README.md](docs/00-Strategy/IP/README.md)
+
 # LogoMesh: Strategy & Intellectual Property
 
 This directory contains the core documentation for LogoMesh's business strategy, intellectual property, and investor relations. It is designed to onboard new team members to the "why" behind the code.

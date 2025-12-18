@@ -1,3 +1,9 @@
+> **Status:** DEPRECATED
+> **Type:** Research
+> **Context:**
+> * [2025-12-17]: The mathematical formalization was merged into the Copyright Edition. Note: While the Copyright strategy is PAUSED, that document remains the primary reference for the CIS formulas.
+> **Superseded By:** [docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md)
+
 # **3\. Formalization: The Contextual Integrity Score (CIS)**
 
 To move beyond the subjectivity of traditional code quality metrics, we define **Contextual Integrity ($CI$)** not as a qualitative sentiment, but as a computable probability that a given software artifact preserves its original intent.

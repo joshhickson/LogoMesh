@@ -1,3 +1,9 @@
+> **Status:** DEPRECATED
+> **Type:** Plan
+> **Context:**
+> * [2025-11-27]: Replaced by the Revision plan.
+> **Superseded By:** [docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md](docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md)
+
 # 20251124-Contextual-Discovery-Plan (Revised)
 
 ## 1. Referenced Documents

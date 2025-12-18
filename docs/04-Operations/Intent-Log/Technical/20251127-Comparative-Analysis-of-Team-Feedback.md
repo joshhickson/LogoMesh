@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Key decision record for Public Good pivot.
+
 # Comparative Analysis of Team Feedback (2025-11-26)
 
 ## 1. Introduction

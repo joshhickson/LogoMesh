@@ -1,3 +1,8 @@
+> **Status:** DEPRECATED
+> **Type:** Guide
+> **Context:**
+> * [2025-12-17]: Commercial legal checklist PAUSED.
+
 # Legal & IP Protection Checklist
 
 This document tracks the necessary legal steps to protect LogoMesh's intellectual property.

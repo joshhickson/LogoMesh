@@ -1,3 +1,7 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Generated manifest.
 
 # Link Repair Manifest (20251201)
 

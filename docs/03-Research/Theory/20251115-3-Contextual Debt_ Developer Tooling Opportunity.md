@@ -1,4 +1,7 @@
-
+> **Status:** DEPRECATED
+> **Type:** Research
+> **Context:**
+> * [2025-12-17]: Merged into Research Paper.
 
 # **From Abstract Liability to Developer-Centric Tooling**
 

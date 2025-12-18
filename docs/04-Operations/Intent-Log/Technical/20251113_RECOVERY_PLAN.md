@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Plan
+> **Context:**
+> * [2025-12-17]: Superseded recovery plan.
+
 # Intensive Recovery Plan (2025-11-13)
 
 ## 1. Introduction & Acknowledgment of Current Plan

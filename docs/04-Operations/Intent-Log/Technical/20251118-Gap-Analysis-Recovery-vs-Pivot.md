@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Pivot gap analysis.
+
 # Gap Analysis: `RECOVERY_PLAN` vs. `Strategic-Pivot-Plan` (2025-11-18)
 
 ## 1. Purpose

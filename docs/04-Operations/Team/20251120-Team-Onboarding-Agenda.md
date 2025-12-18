@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Minutes
+> **Context:**
+> * [2025-12-17]: Meeting agenda.
+
 # Team Onboarding Meeting Agenda
 **Date:** November 20, 2025
 **Location:** [Meeting Link]

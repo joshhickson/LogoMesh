@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Log of reference repair operations.
+
 # Reference Repair Log: 2025-12-02
 
 **Date:** December 2, 2025

@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Research
+> **Context:**
+> * [2025-12-17]: Novelty validation for competition.
+
 # Viability and Novelty Analysis: The Contextual Integrity Score
 
 **Date:** November 27, 2025

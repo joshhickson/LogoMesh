@@ -1,4 +1,7 @@
-
+> **Status:** DEPRECATED
+> **Type:** Research
+> **Context:**
+> * [2025-12-17]: Ancient research.
 
 # **Architecting Resilience: A Framework for Managing Technical and Contextual Debt in Agentic Software Engineering**
 

@@ -1,3 +1,8 @@
+> **Status:** DEPRECATED
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Registration manifest PAUSED.
+
 # Registration Manifest: Contextual Debt Group (2025-11-19)
 
 This manifest lists the exact files and metadata to be used for the "Group Registration of Unpublished Works" (GRUW) submission to the U.S. Copyright Office.

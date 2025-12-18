@@ -1,3 +1,8 @@
+> **Status:** ACTIVE
+> **Type:** Guide
+> **Context:**
+> * [2025-12-17]: The current Onboarding Guide.
+
 # Onboarding Hub
 
 Welcome to the **LogoMesh Onboarding Hub**. This folder contains the tools and data used to visualize the project's structure and "Contextual Debt."

@@ -1,3 +1,8 @@
+> **Status:** SNAPSHOT
+> **Type:** Log
+> **Context:**
+> * [2025-12-17]: Verification checkpoint.
+
 # Log: Verification Checkpoint
 **Date:** 2025-11-13
 

@@ -1,4 +1,7 @@
-
+> **Status:** DEPRECATED
+> **Type:** Research
+> **Context:**
+> * [2025-12-17]: Merged into Research Paper.
 
 # **A Proposal for a Standardized Contextual Integrity Score (CIS): Quantifying Intent in AI-Generated Code**
 
