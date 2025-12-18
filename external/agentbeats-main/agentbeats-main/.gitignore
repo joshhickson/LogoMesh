@@ -1,0 +1,145 @@
+# Existing ignores
+**/__pycache__/
+**/tmp/
+**/data/
+venv/
+.DS_Store
+
+# Battle log files
+*.log
+
+# Node.js dependencies
+node_modules/
+
+# npm/yarn/pnpm lock files
+frontend/webapp*/package-lock.json
+frontend/webapp*/yarn.lock
+frontend/webapp*/pnpm-lock.yaml
+frontend/webapp*/node_modules/
+
+# Build output
+frontend/webapp*/build/
+frontend/webapp*/dist/
+frontend/webapp*/.svelte-kit/
+
+# Frontend specific ignores
+frontend/webapp*/.output
+frontend/webapp*/.vercel
+frontend/webapp*/.netlify
+frontend/webapp*/.wrangler
+frontend/webapp*/vite.config.js.timestamp-*
+frontend/webapp*/vite.config.ts.timestamp-*
+
+# ccache
+ccache/
+*.ccache
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+Thumbs.db
+
+# Misc
+*.bak
+*.tmpi
+
+# --- Additional ignores for SvelteKit, Vite, Node, Python, pm2, and SSL ---
+# SvelteKit output (if not already ignored)
+frontend/webapp*/.svelte-kit-output/
+frontend/webapp*/.vite/
+frontend/webapp*/.vite-temp/
+frontend/webapp*/.output/
+
+# pm2 logs and dump
+~/.pm2/
+pm2.log
+pm2.pid
+dump.pm2.json
+
+# Python egg info
+*.egg-info/
+.eggs/
+
+# Python bytecode (in case not caught by previous rules)
+*.pyc
+*.pyo
+*.pyd
+
+# SvelteKit preview output (if using adapters that output .output/)
+webapp/.output/
+
+# SSL keys/certs (never commit these!)
+*.pem
+*.crt
+*.key
+
+# Certbot/letsencrypt (if you ever back up configs)
+etc/letsencrypt/
+
+# Local Vite config (dev proxy)
+webapp/vite.config.ts
+
+# --- Docker and Battle Royale specific ignores ---
+# Docker volumes and data
+scenarios/battle_royale/docker/shared/
+scenarios/battle_royale/docker/logs/
+scenarios/battle_royale/docker/dev-logs/
+scenarios/battle_royale/docker/dev-shared/
+scenarios/battle_royale/docker/dev-monitor-html/
+
+# Docker build artifacts
+scenarios/battle_royale/docker/.dockerignore.bak
+scenarios/battle_royale/docker/docker-compose.override.yml.bak
+
+# Battle Royale test artifacts
+scenarios/battle_royale/test_*.log
+scenarios/battle_royale/*_service.log
+scenarios/battle_royale/*_service.py
+
+# SSH keys and credentials (if any are generated)
+scenarios/battle_royale/ssh_keys/
+scenarios/battle_royale/credentials/
+
+# Container-specific files
+scenarios/battle_royale/container_data/
+scenarios/battle_royale/monitor-html/
+
+# .env files
+.env
+
+# logs folder
+logs/
+
+# build folder
+**/agentbeats/agentbeats.egg-info/
+**/build/
+
+# --- Assets and Uploads ---
+# Auto-generated assets folder structure (ignore all uploaded files)
+src/backend/assets/uploads/avatars/users/*
+src/backend/assets/uploads/avatars/agents/*
+src/backend/assets/uploads/battles/*
+
+# Static assets (ignore session files)
+src/backend/assets/static/images/*
+src/backend/assets/static/css/*
+src/backend/assets/static/js/*
+src/backend/assets/static/fonts/*
+src/backend/assets/static/icons/*
+
+# python build artifacts
+dist/
+
+# --- CyberGym ---
+scenarios/cybergym/resources/cybergym/
+scenarios/cybergym/scripts/
+
+# Asciinema
+asciinema_playground
+**/asciinema_outputs/
+

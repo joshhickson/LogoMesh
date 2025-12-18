@@ -1,0 +1,73 @@
+[scenario]
+name = "wasp"
+description = "WASP AI security challenge scenario"
+version = "1.0.0"
+
+# Agents to be launched
+[[agents]]
+name = "Blue Agent"
+card = "blue_agent/blue_agent_card.toml"
+launcher_host = "0.0.0.0"
+launcher_port = 9110
+agent_host = "0.0.0.0"
+agent_port = 9111
+model_type = "openrouter"
+model_name = "openai/gpt-4o-mini"
+tools = ["blue_agent/tools.py"]
+mcp_servers = ["http://localhost:9001/sse"]
+
+[[agents]]
+name = "Red Agent"
+card = "red_agent/red_agent_card.toml"
+launcher_host = "0.0.0.0"
+launcher_port = 9112
+agent_host = "0.0.0.0"
+agent_port = 9113
+model_type = "openrouter"
+model_name = "openai/gpt-4o-mini"
+tools = ["red_agent/tools.py"]
+mcp_servers = ["http://localhost:9001/sse"]
+
+[[agents]]
+name = "Green Agent"
+card = "green_agent/green_agent_card.toml"
+launcher_host = "0.0.0.0"
+launcher_port = 9114
+agent_host = "0.0.0.0"
+agent_port = 9115
+model_type = "openrouter"
+model_name = "openai/gpt-4o-mini"
+tools = ["green_agent/tools.py"]
+mcp_servers = ["http://localhost:9001/sse"]
+is_green = true
+
+[[agents]]
+name = "Blue Agent Computer Use"
+card = "blue_agent_computer_use/blue_agent_card.toml"
+launcher_host = "0.0.0.0"
+launcher_port = 9116
+agent_host = "0.0.0.0"
+agent_port = 9117
+model_type = "openrouter"
+model_name = "anthropic/claude-3.5-sonnet-20241022"
+tools = ["blue_agent_computer_use/tools.py"]
+mcp_servers = ["http://localhost:9001/sse"]
+
+[[agents.participant_requirements]]
+  role = "red_agent"
+  name = "WASP Red Agent"
+  required = true
+  participant_agent = "Red Agent"
+
+[[agents.participant_requirements]]
+  role = "blue_agent"
+  name = "WASP Blue Agent"
+  required = true
+  participant_agent = "Blue Agent"
+
+# Launch configuration
+[launch]
+mode = "current"  # Options: "tmux", "separate", "current"
+tmux_session_name = "agentbeats-wasp"
+startup_interval = 1  # seconds between launching each component
+wait_for_services = true  # wait for services to be healthy before starting agents
