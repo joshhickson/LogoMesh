@@ -17,12 +17,16 @@
 
 ### Part I: Alignment & Architecture (30 Minutes)
 
-1.  **Strategy Recap (10 min)**
-    *   **Goal:** Ensure everyone understands *why* we are building the "Hybrid Sidecar".
+1.  **Strategy & Legacy Audit (10 min)**
+    *   **Goal:** Ensure everyone understands the strategy and the legacy constraints we must respect.
+    *   **Required Reading:**
+        *   [`docs/00-Strategy/Competition/20251216-Unified AI Competition Development Plan.md`](../../00-Strategy/Competition/20251216-Unified%20AI%20Competition%20Development%20Plan.md)
+        *   [`green-agent/QUICKSTART.md`](../../../../green-agent/QUICKSTART.md) (Legacy Ports 9040/9050)
+        *   [`docs/05-Competition/Agent-Architecture.md`](../../05-Competition/Agent-Architecture.md) (Scoring Weights & Tools)
     *   **Key Points:**
         *   The "Single-Rig Hypothesis" ($400 budget limit).
-        *   The "Cop vs. Robber" dynamic (Team A evaluates Team B).
-        *   Review `docs/00-Strategy/Competition/20251216-Unified AI Competition Development Plan.md`.
+        *   The "Cop vs. Robber" dynamic.
+        *   Preserving the "Contextual Debt" scoring logic (33/33/33 split).
 2.  **Architectural Decisions (20 min)**
     *   **Goal:** Reach consensus on the "Architectural Decision Matrix" in the Implementation Plan.
     *   **Decision 1:** Confirm **Option A (Direct Inference)**: Node.js controls vLLM directly.
@@ -35,10 +39,10 @@
     *   **Goal:** Assign ownership of the "Implementation Steps".
     *   **Suggested Roles:**
         *   **Infrastructure Lead:** Owns `docker-compose.yml`, vLLM setup, and GPU drivers.
-        *   **Control Plane Engineer:** Owns `SidecarLlmClient.ts` and `RationaleDebtAnalyzer` (Node.js).
+        *   **Control Plane Engineer:** Owns `SidecarLlmClient.ts` and porting the `Agent-Architecture.md` tool logic to Node.js.
         *   **Green Agent Lead (Python):** Owns `packages/unified-agent/src/green_logic` (Parsing/Norms).
         *   **Red Agent Lead (Python):** Owns `packages/unified-agent/src/red_logic` (Attack Generation).
-        *   **QA/Integration:** Owns the E2E tests and "Battle" simulation script.
+        *   **QA/Integration:** Owns the E2E tests and ensuring legacy compatibility (ports 9040/9050).
 4.  **Task Breakdown (25 min)**
     *   Review the "Execution Roadmap" (Week 1 vs Week 2).
     *   Create specific tickets/cards for Week 1 (Infrastructure & Bridge).
