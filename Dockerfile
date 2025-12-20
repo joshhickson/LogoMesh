@@ -1,5 +1,5 @@
 # Use a compatible Node.js 16 image
-FROM node:16-bullseye
+FROM node:20-bookworm
 
 # Install build essentials for native addons like isolated-vm
 RUN apt-get update && apt-get install -y python3 make g++ --no-install-recommends && rm -rf /var/lib/apt/lists/*
