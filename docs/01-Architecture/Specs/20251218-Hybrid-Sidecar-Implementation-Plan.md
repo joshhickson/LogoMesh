@@ -1,7 +1,7 @@
 > **Status:** DRAFT
 > **Type:** Plan
 > **Context:**
-> *   [2025-12-18]: Implementation plan for the Hybrid Sidecar Architecture, explicitly aligned with the "Unified Agentic Defense" strategy.
+> *   [2025-12-18]: Implementation plan for the Hybrid Sidecar Architecture, explicitly aligned with the "Unified Agentic Defense" strategy and legacy assets.
 > **Superseded By:** -
 
 # Hybrid Sidecar Implementation Plan
@@ -25,7 +25,26 @@ This plan directly operationalizes the following strategic pillars:
 
 ---
 
-## 3. Architectural Decision Matrix
+## 3. Legacy Context & Integration
+
+This plan incorporates logic and constraints from the following legacy documents. The Node.js implementation must strictly adhere to these specifications.
+
+### Reference Material
+1.  **[green-agent/QUICKSTART.md](../../../../green-agent/QUICKSTART.md)**: Defines the baseline "Team B" setup and the legacy ports (Green: 9040, Purple: 9050).
+2.  **[docs/05-Competition/Agent-Architecture.md](../../../05-Competition/Agent-Architecture.md)**: Defines the **Contextual Debt Framework** weights and the **Tool Execution Flow**.
+
+### Key Integration Constraints
+*   **Scoring Weights:** The `RationaleDebtAnalyzer` must implement the exact weighting from `Agent-Architecture.md`:
+    *   **Rationale Debt:** 33%
+    *   **Architectural Debt:** 33%
+    *   **Testing Debt:** 33%
+*   **Tool Specification:** The Node.js Control Plane must implement the equivalents of the Python tools defined in `Agent-Architecture.md §5`:
+    *   `send_coding_task(purple_agent_url, battle_id)`
+    *   `report_result(battle_id, score, breakdown)`
+
+---
+
+## 4. Architectural Decision Matrix
 
 To ensure the "Unified Agentic Defense" strategy is correctly interpreted, the following architectural decisions require team consensus. This plan assumes the **Recommended Path**.
 
@@ -53,7 +72,7 @@ To ensure the "Unified Agentic Defense" strategy is correctly interpreted, the f
 
 ---
 
-## 4. Recommended Architecture (Option A)
+## 5. Recommended Architecture (Option A)
 
 ### System Diagram
 
@@ -92,7 +111,7 @@ graph TD
 
 ---
 
-## 5. Detailed Implementation Steps
+## 6. Detailed Implementation Steps
 
 ### Step 1: Create `packages/unified-agent` (The Polymorphic Repo)
 
@@ -189,11 +208,14 @@ To support **Strategy §5.1 (Cyber-Sentinel Architecture)**, we must ensure the 
 
 1.  **Module 1 (CI-Parser):** Logic resides in the **LoRA Adapter** (trained via `packages/unified-agent/src/green_logic`). Node.js invokes this by calling `SidecarLlmClient`.
 2.  **Module 2 (Norms Database):** This static logic will be implemented in Node.js (e.g., `packages/workers/src/rules/norms.ts`) to allow for fast, deterministic checking.
-3.  **Module 3 (Scoring Engine):** The `RationaleDebtAnalyzer` in `packages/workers` will implement the scoring formula ($v_i \times w_i$) defined in Strategy §2.2.
+3.  **Module 3 (Scoring Engine):** The `RationaleDebtAnalyzer` in `packages/workers` must implement the **33% Weighted Scoring Logic** defined in [`docs/05-Competition/Agent-Architecture.md §4`](../../../05-Competition/Agent-Architecture.md).
+4.  **Tool Implementation:** The Node.js orchestrator must implement the tools defined in [`docs/05-Competition/Agent-Architecture.md §5`](../../../05-Competition/Agent-Architecture.md):
+    *   `send_coding_task`: Implemented via A2A HTTP client to the Red Agent.
+    *   `report_result`: Logs the final score to the SQLite database.
 
 ---
 
-## 6. Execution Roadmap
+## 7. Execution Roadmap
 
 This plan aligns with the **Unified Sprint Plan (Strategy §6)**.
 
