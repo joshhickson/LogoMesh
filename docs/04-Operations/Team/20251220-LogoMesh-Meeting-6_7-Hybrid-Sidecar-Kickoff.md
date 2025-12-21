@@ -11,7 +11,7 @@
 **Date:** 2025-12-20
 **Duration:** ~60 Minutes
 **Attendees:** Josh Hickson, Mark (Kuan Zhou), Alaa Elobaid
-**Absent:** Samuel, Deepti, Garrett, Oleksander
+**Absent:** Samuel
 
 *   **Note:** Quote speakers may be mislabeled. Correct if seen.
 *   **Note:** Filepaths have been reformatted into clickable GitHub links.
@@ -131,11 +131,11 @@ sequenceDiagram
 *   **[Mark]** Begin listing benchmarks and scenarios (CyberGym, Lambda Library) for the Red Agent.
 *   **[Josh]** Schedule a follow-up with Samuel to discuss the "Unified Agent" code restructuring.
 
-### **6. Missing Context & Assumptions - From Google Gemini 3 Pro (Not Jules) - Please revise this document accordingly**
+### **6. Post-Meeting Verification Notes**
 
-*   **Samuel's Code:** The meeting frequently referenced Samuel's recent updates to the Green Agent. As I do not have access to the repository files or his update messages, I cannot verify the current state of the Python implementation.
-*   **External Repositories:** References were made to `agentbeats-lambda-main`. I do not have access to these files and cannot confirm specific configurations beyond what has been provided in the chat.
-*   **Competition Specs:** References were made to [docs/05-Competition/Agent-Architecture.md](../../05-Competition/Agent-Architecture.md). While the file path is known, I do not have access to the file content itself to verify the scoring weights.
+*   **Samuel's Code:** Verified. The Green Agent is a Python service located in [green-agent/](../../../green-agent/). It uses `tools.py` for tool definitions and runs via `run.sh`, as referenced in the meeting.
+*   **External Repositories:** "agentbeats-lambda-main" likely refers to the upstream competition repositories or the contents of the `external/` directory in this monorepo, which contains `agentbeats-main`.
+*   **Competition Specs:** Verified. [docs/05-Competition/Agent-Architecture.md](../../05-Competition/Agent-Architecture.md) details the scoring weights (33% each for Rationale, Architecture, Testing) and confirms the port requirements (Green: 9040, Purple: 9050).
 
 ---
 
@@ -212,7 +212,7 @@ The meeting focused heavily on finding the right fit for the new attendees withi
 *   **[Garrett]** Sync with Samuel regarding the Green Agent Python codebase.
 *   **[Josh]** Compare the [Contextual Discovery Plan Revision](../Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md) against the [Hybrid Sidecar Implementation Plan](../../01-Architecture/Specs/20251218-Hybrid-Sidecar-Implementation-Plan.md) to ensure consistency.
 
-### **5. Missing Context & Assumptions**
+### **5. Post-Meeting Verification Notes**
 
-*   **Model Specifics:** The reference to an "OpenAI 20B" model is ambiguous. It likely refers to a specific diverse benchmark model or a misunderstanding of the "20B" parameter requirement from a specific track (possibly the "Purple Llama" 20B CyberSecurity benchmark).
-*   **Worker Code:** I do not have access to the specific `RationaleWorker.ts` file Alexander referenced (corrected to `rationale-worker.ts`), so I cannot confirm its current implementation status (mock vs. stub).
+*   **Model Specifics:** The reference to an "OpenAI 20B" model was likely a confusion. The current Green Agent implementation [expressly requires an OpenAI API Key](../../../green-agent/QUICKSTART.md) and interacts with standard OpenAI models. No reference to a strict "20B" parameter requirement was found in the Green Agent documentation.
+*   **Worker Code:** Verified. The [rationale-worker.ts](../../../packages/workers/src/rationale-worker.ts) currently uses a `mockLlmClient` with hardcoded responses (`{ "debtIncurred": true, ... }`). Alexander's task to implement the actual LLM API calls is confirmed as necessary.
