@@ -11,7 +11,7 @@
 **Date:** 2025-12-20
 **Duration:** ~60 Minutes
 **Attendees:** Josh Hickson, Mark (Kuan Zhou), Alaa Elobaid
-**Absent:** Samuel
+**Absent:** Samuel, Deepti, Garrett, Oleksander
 
 *   **Note:** Quote speakers may be mislabeled. Correct if seen.
 *   **Note:** Filepaths have been reformatted into clickable GitHub links.
