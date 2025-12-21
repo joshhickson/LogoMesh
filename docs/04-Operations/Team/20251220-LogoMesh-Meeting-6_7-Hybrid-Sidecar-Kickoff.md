@@ -79,6 +79,7 @@ The following items were raised during discussion but require follow-up investig
 
 Based on the discussion in Section 2.2, the following diagram illustrates the agreed-upon interaction flow between the agents.
 
+```mermaid
 sequenceDiagram  
     participant Red as Red Agent (Attacker)  
     participant Purple as Purple Agent (Defender)  
@@ -95,6 +96,7 @@ sequenceDiagram
     Green-\>\>Green: Calculates Contextual Integrity Score (CIS)  
     Green--\>\>Red: Feedback (Attack Effectiveness)  
     Green--\>\>Purple: Feedback (Defense Quality)
+```
 
 ## **4\. Role Assignments**
 
