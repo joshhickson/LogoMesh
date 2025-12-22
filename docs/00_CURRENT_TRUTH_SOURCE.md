@@ -1,11 +1,7 @@
 > **Status:** ACTIVE
-> **Type:** Source
-> **Context:**
-> * [2025-12-17]: The definitive Single Source of Truth for the project state.
-=======
 > **Type:** System of Record
 > **Context:** Single Source of Truth (Post-Gap Analysis)
-> **Last Updated:** 2025-12-17
+> **Last Updated:** 2025-12-21
 
 # Current Truth Source
 
@@ -55,6 +51,7 @@
 *   **Immediate (Owner: Josh/Garrett):**
     *   Fix Dockerfile for Mac/Node v20.
     *   Finalize "Contextual Discovery Plan" revision.
+    *   **Resolve Review Questions:** Address questions for Mark (Lambda) and Samuel (Green Agent) to unblock Hybrid Sidecar integration.
 *   **Sprint Goal (Owner: Garrett/Samuel):**
     *   Working "Rationale Worker" (Chain of Thought).
     *   Mock Purple Agent POC.
@@ -68,6 +65,13 @@
 *   **Paper Structure:** Can we model the research paper on "The Google File System"?
 
 ## 8. Active Documentation
+
+### Recent Reviews (Hybrid Sidecar Strategy)
+| Document | Description | Status |
+|----------|-------------|--------|
+| [Review: Lambda Agent](04-Operations/agentbeats-lambda/20251221-Review-Lambda-Agent.md) | Review of Kuan's Red/Blue agent implementation | REVIEW |
+| [Review: Green Agent](04-Operations/green-agent/20251221-Review-Green-Agent.md) | Review of Samuel's CLI-based Green Agent | REVIEW |
+| [Review: Purple Agent](04-Operations/purple-agent/20251221-Review-Purple-Agent.md) | Comparison of Purple Agent vs. Kuan's Blue Agent | REVIEW |
 
 ### Competition Implementation
 | Document | Description | Status |
@@ -99,5 +103,5 @@ All markdown files in `docs/` must start with this header:
 > **Superseded By:** [Link] (if SUPERSEDED)
 ```
 
-## 9. LogoMesh Development Team Meeting Minutes Folder
+## 10. LogoMesh Development Team Meeting Minutes Folder
 *   [docs/04-Operations/Team](/docs/04-Operations/Team)
