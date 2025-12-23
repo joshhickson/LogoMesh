@@ -8,9 +8,9 @@
 ## 1. New Documents Created
 The following documents were created to define the strategy for merging the Python-centric Lambda Track work with the Node.js-centric Hybrid Sidecar plan.
 
-### Strategic Plans & Manifests
-*   [Proposed Consolidation Plan: The Polyglot Repository](20251221-Proposed-Consolidation-Plan.md)
-*   [Migration Manifest: Polyglot Consolidation](20251221-Migration-Manifest-Polyglot.md)
+### Strategic Plans & Repo Surgery Blueprints
+*   [Proposed Consolidation Plan: The Polyglot Repository](20251221-Proposed-Consolidation-Plan.md) (High-Level Strategy & Architecture)
+*   [Migration Manifest: Polyglot Consolidation](20251221-Migration-Manifest-Polyglot.md) (**Tactical "Repo Surgery" Checklist**)
 *   [Submission Requirements Matrix](../../../05-Competition/20251221-Submission-Requirements-Matrix.md)
 *   [Session Learnings: Architectural Diagnostics](20251221-Session-Learnings-Architecture.md)
 
