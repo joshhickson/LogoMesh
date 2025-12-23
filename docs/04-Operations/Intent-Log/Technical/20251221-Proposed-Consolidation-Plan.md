@@ -1,74 +1,75 @@
 > **Status:** DRAFT
 > **Type:** Plan
 > **Context:**
-> *   [2025-12-21]: Proposed strategy to consolidate the fractured agent implementations (CLI vs Code) into a single "Polymorphic" repository for the AgentX competition.
+> *   [2025-12-21]: Proposed strategy to consolidate agent implementations into a single "Polyglot" repository that supports both the Lambda Track (Python) and Custom Track (Node.js/Python Hybrid).
 
-# Proposed Consolidation Plan: The Polymorphic Repository
+# Proposed Consolidation Plan: The Polyglot Repository
 
 ## 1. Executive Summary
-We propose standardizing the codebase on **Kuan's `agentbeats-lambda` repository** structure. This structure complies with the strict **Lambda Track** submission requirements (Plugins, TOML config) while providing the flexibility to host the **Custom Track** (Green Agent) logic within the same codebase.
+We propose a **Polyglot Root** strategy that merges the Python-centric structure of the Lambda Track (`agentbeats-lambda`) with the Node.js-centric structure of our current monorepo (`packages/`).
 
-**The Goal:** A single Docker container that can act as either a "Red Agent" (Attacker) or "Green Agent" (Evaluator) based on its startup configuration (`main.py --role`).
+**The Goal:** A single repository that builds:
+1.  **The "Submission" Container:** A Python environment running the Red/Blue agents for the Lambda Track.
+2.  **The "Evaluator" System:** A Hybrid environment where the Python Green Agent (Orchestrator) communicates with local Node.js Sidecars (`packages/workers`) to calculate the Contextual Integrity Score (CIS).
 
-## 2. The Current Fracture
-*   **Repo A (Kuan):** `external/TEAM/agentbeats-lambda-[...]`. Code-based, specific to Lambda Track. Contains valid `ScenarioPlugin` implementations.
-*   **Repo B (Samuel):** `green-agent/` and `purple-agent/`. CLI-based (`agentbeats run_agent`), specific to Custom Track. Lacks "Plugin" structure.
-*   **Repo C (Monorepo):** `packages/workers`. Node.js services for Rationale/Architecture analysis.
+## 2. Strategic Alignment
 
-## 3. The Consolidation Strategy ("Trojan Horse")
+### 2.1. Alignment with Meeting 6/7 (Dual Track)
+*   **Requirement:** "We will submit to both tracks... using the tracks against each other."
+*   **Solution:** The Polyglot structure keeps the Red Agent (Python) and Green Agent (Python) in the same `src/` tree, enabling the "Symbiotic" feedback loop described in the unified plan. The Red Agent generates attacks, and the Green Agent (powered by Node.js sidecars) evaluates them.
 
-We will move all logic into a Unified Directory (likely `external/TEAM/agentbeats-lambda...` promoted to `agentbeats-unified` or root).
+### 2.2. Alignment with Hybrid Sidecar Spec
+*   **Requirement:** "Option B (Delegation)... using Node.js as a client to a full-fledged Python Green Agent service."
+*   **Solution:** We preserve the `packages/` directory (Node.js). The Python Green Agent acts as the *Execution Layer* (sending/receiving messages), while delegating the *Cognitive Layer* (CIS Calculation) to the Node.js `RationaleWorker` via local HTTP calls. This implements the "Sidecar" pattern perfectly.
 
-### 3.1. Directory Structure Target
+## 3. Target Architecture (The Polyglot Tree)
+
+We will promote the `agentbeats-lambda` structure to the root, but **retain** the Node.js build configuration.
+
 ```text
-agentbeats-unified/
-├── Dockerfile                   # Shared runtime (Python + Node Sidecar)
-├── main.py                      # Polymorphic Entrypoint
-├── pyproject.toml               # Python dependencies
-├── src/
-│   ├── common/                  # Shared A2A SDK, Logging
-│   ├── red_logic/               # Kuan's Attacker Logic
-│   ├── green_logic/             # Samuel's Evaluator Logic (Ported)
-│   └── blue_logic/              # Kuan's Defender Logic (Mock Purple)
+/ (Root)
+├── package.json                 # Node.js Monorepo Config (Retained)
+├── pnpm-workspace.yaml          # Workspace Definition
+├── pyproject.toml               # Python Dependency Config (Promoted from Kuan's repo)
+├── uv.lock                      # Python Lockfile
+├── Dockerfile                   # Polyglot Runtime (Installs Python + Node)
+├── main.py                      # Polymorphic Entrypoint (Red/Green Switch)
+├── src/                         # The Unified Python Core
+│   ├── common/                  # Shared A2A SDK
+│   ├── red_logic/               # Kuan's Attacker (Generic Attacker)
+│   ├── green_logic/             # Samuel's Evaluator (Ported from tools.py)
+│   └── blue_logic/              # Kuan's Defender (Generic Defender)
 ├── scenarios/                   # Lambda Track Submissions
-│   └── security_arena/
-│       └── submissions/
-│           └── logmesh/         # OUR SCENARIOS (AdAttack, etc.)
-└── packages/                    # (Optional) Node.js Sidecars
+│   └── security_arena/...
+├── packages/                    # Node.js Sidecars (Retained)
+│   ├── workers/                 # Rationale/Architecture Workers
+│   └── contracts/               # Shared Schemas
+└── scripts/                     # Utility scripts
 ```
 
-### 3.2. Migration Actions
+## 4. Migration Execution
 
-#### Phase 1: The Green Migration
-*   **Task:** Port `green-agent/tools.py` (Samuel) into `src/green_logic/evaluator.py`.
-*   **Change:** Instead of `tools.py` (CLI Tool), implement a `GreenAgent` class that inherits from `BaseAgent`.
-*   **Integration:** The `GreenAgent` will make HTTP calls to the Node.js "Rationale Worker" (running as a sidecar) to calculate CIS scores.
+### Phase 1: Root Surgery (The Merge)
+1.  **Promote:** Move `external/TEAM/agentbeats-lambda/[pyproject.toml, uv.lock, src, scenarios]` to the repository root.
+2.  **Merge:** Update root `.gitignore` to handle both Node (`node_modules`) and Python (`__pycache__`, `.venv`) artifacts.
+3.  **Config:** Ensure `package.json` scripts (e.g., `build`, `test`) do not conflict with Python commands (e.g., use `pnpm build` vs `uv run`).
 
-#### Phase 2: The Purple Consolidation
-*   **Task:** Deprecate `purple-agent/`.
-*   **Replacement:** Officially adopt `src/blue_logic/generic_defender.py` (Kuan's) as the "Mock Purple Agent".
-*   **Reason:** It is already code-based and "Generic", making it perfect for the "Hybrid Sidecar" testing.
+### Phase 2: The Green Port (Logic Transfer)
+1.  **Source:** `green-agent/tools.py` (Samuel's logic).
+2.  **Target:** `src/green_logic/evaluator.py`.
+3.  **Action:** Rewrite the CLI tools as a `GreenAgent` class. Implement the `evaluate()` method to call `http://localhost:3000/v1/analyze` (The Node.js Sidecar).
 
-#### Phase 3: The Polymorphic Entrypoint
-*   **Task:** Create `main.py` to route execution.
-```python
-# Pseudo-code
-if role == "RED":
-    run_scenario_plugin()
-elif role == "GREEN":
-    run_green_evaluator()
-```
+### Phase 3: The Purple Retirement
+1.  **Action:** Delete `purple-agent/`.
+2.  **Replacement:** Use `src/blue_logic/generic_defender.py` (Kuan's code) as the canonical "Mock Purple Agent".
 
-## 4. Handling the "Hybrid Sidecar" (Node.js)
-The competition repo is Python-centric. The "Hybrid Sidecar" plan relies on Node.js workers.
-*   **Proposal:** Run Node.js as a background process within the **same Docker container**.
-*   **Mechanism:**
-    1.  Dockerfile installs both Python and Node.js.
-    2.  `entrypoint.sh` starts the Node.js server (`pnpm start:worker`) in the background.
-    3.  `main.py` starts the Python Agent.
-    4.  Python Agent talks to `http://localhost:3000` for Rationale Analysis.
+## 5. Risk Mitigation
 
-## 5. Immediate Next Steps
-1.  **Approval:** Confirm this architectural pivot.
-2.  **Repo Surgery:** Move Kuan's repo code to a top-level `agentbeats-unified` folder (or clean root).
-3.  **Porting:** Begin rewriting `tools.py` into `GreenAgent` class.
+| Risk | Mitigation |
+| :--- | :--- |
+| **Dependency Conflicts** | Use distinct lockfiles (`pnpm-lock.yaml` vs `uv.lock`) and package managers. |
+| **Docker Complexity** | The Dockerfile must explicitly install Node v20 AND Python 3.12. |
+| **Port Collisions** | Assign fixed ports: Node Sidecar (3000), Green Agent (9040), Purple Agent (9050). |
+
+## 6. Conclusion
+This Polyglot Plan satisfies the **Lambda Track** by providing a clean Python `src/` structure for scenarios, while satisfying the **Hybrid Sidecar** strategy by preserving the `packages/` directory as the sophisticated "Brain" of the operation.
