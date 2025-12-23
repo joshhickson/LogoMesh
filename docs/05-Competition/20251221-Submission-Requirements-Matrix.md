@@ -67,3 +67,21 @@ Every submission must include the following 6 artifacts:
 1.  **Docker is King:** Both tracks require a Docker image. The "Polyglot" container approach is validated.
 2.  **Purple Agent is Mandatory:** The Custom Track explicitly requires submitting a "Baseline Purple Agent". This confirms that moving Kuan's `generic_defender.py` to `src/blue_logic/` (as the Purple Agent) is a critical path task.
 3.  **Registration:** We need to register *both* our Green and Purple agents on the platform.
+
+## 5. Open Logistics Questions (To Be Answered)
+
+### 5.1. Custom Track (Green Agent)
+1.  **Docker Hosting:** The requirements specify a "Docker Image," but do not specify the registry.
+    *   *Question:* Should we push to Docker Hub, GitHub Container Registry (ghcr.io), or a specific AgentBeats registry?
+2.  **Video Submission:** "Demo Video (Max 3 mins)".
+    *   *Question:* Is this a file upload (MP4) to the portal, or a hosted link (YouTube/Vimeo)?
+3.  **Registration Authentication:** "Must be registered on the AgentBeats Developer Platform".
+    *   *Question:* Does the agent require a runtime API key or Token to prove its registration identity during the competition?
+4.  **Purple Agent Bundling:** "Submit at least one Purple Agent".
+    *   *Question:* Do we register the Purple Agent as a separate entity on the platform, or is it implicitly bundled with the Green Agent submission?
+
+### 5.2. Lambda Track (Red Agent)
+1.  **Submission Batching:** "Submit 3-6 scenarios".
+    *   *Question:* Should we create a separate Pull Request for each scenario (e.g., `submission/logmesh/dockerdoo`), or one combined PR for the team? (Git instructions imply one branch per scenario).
+2.  **Validation Script:**
+    *   *Question:* Is there a specific `validate_submission.py` script provided by Lambda to pre-check our `test_results/` before pushing?
