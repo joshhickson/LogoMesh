@@ -70,8 +70,8 @@
 | Document | Description | Status |
 |----------|-------------|--------|
 | [Submission Requirements Matrix](05-Competition/20251221-Submission-Requirements-Matrix.md) | Comparison of Lambda vs Custom track requirements | ACTIVE |
-| [Proposed Consolidation Plan](04-Operations/Intent-Log/Technical/20251221-Proposed-Consolidation-Plan.md) | Strategy to unify CLI and Code agents | PROPOSED |
-| [Migration Manifest](04-Operations/Intent-Log/Technical/20251221-Migration-Manifest-Polyglot.md) | Technical checklist for Polyglot consolidation | DRAFT |
+| [Proposed Consolidation Plan](04-Operations/Intent-Log/Technical/20251221-Consolidation-Artifacts/20251221-Proposed-Consolidation-Plan.md) | Strategy to unify CLI and Code agents | PROPOSED |
+| [Migration Manifest](04-Operations/Intent-Log/Technical/20251221-Consolidation-Artifacts/20251221-Migration-Manifest-Polyglot.md) | Technical checklist for Polyglot consolidation | DRAFT |
 | [Review: Lambda Agent](04-Operations/agentbeats-lambda/20251221-Review-Lambda-Agent.md) | Review of Kuan's Red/Blue agent implementation | REVIEW |
 | [Review: Green Agent](04-Operations/green-agent/20251221-Review-Green-Agent.md) | Review of Samuel's CLI-based Green Agent | REVIEW |
 | [Review: Purple Agent](04-Operations/purple-agent/20251221-Review-Purple-Agent.md) | Comparison of Purple Agent vs. Kuan's Blue Agent | REVIEW |
