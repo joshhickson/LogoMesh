@@ -14,7 +14,7 @@
 
 ### What Was Missing (Resolved)
 *   **Custom Track Rules:** We have resolved the "Green Track" requirements (see Section 2).
-*   **Blue Agent Baseline:** We are verifying the location of official scenarios (see Section 3).
+*   **Blue Agent Baseline:** Verified. Found 3 submissions + 1 example (see Section 3.2).
 
 ## 2. Canvas: Custom Green Agent Guidelines (Official)
 
@@ -65,6 +65,14 @@ Every submission must include the following 6 artifacts:
 | **Core Files** | `plugin.py` (ScenarioPlugin), `scenario.toml`, `README.md` |
 | **Evidence** | `test_results/baseline_passed.json`, `test_results/attack_succeeded.json` |
 | **Constraint** | Must use `GenericAttacker` / `GenericDefender` |
+
+### 3.2. Verified Scenarios (Existing Implementation)
+We have confirmed the following scenarios are present in `external/TEAM/`:
+1.  **DockerDoo** (`dockerdoo`): Supply Chain / Hallucination Attack.
+2.  **SolarSpike** (`solarspike`): Indirect Prompt Injection / Data Poisoning.
+3.  **DebugDump** (`debugdump`): Prompt Extraction / Info Disclosure.
+4.  **MedicalLeak** (`example_medical`): PII Extraction (Example Plugin).
+*   **Missing:** "AdAttack" (Not found in repo).
 
 ## 4. Strategic Implications (Consolidation)
 

@@ -63,6 +63,16 @@ We will promote the `agentbeats-lambda` structure to the root, but **retain** th
 1.  **Action:** Delete `purple-agent/`.
 2.  **Replacement:** Use `src/blue_logic/generic_defender.py` (Kuan's code) as the canonical "Mock Purple Agent".
 
+### Phase 4: Submission Packaging
+The "Dual Track" strategy requires two distinct registrations on the AgentBeats platform.
+1.  **Green Agent Submission:**
+    *   Artifact: Docker Image (Polyglot).
+    *   Command: `main.py --role GREEN` (Starts Python Evaluator + Node Sidecar).
+2.  **Purple Agent Submission:**
+    *   Artifact: Docker Image (Python-Only or Polyglot).
+    *   Command: `main.py --role PURPLE` (Starts `generic_defender.py`).
+    *   *Action:* Register this as a **separate entity** on the AgentBeats portal.
+
 ## 5. Risk Mitigation
 
 | Risk | Mitigation |
