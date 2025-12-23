@@ -28,7 +28,7 @@ Every submission must include the following 6 artifacts:
 | Artifact | Requirement Details |
 | :--- | :--- |
 | **1. Public GitHub Repository** | Must contain complete source code. Crucial: Must include a `README.md` that thoroughly describes the benchmark, setup instructions, and usage guide. |
-| **2. Docker Image** | Your agent must be packaged as a Docker image that runs **end-to-end without manual intervention**. |
+| **2. Docker Image** | Your agent must be packaged as a Docker image that runs **end-to-end without manual intervention**. **Must be published to the GitHub Container Registry (GHCR).** |
 | **3. Baseline Purple Agent(s)** | You must submit at least one "Purple Agent" (test subject) that is **A2A (Agent-to-Agent) compatible**. Purpose: To demonstrate how your benchmark is evaluated in practice. |
 | **4. AgentBeats Registration** | Both your Green Agent and your Baseline Purple Agent must be registered on the [AgentBeats Developer Platform](https://rdi.berkeley.edu/agentx-agentbeats). |
 | **5. Abstract** | A brief text description of the tasks the green agent evaluates. |
@@ -37,6 +37,10 @@ Every submission must include the following 6 artifacts:
 ### 2.2. Technical Guidelines
 *   **Automation:** The Green Agent must be fully automated (Proctor).
 *   **Protocol:** Strict adherence to **A2A Protocol**. Green Agent acts as server/host.
+*   **Entrypoint Interface:** The Docker image must accept specific CLI arguments to start the server:
+    *   `--host`: Host address to bind to.
+    *   `--port`: Port to listen on.
+    *   `--card-url`: The URL to advertise in the agent card.
 *   **Stability:** Robust error handling; should not crash on unexpected Purple Agent behavior.
 *   **Resource Usage:** Must run within "reasonable" limits.
 *   **Reproducibility:** Consistent results; any A2A agent must be able to run it.
@@ -71,13 +75,11 @@ Every submission must include the following 6 artifacts:
 ## 5. Open Logistics Questions (To Be Answered)
 
 ### 5.1. Custom Track (Green Agent)
-1.  **Docker Hosting:** The requirements specify a "Docker Image," but do not specify the registry.
-    *   *Question:* Should we push to Docker Hub, GitHub Container Registry (ghcr.io), or a specific AgentBeats registry?
-2.  **Video Submission:** "Demo Video (Max 3 mins)".
+1.  **Video Submission:** "Demo Video (Max 3 mins)".
     *   *Question:* Is this a file upload (MP4) to the portal, or a hosted link (YouTube/Vimeo)?
-3.  **Registration Authentication:** "Must be registered on the AgentBeats Developer Platform".
+2.  **Registration Authentication:** "Must be registered on the AgentBeats Developer Platform".
     *   *Question:* Does the agent require a runtime API key or Token to prove its registration identity during the competition?
-4.  **Purple Agent Bundling:** "Submit at least one Purple Agent".
+3.  **Purple Agent Bundling:** "Submit at least one Purple Agent".
     *   *Question:* Do we register the Purple Agent as a separate entity on the platform, or is it implicitly bundled with the Green Agent submission?
 
 ### 5.2. Lambda Track (Red Agent)
