@@ -1,7 +1,7 @@
 > **Status:** REVIEW
 > **Type:** Log
 > **Context:**
-> *   [2025-12-21]: Clarifying questions for Samuel based on the review of the `green-agent` directory.
+> *   [2025-12-21]: Clarifying questions for Samuel based on the review of the `green-agent` directory and new submission requirements.
 
 # Questions for Samuel (Green Agent)
 
@@ -18,3 +18,8 @@ We need the Green Agent to orchestrate a "Red Team" phase (sending the code to a
 ## 3. Integration with Node.js Control Plane
 *   **Question:** Are you comfortable with `tools.py` making HTTP calls to our local Node.js workers (e.g., `http://localhost:3000/analyze/rationale`)?
 *   **Context:** This would allow us to offload complex analysis (CIS calculation) from the LLM prompt to our specialized Typescript workers.
+
+## 4. Submission Compliance (New)
+The Custom Track has strict technical guidelines.
+*   **Question:** Can you ensure the ported `GreenAgent` supports the mandatory CLI arguments: `--host`, `--port`, and `--card-url`?
+*   **Context:** The Docker container entrypoint must accept these specific flags to run on the AgentBeats platform.
