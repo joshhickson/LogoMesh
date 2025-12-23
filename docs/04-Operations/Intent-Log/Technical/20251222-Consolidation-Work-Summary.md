@@ -39,3 +39,7 @@ The following existing files were analyzed to form the basis of the consolidatio
     *   [Green Agent Tools](../../../../green-agent/tools.py)
     *   [Green Agent Runner](../../../../green-agent/run.sh)
     *   [Purple Agent Tools](../../../../purple-agent/tools.py)
+*   **Monorepo Infrastructure (Node.js Sidecars):**
+    *   [Workers Package](../../../../packages/workers/)
+    *   [Contracts Package](../../../../packages/contracts/)
+    *   [Root Package Config](../../../../package.json)
