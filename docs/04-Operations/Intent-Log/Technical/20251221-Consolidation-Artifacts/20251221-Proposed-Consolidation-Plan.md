@@ -81,7 +81,7 @@ graph TD
 ### Phase 2: The Green Port (Logic Transfer)
 1.  **Source:** `green-agent/tools.py` (Samuel's logic).
 2.  **Target:** `src/green_logic/evaluator.py`.
-3.  **Action:** Rewrite the CLI tools as a `GreenAgent` class. Implement the `evaluate()` method to call `http://localhost:3000/v1/analyze` (The Node.js Sidecar).
+3.  **Action:** Rewrite the CLI tools as a `GreenAgent` class. This involves **Dockerizing** the code (removing hardcoded `localhost` references) and **Wiring** the OpenAI client to the vLLM Sidecar.
 
 ### Phase 3: The Purple Retirement
 1.  **Action:** Delete `purple-agent/`.
@@ -96,6 +96,7 @@ The "Dual Track" strategy requires two distinct registrations on the AgentBeats 
     *   Artifact: Docker Image (Python-Only or Polyglot).
     *   Command: `main.py --role PURPLE` (Starts `generic_defender.py`).
     *   *Action:* Register this as a **separate entity** on the AgentBeats portal.
+    *   *Constraint Check:* Verify the `ad_attack` scenario is present (or stubbed) before packaging to avoid disqualification.
 
 ## 5. Detailed Agent Architectures
 

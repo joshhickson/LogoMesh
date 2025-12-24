@@ -59,5 +59,10 @@ Create a single `Dockerfile` at root that:
     - Extract `CODING_TASKS` from `green-agent/tools.py`.
     - Create `src/green_logic/tasks.py`.
     - Implement `src/green_logic/agent.py` using `A2AStarletteApplication`.
+    - [ ] **Network Hardening:** Replace all `localhost` and port `9050` references in `tools.py` with `os.getenv('PURPLE_AGENT_URL')`.
+    - [ ] **vLLM Config:** Update `agent.py` / `run.sh` logic to accept `OPENAI_BASE_URL` and `MODEL_NAME` env vars for Sidecar routing.
+    - [ ] **Persistence:** Rewrite `report_result` to save the evaluation JSON to `data/battles.db` (SQLite) instead of just printing to console.
 - [ ] **Purple Agent:**
     - Verify `src/blue_logic/generic_defender.py` runs correctly.
+- [ ] **Red Agent:**
+    - [ ] **Missing Scenario:** Locate the `ad_attack` scenario in upstream repos or implement a placeholder to satisfy the submission requirement.
