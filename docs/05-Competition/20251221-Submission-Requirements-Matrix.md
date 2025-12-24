@@ -10,7 +10,7 @@
 ### What We Have Verified (Done)
 *   **Submission Format:** The `SCENARIO_SPECIFICATIONS.md` file in Kuan's repo explicitly defines the directory structure (`submissions/{team}/{scenario}`), the required files (`plugin.py`, `scenario.toml`), and the "Success Criteria" (Attack Succeeded JSON).
 *   **Agent Architecture:** The Lambda track *mandates* the use of the `ScenarioPlugin` class structure. This is the "Smoking Gun" evidence that disqualifies Samuel's CLI-based agent approach.
-*   **Model Limits:** Confirmed the `gpt-oss-20b` (or 80GB H100 constraint) from the `README.md` and meeting notes.
+*   **Model Limits:** CONFIRMED: The 20B requirement was a placeholder. The Lambda Track target is **Llama-3-70B (Quantized)** running on vLLM, which fits the 80GB H100 constraint.
 
 ### What Was Missing (Resolved)
 *   **Custom Track Rules:** We have resolved the "Green Track" requirements (see Section 2).
@@ -93,3 +93,7 @@ We have confirmed the following scenarios are present in `external/TEAM/`:
     *   *Status:* **Unverified**. No data on whether scenarios should be batched in one PR or submitted individually.
 2.  **Validation Script:**
     *   *Status:* **Unverified**. No reference to a `validate_submission.py` script was found in the provided Lambda documentation.
+
+## 6. Critical Risks (Confirmed)
+1.  **AdAttack Scenario Missing:** CONFIRMED: The required `ad_attack` scenario is missing from `external/TEAM/`.
+2.  **Hardcoded Ports:** CONFIRMED: `green-agent/tools.py` and `run.sh` contain hardcoded references to `localhost` and port `9040` that will break in Docker.

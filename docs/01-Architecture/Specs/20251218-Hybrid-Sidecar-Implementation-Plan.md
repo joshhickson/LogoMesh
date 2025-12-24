@@ -18,7 +18,7 @@ This plan directly operationalizes the following strategic pillars:
 
 | Strategic Pillar | Source | Technical Implementation |
 | :--- | :--- | :--- |
-| **Single-Rig Hypothesis** | Strategy §1.3 | **vLLM Sidecar:** A shared container in `docker-compose.yml` serving `Llama-3-70B` with multiple LoRA adapters. |
+| **Single-Rig Hypothesis** | Strategy §1.3 | **vLLM Sidecar:** A shared container in `docker-compose.yml` serving `Meta-Llama-3-70B-Instruct-AWQ` with multiple LoRA adapters. |
 | **Polymorphic Repo** | Strategy §7.0 | **`packages/unified-agent`:** A new monorepo package that builds the single "Trojan Horse" Docker image for both tracks. |
 | **Cop vs. Robber** | Strategy §1.1 | **Shared Logic:** Node.js `Control Plane` orchestrates the battle, invoking `Red` attacks and `Green` audits via the sidecar. |
 | **A2A Protocol** | Strategy §3.3 | **Hybrid Client:** Node.js speaks A2A to external agents, but uses optimized HTTP/RPC to talk to its own Sidecar. |
@@ -212,6 +212,7 @@ To support **Strategy §5.1 (Cyber-Sentinel Architecture)**, we must ensure the 
 4.  **Tool Implementation:** The Node.js orchestrator must implement the tools defined in [`docs/05-Competition/Agent-Architecture.md §5`](../../../05-Competition/Agent-Architecture.md):
     *   `send_coding_task`: Implemented via A2A HTTP client to the Red Agent.
     *   `report_result`: Logs the final score to the SQLite database.
+    *   **vLLM Compatibility:** The Green Agent must be configured with `OPENAI_BASE_URL=http://vllm-sidecar:8000/v1` and `MODEL_NAME=meta-llama/Meta-Llama-3-70B-Instruct` to route traffic to the local sidecar instead of the OpenAI API.
 
 ---
 

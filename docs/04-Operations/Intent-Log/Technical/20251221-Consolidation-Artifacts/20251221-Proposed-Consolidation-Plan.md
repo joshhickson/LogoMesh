@@ -161,6 +161,9 @@ graph TD
 | **Dependency Conflicts** | Use distinct lockfiles (`pnpm-lock.yaml` vs `uv.lock`) and package managers. |
 | **Docker Complexity** | The Dockerfile must explicitly install Node v20 AND Python 3.12. |
 | **Port Collisions** | Assign fixed ports: Node Sidecar (3000), Green Agent (9040), Purple Agent (9050). |
+| **Missing Scenario** | The `ad_attack` scenario is missing and must be located or recreated. |
+| **Hardcoded Ports** | Legacy Python scripts rely on `localhost`; migration must inject `os.getenv()` overrides. |
+| **Persistence Gap** | Samuel's `report_result` tool only prints to console; the Node.js port must add database persistence for submission evidence. |
 
 ## 7. Conclusion
 This Polyglot Plan satisfies the **Lambda Track** by providing a clean Python `src/` structure for scenarios, while satisfying the **Hybrid Sidecar** strategy by preserving the `packages/` directory as the sophisticated "Brain" of the operation.
