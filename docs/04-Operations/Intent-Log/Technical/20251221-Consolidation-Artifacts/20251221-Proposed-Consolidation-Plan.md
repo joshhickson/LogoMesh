@@ -97,7 +97,64 @@ The "Dual Track" strategy requires two distinct registrations on the AgentBeats 
     *   Command: `main.py --role PURPLE` (Starts `generic_defender.py`).
     *   *Action:* Register this as a **separate entity** on the AgentBeats portal.
 
-## 5. Risk Mitigation
+## 5. Detailed Agent Architectures
+
+### 5.1. Green Agent (The Hybrid Evaluator)
+```mermaid
+graph TD
+    subgraph "Python Core (src/green_logic)"
+        GreenOrchestrator[GreenAgent Class]
+    end
+
+    subgraph "Node.js Sidecar (packages/workers)"
+        Worker[RationaleWorker]
+    end
+
+    subgraph "Inference Plane"
+        vLLM[vLLM Service]
+    end
+
+    GreenOrchestrator -->|HTTP POST /analyze| Worker
+    Worker -->|HTTP POST /v1/chat/completions| vLLM
+```
+
+### 5.2. Purple/Blue Agent (The Dual Defender)
+```mermaid
+classDiagram
+    class GenericDefender {
+        +execute_task()
+        +conversation_history
+    }
+    class PurpleAgent {
+        +Identity: "Mock Target"
+        +Role: "Build Vulnerable Code"
+    }
+    class BlueAgent {
+        +Identity: "Lambda Defender"
+        +Role: "Protect System"
+    }
+
+    GenericDefender <|-- PurpleAgent : Instantiates as
+    GenericDefender <|-- BlueAgent : Instantiates as
+```
+
+### 5.3. Red Agent (The Attacker)
+```mermaid
+graph TD
+    subgraph "Red Agent (src/red_logic)"
+        Plugin[ScenarioPlugin]
+        Attacker[GenericAttacker]
+    end
+
+    subgraph "Target Environment"
+        Target[PurpleAgent]
+    end
+
+    Plugin -->|Loads Config| Attacker
+    Attacker -->|Execute Attack Vector| Target
+```
+
+## 6. Risk Mitigation
 
 | Risk | Mitigation |
 | :--- | :--- |
@@ -105,5 +162,5 @@ The "Dual Track" strategy requires two distinct registrations on the AgentBeats 
 | **Docker Complexity** | The Dockerfile must explicitly install Node v20 AND Python 3.12. |
 | **Port Collisions** | Assign fixed ports: Node Sidecar (3000), Green Agent (9040), Purple Agent (9050). |
 
-## 6. Conclusion
+## 7. Conclusion
 This Polyglot Plan satisfies the **Lambda Track** by providing a clean Python `src/` structure for scenarios, while satisfying the **Hybrid Sidecar** strategy by preserving the `packages/` directory as the sophisticated "Brain" of the operation.
