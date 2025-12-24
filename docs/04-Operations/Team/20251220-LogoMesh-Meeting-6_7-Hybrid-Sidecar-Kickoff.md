@@ -78,15 +78,20 @@ The following items were raised during discussion but require follow-up investig
 
 ### **3. Visualizing the Unified Workflow**
 
-Based on the discussion in Section 2.2, the following diagram illustrates the agreed-upon interaction flow between the agents.
+Based on the discussion in Section 2.2, the following diagram illustrates the agreed-upon interaction flow between the agents. Note: The Purple Agent acts as the Mock Defender for the Green Track AND the Blue Agent for the Lambda Track.
 
 ```mermaid
 sequenceDiagram
     autonumber
 
+    Note right of Green: Note: The Purple Agent acts as the Mock Defender for the Green Track AND the Blue Agent for the Lambda Track.
+
     box "Custom Track (Green Team)" #e6fffa
         participant Green as Green Agent<br/>(Proctor/Evaluator)
-        participant Purple as Purple Agent<br/>(Mock Defender)
+    end
+
+    box "Shared Bridge (Dual Nature)" #f0f0f0
+        participant Purple as Purple/Blue Agent<br/>(Defender/Subject)
     end
 
     box "Lambda Track (Red Team)" #fff5f5
@@ -100,9 +105,9 @@ sequenceDiagram
     deactivate Purple
 
     Note over Green, Red: Phase 2: Red Teaming
-    Green->>Red: 3. Forward Target Code (for Attack)
+    Green->>Red: 3. Forward Purple's Code (Targeting as "Blue Agent")
     activate Red
-    Red-->>Green: 4. Submit Attack Vector (Injection/Leak Attempt)
+    Red-->>Green: 4. Submit Attack Vector (vs. Blue Agent)
     deactivate Red
 
     Note over Green: Phase 3: Evaluation
