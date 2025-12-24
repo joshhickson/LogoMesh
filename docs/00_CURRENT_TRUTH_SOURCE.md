@@ -21,7 +21,7 @@
 *   **Unknowable Code:** Code where AI generation velocity exceeds human review velocity ($v \to \infty$).
 
 ## 3. Technical Specifications
-*   **The Math ($CIS$):** Contextual Integrity Score is a composite function:
+*   **The Math ($CIS$):** Contextual Integrity Score is a composite function (See [Full Mathematical Specification](03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md)):
     $$ CIS(c) = w_r I_r + w_a I_a + w_t I_t $$
     *   **$I_r$ (Rationale):** Vector Cosine Similarity (Implementation vs Intent).
     *   **$I_a$ (Architecture):** Graph Centrality/Veto (Structural Risk).
