@@ -49,6 +49,30 @@ We will promote the `agentbeats-lambda` structure to the root, but **retain** th
 
 ## 4. Migration Execution
 
+```mermaid
+graph TD
+    subgraph "Phase 1: Root Surgery"
+        P1_Src[external/src] -->|Move| P1_Root[root/src]
+    end
+
+    subgraph "Phase 2: Green Port"
+        P2_Old[green-agent/tools.py] -->|Transform| P2_New[src/green_logic/]
+    end
+
+    subgraph "Phase 3: Purple Retirement"
+        P3_Old[purple-agent/] -->|Replace with| P3_New[src/blue_logic/]
+    end
+
+    subgraph "Phase 4: Packaging"
+        P4_Output(Polyglot Docker Image)
+    end
+
+    P1_Root --> P2_New
+    P1_Root --> P3_New
+    P2_New --> P4_Output
+    P3_New --> P4_Output
+```
+
 ### Phase 1: Root Surgery (The Merge)
 1.  **Promote:** Move `external/TEAM/agentbeats-lambda/[pyproject.toml, uv.lock, src, scenarios]` to the repository root.
 2.  **Merge:** Update root `.gitignore` to handle both Node (`node_modules`) and Python (`__pycache__`, `.venv`) artifacts.
