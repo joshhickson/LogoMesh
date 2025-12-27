@@ -1,7 +1,7 @@
 > **Status:** ACTIVE
 > **Type:** System of Record
 > **Context:** Single Source of Truth (Post-Gap Analysis)
-> **Last Updated:** 2025-12-21
+> **Last Updated:** 2025-12-27
 
 # Current Truth Source
 
@@ -66,9 +66,10 @@
 
 ## 8. Active Documentation
 
-### Recent Reviews & Plans (Dec 21)
+### Recent Reviews & Plans (Dec 27)
 | Document | Description | Status |
 |----------|-------------|--------|
+| [Consolidation Work Summary](04-Operations/Intent-Log/Technical/20251227-Consolidation-Work-Summary.md) | Index of all planning artifacts | SNAPSHOT |
 | [Submission Requirements Matrix](05-Competition/20251221-Submission-Requirements-Matrix.md) | Comparison of Lambda vs Custom track requirements | ACTIVE |
 | [Proposed Consolidation Plan](04-Operations/Intent-Log/Technical/20251221-Consolidation-Artifacts/20251221-Proposed-Consolidation-Plan.md) | Strategy to unify CLI and Code agents | PROPOSED |
 | [Migration Manifest](04-Operations/Intent-Log/Technical/20251221-Consolidation-Artifacts/20251221-Migration-Manifest-Polyglot.md) | Technical checklist for Polyglot consolidation | DRAFT |
