@@ -1,11 +1,7 @@
 > **Status:** ACTIVE
-> **Type:** Source
-> **Context:**
-> * [2025-12-17]: The definitive Single Source of Truth for the project state.
-=======
 > **Type:** System of Record
 > **Context:** Single Source of Truth (Post-Gap Analysis)
-> **Last Updated:** 2025-12-17
+> **Last Updated:** 2025-12-27
 
 # Current Truth Source
 
@@ -25,7 +21,7 @@
 *   **Unknowable Code:** Code where AI generation velocity exceeds human review velocity ($v \to \infty$).
 
 ## 3. Technical Specifications
-*   **The Math ($CIS$):** Contextual Integrity Score is a composite function:
+*   **The Math ($CIS$):** Contextual Integrity Score is a composite function (See [Full Mathematical Specification](03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md)):
     $$ CIS(c) = w_r I_r + w_a I_a + w_t I_t $$
     *   **$I_r$ (Rationale):** Vector Cosine Similarity (Implementation vs Intent).
     *   **$I_a$ (Architecture):** Graph Centrality/Veto (Structural Risk).
@@ -55,6 +51,7 @@
 *   **Immediate (Owner: Josh/Garrett):**
     *   Fix Dockerfile for Mac/Node v20.
     *   Finalize "Contextual Discovery Plan" revision.
+    *   **Resolve Review Questions:** Address questions for Mark (Lambda) and Samuel (Green Agent) to unblock Hybrid Sidecar integration.
 *   **Sprint Goal (Owner: Garrett/Samuel):**
     *   Working "Rationale Worker" (Chain of Thought).
     *   Mock Purple Agent POC.
@@ -68,6 +65,17 @@
 *   **Paper Structure:** Can we model the research paper on "The Google File System"?
 
 ## 8. Active Documentation
+
+### Recent Reviews & Plans (Dec 27)
+| Document | Description | Status |
+|----------|-------------|--------|
+| [Consolidation Work Summary](04-Operations/Intent-Log/Technical/20251227-Consolidation-Work-Summary.md) | Index of all planning artifacts | SNAPSHOT |
+| [Submission Requirements Matrix](05-Competition/20251221-Submission-Requirements-Matrix.md) | Comparison of Lambda vs Custom track requirements | ACTIVE |
+| [Proposed Consolidation Plan](04-Operations/Intent-Log/Technical/20251221-Consolidation-Artifacts/20251221-Proposed-Consolidation-Plan.md) | Strategy to unify CLI and Code agents | PROPOSED |
+| [Migration Manifest](04-Operations/Intent-Log/Technical/20251221-Consolidation-Artifacts/20251221-Migration-Manifest-Polyglot.md) | Technical checklist for Polyglot consolidation | DRAFT |
+| [Review: Lambda Agent](04-Operations/agentbeats-lambda/20251221-Review-Lambda-Agent.md) | Review of Kuan's Red/Blue agent implementation | REVIEW |
+| [Review: Green Agent](04-Operations/green-agent/20251221-Review-Green-Agent.md) | Review of Samuel's CLI-based Green Agent | REVIEW |
+| [Review: Purple Agent](04-Operations/purple-agent/20251221-Review-Purple-Agent.md) | Comparison of Purple Agent vs. Kuan's Blue Agent | REVIEW |
 
 ### Competition Implementation
 | Document | Description | Status |
@@ -99,5 +107,5 @@ All markdown files in `docs/` must start with this header:
 > **Superseded By:** [Link] (if SUPERSEDED)
 ```
 
-## 9. LogoMesh Development Team Meeting Minutes Folder
+## 10. LogoMesh Development Team Meeting Minutes Folder
 *   [docs/04-Operations/Team](/docs/04-Operations/Team)
