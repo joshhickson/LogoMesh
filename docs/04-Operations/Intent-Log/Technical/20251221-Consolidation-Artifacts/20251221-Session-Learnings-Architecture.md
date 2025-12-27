@@ -19,3 +19,15 @@ The Lambda Track is strict:
 *   Submissions must follow the `submissions/{team}/{scenario}` directory structure.
 *   Agents must be implemented as `ScenarioPlugin` classes.
 *   **Impact:** Kuan's repository structure is not just a "suggestion"; it is the required schema. We must conform the entire monorepo to fit *inside* or *around* this structure, not the other way around.
+
+## 4. Future Risks (Watchouts)
+
+### 4.1. The "Docker Monster" (Dependency Hell)
+Merging the Node.js monorepo (`pnpm`, `node-gyp`) with the Python AI stack (`uv`, `vLLM`) in a single Dockerfile is high-risk.
+*   **Risk:** Native module compilation failures (`node-gyp`) are likely when `pnpm install` runs in a Python-heavy base image.
+*   **Mitigation:** Use a multi-stage build or carefully layered installation commands (Python first, then Node).
+
+### 4.2. The "Ground Truth" Gap
+Alaa Elobaid identified that "LLM-as-a-Judge" without calibration is subjective ("Vibe Grading").
+*   **Risk:** The Green Agent may produce "valid" scores that are mathematically meaningless.
+*   **Action:** We must locate the **CI-Bench** dataset (referenced in `Unified AI Competition Development Plan`) and use it to calibrate the Rationale Worker's cosine similarity thresholds.

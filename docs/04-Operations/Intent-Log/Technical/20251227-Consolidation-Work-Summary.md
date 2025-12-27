@@ -43,3 +43,14 @@ The following existing files were analyzed to form the basis of the consolidatio
     *   [Workers Package](../../../../packages/workers/)
     *   [Contracts Package](../../../../packages/contracts/)
     *   [Root Package Config](../../../../package.json)
+
+## 3. Session Audit & Watchouts (For Next Session)
+
+### 3.1. Ignored Suggestions Audit
+*   **The Big Pivot (Accepted):** The recommendation to abandon the CLI-based Green Agent in favor of a "Polyglot" port was accepted.
+*   **The "Blue Agent" (Accepted):** The recommendation to promote Kuan's `generic_defender.py` to "Purple Agent" was accepted.
+*   **The Node.js Conflict (Addressed):** The "Polyglot Root" strategy was adopted to preserve `packages/`.
+
+### 3.2. Critical Watchouts
+1.  **Alaa's Ground Truth Gap:** The current "LLM-as-a-Judge" is subjective ("Vibe Grading"). We must find and ingest the **CI-Bench** dataset to calibrate the Rationale Worker.
+2.  **The Docker Monster:** Building a container with Node.js v20, Python 3.12, vLLM, pnpm, and uv is complex. Expect "Dependency Hell" (`node-gyp`) during the first build attempts.
