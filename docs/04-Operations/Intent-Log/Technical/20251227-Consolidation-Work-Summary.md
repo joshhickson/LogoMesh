@@ -28,6 +28,7 @@ The following existing files were analyzed to form the basis of the consolidatio
 *   [Current Truth Source](../../../00_CURRENT_TRUTH_SOURCE.md)
 *   [Unified AI Competition Development Plan](../../../00-Strategy/Competition/20251216-Unified%20AI%20Competition%20Development%20Plan.md)
 *   [Hybrid Sidecar Kickoff Minutes (Meeting 6/7)](../../Team/20251220-LogoMesh-Meeting-6_7-Hybrid-Sidecar-Kickoff.md)
+*   [Hybrid Sidecar Sync (Meeting 8)](../../Team/20251227-Logomesh-Meeting-8-[Josh_Deepti].md)
 *   [Hybrid Sidecar Implementation Plan](../../../01-Architecture/Specs/20251218-Hybrid-Sidecar-Implementation-Plan.md)
 
 ### Code & Specifications
