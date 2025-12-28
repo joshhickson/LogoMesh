@@ -25,6 +25,7 @@ A key strategic decision is the **"Iron Sharpens Iron"** approach: utilizing the
 *   **Hardware Constraint:** Models must run on a single **NVIDIA H100 GPU (80GB VRAM)**. *[Needs Verification]*
     *   *implication:* Proprietary APIs (OpenAI/Anthropic) are likely disallowed for the core agent loop unless explicitly permitted. We must rely on open-weights models (e.g., Llama 3.1 70B, Qwen). *[Needs Verification]*
 *   **Scoring:** "Presentation" is a significant scoring factor, motivating a shift from Terminal CLI to a Web UI.
+*   **Submission Compliance:** We need to ensure that maintaining 4 internal agents (Red/Blue/Green/Purple) while submitting only specific subsets to each track does not violate any competition "Single Submission" rules or create confusion. *[Needs Verification]*
 
 ## 3. Discussion Points
 
@@ -37,6 +38,7 @@ A key strategic decision is the **"Iron Sharpens Iron"** approach: utilizing the
 *   **Migration Plan:** Josh is centralizing code into a **Polyglot** structure:
     *   **Backend:** Dockerized Python environment for the Agents (Red/Blue/Green).
     *   **Frontend/Sidecar:** Node.js Web UI to replace the terminal prompt.
+*   **Verification:** We must verify the technical differences between Samuel's Purple Agent and Mark's Blue Agent to confirm they can be consolidated into a single codebase. *[Needs Verification]*
 
 ### B. Model Selection & Intelligence
 
@@ -49,6 +51,7 @@ A key strategic decision is the **"Iron Sharpens Iron"** approach: utilizing the
 
 *   **Decision:** Shift from Terminal CLI to a **Node.js Web UI**.
 *   **Rationale:** Presentation accounts for ~50% of the potential score. A graphical interface is critical for ranking higher than teams submitting raw terminal logs.
+    *   *Note:* This is a **Strategic Decision** for presentation scoring, not a strict **Competition Requirement**. The competition allows CLI, but we are choosing Web UI for the competitive edge.
 
 ## 4. Action Items
 
