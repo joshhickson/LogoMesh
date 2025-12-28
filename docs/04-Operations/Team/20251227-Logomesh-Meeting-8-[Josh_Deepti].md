@@ -22,9 +22,10 @@ A key strategic decision is the **"Iron Sharpens Iron"** approach: utilizing the
 ## 2. Competition Context & Constraints
 
 *   **Competition:** AgentX - AgentBeats (Green Agent due Jan 15, 2026; Purple Agent due Feb 22, 2026).
-*   **Hardware Constraint:** Models must run on a single **NVIDIA H100 GPU (80GB VRAM)**.
-    *   *implication:* Proprietary APIs (OpenAI/Anthropic) are likely disallowed for the core agent loop unless explicitly permitted. We must rely on open-weights models (e.g., Llama 3.1 70B, Qwen).
+*   **Hardware Constraint:** Models must run on a single **NVIDIA H100 GPU (80GB VRAM)**. *[Needs Verification]*
+    *   *implication:* Proprietary APIs (OpenAI/Anthropic) are likely disallowed for the core agent loop unless explicitly permitted. We must rely on open-weights models (e.g., Llama 3.1 70B, Qwen). *[Needs Verification]*
 *   **Scoring:** "Presentation" is a significant scoring factor, motivating a shift from Terminal CLI to a Web UI.
+*   **Submission Compliance:** We need to ensure that maintaining 4 internal agents (Red/Blue/Green/Purple) while submitting only specific subsets to each track does not violate any competition "Single Submission" rules or create confusion. *[Needs Verification]*
 
 ## 3. Discussion Points
 
@@ -37,11 +38,12 @@ A key strategic decision is the **"Iron Sharpens Iron"** approach: utilizing the
 *   **Migration Plan:** Josh is centralizing code into a **Polyglot** structure:
     *   **Backend:** Dockerized Python environment for the Agents (Red/Blue/Green).
     *   **Frontend/Sidecar:** Node.js Web UI to replace the terminal prompt.
+*   **Verification:** We must verify the technical differences between Samuel's Purple Agent and Mark's Blue Agent to confirm they can be consolidated into a single codebase. *[Needs Verification]*
 
 ### B. Model Selection & Intelligence
 
 *   **Llama Concerns:** Deepti raised concerns about **Llama-3-70B's** performance, citing benchmarks where it was "nowhere near the top" and describing it as a potential "failure" compared to other options.
-*   **Hardware Reality:** Josh clarified the 80GB VRAM limit. A 70B model (approx. 40GB quantized) fits, but we must verify if it provides sufficient intelligence.
+*   **Hardware Reality:** Josh clarified the 80GB VRAM limit *[Needs Verification]*. A 70B model (approx. 40GB quantized) fits, but we must verify if it provides sufficient intelligence.
 *   **AWS Kira:** It was noted that Mark is currently using **AWS Kira**, a terminal-based coding agent, on the Lambda instance. We need to investigate if this is a dependency we can carry forward or if we must switch.
 *   **Alaa's Warning ("Playing with Fire"):** Alaa (Aladdin) previously warned that using a simple "LLM-as-a-Judge" is risky due to the "Ground Truth Gap." We need to go deeper than vibe-checking, potentially integrating **CI-Bench** datasets to calibrate the evaluator (as detailed in the Consolidation Summary).
 
@@ -49,13 +51,14 @@ A key strategic decision is the **"Iron Sharpens Iron"** approach: utilizing the
 
 *   **Decision:** Shift from Terminal CLI to a **Node.js Web UI**.
 *   **Rationale:** Presentation accounts for ~50% of the potential score. A graphical interface is critical for ranking higher than teams submitting raw terminal logs.
+    *   *Note:* This is a **Strategic Decision** for presentation scoring, not a strict **Competition Requirement**. The competition allows CLI, but we are choosing Web UI for the competitive edge.
 
 ## 4. Action Items
 
 | Owner | Task | Deadline |
 | :--- | :--- | :--- |
 | **Josh** | Consolidate Samuel’s and Mark’s code into the new Polyglot container structure. | Next Meeting |
-| **Josh** | Verify H100 constraints (80GB VRAM) and confirm if Llama 3.1 70B is viable vs. other open models. | ASAP |
+| **Josh** | Verify H100 constraints (80GB VRAM) *[Needs Verification]* and confirm if Llama 3.1 70B is viable vs. other open models. | ASAP |
 | **Josh** | Connect with Mark to clarify his use of **AWS Kira** and his work on the Lambda instance. | ASAP |
 | **Deepti** | Meet with Mark and Samuel to review their implementations and the consolidation plan. | Before Next Meeting |
 | **Deepti** | Update the Miro board architecture diagram to reflect the new 4-Agent structure (Green, Purple, Red, Blue). | Next Meeting |
