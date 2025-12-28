@@ -22,8 +22,8 @@ A key strategic decision is the **"Iron Sharpens Iron"** approach: utilizing the
 ## 2. Competition Context & Constraints
 
 *   **Competition:** AgentX - AgentBeats (Green Agent due Jan 15, 2026; Purple Agent due Feb 22, 2026).
-*   **Hardware Constraint:** Models must run on a single **NVIDIA H100 GPU (80GB VRAM)**.
-    *   *implication:* Proprietary APIs (OpenAI/Anthropic) are likely disallowed for the core agent loop unless explicitly permitted. We must rely on open-weights models (e.g., Llama 3.1 70B, Qwen).
+*   **Hardware Constraint:** Models must run on a single **NVIDIA H100 GPU (80GB VRAM)**. *[Needs Verification]*
+    *   *implication:* Proprietary APIs (OpenAI/Anthropic) are likely disallowed for the core agent loop unless explicitly permitted. We must rely on open-weights models (e.g., Llama 3.1 70B, Qwen). *[Needs Verification]*
 *   **Scoring:** "Presentation" is a significant scoring factor, motivating a shift from Terminal CLI to a Web UI.
 
 ## 3. Discussion Points
@@ -41,7 +41,7 @@ A key strategic decision is the **"Iron Sharpens Iron"** approach: utilizing the
 ### B. Model Selection & Intelligence
 
 *   **Llama Concerns:** Deepti raised concerns about **Llama-3-70B's** performance, citing benchmarks where it was "nowhere near the top" and describing it as a potential "failure" compared to other options.
-*   **Hardware Reality:** Josh clarified the 80GB VRAM limit. A 70B model (approx. 40GB quantized) fits, but we must verify if it provides sufficient intelligence.
+*   **Hardware Reality:** Josh clarified the 80GB VRAM limit *[Needs Verification]*. A 70B model (approx. 40GB quantized) fits, but we must verify if it provides sufficient intelligence.
 *   **AWS Kira:** It was noted that Mark is currently using **AWS Kira**, a terminal-based coding agent, on the Lambda instance. We need to investigate if this is a dependency we can carry forward or if we must switch.
 *   **Alaa's Warning ("Playing with Fire"):** Alaa (Aladdin) previously warned that using a simple "LLM-as-a-Judge" is risky due to the "Ground Truth Gap." We need to go deeper than vibe-checking, potentially integrating **CI-Bench** datasets to calibrate the evaluator (as detailed in the Consolidation Summary).
 
@@ -55,7 +55,7 @@ A key strategic decision is the **"Iron Sharpens Iron"** approach: utilizing the
 | Owner | Task | Deadline |
 | :--- | :--- | :--- |
 | **Josh** | Consolidate Samuel’s and Mark’s code into the new Polyglot container structure. | Next Meeting |
-| **Josh** | Verify H100 constraints (80GB VRAM) and confirm if Llama 3.1 70B is viable vs. other open models. | ASAP |
+| **Josh** | Verify H100 constraints (80GB VRAM) *[Needs Verification]* and confirm if Llama 3.1 70B is viable vs. other open models. | ASAP |
 | **Josh** | Connect with Mark to clarify his use of **AWS Kira** and his work on the Lambda instance. | ASAP |
 | **Deepti** | Meet with Mark and Samuel to review their implementations and the consolidation plan. | Before Next Meeting |
 | **Deepti** | Update the Miro board architecture diagram to reflect the new 4-Agent structure (Green, Purple, Red, Blue). | Next Meeting |
