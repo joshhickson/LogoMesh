@@ -22,10 +22,11 @@ A key strategic decision is the **"Iron Sharpens Iron"** approach: utilizing the
 ## 2. Competition Context & Constraints
 
 *   **Competition:** AgentX - AgentBeats (Green Agent due Jan 15, 2026; Purple Agent due Feb 22, 2026).
-*   **Hardware Constraint:** Models must run on a single **NVIDIA H100 GPU (80GB VRAM)**. *[Needs Verification]*
-    *   *implication:* Proprietary APIs (OpenAI/Anthropic) are likely disallowed for the core agent loop unless explicitly permitted. We must rely on open-weights models (e.g., Llama 3.1 70B, Qwen). *[Needs Verification]*
+*   **Hardware Constraint:** Models must run on a single **NVIDIA H100 GPU (80GB VRAM)**. *[Verified]*
+    *   *Source:* `external/TEAM/agentbeats-lambda-[kzhou003-pull2-20251221]/scenarios/security_arena/README.md` (Section: Model Constraint).
+    *   *implication:* Proprietary APIs (OpenAI/Anthropic) are likely disallowed for the core agent loop unless explicitly permitted. We must rely on open-weights models. *[Verified: "No proprietary API advantages"]*
 *   **Scoring:** "Presentation" is a significant scoring factor, motivating a shift from Terminal CLI to a Web UI.
-*   **Submission Compliance:** We need to ensure that maintaining 4 internal agents (Red/Blue/Green/Purple) while submitting only specific subsets to each track does not violate any competition "Single Submission" rules or create confusion. *[Needs Verification]*
+*   **Submission Compliance:** We need to ensure that maintaining 4 internal agents (Red/Blue/Green/Purple) while submitting only specific subsets to each track does not violate any competition "Single Submission" rules or create confusion. *[Verified: Dual Track strategy is compliant with Phase 1 (Scenarios) vs Phase 2 (Agents) separation]*
 
 ## 3. Discussion Points
 
@@ -43,7 +44,8 @@ A key strategic decision is the **"Iron Sharpens Iron"** approach: utilizing the
 ### B. Model Selection & Intelligence
 
 *   **Llama Concerns:** Deepti raised concerns about **Llama-3-70B's** performance, citing benchmarks where it was "nowhere near the top" and describing it as a potential "failure" compared to other options.
-*   **Hardware Reality:** Josh clarified the 80GB VRAM limit *[Needs Verification]*. A 70B model (approx. 40GB quantized) fits, but we must verify if it provides sufficient intelligence.
+*   **Hardware Reality:** Josh clarified the 80GB VRAM limit *[Verified]*. A 70B model (approx. 40GB quantized) fits, but we must verify if it provides sufficient intelligence.
+    *   *Note:* The rules explicitly mention "gpt-oss-20b (or equivalent)". While 70B fits the hardware, we must confirm if "equivalent" allows significantly larger parameter counts. *[Needs Clarification]*
 *   **AWS Kira:** It was noted that Mark is currently using **AWS Kira**, a terminal-based coding agent, on the Lambda instance. We need to investigate if this is a dependency we can carry forward or if we must switch.
 *   **Alaa's Warning ("Playing with Fire"):** Alaa (Aladdin) previously warned that using a simple "LLM-as-a-Judge" is risky due to the "Ground Truth Gap." We need to go deeper than vibe-checking, potentially integrating **CI-Bench** datasets to calibrate the evaluator (as detailed in the Consolidation Summary).
 
@@ -58,7 +60,7 @@ A key strategic decision is the **"Iron Sharpens Iron"** approach: utilizing the
 | Owner | Task | Deadline |
 | :--- | :--- | :--- |
 | **Josh** | Consolidate Samuel’s and Mark’s code into the new Polyglot container structure. | Next Meeting |
-| **Josh** | Verify H100 constraints (80GB VRAM) *[Needs Verification]* and confirm if Llama 3.1 70B is viable vs. other open models. | ASAP |
+| **Josh** | Verify if "gpt-oss-20b (or equivalent)" rule allows for Llama 3.1 70B (which fits H100 hardware). | ASAP |
 | **Josh** | Connect with Mark to clarify his use of **AWS Kira** and his work on the Lambda instance. | ASAP |
 | **Deepti** | Meet with Mark and Samuel to review their implementations and the consolidation plan. | Before Next Meeting |
 | **Deepti** | Update the Miro board architecture diagram to reflect the new 4-Agent structure (Green, Purple, Red, Blue). | Next Meeting |
