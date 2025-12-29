@@ -14,8 +14,13 @@ We identified `scenarios/security_arena/agents/generic_defender.py` in your repo
 The current implementation uses `AsyncOpenAI` with `gpt-4o-mini`.
 *   **Question:** Have you planned the migration to local models (e.g., using vLLM)?
 *   **Context:** The competition (and our cost constraints) requires running local inference (e.g., `gpt-oss-20b`). Should we abstract the client in `GenericDefenderExecutor` to support this?
+*   **Update (Dec 27):** You mentioned testing `gpt-oss-20b` on A100 40GB. Does this mean `gpt-oss-20b` is the *exact* model we must use, or is `Llama-3-70B` (which fits our H100 target) considered "equivalent" and allowed?
 
-## 3. Rationale Injection
+## 3. General / Process (New)
+*   **Question:** Where is the `ad_attack` scenario code? It is listed as required in the spec but is missing from `external/TEAM`.
+*   **Question:** How do we submit multiple scenarios? Is it a single Pull Request containing all scenario folders, or separate submissions?
+
+## 4. Rationale Injection
 For the Green Agent to evaluate "Rationale Debt," the Purple Agent needs to output a "Rationale" field alongside its code.
 *   **Question:** How should we modify the `generic_defender.py` prompt or schema to ensure it outputs JSON with a `rationale` field?
 *   **Suggestion:** We might need to enforce a structured output schema (e.g., Pydantic or JSON mode) in the `execute` method.
