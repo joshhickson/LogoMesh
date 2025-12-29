@@ -44,14 +44,9 @@ build/
 *.spec
 ```
 
-### Dockerfile Strategy
-Create a single `Dockerfile` at root that:
-1.  From `node:20-bookworm` (Base).
-2.  Installs Python 3.12 + `uv`.
-3.  Copies `package.json` + `pnpm-lock.yaml` -> `pnpm install`.
-4.  Copies `pyproject.toml` + `uv.lock` -> `uv sync`.
-5.  Copies `src/` and `packages/`.
-6.  Entrypoint: `scripts/start_polyglot.sh` (Starts Node + Python).
+### Dockerfile Strategy (Completed)
+*   **Status:** [x] Done (See [Scaffolding Log](20251227-Polyglot-Scaffolding-Log.md)).
+*   **Implementation:** Created root `Dockerfile` (Node 20 + Python 3.12 + uv) and `main.py` entrypoint.
 
 ## 4. Porting Checklist (Logic Transfer)
 

@@ -21,6 +21,9 @@ The following documents were created to define the strategy for merging the Pyth
 *   [Questions for Samuel (Green Agent)](../../green-agent/Questions-for-Samuel-Green.md)
 *   [Review: Purple Agent (Comparison)](../../purple-agent/20251221-Review-Purple-Agent.md)
 
+### Scaffolding & Execution Logs
+*   [Polyglot Scaffolding Log](20251221-Consolidation-Artifacts/20251227-Polyglot-Scaffolding-Log.md) (Created Dec 27)
+
 ## 2. Referenced & Analyzed Source Materials
 The following existing files were analyzed to form the basis of the consolidation strategy.
 
@@ -55,3 +58,10 @@ The following existing files were analyzed to form the basis of the consolidatio
 ### 3.2. Critical Watchouts
 1.  **Alaa's Ground Truth Gap:** The current "LLM-as-a-Judge" is subjective ("Vibe Grading"). We must find and ingest the **CI-Bench** dataset to calibrate the Rationale Worker.
 2.  **The Docker Monster:** Building a container with Node.js v20, Python 3.12, vLLM, pnpm, and uv is complex. Expect "Dependency Hell" (`node-gyp`) during the first build attempts.
+
+## 4. Scaffolding Logs
+Details of the technical execution (file creation, moves, and build steps) are tracked in the artifact logs.
+
+*   **Log:** [Polyglot Scaffolding Log](20251221-Consolidation-Artifacts/20251227-Polyglot-Scaffolding-Log.md)
+    *   *Status:* **Scaffolding Created**. `Dockerfile` and `main.py` are present.
+    *   *Next:* Source Migration (Moving files from `external/`).
