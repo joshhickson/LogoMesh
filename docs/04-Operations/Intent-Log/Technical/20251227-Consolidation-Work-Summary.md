@@ -66,5 +66,10 @@ Details of the technical execution (file creation, moves, and build steps) are t
     *   *Status:* **Scaffolding Created**. `Dockerfile` and `main.py` are present.
     *   *Next:* Source Migration (Moving files from `external/`).
 
+*   **Guide:** [Phase 3B: Dependency Verification Guide](20251221-Consolidation-Artifacts/20251229-Phase3B-Dependency-Verification-Guide.md)
+    *   *Status:* **Ready for Execution**. Instructions for local install and Docker build verification.
+*   **Prompt:** [Phase 3B: Agent Prompt](20251221-Consolidation-Artifacts/20251229-Phase3B-Agent-Prompt.md)
+    *   *Status:* **Ready for Copy-Paste**. The exact prompt to feed your local AI agent.
+
 *   **Guide:** [Phase 4: Green Agent Porting Guide](20251221-Consolidation-Artifacts/20251229-Phase4-Green-Agent-Porting-Guide.md)
-    *   *Status:* **Ready for Execution**. Contains strict copy-paste instructions for the Green Agent migration.
+    *   *Status:* **Pending Phase 3B**. Contains strict copy-paste instructions for the Green Agent migration.
