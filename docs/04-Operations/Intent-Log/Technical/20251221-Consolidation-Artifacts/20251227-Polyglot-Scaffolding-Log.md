@@ -27,9 +27,9 @@
 ## 3. Pending Actions (Next Steps)
 
 ### A. Source Migration (The "Big Move")
-*   [ ] Move `external/TEAM/agentbeats-lambda-[...]/src/` to `./src/`.
-*   [ ] Move `external/TEAM/agentbeats-lambda-[...]/scenarios/` to `./scenarios/`.
-*   [ ] Move dependency files (`pyproject.toml`, `uv.lock`) to root.
+*   [x] Move `external/TEAM/agentbeats-lambda-[...]/src/` to `./src/`.
+*   [x] Move `external/TEAM/agentbeats-lambda-[...]/scenarios/` to `./scenarios/`.
+*   [x] Move dependency files (`pyproject.toml`, `uv.lock`) to root.
 
 ### B. Dependency Installation
 *   [ ] Run `uv sync` to install Python dependencies.
