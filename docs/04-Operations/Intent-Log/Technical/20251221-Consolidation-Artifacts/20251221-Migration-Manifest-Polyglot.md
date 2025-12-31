@@ -48,6 +48,13 @@ build/
 *   **Status:** [x] Done (See [Scaffolding Log](20251227-Polyglot-Scaffolding-Log.md)).
 *   **Implementation:** Created root `Dockerfile` (Node 20 + Python 3.12 + uv) and `main.py` entrypoint.
 
+### Infrastructure Hardening (Lambda Prep)
+*   **Status:** [ ] Pending.
+*   **Task:** Create `Dockerfile.gpu` based on `nvidia/cuda:12.1.0-devel-ubuntu22.04`.
+    *   Must install Python 3.12, Node.js v20, `uv`, and `pnpm`.
+    *   Must include `vllm` for local inference.
+*   **Task:** Create `scripts/start_lambda.sh` to launch vLLM and the Agent in parallel.
+
 ## 4. Porting Checklist (Logic Transfer)
 
 - [ ] **Green Agent:**
@@ -60,4 +67,4 @@ build/
 - [ ] **Purple Agent:**
     - Verify `src/blue_logic/generic_defender.py` runs correctly.
 - [ ] **Red Agent:**
-    - [ ] **Missing Scenario:** Locate the `ad_attack` scenario in upstream repos or implement a placeholder to satisfy the submission requirement.
+    - [ ] **Scenario Implementation:** Implement `ad_attack` scenario based on the Lambda specification blueprint (Optional but recommended for score padding).

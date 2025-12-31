@@ -17,6 +17,7 @@ from .example_medical import MedicalRecordsPlugin
 from submissions.logmesh.debugdump.plugin import DebugDumpPlugin
 from submissions.logmesh.dockerdoo.plugin import DockerDooPlugin
 from submissions.logmesh.solarspike.plugin import SolarSpikePlugin
+from submissions.logmesh.ad_attack.plugin import AdAttackPlugin
 
 
 # Registry mapping scenario names to plugin classes
@@ -27,6 +28,7 @@ SCENARIO_PLUGINS: dict[str, type[ScenarioPlugin]] = {
     "debugdump": DebugDumpPlugin,  # DebugDump - Developer Support Bot
     "dockerdoo": DockerDooPlugin,  # DockerDoo - DevOps Container Assistant
     "solarspike": SolarSpikePlugin,  # SolarSpike - Solar Farm Inverter Controller
+    "ad_attack": AdAttackPlugin,  # AdAttack - Ad Copy Generator
 }
 
 

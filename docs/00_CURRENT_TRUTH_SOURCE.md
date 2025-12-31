@@ -28,7 +28,9 @@
     *   **$I_a$ (Architecture):** Graph Centrality/Veto (Structural Risk).
     *   **$I_t$ (Testing):** Semantic Alignment (Implementation vs Specs).
 *   **Infrastructure:**
-    *   **Runtime:** Docker (Polyglot: Python 3.12 + Node.js v20).
+    *   **Runtime:** Docker (Polyglot).
+        *   **Dev (CPU):** `Dockerfile` (Node 20 + Python 3.12).
+        *   **Prod (GPU/Lambda):** `Dockerfile.gpu` (Nvidia CUDA 12.1 + vLLM + Node/Python).
     *   **Entrypoint:** `main.py` (Dispatches to Green/Purple/Red roles).
     *   **Communication:** HTTP (FastAPI) + A2A Protocol.
     *   **Security:** Docker Container Isolation.
@@ -61,6 +63,7 @@
     *   Consolidate technical designs.
 
 ## 7. Known Unknowns (Open Questions)
+*   **Model Selection:** Is **Llama-3-70B** the mandatory model, or does "gpt-oss-20b (or equivalent)" allow for better performers (Qwen, Mistral) that fit the H100? (Status: PENDING).
 *   **Testing Integrity:** What is the formal definition of "Semantic Coverage"? (Assigned to Kuan).
 *   **Metrics:** Is Cosine Similarity ($I_r$) sufficient, or do we strictly need Graph RAG? (Evidence suggests Cosine is "too basic" but may be V1).
 *   **Paper Structure:** Can we model the research paper on "The Google File System"?

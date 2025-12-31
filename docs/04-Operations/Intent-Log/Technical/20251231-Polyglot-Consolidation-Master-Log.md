@@ -158,5 +158,92 @@ This log consolidates the execution details of the Polyglot Consolidation projec
 
 ---
 
+## Phase 7: Infrastructure Hardening (2025-12-31)
+
+**Objective:** Prepare the repository for deployment on Lambda Cloud (Nvidia H100/A100) by enabling GPU support and local inference (vLLM).
+
+### Step 1: Update Dependencies
+**Action:** Added `vllm` to `pyproject.toml`.
+**Details:**
+- Added `"vllm>=0.6.0 ; sys_platform == 'linux'"` to dependencies.
+- This ensures vLLM is installed only on Linux environments (like the Docker container), preventing breakage on Windows dev machines.
+
+### Step 2: Create GPU Dockerfile
+**Action:** Created `Dockerfile.gpu`.
+**Details:**
+- **Base Image:** `nvidia/cuda:12.1.0-devel-ubuntu22.04` (Required for vLLM/CUDA).
+- **System Deps:** Installed Python 3.12 (via deadsnakes PPA), Node.js 20, `uv`, `pnpm`.
+- **Configuration:** Sets `ENV PATH="/app/.venv/bin:$PATH"` to ensure the `uv` virtual environment is used by default.
+- **Outcome:** We now have a dedicated build artifact for the competition environment that supports local LLM inference.
+
+---
+
+## Phase 8: Scenario Implementation (2025-12-31)
+
+**Objective:** Implement the "AdAttack" scenario to meet the competition's submission requirements (3-6 scenarios).
+
+### Step 1: Implementation
+**Action:** Created `AdAttackPlugin` based on the Lambda specification blueprint.
+**Files Created:**
+- `scenarios/security_arena/submissions/logmesh/ad_attack/plugin.py`
+- `scenarios/security_arena/scenario_ad_attack.toml`
+
+### Step 2: Registration
+**Action:** Registered the new plugin in `scenarios/security_arena/plugins/registry.py`.
+**Result:** The `ad_attack` scenario is now available for execution via the Green Agent.
+
+---
+
+## Phase 9: Green Agent Logic - Dual Track Integration (2025-12-31)
+
+**Objective:** Implement the "Contextual Integrity" scoring logic that leverages the Red Agent's output to grade the Green Agent's performance.
+
+### Step 1: Scoring Logic
+**Action:** Created `src/green_logic/scoring.py`.
+**Details:**
+- Implemented `ContextualIntegrityScorer` class.
+- Formula: $CIS = (I_r + I_a + I_t) / 3$.
+- Inputs: Rationale (Purple), Architecture (Purple), Testing (Red Audit).
+
+### Step 2: Server Integration
+**Action:** Updated `src/green_logic/server.py`.
+**Details:**
+- Wired `ContextualIntegrityScorer` into `/actions/send_coding_task`.
+- The Green Agent now executes the full loop: Purple (Generate) -> Red (Audit) -> Scorer (Evaluate).
+
+### Step 3: Discrepancy Log (Samuel's Code)
+**Observation:** The "Contextual Integrity" concept was referenced in legacy docs (`green_agent_card.toml`) and `agent.py` docstrings, but the implementation was missing.
+**Missing Artifact:** `evaluator_final_step.py` (referenced in `tools.py` of the WASP scenario) was not found in the repository.
+**Resolution:** Re-implemented the logic from scratch in `src/green_logic/scoring.py` to ensure the feature exists for the competition.
+**Action Item:** Ask Samuel about the original `evaluator_final_step.py` to see if it contained additional logic or nuances we missed.
+
+---
+
+## Phase 10: Documentation & Roadmap (2025-12-31)
+
+**Objective:** Formalize the "Contextual Integrity" concept and define the roadmap for upgrading from the current "LLM-as-a-Judge" baseline to the rigorous "Vector Space" implementation defined in the IP paper.
+
+### Step 1: Code Alignment
+**Action:** Updated `src/green_logic/scoring.py`.
+**Details:**
+- Aligned terminology with the IP paper:
+    - `Rationale Alignment` -> `Rationale Integrity ($R$)`
+    - `Testing Verification` -> `Testing Integrity ($T$)`
+- Updated docstrings to reference `docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md`.
+
+### Step 2: Roadmap Creation
+**Action:** Created `docs/04-Operations/Embedding-Vectors/` directory and specifications.
+**Files Created:**
+- `README.md`: Overview of the transition from Qualitative (LLM) to Quantitative (Vector) scoring.
+- `Rationale_Integrity.md`: Spec for measuring semantic distance between Intent and Execution.
+- `Architectural_Integrity.md`: Spec for measuring graph centrality and illegal edges.
+- `Testing_Integrity.md`: Spec for measuring semantic coverage of test assertions.
+
+---
+
 # Final Summary
 The Polyglot Consolidation project is complete. The repository now supports a unified Docker container that can run as a Green, Purple, or Red agent based on the `--role` argument. The Green Agent orchestrates the "Iron Sharpens Iron" loop, leveraging the Purple and Red agents for defense and attack simulation.
+
+Additionally, the infrastructure is now **Lambda-Ready** with the creation of `Dockerfile.gpu`, which enables the use of local open-source models (Llama-3, Qwen, Mistral) on H100 hardware via vLLM.
+
+Finally, the scenario library has been expanded to include the **AdAttack** scenario, bringing the total count of custom scenarios to 4 (DebugDump, DockerDoo, SolarSpike, AdAttack), satisfying the competition's submission requirements. The Green Agent's logic has been significantly strengthened by the "Dual Track" integration, where the Red Agent's audit findings directly impact the final "Contextual Integrity Score" (CIS).
