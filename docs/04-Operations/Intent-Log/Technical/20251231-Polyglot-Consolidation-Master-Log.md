@@ -20,7 +20,7 @@ This log consolidates the execution details of the Polyglot Consolidation projec
 - `uv` version: 0.9.20
 - Resolved 115 packages.
 - `.venv` directory verified.
-- **Warning:** `tool.uv.dev-dependencies` in `pyproject.toml` is deprecated. Recommended to use `dependency-groups.dev`.
+- **Warning:** `tool.uv.dev-dependencies` in [pyproject.toml](../../../../pyproject.toml) is deprecated. Recommended to use `dependency-groups.dev`.
 
 ### Step 2: Node.js Dependency Installation
 **Action:** Ran `pnpm install`
@@ -41,9 +41,9 @@ This log consolidates the execution details of the Polyglot Consolidation projec
 **Result:** Success (after fixes).
 **Details:**
 - Initial failure: `uv` not found in PATH.
-- Fix 1: Modified `Dockerfile` to install `uv` to `/usr/local/bin`.
+- Fix 1: Modified [Dockerfile](../../../../Dockerfile) to install `uv` to `/usr/local/bin`.
 - Second failure: `README.md` missing during `uv sync`.
-- Fix 2: Modified `Dockerfile` to copy `README.md` before `uv sync`.
+- Fix 2: Modified [Dockerfile](../../../../Dockerfile) to copy [README.md](../../../../README.md) before `uv sync`.
 - Final build successful. Image `polyglot-agent:latest` created.
 
 ---
@@ -57,15 +57,15 @@ This log consolidates the execution details of the Polyglot Consolidation projec
 **Deviation:** User requested to RETAIN `external/` directory for reference.
 
 ### Step 2: Create Green Agent Logic
-**Action:** Created `src/green_logic/` structure.
+**Action:** Created [src/green_logic/](../../../../src/green_logic/) structure.
 **Files Created:**
-- `src/green_logic/__init__.py`
-- `src/green_logic/tasks.py` (Coding challenges)
-- `src/green_logic/agent.py` (Core logic)
-- `src/green_logic/server.py` (FastAPI server)
+- [src/green_logic/__init__.py](../../../../src/green_logic/__init__.py)
+- [src/green_logic/tasks.py](../../../../src/green_logic/tasks.py) (Coding challenges)
+- [src/green_logic/agent.py](../../../../src/green_logic/agent.py) (Core logic)
+- [src/green_logic/server.py](../../../../src/green_logic/server.py) (FastAPI server)
 
 ### Step 3: Update Entrypoint
-**Action:** Updated `main.py` to import and run `src.green_logic.server`.
+**Action:** Updated [main.py](../../../../main.py) to import and run `src.green_logic.server`.
 **Details:**
 - Wired `start_green_agent` to `run_server()`.
 - Added `sys.path` modification to ensure imports work.
@@ -83,21 +83,21 @@ This log consolidates the execution details of the Polyglot Consolidation projec
 
 **Objective:** Port the Purple Agent (Defender) logic to `src/purple_logic` and wire it to the main entrypoint.
 
-**Critical Note:** The "Purple Agent" logic is sourced from the **Lambda Track** repository (`agentbeats-lambda`), specifically `scenarios/security_arena/agents/generic_defender.py`.
+**Critical Note:** The "Purple Agent" logic is sourced from the **Lambda Track** repository (`agentbeats-lambda`), specifically [scenarios/security_arena/agents/generic_defender.py](../../../../scenarios/security_arena/agents/generic_defender.py).
 
 ### Step 1: Verify Source Code
-**Action:** Verify contents of `src/agentbeats/` and `scenarios/`.
+**Action:** Verify contents of [src/agentbeats/](../../../../src/agentbeats/) and [scenarios/](../../../../scenarios/).
 **Result:**
-- **CRITICAL FINDING:** The actual **Defender (Purple Agent)** logic was found in `scenarios/security_arena/agents/generic_defender.py`.
+- **CRITICAL FINDING:** The actual **Defender (Purple Agent)** logic was found in [scenarios/security_arena/agents/generic_defender.py](../../../../scenarios/security_arena/agents/generic_defender.py).
 
 ### Step 2: Create Purple Agent Wrapper
-**Action:** Created `src/purple_logic/` and `scenarios/__init__.py`.
+**Action:** Created [src/purple_logic/](../../../../src/purple_logic/) and [scenarios/__init__.py](../../../../scenarios/__init__.py).
 **Details:**
-- Created `src/purple_logic/agent.py` which imports `GenericDefenderExecutor` from `scenarios.security_arena.agents.generic_defender`.
-- Created `scenarios/__init__.py` to make the scenarios directory importable.
+- Created [src/purple_logic/agent.py](../../../../src/purple_logic/agent.py) which imports `GenericDefenderExecutor` from `scenarios.security_arena.agents.generic_defender`.
+- Created [scenarios/__init__.py](../../../../scenarios/__init__.py) to make the scenarios directory importable.
 
 ### Step 3: Update Entrypoint
-**Action:** Updated `main.py` to wire up the Purple Agent.
+**Action:** Updated [main.py](../../../../main.py) to wire up the Purple Agent.
 **Details:**
 - Imported `run_purple_agent`.
 - Updated `start_purple_agent` to call the wrapper.
@@ -114,16 +114,16 @@ This log consolidates the execution details of the Polyglot Consolidation projec
 
 **Objective:** Wire up the Red Agent (Attacker) service to enable the "Dual Track" strategy.
 
-**Source Logic:** `scenarios/security_arena/agents/generic_attacker.py`
+**Source Logic:** [scenarios/security_arena/agents/generic_attacker.py](../../../../scenarios/security_arena/agents/generic_attacker.py)
 
 ### Step 1: Create Red Agent Wrapper
-**Action:** Create `src/red_logic/` structure and wrapper script.
+**Action:** Create [src/red_logic/](../../../../src/red_logic/) structure and wrapper script.
 **Details:**
-- Created `src/red_logic/agent.py` wrapping `GenericAttackerExecutor`.
-- Created `src/red_logic/__init__.py`.
+- Created [src/red_logic/agent.py](../../../../src/red_logic/agent.py) wrapping `GenericAttackerExecutor`.
+- Created [src/red_logic/__init__.py](../../../../src/red_logic/__init__.py).
 
 ### Step 2: Update Entrypoint
-**Action:** Update `main.py` to support `--role RED`.
+**Action:** Update [main.py](../../../../main.py) to support `--role RED`.
 **Details:**
 - Added `start_red_agent` function.
 - Updated argument parser to include `RED` in choices.
@@ -142,7 +142,7 @@ This log consolidates the execution details of the Polyglot Consolidation projec
 **Objective:** Implement the "Iron Sharpens Iron" orchestration loop within the Green Agent.
 
 ### Step 1: Update `src/green_logic/server.py`
-**Action:** Modify `server.py` to include Red Agent orchestration.
+**Action:** Modify [src/green_logic/server.py](../../../../src/green_logic/server.py) to include Red Agent orchestration.
 **Details:**
 - Updated `SendTaskRequest` to accept `red_agent_url`.
 - Rewrote `send_coding_task_action` to implement the loop:
@@ -163,13 +163,13 @@ This log consolidates the execution details of the Polyglot Consolidation projec
 **Objective:** Prepare the repository for deployment on Lambda Cloud (Nvidia H100/A100) by enabling GPU support and local inference (vLLM).
 
 ### Step 1: Update Dependencies
-**Action:** Added `vllm` to `pyproject.toml`.
+**Action:** Added `vllm` to [pyproject.toml](../../../../pyproject.toml).
 **Details:**
 - Added `"vllm>=0.6.0 ; sys_platform == 'linux'"` to dependencies.
 - This ensures vLLM is installed only on Linux environments (like the Docker container), preventing breakage on Windows dev machines.
 
 ### Step 2: Create GPU Dockerfile
-**Action:** Created `Dockerfile.gpu`.
+**Action:** Created [Dockerfile.gpu](../../../../Dockerfile.gpu).
 **Details:**
 - **Base Image:** `nvidia/cuda:12.1.0-devel-ubuntu22.04` (Required for vLLM/CUDA).
 - **System Deps:** Installed Python 3.12 (via deadsnakes PPA), Node.js 20, `uv`, `pnpm`.
@@ -185,11 +185,11 @@ This log consolidates the execution details of the Polyglot Consolidation projec
 ### Step 1: Implementation
 **Action:** Created `AdAttackPlugin` based on the Lambda specification blueprint.
 **Files Created:**
-- `scenarios/security_arena/submissions/logmesh/ad_attack/plugin.py`
-- `scenarios/security_arena/scenario_ad_attack.toml`
+- [scenarios/security_arena/submissions/logmesh/ad_attack/plugin.py](../../../../scenarios/security_arena/submissions/logmesh/ad_attack/plugin.py)
+- [scenarios/security_arena/scenario_ad_attack.toml](../../../../scenarios/security_arena/scenario_ad_attack.toml)
 
 ### Step 2: Registration
-**Action:** Registered the new plugin in `scenarios/security_arena/plugins/registry.py`.
+**Action:** Registered the new plugin in [scenarios/security_arena/plugins/registry.py](../../../../scenarios/security_arena/plugins/registry.py).
 **Result:** The `ad_attack` scenario is now available for execution via the Green Agent.
 
 ---
@@ -199,14 +199,14 @@ This log consolidates the execution details of the Polyglot Consolidation projec
 **Objective:** Implement the "Contextual Integrity" scoring logic that leverages the Red Agent's output to grade the Green Agent's performance.
 
 ### Step 1: Scoring Logic
-**Action:** Created `src/green_logic/scoring.py`.
+**Action:** Created [src/green_logic/scoring.py](../../../../src/green_logic/scoring.py).
 **Details:**
 - Implemented `ContextualIntegrityScorer` class.
 - Formula: $CIS = (I_r + I_a + I_t) / 3$.
 - Inputs: Rationale (Purple), Architecture (Purple), Testing (Red Audit).
 
 ### Step 2: Server Integration
-**Action:** Updated `src/green_logic/server.py`.
+**Action:** Updated [src/green_logic/server.py](../../../../src/green_logic/server.py).
 **Details:**
 - Wired `ContextualIntegrityScorer` into `/actions/send_coding_task`.
 - The Green Agent now executes the full loop: Purple (Generate) -> Red (Audit) -> Scorer (Evaluate).
@@ -214,7 +214,7 @@ This log consolidates the execution details of the Polyglot Consolidation projec
 ### Step 3: Discrepancy Log (Samuel's Code)
 **Observation:** The "Contextual Integrity" concept was referenced in legacy docs (`green_agent_card.toml`) and `agent.py` docstrings, but the implementation was missing.
 **Missing Artifact:** `evaluator_final_step.py` (referenced in `tools.py` of the WASP scenario) was not found in the repository.
-**Resolution:** Re-implemented the logic from scratch in `src/green_logic/scoring.py` to ensure the feature exists for the competition.
+**Resolution:** Re-implemented the logic from scratch in [src/green_logic/scoring.py](../../../../src/green_logic/scoring.py) to ensure the feature exists for the competition.
 **Action Item:** Ask Samuel about the original `evaluator_final_step.py` to see if it contained additional logic or nuances we missed.
 
 ---
@@ -224,26 +224,26 @@ This log consolidates the execution details of the Polyglot Consolidation projec
 **Objective:** Formalize the "Contextual Integrity" concept and define the roadmap for upgrading from the current "LLM-as-a-Judge" baseline to the rigorous "Vector Space" implementation defined in the IP paper.
 
 ### Step 1: Code Alignment
-**Action:** Updated `src/green_logic/scoring.py`.
+**Action:** Updated [src/green_logic/scoring.py](../../../../src/green_logic/scoring.py).
 **Details:**
 - Aligned terminology with the IP paper:
     - `Rationale Alignment` -> `Rationale Integrity ($R$)`
     - `Testing Verification` -> `Testing Integrity ($T$)`
-- Updated docstrings to reference `docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md`.
+- Updated docstrings to reference [docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../../../docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md).
 
 ### Step 2: Roadmap Creation
-**Action:** Created `docs/04-Operations/Embedding-Vectors/` directory and specifications.
+**Action:** Created [docs/04-Operations/Embedding-Vectors/](../../../../docs/04-Operations/Embedding-Vectors/) directory and specifications.
 **Files Created:**
-- `README.md`: Overview of the transition from Qualitative (LLM) to Quantitative (Vector) scoring.
-- `Rationale_Integrity.md`: Spec for measuring semantic distance between Intent and Execution.
-- `Architectural_Integrity.md`: Spec for measuring graph centrality and illegal edges.
-- `Testing_Integrity.md`: Spec for measuring semantic coverage of test assertions.
+- [README.md](../../../../docs/04-Operations/Embedding-Vectors/README.md): Overview of the transition from Qualitative (LLM) to Quantitative (Vector) scoring.
+- [Rationale_Integrity.md](../../../../docs/04-Operations/Embedding-Vectors/Rationale_Integrity.md): Spec for measuring semantic distance between Intent and Execution.
+- [Architectural_Integrity.md](../../../../docs/04-Operations/Embedding-Vectors/Architectural_Integrity.md): Spec for measuring graph centrality and illegal edges.
+- [Testing_Integrity.md](../../../../docs/04-Operations/Embedding-Vectors/Testing_Integrity.md): Spec for measuring semantic coverage of test assertions.
 
 ---
 
 # Final Summary
 The Polyglot Consolidation project is complete. The repository now supports a unified Docker container that can run as a Green, Purple, or Red agent based on the `--role` argument. The Green Agent orchestrates the "Iron Sharpens Iron" loop, leveraging the Purple and Red agents for defense and attack simulation.
 
-Additionally, the infrastructure is now **Lambda-Ready** with the creation of `Dockerfile.gpu`, which enables the use of local open-source models (Llama-3, Qwen, Mistral) on H100 hardware via vLLM.
+Additionally, the infrastructure is now **Lambda-Ready** with the creation of [Dockerfile.gpu](../../../../Dockerfile.gpu), which enables the use of local open-source models (Llama-3, Qwen, Mistral) on H100 hardware via vLLM.
 
 Finally, the scenario library has been expanded to include the **AdAttack** scenario, bringing the total count of custom scenarios to 4 (DebugDump, DockerDoo, SolarSpike, AdAttack), satisfying the competition's submission requirements. The Green Agent's logic has been significantly strengthened by the "Dual Track" integration, where the Red Agent's audit findings directly impact the final "Contextual Integrity Score" (CIS).
