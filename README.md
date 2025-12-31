@@ -17,82 +17,91 @@
 
 Welcome. This repo contains the LogoMesh monorepo: a TypeScript-based platform for evaluating AI agents and measuring our core metric, "Contextual Debt."
 
-## ⚡ Quickstart (Docker)
+## ⚡ Quickstart (Polyglot Agent)
 
-**Recommended for Evaluators & Data Scientists.**
-The fastest way to run the full system (Redis, API, Workers, Tests) is using Docker Compose.
+**Recommended for Evaluators & Competitors.**
+The system now runs as a single Docker container that can assume different roles (Green, Purple, Red).
 
 **Prerequisites:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) (ensure it's running).
 
-1.  **Clone & Build Containers**
+1.  **Build the Container**
     ```bash
-    docker compose build --progress=plain
+    docker build -t polyglot-agent .
     ```
 
-2.  **Run End-to-End Verification**
-    This starts the entire stack and runs the integration tests to verify everything is working.
+2.  **Run the Green Agent (Evaluator)**
+    This starts the orchestrator which will manage the evaluation lifecycle.
     ```bash
-    docker compose up --build --abort-on-container-exit --exit-code-from e2e-tester
+    docker run -p 8000:8000 -e OPENAI_API_KEY=your_key polyglot-agent --role GREEN
     ```
-    *Success is indicated by a clean exit (code 0) from the test runner.*
 
-3.  **Run Services Manually (Optional)**
-    If you want to keep the services running to inspect them:
+3.  **Run the Purple Agent (Defender)**
+    This starts the defender agent which generates code solutions.
     ```bash
-    docker compose up -d redis server worker-rationale worker-architectural worker-testing
+    docker run -p 8001:8000 -e OPENAI_API_KEY=your_key polyglot-agent --role PURPLE
+    ```
+
+4.  **Run the Red Agent (Attacker)**
+    This starts the attacker agent which generates exploits.
+    ```bash
+    docker run -p 8002:8000 -e OPENAI_API_KEY=your_key polyglot-agent --role RED
     ```
 
 ---
 
-## 🛠️ Manual Setup (Advanced)
+## 🛠️ Manual Setup (Local Development)
 
 **Recommended for Core Engineers.**
-Follow these steps if you need to develop features or debug the Node.js source directly.
+Follow these steps if you need to develop features or debug the Python/Node.js source directly.
 
 ### Prerequisites
-*   **Node.js v20+** (Use `nvm install`)
+*   **Python 3.12+**
+*   **uv** (Python Package Manager): `pip install uv`
+*   **Node.js v20+**
 *   **pnpm** (`corepack enable`)
-*   **Python 3.12+** (Required for `node-gyp`)
-*   **Build Tools:**
-    *   **Linux:** `make`, `gcc`, `g++`
-    *   **Windows:** Visual Studio Build Tools (C++ Desktop Workload)
 
 ### Installation
-1.  **Install Dependencies**
+1.  **Install Python Dependencies**
+    ```bash
+    uv sync
+    ```
+
+2.  **Install Node.js Dependencies**
     ```bash
     pnpm install
     ```
-    *Note: If you encounter `node-gyp` or `distutils` errors, ensure you have `setuptools` installed (`pip install setuptools`).*
 
-2.  **Build Monorepo**
+3.  **Run Agents Locally**
     ```bash
-    pnpm run build
-    ```
+    # Green Agent
+    uv run main.py --role GREEN
 
-3.  **Run Tests**
-    ```bash
-    pnpm test
+    # Purple Agent
+    uv run main.py --role PURPLE
+
+    # Red Agent
+    uv run main.py --role RED
     ```
 
 ---
 
 ## 📚 Documentation Map
 
-*   **Current Roadmap (Active):** [Discovery Sprint Dashboard](docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md)
+*   **Master Log:** [Polyglot Consolidation Master Log](docs/04-Operations/Intent-Log/Technical/20251231-Polyglot-Consolidation-Master-Log.md)
+*   **Current Truth:** [Current Truth Source](docs/00_CURRENT_TRUTH_SOURCE.md)
 *   **Core Concept:** [Contextual Debt Research Paper](docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md)
-*   **Technical Spec:** [Contextual Debt Metric Spec](docs/01-Architecture/Specs/Contextual-Debt-Spec.md)
-*   **Evaluation Output:** [Schema Definition](docs/01-Architecture/Specs/Evaluation-Output-Schema.md)
-*   **Project Context:** [Strategic Master Log](docs/04-Operations/Intent-Log/Technical/20251128-Consolidated-Context-and-Actions.md) (Background & Status)
 
 ## 🏗️ Repository Structure
 
-*   `packages/` - Monorepo workspaces
-    *   `core` - Core logic and orchestrator
-    *   `server` - Express API
-    *   `workers` - Isolated analysis workers
-    *   `contracts` - **Shared TypeScript Interfaces & DTOs** (Not Smart Contracts)
+*   `src/` - Agent Logic
+    *   `green_logic/` - Evaluator & Orchestrator
+    *   `purple_logic/` - Defender Wrapper
+    *   `red_logic/` - Attacker Wrapper
+    *   `agentbeats/` - Shared Library
+*   `scenarios/` - Security Scenarios (Source of Truth for Purple/Red Logic)
+*   `packages/` - Legacy Node.js Workspaces (Retained for reference/tools)
 *   `docs/` - Comprehensive project documentation
-*   `onboarding/` - Interactive documentation graph viewer
+
 
 ## 🔍 Data Scientist Notes
 

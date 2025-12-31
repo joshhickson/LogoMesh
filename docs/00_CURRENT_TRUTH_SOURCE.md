@@ -1,7 +1,7 @@
 > **Status:** ACTIVE
 > **Type:** System of Record
 > **Context:** Single Source of Truth (Post-Gap Analysis)
-> **Last Updated:** 2025-12-27
+> **Last Updated:** 2025-12-31
 
 # Current Truth Source
 
@@ -9,6 +9,7 @@
 *   **The Mission:** We are building **AgentBeats**, an open-source **benchmark** for the AgentX competition.
 *   **The Pivot:** We have explicitly rejected the "Commercial SaaS" (LogoMesh as a product) strategy in favor of a "Public Good" research instrument.
 *   **The Core Innovation:** **Contextual Integrity**, a measurable protocol for "Agent Safety" and "Cybersecurity".
+*   **The Strategy:** "Iron Sharpens Iron" (Dual Track). We use a Red Agent (Attacker) to validate the Purple Agent (Defender), orchestrated by the Green Agent.
 
 ## 2. Core Definitions (Terminology)
 *   **Contextual Debt:** The accumulating probability that a software system’s behavior has drifted from its human intent.
@@ -27,11 +28,11 @@
     *   **$I_a$ (Architecture):** Graph Centrality/Veto (Structural Risk).
     *   **$I_t$ (Testing):** Semantic Alignment (Implementation vs Specs).
 *   **Infrastructure:**
-    *   **Runtime:** Docker (Required).
-    *   **Language:** Node.js v20/v22 (Downgraded from v24 for Mac/Docker compatibility).
-    *   **Communication:** Redis Message Queue (Mission Control Protocol).
-    *   **Security:** `isolated-vm` for sandboxing.
-    *   **Authentication:** **None.** Auth0 is DEAD. Use `jose` library only for DBOM signing.
+    *   **Runtime:** Docker (Polyglot: Python 3.12 + Node.js v20).
+    *   **Entrypoint:** `main.py` (Dispatches to Green/Purple/Red roles).
+    *   **Communication:** HTTP (FastAPI) + A2A Protocol.
+    *   **Security:** Docker Container Isolation.
+    *   **Authentication:** None (Local Execution).
 
 ## 4. Execution Constraints (Competition Rules)
 *   **Hard Deadline:** **December 19, 2025.** (Note: Jan 15 extension mentioned in minutes, but Dec 19 remains the target for "Green Phase").
@@ -84,10 +85,11 @@
 | [green-agent/QUICKSTART.md](../green-agent/QUICKSTART.md) | Quick start guide for running both agents | ACTIVE |
 
 ### Agent Implementations
-| Agent | Location | Port | Purpose |
+| Agent | Location | Role | Purpose |
 |-------|----------|------|---------|
-| Green Agent (Assessor) | `green-agent/` | 9040 | Sends coding tasks, evaluates using Contextual Debt framework |
-| Purple Agent (Assessee) | `purple-agent/` | 9050 | Receives tasks, generates code solutions |
+| Green Agent (Evaluator) | `src/green_logic/` | `--role GREEN` | Orchestrator, Evaluator, Task Dispatcher |
+| Purple Agent (Defender) | `src/purple_logic/` | `--role PURPLE` | Generates secure code solutions (Defender) |
+| Red Agent (Attacker) | `src/red_logic/` | `--role RED` | Generates attacks against Purple's code |
 
 ### Known Limitations (Current Implementation)
 - Single-file tasks only (no multi-file codebases)

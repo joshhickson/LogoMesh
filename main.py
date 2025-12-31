@@ -1,52 +1,53 @@
 import argparse
 import os
 import sys
-import subprocess
-import signal
+
+# Ensure the src directory is in the Python path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from src.green_logic.server import run_server
+from src.purple_logic.agent import run_purple_agent
+from src.red_logic.agent import run_red_agent
 
 def start_green_agent(args):
-    """
-    Starts the Green Agent (Evaluator) + Node.js Sidecars.
-    """
-    print("[Polyglot] Starting Green Agent (Evaluator)...")
+    """Initializes and runs the Green Agent server."""
+    print("[Polyglot] Starting Green Agent...")
 
-    # 1. Start Node.js Sidecars (Background)
-    # Using pnpm run start:workers or similar from root package.json
-    # Assuming 'pnpm start' in 'packages/workers' runs the necessary workers.
-    # We might need a specific script in the root package.json.
-    # For now, we'll assume a placeholder command.
-    print("[Polyglot] Launching Node.js Sidecars...")
-    # sidecar_process = subprocess.Popen(["pnpm", "start:sidecar"], env=os.environ.copy())
+    # Set environment variables for the server to use
+    if args.host:
+        os.environ["HOST"] = args.host
+    if args.port:
+        os.environ["PORT"] = str(args.port)
 
-    # 2. Start Python Green Agent (Foreground)
-    # Using the ported logic in src/green_logic/
-    print(f"[Polyglot] Launching Green Agent with args: host={args.host}, port={args.port}")
-    # from src.green_logic.agent import GreenAgent
-    # agent = GreenAgent(...)
-    # agent.run()
-
-    # Placeholder for scaffolding
-    print("[Polyglot] Green Agent Logic Not Yet Ported. Exiting.")
+    # Run the FastAPI server
+    run_server()
 
 def start_purple_agent(args):
-    """
-    Starts the Purple Agent (Defender) - Based on GenericDefender.
-    """
-    print("[Polyglot] Starting Purple Agent (Defender)...")
+    """Initializes and runs the Purple Agent."""
+    print("[Polyglot] Starting Purple Agent...")
+    
+    # Run the Purple Agent server
+    run_purple_agent(args.host, args.port)
 
-    # 1. Start Python Purple Agent (Foreground)
-    # Using src/blue_logic/generic_defender.py wrapper
-    print("[Polyglot] Launching Generic Defender as 'Purple Agent'...")
-    # from src.blue_logic.generic_defender import GenericDefender
-    # agent = GenericDefender(...)
-    # agent.run()
-
-    # Placeholder for scaffolding
-    print("[Polyglot] Purple Agent Logic Not Yet Ported. Exiting.")
+def start_red_agent(args):
+    """Initializes and runs the Red Agent."""
+    print("[Polyglot] Starting Red Agent...")
+    
+    # Run the Red Agent server
+    run_red_agent(args.host, args.port)
 
 def main():
+    """
+    The main entrypoint for the Polyglot Agent.
+    Parses command-line arguments to determine which agent role to start.
+    """
     parser = argparse.ArgumentParser(description="AgentBeats Polyglot Entrypoint")
-    parser.add_argument("--role", choices=["GREEN", "PURPLE"], required=True, help="The role to play (Evaluator vs Defender)")
+    parser.add_argument(
+        "--role",
+        choices=["GREEN", "PURPLE", "RED"],
+        required=True,
+        help="The role to play (Evaluator vs Defender vs Attacker)"
+    )
 
     # AgentBeats Platform Requirements
     parser.add_argument("--host", default="0.0.0.0", help="Host to bind to")
@@ -59,6 +60,8 @@ def main():
         start_green_agent(args)
     elif args.role == "PURPLE":
         start_purple_agent(args)
+    elif args.role == "RED":
+        start_red_agent(args)
 
 if __name__ == "__main__":
     main()
