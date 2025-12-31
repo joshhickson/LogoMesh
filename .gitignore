@@ -1,6 +1,11 @@
 # Dependencies
 node_modules/
 
+# Python
+.venv/
+__pycache__/
+*.pyc
+
 # Build artifacts
 dist/
 .DS_Store

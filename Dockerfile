@@ -12,8 +12,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv (The Python Package Manager)
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-ENV PATH="/root/.cargo/bin:$PATH"
+# Force install to /usr/local/bin so it's in the PATH for everyone
+RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR="/usr/local/bin" sh
 
 # 2. Setup Workspace
 WORKDIR /app
@@ -27,7 +27,7 @@ RUN pnpm install --frozen-lockfile
 
 # 4. Python Dependencies (Agents)
 # Copy config files first
-COPY pyproject.toml uv.lock ./
+COPY pyproject.toml uv.lock README.md ./
 # Sync dependencies
 RUN uv sync --frozen
 
