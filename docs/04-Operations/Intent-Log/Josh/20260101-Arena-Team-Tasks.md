@@ -6,7 +6,7 @@
 # Arena Team Task List (2026-01-01)
 
 ## Overview
-This document serves as a "Grab Bag" of tasks for the team (Alaa, Garrett, Samuel, Kuan, Josh) to execute once the Agent Arena is fully operational on Lambda Cloud.
+This document serves as a "Grab Bag" of tasks for the team (Alaa, Garrett, Samuel, Kuan, Deepti, Josh) to execute once the Agent Arena is fully operational on Lambda Cloud.
 **Rule:** Pick a task, assign your name to it in the Git log, and execute.
 
 ---
