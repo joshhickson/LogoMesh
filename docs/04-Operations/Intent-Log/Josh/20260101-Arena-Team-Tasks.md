@@ -80,3 +80,30 @@ This document serves as a "Grab Bag" of tasks for the team (Alaa, Garrett, Samue
 *   **Core Feature:** **Graph "CIS Score vs. Time (Steps)"**.
     *   **Goal:** Differentiate from DeepEval by visually proving the **Decay Theorem** ($P(\text{Knowable})_t \approx e^{-(\lambda - \mu)t}$) defined in Section 3.4 of the [Contextual Debt Paper](../../../../docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md).
     *   **Visual:** A line chart showing the CIS score dropping as the agent takes more steps without human review.
+
+---
+
+## 6. Reach Goals & Theoretical Experiments
+
+**Status:** Optional / Time Permitting
+**Prioritization:** Execute only if primary tasks are complete by Jan 14.
+
+### 6.1 The "Architect" Agent (Zero-Shot Project Manager)
+*   **Concept:** A "0-1" innovation where the Green Agent acts as the **Orchestrator ($O$)** in the Glass Box Protocol (Section 4.1), managing the entire lifecycle of a project from a single high-level prompt.
+*   **Hypothesis:** By enforcing CIS constraints at *every step*, we can prevent the "Decay" usually seen in long-horizon agent tasks.
+*   **Experiment:**
+    1.  User provides: "Build a Todo App with React and SQLite."
+    2.  Green Agent decomposes this into 10 `Intent Vectors`.
+    3.  Green Agent dispatches tasks to Purple Agent (Worker).
+    4.  **Constraint:** If `CIS(Step_N) < 0.9`, the Green Agent *rejects* the code and forces a retry, preventing debt accumulation.
+
+### 6.2 The "Healer" Agent (Active Mitigation)
+*   **Concept:** Moving from "Passive Scoring" to "Active Mitigation" (Paper Section: Proactive Management).
+*   **Hypothesis:** If Contextual Debt is detected, can the Green Agent *fix* it?
+*   **Experiment:**
+    1.  Green Agent detects "Missing Rationale" (Low $R(\Delta)$).
+    2.  Green Agent triggers a "Healer Routine" that:
+        *   Analyzes the code.
+        *   Queries the `Intent Log`.
+        *   **Auto-Generates an ADR (Architectural Decision Record)** to restore context.
+    3.  Goal: Restore the CIS score without human intervention.
