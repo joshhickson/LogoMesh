@@ -37,24 +37,128 @@ Before starting the migration, ensure you are familiar with the "Reference Integ
 
 ---
 
-## 2. The RST & Read the Docs Upgrade
+## 2. The RST & Read the Docs Migration (Jules Handoff Packet)
 
-**Goal:** Create a professional, searchable documentation site.
+**Instructions for Josh:** Copy the entire block below and paste it into a new chat session with Jules (or another agent) to execute the migration.
 
-### 2.1 Prompting Jules (New Session Instructions)
-When starting a new session to execute this upgrade, paste the following context to Jules:
+***
 
-> "I am ready to execute the RST and Read the Docs migration plan.
-> 1.  Refer to the roadmap in `docs/04-Operations/Intent-Log/Technical/20251218-Roadmap-RST-Migration-Strategy.md`.
-> 2.  **Phase 1:** Install `sphinx`, `myst-parser`, and `sphinx-rtd-theme`. Set up the `docs/conf.py` to support both `.rst` and `.md` files (Hybrid Approach).
-> 3.  **Phase 2:** Verify that the 'Blockquote Headers' in our markdown files can be parsed or migrated to YAML frontmatter as described in the roadmap.
-> 4.  **Phase 3:** Create the root `index.rst` that defines the `toctree` (Table of Contents) structure, linking to our existing markdown folders.
-> 5.  **Phase 4:** Setup the local build command (`make html`) and fix any immediate warnings."
+### 🤖 AGENT PROMPT: Start RST Migration
 
-### 2.2 Addressing RST Concerns
-*   **"I'm worried about current link formatting":**
-    *   **Solution:** We will use **MyST-Parser**. This allows us to keep 95% of our files in **Markdown**. You do *not* need to rewrite everything in RST. Standard Markdown links `[Link](file.md)` work perfectly in MyST.
-    *   **The Hybrid Model:** We will only use `.rst` for the "glue" files (like `index.rst`) that require advanced Sphinx features (like toctrees). Content remains in Markdown.
+**Role:** You are the Documentation Architect.
+**Objective:** Migrate the current `docs/` folder (Markdown) to a Sphinx-based documentation site without breaking existing links or Git history.
+
+**Constraints:**
+1.  **Hybrid Approach:** Do NOT convert `.md` files to `.rst`. Use **MyST-Parser** to support Markdown natively.
+2.  **Package Manager:** Use `pnpm` for any JS dependencies (if needed), but Sphinx is Python-based. Use `pip install` for Sphinx tools.
+3.  **Reference Integrity:** Do not break existing relative links.
+
+**Execution Plan:**
+
+#### Phase 1: Environment Setup
+1.  Create `docs/requirements.txt` with:
+    ```text
+    sphinx>=7.0
+    sphinx-rtd-theme
+    myst-parser
+    sphinx-design
+    sphinxcontrib-mermaid
+    ```
+2.  Run `pip install -r docs/requirements.txt`.
+3.  Run `sphinx-quickstart docs` (Accept defaults, separate build/source directories = no).
+
+#### Phase 2: Configuration (`docs/conf.py`)
+Overwrite `docs/conf.py` with this configuration to enable MyST:
+
+```python
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
+
+project = 'LogoMesh'
+copyright = '2026, LogoMesh Team'
+author = 'Josh, Deepti, Alaa, Garrett, Samuel, Kuan, Mark'
+
+extensions = [
+    'myst_parser',
+    'sphinx_rtd_theme',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.viewcode',
+    'sphinx_design',
+    'sphinxcontrib.mermaid'
+]
+
+# MyST Configuration
+myst_enable_extensions = [
+    "colon_fence",
+    "deflist",
+]
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.md': 'markdown',
+}
+
+templates_path = ['_templates']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'node_modules']
+
+html_theme = 'sphinx_rtd_theme'
+html_static_path = ['_static']
+```
+
+#### Phase 3: Metadata Migration (Headers -> Frontmatter)
+Write a script `scripts/migrate_headers_to_frontmatter.js` that:
+1.  Scans all `.md` files in `docs/`.
+2.  Parses the "Blockquote Header" (e.g., `> **Status:** ACTIVE`).
+3.  Converts it into YAML Frontmatter at the very top of the file:
+    ```yaml
+    ---
+    status: ACTIVE
+    type: Plan
+    ---
+    ```
+4.  **Dry Run First:** Log the changes before writing.
+
+#### Phase 4: Structure (`docs/index.rst`)
+Create a root `index.rst` that maps our directory structure. Do not list every file; list the folders.
+
+```rst
+LogoMesh Documentation
+======================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Strategy
+
+   00-Strategy/index
+   00_CURRENT_TRUTH_SOURCE
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Architecture
+
+   01-Architecture/Specs/index
+   01-Architecture/Diagrams/index
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Engineering
+
+   02-Engineering/Setup/index
+   02-Engineering/Onboarding/index
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Operations & Logs
+
+   04-Operations/Intent-Log/index
+```
+
+#### Phase 5: Build & Verify
+1.  Run `sphinx-build -b html docs/ docs/_build/html`.
+2.  Check for warnings (broken links will show as warnings).
+3.  If successful, create a `.readthedocs.yaml` file in the root for deployment.
+
+***
 
 ---
 
