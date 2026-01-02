@@ -64,12 +64,14 @@ We will turn the Arena into a data generation engine to build the "Data Moat" me
 ## Part 3: Green Agent Upgrade (The Mathematical Judge)
 
 **Objective:** Move from "LLM-as-a-Judge" (Subjective) to "Contextual Integrity Score" (Objective).
+**Reference:** See [docs/04-Operations/Embedding-Vectors/](../../Embedding-Vectors/README.md) for detailed mathematical specifications.
 
 ### 3.1. Quantitative Scoring (The CIS Formula)
 We will implement the CIS formula defined in Section 3 of the paper:
 $$CIS(\Delta) = w_r \cdot R(\Delta) + w_a \cdot A(\Delta) + w_t \cdot T(\Delta)$$
 
 #### A. Rationale Integrity ($R$) - "The Why"
+*   **Spec:** [Rationale_Integrity.md](../../Embedding-Vectors/Rationale_Integrity.md)
 *   **Current:** LLM asks "Does this code match the prompt?"
 *   **Upgrade:** **Vector Cosine Similarity**.
     *   `Emb_Intent`: Embedding of the Requirements/Prompt.
@@ -78,6 +80,7 @@ $$CIS(\Delta) = w_r \cdot R(\Delta) + w_a \cdot A(\Delta) + w_t \cdot T(\Delta)$
     *   **Constraint:** If `Score < Threshold`, reject immediately.
 
 #### B. Architectural Integrity ($A$) - "The Structure"
+*   **Spec:** [Architectural_Integrity.md](../../Embedding-Vectors/Architectural_Integrity.md)
 *   **Current:** None / LLM guess.
 *   **Upgrade:** **Graph Centrality & "Illegal Edge" Detection**.
     *   Parse the code into a Dependency Graph ($G$).
@@ -86,6 +89,7 @@ $$CIS(\Delta) = w_r \cdot R(\Delta) + w_a \cdot A(\Delta) + w_t \cdot T(\Delta)$
     *   **Metric:** Penalize code that increases the "Centrality" of already-complex nodes (The "God Object" anti-pattern).
 
 #### C. Testing Integrity ($T$) - "The Verification"
+*   **Spec:** [Testing_Integrity.md](../../Embedding-Vectors/Testing_Integrity.md)
 *   **Current:** Code Coverage (%).
 *   **Upgrade:** **Semantic Coverage**.
     *   Embed the **Test Assertions** (`Emb_Assert`).
