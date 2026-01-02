@@ -42,14 +42,17 @@ This document serves as a "Grab Bag" of tasks for the team (Alaa, Garrett, Samue
 
 ## 3. Green Team Tasks (Evaluation)
 
-### 3.1 Vector Scoring Implementation
-*   **Context:** Migrate from LLM-based scoring to Vector-based scoring.
+**Primary Reference:** [Contextual Debt Paper (Submission Draft)](../../../../docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md)
+
+### 3.1 Vector Scoring Implementation (Section 3.1 - 3.3)
+*   **Context:** Migrate from LLM-based scoring to Vector-based scoring as defined in the **"Contextual Integrity Score ($CIS$)"** section of the IP paper.
 *   **Task:** Install `sentence-transformers` in the container.
-*   **Task:** Write a script `compare_vectors.py` that takes two text files (Intent, Code) and outputs their Cosine Similarity.
+*   **Task:** Write a script `compare_vectors.py` that takes two text files (Intent, Code) and outputs their **Cosine Similarity** (Rationale Integrity - $R(\Delta)$).
 *   **Integration:** Wire this script into the `ContextualIntegrityScorer` class.
 
-### 3.2 DBOM Generator
-*   **Task:** Create a JSON schema for the "Decision Bill of Materials" (DBOM).
+### 3.2 DBOM Generator (Section 4.2)
+*   **Context:** Implement the **"Decision Bill of Materials"** defined in Section 4.2 of the paper.
+*   **Task:** Create a JSON schema that matches the tuple: $DBOM_i = \langle H(\Delta_i), \vec{v}_{intent}, \text{Score}_{CIS}, \sigma_{Judge} \rangle$.
 *   **Task:** Implement a function that takes the Score Object and signs it (simulated signature for now) into a JSON file.
 
 ---
