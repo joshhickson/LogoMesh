@@ -6,7 +6,7 @@
 # Arena Team Task List (2026-01-01)
 
 ## Overview
-This document serves as a "Grab Bag" of tasks for the team (Alaa, Garrett, Samuel, Kuan, Josh, Deepti, Oleksander, Mark, Hadiza) to execute once the Agent Arena is fully operational on Lambda Cloud.
+This document serves as a "Grab Bag" of tasks for the team (Alaa, Garrett, Samuel, Kuan, Josh, Deepti, Oleksander, Mark) to execute once the Agent Arena is fully operational on Lambda Cloud.
 **Rule:** Pick a task, assign your name to it in the Git log, and execute.
 
 ---
@@ -83,27 +83,27 @@ This document serves as a "Grab Bag" of tasks for the team (Alaa, Garrett, Samue
 
 ---
 
-## 6. Reach Goals & Theoretical Experiments
+## 6. Future Work & Theoretical Extensions (Paper Only)
 
-**Status:** Optional / Time Permitting
-**Prioritization:** Execute only if primary tasks are complete by Jan 14.
+**Status:** **DO NOT BUILD for Competition.**
+**Reasoning:** These concepts (Active Mitigation) technically violate the "Assessor" neutrality rule of the Green Agent track. They should be included in the **Discussion/Future Work** section of the submission paper to demonstrate long-term vision, but implemented *after* the competition.
 
 ### 6.1 The "Architect" Agent (Zero-Shot Project Manager)
-*   **Concept:** A "0-1" innovation where the Green Agent acts as the **Orchestrator ($O$)** in the Glass Box Protocol (Section 4.1), managing the entire lifecycle of a project from a single high-level prompt.
+*   **Concept:** A "0-1" innovation where the Green Agent acts as the **Orchestrator ($O$)** in the Glass Box Protocol (Section 4.1).
 *   **Hypothesis:** By enforcing CIS constraints at *every step*, we can prevent the "Decay" usually seen in long-horizon agent tasks.
-*   **Experiment:**
-    1.  User provides: "Build a Todo App with React and SQLite."
-    2.  Green Agent decomposes this into 10 `Intent Vectors`.
-    3.  Green Agent dispatches tasks to Purple Agent (Worker).
-    4.  **Constraint:** If `CIS(Step_N) < 0.9`, the Green Agent *rejects* the code and forces a retry, preventing debt accumulation.
 
 ### 6.2 The "Healer" Agent (Active Mitigation)
 *   **Concept:** Moving from "Passive Scoring" to "Active Mitigation" (Paper Section: Proactive Management).
-*   **Hypothesis:** If Contextual Debt is detected, can the Green Agent *fix* it?
-*   **Experiment:**
-    1.  Green Agent detects "Missing Rationale" (Low $R(\Delta)$).
-    2.  Green Agent triggers a "Healer Routine" that:
-        *   Analyzes the code.
-        *   Queries the `Intent Log`.
-        *   **Auto-Generates an ADR (Architectural Decision Record)** to restore context.
-    3.  Goal: Restore the CIS score without human intervention.
+*   **Hypothesis:** If Contextual Debt is detected, can the Green Agent *fix* it by auto-generating ADRs?
+
+---
+
+## 7. Strategic Alignment (Security Focus)
+
+**Goal:** Ensure our "Type 2" (New Benchmark) submission also satisfies the "Type 3" (Lambda Security) requirements.
+
+*   **Task:** **Reframe Contextual Debt as Security Liability.**
+    *   **Action:** In the `README.md` and `Abstract`, explicitly state that "Contextual Debt is the root cause of logic vulnerabilities like IDOR and BOLA."
+    *   **Logic:** "Bugs happen when code is written wrong. Vulnerabilities happen when code is written right (syntax) but for the wrong reason (intent)."
+*   **Task:** **Highlight the Red Agent.**
+    *   **Action:** Ensure the Demo Video shows the Red Agent *generating* the test cases that the Green Agent uses. This proves we are doing "Red Teaming" (Lambda Goal).
