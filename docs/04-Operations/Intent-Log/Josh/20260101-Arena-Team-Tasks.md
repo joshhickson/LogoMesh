@@ -69,3 +69,14 @@ This document serves as a "Grab Bag" of tasks for the team (Alaa, Garrett, Samue
 ### 4.2 Log Aggregation
 *   **Task:** Configure the agents to write their logs to a shared volume (e.g., `/var/log/arena/`).
 *   **Goal:** Ensure that if the container crashes, the logs are preserved on the host instance for debugging.
+
+---
+
+## 5. Presentation & UI (The "Decay Dashboard")
+
+### 5.1 Node.js WebUI
+*   **Context:** In [Meeting 8 (Deepti's Request)](../../Team/20251227-Logomesh-Meeting-8-[Josh_Deepti].md), we identified that a GUI is critical for the "Presentation" score.
+*   **Task:** Build a lightweight Node.js/Express dashboard (or integrate into `onboarding/`).
+*   **Core Feature:** **Graph "CIS Score vs. Time (Steps)"**.
+    *   **Goal:** Differentiate from DeepEval by visually proving the **Decay Theorem** ($P(\text{Knowable})_t \approx e^{-(\lambda - \mu)t}$) defined in Section 3.4 of the [Contextual Debt Paper](../../../../docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md).
+    *   **Visual:** A line chart showing the CIS score dropping as the agent takes more steps without human review.
