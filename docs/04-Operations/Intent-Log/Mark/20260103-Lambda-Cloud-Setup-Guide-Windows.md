@@ -1,9 +1,9 @@
 > **Status:** ACTIVE
 > **Type:** Guide
 > **Context:**
-> *   [2026-01-01]: Step-by-step "Noob Guide" for connecting Windows 10 VS Code to Lambda Cloud (A100).
+> *   [2026-01-01]: Step-by-step Setup Guide for connecting Windows 10 VS Code to Lambda Cloud (A100).
 
-# Lambda Cloud "Noob Guide" (Windows 10 Edition)
+# Lambda Cloud Setup Guide (Windows 10 Edition)
 
 ## Executive Summary
 This guide explains how to connect your local Windows 10 machine to a powerful **NVIDIA A100** server on Lambda Cloud using **VS Code Remote SSH**. This approach (The "Pro Way") makes the remote server feel exactly like your local computer, allowing you to use GitHub Copilot, edit files, and run terminals seamlessly.

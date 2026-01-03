@@ -1,35 +1,35 @@
 > **Status:** ACTIVE
 > **Type:** Guide
 > **Context:**
-> *   [2026-01-01]: Step-by-step "Noob Guide" for connecting Windows 10 VS Code to Lambda Cloud (A100).
+> *   [2026-01-01]: Step-by-step Setup Guide for connecting MacOS VS Code to Lambda Cloud (A100).
 
-# Lambda Cloud "Noob Guide" (Windows 10 Edition)
+# Lambda Cloud Setup Guide (MacOS Edition)
 
 ## Executive Summary
-This guide explains how to connect your local Windows 10 machine to a powerful **NVIDIA A100** server on Lambda Cloud using **VS Code Remote SSH**. This approach (The "Pro Way") makes the remote server feel exactly like your local computer, allowing you to use GitHub Copilot, edit files, and run terminals seamlessly.
+This guide explains how to connect your local MacOS machine to a powerful **NVIDIA A100** server on Lambda Cloud using **VS Code Remote SSH**. This approach (The "Pro Way") makes the remote server feel exactly like your local computer, allowing you to use GitHub Copilot, edit files, and run terminals seamlessly.
 
 ---
 
-## Phase 1: The Keys (Windows 10)
+## Phase 1: The Keys (MacOS)
 You need an SSH Keypair (a digital "Passport") to enter the server.
 
-1.  **Open PowerShell:**
-    *   Press `Win + X` and select **Windows PowerShell**.
+1.  **Open Terminal:**
+    *   Press `Cmd + Space` and search for **Terminal**.
 
 2.  **Generate the Key:**
     *   Type the following command and press Enter:
-        ```powershell
-        ssh-keygen -t ed25519 -C "josh@windows"
+        ```bash
+        ssh-keygen -t ed25519 -C "josh@mac"
         ```
     *   Press **Enter** to accept the default file location.
     *   Press **Enter** twice to skip the passphrase (for convenience).
 
 3.  **Copy Your Public Key:**
-    *   Run this command to display your "Public Key" (the part you give to Lambda):
-        ```powershell
-        type $env:USERPROFILE\.ssh\id_ed25519.pub
+    *   Run this command to copy your "Public Key" (the part you give to Lambda) to your clipboard:
+        ```bash
+        pbcopy < ~/.ssh/id_ed25519.pub
         ```
-    *   **Copy** the entire output string (starts with `ssh-ed25519` and ends with `josh@windows`).
+    *   It is now in your clipboard, ready to paste.
 
 ---
 
@@ -39,7 +39,7 @@ You need an SSH Keypair (a digital "Passport") to enter the server.
 2.  **Add Your Key:**
     *   Go to **Settings** -> **SSH Keys**.
     *   Click **Add SSH Key**.
-    *   Paste the key you copied from PowerShell. Name it "Windows Laptop".
+    *   Paste the key from your clipboard (`Cmd + V`). Name it "MacBook".
 3.  **Launch Instance:**
     *   Go to **Instances** -> **Launch Instance**.
     *   Select **1x A100 (80GB)**. (Note: A100 is cheaper/more available than H100 and sufficient for our needs).
@@ -87,7 +87,7 @@ This connects your VS Code directly to the server.
 Since you are using the "Pro Way," GitHub Copilot works directly on the remote machine.
 
 1.  **Open the Remote Terminal:**
-    *   Press `Ctrl + ~` (tilde) to open the terminal panel.
+    *   Press `` Ctrl + ` `` (backtick) to open the terminal panel.
     *   Notice the prompt says `ubuntu@...` (You are on Linux!).
 
 2.  **Ask Copilot for Help:**
@@ -181,23 +181,3 @@ curl -X POST http://localhost:9000/actions/send_coding_task \
 *   **Model Errors:** `sudo docker logs vllm-server`
 
 **Note:** When you are done, **Terminate the instance** on the Lambda website! You are charged by the hour ($1-$2/hr) as long as it is "Running," even if you close VS Code.
-
----
-
-## Phase 6: Port Forwarding (Seeing the Website)
-
-If you run a web server (like `vLLM` on port 8000) on the remote machine, you can't see it on your local browser by default. You need to "forward" the port.
-
-1.  **Open Ports Tab:**
-    *   Press `Ctrl + ~` to open the panel.
-    *   Click the **PORTS** tab (next to TERMINAL).
-
-2.  **Add Port:**
-    *   Click **Forward a Port**.
-    *   Type the port number (e.g., `8000`).
-    *   Press Enter.
-
-3.  **View:**
-    *   You will see a "Local Address" (e.g., `localhost:8000`).
-    *   Click the **Globe Icon** next to it to open it in your browser.
-    *   Now `localhost:8000` on your laptop tunnels to `localhost:8000` on the A100!

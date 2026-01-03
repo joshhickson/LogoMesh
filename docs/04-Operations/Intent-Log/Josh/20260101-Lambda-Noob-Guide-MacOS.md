@@ -105,13 +105,79 @@ Since you are using the "Pro Way," GitHub Copilot works directly on the remote m
 
 ---
 
-## Phase 5: The Workflow (What to do next)
+## Phase 5: The Workflow (Operational Setup)
 
-Now that you are connected, follow the [Lambda Test Protocol](20260101-Lambda-Test-Protocol.md):
+Now that you are connected, follow these exact steps to deploy the "Arena" stack (vLLM + Green Agent + Purple Agent).
 
-1.  **Clone the Repo:** (Ask Copilot if you forget the command).
-2.  **Install Docker:** (The A100 usually comes with it, but verify with `docker --version`).
-3.  **Build the Image:** `docker build -f Dockerfile.gpu ...`
-4.  **Run the Agent:** `docker run --gpus all ...`
+### 1. Setup & Build
+Run these commands in your VS Code terminal (connected to the A100):
+
+```bash
+# 1. Configure Docker to use the GPU (Critical Step!)
+sudo nvidia-ctk runtime configure --runtime=docker
+sudo systemctl restart docker
+
+# 2. Build the Unified Docker Image
+# This builds 'polyglot-agent:latest' which contains all our code and dependencies.
+docker build -t polyglot-agent:latest -f Dockerfile.gpu .
+```
+
+### 2. Launch the Infrastructure
+We run 3 containers: One for the Brain (vLLM) and two for the Agents.
+
+```bash
+# 1. Launch vLLM (The Brain) - Port 8000
+# Uses Qwen 2.5 Coder 32B. Takes ~2 mins to load.
+sudo docker run --gpus all --network host --name vllm-server -d \
+  polyglot-agent:latest \
+  uv run vllm serve Qwen/Qwen2.5-Coder-32B-Instruct \
+  --port 8000 --trust-remote-code --max-model-len 16384
+
+# 2. Launch Green Agent (The Judge) - Port 9000
+# Note: Ignores "NVIDIA Driver not detected" warning (it's CPU-only client).
+sudo docker run -d --name green-agent --network host \
+  -e OPENAI_BASE_URL=http://localhost:8000/v1 \
+  -e OPENAI_API_KEY=EMPTY \
+  -e MODEL_NAME=Qwen/Qwen2.5-Coder-32B-Instruct \
+  polyglot-agent:latest \
+  uv run python main.py --role GREEN --port 9000
+
+# 3. Launch Purple Agent (The Defender) - Port 9001
+sudo docker run -d --name purple-agent --network host \
+  -e OPENAI_BASE_URL=http://localhost:8000/v1 \
+  -e OPENAI_API_KEY=EMPTY \
+  -e OPENAI_MODEL=Qwen/Qwen2.5-Coder-32B-Instruct \
+  polyglot-agent:latest \
+  uv run python main.py --role PURPLE --host localhost --port 9001
+```
+
+### 3. Verify & Test
+Check if everything is running:
+
+```bash
+# Check container status
+sudo docker ps
+
+# Check vLLM logs (Wait for "Application startup complete")
+sudo docker logs vllm-server | tail -n 20
+```
+
+**Run a Battle (Iron Sharpens Iron):**
+Trigger a test loop where Green challenges Purple.
+
+```bash
+curl -X POST http://localhost:9000/actions/send_coding_task \
+  -H "Content-Type: application/json" \
+  -d '{
+    "battle_id": "test-001",
+    "purple_agent_url": "http://localhost:9001"
+  }'
+```
+
+### 4. Logs & Debugging
+*   **Arena Logs:** Currently, battle results are printed to the Green Agent's console.
+    *   View: `sudo docker logs green-agent`
+*   **Purple Logic:** `sudo docker logs purple-agent`
+*   **Model Errors:** `sudo docker logs vllm-server`
 
 **Note:** When you are done, **Terminate the instance** on the Lambda website! You are charged by the hour ($1-$2/hr) as long as it is "Running," even if you close VS Code.

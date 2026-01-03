@@ -77,14 +77,26 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             )
             purple_response.raise_for_status()
             purple_result = purple_response.json()
+            print(f"DEBUG: Full Purple Result: {json.dumps(purple_result, indent=2)}")
             
             # Extract code from Purple's response (simplified extraction for POC)
             # In a real scenario, we'd parse the JSON from the text part.
-            purple_text = purple_result.get("result", {}).get("message", {}).get("parts", [{}])[0].get("text", "")
+            # Structure: result -> status -> message -> parts[0] -> text
+            purple_text = purple_result.get("result", {}).get("status", {}).get("message", {}).get("parts", [{}])[0].get("text", "")
+            print(f"DEBUG: Raw Purple Text: {purple_text}")
             
             # Try to parse the JSON inside the text
             try:
-                purple_data = json.loads(purple_text)
+                # Clean up markdown code blocks if present
+                clean_text = purple_text.strip()
+                if clean_text.startswith("```json"):
+                    clean_text = clean_text[7:]
+                elif clean_text.startswith("```"):
+                    clean_text = clean_text[3:]
+                if clean_text.endswith("```"):
+                    clean_text = clean_text[:-3]
+                
+                purple_data = json.loads(clean_text.strip())
             except json.JSONDecodeError:
                 # Fallback if Purple didn't return pure JSON
                 purple_data = {
@@ -144,34 +156,7 @@ Provide a proof-of-concept exploit if possible."""
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-                        "method": "message/send",
-                        "params": {
-                            "message": {
-                                "messageId": f"attack-{request.battle_id}",
-                                "role": "user",
-                                "parts": [{"type": "text", "text": attack_prompt}]
-                            }
-                        },
-                        "id": request.battle_id
-                    },
-                    headers={"Content-Type": "application/json"}
-                )
-                red_response.raise_for_status()
-                red_result = red_response.json()
 
-            return {
-                "battle_id": request.battle_id,
-                "task": task,
-                "purple_response": purple_result,
-                "red_response": red_result
-            }
-
-    except httpx.TimeoutException:
-        raise HTTPException(status_code=408, detail="Request to Agent timed out.")
-    except httpx.HTTPStatusError as e:
-        raise HTTPException(status_code=e.response.status_code, detail=f"Error from Agent: {e}")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An unknown error occurred: {str(e)}")
 
 @app.post("/actions/report_result")
 async def report_result_action(request: ReportResultRequest):
