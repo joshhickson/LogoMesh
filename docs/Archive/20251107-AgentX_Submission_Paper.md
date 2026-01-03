@@ -1,5 +1,7 @@
-> **Status:** SNAPSHOT
-> **Type:** Research
+---
+status: SNAPSHOT
+type: Research
+---
 > **Context:**
 > * [2025-12-17]: Historical submission draft.
 

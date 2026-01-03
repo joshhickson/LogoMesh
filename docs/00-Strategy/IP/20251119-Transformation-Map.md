@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Plan
+---
+status: ACTIVE
+type: Plan
+---
 > **Context:**
 > * [2025-12-17]: Commercial strategies (Copyright/SaaS) mentioned are PAUSED to focus on AgentX competition.
 

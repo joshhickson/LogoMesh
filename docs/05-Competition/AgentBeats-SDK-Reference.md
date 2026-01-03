@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Guide
+---
+status: ACTIVE
+type: Guide
+---
 > **Context:** AgentBeats SDK, Green Agent, Competition
 
 # AgentBeats SDK Reference

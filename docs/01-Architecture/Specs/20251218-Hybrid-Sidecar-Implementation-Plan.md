@@ -1,5 +1,7 @@
-> **Status:** DRAFT
-> **Type:** Plan
+---
+status: DRAFT
+type: Plan
+---
 > **Context:**
 > *   [2025-12-18]: Implementation plan for the Hybrid Sidecar Architecture, explicitly aligned with the "Unified Agentic Defense" strategy and legacy assets.
 > **Superseded By:** -

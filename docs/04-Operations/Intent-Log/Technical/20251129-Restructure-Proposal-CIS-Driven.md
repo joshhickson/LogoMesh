@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Plan
+---
+status: ACTIVE
+type: Plan
+---
 > **Context:**
 > * [2025-12-17]: Executed proposal for current folder structure.
 

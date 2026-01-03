@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Plan
+---
+status: ACTIVE
+type: Plan
+---
 > **Context:**
 > *   [2026-01-01]: Task list for the team to execute once the Agent Arena is live on Lambda.
 

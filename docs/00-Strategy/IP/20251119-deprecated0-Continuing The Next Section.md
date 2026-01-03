@@ -1,5 +1,7 @@
-> **Status:** DEPRECATED
-> **Type:** Research
+---
+status: DEPRECATED
+type: Research
+---
 > **Context:**
 > * [2025-12-17]: Superseded by the new Contextual Debt Specification.
 > **Superseded By:** [docs/01-Architecture/Specs/Contextual-Debt-Spec.md](docs/01-Architecture/Specs/Contextual-Debt-Spec.md)

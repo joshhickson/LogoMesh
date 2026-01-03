@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Guide
+---
+status: ACTIVE
+type: Guide
+---
 > **Context:**
 > *   [2025-12-31]: A step-by-step execution guide for Porting the Purple Agent (Phase 5).
 

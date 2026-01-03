@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Spec
+---
+status: ACTIVE
+type: Spec
+---
 > **Context:**
 > * [2025-12-17]: The Core Data Model Spec.
 

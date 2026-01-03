@@ -1,5 +1,7 @@
-> **Status:** DEPRECATED
-> **Type:** Research
+---
+status: DEPRECATED
+type: Research
+---
 > **Context:**
 > * [2025-12-17]: Copyright-specific version PAUSED.
 > **Superseded By:** [docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md](docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md)

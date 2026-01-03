@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Guide
+---
+status: ACTIVE
+type: Guide
+---
 > **Context:**
 > * [2025-12-17]: Reference integrity standards.
 

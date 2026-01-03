@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Guide
+---
+status: ACTIVE
+type: Guide
+---
 > **Context:**
 > *   [2026-01-01]: Step-by-step "Noob Guide" for connecting Windows 10 VS Code to Lambda Cloud (A100).
 

@@ -1,5 +1,7 @@
-> **Status:** DEPRECATED
-> **Type:** Research
+---
+status: DEPRECATED
+type: Research
+---
 > **Context:**
 > * [2025-12-17]: Ancient research.
 

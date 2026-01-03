@@ -1,5 +1,7 @@
-> **Status:** DEPRECATED
-> **Type:** Guide
+---
+status: DEPRECATED
+type: Guide
+---
 > **Context:**
 > * [2025-12-17]: Commercial legal checklist PAUSED.
 

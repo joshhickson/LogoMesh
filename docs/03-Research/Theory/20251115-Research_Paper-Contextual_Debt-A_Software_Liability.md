@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Research
+---
+status: ACTIVE
+type: Research
+---
 > **Context:**
 > * [2025-12-17]: The Definitive Research Paper (Core IP).
 

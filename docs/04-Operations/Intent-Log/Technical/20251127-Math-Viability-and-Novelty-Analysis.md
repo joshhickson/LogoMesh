@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Research
+---
+status: ACTIVE
+type: Research
+---
 > **Context:**
 > * [2025-12-17]: Novelty validation for competition.
 

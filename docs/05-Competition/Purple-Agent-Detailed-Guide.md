@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Guide
+---
+status: ACTIVE
+type: Guide
+---
 > **Context:** AgentBeats, Purple Agent, Assessee, Phase 2
 
 # Purple Agent (Assessee) Detailed Guide

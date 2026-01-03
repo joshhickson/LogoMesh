@@ -1,5 +1,7 @@
-> **Status:** DEPRECATED
-> **Type:** Log
+---
+status: DEPRECATED
+type: Log
+---
 > **Context:**
 > * [2025-12-17]: Registration manifest PAUSED.
 

@@ -1,5 +1,7 @@
-> **Status:** SNAPSHOT
-> **Type:** Log
+---
+status: SNAPSHOT
+type: Log
+---
 > **Context:**
 > * [2025-12-17]: Technical graph generation log.
 

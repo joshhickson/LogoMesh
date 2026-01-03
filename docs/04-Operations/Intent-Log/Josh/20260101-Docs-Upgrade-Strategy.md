@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Plan
+---
+status: ACTIVE
+type: Plan
+---
 > **Context:**
 > *   [2026-01-01]: Strategy for migrating documentation to Sphinx/RST and cleaning up the `onboarding/` directory.
 

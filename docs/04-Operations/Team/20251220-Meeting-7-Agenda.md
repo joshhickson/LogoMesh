@@ -1,5 +1,7 @@
-> **Status:** DRAFT
-> **Type:** Agenda
+---
+status: DRAFT
+type: Agenda
+---
 > **Context:**
 > *   [2025-12-20]: Agenda for Meeting #7, focusing on onboarding a new teammate and reviewing the "Option B" architecture decision with Garrett.
 > **Superseded By:** -

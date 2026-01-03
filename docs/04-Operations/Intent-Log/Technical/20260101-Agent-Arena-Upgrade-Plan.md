@@ -1,5 +1,7 @@
-> **Status:** DRAFT
-> **Type:** Plan
+---
+status: DRAFT
+type: Plan
+---
 > **Context:**
 > *   [2026-01-01]: Upgrade Strategy for the "Agent Arena" (Red Team Infrastructure) and "Green Agent" (Judge) based on the "Contextual Debt" IP Paper.
 

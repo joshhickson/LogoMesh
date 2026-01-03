@@ -1,5 +1,7 @@
-> **Status:** REVIEW
-> **Type:** Log
+---
+status: REVIEW
+type: Log
+---
 > **Context:**
 > *   [2025-12-21]: Clarifying questions for Mark (Kuan Zhou) based on the review of the `agentbeats-lambda` repository.
 

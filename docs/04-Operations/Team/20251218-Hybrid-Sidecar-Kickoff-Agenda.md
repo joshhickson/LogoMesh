@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Guide
+---
+status: ACTIVE
+type: Guide
+---
 > **Context:**
 > *   [2025-12-18]: Meeting agenda for the team kickoff of the Hybrid Sidecar sprint.
 > **Superseded By:** -

@@ -1,5 +1,7 @@
-> **Status:** SNAPSHOT
-> **Type:** Log
+---
+status: SNAPSHOT
+type: Log
+---
 > **Context:**
 > * [2025-12-17]: Historical status.
 > **Superseded By:** [docs/00_CURRENT_TRUTH_SOURCE.md](docs/00_CURRENT_TRUTH_SOURCE.md)

@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Log
+---
+status: ACTIVE
+type: Log
+---
 > **Context:**
 > *   [2025-12-30]: Execution log for Phase 4 (Green Agent Porting).
 

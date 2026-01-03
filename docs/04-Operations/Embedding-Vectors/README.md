@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Plan
+---
+status: ACTIVE
+type: Plan
+---
 > **Context:**
 > *   [2025-12-31]: Roadmap for upgrading CIS from qualitative to quantitative.
 

@@ -1,5 +1,7 @@
-> **Status:** SNAPSHOT
-> **Type:** Log
+---
+status: SNAPSHOT
+type: Log
+---
 > **Context:**
 > * [2025-12-17]: Working log. Contains outdated Auth0 references (Auth0 is REJECTED).
 
