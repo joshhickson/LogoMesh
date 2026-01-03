@@ -50,6 +50,8 @@ type: Spec
 ### Operations
 *   [Master Log](../04-Operations/Intent-Log/Technical/20251231-Polyglot-Consolidation-Master-Log.md): History of the Polyglot merge.
 *   [Lambda Test Protocol](../04-Operations/Intent-Log/Josh/20260101-Lambda-Test-Protocol.md): How to run the test.
+*   [Instance Restart Guide](../04-Operations/Intent-Log/Josh/20260103-Instance-Restart-Guide.md): **CRITICAL** procedure for recovering the ephemeral H100 environment.
+*   [Team Briefing Draft](../04-Operations/Intent-Log/Josh/20260101-Team-Briefing-Draft.md): Announcement of the "Red Zone" sprint.
 
 ---
 
@@ -58,4 +60,5 @@ type: Spec
 *   **Deprecated:** `PROJECT_PLAN.md` (Old commercial strategy).
 *   **Deprecated:** "Auth0 Sponsorship" (Expired/Irrelevant).
 *   **Deprecated:** `docs/04-Operations/green-agent/`, `docs/04-Operations/purple-agent/`, `docs/04-Operations/agentbeats-lambda/` (Code migrated to `src/`).
+*   **Deprecated:** `Llama-3-70B` and `gpt-oss-20b` (Replaced by `Qwen/Qwen2.5-Coder-32B-Instruct` for 16k context compliance).
 *   **Pivot:** Moved from "SaaS Tool" to "Competition Benchmark."
