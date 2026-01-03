@@ -10,7 +10,7 @@
 ### What We Have Verified (Done)
 *   **Submission Format:** The `SCENARIO_SPECIFICATIONS.md` file in Kuan's repo explicitly defines the directory structure (`submissions/{team}/{scenario}`), the required files (`plugin.py`, `scenario.toml`), and the "Success Criteria" (Attack Succeeded JSON).
 *   **Agent Architecture:** The Lambda track *mandates* the use of the `ScenarioPlugin` class structure. This is the "Smoking Gun" evidence that disqualifies Samuel's CLI-based agent approach.
-*   **Model Limits:** CONFIRMED: The 20B requirement was a placeholder. The Lambda Track target is **Llama-3-70B (Quantized)** running on vLLM, which fits the 80GB H100 constraint.
+*   **Model Limits:** **PENDING REVIEW:** The 20B requirement was a placeholder. The Lambda Track target is likely **Llama-3-70B (Quantized)** running on vLLM, which fits the 80GB H100 constraint. However, the rule "gpt-oss-20b (or equivalent)" is ambiguous. We must verify if "equivalent" allows for other models (e.g., Qwen-2.5-72B, Mistral-Large) that fit the hardware.
 
 ### What Was Missing (Resolved)
 *   **Custom Track Rules:** We have resolved the "Green Track" requirements (see Section 2).
@@ -72,7 +72,7 @@ We have confirmed the following scenarios are present in `external/TEAM/`:
 2.  **SolarSpike** (`solarspike`): Indirect Prompt Injection / Data Poisoning.
 3.  **DebugDump** (`debugdump`): Prompt Extraction / Info Disclosure.
 4.  **MedicalLeak** (`example_medical`): PII Extraction (Example Plugin).
-*   **Missing:** "AdAttack" (Not found in repo).
+*   **Missing:** "AdAttack" (Not found in repo). **UPDATE:** "AdAttack" is not a missing file but a **Specification Blueprint** provided by Lambda as an example for teams to implement. It is not required if we have 3 other custom scenarios, but implementing it is recommended for easy points.
 
 ## 4. Strategic Implications (Consolidation)
 

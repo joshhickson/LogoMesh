@@ -6,6 +6,16 @@
 
 ---
 
+## Agent Protocol: "Ask for Instructor"
+
+**At the beginning of every session:**
+1.  **Ask the user for their name** (e.g., "Josh", "Deepti", "Garrett").
+2.  **Locate their Workspace:** Navigate to `docs/04-Operations/Intent-Log/<Name>/`.
+3.  **Check for Orders:** Read the `README.md` or latest plan in that folder.
+4.  **Log Your Work:** Save any session logs or transient plans into that specific folder.
+
+---
+
 ## Documentation Triggers
 
 | Change Type | Required Action |
@@ -34,6 +44,7 @@ docs/
 ├── 02-Engineering/              # Setup, verification
 ├── 03-Research/                 # Analysis, novelty audits
 ├── 04-Operations/               # Logs, meeting minutes, team docs
+│   └── Intent-Log/              # Team Workspaces (Josh, Deepti, etc.)
 └── TEMPLATE_DOC.md              # Copy this for new docs
 ```
 

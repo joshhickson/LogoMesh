@@ -23,3 +23,8 @@ We need the Green Agent to orchestrate a "Red Team" phase (sending the code to a
 The Custom Track has strict technical guidelines (See [Requirements Matrix](../../05-Competition/20251221-Submission-Requirements-Matrix.md)).
 *   **Question:** Can you ensure the ported `GreenAgent` supports the mandatory CLI arguments: `--host`, `--port`, and `--card-url`?
 *   **Context:** The Docker container entrypoint must accept these specific flags to run on the AgentBeats platform.
+
+## 5. Logistics (New)
+*   **Question (Critical):** How does the Green Agent authenticate with the platform? (Token, API Key, mTLS?) This is currently listed as "Unverified" in our matrix.
+*   **Question:** For the required 3-minute demo video, do we upload a file or provide a hosted link (YouTube/Vimeo)?
+*   **Question:** Which specific file contains the A2A HTTP server implementation? We need to verify the `/v1/evaluate` endpoint.

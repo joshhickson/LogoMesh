@@ -1,24 +1,42 @@
-# Use a compatible Node.js 16 image
+# Use Node.js 20 as the base for the "Polyglot" environment
+# We need Node for the Sidecars/Workers and Python for the Agents.
 FROM node:20-bookworm
 
-# Install build essentials for native addons like isolated-vm
-RUN apt-get update && apt-get install -y python3 make g++ --no-install-recommends && rm -rf /var/lib/apt/lists/*
+# 1. Install Python 3.12 and uv
+# Using python:3.12-bookworm image pattern or installing manually.
+# Since we are based on debian bookworm, we can install python3.
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
+    && rm -rf /var/lib/apt/lists/*
 
-# Enable pnpm
-RUN corepack enable
+# Install uv (The Python Package Manager)
+# Force install to /usr/local/bin so it's in the PATH for everyone
+RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR="/usr/local/bin" sh
 
-# Set the working directory
+# 2. Setup Workspace
 WORKDIR /app
 
-# Copy ALL files (respecting .dockerignore)
-COPY . .
-
-# Run pnpm install. This will correctly link the workspace.
+# 3. Node.js Dependencies (Sidecars)
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY packages/ packages/
+# We need pnpm
+RUN npm install -g pnpm
 RUN pnpm install --frozen-lockfile
 
-# Run the build command for the entire monorepo.
-RUN pnpm run build
+# 4. Python Dependencies (Agents)
+# Copy config files first
+COPY pyproject.toml uv.lock README.md ./
+# Sync dependencies
+RUN uv sync --frozen
 
-# This is a generic CMD. You will need to override this in the
-# docker-compose.yml for each specific service.
-CMD ["node"]
+# 5. Copy Source Code
+COPY src/ src/
+COPY scenarios/ scenarios/
+COPY main.py .
+
+# 6. Runtime Configuration
+# The entrypoint is handled by the CMD or ENTRYPOINT at runtime.
+# Example: python3 main.py --role GREEN
+CMD ["python3", "main.py", "--help"]
