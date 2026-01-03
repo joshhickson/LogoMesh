@@ -46,6 +46,7 @@ This document serves as a "Grab Bag" of tasks for the team (Alaa, Garrett, Samue
 
 ### 3.1 Vector Scoring Implementation (Section 3.1 - 3.3)
 *   **Context:** Migrate from LLM-based scoring to Vector-based scoring as defined in the **"Contextual Integrity Score ($CIS$)"** section of the IP paper.
+*   **Reference:** See `docs/04-Operations/Embedding-Vectors/` for the full mathematical roadmap (Rationale, Architectural, and Testing Integrity).
 *   **Task:** Install `sentence-transformers` in the container.
 *   **Task:** Write a script `compare_vectors.py` that takes two text files (Intent, Code) and outputs their **Cosine Similarity** (Rationale Integrity - $R(\Delta)$).
 *   **Integration:** Wire this script into the `ContextualIntegrityScorer` class.
@@ -54,6 +55,20 @@ This document serves as a "Grab Bag" of tasks for the team (Alaa, Garrett, Samue
 *   **Context:** Implement the **"Decision Bill of Materials"** defined in Section 4.2 of the paper.
 *   **Task:** Create a JSON schema that matches the tuple: $DBOM_i = \langle H(\Delta_i), \vec{v}_{intent}, \text{Score}_{CIS}, \sigma_{Judge} \rangle$.
 *   **Task:** Implement a function that takes the Score Object and signs it (simulated signature for now) into a JSON file.
+
+### 3.3 The "Filing System" (Session Persistence) - **CRITICAL PRIORITY (P0)**
+*   **Context:** **COMPETITION SURVIVAL REQUIREMENT.** If the agent crashes mid-battle during the AgentBeats competition human judge's evaluation, we get a score of 0. We cannot rely on RAM.
+*   **Task:** Implement a robust "Crash-Proof" filing system immediately.
+*   **Mechanism:**
+    *   **Write-Ahead Logging:** Every A2A message must be appended to `data/battles/{battle_id}/transcript.jsonl` *before* processing.
+    *   **Recovery Mode:** On startup, the Green Agent must check for unfinished battles and resume them.
+*   **Goal:** Zero data loss even if the container is killed by OOM (Out of Memory).
+
+### 3.4 Vector Consistency Validation
+*   **Context:** We cannot trust the vector math blindly. We need to prove that the scoring is consistent and aligns with human intuition.
+*   **Task:** Create a test suite `tests/vector_consistency.py` with a "Golden Set" of known "Good" vs "Bad" code/intent pairs.
+*   **Goal:** Verify that $CIS(\text{Good}) > CIS(\text{Bad})$ consistently across different embedding models.
+*   **Metric:** Achieve a Pearson correlation > 0.8 with human labels.
 
 ---
 
@@ -69,6 +84,13 @@ This document serves as a "Grab Bag" of tasks for the team (Alaa, Garrett, Samue
 ### 4.2 Log Aggregation
 *   **Task:** Configure the agents to write their logs to a shared volume (e.g., `/var/log/arena/`).
 *   **Goal:** Ensure that if the container crashes, the logs are preserved on the host instance for debugging.
+
+### 4.3 Model Benchmarking & Selection
+*   **Context:** We are currently using `Qwen/Qwen2.5-Coder-32B-Instruct`.
+    *   **CONSTRAINT:** We have strictly limited the context window to **16,384 tokens** (`--max-model-len 16384`) to prevent OOM on the H100. All scenarios must fit within this budget.
+    *   **DEPRECATED:** Do NOT use `Llama-3-70B` or `gpt-oss-20b`. They are too large or outdated.
+*   **Task:** Run the `debugdump` scenario with different models (e.g., Llama-3, DeepSeek-Coder) and compare execution time vs. code quality.
+*   **Task:** Establish a "Leaderboard" protocol where we can swap the Purple Agent's model to test "Model vs Model" dynamics (e.g., Qwen vs. GPT-4).
 
 ---
 

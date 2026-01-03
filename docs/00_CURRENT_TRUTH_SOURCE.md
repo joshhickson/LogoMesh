@@ -15,10 +15,11 @@
 
 ## 2. Immediate Tactical Goals (The "What")
 
-*   **Lambda Test:** Prove the Green Agent runs on H100 GPU in Lambda Cloud.
+*   **Lambda Test:** **COMPLETE (2026-01-03).** Green Agent successfully deployed on H100 GPU in Lambda Cloud.
 *   **Vector Scoring:** Implement `Rationale Integrity` using Cosine Similarity (not just LLM vibes).
 *   **Adversarial Defense:** Prevent "Context Stuffing" using KL Divergence.
 *   **Documentation:** Migrate to RST/ReadTheDocs for professional presentation.
+*   **Session Persistence:** **CRITICAL (P0).** Implement crash-proof filing system for battle logs.
 
 ## 3. Team Workspaces & Roles (The "Who")
 
@@ -54,4 +55,5 @@
 
 *   **Deprecated:** `PROJECT_PLAN.md` (Old commercial strategy).
 *   **Deprecated:** "Auth0 Sponsorship" (Expired/Irrelevant).
+*   **Deprecated:** `docs/04-Operations/green-agent/`, `docs/04-Operations/purple-agent/`, `docs/04-Operations/agentbeats-lambda/` (Code migrated to `src/`).
 *   **Pivot:** Moved from "SaaS Tool" to "Competition Benchmark."
