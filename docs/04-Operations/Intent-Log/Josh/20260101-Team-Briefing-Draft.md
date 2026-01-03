@@ -40,7 +40,7 @@ To streamline this sprint, I have generated personal workspaces for everyone in 
 
 ### 4. 🎯 Immediate Task List (The "Grab Bag")
 I have created a master task list for the sprint:
-**[👉 View the Arena Team Task List](../20260101-Arena-Team-Tasks.md)**
+**[👉 View the Arena Team Task List](20260101-Arena-Team-Tasks.md)**
 
 **Top Priorities:**
 1.  **Samuel/Garrett:** **CRITICAL (P0)** - Implement "Session Persistence" (Write-Ahead Logging). If the agent crashes mid-battle, we lose the competition. This is our #1 engineering risk.
