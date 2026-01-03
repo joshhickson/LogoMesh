@@ -30,7 +30,9 @@ Before renting the instance, ensure the Docker image is ready.
 
 1.  **Instance Selection:**
     *   **Region:** us-east-1 (or cheapest available).
-    *   **Type:** 1x H100 (80GB VRAM) or A100 (80GB VRAM).
+    *   **Type:** **1x H100 (80 GB PCIe)** is the recommended choice ($2.49/hr).
+        *   *Alternative:* 1x H100 (80 GB SXM5) if PCIe is unavailable ($3.29/hr).
+        *   *Warning:* Avoid GH200 (ARM64) to prevent Docker architecture conflicts.
     *   **OS:** Ubuntu 22.04 LTS.
 
 2.  **Environment Setup (On Instance):**

@@ -42,9 +42,14 @@ You need an SSH Keypair (a digital "Passport") to enter the server.
     *   Paste the key from your clipboard (`Cmd + V`). Name it "MacBook".
 3.  **Launch Instance:**
     *   Go to **Instances** -> **Launch Instance**.
-    *   Select **1x A100 (80GB)**. (Note: A100 is cheaper/more available than H100 and sufficient for our needs).
-    *   **Region:** Choose the cheapest available (e.g., Texas or Utah).
+    *   Select **1x H100 (80 GB PCIe)**.
+        *   *Why?* It matches the competition hardware (H100), has the full **80GB VRAM** required for large models, and is cheaper ($2.49/hr) than the SXM5 version.
+        *   *Avoid:* Do **not** select the GH200 (ARM64) unless you want to debug complex architecture issues.
+    *   **Region:** Choose the cheapest available.
     *   **Filesystem:** Don't attach a filesystem yet (keep it simple).
+    *   **Base Image:** Use the default **Lambda Stack 22.04** (Ubuntu 22.04).
+        *   *Why?* It comes pre-installed with the **NVIDIA Container Toolkit**, which is critical for Docker to see the GPU.
+        *   *Note:* Avoid "Ubuntu Server" (bare metal) unless you want to install drivers manually (painful).
     *   Click **Launch**.
 4.  **Wait & Copy IP:**
     *   Wait ~2-5 minutes until the status is **Running**.
