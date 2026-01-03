@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Guide
+---
+status: ACTIVE
+type: Guide
+---
 > **Context:**
 > *   [2025-12-29]: A step-by-step execution guide for Porting the Green Agent (Phase 4). Created to provide a deterministic source of truth for local execution.
 

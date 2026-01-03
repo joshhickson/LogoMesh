@@ -1,5 +1,7 @@
-> **Status:** ARCHIVED
-> **Type:** Plan
+---
+status: ARCHIVED
+type: Plan
+---
 > **Context:**
 > * [2025-12-17]: Structurally critical historical reference. Superseded by Contextual Discovery Plan, but retained for referential integrity.
 

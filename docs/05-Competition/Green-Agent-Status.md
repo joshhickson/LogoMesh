@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Log
+---
+status: ACTIVE
+type: Log
+---
 > **Context:** Green Agent, Implementation Progress
 
 # Green Agent Implementation Status

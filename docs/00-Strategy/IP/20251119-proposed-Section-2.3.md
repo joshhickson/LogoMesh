@@ -1,5 +1,7 @@
-> **Status:** DEPRECATED
-> **Type:** Spec
+---
+status: DEPRECATED
+type: Spec
+---
 > **Context:**
 > * [2025-12-17]: Merged into Contextual Debt Spec.
 > **Superseded By:** [docs/01-Architecture/Specs/Contextual-Debt-Spec.md](docs/01-Architecture/Specs/Contextual-Debt-Spec.md)

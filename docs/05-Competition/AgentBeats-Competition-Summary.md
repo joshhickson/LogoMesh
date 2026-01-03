@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Guide
+---
+status: ACTIVE
+type: Guide
+---
 > **Context:** AgentBeats, Competition, Requirements
 
 # AgentX-AgentBeats Competition Summary

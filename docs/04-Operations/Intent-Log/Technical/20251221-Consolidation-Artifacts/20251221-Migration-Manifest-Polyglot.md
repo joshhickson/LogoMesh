@@ -1,5 +1,7 @@
-> **Status:** DRAFT
-> **Type:** Spec
+---
+status: DRAFT
+type: Spec
+---
 > **Context:**
 > *   [2025-12-21]: Technical manifest for executing the "Polyglot" consolidation. Lists specific file moves and deletions.
 

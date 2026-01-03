@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Log
+---
+status: ACTIVE
+type: Log
+---
 > **Context:**
 > *   [2025-12-27]: Log of the "Polyglot" scaffolding process, documenting file creation and next steps.
 

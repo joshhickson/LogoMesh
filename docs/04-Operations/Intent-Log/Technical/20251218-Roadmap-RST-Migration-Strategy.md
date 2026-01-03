@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Plan
+---
+status: ACTIVE
+type: Plan
+---
 > **Context:**
 > * [2025-12-18]: Strategic roadmap for the upcoming migration to Sphinx/ReadTheDocs. Created by Jules to guide future agents.
 

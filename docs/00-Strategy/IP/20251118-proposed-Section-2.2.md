@@ -1,5 +1,7 @@
-> **Status:** DEPRECATED
-> **Type:** Research
+---
+status: DEPRECATED
+type: Research
+---
 > **Context:**
 > * [2025-12-17]: The mathematical formalization was merged into the Copyright Edition. Note: While the Copyright strategy is PAUSED, that document remains the primary reference for the CIS formulas.
 > **Superseded By:** [docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md)

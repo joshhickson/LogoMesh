@@ -1,5 +1,7 @@
-> **Status:** REVIEW
-> **Type:** Log
+---
+status: REVIEW
+type: Log
+---
 > **Context:**
 > *   [2025-12-21]: Review of the imported `agentbeats-lambda` repository (Kuan Zhou) to assess its alignment with the Hybrid Sidecar / Dual Track strategy.
 

@@ -1,5 +1,7 @@
-> **Status:** DRAFT
-> **Type:** Plan
+---
+status: DRAFT
+type: Plan
+---
 > **Context:**
 > *   [2025-12-21]: Proposed strategy to consolidate agent implementations into a single "Polyglot" repository that supports both the Lambda Track (Python) and Custom Track (Node.js/Python Hybrid).
 

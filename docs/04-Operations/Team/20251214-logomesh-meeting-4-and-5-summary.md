@@ -1,5 +1,7 @@
-> **Status:** SNAPSHOT
-> **Type:** Minutes
+---
+status: SNAPSHOT
+type: Minutes
+---
 > **Context:** A meeting to discuss competition strategy for the LogoMesh Project.
 
 # LogoMesh Meeting Summary

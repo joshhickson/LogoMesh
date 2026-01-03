@@ -1,5 +1,7 @@
-> **Status:** DRAFT
-> **Type:** Spec
+---
+status: DRAFT
+type: Spec
+---
 > **Context:**
 > *   [2025-12-31]: Definition of Current vs. Future state for Testing Integrity.
 

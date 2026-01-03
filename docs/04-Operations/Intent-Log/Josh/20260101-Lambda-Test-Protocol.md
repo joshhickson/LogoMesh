@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Plan
+---
+status: ACTIVE
+type: Plan
+---
 > **Context:**
 > *   [2026-01-01]: Protocol for the first end-to-end test of the Polyglot Agent on Lambda Cloud.
 

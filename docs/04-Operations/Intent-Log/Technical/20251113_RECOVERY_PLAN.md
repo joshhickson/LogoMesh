@@ -1,5 +1,7 @@
-> **Status:** SNAPSHOT
-> **Type:** Plan
+---
+status: SNAPSHOT
+type: Plan
+---
 > **Context:**
 > * [2025-12-17]: Superseded recovery plan.
 

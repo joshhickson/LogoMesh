@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Guide
+---
+status: ACTIVE
+type: Guide
+---
 > **Context:** AgentBeats, Green Agent, Assessor, Phase 1, Benchmark
 
 # Green Agent (Assessor) Detailed Guide

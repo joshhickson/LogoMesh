@@ -1,5 +1,7 @@
-> **Status:** REVIEW
-> **Type:** Log
+---
+status: REVIEW
+type: Log
+---
 > **Context:**
 > *   [2025-12-21]: Clarifying questions for Samuel based on the review of the `green-agent` directory and new submission requirements.
 

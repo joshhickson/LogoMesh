@@ -1,5 +1,7 @@
-> **Status:** REVIEW
-> **Type:** Log
+---
+status: REVIEW
+type: Log
+---
 > **Context:**
 > *   [2025-12-22]: Feedback from Alaa Elobaid regarding the current state of the Green Agent.
 

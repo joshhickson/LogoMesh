@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Log
+---
+status: ACTIVE
+type: Log
+---
 > **Context:**
 > * [2025-12-17]: Audit log for System Integrity.
 

@@ -1,5 +1,7 @@
-> **Status:** FINAL
-> **Type:** Log
+---
+status: FINAL
+type: Log
+---
 > **Context:**
 > *   [2025-12-20]: Consolidated meeting minutes for the Hybrid Sidecar Kickoff (Meeting 6) and the subsequent Onboarding Briefing (Meeting 7), confirming the "Dual Track" strategy and role assignments.
 > **Superseded By:** -

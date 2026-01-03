@@ -1,5 +1,7 @@
-> **Status:** SNAPSHOT
-> **Type:** Log
+---
+status: SNAPSHOT
+type: Log
+---
 > **Context:**
 > *   [2025-12-21]: Key architectural learnings from the deep review of the repository state vs. competition requirements.
 

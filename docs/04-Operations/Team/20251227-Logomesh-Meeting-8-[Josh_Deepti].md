@@ -1,5 +1,7 @@
-> **Status:** SNAPSHOT
-> **Type:** Meeting Minutes
+---
+status: SNAPSHOT
+type: Meeting Minutes
+---
 > **Context:**
 > *   [2025-12-27]: Sync on code consolidation, model selection, and competition strategy for AgentBeats.
 

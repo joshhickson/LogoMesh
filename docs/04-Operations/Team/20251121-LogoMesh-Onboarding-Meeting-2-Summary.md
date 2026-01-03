@@ -1,5 +1,7 @@
-> **Status:** SNAPSHOT
-> **Type:** Minutes
+---
+status: SNAPSHOT
+type: Minutes
+---
 > **Context:**
 > * [2025-12-17]: Meeting summary.
 

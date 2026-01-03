@@ -1,5 +1,7 @@
-> **Status:** REVIEW
-> **Type:** Log
+---
+status: REVIEW
+type: Log
+---
 > **Context:**
 > *   [2025-12-21]: Review of Samuel's `purple-agent` and comparison with Kuan's `generic_defender.py`.
 

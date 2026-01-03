@@ -1,5 +1,7 @@
-> **Status:** SNAPSHOT
-> **Type:** Guide
+---
+status: SNAPSHOT
+type: Guide
+---
 > **Context:**
 > * [2025-12-17]: Snapshot of the commercial strategy (PAUSED). Defines core business entities referenced in the code.
 

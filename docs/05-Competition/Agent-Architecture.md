@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Guide
+---
+status: ACTIVE
+type: Guide
+---
 > **Context:** Technical architecture documentation for the Green/Purple agent evaluation system
 
 # Agent Architecture Guide

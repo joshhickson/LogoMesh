@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Spec
+---
+status: ACTIVE
+type: Spec
+---
 > **Context:**
 > *   [2025-12-22]: Detailed matrix of submission requirements for both the Lambda (Red) and Custom (Green) tracks. updated with official Canvas guidelines for the Custom Track.
 

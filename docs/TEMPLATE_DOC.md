@@ -1,5 +1,7 @@
-> **Status:** [ACTIVE | DRAFT | REVIEW | SNAPSHOT | DEPRECATED | SUPERSEDED]
-> **Type:** [Plan | Spec | Log | Minutes | Research | Guide]
+---
+status: [ACTIVE | DRAFT | REVIEW | SNAPSHOT | DEPRECATED | SUPERSEDED]
+type: [Plan | Spec | Log | Minutes | Research | Guide]
+---
 > **Context:**
 > *   [YYYY-MM-DD]: [Brief description of strategic context or "why"]
 > **Superseded By:** [Link] (if SUPERSEDED)

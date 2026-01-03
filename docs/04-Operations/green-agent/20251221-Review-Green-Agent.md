@@ -1,5 +1,7 @@
-> **Status:** REVIEW
-> **Type:** Log
+---
+status: REVIEW
+type: Log
+---
 > **Context:**
 > *   [2025-12-21]: Review of the `green-agent` directory (Samuel) to assess its readiness as the Evaluator in the Dual Track strategy.
 

@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Spec
+---
+status: ACTIVE
+type: Spec
+---
 > **Context:**
 > *   [2025-12-21]: The absolute single source of truth for the LogoMesh project. All agents must check this file first.
 

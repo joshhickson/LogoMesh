@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Plan
+---
+status: ACTIVE
+type: Plan
+---
 > **Context:** Green Agent, AgentBeats SDK, Implementation Roadmap
 
 # Green Agent Implementation Plan

@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Log
+---
+status: ACTIVE
+type: Log
+---
 > **Context:**
 > *   [2025-12-31]: Execution log for Phase 6A (Red Agent Infrastructure).
 

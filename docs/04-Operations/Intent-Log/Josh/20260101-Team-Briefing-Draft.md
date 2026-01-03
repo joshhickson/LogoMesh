@@ -1,5 +1,7 @@
-> **Status:** DRAFT
-> **Type:** Communications
+---
+status: DRAFT
+type: Communications
+---
 > **Context:**
 > *   [2026-01-01]: Draft announcement for Josh to send to the team (Slack/Discord) after verifying the Lambda instance.
 

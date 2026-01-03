@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Log
+---
+status: ACTIVE
+type: Log
+---
 > **Context:**
 > *   [2025-12-31]: Master Execution Log for the Polyglot Consolidation Project (Phases 3B - 6B).
 

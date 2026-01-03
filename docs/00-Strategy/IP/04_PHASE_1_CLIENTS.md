@@ -1,5 +1,7 @@
-> **Status:** DEPRECATED
-> **Type:** Plan
+---
+status: DEPRECATED
+type: Plan
+---
 > **Context:**
 > * [2025-12-17]: Client acquisition PAUSED.
 

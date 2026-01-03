@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Checklist
+---
+status: ACTIVE
+type: Checklist
+---
 > **Context:**
 > *   [2026-01-01]: Verification Checklist derived from the "Judge Evaluation Simulation" and Competition Guidelines.
 

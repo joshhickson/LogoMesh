@@ -1,5 +1,7 @@
-> **Status:** DEPRECATED
-> **Type:** Guide
+---
+status: DEPRECATED
+type: Guide
+---
 > **Context:**
 > * [2025-12-17]: Copyright registration is PAUSED to focus on AgentX competition ("Public Good").
 
