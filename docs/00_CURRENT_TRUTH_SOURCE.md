@@ -31,7 +31,7 @@
 | **Green Agent Lead** | **Alaa** | [docs/04-Operations/Intent-Log/Alaa/](../04-Operations/Intent-Log/Alaa/) | Evaluator Logic, Vector Math |
 | **Builder/Dev** | **Garrett** | [docs/04-Operations/Intent-Log/Garrett/](../04-Operations/Intent-Log/Garrett/) | Implementation, Docker, Tooling |
 | **Green Agent Dev** | **Samuel** | [docs/04-Operations/Intent-Log/Samuel/](../04-Operations/Intent-Log/Samuel/) | Python Codebase, A2A Protocol |
-| **System Architect** | **Kuan (Mark)** | [docs/04-Operations/Intent-Log/Kuan/](../04-Operations/Intent-Log/Kuan/) | Security, AWS/Lambda, Red Agent Lead |
+| **System Architect** | **Mark (Kuan Zhou)** | [docs/04-Operations/Intent-Log/Mark/](../04-Operations/Intent-Log/Mark/) | Security, AWS/Lambda, Red Agent Lead |
 | **Backend Dev** | **Oleksander**| [docs/04-Operations/Intent-Log/Oleksander/](../04-Operations/Intent-Log/Oleksander/) | Orchestration, Sidecar, API |
 
 ## 4. Key Documentation Indices

@@ -32,7 +32,7 @@ To streamline this sprint, I have generated personal workspaces for everyone in 
 *   [Alaa's Workspace](../../Alaa/README.md) (Green Agent Lead)
 *   [Garrett's Workspace](../../Garrett/README.md) (Builder/Dev)
 *   [Deepti's Workspace](../../Deepti/README.md) (Data Scientist - Decay Dashboard)
-*   [Kuan's (Mark) Workspace](../../Kuan/README.md) (System Architect / Red Agent Lead)
+*   [Mark's Workspace (Kuan)](../../Mark/README.md) (System Architect / Red Agent Lead)
 *   [Samuel's Workspace](../../Samuel/README.md) (Green Agent Dev)
 *   [Oleksander's Workspace](../../Oleksander/README.md) (Backend Dev)
 
@@ -42,7 +42,7 @@ I have created a master task list for the sprint:
 
 **Top Priorities:**
 1.  **Deepti:** We need the **"Decay Dashboard"** (WebUI) to visualize the CIS score dropping over time. This is our key differentiator against DeepEval.
-2.  **Kuan (Mark):** Build the `fga_breaker.py` worker. We need to show a successful "Contextual" exploit.
+2.  **Mark (Kuan):** Build the `fga_breaker.py` worker. We need to show a successful "Contextual" exploit.
 3.  **Alaa:** Implement **Vector Scoring** (Cosine Similarity). We need to move off "LLM Vibes" immediately.
 
 ### 5. Next Steps

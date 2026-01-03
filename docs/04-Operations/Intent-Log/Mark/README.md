@@ -1,6 +1,6 @@
-# Kuan Zhou's Workspace
+# Mark's Workspace
 
-> **Context:** Personal intent log and task tracking for **Kuan Zhou** (also known as **Mark**).
+> **Context:** Personal intent log and task tracking for **Mark** (also known as **Kuan Zhou**).
 
 ## Your Action Items
 Check the latest meeting minutes or the [Arena Team Tasks](../Josh/20260101-Arena-Team-Tasks.md) for unassigned work.
