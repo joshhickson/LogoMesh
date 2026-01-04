@@ -74,7 +74,7 @@ The following items were raised during discussion but require follow-up investig
 *   **Benchmark Sample Size:** Alaa requested clarity on the specific number of scenarios required. **Alaa (09:42:41):** "if we can get some clarity on the number of samples that we need for this benchmark... I guess that would be also helpful."
 *   **Submission Readiness:** The team is unsure if the current Green Agent code is ready for submission to the platform. **Alaa (09:24:27):** "In its current state, is it like submissive? Is it possible to submit it to agent X?" **Josh (09:24:37):** "I'm honestly not sure. I think we'll have to ask Samuel that."
 *   **Legacy Port Definitions:** The team discussed the requirement for maintaining compatibility with legacy ports 9040 (Green) and 9050 (Purple). The intricacy of this requirement is tied to Samuel's existing build, as documented in:
-    *   [green-agent/QUICKSTART.md](../../../green-agent/QUICKSTART.md)
+    *   [green-agent/QUICKSTART.md](../../../Dual-Track-Arena/green-agent/QUICKSTART.md)
     *   [docs/05-Competition/Agent-Architecture.md](../../05-Competition/Agent-Architecture.md)
 *   **Node Compatibility Bug:** There is a known infrastructure issue needing resolution. **Josh (09:54:42):** "There's a common error that people are running into with node compatibility. I still have to fix that."
 
@@ -140,7 +140,7 @@ sequenceDiagram
 
 ### **6. Post-Meeting Verification Notes**
 
-*   **Samuel's Code:** Verified. The Green Agent is a Python service located in [green-agent/](../../../green-agent/). It uses `tools.py` for tool definitions and runs via `run.sh`, as referenced in the meeting.
+*   **Samuel's Code:** Verified. The Green Agent is a Python service located in [green-agent/](../../../Dual-Track-Arena/green-agent/). It uses `tools.py` for tool definitions and runs via `run.sh`, as referenced in the meeting.
 *   **External Repositories:** "agentbeats-lambda-main" likely refers to the upstream competition repositories or the contents of the `external/` directory in this monorepo, which contains `agentbeats-main`.
 *   **Competition Specs:** Verified. [docs/05-Competition/Agent-Architecture.md](../../05-Competition/Agent-Architecture.md) details the scoring weights (33% each for Rationale, Architecture, Testing) and confirms the port requirements (Green: 9040, Purple: 9050).
 
@@ -221,5 +221,5 @@ The meeting focused heavily on finding the right fit for the new attendees withi
 
 ### **5. Post-Meeting Verification Notes**
 
-*   **Model Specifics:** The reference to an "OpenAI 20B" model was likely a confusion. The current Green Agent implementation [expressly requires an OpenAI API Key](../../../green-agent/QUICKSTART.md) and interacts with standard OpenAI models. No reference to a strict "20B" parameter requirement was found in the Green Agent documentation.
+*   **Model Specifics:** The reference to an "OpenAI 20B" model was likely a confusion. The current Green Agent implementation [expressly requires an OpenAI API Key](../../../Dual-Track-Arena/green-agent/QUICKSTART.md) and interacts with standard OpenAI models. No reference to a strict "20B" parameter requirement was found in the Green Agent documentation.
 *   **Worker Code:** Verified. The [rationale-worker.ts](../../../packages/workers/src/rationale-worker.ts) currently uses a `mockLlmClient` with hardcoded responses (`{ "debtIncurred": true, ... }`). Alexander's task to implement the actual LLM API calls is confirmed as necessary.

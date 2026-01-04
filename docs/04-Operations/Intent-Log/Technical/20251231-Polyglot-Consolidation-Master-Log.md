@@ -234,12 +234,12 @@ This log consolidates the execution details of the Polyglot Consolidation projec
 - Updated docstrings to reference [docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../../../docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md).
 
 ### Step 2: Roadmap Creation
-**Action:** Created [docs/04-Operations/Embedding-Vectors/](../../../../docs/04-Operations/Embedding-Vectors/) directory and specifications.
+**Action:** Created [docs/04-Operations/Embedding-Vectors/](../../../../docs/04-Operations/Dual-Track-Arena/Embedding-Vectors/) directory and specifications.
 **Files Created:**
-- [README.md](../../../../docs/04-Operations/Embedding-Vectors/README.md): Overview of the transition from Qualitative (LLM) to Quantitative (Vector) scoring.
-- [Rationale_Integrity.md](../../../../docs/04-Operations/Embedding-Vectors/Rationale_Integrity.md): Spec for measuring semantic distance between Intent and Execution.
-- [Architectural_Integrity.md](../../../../docs/04-Operations/Embedding-Vectors/Architectural_Integrity.md): Spec for measuring graph centrality and illegal edges.
-- [Testing_Integrity.md](../../../../docs/04-Operations/Embedding-Vectors/Testing_Integrity.md): Spec for measuring semantic coverage of test assertions.
+- [README.md](../../../../docs/04-Operations/Dual-Track-Arena/Embedding-Vectors/README.md): Overview of the transition from Qualitative (LLM) to Quantitative (Vector) scoring.
+- [Rationale_Integrity.md](../../../../docs/04-Operations/Dual-Track-Arena/Embedding-Vectors/Rationale_Integrity.md): Spec for measuring semantic distance between Intent and Execution.
+- [Architectural_Integrity.md](../../../../docs/04-Operations/Dual-Track-Arena/Embedding-Vectors/Architectural_Integrity.md): Spec for measuring graph centrality and illegal edges.
+- [Testing_Integrity.md](../../../../docs/04-Operations/Dual-Track-Arena/Embedding-Vectors/Testing_Integrity.md): Spec for measuring semantic coverage of test assertions.
 
 ---
 

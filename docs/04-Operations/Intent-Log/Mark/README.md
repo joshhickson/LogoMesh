@@ -9,8 +9,8 @@ Check the latest meeting minutes or the [Arena Team Tasks](../Josh/20260101-Aren
 A list of documents where you are mentioned (as Kuan or Mark), to help you get up to speed:
 
 - [20251221-Submission-Requirements-Matrix.md](../../../05-Competition/20251221-Submission-Requirements-Matrix.md)
-- [20251221-Review-Lambda-Agent.md](../../agentbeats-lambda/20251221-Review-Lambda-Agent.md)
-- [Questions-for-Mark.md](../../agentbeats-lambda/Questions-for-Mark.md)
+- [20251221-Review-Lambda-Agent.md](../../Dual-Track-Arena/agentbeats-lambda/20251221-Review-Lambda-Agent.md)
+- [Questions-for-Mark.md](../../Dual-Track-Arena/agentbeats-lambda/Questions-for-Mark.md)
 - [README.md](../Josh/README.md)
 - [20260101-Team-Briefing-Draft.md](../Josh/20260101-Team-Briefing-Draft.md)
 - [20260101-Docs-Upgrade-Strategy.md](../Josh/20260101-Docs-Upgrade-Strategy.md)
@@ -28,7 +28,7 @@ A list of documents where you are mentioned (as Kuan or Mark), to help you get u
 - [20251203-Gap-Analysis-Recent-Docs.md](../Technical/20251203-Gap-Analysis-Recent-Docs.md)
 - [Proposed-Headers-Manifest.md](../Technical/Proposed-Headers-Manifest.md)
 - [README.md](../Alaa/README.md)
-- [20251221-Review-Purple-Agent.md](../../purple-agent/20251221-Review-Purple-Agent.md)
+- [20251221-Review-Purple-Agent.md](../../Dual-Track-Arena/purple-agent/20251221-Review-Purple-Agent.md)
 - [20251220-LogoMesh-Meeting-6_7-Hybrid-Sidecar-Kickoff.md](../../Team/20251220-LogoMesh-Meeting-6_7-Hybrid-Sidecar-Kickoff.md)
 - [20251203-Meeting_Minutes-Josh_Deepti_Aladdin_Garrett.md](../../Team/20251203-Meeting_Minutes-Josh_Deepti_Aladdin_Garrett.md)
 - [00_CURRENT_TRUTH_SOURCE.md](../../../00_CURRENT_TRUTH_SOURCE.md)

@@ -32,7 +32,7 @@ This plan directly operationalizes the following strategic pillars:
 This plan incorporates logic and constraints from the following legacy documents. The Node.js implementation must strictly adhere to these specifications.
 
 ### Reference Material
-1.  **[green-agent/QUICKSTART.md](../../../../green-agent/QUICKSTART.md)**: Defines the baseline "Team B" setup and the legacy ports (Green: 9040, Purple: 9050).
+1.  **[green-agent/QUICKSTART.md](../../../../Dual-Track-Arena/green-agent/QUICKSTART.md)**: Defines the baseline "Team B" setup and the legacy ports (Green: 9040, Purple: 9050).
 2.  **[docs/05-Competition/Agent-Architecture.md](../../../05-Competition/Agent-Architecture.md)**: Defines the **Contextual Debt Framework** weights and the **Tool Execution Flow**.
 
 ### Key Integration Constraints

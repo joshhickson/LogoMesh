@@ -32,7 +32,7 @@ LogoMesh Documentation
    :maxdepth: 2
    :caption: Operations & Logs
 
-   04-Operations/Intent-Log/index
+   04-Operations/index
 
 .. toctree::
    :maxdepth: 2
