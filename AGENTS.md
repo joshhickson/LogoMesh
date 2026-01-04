@@ -2,7 +2,12 @@
 
 ## Core Rule
 
-**Before completing any task, update documentation to maintain system integrity.** The single source of truth is `docs/00_CURRENT_TRUTH_SOURCE.md`—if your work affects the roadmap, specs, or deprecates anything, update it there. All new docs in `docs/` must use the header template (`docs/TEMPLATE_DOC.md`) with Status tags (ACTIVE, DRAFT, SNAPSHOT, DEPRECATED, SUPERSEDED) and Type tags (Plan, Spec, Log, Minutes, Research, Guide).
+**Before completing any task, update documentation to maintain system integrity.** The single source of truth is `docs/00_CURRENT_TRUTH_SOURCE.md`—if your work affects the roadmap, specs, or deprecates anything, update it there.
+
+For detailed instructions on managing documentation (creating files, folder structure, RST integration), strictly follow:
+**`docs/Docs-Management-Instruction-Manual.md`**
+
+All new docs in `docs/` must use the header template (`docs/TEMPLATE_DOC.md`) with Status tags (ACTIVE, DRAFT, SNAPSHOT, DEPRECATED, SUPERSEDED) and Type tags (Plan, Spec, Log, Minutes, Research, Guide).
 
 ---
 
