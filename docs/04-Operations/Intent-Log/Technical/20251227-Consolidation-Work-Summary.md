@@ -17,11 +17,11 @@ The following documents were created to define the strategy for merging the Pyth
 *   [Session Learnings: Architectural Diagnostics](20251221-Consolidation-Artifacts/20251221-Session-Learnings-Architecture.md)
 
 ### Agent Reviews & Team Questions
-*   [Review: Lambda Agent (Red/Blue)](../../agentbeats-lambda/20251221-Review-Lambda-Agent.md)
-*   [Questions for Mark (Kuan Zhou)](../../agentbeats-lambda/Questions-for-Mark.md)
-*   [Review: Green Agent (Samuel)](../../green-agent/20251221-Review-Green-Agent.md)
-*   [Questions for Samuel (Green Agent)](../../green-agent/Questions-for-Samuel-Green.md)
-*   [Review: Purple Agent (Comparison)](../../purple-agent/20251221-Review-Purple-Agent.md)
+*   [Review: Lambda Agent (Red/Blue)](../../Dual-Track-Arena/agentbeats-lambda/20251221-Review-Lambda-Agent.md)
+*   [Questions for Mark (Kuan Zhou)](../../Dual-Track-Arena/agentbeats-lambda/Questions-for-Mark.md)
+*   [Review: Green Agent (Samuel)](../../Dual-Track-Arena/green-agent/20251221-Review-Green-Agent.md)
+*   [Questions for Samuel (Green Agent)](../../Dual-Track-Arena/green-agent/Questions-for-Samuel-Green.md)
+*   [Review: Purple Agent (Comparison)](../../Dual-Track-Arena/purple-agent/20251221-Review-Purple-Agent.md)
 
 ### Scaffolding & Execution Logs
 *   [Polyglot Scaffolding Log](20251221-Consolidation-Artifacts/20251227-Polyglot-Scaffolding-Log.md) (Created Dec 27)
@@ -42,9 +42,9 @@ The following existing files were analyzed to form the basis of the consolidatio
     *   [Generic Attacker Logic](../../../../external/TEAM/agentbeats-lambda-%5Bkzhou003-pull2-20251221%5D/scenarios/security_arena/agents/generic_attacker.py)
     *   [Scenario Specifications](../../../../external/TEAM/agentbeats-lambda-%5Bkzhou003-pull2-20251221%5D/scenarios/security_arena/SCENARIO_SPECIFICATIONS.md)
 *   **Custom Track (Samuel's Agents):**
-    *   [Green Agent Tools](../../../../green-agent/tools.py)
-    *   [Green Agent Runner](../../../../green-agent/run.sh)
-    *   [Purple Agent Tools](../../../../purple-agent/tools.py)
+    *   [Green Agent Tools](../../../../Dual-Track-Arena/green-agent/tools.py)
+    *   [Green Agent Runner](../../../../Dual-Track-Arena/green-agent/run.sh)
+    *   [Purple Agent Tools](../../../../Dual-Track-Arena/purple-agent/tools.py)
 *   **Monorepo Infrastructure (Node.js Sidecars):**
     *   [Workers Package](../../../../packages/workers/)
     *   [Contracts Package](../../../../packages/contracts/)

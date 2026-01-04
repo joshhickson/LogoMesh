@@ -23,7 +23,7 @@ type: Guide
     *   **Goal:** Ensure everyone understands the strategy and the legacy constraints we must respect.
     *   **Required Reading:**
         *   [`docs/00-Strategy/Competition/20251216-Unified AI Competition Development Plan.md`](../../00-Strategy/Competition/20251216-Unified%20AI%20Competition%20Development%20Plan.md)
-        *   [`green-agent/QUICKSTART.md`](../../../green-agent/QUICKSTART.md) (Legacy Ports 9040/9050)
+        *   [`green-agent/QUICKSTART.md`](../../../Dual-Track-Arena/green-agent/QUICKSTART.md) (Legacy Ports 9040/9050)
         *   [`docs/05-Competition/Agent-Architecture.md`](../../05-Competition/Agent-Architecture.md) (Scoring Weights & Tools)
     *   **Key Points:**
         *   The "Single-Rig Hypothesis" ($400 budget limit).

@@ -286,4 +286,4 @@ It is **not** yet suitable for evaluating agents on real software engineering ta
 
 ## 11. Quick Start
 
-See [green-agent/QUICKSTART.md](../../green-agent/QUICKSTART.md) for setup and run instructions.
+See [green-agent/QUICKSTART.md](../../Dual-Track-Arena/green-agent/QUICKSTART.md) for setup and run instructions.
