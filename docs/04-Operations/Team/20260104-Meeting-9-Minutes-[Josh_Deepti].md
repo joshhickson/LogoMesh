@@ -1,5 +1,6 @@
-**Review the files and steps below, and create a GAP ANALYSIS PLANNING DOCUMENT in** docs/04-Operations/Intent-Log/Josh/ **to tackle the steps below in multiple phases:**
+**Review the files and steps below, and create a GAP ANALYSIS PLANNING DOCUMENT in** docs/04-Operations/Intent-Log/Josh/ **to tackle the steps below in multiple phases. Finally, reformat this document so that all links are "github clickable", add a formatted header, and link to the new planning document that you created. Ensure that your planning document takes into account how log files for the plan will be stored, hopefully in a new dedicated folder within docs/04-Operations/Dual-Track-Arena.**
 
+**Prominent FileList:**
 docs/05-Competition/Lambda × Berkeley AgentBeats Security Arena\_ Building the Future of AI Security Testing.md
 
 docs/04-Operations/Intent-Log/Josh/20260104-Agent-Battle-Chat.json
