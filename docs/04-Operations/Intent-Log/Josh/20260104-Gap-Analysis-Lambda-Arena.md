@@ -33,17 +33,25 @@ This document outlines the strategic plan to bridge the gap between our current 
         *   **Network:** Verify `nvidia-smi` immediately.
 
 ### 1.2 Create `docs/AGENT_SETUP_CONTEXT.md`
-*   **Goal:** A "Context Injection" file for Copilot/Agents to understand the environment bootstrapping process immediately.
-*   **Content:**
-    *   **Environment:** Ubuntu 22.04 on Lambda Cloud (A100).
+*   **Goal:** A "Context Injection" file for Copilot/Agents to understand the environment bootstrapping process immediately, resolving all issues encountered in the `20260104-Agent-Battle-Chat.json` log.
+*   **Content Checklist (Must Address):**
+    *   **Environment Context:** Explicitly state we are running on the **Host** (Ubuntu 22.04), not inside a Docker container for development.
+    *   **Dependency Gaps:**
+        *   **Python:** The default Python might be too new (3.14 was picked by `uv`, breaking `ray`). **Mandate Python 3.12**.
+        *   **Package Managers:** `uv`, `npm`, and `pnpm` are missing by default.
     *   **Bootstrapping Sequence (Proven):**
-        1.  Install `uv`: `curl -LsSf https://astral.sh/uv/install.sh | sh`
-        2.  Install Python 3.12 (crucial for `ray` compatibility): `uv python install 3.12`
-        3.  Sync dependencies: `uv sync --python 3.12`
-        4.  Install Node.js v20 (via nodesource): `curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt-get install -y nodejs`
-        5.  Install `pnpm`: `sudo npm install -g pnpm`
-        6.  Install dependencies: `pnpm install`
-    *   **Repo Setup:** Instructions for `gh auth login` and `git pull`.
+        1.  **Install `uv`:** `curl -LsSf https://astral.sh/uv/install.sh | sh` (Addresses: "Command 'uv' not found").
+        2.  **Install Python 3.12:** `uv python install 3.12` (Addresses: `ray` installation error with Python 3.14).
+        3.  **Sync Dependencies:** `uv sync --python 3.12` (Addresses: Missing `vllm`, `openai`, `pydantic`).
+        4.  **Install Node.js v20:** `curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt-get install -y nodejs` (Addresses: "Command 'node' not found").
+        5.  **Install `pnpm`:** `sudo npm install -g pnpm` (Addresses: `EACCES` error when running without sudo).
+        6.  **Install Node Deps:** `pnpm install` (Addresses: Missing `node_modules`).
+    *   **Runtime Config:**
+        *   **Context Length:** explicitly mention that `run_arena_test.sh` uses `--max-model-len 16384` to prevent 4096 token limit errors.
+        *   **Model Location:** Verify models are downloaded to `~/.cache/huggingface` or handled automatically by `vllm`.
+    *   **Git & Workflow:**
+        *   Instructions for `gh auth login`.
+        *   Reminder to `git add results/` and `vllm.log` (which were untracked in the session).
 
 ---
 
