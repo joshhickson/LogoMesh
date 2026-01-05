@@ -6,23 +6,26 @@ import os
 INPUT_FILE = 'docs/04-Operations/Intent-Log/Josh/20260104-Agent-Battle-Chat.json'
 OUTPUT_FILE = 'docs/04-Operations/Intent-Log/Josh/20260104-Agent-Battle-Thinking-Decoded.md'
 
-def decode_thinking(value):
+def decode_string(value):
     """
-    Attempts to decode a thinking value.
-    If it looks like base64, decodes it.
-    Otherwise, returns it as is.
+    Attempts to decode a string as base64.
+    Returns the decoded text if successful and looks like text,
+    otherwise returns None.
     """
-    # Heuristic for Base64: no spaces, reasonably long (though shorter ones exist)
+    # Heuristic for Base64: no spaces, reasonably long
     if ' ' not in value and len(value) > 20:
         try:
             decoded_bytes = base64.b64decode(value)
-            # Try to decode as utf-8, ignore errors if it's binary data
+            # Try to decode as utf-8, ignore errors
             decoded_text = decoded_bytes.decode('utf-8', errors='ignore')
-            return f"**[Decoded Base64]**\n\n{decoded_text}"
+            # Heuristic to check if it looks like useful text (not just random binary garbage)
+            # If it's mostly printable characters, we assume it's good.
+            # But since the prompt said it might be binary serialization, we will just output it
+            # and let the markdown viewer handle it (maybe escaping control chars if needed, but simple decode is fine)
+            return decoded_text
         except Exception:
-            # If decoding fails, return original
-            return value
-    return value
+            return None
+    return None
 
 def extract_thinking():
     if not os.path.exists(INPUT_FILE):
@@ -47,14 +50,36 @@ def extract_thinking():
         for resp in responses:
             if resp.get('kind') == 'thinking':
                 raw_value = resp.get('value', '')
+                block_id = resp.get('id', '')
                 generated_title = resp.get('generatedTitle', 'No Title')
 
                 output_content.append(f"### Thinking Block ({generated_title})\n")
 
-                decoded_value = decode_thinking(raw_value)
+                content_to_show = ""
 
-                # Format code blocks for better readability in markdown
-                output_content.append(f"{decoded_value}\n\n")
+                # Case 1: Value is present (Human Readable CoT)
+                if raw_value:
+                    # Check if value itself is base64 (unlikely for "value" field based on observations, but possible)
+                    decoded = decode_string(raw_value)
+                    if decoded:
+                         content_to_show = f"**[Decoded Value]**\n\n{decoded}"
+                    else:
+                         content_to_show = raw_value
+
+                # Case 2: Value is empty, check ID (Hidden Reasoning / State)
+                elif block_id:
+                    decoded = decode_string(block_id)
+                    if decoded:
+                        content_to_show = f"**[Decoded ID]**\n\n{decoded}"
+                    else:
+                        # If ID is not base64 or decode fails, just show it (it might be a timestamp ID)
+                        # But for empty value blocks, it's likely the gibberish ID
+                        content_to_show = f"**[Raw ID (Could not decode as text)]**\n\n`{block_id}`"
+
+                else:
+                    content_to_show = "*Empty Thinking Block*"
+
+                output_content.append(f"{content_to_show}\n\n")
                 output_content.append("---\n")
 
     with open(OUTPUT_FILE, 'w') as f:
