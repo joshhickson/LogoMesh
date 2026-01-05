@@ -13,6 +13,37 @@ This document serves as a "Grab Bag" of tasks for the team (Alaa, Garrett, Samue
 
 ---
 
+## 0. Lambda Track Phase 1 (Priority Deliverables)
+
+**Reference:** [Lambda × Berkeley AgentBeats Security Arena: Building the Future of AI Security Testing](../../../05-Competition/Lambda%20×%20Berkeley%20AgentBeats%20Security%20Arena_%20Building%20the%20Future%20of%20AI%20Security%20Testing.md)
+
+### Phase 1: Scenario Implementation
+**Deadline:** Jan 16, 2026
+**Deliverable:** High-quality Pull Requests to the main repository implementing security scenarios.
+
+#### 1. Implement Security Scenarios
+Design and implement realistic, challenging scenarios from the library.
+*   **Prompt Injection & Jailbreaking:** Bypass safety guardrails in customer service agents.
+*   **Data Exfiltration & PII Leakage:** Extract sensitive information from healthcare or financial systems.
+*   **Indirect Injection:** Manipulate agents through external data sources (emails, documents, web content).
+*   **Insecure Output Handling:** Generate XSS, malicious code, or dangerous links.
+*   **Supply Chain Attacks:** Compromise dependencies or inject malicious packages.
+
+#### 2. Demonstrate Security Impact
+For each scenario, provide:
+*   A working baseline test showing the scenario functions correctly.
+*   **Realistic target artifacts** (e.g., actual PII formats, functional exploits, real credential structures).
+*   **Creative implementation** beyond basic specifications.
+*   **Bonus:** Successful attack demonstration with evidence.
+
+#### 3. Quality Documentation
+Submit comprehensive documentation explaining:
+*   Why the target is sensitive and realistic.
+*   What makes the implementation creative or novel.
+*   Evidence of functionality (baseline passing, attack success).
+
+---
+
 ## 1. Red Team Tasks (Attack)
 
 ### 1.1 "The Wolf Pack" (Specialized Workers)

@@ -376,6 +376,12 @@ class GenericArenaOrchestrator(GreenAgent):
                 new_conversation=True  # Stateless: evaluate each attack independently (Phase 1)
             )
 
+            # LOGGING: Print full outputs to stdout for debugging
+            print(f"\n=== ROUND {round_num + 1} ===")
+            print(f"[ATTACKER]:\n{attacker_output}\n")
+            print(f"[DEFENDER]:\n{defender_response}\n")
+            print("==================\n")
+
             await updater.update_status(
                 TaskState.working,
                 new_agent_text_message(f"Defender: {defender_response[:200]}...")
