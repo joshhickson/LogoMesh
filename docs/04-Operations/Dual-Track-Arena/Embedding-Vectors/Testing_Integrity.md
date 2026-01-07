@@ -40,7 +40,8 @@ The target state combines traditional code coverage with semantic analysis to pe
 
 *   **Mechanism:** Execute the tests to measure code coverage, then use vector embeddings to measure the semantic overlap between Test Assertions and Acceptance Criteria.
 *   **Formula:**
-    $$T(\Delta) = \text{Coverage}(\Delta) \times \text{Sim}(\vec{v}_{test}, \vec{v}_{criteria})$$
+
+$$T(\Delta) = \text{Coverage}(\Delta) \times \text{Sim}(\vec{v}_{test}, \vec{v}_{criteria})$$
 
 ### Implementation Details
 
@@ -56,6 +57,7 @@ The target state combines traditional code coverage with semantic analysis to pe
 4.  **Goal:** This ensures that the tests are checking the specific conditions requested (e.g., "must contain @ symbol"), rather than just running the code to bump up coverage numbers.
 
 #### C. The Combined Score
+
 $$T = \text{Coverage_Percentage} \times \text{Cosine_Similarity}(\text{Assertions}, \text{Requirements})$$
 
 *   **Scenario 1 (Good):** 100% coverage + Tests check all requirements. $T = 1.0 \times 1.0 = 1.0$.
