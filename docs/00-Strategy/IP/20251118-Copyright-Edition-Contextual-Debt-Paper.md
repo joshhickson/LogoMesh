@@ -1,10 +1,9 @@
 ---
-status: DEPRECATED
+status: ACTIVE
 type: Research
 ---
 > **Context:**
-> * [2025-12-17]: Copyright-specific version PAUSED.
-> **Superseded By:** [docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md](docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md)
+> * [2026-01-03]: Reactivated as primary draft for AgentX submission.
 
 # **The Unknowable Code: A Framework for Measuring and Mitigating Software Liability**
 
