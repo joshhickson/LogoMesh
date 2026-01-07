@@ -12,7 +12,7 @@ import * as path from 'path';
 import * as os from 'os';
 
 // A simplified interface for a local LLM client (e.g., Ollama)
-interface LlmClient {
+export interface LlmClient {
   prompt(systemMessage: string, userMessage: string): Promise<string>;
 }
 
