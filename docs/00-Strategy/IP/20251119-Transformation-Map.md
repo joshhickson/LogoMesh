@@ -1,5 +1,5 @@
 ---
-status: ACTIVE
+status: DEPRECATED
 type: Plan
 ---
 > **Context:**

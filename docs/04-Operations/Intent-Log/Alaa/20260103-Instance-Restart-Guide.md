@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Guide
+---
+status: ACTIVE
+type: Guide
+---
 > **Context:**
 > *   [2026-01-03]: Instructions for recovering the environment after terminating the ephemeral H100 instance.
 

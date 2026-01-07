@@ -79,3 +79,16 @@ To preview your changes before pushing:
 ## 5. Troubleshooting
 *   **Missing from Nav:** Ensure the file has a proper `.md` extension and is located in a folder included by a parent `index.rst`.
 *   **Broken Links:** Run `node scripts/audit_links.js` to scan for broken relative links.
+
+## 6. Maintaining the Source of Truth
+To ensure `docs/00_CURRENT_TRUTH_SOURCE.md` remains accurate, you must regularly identify the most recent documentation.
+
+### 6.1 Using the List Recent Docs Tool
+We have provided a script to list all dated documents in the `docs/` directory, sorted by recency.
+
+1.  **Run the script:**
+    ```bash
+    node scripts/list_recent_docs.js
+    ```
+2.  **Analyze the Output:** The script outputs a list of files starting with the most recent `YYYYMMDD` prefix.
+3.  **Update Truth Source:** Use this list to identify new plans, logs, or specs that should be referenced or indexed in `00_CURRENT_TRUTH_SOURCE.md`.
