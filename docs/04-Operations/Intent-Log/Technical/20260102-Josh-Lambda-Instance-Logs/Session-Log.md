@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Log
+---
+status: ACTIVE
+type: Log
+---
 > **Context:**
 > *   [2026-01-03]: Session log for setting up and testing the Green Agent on Lambda Cloud (H100).
 
