@@ -26,17 +26,17 @@ We are refining our competition narrative. Instead of just "checking code qualit
 
 ### 3. 📂 Your New Workspaces
 To streamline this sprint, I have generated personal workspaces for everyone in the repo.
-**Action:** Please go to `docs/04-Operations/Intent-Log/<YourName>/README.md`.
+**Action:** Please go to [`docs/04-Operations/Intent-Log/<YourName>/README.md`](../).
 *   This file lists every document where you are mentioned.
 *   Use this folder to log your daily progress.
 
 **Direct Links:**
-*   [Alaa's Workspace](../../Alaa/README.md) (Green Agent Dev)
-*   [Garrett's Workspace](../../Garrett/README.md) (Builder/Tester/Dev)
-*   [Deepti's Workspace](../../Deepti/README.md) (Data Scientist - Decay Dashboard)
-*   [Mark's Workspace (Kuan)](../../Mark/README.md) (System Architect / Red Agent Lead)
-*   [Samuel's Workspace](../../Samuel/README.md) (Green Agent Lead and Dev)
-*   [Oleksander's Workspace](../../Oleksander/README.md) (Backend Dev)
+*   [Alaa's Workspace](../Alaa/README.md) (Green Agent Dev)
+*   [Garrett's Workspace](../Garrett/README.md) (Builder/Tester/Dev)
+*   [Deepti's Workspace](../Deepti/README.md) (Data Scientist - Decay Dashboard)
+*   [Mark's Workspace (Kuan)](../Mark/README.md) (System Architect / Red Agent Lead)
+*   [Samuel's Workspace](../Samuel/README.md) (Green Agent Lead and Dev)
+*   [Oleksander's Workspace](../Oleksander/README.md) (Backend Dev)
 
 ### 4. 🎯 Immediate Task List (The "Grab Bag")
 I have created a master task list for the sprint:
@@ -46,7 +46,7 @@ I have created a master task list for the sprint:
 1.  **Samuel/Garrett:** **CRITICAL (P0)** - Implement "Session Persistence" (Write-Ahead Logging). If the agent crashes mid-battle, we lose the competition. This is our #1 engineering risk.
 2.  **Deepti:** We need the **"Decay Dashboard"** (WebUI) to visualize the CIS score dropping over time. This is our key differentiator against DeepEval.
 3.  **Mark (Kuan):** Build the `fga_breaker.py` worker. We need to show a successful "Contextual" exploit.
-4.  **Alaa:** Implement **Vector Scoring** (Cosine Similarity). See `docs/04-Operations/Embedding-Vectors/` for the math specs. We need to move off "LLM Vibes" immediately.
+4.  **Alaa:** Implement **Vector Scoring** (Cosine Similarity). See [`docs/04-Operations/Dual-Track-Arena/Embedding-Vectors/`](../../Dual-Track-Arena/Embedding-Vectors/) for the math specs. We need to move off "LLM Vibes" immediately.
 
 ### 5. Next Steps
 1.  Check your workspace.
