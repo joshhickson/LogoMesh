@@ -1,4 +1,7 @@
 import json
+import sqlite3
+import os
+import datetime
 
 class GreenAgent:
     """
@@ -14,12 +17,47 @@ class GreenAgent:
             result: A dictionary containing the evaluation results, including
                     'battle_id', 'score', and 'breakdown'.
         """
-        # TODO: Implement SQLite persistence as per the migration manifest.
-        # The result JSON should be saved to `data/battles.db`.
-
         battle_id = result.get("battle_id", "N/A")
         score = result.get("score", 0.0)
         breakdown = result.get("breakdown", "No breakdown provided.")
+
+        # SQLite Persistence Implementation
+        try:
+            # Ensure data directory exists
+            os.makedirs("data", exist_ok=True)
+
+            db_path = os.path.join("data", "battles.db")
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+
+            # Create table if it doesn't exist
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS battles (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    battle_id TEXT NOT NULL,
+                    timestamp TEXT NOT NULL,
+                    score REAL NOT NULL,
+                    breakdown TEXT,
+                    raw_result TEXT
+                )
+            """)
+
+            # Prepare data
+            timestamp = datetime.datetime.now().isoformat()
+            raw_result = json.dumps(result)
+
+            # Insert record
+            cursor.execute("""
+                INSERT INTO battles (battle_id, timestamp, score, breakdown, raw_result)
+                VALUES (?, ?, ?, ?, ?)
+            """, (battle_id, timestamp, score, breakdown, raw_result))
+
+            conn.commit()
+            conn.close()
+            print(f"[GreenAgent] Result saved to {db_path}")
+
+        except Exception as e:
+            print(f"[GreenAgent] Error saving result to database: {e}")
 
         # Print to console for visibility (fallback from original implementation)
         print("\n" + "=" * 60)
