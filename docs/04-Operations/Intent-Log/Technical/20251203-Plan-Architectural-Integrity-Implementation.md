@@ -6,6 +6,7 @@ type: Plan
 > *   [2025-12-03]: Technical implementation plan for the "Architectural Integrity" ($A$) pillar.
 > *   **Goal:** Move from qualitative "red-agent" checks to quantitative "graph-centrality" measurements.
 > *   **Executor:** Automated Worker (`ArchitecturalDebtAnalyzer`).
+> *   **Analysis Status:** Completed gap analysis of existing Rationale analyzer and contracts.
 
 # Implementation Plan: Architectural Integrity ($A$)
 
@@ -14,7 +15,7 @@ type: Plan
 This document outlines the technical steps to implement the **Architectural Integrity ($A$)** scoring mechanism as defined in the [Dual-Track Arena Specs](../../../Dual-Track-Arena/Embedding-Vectors/Architectural_Integrity.md).
 
 **The Challenge:**
-We must transition from a subjective LLM-based evaluation to a deterministic, graph-based calculation. The core formula requires us to:
+We must transition from a subjective LLM-based evaluation (and the current placeholder `escomplex` static analysis) to a deterministic, graph-based calculation. The core formula requires us to:
 1.  Extract the dependency graph of the submitted code.
 2.  Compute the "Centrality" (importance) of every node.
 3.  Identify "Illegal Edges" based on a policy.
@@ -28,9 +29,10 @@ We must transition from a subjective LLM-based evaluation to a deterministic, gr
 *   **Worker:** `@logomesh/workers` (TypeScript).
 
 ### 2.2 Data Flow
-1.  **Input:** The `ArchitecturalDebtAnalyzer` receives the `sourceCode` (string) or a path to the staged code.
-2.  **Extraction:**
+1.  **Input:** The `ArchitecturalDebtAnalyzer` receives the `sourceCode` (string) via `architectural-worker.ts`.
+2.  **Extraction (FileSystem Adapter):**
     *   Since `dependency-cruiser` works on files, we must write the `sourceCode` to a temporary directory.
+    *   *Note:* We will reuse the `fs.mkdtemp` and cleanup pattern seen in `TestingDebtAnalyzer` (using `os.tmpdir()`), but we do *not* need `isolated-vm` since we are running trusted analysis tools, not executing untrusted code directly (unlike tests).
     *   Run `depcruise` programmatically to generate a JSON output of modules and dependencies.
 3.  **Construction:**
     *   Load the JSON into a `graphology` Directed Graph instance.
@@ -41,7 +43,7 @@ We must transition from a subjective LLM-based evaluation to a deterministic, gr
     *   Check if edge $e$ violates a constraint.
 5.  **Scoring:**
     *   Apply the formula.
-    *   Return the `ArchitecturalDebtReport`.
+    *   Return the `ArchitecturalDebtReport` (defined in `@logomesh/contracts`).
 
 ## 3. Implementation Steps
 
@@ -52,7 +54,7 @@ We must transition from a subjective LLM-based evaluation to a deterministic, gr
     *   Ensure `dependency-cruiser` is available to the worker (it is currently a devDependency in root, might need to be a prod dependency for the worker package).
 
 2.  **Policy Definition (`contracts` package):**
-    *   Define the `ArchitecturePolicy` interface in `@logomesh/contracts`.
+    *   Define the `ArchitecturePolicy` interface in `@logomesh/contracts/src/entities.ts` (or similar).
     *   Create a default policy file (e.g., `default-policy.json` or `yaml`) that defines standard layered architecture rules (e.g., "Presentation cannot touch Data").
 
 ### Phase 2: The Graph Analyzer Service
@@ -81,18 +83,42 @@ Create `ConstraintEngine.ts`:
 
 Update `ArchitecturalDebtAnalyzer` in `packages/workers/src/analyzers.ts`:
 
-```typescript
-export class ArchitecturalDebtAnalyzer {
-  async analyze(sourceCode: string): Promise<ArchitecturalDebtReport> {
-     // 1. Write sourceCode to temp dir
-     // 2. graph = await GraphAnalyzer.generateGraph(tempDir);
-     // 3. violations = ConstraintEngine.evaluate(graph, defaultPolicy);
-     // 4. score = calculateScore(violations);
-     // 5. Cleanup temp dir
-     return { score, details, ... };
-  }
-}
-```
+*   **Class Structure:**
+    *   Remove `escomplex` imports and logic.
+    *   Add imports for `GraphAnalyzer`, `ConstraintEngine`, `fs`, `path`, `os`.
+*   **Method:** `analyze(sourceCode: string): Promise<ArchitecturalDebtReport>`
+    ```typescript
+    async analyze(sourceCode: string): Promise<ArchitecturalDebtReport> {
+      const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'logomesh-arch-'));
+      try {
+        // 1. Write sourceCode to temp file (e.g. index.ts or structure)
+        await fs.writeFile(path.join(tempDir, 'index.ts'), sourceCode);
+
+        // 2. Generate Graph
+        const graph = await GraphAnalyzer.generateGraph(tempDir);
+
+        // 3. Calculate Centrality
+        const centralityMap = GraphAnalyzer.calculateCentrality(graph);
+
+        // 4. Evaluate Constraints
+        const violations = ConstraintEngine.evaluate(graph, centralityMap, defaultPolicy);
+
+        // 5. Calculate Score
+        let score = 1.0;
+        for (const v of violations) {
+          score *= (1 - v.probability);
+        }
+
+        return {
+           score,
+           details: JSON.stringify(violations),
+           metrics: { nodeCount: graph.order, edgeCount: graph.size }
+        };
+      } finally {
+        await fs.rm(tempDir, { recursive: true, force: true });
+      }
+    }
+    ```
 
 ## 4. Policy Schema Design
 
