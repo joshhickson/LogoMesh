@@ -144,7 +144,16 @@ sudo docker run -d --name green-agent --network host \
   polyglot-agent:latest \
   uv run python main.py --role GREEN --port 9000
 
-# 3. Launch Purple Agent (The Defender) - Port 9001
+# 3. Launch Rationale Worker (Contextual Debt Analysis)
+# Analyzes reasoning traces using vLLM
+sudo docker run -d --name rationale-worker --network host \
+  -e LLM_API_BASE_URL=http://localhost:8000/v1 \
+  -e LLM_API_KEY=EMPTY \
+  -e LLM_MODEL_NAME=Qwen/Qwen2.5-Coder-32B-Instruct \
+  polyglot-agent:latest \
+  pnpm start:rationale
+
+# 4. Launch Purple Agent (The Defender) - Port 9001
 sudo docker run -d --name purple-agent --network host \
   -e OPENAI_BASE_URL=http://localhost:8000/v1 \
   -e OPENAI_API_KEY=EMPTY \

@@ -68,7 +68,17 @@ Before renting the instance, ensure the Docker image is ready.
       --port 8000
     ```
 
-3.  **Run the Purple Agent (Client/Test Subject):**
+3.  **Run the Rationale Worker:**
+    ```bash
+    docker run -d --name rationale-worker --network host \
+      -e LLM_API_BASE_URL=http://localhost:8000/v1 \
+      -e LLM_API_KEY=EMPTY \
+      -e LLM_MODEL_NAME=Qwen/Qwen2.5-Coder-32B-Instruct \
+      polyglot-agent:latest \
+      pnpm start:rationale
+    ```
+
+4.  **Run the Purple Agent (Client/Test Subject):**
     *   Open a second SSH terminal.
     *   Run the Purple Agent to connect to the Green Agent:
     ```bash
