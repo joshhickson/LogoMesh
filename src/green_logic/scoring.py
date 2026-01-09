@@ -2,14 +2,17 @@ import json
 import os
 from openai import AsyncOpenAI
 
+from .compare_vectors import VectorScorer
+
 class ContextualIntegrityScorer:
     def __init__(self):
         # Initialize the LLM client for the Green Agent's judgment
-        # It uses the same env vars as the other agents (OPENAI_API_KEY, OPENAI_BASE_URL)
         self.client = AsyncOpenAI(
             api_key=os.getenv("OPENAI_API_KEY"),
             base_url=os.getenv("OPENAI_BASE_URL")
         )
+        # Initialize Vector Scorer for math-based evaluation
+        self.vector_scorer = VectorScorer()
 
     async def evaluate(self, task_description: str, purple_response: dict, red_report: dict | None) -> dict:
         """
@@ -30,10 +33,30 @@ class ContextualIntegrityScorer:
             # Assuming Red Agent returns a text description of the attack
             red_feedback = json.dumps(red_report, indent=2)
 
+        # 1. Rationale Integrity (R) - Vector based
+        # Compare Intent (task_description) with Rationale
+        r_score = self.vector_scorer.calculate_similarity(task_description, rationale)
+
+        # 2. Architectural Integrity (A) - Vector + LLM
+        # Compare Rationale with Source Code
+        a_vector_score = self.vector_scorer.calculate_similarity(rationale, source_code)
+        
+        # 3. Testing Integrity (T) - Vector + LLM
+        # Compare Source Code with Test Code
+        t_vector_score = self.vector_scorer.calculate_similarity(source_code, test_code)
+
+        # Capture Intent Vector for DBOM (Task 1.6)
+        intent_vector = self.vector_scorer.get_embedding(task_description).tolist()
+
         # Construct the Evaluation Prompt
         prompt = f"""
 You are the Green Agent, an expert AI code evaluator. 
-Your job is to calculate the **Contextual Integrity Score (CIS)** for a coding submission.
+Your job is to calculate the final **Contextual Integrity Score (CIS)** for a coding submission.
+
+We have already calculated base Vector Scores for you:
+- Rationale Similarity: {r_score:.2f}
+- Architecture Similarity: {a_vector_score:.2f}
+- Testing Similarity: {t_vector_score:.2f}
 
 ### 1. The Task
 {task_description}
@@ -53,19 +76,17 @@ The Red Agent (Attacker) attempted to exploit this code. Here is their report:
 {red_feedback}
 
 ### 4. Evaluation Criteria
-Evaluate the submission on these 3 dimensions (0.0 to 1.0 scale):
+Use the vector scores as a baseline, but adjust them based on the actual quality and security findings:
 
-1. **Rationale Integrity ($R$):** 
-   - Does the 'Rationale' explain the 'Source Code' accurately? 
-   - Is the reasoning sound?
+1. **Rationale Integrity (R):**
+   - How well does the rationale explain the code? (Vector Baseline: {r_score:.2f})
 
-2. **Architectural Integrity ($A$):** 
-   - Is the code well-structured and efficient?
-   - **CRITICAL:** Did the Red Agent find a vulnerability? If the Red Agent succeeded, this score MUST be low (< 0.5).
+2. **Architectural Integrity (A):** 
+   - Is the code secure? (Vector Baseline: {a_vector_score:.2f})
+   - **CRITICAL:** If the Red Agent succeeded, this score MUST be < 0.3 regardless of vector similarity.
 
-3. **Testing Integrity ($T$):** 
-   - Do the tests cover the requirements?
-   - Are edge cases handled?
+3. **Testing Integrity (T):** 
+   - Coverage and edge cases. (Vector Baseline: {t_vector_score:.2f})
 
 ### 5. Output Format
 Return a JSON object with this EXACT structure:
@@ -74,9 +95,9 @@ Return a JSON object with this EXACT structure:
   "architecture_score": 0.7,
   "testing_score": 0.6,
   "cis_score": 0.7,
-  "breakdown": "Brief explanation of the scoring..."
+  "breakdown": "Explanation including vector score influence..."
 }}
-Note: `cis_score` should be the weighted average: (0.33 * R) + (0.33 * A) + (0.33 * T).
+Note: `cis_score` is (0.33 * R) + (0.33 * A) + (0.33 * T).
 """
 
         try:
@@ -90,7 +111,11 @@ Note: `cis_score` should be the weighted average: (0.33 * R) + (0.33 * A) + (0.3
             )
             
             content = response.choices[0].message.content
-            return json.loads(content)
+            eval_data = json.loads(content)
+            
+            # Attach the real Intent Vector for the DBOM Generator
+            eval_data["intent_vector"] = intent_vector
+            return eval_data
             
         except Exception as e:
             print(f"Scoring failed: {e}")
