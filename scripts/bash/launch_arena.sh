@@ -11,6 +11,10 @@ MODEL="Qwen/Qwen2.5-Coder-32B-Instruct-AWQ"
 
 echo -e "${BLUE}[arena] starting the full setup...${NC}"
 
+# 0. build the polyglot docker image
+echo -e "${GREEN}[LaunchArena] Building Docker Image...${NC}"
+sudo docker build -t polyglot-agent:latest -f Dockerfile.gpu .
+
 # 1. remove old containers to avoid conflicts
 echo -e "${BLUE}[arena] cleaning up old containers...${NC}"
 sudo docker rm -f vllm-server green-agent purple-agent > /dev/null 2>&1
