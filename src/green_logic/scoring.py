@@ -14,13 +14,27 @@ class ContextualIntegrityScorer:
         # Initialize Vector Scorer for math-based evaluation
         self.vector_scorer = VectorScorer()
 
-    async def evaluate(self, task_description: str, purple_response: dict, red_report: dict | None) -> dict:
+    async def evaluate(
+        self,
+        task_description: str,
+        purple_response: dict,
+        red_report: dict | None,
+        audit_result: dict | None = None,
+        sandbox_result: dict | None = None
+    ) -> dict:
         """
         Evaluates the Purple Agent's submission using the Contextual Integrity framework,
-        incorporating the Red Agent's security audit.
-        
+        incorporating the Red Agent's security audit and Tier 2 analysis results.
+
         Reference: docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md
         Formula: CIS = w_r * R + w_a * A + w_t * T
+
+        Args:
+            task_description: The original task description
+            purple_response: Purple Agent's response with sourceCode, rationale, testCode
+            red_report: Optional Red Agent attack report
+            audit_result: Optional static analysis result from SemanticAuditor
+            sandbox_result: Optional dynamic execution result from Sandbox
         """
         
         source_code = purple_response.get("sourceCode", "")
@@ -48,9 +62,28 @@ class ContextualIntegrityScorer:
         # Capture Intent Vector for DBOM (Task 1.6)
         intent_vector = self.vector_scorer.get_embedding(task_description).tolist()
 
+        # Format Tier 2 analysis results
+        static_analysis_feedback = "No static analysis performed."
+        if audit_result:
+            static_analysis_feedback = f"""
+**Static Analysis (AST) Result:**
+- Valid: {audit_result.get('valid', 'N/A')}
+- Penalty: {audit_result.get('penalty', 0)}
+- Reason: {audit_result.get('reason', 'N/A')}
+"""
+
+        dynamic_analysis_feedback = "No dynamic tests executed."
+        if sandbox_result:
+            dynamic_analysis_feedback = f"""
+**Dynamic Execution (Sandbox) Result:**
+- Tests Passed: {sandbox_result.get('success', 'N/A')}
+- Duration: {sandbox_result.get('duration', 0):.2f}s
+- Output: {sandbox_result.get('output', 'N/A')[:500]}
+"""
+
         # Construct the Evaluation Prompt
         prompt = f"""
-You are the Green Agent, an expert AI code evaluator. 
+You are the Green Agent, an expert AI code evaluator.
 Your job is to calculate the final **Contextual Integrity Score (CIS)** for a coding submission.
 
 We have already calculated base Vector Scores for you:
@@ -75,27 +108,33 @@ We have already calculated base Vector Scores for you:
 The Red Agent (Attacker) attempted to exploit this code. Here is their report:
 {red_feedback}
 
-### 4. Evaluation Criteria
+### 4. Tier 2 Analysis Results
+{static_analysis_feedback}
+{dynamic_analysis_feedback}
+
+### 5. Evaluation Criteria
 Use the vector scores as a baseline, but adjust them based on the actual quality and security findings:
 
 1. **Rationale Integrity (R):**
    - How well does the rationale explain the code? (Vector Baseline: {r_score:.2f})
 
-2. **Architectural Integrity (A):** 
+2. **Architectural Integrity (A):**
    - Is the code secure? (Vector Baseline: {a_vector_score:.2f})
    - **CRITICAL:** If the Red Agent succeeded, this score MUST be < 0.3 regardless of vector similarity.
+   - **CRITICAL:** If static analysis detected forbidden imports, this score MUST be < 0.2.
 
-3. **Testing Integrity (T):** 
+3. **Testing Integrity (T):**
    - Coverage and edge cases. (Vector Baseline: {t_vector_score:.2f})
+   - **CRITICAL:** If dynamic sandbox tests failed, this score MUST be < 0.5.
 
-### 5. Output Format
+### 6. Output Format
 Return a JSON object with this EXACT structure:
 {{
   "rationale_score": 0.8,
   "architecture_score": 0.7,
   "testing_score": 0.6,
   "cis_score": 0.7,
-  "breakdown": "Explanation including vector score influence..."
+  "breakdown": "Explanation including vector score influence and Tier 2 analysis..."
 }}
 Note: `cis_score` is (0.33 * R) + (0.33 * A) + (0.33 * T).
 """
