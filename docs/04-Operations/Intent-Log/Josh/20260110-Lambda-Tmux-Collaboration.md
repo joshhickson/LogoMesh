@@ -34,7 +34,7 @@ The Host rents the machine and prepares the "Lobby".
 
 1.  **Launch Instance:**
     *   Go to [lambdalabs.com](https://lambdalabs.com).
-    *   Launch an **A100 (80GB)** instance using your primary SSH key.
+    *   Launch an **A100 (40GB)** instance using your primary SSH key.
     *   Copy the **IP Address**.
 
 2.  **Connect:**
