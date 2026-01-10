@@ -34,9 +34,13 @@ until curl -s http://localhost:8000/v1/models > /dev/null; do
 done
 echo -e "\n${GREEN}[ok] brain is online.${NC}"
 
+# Create the data folder on your host if it doesn't exist
+mkdir -p $(pwd)/data
+
 # 4. start the judge (green agent)
 echo -e "${BLUE}[arena] launching the judge on port 9000...${NC}"
 sudo docker run -d --name green-agent --network host \
+  -v $(pwd)/data:/app/data \
   -e OPENAI_BASE_URL=http://localhost:8000/v1 \
   -e OPENAI_API_KEY=EMPTY \
   -e MODEL_NAME=$MODEL \
