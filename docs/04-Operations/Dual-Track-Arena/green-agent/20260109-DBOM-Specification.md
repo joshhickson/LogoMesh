@@ -51,3 +51,7 @@ These DBOMs provide the "proof of work" for the Contextual Debt paper. They allo
 1.  **Traceability:** We know exactly what task produced the score.
 2.  **Integrity:** We can prove the result hasn't changed since generation.
 3.  **Reproducibility:** The `v_intent` allows us to analyze the semantic spread of our test cases.
+
+## Status
+*   **Status:** **Implemented**.
+*   **Location:** `src/green_logic/agent.py` (`generate_dbom`).

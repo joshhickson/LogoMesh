@@ -97,45 +97,29 @@ tmux attach -t agent_arena
 
 Perform these actions **inside the `agent_arena` tmux session**.
 
-### 1. Setup & Build
-```bash
-# 1. Configure Docker to use the GPU
-sudo nvidia-ctk runtime configure --runtime=docker
-sudo systemctl restart docker
+### 1. Setup & Launch
+We now use a unified script to handle building the Docker image and launching the arena.
 
-# 2. Build the Unified Docker Image
-# This builds 'polyglot-agent:latest' which contains all our code and dependencies.
-docker build -t polyglot-agent:latest -f Dockerfile.gpu .
-```
+**See [Quick Start Scripts](../../Dual-Track-Arena/20260110-Quick-Start-Scripts.md) for the full command reference.**
 
-### 2. Launch the Infrastructure
-We run 3 containers. Since we are in `tmux`, we run them in "detached" mode (`-d`) so they run in the background.
+> **CRITICAL:** Use the **AWQ** quantized model to avoid Out-of-Memory (OOM) errors on 40GB A100s. The script handles this if configured or modified, but be aware of the `Qwen/Qwen2.5-Coder-32B-Instruct-AWQ` requirement.
 
 ```bash
-# 1. Launch vLLM (The Brain) - Port 8000
-sudo docker run --gpus all --network host --name vllm-server -d \
-  polyglot-agent:latest \
-  uv run vllm serve Qwen/Qwen2.5-Coder-32B-Instruct \
-  --port 8000 --trust-remote-code --max-model-len 16384
+# 1. Run the Launch Script
+# This builds the image (if missing), removes old containers, and starts vLLM, Green Agent, and Purple Agent.
+sudo ./scripts/bash/launch_arena.sh
 
-# 2. Launch Green Agent (The Judge) - Port 9000
-sudo docker run -d --name green-agent --network host \
-  -e OPENAI_BASE_URL=http://localhost:8000/v1 \
-  -e OPENAI_API_KEY=EMPTY \
-  -e MODEL_NAME=Qwen/Qwen2.5-Coder-32B-Instruct \
-  polyglot-agent:latest \
-  uv run python main.py --role GREEN --port 9000
-
-# 3. Launch Purple Agent (The Defender) - Port 9001
-sudo docker run -d --name purple-agent --network host \
-  -e OPENAI_BASE_URL=http://localhost:8000/v1 \
-  -e OPENAI_API_KEY=EMPTY \
-  -e OPENAI_MODEL=Qwen/Qwen2.5-Coder-32B-Instruct \
-  polyglot-agent:latest \
-  uv run python main.py --role PURPLE --host localhost --port 9001
+# 2. Wait for vLLM
+# Watch the logs until you see "Application startup complete"
+sudo docker logs -f vllm-server
 ```
 
-### 3. Monitoring (Split Panes)
+The script sets up:
+*   **vLLM (Brain):** Port 8000
+*   **Green Agent (Judge):** Port 9000
+*   **Purple Agent (Defender):** Port 9001
+
+### 2. Monitoring (Split Panes)
 This is where `tmux` shines. You can split your screen to see logs while running commands.
 
 *   **Split Horizontally:** Press `Ctrl+B`, then `"` (Shift + ').

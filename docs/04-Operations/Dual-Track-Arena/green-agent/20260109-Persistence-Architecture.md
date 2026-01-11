@@ -41,3 +41,7 @@ Cryptographic proofs are stored as individual JSON files to decouple them from t
 ## Backup & Recovery
 *   **Database:** The `battles.db` file is a standard SQLite file and can be backed up by copying. WAL files (`battles.db-wal`) should be included in snapshots if the database is active.
 *   **Artifacts:** The `data/dboms/` directory should be backed up regularly.
+
+## Status
+*   **Status:** **Implemented**.
+*   **Location:** `src/green_logic/agent.py`.

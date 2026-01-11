@@ -36,7 +36,7 @@ context: Operations / Testing / Green Agent Evaluation
 *   **Status:** ✅ **PASS**
 *   **Notes:** `sentence_transformers` package verified in `.venv`.
 
-## 3. Functional Testing
+## 3. Functional Testing (Session 1 - Pre-Merge)
 
 ### 3.1 Basic Connectivity
 *   **Status:** ✅ **PASS**
@@ -80,23 +80,28 @@ context: Operations / Testing / Green Agent Evaluation
     *   Context Length: `16384` (Successful so far).
     *   Status: Loading model weights.
 
-## 5. Session Paused (User Request)
-*   **Time:** 2026-01-10 (Late Night)
-*   **Reason:** Teammate joined; switching to `tmux` collaboration mode.
-*   **Infrastructure State:**
-    *   `vllm-server`: Running (Loading `Qwen2.5-Coder-32B-AWQ`).
-    *   `green-agent` (Local): Running on Port 9040.
-    *   `mock-purple` (Local): Running on Port 9041.
-*   **Next Action:** Resume at **Task 4 (Integrity Verification)** once inside `tmux`.
+---
 
-## 6. Next Steps
-*   **Wait for vLLM:** Monitor logs (`docker logs -f vllm-server`) until "Application startup complete".
-*   **Task 4 (Integrity Verification):** Re-run Green Agent to test scoring with live LLM.
+## 5. Session 2: Post-Merge Verification (Planned)
 
-*   **User-Note:** 
-        **Gemini 3 CoPilot:**
-        "1.  Since the `polyglot-agent` Docker image does not exist yet (as seen in `docker images`), and building it might take time, I will launch `vllm` using the official **`vllm/vllm-openai:latest`** Docker image. This is standard practice for just running the inference server.
-        2.  I will execute the run command in detached mode.
-        Shall I proceed with downloading and launching the model now? (This will take a few minutes depending on download speed)."
-        **Human:**
-        "Well, the goal is to use and evaluate our own docker image to ensure that it actually works using vLLM in the arena. Please build docker, update the log, and then proceed with launching vllm and downloading the model."
+**Objective:** Verify the new "Aeduee" Pull Request changes, specifically the Runtime Sandbox (Docker + File Injection) and Authoritative Grading (DBOM + Vector Math).
+
+### 5.1 Updated Connectivity Check
+*   [ ] **Verify Ports:** Green Agent should now be on **Port 9000** (previously 9040).
+*   [ ] **Verify Script:** `sudo ./scripts/bash/launch_arena.sh` runs successfully.
+
+### 5.2 Manual Task Override
+*   [ ] **Action:** Modify `src/green_logic/server.py` to force Task 004 (Fibonacci).
+*   [ ] **Verify:** Send request -> Logs show "Fibonacci" task selected.
+
+### 5.3 Grading Integrity (The "Iron Sharpens Iron" Test)
+*   [ ] **Vector Math:** Check logs for `[VectorScorer]` loading `all-MiniLM-L6-v2`.
+*   [ ] **Sandbox Isolation:**
+    *   [ ] Verify logs show "File Injection" (no volume mounts).
+    *   [ ] Verify score is **capped at 0.5** if the code fails execution (Simulate a failure if possible).
+*   [ ] **DBOM Generation:**
+    *   [ ] Check `data/dboms/` for JSON file.
+    *   [ ] Check `data/battles.db` for corresponding hash.
+
+### 5.4 Notes & Observations
+*   *(Log outcomes here during the session)*
