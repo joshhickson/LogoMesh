@@ -35,10 +35,12 @@ The Green Agent has been upgraded with three core subsystems to support the rese
 
 ## Usage
 ### Quick Start (Scripts)
-For a list of runnable scripts to launch and test the arena, see the **[Quick Start Scripts](../20260110-Quick-Start-Scripts.md)**.
+For setup instructions (including `.env` creation) and runnable scripts, see the **[Quick Start Scripts](../20260110-Quick-Start-Scripts.md)**.
 
 ### Requirements
 *   **OS:** Ubuntu (Optimized for Lambda Cloud/Debian environments).
+*   **Config:** `.env` file (See Quick Start).
+*   **Deps:** `uv` package manager.
 
 ### Running the Agent
 See the **[Evaluation Tasklist](20260109-Evaluation-Tasklist.md)** for detailed steps on verifying the system in a production/docker environment.

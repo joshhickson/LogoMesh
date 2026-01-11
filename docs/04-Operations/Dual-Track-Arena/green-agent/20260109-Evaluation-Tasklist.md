@@ -11,6 +11,7 @@ context: Operations / Testing
 
 ## 1. Environment Setup
 - [ ] **OS Check:** Ensure system is running **Ubuntu** (required for scripts).
+- [ ] **Config:** Run `cp .env.example .env` to create the configuration file.
 - [ ] **Docker:** Ensure Docker is running.
 - [ ] **GPU Access:** (Optional) Verify NVIDIA drivers if running local LLM inference.
 - [ ] **API Keys:** Check `.env` for `OPENAI_API_KEY` (if using OpenAI for Judge) or ensure `vllm` is running.

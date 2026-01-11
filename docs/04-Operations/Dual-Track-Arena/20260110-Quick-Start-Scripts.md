@@ -12,6 +12,21 @@ This table serves as the master reference for all operational scripts in the `sc
 > **Requirement:** All scripts must be run from the **repo root** (e.g., `sudo ./scripts/bash/launch_arena.sh`).
 > **OS:** Ubuntu (Lambda Cloud).
 
+## 🛑 Step 0: Prerequisites (Run Once)
+
+Before running any scripts, you must configure the environment and install dependencies.
+
+```bash
+# 1. Create Environment Config
+# Copilot/Agents: Do not skip this. The system fails without an .env file.
+cp .env.example .env
+
+# 2. Install Dependencies
+# This project uses 'uv' for package management.
+pip install uv
+uv sync --python 3.11
+```
+
 ## 🚀 Core Scripts
 
 | Script Name | Command | Description | Ports Used |
