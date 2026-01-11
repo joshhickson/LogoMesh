@@ -34,6 +34,9 @@ The Green Agent has been upgraded with three core subsystems to support the rese
     *   **Constraint:** Adds ~2-3 minutes overhead per run due to container initialization.
 
 ## Usage
+### Quick Start (Scripts)
+For a list of runnable scripts to launch and test the arena, see the **[Quick Start Scripts](../20260110-Quick-Start-Scripts.md)**.
+
 ### Requirements
 *   **OS:** Ubuntu (Optimized for Lambda Cloud/Debian environments).
 

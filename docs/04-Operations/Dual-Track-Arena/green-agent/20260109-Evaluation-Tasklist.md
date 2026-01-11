@@ -24,6 +24,8 @@ context: Operations / Testing
 ## 3. Functional Testing (The "Iron Sharpens Iron" Loop)
 
 ### A. Launch
+**Note:** See [Quick Start Scripts](../20260110-Quick-Start-Scripts.md) for details.
+
 - [ ] **Start Arena:** Run the automated launch script:
   ```bash
   sudo ./scripts/bash/launch_arena.sh
@@ -45,6 +47,8 @@ context: Operations / Testing
     "red_agent_url": null
   }
   ```
+  *(Or use `sudo ./scripts/bash/test_agents.sh`)*
+
 - [ ] **Verify Output:** Response should contain `cis_score` and `breakdown`.
 
 ### C. Multi-File Support (New)

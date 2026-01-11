@@ -98,7 +98,9 @@ tmux attach -t agent_arena
 Perform these actions **inside the `agent_arena` tmux session**.
 
 ### 1. Setup & Launch
-We now use a unified script to handle building the Docker image and launching the arena (vLLM + Green Agent + Purple Agent).
+We now use a unified script to handle building the Docker image and launching the arena.
+
+**See [Quick Start Scripts](../../Dual-Track-Arena/20260110-Quick-Start-Scripts.md) for the full command reference.**
 
 > **CRITICAL:** Use the **AWQ** quantized model to avoid Out-of-Memory (OOM) errors on 40GB A100s. The script handles this if configured or modified, but be aware of the `Qwen/Qwen2.5-Coder-32B-Instruct-AWQ` requirement.
 
