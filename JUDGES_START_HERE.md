@@ -91,6 +91,12 @@ ls -l data/dboms/
 
 ---
 
+## 5. Advanced QA
+
+For detailed test cases (including negative testing and security constraints), see the **[QA Testing Plan](docs/04-Operations/Intent-Log/Josh/20260110-pr-88-testing-plan.md)**.
+
+---
+
 ## 📚 Deep Dive
 *   **Full Documentation:** [docs/04-Operations/Dual-Track-Arena/green-agent/20260109-Green-Agent-README.md](docs/04-Operations/Dual-Track-Arena/green-agent/20260109-Green-Agent-README.md)
 *   **Troubleshooting:** [docs/04-Operations/Dual-Track-Arena/20260110-Quick-Start-Scripts.md](docs/04-Operations/Dual-Track-Arena/20260110-Quick-Start-Scripts.md)

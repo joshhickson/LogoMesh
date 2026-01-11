@@ -24,6 +24,8 @@ context: Operations / Testing
 
 ## 3. Functional Testing (The "Iron Sharpens Iron" Loop)
 
+> **Pro Tip:** For a detailed QA plan with negative test cases (e.g., testing forbidden loops or bad code), see the **[QA Testing Plan](../../Intent-Log/Josh/20260110-pr-88-testing-plan.md)**.
+
 ### A. Launch
 **Note:** See [Quick Start Scripts](../20260110-Quick-Start-Scripts.md) for details.
 
