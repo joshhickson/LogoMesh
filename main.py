@@ -5,13 +5,17 @@ import sys
 # Ensure the src directory is in the Python path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from src.green_logic.server import run_server
+# Import only purple and red agents at module level
+# Green agent import is delayed to avoid Docker socket dependency
 from src.purple_logic.agent import run_purple_agent
 from src.red_logic.agent import run_red_agent
 
 def start_green_agent(args):
     """Initializes and runs the Green Agent server."""
     print("[Polyglot] Starting Green Agent...")
+
+    # Import green agent only when needed (avoids Docker socket init for other agents)
+    from src.green_logic.server import run_server
 
     # Set environment variables for the server to use
     if args.host:
