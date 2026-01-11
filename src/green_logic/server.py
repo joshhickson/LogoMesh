@@ -59,9 +59,17 @@ async def send_coding_task_action(request: SendTaskRequest):
 {json.dumps(request.files, indent=2)}
 
 IMPORTANT: Respond with valid JSON only:
-{{"sourceCode": "...", "testCode": "...", "rationale": "..."}}"""
+{{
+    "sourceCode": "...",
+    "testCode": "...",
+    "rationale": "..."
+}}"""
     else:
+        # Select a random task from the available set
         task = random.choice(CODING_TASKS)
+        # DEBUG: Override for specific task
+        # task = next(t for t in CODING_TASKS if t['id'] == 'task-004')
+        
         task_title = task['title']
         task_desc = task['description']
         task_constraints = task.get('constraints', {})
@@ -71,7 +79,11 @@ IMPORTANT: Respond with valid JSON only:
 {task_desc}
 
 IMPORTANT: Respond with valid JSON only (no markdown code blocks):
-{{"sourceCode": "...", "testCode": "...", "rationale": "..."}}"""
+{{
+    "sourceCode": "...",
+    "testCode": "...",
+    "rationale": "..."
+}}"""
 
     # Network Hardening: Use env var if provided, else fallback to request param
     purple_agent_url = os.getenv("PURPLE_AGENT_URL", request.purple_agent_url)
@@ -165,8 +177,25 @@ Provide a proof-of-concept exploit if possible."""
             source_code = purple_data.get('sourceCode', '')
             purple_test_code = purple_data.get('testCode', '')
 
+            # Check if source_code is actually a JSON string (Multi-file response)
+            sandbox_payload = source_code
+            if isinstance(source_code, str):
+                trimmed_source = source_code.strip()
+                if trimmed_source.startswith('{') and trimmed_source.endswith('}'):
+                    try:
+                        sandbox_payload = json.loads(trimmed_source)
+                        print("DEBUG: Detected multi-file JSON payload from Purple Agent.")
+                    except json.JSONDecodeError:
+                        pass # Treat as regular string
+
             # Step 3.1: Static Analysis (AST)
-            audit_result = auditor.analyze(source_code, task_constraints)
+            # Note: Auditor might need update for multi-file, but for now passing raw string or main file
+            audit_source = source_code
+            if isinstance(sandbox_payload, dict):
+                 # For auditing, just concatenate all files or pick main
+                 audit_source = "\n\n".join(sandbox_payload.values())
+
+            audit_result = auditor.analyze(audit_source, task_constraints)
             print(f"DEBUG: Audit Result: {json.dumps(audit_result, indent=2)}")
 
             # Step 3.2: Dynamic Execution (Sandbox)
@@ -177,14 +206,22 @@ Provide a proof-of-concept exploit if possible."""
 
             if hidden_tests and hidden_tests.strip():
                 # Use Green Agent's authoritative hidden tests
-                sandbox_result = sandbox.run(source_code, hidden_tests)
+                # If we have a multi-file payload, hidden_tests works if it imports the right modules
+                sandbox_result = sandbox.run(sandbox_payload, hidden_tests)
                 tests_used = "hidden"
                 print(f"DEBUG: Running HIDDEN TESTS (Purple's tests ignored)")
             elif purple_test_code and purple_test_code.strip():
                 # Fallback to Purple's tests only if no hidden tests
-                sandbox_result = sandbox.run(source_code, purple_test_code)
+                # If payload is multi-file, we assume test code is either in the dict OR separate
+                sandbox_result = sandbox.run(sandbox_payload, purple_test_code)
                 tests_used = "purple"
                 print(f"DEBUG: Running Purple's tests (no hidden tests defined)")
+            elif isinstance(sandbox_payload, dict):
+                 # If payload is a dict, it might contain self-contained tests
+                 # Try running without explicit test code argument
+                 sandbox_result = sandbox.run(sandbox_payload, "")
+                 tests_used = "embedded"
+                 print(f"DEBUG: Running Embedded tests in multi-file payload")
 
             print(f"DEBUG: Sandbox Result: success={sandbox_result['success']}, tests={tests_used}, duration={sandbox_result['duration']:.2f}s")
 
@@ -212,7 +249,7 @@ Provide a proof-of-concept exploit if possible."""
                 evaluation['sandbox_output'] = sandbox_result['output'][:500]  # Truncate for response size
 
             # --- Step 5: Return Combined Result ---
-            return {
+            result = {
                 "battle_id": request.battle_id,
                 "task": task_title,
                 "purple_response": purple_data,
@@ -226,6 +263,12 @@ Provide a proof-of-concept exploit if possible."""
                 },
                 "evaluation": evaluation
             }
+            
+            # Auto-save the result (Persistence Logic)
+            print(f"DEBUG: Auto-saving result for battle {request.battle_id}")
+            agent.submit_result(result)
+            
+            return result
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

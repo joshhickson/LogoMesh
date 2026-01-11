@@ -86,33 +86,113 @@ class Sandbox:
             print(f"[Sandbox] Pulling image {self.image}...")
             self.client.images.pull(self.image)
 
-    def run(self, source_code: str, test_code: str) -> dict:
+    def run(self, source_code: str | dict[str, str], test_code: str = "") -> dict:
         """
         Execute source code with test code in an isolated container.
 
-        Uses put_archive to copy files directly into the container,
-        avoiding volume mount issues in Docker-in-Docker environments.
+        Uses put_archive to copy files directly into the container.
 
         Args:
-            source_code: The Python source code to test
-            test_code: The pytest test code to run against the source
+            source_code: The Python source code OR a dictionary of {filename: content}
+            test_code: The pytest test code (ignored if source_code is a dict)
 
         Returns:
-            dict with keys:
-                - success: bool indicating if all tests passed
-                - output: str containing stdout/stderr from pytest
-                - duration: float execution time in seconds
+            dict with keys: success, output, duration
         """
         container = None
         start_time = time.time()
 
         try:
             # Prepare files to copy into container
-            files = {
-                "solution.py": source_code,
-                "test_solution.py": test_code,
-                "conftest.py": "import sys; sys.path.insert(0, '/workspace')"
-            }
+            if isinstance(source_code, dict):
+                # Multi-file mode
+                files = source_code.copy()
+                # Ensure conftest is there
+                if "conftest.py" not in files:
+                    files["conftest.py"] = "import sys; sys.path.insert(0, '/workspace')"
+            else:
+                # Single-file legacy mode
+                files = {
+                    "solution.py": source_code,
+                    "test_solution.py": test_code,
+                    "conftest.py": "import sys; sys.path.insert(0, '/workspace')"
+                }
+
+            # Generate dynamic runner based on available test files
+            # Find any file that looks like a test
+            test_modules = [
+                f.replace('.py', '') 
+                for f in files.keys() 
+                if f.startswith('test_') and f.endswith('.py')
+            ]
+            
+            # Fallback for legacy single-file if named differently, though logic above forces test_solution
+            if not test_modules and "test_solution.py" in files:
+                test_modules = ["test_solution"]
+
+            # Safe string formatting for the python list
+            test_modules_str = str(test_modules)
+
+            runner_code = f"""
+import sys
+import inspect
+import importlib
+
+def run_tests():
+    test_modules_names = {test_modules_str}
+    if not test_modules_names:
+        print("No test modules found (looking for test_*.py)!")
+        sys.exit(1)
+
+    all_tests = []
+    
+    for mod_name in test_modules_names:
+        try:
+            mod = importlib.import_module(mod_name)
+            # Find all functions starting with test_
+            tests = [
+                obj for name, obj in inspect.getmembers(mod)
+                if name.startswith('test_') and inspect.isfunction(obj)
+            ]
+            if tests:
+                print(f"Found {{len(tests)}} tests in {{mod_name}}...")
+                all_tests.extend(tests)
+            else:
+                print(f"No tests found in {{mod_name}}.")
+        except ImportError as e:
+            print(f"ERROR: Could not import {{mod_name}}: {{e}}")
+            # Continue to other modules? Or fail? Let's fail hard for now to be safe.
+            sys.exit(1)
+        except Exception as e:
+            print(f"ERROR: loading {{mod_name}}: {{e}}")
+            sys.exit(1)
+    
+    if not all_tests:
+        print("No test functions found in any modules!")
+        sys.exit(1)
+        
+    print(f"Running total {{len(all_tests)}} tests...")
+    failures = 0
+    
+    for test_func in all_tests:
+        try:
+            test_func()
+            print(f"PASS: {{test_func.__name__}}")
+        except Exception as e:
+            print(f"FAIL: {{test_func.__name__}} - {{e}}")
+            failures += 1
+            
+    if failures > 0:
+        print(f"FAILED: {{failures}}/{{len(all_tests)}} tests failed.")
+        sys.exit(1)
+    else:
+        print("SUCCESS: All tests passed.")
+        sys.exit(0)
+
+if __name__ == "__main__":
+    run_tests()
+"""
+            files["runner.py"] = runner_code
 
             # Create tar archive of the files
             tar_stream = _create_tar_stream(files)
@@ -136,9 +216,9 @@ class Sandbox:
             # Copy files into the container using put_archive
             container.put_archive("/workspace", tar_stream)
 
-            # Execute the test command
+            # Execute the test command using our custom runner (no pip install needed)
             exec_result = container.exec_run(
-                cmd=["sh", "-c", "pip install pytest -q && timeout 5s python -m pytest test_solution.py -v --tb=short 2>&1"],
+                cmd=["sh", "-c", "timeout 5s python3 runner.py 2>&1"],
                 workdir="/workspace",
                 demux=False
             )

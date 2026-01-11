@@ -27,7 +27,9 @@ sudo docker rm -f vllm-server green-agent purple-agent > /dev/null 2>&1
 # 2. start the vllm brain
 echo -e "${BLUE}[arena] launching vllm with ${MODEL}...${NC}"
 # CRITICAL FIX 1: Added --quantization and --max-model-len to prevent OOM crashes
+# CRITICAL FIX 2: Mounted host HF cache to avoid redownloading models
 sudo docker run --gpus all --network host --name vllm-server -d \
+  -v /home/ubuntu/.cache/huggingface:/root/.cache/huggingface \
   polyglot-agent:latest \
   uv run vllm serve $MODEL \
   --port 8000 --trust-remote-code \
@@ -53,6 +55,7 @@ mkdir -p $(pwd)/data
 # 4. start the judge (green agent)
 echo -e "${BLUE}[arena] launching the judge on port 9000...${NC}"
 sudo docker run -d --name green-agent --network host \
+  -v /home/ubuntu/.cache/huggingface:/root/.cache/huggingface \
   -e OPENAI_BASE_URL=http://localhost:8000/v1 \
   -e OPENAI_API_KEY=EMPTY \
   -e MODEL_NAME=$MODEL \
