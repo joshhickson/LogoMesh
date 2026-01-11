@@ -28,7 +28,15 @@ The Green Agent has been upgraded with three core subsystems to support the rese
     *   Uses SQLite with **Write-Ahead Logging (WAL)** for crash-proof data storage.
     *   Decouples cryptographic artifacts (JSON files) from relational data (SQL).
 
+4.  **Runtime Sandbox (New):**
+    *   **Isolation:** Docker-based execution using `python:3.12-slim`.
+    *   **Mechanism:** Uses **File Injection** (tarball via `put_archive`) instead of volume mounts to ensure stability in Cloud/Docker-in-Docker environments.
+    *   **Constraint:** Adds ~2-3 minutes overhead per run due to container initialization.
+
 ## Usage
+### Requirements
+*   **OS:** Ubuntu (Optimized for Lambda Cloud/Debian environments).
+
 ### Running the Agent
 See the **[Evaluation Tasklist](20260109-Evaluation-Tasklist.md)** for detailed steps on verifying the system in a production/docker environment.
 
@@ -43,10 +51,10 @@ See the **[Evaluation Tasklist](20260109-Evaluation-Tasklist.md)** for detailed 
 | **Vector Math** | ✅ Live | `all-MiniLM-L6-v2` model integrated. |
 | **DBOM Generator** | ✅ Live | SHA256 Hashing & JSON persistence. |
 | **Multi-File Support**| ✅ Live | Input contract defined in `server.py`. |
-| **Runtime Sandbox** | 🚧 In Progress | Isolation logic is partially defined in scripts. |
+| **Runtime Sandbox** | ✅ Live | Docker + File Injection. |
 
 ## Source Code Map
-*   `src/green_logic/server.py`: FastAPI Entrypoint.
+*   `src/green_logic/server.py`: FastAPI Entrypoint (Port 9000).
 *   `src/green_logic/agent.py`: Orchestrator & DBOM Generator.
 *   `src/green_logic/scoring.py`: CIS Logic (LLM + Vectors).
 *   `src/green_logic/compare_vectors.py`: Vector Math Implementation.
