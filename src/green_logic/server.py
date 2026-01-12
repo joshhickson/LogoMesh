@@ -17,6 +17,7 @@ class SendTaskRequest(BaseModel):
     purple_agent_url: str
     red_agent_url: str | None = None  # Optional for now, but recommended
     battle_id: str
+    task_id: str | None = None  # Force a specific task
     files: dict[str, str] | None = None # For Task 1.5: Input Contract Definition
 
 class ReportResultRequest(BaseModel):
@@ -65,10 +66,14 @@ IMPORTANT: Respond with valid JSON only:
     "rationale": "..."
 }}"""
     else:
-        # Select a random task from the available set
-        task = random.choice(CODING_TASKS)
-        # DEBUG: Override for specific task
-        # task = next(t for t in CODING_TASKS if t['id'] == 'task-004')
+        if request.task_id:
+            try:
+                task = next(t for t in CODING_TASKS if t['id'] == request.task_id)
+            except StopIteration:
+                raise HTTPException(status_code=404, detail=f"Task {request.task_id} not found")
+        else:
+            # Select a random task from the available set
+            task = random.choice(CODING_TASKS)
         
         task_title = task['title']
         task_desc = task['description']
