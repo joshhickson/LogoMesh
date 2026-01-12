@@ -69,12 +69,12 @@ Every submission must include the following 6 artifacts:
 | **Constraint** | Must use `GenericAttacker` / `GenericDefender` |
 
 ### 3.2. Verified Scenarios (Existing Implementation)
-We have confirmed the following scenarios are present in `external/TEAM/`:
-1.  **DockerDoo** (`dockerdoo`): Supply Chain / Hallucination Attack.
-2.  **SolarSpike** (`solarspike`): Indirect Prompt Injection / Data Poisoning.
-3.  **DebugDump** (`debugdump`): Prompt Extraction / Info Disclosure.
-4.  **MedicalLeak** (`example_medical`): PII Extraction (Example Plugin).
-*   **Missing:** "AdAttack" (Not found in repo). **UPDATE:** "AdAttack" is not a missing file but a **Specification Blueprint** provided by Lambda as an example for teams to implement. It is not required if we have 3 other custom scenarios, but implementing it is recommended for easy points.
+We have confirmed the following scenarios are present in `scenarios/security_arena/submissions/logomesh/`:
+1.  **DockerDoo** (`dockerdoo`): Supply Chain / Hallucination Attack. (Status: 🟢 READY)
+2.  **SolarSpike** (`solarspike`): Indirect Prompt Injection / Data Poisoning. (Status: 🟢 READY)
+3.  **DebugDump** (`debugdump`): Prompt Extraction / Info Disclosure. (Status: 🟢 READY)
+4.  **AdAttack** (`ad_attack`): Insecure Output Handling. (Status: 🟡 PARTIAL - Missing Test Results)
+*   **Resolved:** "AdAttack" has been implemented and deduplicated.
 
 ## 4. Strategic Implications (Consolidation)
 

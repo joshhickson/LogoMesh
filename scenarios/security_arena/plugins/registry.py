@@ -14,10 +14,10 @@ from .thingularity import ThingularityPlugin
 from .example_medical import MedicalRecordsPlugin
 
 # Import submission scenarios
-from submissions.logmesh.debugdump.plugin import DebugDumpPlugin
-from submissions.logmesh.dockerdoo.plugin import DockerDooPlugin
-from submissions.logmesh.solarspike.plugin import SolarSpikePlugin
-from submissions.logmesh.ad_attack.plugin import AdAttackPlugin
+from scenarios.security_arena.submissions.logomesh.debugdump.plugin import DebugDumpPlugin
+from scenarios.security_arena.submissions.logomesh.dockerdoo.plugin import DockerDooPlugin
+from scenarios.security_arena.submissions.logomesh.solarspike.plugin import SolarSpikePlugin
+from scenarios.security_arena.submissions.logomesh.ad_attack.plugin import AdAttackPlugin
 
 
 # Registry mapping scenario names to plugin classes

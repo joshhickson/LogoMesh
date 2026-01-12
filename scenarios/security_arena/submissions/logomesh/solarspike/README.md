@@ -139,7 +139,7 @@ temperature = "28°C"
 Add to `scenarios/security_arena/plugins/registry.py`:
 
 ```python
-from scenarios.security_arena.submissions.logmesh.solarspike.plugin import SolarSpikePlugin
+from scenarios.security_arena.submissions.logomesh.solarspike.plugin import SolarSpikePlugin
 
 SCENARIO_PLUGINS = {
     # ... existing scenarios ...
