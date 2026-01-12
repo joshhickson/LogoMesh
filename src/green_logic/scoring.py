@@ -15,7 +15,7 @@ class ContextualIntegrityScorer:
         )
         # Initialize Vector Scorer for math-based evaluation
         self.vector_scorer = VectorScorer()
-        self.logic_review_timeout = 15
+        self.logic_review_timeout = 85
 
     async def _perform_logic_review(
         self, task_description: str, source_code: str
