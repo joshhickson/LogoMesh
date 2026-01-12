@@ -1,3 +1,9 @@
+# ⚖️ [JUDGES: START HERE](JUDGES_START_HERE.md)
+
+**If you are evaluating this submission for the AgentBeats competition, please read [JUDGES_START_HERE.md](JUDGES_START_HERE.md) first for the "Big Red Button" setup guide.**
+
+---
+
 > **🚀 Onboarding Start Here**
 >
 > **For the best onboarding experience, please start by viewing our interactive documentation hub.**
@@ -20,31 +26,28 @@ Welcome. This repo contains the LogoMesh monorepo: a TypeScript-based platform f
 ## ⚡ Quickstart (Polyglot Agent)
 
 **Recommended for Evaluators & Competitors.**
-The system now runs as a single Docker container that can assume different roles (Green, Purple, Red).
+We now use a unified launch script to manage the Polyglot Agent containers (Green, Purple, Red).
 
-**Prerequisites:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) (ensure it's running).
+**Prerequisites:** Ubuntu, Docker, `uv`.
 
-1.  **Build the Container**
+1.  **Configure Environment**
     ```bash
-    docker build -t polyglot-agent .
+    cp .env.example .env
+    pip install uv && uv sync
     ```
 
-2.  **Run the Green Agent (Evaluator)**
-    This starts the orchestrator which will manage the evaluation lifecycle.
+2.  **Launch Arena**
     ```bash
-    docker run -p 8000:8000 -e OPENAI_API_KEY=your_key polyglot-agent --role GREEN
+    sudo ./scripts/bash/launch_arena.sh
     ```
+    *   This builds the Docker image and starts all services.
+    *   **Green Agent:** Port 9000
+    *   **Purple Agent:** Port 9001
+    *   **vLLM Brain:** Port 8000
 
-3.  **Run the Purple Agent (Defender)**
-    This starts the defender agent which generates code solutions.
+3.  **Run Test**
     ```bash
-    docker run -p 8001:8000 -e OPENAI_API_KEY=your_key polyglot-agent --role PURPLE
-    ```
-
-4.  **Run the Red Agent (Attacker)**
-    This starts the attacker agent which generates exploits.
-    ```bash
-    docker run -p 8002:8000 -e OPENAI_API_KEY=your_key polyglot-agent --role RED
+    sudo ./scripts/bash/test_agents.sh
     ```
 
 ---

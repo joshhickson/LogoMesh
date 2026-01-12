@@ -5,12 +5,10 @@ import sys
 # Ensure the src directory is in the Python path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from src.green_logic.server import run_server
-from src.purple_logic.agent import run_purple_agent
-from src.red_logic.agent import run_red_agent
 
 def start_green_agent(args):
     """Initializes and runs the Green Agent server."""
+    from src.green_logic.server import run_server
     print("[Polyglot] Starting Green Agent...")
 
     # Set environment variables for the server to use
@@ -24,6 +22,7 @@ def start_green_agent(args):
 
 def start_purple_agent(args):
     """Initializes and runs the Purple Agent."""
+    from src.purple_logic.agent import run_purple_agent
     print("[Polyglot] Starting Purple Agent...")
     
     # Run the Purple Agent server
@@ -31,6 +30,7 @@ def start_purple_agent(args):
 
 def start_red_agent(args):
     """Initializes and runs the Red Agent."""
+    from src.red_logic.agent import run_red_agent
     print("[Polyglot] Starting Red Agent...")
     
     # Run the Red Agent server

@@ -1,7 +1,12 @@
 ---
-status: ACTIVE
+status: DEPRECATED
 type: Guide
+superseded_by: docs/04-Operations/Intent-Log/Josh/20260110-Lambda-Tmux-Collaboration.md
 ---
+> **Update Note (2026-01-10):**
+> This guide lists manual `docker run` commands that are now **outdated**.
+> Please refer to the **[Quick Start Scripts](../../Dual-Track-Arena/20260110-Quick-Start-Scripts.md)** for the latest one-command launch instructions.
+>
 > **Context:**
 > *   [2026-01-01]: Step-by-step "Noob Guide" for connecting MacOS VS Code to Lambda Cloud (A100).
 
@@ -111,6 +116,8 @@ Since you are using the "Pro Way," GitHub Copilot works directly on the remote m
 
 Now that you are connected, follow these exact steps to deploy the "Arena" stack (vLLM + Green Agent + Purple Agent).
 
+> **Update:** The manual commands below are valid but cumbersome. It is recommended to use the **[Quick Start Scripts](../../Dual-Track-Arena/20260110-Quick-Start-Scripts.md)** instead.
+
 ### 1. Setup & Build
 Run these commands in your VS Code terminal (connected to the A100):
 
@@ -126,6 +133,8 @@ docker build -t polyglot-agent:latest -f Dockerfile.gpu .
 
 ### 2. Launch the Infrastructure
 We run 3 containers: One for the Brain (vLLM) and two for the Agents.
+
+**Note:** The ports in the legacy commands below may be outdated. The new standard is Green Agent on **9000** and Purple on **9001**.
 
 ```bash
 # 1. Launch vLLM (The Brain) - Port 8000
