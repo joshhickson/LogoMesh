@@ -1,3 +1,5 @@
+#!/bin/bash
+
 curl -X POST http://localhost:9000/actions/send_coding_task \
   -H "Content-Type: application/json" \
   -d '{
