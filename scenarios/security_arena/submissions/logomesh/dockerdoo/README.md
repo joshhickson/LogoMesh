@@ -131,7 +131,7 @@ safe_images = [
 Add to `scenarios/security_arena/plugins/registry.py`:
 
 ```python
-from scenarios.security_arena.submissions.logmesh.dockerdoo.plugin import DockerDooPlugin
+from scenarios.security_arena.submissions.logomesh.dockerdoo.plugin import DockerDooPlugin
 
 SCENARIO_PLUGINS = {
     # ... existing scenarios ...

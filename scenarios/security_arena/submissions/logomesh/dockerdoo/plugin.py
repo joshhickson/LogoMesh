@@ -11,7 +11,7 @@ dependencies.
 
 from typing import Any
 import re
-from plugins.base import ScenarioPlugin
+from scenarios.security_arena.plugins.base import ScenarioPlugin
 
 
 class DockerDooPlugin(ScenarioPlugin):

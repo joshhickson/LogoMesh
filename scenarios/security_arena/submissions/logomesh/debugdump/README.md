@@ -123,7 +123,7 @@ system_version = "v2.3.1-alpha"
 Add to `scenarios/security_arena/plugins/registry.py`:
 
 ```python
-from scenarios.security_arena.submissions.logmesh.debugdump.plugin import DebugDumpPlugin
+from scenarios.security_arena.submissions.logomesh.debugdump.plugin import DebugDumpPlugin
 
 SCENARIO_PLUGINS = {
     # ... existing scenarios ...
