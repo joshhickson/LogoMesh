@@ -11,6 +11,7 @@ from .tasks import CODING_TASKS
 from .scoring import ContextualIntegrityScorer
 from .analyzer import SemanticAuditor
 from .sandbox import Sandbox
+from .generator import TestGenerator
 
 # --- Data Models ---
 class SendTaskRequest(BaseModel):
@@ -35,6 +36,7 @@ agent = GreenAgent()
 scorer = ContextualIntegrityScorer()
 auditor = SemanticAuditor()
 sandbox = Sandbox(timeout=5)
+test_generator = TestGenerator()
 
 # --- Endpoints ---
 @app.post("/actions/send_coding_task")
@@ -200,28 +202,33 @@ Provide a proof-of-concept exploit if possible."""
 
             # Step 3.2: Dynamic Execution (Sandbox)
             # CRITICAL: Use hidden_tests if available (prevents Purple from cheating with weak tests)
-            # Only fall back to Purple's tests if no hidden tests are defined
+            # If no hidden tests, generate adversarial tests dynamically using LLM
             sandbox_result = {"success": True, "output": "No tests provided", "duration": 0.0}
             tests_used = "none"
+            tests_to_run = ""
 
             if hidden_tests and hidden_tests.strip():
-                # Use Green Agent's authoritative hidden tests
-                # If we have a multi-file payload, hidden_tests works if it imports the right modules
-                sandbox_result = sandbox.run(sandbox_payload, hidden_tests)
+                # Fast path: Use Green Agent's authoritative hidden tests
+                tests_to_run = hidden_tests
                 tests_used = "hidden"
-                print(f"DEBUG: Running HIDDEN TESTS (Purple's tests ignored)")
-            elif purple_test_code and purple_test_code.strip():
-                # Fallback to Purple's tests only if no hidden tests
-                # If payload is multi-file, we assume test code is either in the dict OR separate
-                sandbox_result = sandbox.run(sandbox_payload, purple_test_code)
-                tests_used = "purple"
-                print(f"DEBUG: Running Purple's tests (no hidden tests defined)")
+                print(f"DEBUG: Using HIDDEN TESTS (static, {len(tests_to_run)} chars)")
+            else:
+                # Dynamic path: Generate adversarial tests using LLM
+                tests_to_run = await test_generator.generate_adversarial_tests(
+                    task_desc, source_code
+                )
+                tests_used = "generated"
+                print(f"DEBUG: Generated dynamic tests ({len(tests_to_run)} chars)")
+
+            # Run the tests (hidden or generated) if we have any
+            if tests_to_run and tests_to_run.strip():
+                sandbox_result = sandbox.run(sandbox_payload, tests_to_run)
             elif isinstance(sandbox_payload, dict):
-                 # If payload is a dict, it might contain self-contained tests
-                 # Try running without explicit test code argument
-                 sandbox_result = sandbox.run(sandbox_payload, "")
-                 tests_used = "embedded"
-                 print(f"DEBUG: Running Embedded tests in multi-file payload")
+                # If payload is a dict, it might contain self-contained tests
+                # Try running without explicit test code argument
+                sandbox_result = sandbox.run(sandbox_payload, "")
+                tests_used = "embedded"
+                print(f"DEBUG: Running Embedded tests in multi-file payload")
 
             print(f"DEBUG: Sandbox Result: success={sandbox_result['success']}, tests={tests_used}, duration={sandbox_result['duration']:.2f}s")
 
