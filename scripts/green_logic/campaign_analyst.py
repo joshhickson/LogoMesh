@@ -43,21 +43,27 @@ def load_data():
 
             return pd.Series({
                 'cis_score': evaluation.get('cis_score', 0.0),
-                'rationale_score': evaluation.get('rationale_score', 0.0), # Assuming this field exists in breakdown
-                'architectural_score': evaluation.get('architectural_score', 0.0), # Assuming this field exists
+                'logic_score': evaluation.get('logic_score', 0.0),
+                'rationale_score': evaluation.get('rationale_score', 0.0),
+                'architectural_score': evaluation.get('architectural_score', 0.0),
                 'sandbox_success': sandbox.get('success', False),
                 'duration': sandbox.get('duration', 0.0),
-                'tests_used': sandbox.get('tests_used', 'unknown')
+                'tests_used': sandbox.get('tests_used', 'unknown'),
+                'security_issues': len(data.get('audit_result', {}).get('security_issues', [])),
+                'code_smells': len(data.get('audit_result', {}).get('code_smells', []))
             })
         except Exception as e:
             # print(f"Error parsing row {row.name}: {e}")
             return pd.Series({
                 'cis_score': 0.0,
+                'logic_score': 0.0,
                 'rationale_score': 0.0,
                 'architectural_score': 0.0,
                 'sandbox_success': False,
                 'duration': 0.0,
-                'tests_used': 'error'
+                'tests_used': 'error',
+                'security_issues': 0,
+                'code_smells': 0
             })
 
     metrics_df = df.apply(parse_json, axis=1)
@@ -80,13 +86,12 @@ def generate_report(df, output_format="markdown"):
 
     # 2. Scoreboard
     # Group by task and calculate means
-    scoreboard = df.groupby('task_title')[['cis_score', 'sandbox_success', 'duration']].mean()
+    scoreboard = df.groupby('task_title')[['cis_score', 'logic_score', 'sandbox_success', 'security_issues']].mean()
     scoreboard['sandbox_success'] = scoreboard['sandbox_success'].apply(lambda x: f"{x:.1%}")
     scoreboard_md = scoreboard.to_markdown()
 
-    # 3. Anomalies (The "Daoist" Insights)
+    # 3. Hall of Shame (The "Daoist" Insights)
     # Hallucinations: High Rationale (>0.8) BUT Low Sandbox Success (False)
-    # Note: Using sandbox_success as proxy for architectural integrity if explicit score missing
     hallucinations = df[
         (df['rationale_score'] > 0.8) &
         (df['sandbox_success'] == False)
@@ -112,7 +117,7 @@ def generate_report(df, output_format="markdown"):
 ## 2. Scoreboard (Averages)
 {scoreboard_md}
 
-## 3. Anomalies & Insights
+## 3. Hall of Shame
 
 ### The "Hallucination" Trap (High Rationale, Broken Code)
 *Potential candidates where the agent lied about its reasoning.*
