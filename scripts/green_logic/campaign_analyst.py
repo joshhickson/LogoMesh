@@ -1,124 +1,154 @@
-import json
+#!/usr/bin/env python3
+"""
+Campaign Analyst (Yang)
+Analyzes Green Agent campaign data and generates empirical reports.
+"""
+
+import os
+import sys
 import sqlite3
+import json
 import pandas as pd
 import argparse
-import os
 from datetime import datetime
 
-# Configuration
 DB_PATH = "data/battles.db"
 REPORT_DIR = "docs/04-Operations/Dual-Track-Arena/reports"
 
-class CampaignAnalyst:
-    def __init__(self, db_path=DB_PATH):
-        self.db_path = db_path
+def load_data():
+    """Load and parse data from SQLite into a Pandas DataFrame."""
+    if not os.path.exists(DB_PATH):
+        print(f"Error: Database not found at {DB_PATH}")
+        return pd.DataFrame()
 
-    def load_data(self):
-        """Load and parse data from SQLite."""
-        if not os.path.exists(self.db_path):
-            raise FileNotFoundError(f"Database not found at {self.db_path}")
+    conn = sqlite3.connect(DB_PATH)
+    query = "SELECT battle_id, task_title, timestamp, raw_result FROM battles"
+    df = pd.read_sql_query(query, conn)
+    conn.close()
 
-        conn = sqlite3.connect(self.db_path)
-        df_raw = pd.read_sql_query("SELECT battle_id, timestamp, raw_result FROM battles", conn)
-        conn.close()
+    if df.empty:
+        return df
 
-        # Parse JSON
-        parsed_data = []
-        for _, row in df_raw.iterrows():
-            try:
-                data = json.loads(row['raw_result'])
+    # Parse raw_result JSON
+    # We expect raw_result to be a JSON string.
+    # We extract key metrics into new columns.
 
-                # Extract core metrics
-                eval_data = data.get("evaluation", {})
-                audit_data = data.get("audit_result", {})
-                sandbox_data = data.get("sandbox_result", {})
+    def parse_json(row):
+        try:
+            data = json.loads(row['raw_result']) if isinstance(row['raw_result'], str) else row['raw_result']
 
-                # Identify Task
-                task_title = data.get("task", "Unknown")
-                task_id = "unknown"
-                if "Email" in task_title: task_id = "task-001"
-                elif "Rate" in task_title: task_id = "task-002"
-                elif "LRU" in task_title: task_id = "task-003"
-                elif "Fibonacci" in task_title: task_id = "task-004"
+            # Extract evaluation metrics
+            evaluation = data.get('evaluation', {})
+            sandbox = data.get('sandbox_result', {})
 
-                # New Metrics (Logic, Security, Smells)
-                # Handle cases where new fields might be missing in older logs
-                logic_score = eval_data.get("logic_score", 0.0)
+            return pd.Series({
+                'cis_score': evaluation.get('cis_score', 0.0),
+                'rationale_score': evaluation.get('rationale_score', 0.0), # Assuming this field exists in breakdown
+                'architectural_score': evaluation.get('architectural_score', 0.0), # Assuming this field exists
+                'sandbox_success': sandbox.get('success', False),
+                'duration': sandbox.get('duration', 0.0),
+                'tests_used': sandbox.get('tests_used', 'unknown')
+            })
+        except Exception as e:
+            # print(f"Error parsing row {row.name}: {e}")
+            return pd.Series({
+                'cis_score': 0.0,
+                'rationale_score': 0.0,
+                'architectural_score': 0.0,
+                'sandbox_success': False,
+                'duration': 0.0,
+                'tests_used': 'error'
+            })
 
-                # Security Issues & Code Smells
-                # Currently audit_result might be just {valid: bool} or new detailed object
-                security_issues = audit_data.get("security_issues", [])
-                code_smells = audit_data.get("code_smells", [])
+    metrics_df = df.apply(parse_json, axis=1)
+    final_df = pd.concat([df, metrics_df], axis=1)
+    return final_df
 
-                parsed_data.append({
-                    "battle_id": row['battle_id'],
-                    "timestamp": row['timestamp'],
-                    "task_id": task_id,
-                    "cis_score": eval_data.get("cis_score", 0.0),
-                    "rationale_score": eval_data.get("rationale_score", 0.0),
-                    "architecture_score": eval_data.get("architecture_score", 0.0),
-                    "testing_score": eval_data.get("testing_score", 0.0),
-                    "logic_score": logic_score,
-                    "sandbox_success": sandbox_data.get("success", False),
-                    "tests_used": sandbox_data.get("tests_used", "unknown"),
-                    "security_issue_count": len(security_issues),
-                    "code_smell_count": len(code_smells),
-                    "security_issues_list": str([s['issue_type'] for s in security_issues]),
-                    "code_smells_list": str([s['smell_type'] for s in code_smells])
-                })
-            except Exception as e:
-                print(f"Skipping row {row['battle_id']}: {e}")
+def generate_report(df, output_format="markdown"):
+    """Generate a rigorous empirical report."""
+    if df.empty:
+        print("No data to report.")
+        return
 
-        return pd.DataFrame(parsed_data)
+    report_date = datetime.now().strftime("%Y-%m-%d")
+    report_filename = f"Campaign-Report-{datetime.now().strftime('%Y%m%d')}.md"
+    report_path = os.path.join(REPORT_DIR, report_filename)
 
-    def generate_report(self, df):
-        """Generate a Markdown report."""
-        os.makedirs(REPORT_DIR, exist_ok=True)
-        report_path = os.path.join(REPORT_DIR, f"Campaign_Report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md")
+    # 1. Census
+    total_battles = len(df)
+    task_breakdown = df['task_title'].value_counts().to_markdown()
 
-        with open(report_path, "w") as f:
-            f.write("# Campaign Report (Yang)\n\n")
-            f.write(f"**Generated:** {datetime.now()}\n")
-            f.write(f"**Total Battles:** {len(df)}\n\n")
+    # 2. Scoreboard
+    # Group by task and calculate means
+    scoreboard = df.groupby('task_title')[['cis_score', 'sandbox_success', 'duration']].mean()
+    scoreboard['sandbox_success'] = scoreboard['sandbox_success'].apply(lambda x: f"{x:.1%}")
+    scoreboard_md = scoreboard.to_markdown()
 
-            # 1. Census
-            f.write("## 1. Census\n")
-            f.write(df['task_id'].value_counts().to_markdown())
-            f.write("\n\n")
+    # 3. Anomalies (The "Daoist" Insights)
+    # Hallucinations: High Rationale (>0.8) BUT Low Sandbox Success (False)
+    # Note: Using sandbox_success as proxy for architectural integrity if explicit score missing
+    hallucinations = df[
+        (df['rationale_score'] > 0.8) &
+        (df['sandbox_success'] == False)
+    ]
 
-            # 2. Scoreboard
-            f.write("## 2. Scoreboard (Averages)\n")
-            scoreboard = df.groupby('task_id')[['cis_score', 'logic_score', 'rationale_score', 'architecture_score', 'testing_score', 'sandbox_success']].mean()
-            f.write(scoreboard.to_markdown())
-            f.write("\n\n")
+    # Plagiarism/Silent Failures: High Sandbox (True) BUT Low Rationale (<0.5)
+    silent_failures = df[
+        (df['sandbox_success'] == True) &
+        (df['rationale_score'] < 0.5)
+    ]
 
-            # 3. Security & Quality
-            f.write("## 3. Security & Code Quality\n")
-            quality_board = df.groupby('task_id')[['security_issue_count', 'code_smell_count']].mean()
-            f.write(quality_board.to_markdown())
-            f.write("\n\n")
+    content = f"""# Campaign Report: {report_date}
 
-            # 4. Hall of Shame (Failures)
-            f.write("## 4. Hall of Shame (Lowest CIS)\n")
-            shame = df.sort_values('cis_score').head(5)[['battle_id', 'task_id', 'cis_score', 'logic_score', 'sandbox_success']]
-            f.write(shame.to_markdown(index=False))
-            f.write("\n\n")
+**Status:** AUTOMATED REPORT
+**Context:** Operations / Green Agent Analysis
 
-            # 5. Hall of Fame (Best)
-            f.write("## 5. Hall of Fame (Highest CIS)\n")
-            fame = df.sort_values('cis_score', ascending=False).head(5)[['battle_id', 'task_id', 'cis_score', 'logic_score', 'sandbox_success']]
-            f.write(fame.to_markdown(index=False))
-            f.write("\n")
+## 1. Census
+**Total Battles:** {total_battles}
 
-        print(f"Report generated: {report_path}")
+### Breakdown by Task
+{task_breakdown}
+
+## 2. Scoreboard (Averages)
+{scoreboard_md}
+
+## 3. Anomalies & Insights
+
+### The "Hallucination" Trap (High Rationale, Broken Code)
+*Potential candidates where the agent lied about its reasoning.*
+**Count:** {len(hallucinations)}
+"""
+
+    if not hallucinations.empty:
+        content += "\n| Battle ID | Task | CIS Score | Rationale |\n|---|---|---|---|\n"
+        for _, row in hallucinations.head(5).iterrows():
+            content += f"| `{row['battle_id']}` | {row['task_title']} | {row['cis_score']:.2f} | {row['rationale_score']:.2f} |\n"
+    else:
+        content += "\n*No clear hallucinations detected yet.*\n"
+
+    content += f"""
+### The "Silent Failure" Trap (Working Code, Poor Rationale)
+*Potential candidates where the agent got lucky or plagiarized without understanding.*
+**Count:** {len(silent_failures)}
+"""
+
+    if not silent_failures.empty:
+        content += "\n| Battle ID | Task | CIS Score | Rationale |\n|---|---|---|---|\n"
+        for _, row in silent_failures.head(5).iterrows():
+            content += f"| `{row['battle_id']}` | {row['task_title']} | {row['cis_score']:.2f} | {row['rationale_score']:.2f} |\n"
+    else:
+        content += "\n*No silent failures detected yet.*\n"
+
+    # Save Report
+    with open(report_path, "w") as f:
+        f.write(content)
+
+    print(f"Report generated: {report_path}")
 
 if __name__ == "__main__":
-    analyst = CampaignAnalyst()
-    try:
-        df = analyst.load_data()
-        if not df.empty:
-            analyst.generate_report(df)
-        else:
-            print("No data found to analyze.")
-    except Exception as e:
-        print(f"Analysis failed: {e}")
+    parser = argparse.ArgumentParser(description="Green Agent Campaign Analyst")
+    parser.add_argument("--format", default="markdown", help="Output format (default: markdown)")
+    args = parser.parse_args()
+
+    df = load_data()
+    generate_report(df, args.format)

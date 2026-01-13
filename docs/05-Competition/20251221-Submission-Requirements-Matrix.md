@@ -73,8 +73,8 @@ We have confirmed the following scenarios are present in `scenarios/security_are
 1.  **DockerDoo** (`dockerdoo`): Supply Chain / Hallucination Attack. (Status: 🟢 READY)
 2.  **SolarSpike** (`solarspike`): Indirect Prompt Injection / Data Poisoning. (Status: 🟢 READY)
 3.  **DebugDump** (`debugdump`): Prompt Extraction / Info Disclosure. (Status: 🟢 READY)
-4.  **AdAttack** (`ad_attack`): Insecure Output Handling. (Status: 🟡 PARTIAL - Missing Test Results)
-*   **Resolved:** "AdAttack" has been implemented and deduplicated.
+4.  **AdAttack** (`ad_attack`): Insecure Output Handling. (Status: 🟢 REGISTERED - Ready for Execution)
+*   **Resolved:** "AdAttack" has been implemented, deduplicated, and registered in `registry.py`. A helper script (`scripts/run_lambda_ad_attack.sh`) is available for execution.
 
 ## 4. Strategic Implications (Consolidation)
 
