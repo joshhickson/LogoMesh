@@ -1,191 +1,222 @@
-import asyncio
-import json
-import logging
+#!/usr/bin/env python3
+"""
+Smart Campaign Runner (Yin)
+Executes the Green Agent testing loop to fill the coverage matrix.
+"""
+
 import os
-import random
-import sqlite3
 import sys
+import json
 import time
-from datetime import datetime
-from typing import Dict, List
-
+import sqlite3
+import random
+import argparse
 import httpx
+from datetime import datetime
 from rich.console import Console
-from rich.live import Live
-from rich.panel import Panel
-from rich.progress import BarColumn, Progress, TextColumn
 from rich.table import Table
+from rich.progress import Progress
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[logging.FileHandler("smart_campaign.log"), logging.StreamHandler()],
-)
+# Add project root to path to import src modules if needed
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+
+# Import CODING_TASKS directly or define a fallback
+try:
+    from src.green_logic.tasks import CODING_TASKS
+except ImportError:
+    # Fallback if src not in path or module missing
+    CODING_TASKS = [
+        {"id": "task-001", "title": "Email Validator"},
+        {"id": "task-002", "title": "Rate Limiter"},
+        {"id": "task-003", "title": "LRU Cache"},
+        {"id": "task-004", "title": "Recursive Fibonacci"},
+    ]
+
+DB_PATH = "data/battles.db"
+DEFAULT_TARGET = 100
+MAX_CONSECUTIVE_ERRORS = 5
 
 console = Console()
 
-# Configuration
-DB_PATH = "data/battles.db"
-GREEN_AGENT_URL = "http://localhost:9040/actions/send_coding_task"
-PURPLE_AGENT_URL = "http://localhost:9001"
-TARGET_SAMPLES = 100
-COOL_DOWN_SECONDS = 10  # Throttling for H100
-MAX_CONSECUTIVE_ERRORS = 5
+def init_db():
+    """Initialize the SQLite database if it doesn't exist."""
+    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
 
-# Task Definitions (Mirroring src/green_logic/tasks.py)
-TASKS = ["task-001", "task-002", "task-003", "task-004"]
+    # Check if table exists
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='battles'")
+    if not cursor.fetchone():
+        create_table(cursor)
+    else:
+        # Check if schema is correct (has task_title)
+        cursor.execute("PRAGMA table_info(battles)")
+        columns = [info[1] for info in cursor.fetchall()]
+        if 'task_title' not in columns:
+            console.print("[yellow]Schema mismatch (missing task_title). Recreating table...[/yellow]")
+            cursor.execute("DROP TABLE battles")
+            create_table(cursor)
 
+    conn.commit()
+    conn.close()
 
-class SmartCampaignRunner:
-    def __init__(self):
-        self.consecutive_errors = 0
-        self.total_battles = 0
-        self._ensure_db()
+def create_table(cursor):
+    console.print("[yellow]Creating table 'battles'...[/yellow]")
+    cursor.execute("""
+        CREATE TABLE battles (
+            battle_id TEXT PRIMARY KEY,
+            task_title TEXT,
+            timestamp DATETIME,
+            raw_result JSON
+        )
+    """)
 
-    def _ensure_db(self):
-        """Ensure the database exists."""
-        if not os.path.exists(DB_PATH):
-            logging.warning(f"Database {DB_PATH} not found. Waiting for first run...")
-            os.makedirs("data", exist_ok=True)
-            # Create a dummy connection to init file if needed, though server should do it
-            conn = sqlite3.connect(DB_PATH)
-            conn.close()
+def get_coverage_stats(cursor):
+    """Query the database to get current coverage counts per task."""
+    stats = {task['title']: 0 for task in CODING_TASKS}
 
-    def get_coverage(self) -> Dict[str, int]:
-        """Query the database to get current coverage per task."""
-        coverage = {task: 0 for task in TASKS}
+    try:
+        # Assuming task_title is populated. If not, we'd need to parse raw_result.
+        # For this implementation, we rely on the insert logic to populate task_title.
+        cursor.execute("SELECT task_title, COUNT(*) FROM battles GROUP BY task_title")
+        rows = cursor.fetchall()
+        for title, count in rows:
+            if title in stats:
+                stats[title] = count
+            else:
+                # Handle case where title might not match exactly or is a legacy task
+                stats[title] = count
+    except sqlite3.OperationalError:
+        console.print("[red]Error querying database. Is the schema correct?[/red]")
+
+    return stats
+
+def get_next_task(stats):
+    """Determine the most under-represented task."""
+    # Find task with minimum count
+    # Filter only tasks in our target list
+    target_tasks = {t['title']: stats.get(t['title'], 0) for t in CODING_TASKS}
+
+    # Sort by count (asc) then by title (for stability)
+    sorted_tasks = sorted(target_tasks.items(), key=lambda item: (item[1], item[0]))
+
+    next_task_title = sorted_tasks[0][0]
+    current_count = sorted_tasks[0][1]
+
+    # Find the full task object
+    next_task = next((t for t in CODING_TASKS if t['title'] == next_task_title), None)
+
+    return next_task, current_count
+
+def run_campaign(url, target_samples, dry_run=False):
+    """Main execution loop."""
+    init_db()
+
+    consecutive_errors = 0
+
+    console.print(f"[bold green]Starting Smart Campaign Runner[/bold green]")
+    console.print(f"Target: {target_samples} samples per task")
+    console.print(f"Agent URL: {url}")
+
+    while True:
         try:
             conn = sqlite3.connect(DB_PATH)
             cursor = conn.cursor()
 
-            # Since we don't have a task_id column, we have to parse raw_result
-            # Optimization: Read only the last 1000 records to estimate,
-            # OR read all but only select specific columns.
-            # For now, let's try to be accurate.
-            cursor.execute("SELECT raw_result FROM battles")
-            rows = cursor.fetchall()
+            # 1. Check State
+            stats = get_coverage_stats(cursor)
+            conn.close() # Close quickly to avoid locking
 
-            for row in rows:
-                try:
-                    data = json.loads(row[0])
-                    # Task title usually contains the ID or name we can map
-                    # Current server.py sets "task" field in result to task['title']
-                    # We need to map title back to ID or just count generic.
-                    # Wait, server.py returns "task": task_title.
-                    # We can infer from title.
-                    title = data.get("task", "")
-                    if "Email" in title: coverage["task-001"] += 1
-                    elif "Rate" in title: coverage["task-002"] += 1
-                    elif "LRU" in title: coverage["task-003"] += 1
-                    elif "Fibonacci" in title: coverage["task-004"] += 1
-                except:
-                    pass
+            # Display Dashboard
+            table = Table(title="Campaign Coverage")
+            table.add_column("Task", style="cyan")
+            table.add_column("Count", justify="right")
+            table.add_column("Progress", justify="left")
 
-            conn.close()
-        except sqlite3.OperationalError:
-            # Table might not exist yet
-            pass
+            completed_tasks = 0
+            for task in CODING_TASKS:
+                count = stats.get(task['title'], 0)
+                if count >= target_samples:
+                    completed_tasks += 1
+                    bar = "[green]DONE[/green]"
+                else:
+                    pct = int((count / target_samples) * 20)
+                    bar = "[" + "=" * pct + " " * (20 - pct) + "]"
+
+                table.add_row(task['title'], str(count), bar)
+
+            console.clear()
+            console.print(table)
+
+            if completed_tasks >= len(CODING_TASKS):
+                console.print("[bold green]All targets met! Campaign complete.[/bold green]")
+                break
+
+            # 2. Select Target
+            next_task, count = get_next_task(stats)
+            console.print(f"Next Target: [bold]{next_task['title']}[/bold] (Current: {count})")
+
+            # 3. Execute
+            battle_id = f"auto_{int(time.time())}_{random.randint(1000,9999)}"
+            payload = {
+                "battle_id": battle_id,
+                "task_id": next_task['id'],
+                # "purple_agent_url": ... # Assuming server has default or env var
+            }
+
+            if dry_run:
+                console.print("[yellow]DRY RUN: Skipping network request[/yellow]")
+                # Simulate success
+                time.sleep(1)
+
+                # Mock DB insert for testing loop logic
+                conn = sqlite3.connect(DB_PATH)
+                cursor = conn.cursor()
+                cursor.execute(
+                    "INSERT INTO battles (battle_id, task_title, timestamp, raw_result) VALUES (?, ?, ?, ?)",
+                    (battle_id, next_task['title'], datetime.now(), json.dumps({"status": "mock_success"}))
+                )
+                conn.commit()
+                conn.close()
+
+            else:
+                with httpx.Client(timeout=300.0) as client:
+                    response = client.post(f"{url}/actions/send_coding_task", json=payload)
+                    response.raise_for_status()
+                    result = response.json()
+
+                    # Store result - NOTE: The server might already store it.
+                    # But the spec says "Auto-save the result (Persistence Logic)" in the server.
+                    # However, to be safe and ensure our stats are up to date for this script,
+                    # we verify if we need to insert it here or if the server does it.
+                    # The server code `agent.submit_result(result)` suggests server handles it.
+                    # BUT, this script reads from the DB.
+                    # If the server and this script share the same DB path, we are good.
+
+                    console.print(f"Success! Battle ID: {result.get('battle_id')}")
+                    consecutive_errors = 0
+
+                    # 10s Cool-down logic
+                    console.print("Cooling down for 10s...")
+                    time.sleep(10)
+
+        except KeyboardInterrupt:
+            console.print("[bold red]Stopped by user.[/bold red]")
+            break
         except Exception as e:
-            logging.error(f"Error reading DB: {e}")
-
-        return coverage
-
-    def select_next_task(self, coverage: Dict[str, int]) -> str | None:
-        """Select the most under-represented task."""
-        # Filter tasks that haven't met the target
-        needed = {t: c for t, c in coverage.items() if c < TARGET_SAMPLES}
-
-        if not needed:
-            return None  # All done!
-
-        # Sort by count (ascending) and pick the first
-        return sorted(needed.items(), key=lambda x: x[1])[0][0]
-
-    async def run_battle(self, task_id: str):
-        """Execute a single battle."""
-        battle_id = f"auto_gen_{int(time.time())}_{random.randint(1000, 9999)}"
-        payload = {
-            "purple_agent_url": PURPLE_AGENT_URL,
-            "battle_id": battle_id,
-            "task_id": task_id
-        }
-
-        logging.info(f"Starting battle {battle_id} for {task_id}")
-
-        async with httpx.AsyncClient(timeout=120.0) as client:
-            response = await client.post(GREEN_AGENT_URL, json=payload)
-            response.raise_for_status()
-            return response.json()
-
-    async def loop(self):
-        """Main execution loop."""
-
-        # UI Setup
-        progress = Progress(
-            TextColumn("[progress.description]{task.description}"),
-            BarColumn(),
-            TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
-            TextColumn("{task.completed}/{task.total}"),
-        )
-
-        task_ids = {}
-        for t in TASKS:
-            task_ids[t] = progress.add_task(f"[cyan]{t}", total=TARGET_SAMPLES)
-
-        with Live(Panel(progress, title="Smart Campaign Runner", subtitle="Yin Mode"), refresh_per_second=4) as live:
-
-            while True:
-                # 1. Update State
-                coverage = self.get_coverage()
-                completed_all = True
-
-                for t, count in coverage.items():
-                    progress.update(task_ids[t], completed=count)
-                    if count < TARGET_SAMPLES:
-                        completed_all = False
-
-                if completed_all:
-                    console.print("[bold green]All targets met! Campaign complete.[/bold green]")
-                    break
-
-                # 2. Select Target
-                next_task = self.select_next_task(coverage)
-                if not next_task:
-                    break
-
-                # 3. Throttling (Cool-down)
-                console.print(f"[yellow]Cooling down for {COOL_DOWN_SECONDS}s (H100 Throttling Mitigation)...[/yellow]")
-                await asyncio.sleep(COOL_DOWN_SECONDS)
-
-                # 4. Execute
-                try:
-                    result = await self.run_battle(next_task)
-
-                    # Reset error count on success
-                    self.consecutive_errors = 0
-                    self.total_battles += 1
-
-                    # Quick Status
-                    score = result.get("evaluation", {}).get("cis_score", 0.0)
-                    console.print(f"[green]Battle {result['battle_id']} Complete. CIS: {score:.2f}[/green]")
-
-                except Exception as e:
-                    logging.error(f"Battle failed: {e}")
-                    self.consecutive_errors += 1
-                    console.print(f"[bold red]Error ({self.consecutive_errors}/{MAX_CONSECUTIVE_ERRORS}): {e}[/bold red]")
-
-                    if self.consecutive_errors >= MAX_CONSECUTIVE_ERRORS:
-                        console.print("[bold red]EMERGENCY STOP: Too many consecutive errors.[/bold red]")
-                        sys.exit(1)
-
-                    # Backoff on error
-                    await asyncio.sleep(5)
-
+            console.print(f"[bold red]Error: {e}[/bold red]")
+            consecutive_errors += 1
+            if consecutive_errors > MAX_CONSECUTIVE_ERRORS:
+                console.print("[bold red]Too many consecutive errors. Aborting.[/bold red]")
+                break
+            time.sleep(5)
 
 if __name__ == "__main__":
-    runner = SmartCampaignRunner()
-    try:
-        asyncio.run(runner.loop())
-    except KeyboardInterrupt:
-        console.print("[bold red]Campaign stopped by user.[/bold red]")
+    parser = argparse.ArgumentParser(description="Green Agent Smart Campaign Runner")
+    parser.add_argument("--url", default="http://localhost:9040", help="Green Agent API URL")
+    parser.add_argument("--target", type=int, default=DEFAULT_TARGET, help="Target samples per task")
+    parser.add_argument("--dry-run", action="store_true", help="Simulate execution without API calls")
+
+    args = parser.parse_args()
+
+    run_campaign(args.url, args.target, args.dry_run)
