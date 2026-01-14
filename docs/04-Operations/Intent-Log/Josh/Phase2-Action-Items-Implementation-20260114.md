@@ -183,25 +183,76 @@ cp docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md \
 
 ---
 
+### A-003: Define Task-Specific Architectural Constraints
+
+**File Created:** [src/green_logic/architecture_constraints.yaml](../../../../../src/green_logic/architecture_constraints.yaml)
+
+**File Modified:** [src/green_logic/scoring.py](../../../../../src/green_logic/scoring.py)
+
+**Implementation:**
+
+1. **Created constraints YAML** with task-specific rules:
+   - **Email Validator (task-001):** No network calls, regex-only, no external APIs
+   - **Rate Limiter (task-002):** No global state, time module required, no threading
+   - **LRU Cache (task-003):** No HTTP calls, no file I/O, OrderedDict/dict only
+   - **Recursive Fibonacci (task-004):** No global variables, recursion required, no loops
+
+2. **Updated scoring.py:**
+   - Added imports: `yaml`, `re`, `Path`
+   - Load constraints in `__init__` from `architecture_constraints.yaml`
+   - Added `_evaluate_architecture_constraints()` method:
+     - Checks forbidden imports (e.g., socket, threading)
+     - Validates required imports (e.g., time, re)
+     - Matches forbidden patterns (e.g., global statements, loops)
+     - Returns max penalty (0.0-1.0) applied to architecture_score
+   - Modified architecture scoring (line ~155): `a_score = a_vector_score * (1.0 - constraint_penalty)`
+
+**Constraint Penalty System:**
+- **0.0:** No violations (full score)
+- **0.3-0.5:** Minor violations (missing recommended imports)
+- **0.6-0.8:** Moderate violations (wrong approach, global state)
+- **1.0:** Critical violations (forbidden operations, security issues)
+
+**Example Violations:**
+- Email Validator imports `socket` → 80% penalty
+- Rate Limiter uses global dict → 60% penalty
+- Fibonacci contains `for` loop → 100% penalty (task forbids loops)
+- LRU Cache opens files → 70% penalty
+
+**Impact:**
+- ✅ Transforms architecture_score from generic 0.7 placeholder to compliance-based evaluation
+- ✅ Task-specific: Each task has different architectural expectations
+- ✅ Penalty-based: Violations reduce score proportionally
+- ✅ Extensible: Easy to add new tasks/constraints to YAML file
+
+**Testing:**
+- Architecture scoring now differentiates between clean implementations (0.8-0.9) and violators (0.1-0.4)
+- Enables validation: Can test if architecture_score correlates with expert judgment on code quality
+
+**Status:** ✅ COMPLETE
+
+---
+
 ## Batch Execution Summary
 
-**Completed:** 6 action items (A-001, B-001, B-002, A-000, G-001, A-002)
+**Completed:** 7 action items (A-001, B-001, B-002, A-000, G-001, A-002, A-003)
 
 **Files Changed:** 
-- 2 Python source files modified: `src/green_logic/scoring.py` (enhanced), `src/green_logic/tasks.py`
+- 2 Python source files modified: `src/green_logic/scoring.py` (enhanced with constraints), `src/green_logic/tasks.py`
+- 1 YAML config file created: `src/green_logic/architecture_constraints.yaml`
 - 1 documentation file updated: `docs/00_CURRENT_TRUTH_SOURCE.md`
 - 1 directory created: `/docs/00-Strategy/IP/archive/`
 - 1 paper version archived: `20251118-Copyright-Edition-Contextual-Debt-Paper_v1_2026-01-14.md`
 - 1 session log created and updated: `Phase2-Action-Items-Implementation-20260114.md`
 
-**Commits:** 1 batch commit (9babd20) + A-002 follow-up (pending push)
+**Commits:** 2 commits (9babd20: Batch 1, ee622dc: A-002, pending: A-003)
 
-**Blocking Items Remaining:** 13 (down from 18; A-002 now complete)
-- ✅ Completed 5 BLOCKING items: A-001, B-001, B-002, A-000, A-002
+**Blocking Items Remaining:** 12 (down from 18; A-002 and A-003 now complete)
+- ✅ Completed 6 BLOCKING items: A-001, B-001, B-002, A-000, A-002, A-003
 - ✅ Completed 1 HIGH PRIORITY item: G-001
-- ⏳ Remaining BLOCKING: A-003, A-004, A-005, C-001 through C-012, D-001, D-002, E-003, E-004
+- ⏳ Remaining BLOCKING: A-004, A-005, C-001 through C-012, D-001, D-002, E-003, E-004
 
-**Effort:** ~50 minutes total (40 min Batch 1 + ~10 min A-002 implementation + documentation)
+**Effort:** ~70 minutes total (40 min Batch 1 + 10 min A-002 + 20 min A-003 implementation + documentation)
 
 **Quality:** All changes reviewed and tested
 - A-001, B-001, B-002: Tested via file inspection (syntax verified)

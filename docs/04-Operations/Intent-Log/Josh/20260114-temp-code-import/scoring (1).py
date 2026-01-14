@@ -1,13 +1,12 @@
 import asyncio
 import json
 import os
-import re
-import yaml
-from pathlib import Path
 
 from openai import AsyncOpenAI
 
 from .compare_vectors import VectorScorer
+from .red_report_parser import RedReportParser
+from .red_report_types import RedAgentReport
 
 class ContextualIntegrityScorer:
     def __init__(self):
@@ -18,16 +17,9 @@ class ContextualIntegrityScorer:
         )
         # Initialize Vector Scorer for math-based evaluation
         self.vector_scorer = VectorScorer()
-        self.logic_review_timeout = 85
-        
-        # A-003 Implementation: Load architecture constraints
-        constraints_path = Path(__file__).parent / "architecture_constraints.yaml"
-        try:
-            with open(constraints_path, 'r') as f:
-                self.architecture_constraints = yaml.safe_load(f)
-        except FileNotFoundError:
-            print(f"Warning: Architecture constraints file not found at {constraints_path}")
-            self.architecture_constraints = {}
+        self.logic_review_timeout = 200
+        # Initialize Red Report Parser for vulnerability analysis
+        self.red_parser = RedReportParser()
 
     async def _perform_logic_review(
         self, task_description: str, source_code: str
@@ -102,71 +94,6 @@ The logic_score must be a float between 0.0 and 1.0:
         except Exception as e:
             return {"logic_score": 0.5, "critique": f"Logic review failed: {str(e)}"}
 
-    def _evaluate_architecture_constraints(self, task_id: str, source_code: str) -> float:
-        """
-        A-003 Implementation: Evaluate task-specific architectural constraints.
-        
-        Args:
-            task_id: Task identifier (e.g., "task-001", "task-002")
-            source_code: The submitted source code to validate
-        
-        Returns:
-            Penalty value between 0.0 (no violations) and 1.0 (critical violations)
-        """
-        if not task_id or task_id not in self.architecture_constraints:
-            return 0.0  # No constraints defined, no penalty
-        
-        task_constraints = self.architecture_constraints[task_id].get("constraints", {})
-        max_penalty = 0.0  # Track highest penalty (not cumulative)
-        violations = []
-        
-        for constraint_name, constraint_rules in task_constraints.items():
-            penalty = constraint_rules.get("penalty", 0.0)
-            
-            # Check forbidden imports
-            forbidden_imports = constraint_rules.get("forbidden_imports", [])
-            for forbidden in forbidden_imports:
-                if re.search(rf"\\bimport\\s+{re.escape(forbidden)}\\b", source_code) or \
-                   re.search(rf"\\bfrom\\s+{re.escape(forbidden)}\\s+import\\b", source_code):
-                    violations.append(f"{constraint_name}: Forbidden import '{forbidden}'")
-                    max_penalty = max(max_penalty, penalty)
-                    break
-            
-            # Check required imports (any)
-            required_imports_any = constraint_rules.get("required_imports_any", [])
-            if required_imports_any:
-                found_any = False
-                for required in required_imports_any:
-                    if required in source_code:
-                        found_any = True
-                        break
-                if not found_any:
-                    violations.append(f\"{constraint_name}: Missing required import (any of {required_imports_any})\")
-                    max_penalty = max(max_penalty, penalty)
-            
-            # Check required imports (all)
-            required_imports = constraint_rules.get(\"required_imports\", [])
-            for required in required_imports:
-                if re.search(rf\"\\bimport\\s+{re.escape(required)}\\b\", source_code) is None and \
-                   re.search(rf\"\\bfrom\\s+{re.escape(required)}\\s+import\\b\", source_code) is None:
-                    violations.append(f\"{constraint_name}: Missing required import '{required}'\")
-                    max_penalty = max(max_penalty, penalty)
-            
-            # Check forbidden patterns (regex)
-            forbidden_patterns = constraint_rules.get(\"forbidden_patterns\", [])
-            for pattern in forbidden_patterns:
-                if re.search(pattern, source_code, re.MULTILINE):
-                    violations.append(f\"{constraint_name}: Forbidden pattern '{pattern}'\")
-                    max_penalty = max(max_penalty, penalty)
-                    break
-        
-        if violations:
-            print(f\"[A-003] Architecture constraint violations for {task_id}:\")
-            for v in violations:
-                print(f\"  - {v}\")
-        
-        return max_penalty
-
     async def evaluate(
         self,
         task_description: str,
@@ -194,41 +121,28 @@ The logic_score must be a float between 0.0 and 1.0:
         rationale = purple_response.get("rationale", "")
         test_code = purple_response.get("testCode", "")
         
+        # Parse Red Agent report and calculate penalty
         red_feedback = "No Red Agent audit performed."
+        parsed_red_report: RedAgentReport | None = None
+        red_penalty_multiplier = 1.0  # No penalty by default
+
         if red_report:
-            # Extract relevant info from Red Agent's JSON-RPC response
-            # Assuming Red Agent returns a text description of the attack
-            red_feedback = json.dumps(red_report, indent=2)
+            # Parse structured or unstructured Red Agent response
+            parsed_red_report = self.red_parser.parse(red_report)
+            red_penalty_multiplier = parsed_red_report.get_penalty_multiplier()
+            red_feedback = self._format_red_report(parsed_red_report)
 
         # 1. Rationale Integrity (R) - Vector based
         # Compare Intent (task_description) with Rationale
         r_score = self.vector_scorer.calculate_similarity(task_description, rationale)
 
-        # 2. Architectural Integrity (A) - Vector + Constraints
+        # 2. Architectural Integrity (A) - Vector + LLM
         # Compare Rationale with Source Code
         a_vector_score = self.vector_scorer.calculate_similarity(rationale, source_code)
-        
-        # A-003 Implementation: Apply task-specific architectural constraints
-        # Extract task_id from task_description or purple_response metadata
-        task_id = purple_response.get("task_id") if isinstance(purple_response, dict) else None
-        if not task_id:
-            # Try to infer from task_description (fallback)
-            for tid in ["task-001", "task-002", "task-003", "task-004"]:
-                if tid in str(task_description).lower() or self.architecture_constraints.get(tid, {}).get("title", "").lower() in task_description.lower():
-                    task_id = tid
-                    break
-        
-        constraint_penalty = self._evaluate_architecture_constraints(task_id, source_code) if task_id else 0.0
-        a_score = a_vector_score * (1.0 - constraint_penalty)
         
         # 3. Testing Integrity (T) - Vector + LLM
         # Compare Source Code with Test Code
         t_vector_score = self.vector_scorer.calculate_similarity(source_code, test_code)
-
-        # A-002 Implementation: Explicit Cosine Similarity for Intent vs Code
-        # Compute and store intent_code_similarity as separate diagnostic field
-        # (Not yet used in CIS formula; reserved for validation analysis and reporting)
-        intent_code_similarity = self.vector_scorer.calculate_similarity(task_description, source_code)
 
         # Capture Intent Vector for DBOM (Task 1.6)
         intent_vector = self.vector_scorer.get_embedding(task_description).tolist()
@@ -345,31 +259,28 @@ Note: `cis_score` = (0.2 * R) + (0.2 * A) + (0.2 * T) + (0.4 * L). Logic Score h
                 eval_data["logic_critique"] = logic_critique
 
             # Recalculate CIS with the weighted formula to ensure consistency
-            # A-001 Documentation: CIS Weight Rationale
-            # - R(Δ) [0.25]: Semantic alignment between task intent and rationale
-            # - A(Δ) [0.25]: Architectural soundness of implementation structure
-            # - T(Δ) [0.25]: Test coverage quality and assertion specificity
-            # - L(Δ) [0.25]: Logic correctness via senior code review (LLM-based)
-            # Equal weighting (25-25-25-25) ensures no single dimension dominates
-            # and maintains defensibility against judge criticism of unvalidated metrics.
             r = float(eval_data.get("rationale_score", 0.0))
             a = float(eval_data.get("architecture_score", 0.0))
             t = float(eval_data.get("testing_score", 0.0))
             l = float(eval_data.get("logic_score", logic_score))
-            
-            # B-001 Implementation: Anchor Logic Score to Test Results
-            # If sandbox tests failed, cap logic_score at 0.3 (tests are ground truth)
-            if sandbox_result and not sandbox_result.get("success", False):
-                l = min(l, 0.3)
-                eval_data["logic_score_anchored"] = True
-            
-            # B-002 Implementation: Reweight to 25-25-25-25 (equal component weight)
-            eval_data["cis_score"] = (0.25 * r) + (0.25 * a) + (0.25 * t) + (0.25 * l)
 
-            # A-002 Implementation: Store Intent-Code Similarity
-            # Separate diagnostic field for Intent vs Code semantic alignment
-            # Reserved for validation analysis and future R(Δ) redefinition studies
-            eval_data["intent_code_similarity"] = intent_code_similarity
+            # Calculate raw CIS before Red Agent penalty
+            raw_cis = (0.2 * r) + (0.2 * a) + (0.2 * t) + (0.4 * l)
+            eval_data["cis_score_raw"] = raw_cis
+
+            # Apply Red Agent vulnerability penalty (multiplicative)
+            eval_data["cis_score"] = raw_cis * red_penalty_multiplier
+            eval_data["red_penalty_applied"] = 1.0 - red_penalty_multiplier
+
+            # Include structured Red Agent analysis
+            if parsed_red_report:
+                max_sev = parsed_red_report.get_max_severity()
+                eval_data["red_analysis"] = {
+                    "attack_successful": parsed_red_report.attack_successful,
+                    "vulnerability_count": len(parsed_red_report.vulnerabilities),
+                    "max_severity": max_sev.value if max_sev else None,
+                    "penalty_percentage": (1.0 - red_penalty_multiplier) * 100,
+                }
 
             # Attach the real Intent Vector for the DBOM Generator
             eval_data["intent_vector"] = intent_vector
@@ -387,3 +298,36 @@ Note: `cis_score` = (0.2 * R) + (0.2 * A) + (0.2 * T) + (0.4 * L). Logic Score h
                 "breakdown": f"Scoring failed due to error: {str(e)}",
                 "intent_vector": intent_vector,
             }
+
+    def _format_red_report(self, report: RedAgentReport) -> str:
+        """Format parsed Red Agent report for inclusion in evaluation prompt."""
+        lines = [f"**Attack Successful:** {report.attack_successful}"]
+
+        if report.vulnerabilities:
+            lines.append(f"**Vulnerabilities Found:** {len(report.vulnerabilities)}")
+            for i, v in enumerate(report.vulnerabilities, 1):
+                lines.append(f"\n{i}. [{v.severity.value.upper()}] {v.title}")
+                lines.append(f"   Category: {v.category}")
+                lines.append(f"   Description: {v.description}")
+                if v.exploit_code:
+                    # Truncate long exploit code
+                    exploit_preview = v.exploit_code[:100]
+                    if len(v.exploit_code) > 100:
+                        exploit_preview += "..."
+                    lines.append(f"   Exploit: `{exploit_preview}`")
+                if v.line_number:
+                    lines.append(f"   Line: {v.line_number}")
+                lines.append(f"   Confidence: {v.confidence}")
+        else:
+            lines.append("**No vulnerabilities identified.**")
+
+        if report.attack_summary:
+            lines.append(f"\n**Summary:** {report.attack_summary}")
+
+        # Include penalty info
+        penalty = (1.0 - report.get_penalty_multiplier()) * 100
+        if penalty > 0:
+            max_sev = report.get_max_severity()
+            lines.append(f"\n**Applied Penalty:** {penalty:.0f}% (max severity: {max_sev.value if max_sev else 'none'})")
+
+        return "\n".join(lines)

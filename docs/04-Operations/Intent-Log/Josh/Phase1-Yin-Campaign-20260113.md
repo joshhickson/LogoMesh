@@ -1879,6 +1879,111 @@ Update task description in [src/green_logic/tasks.py](../../../../../src/green_l
 
 ---
 
+### Phase H: Red Agent Integration (Post-Phase A)
+
+**Context:** Teammate (aeduee) pushed Red Agent integration to dev branch (2026-01-13) while feature/stage2-campaign-completion-20260114 was active. Code copied to [docs/04-Operations/Intent-Log/Josh/20260114-temp-code-import/](./20260114-temp-code-import/) for reference. Integration involves 7 files: red_report_parser.py, red_report_types.py, scoring.py, server.py, generic_attacker.py, plugin.py, registry.py.
+
+**H-001** 🟡 **Review Teammate's Red Agent Implementation**
+- **Task:** Analyze teammate's Red Agent vulnerability analysis implementation
+- **Files to Review:**
+  - [red_report_parser.py](./20260114-temp-code-import/red_report_parser.py): Structured JSON parser with keyword fallback
+  - [red_report_types.py](./20260114-temp-code-import/red_report_types.py): Severity enum, Vulnerability dataclass, RedAgentReport
+  - [scoring.py](./20260114-temp-code-import/scoring.py): Integration point in evaluate() method
+- **Analysis Required:**
+  - Document severity levels: CRITICAL (40%), HIGH (25%), MEDIUM (15%), LOW (5%), INFO (0%)
+  - Understand penalty calculation: `multiplier = 1.0 - penalty_pct` applied to raw CIS
+  - Identify conflict areas with our changes (we modified weights, they added red penalties)
+- **Deliverable:** Review notes documenting integration strategy
+- **Effort:** 30 minutes
+- **Dependencies:** None
+- **Owner:** TBD
+- **Priority:** 🟡 HIGH - Required before H-002
+- **Reference:** [correct-filepaths.txt](./20260114-temp-code-import/correct-filepaths.txt)
+
+**H-002** 🟡 **Plan Merge Strategy for Red Agent Changes**
+- **Task:** Document merge plan resolving conflicts between branches
+- **Key Conflicts:**
+  1. **scoring.py formula:** Our branch has 25-25-25-25 weights (B-002); their branch may have 20-20-20-40
+  2. **scoring.py evaluate():** We added intent_code_similarity (A-002); they added red_penalty logic
+  3. **New files:** They added red_report_parser.py, red_report_types.py (no conflict, copy directly)
+- **Merge Strategy:**
+  - Keep our CIS formula weights (25-25-25-25)
+  - Preserve our intent_code_similarity diagnostic field (A-002)
+  - Add their red_penalty_multiplier calculation after raw CIS computation
+  - Integrate their RedReportParser instantiation in __init__
+- **Deliverable:** Merge manifest with line-by-line conflict resolution
+- **Effort:** 20 minutes
+- **Dependencies:** H-001 (review complete)
+- **Owner:** TBD
+- **Priority:** 🟡 HIGH - Required before H-003
+- **Reference:** Git diff between branches
+
+**H-003** 🟢 **Extract and Integrate Red Report Parser**
+- **Task:** Copy Red Agent parsing infrastructure to src/green_logic/
+- **Files to Copy:**
+  - `red_report_parser.py` → `/home/ubuntu/LogoMesh/src/green_logic/red_report_parser.py`
+  - `red_report_types.py` → `/home/ubuntu/LogoMesh/src/green_logic/red_report_types.py`
+- **Changes Required:**
+  - Verify imports work in new location
+  - Test structured JSON parsing with sample Red Agent response
+  - Test keyword fallback detection (EXPLOIT_KEYWORDS patterns)
+- **Validation:**
+  - Unit test with mock Red Agent responses (CRITICAL, HIGH, MEDIUM severities)
+  - Verify penalty calculation: `get_penalty_multiplier()` returns correct values
+- **Effort:** 1 hour
+- **Dependencies:** H-002 (merge plan approved)
+- **Owner:** TBD
+- **Priority:** 🟢 OPTIONAL - Enhancement, not blocking Stage 3
+- **Reference:** [red_report_parser.py](./20260114-temp-code-import/red_report_parser.py), [red_report_types.py](./20260114-temp-code-import/red_report_types.py)
+
+**H-004** 🟢 **Update Scoring Logic with Red Agent Penalties**
+- **Task:** Integrate Red Agent vulnerability penalties into CIS calculation
+- **File:** [src/green_logic/scoring.py](../../../../../src/green_logic/scoring.py)
+- **Changes Required:**
+  1. Add import: `from .red_report_parser import RedReportParser`
+  2. Add to __init__: `self.red_parser = RedReportParser()`
+  3. In evaluate() method (after raw CIS calculation):
+     ```python
+     # Parse Red Agent report and calculate penalty
+     red_penalty_multiplier = 1.0  # Default: no penalty
+     if red_report:
+         parsed_red_report = self.red_parser.parse(red_report)
+         red_penalty_multiplier = parsed_red_report.get_penalty_multiplier()
+         red_feedback = self._format_red_report(parsed_red_report)
+     
+     # Apply penalty to CIS
+     eval_data["cis_score_raw"] = raw_cis
+     eval_data["cis_score"] = raw_cis * red_penalty_multiplier
+     eval_data["red_penalty_applied"] = 1.0 - red_penalty_multiplier
+     ```
+  4. Add `_format_red_report()` helper method (from teammate's implementation)
+- **Testing:** Run battle with Red Agent enabled, verify penalty applied
+- **Effort:** 1 hour
+- **Dependencies:** H-003 (parser files integrated)
+- **Owner:** TBD
+- **Priority:** 🟢 OPTIONAL - Enhancement, not blocking Stage 3
+- **Reference:** [scoring.py](./20260114-temp-code-import/scoring.py) lines 120-130, 260-290
+
+**H-005** 🟡 **Validate Red Agent Integration End-to-End**
+- **Task:** Run full battle with Red Agent and verify penalty flow
+- **Test Scenario:**
+  1. Launch arena with Red Agent: `scripts/bash/launch_arena.sh`
+  2. Run single battle: `scripts/bash/test_agents.sh`
+  3. Check database: Verify `red_penalty_applied` and `red_analysis` fields populated
+  4. Verify DBOM: Confirm vulnerability data included in DBOM JSON
+- **Success Criteria:**
+  - Red Agent report parsed successfully (structured or keyword fallback)
+  - Penalty multiplier applied to CIS (0.6-1.0 range)
+  - Database contains `red_analysis` JSON with severity and vulnerability count
+  - No crashes or timeout issues
+- **Effort:** 30 minutes
+- **Dependencies:** H-004 (scoring logic integrated)
+- **Owner:** TBD
+- **Priority:** 🟡 HIGH - Ensures integration works before Stage 3
+- **Reference:** [test_agents.sh](./20260114-temp-code-import/test_agents.sh), [launch_arena.sh](./20260114-temp-code-import/launch_arena.sh)
+
+---
+
 ## Action Item Summary by Phase
 
 **Phase A-Zero (Skipped Scenarios):** 1 item, ~5-7 hours total, 0 BLOCKING (parallel work)
@@ -1889,15 +1994,17 @@ Update task description in [src/green_logic/tasks.py](../../../../../src/green_l
 **Phase E (Stage 3 Prep):** 4 items, ~2-3 hours total, 2 BLOCKING
 **Phase F (Judge Impression):** 1 item, ~2-4 hours, 0 BLOCKING (optional, time-permitting)
 **Phase G (Documentation & Archival):** 1 item, ~5 min per update, 0 BLOCKING (concurrent, triggered on paper updates)
+**Phase H (Red Agent Integration):** 5 items, ~3.5 hours total, 0 BLOCKING (enhancement, post-Phase A)
 
-**Total Action Items:** 40 (A-000 + A-001 through A-005 + B-001 through B-003 + C-001 through C-012 + D-001 through D-002 + E-001 through E-004 + F-001 + G-001)
+**Total Action Items:** 45 (A-000 + A-001 through A-005 + B-001 through B-003 + C-001 through C-012 + D-001 through D-002 + E-001 through E-004 + F-001 + G-001 + H-001 through H-005)
 **Total BLOCKING Items:** 18
-**Total Estimated Effort (excluding expert review time):** ~29-41 hours (Phase A-F)
+**Total Estimated Effort (excluding expert review time):** ~32.5-44.5 hours (Phase A-H)
 **Critical Path:** Phase C (validation) - requires 2-3 days for expert availability
 
 **Recommended Execution Order:**
 1. **In Parallel:** Start Phase A-Zero (Email Validator design) + Phase A + B (can be done while recruiting experts for Phase C) + **Phase G (immediately—before any paper updates)**
 2. Phase C-001 through C-007 (prepare for validation)
+3. **Phase H (after Phase A completion):** Integrate teammate's Red Agent implementation from dev branch
 3. Phase C-008 (expert review - longest lead time)
 4. Phase C-009 through C-012 (analysis)
 5. Phase D (if validation requires code changes)

@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Build artifacts
+dist/
+.DS_Store
+*.tsbuildinfo
+coverage/
+.turbo/
+.env
+
+.claude/commands
+docs/_build
+
+data/*.db
