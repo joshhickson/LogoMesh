@@ -1781,6 +1781,54 @@ Update task description in [src/green_logic/tasks.py](../../../../../src/green_l
 - **Owner:** Josh
 - **Reference:** Next Steps Decision Point, line 1417-1438
 
+### Phase F: Advanced Features - Judge Impression (Optional, Time-Permitting)
+
+**F-001** 🟢 **Implement True Token-Level Streaming for A2A (Judge Wow Factor)**
+- **Task:** Debug and enhance A2A streaming to emit real-time token events instead of batch completion
+- **Context:** Current implementation enables `streaming=True` on agents, but A2A may only emit events on task completion (36s wait)
+- **Goal:** Achieve token-level granularity (event every 0.1-0.5s) for live UI updates during code generation
+- **Research Reference:** [A2A-Streaming-Debug-Plan.md](./A2A-Streaming-Debug-Plan.md) and [A2A-Streaming-Prototype-Plan.md](./A2A-Streaming-Prototype-Plan.md)
+
+**Investigation Hypotheses (To Diagnose):**
+1. `TaskUpdater.update_status()` may batch updates or only emit on state transitions (not per-token)
+   - Check: A2A SDK source for event emission behavior
+2. Should use `TaskArtifactUpdateEvent` with `append=True` instead of status updates
+   - Check: A2A spec for artifact streaming support
+3. `EventQueue` may buffer events and only flush on completion
+   - Check: Manual flush methods available?
+4. `DefaultRequestHandler` may wait for task completion before streaming results
+   - Check: Handler logs event emission timing
+
+**Implementation Path (If Viable):**
+1. **Diagnosis (1 hour):** Add debug logging to Purple Agent executor, examine A2A library source
+2. **Fix (1-2 hours):** Implement one of 4 solutions (artifact streaming, manual flush, custom handler, or unique messages)
+3. **Validation (30 min):** Run `scripts/test_streaming.py`, confirm 50+ events during 30s generation, measure inter-event timing
+4. **Integration (30 min):** Update Green Agent client to use streaming, add stall detection
+
+**Success Criteria:**
+- ✅ Client receives 50+ events during 30-second generation
+- ✅ Events arrive incrementally (0.1-1s intervals, not batch at end)
+- ✅ First token arrives within 5s of request start
+- ✅ Stall detection works (30s silence = timeout)
+
+**Effort Estimate:** 2-4 hours (optimistic to realistic); 8 hours (pessimistic)
+
+**Decision Threshold:** Abort after 3 hours if no clear solution path emerges
+
+**Rationale:** Live token streaming demonstrates system sophistication to judges. If A2A library supports it cleanly, impressive UX gain. If not, current timeout approach is already solid.
+
+**Dependencies:** None (can work in parallel with Phase E)
+
+**Owner:** TBD
+
+**Priority:** 🟢 OPTIONAL - Only if Phase C validation passes AND time remaining before competition
+
+**Reference:** 
+- Plan: [A2A-Streaming-Debug-Plan.md](./A2A-Streaming-Debug-Plan.md)
+- Prototype: [A2A-Streaming-Prototype-Plan.md](./A2A-Streaming-Prototype-Plan.md)
+- Test: `scripts/test_streaming.py`
+- Implementation: [scenarios/security_arena/agents/generic_defender.py](../../../../../scenarios/security_arena/agents/generic_defender.py#L93-L125)
+
 ---
 
 ## Action Item Summary by Phase
@@ -1791,10 +1839,11 @@ Update task description in [src/green_logic/tasks.py](../../../../../src/green_l
 **Phase C (Validation):** 12 items, ~15-20 hours total (includes expert time), 11 BLOCKING
 **Phase D (Code Adjustments):** 2 items, ~1-2 hours total, 0 BLOCKING (conditional)
 **Phase E (Stage 3 Prep):** 4 items, ~2-3 hours total, 2 BLOCKING
+**Phase F (Judge Impression):** 1 item, ~2-4 hours, 0 BLOCKING (optional, time-permitting)
 
-**Total Action Items:** 38 (including A-000)
+**Total Action Items:** 39 (including A-000)
 **Total BLOCKING Items:** 18
-**Total Estimated Effort (excluding expert review time):** ~27-37 hours
+**Total Estimated Effort (excluding expert review time):** ~29-41 hours (including Phase F)
 **Critical Path:** Phase C (validation) - requires 2-3 days for expert availability
 
 **Recommended Execution Order:**
@@ -1804,8 +1853,11 @@ Update task description in [src/green_logic/tasks.py](../../../../../src/green_l
 4. Phase C-009 through C-012 (analysis)
 5. Phase D (if validation requires code changes)
 6. Phase E (final prep and launch decision)
+7. **If time permits after Stage 3:** Phase F (advanced A2A streaming for judge impression)
 
-**Note on Phase A-Zero:** Email-Validator work (5-7 hours) can proceed independently during expert validation period (2-3 days), bringing Stage 3 from 75 battles (3 tasks) to 100 battles (4 tasks).
+**Notes:**
+- **Phase A-Zero:** Email-Validator work (5-7 hours) can proceed independently during expert validation period (2-3 days), bringing Stage 3 from 75 battles (3 tasks) to 100 battles (4 tasks)
+- **Phase F:** Only pursue if validation passes (r ≥ 0.70) AND time remains before competition. Has clear 3-hour abort threshold to avoid scope creep.
 
 ---
 
