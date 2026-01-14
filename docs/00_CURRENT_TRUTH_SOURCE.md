@@ -41,6 +41,10 @@ type: Spec
 
 ### Strategy & IP
 *   [Contextual Debt Paper (Draft)](../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md): The core theory.
+*   **Paper Versioning Protocol (G-001):** Before any paper update, copy current to archive with timestamp. All versions tracked in this file.
+    - **Current Version:** v1 (2026-01-14) - Validates Stage 2 Campaign (77 battles)
+    - **Archive:** [00-Strategy/IP/archive/](../00-Strategy/IP/archive/)
+    - **Process:** `cp paper.md archive/paper_v[N]_YYYY-MM-DD.md` before edits; update CURRENT_TRUTH_SOURCE.md after
 *   [Competition Requirements](../05-Competition/20251221-Submission-Requirements-Matrix.md): The rules we must follow.
 
 ### Architecture
