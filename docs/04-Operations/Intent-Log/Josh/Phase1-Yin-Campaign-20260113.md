@@ -1829,6 +1829,53 @@ Update task description in [src/green_logic/tasks.py](../../../../../src/green_l
 - Test: `scripts/test_streaming.py`
 - Implementation: [scenarios/security_arena/agents/generic_defender.py](../../../../../scenarios/security_arena/agents/generic_defender.py#L93-L125)
 
+### Phase G: Documentation & Archival (Concurrent with All Phases)
+
+**G-001** 🟡 **Implement Paper Versioning Protocol for CIS Documentation**
+- **Task:** Establish versioning workflow for [docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md)
+- **Current Issue:** Paper file may be overwritten during edits; no version history preserved
+- **Required Solution:**
+  1. Create archival directory: `/home/ubuntu/LogoMesh/docs/00-Strategy/IP/archive/`
+  2. Before any paper update, copy current version with timestamp: `cp paper.md archive/20251118-Copyright-Edition-Contextual-Debt-Paper_v[N]_[YYYY-MM-DD].md`
+  3. Update [docs/00_CURRENT_TRUTH_SOURCE.md](../../00_CURRENT_TRUTH_SOURCE.md) to reflect new paper version and date
+  4. Add section to CURRENT_TRUTH_SOURCE documenting which paper version supports which stage:
+     - "Stage 2 (77 battles): Paper v1 (20251118)"
+     - "Stage 3 (100 battles): Paper v2 (20260114)" - if updated
+  5. Link to all archived versions in CURRENT_TRUTH_SOURCE for historical reference
+
+- **Rationale:** 
+  - Ensures research integrity (can show what claimed at each stage)
+  - Allows judges to verify paper evolution matches implementation timeline
+  - Prevents accidental loss of earlier formulations
+  - Documents which paper version validates which campaign stage
+
+- **Implementation:**
+  ```bash
+  # Before any paper edit, run:
+  mkdir -p docs/00-Strategy/IP/archive/
+  cp docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md \
+     docs/00-Strategy/IP/archive/20251118-Copyright-Edition-Contextual-Debt-Paper_v1_$(date +%Y-%m-%d).md
+  
+  # After edit, update CURRENT_TRUTH_SOURCE.md with new version info
+  ```
+
+- **Files to Update:**
+  - [docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md) (working copy)
+  - [docs/00_CURRENT_TRUTH_SOURCE.md](../../00_CURRENT_TRUTH_SOURCE.md) (master index and version tracker)
+  - Create: `/home/ubuntu/LogoMesh/docs/00-Strategy/IP/archive/` (new directory)
+
+- **Effort:** 5 minutes per update (establish process, 2 minutes per future edit)
+
+- **Dependencies:** None (can be done anytime, recommend before first Stage 2 validation results are integrated into paper)
+
+- **Owner:** TBD
+
+- **Trigger:** Whenever paper is updated with new findings from Stage 2 validation or Stage 3 results
+
+- **Priority:** 🟡 HIGH PRIORITY - Ensures research integrity for judges
+
+- **Reference:** AGENTS.md Documentation Protocol section 1 (paper updates should be documented)
+
 ---
 
 ## Action Item Summary by Phase
@@ -1840,24 +1887,26 @@ Update task description in [src/green_logic/tasks.py](../../../../../src/green_l
 **Phase D (Code Adjustments):** 2 items, ~1-2 hours total, 0 BLOCKING (conditional)
 **Phase E (Stage 3 Prep):** 4 items, ~2-3 hours total, 2 BLOCKING
 **Phase F (Judge Impression):** 1 item, ~2-4 hours, 0 BLOCKING (optional, time-permitting)
+**Phase G (Documentation & Archival):** 1 item, ~5 min per update, 0 BLOCKING (concurrent, triggered on paper updates)
 
-**Total Action Items:** 39 (including A-000)
+**Total Action Items:** 40 (A-000 + A-001 through A-005 + B-001 through B-003 + C-001 through C-012 + D-001 through D-002 + E-001 through E-004 + F-001 + G-001)
 **Total BLOCKING Items:** 18
-**Total Estimated Effort (excluding expert review time):** ~29-41 hours (including Phase F)
+**Total Estimated Effort (excluding expert review time):** ~29-41 hours (Phase A-F)
 **Critical Path:** Phase C (validation) - requires 2-3 days for expert availability
 
 **Recommended Execution Order:**
-1. **In Parallel:** Start Phase A-Zero (Email Validator design) + Phase A + B (can be done while recruiting experts for Phase C)
+1. **In Parallel:** Start Phase A-Zero (Email Validator design) + Phase A + B (can be done while recruiting experts for Phase C) + **Phase G (immediately—before any paper updates)**
 2. Phase C-001 through C-007 (prepare for validation)
 3. Phase C-008 (expert review - longest lead time)
 4. Phase C-009 through C-012 (analysis)
 5. Phase D (if validation requires code changes)
-6. Phase E (final prep and launch decision)
+6. Phase E (final prep and launch decision) + **Phase G trigger (archive paper if validation changes findings)**
 7. **If time permits after Stage 3:** Phase F (advanced A2A streaming for judge impression)
 
 **Notes:**
 - **Phase A-Zero:** Email-Validator work (5-7 hours) can proceed independently during expert validation period (2-3 days), bringing Stage 3 from 75 battles (3 tasks) to 100 battles (4 tasks)
 - **Phase F:** Only pursue if validation passes (r ≥ 0.70) AND time remains before competition. Has clear 3-hour abort threshold to avoid scope creep.
+- **Phase G:** Concurrent with all phases. Automatically triggered whenever paper is updated. 5-minute overhead per update. Ensures judges can trace paper evolution and validate Stage→Finding→Paper causality.
 
 ---
 
