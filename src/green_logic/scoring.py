@@ -8,6 +8,8 @@ from pathlib import Path
 from openai import AsyncOpenAI
 
 from .compare_vectors import VectorScorer
+from .red_report_parser import RedReportParser
+from .red_report_types import RedAgentReport
 
 class ContextualIntegrityScorer:
     def __init__(self):
@@ -28,6 +30,9 @@ class ContextualIntegrityScorer:
         except FileNotFoundError:
             print(f"Warning: Architecture constraints file not found at {constraints_path}")
             self.architecture_constraints = {}
+        
+        # Red Agent Integration: Initialize Red Report Parser
+        self.red_parser = RedReportParser()
 
     async def _perform_logic_review(
         self, task_description: str, source_code: str
@@ -126,8 +131,8 @@ The logic_score must be a float between 0.0 and 1.0:
             # Check forbidden imports
             forbidden_imports = constraint_rules.get("forbidden_imports", [])
             for forbidden in forbidden_imports:
-                if re.search(rf"\\bimport\\s+{re.escape(forbidden)}\\b", source_code) or \
-                   re.search(rf"\\bfrom\\s+{re.escape(forbidden)}\\s+import\\b", source_code):
+                if re.search(rf"\bimport\s+{re.escape(forbidden)}\b", source_code) or \
+                   re.search(rf"\bfrom\s+{re.escape(forbidden)}\s+import\b", source_code):
                     violations.append(f"{constraint_name}: Forbidden import '{forbidden}'")
                     max_penalty = max(max_penalty, penalty)
                     break
@@ -141,31 +146,32 @@ The logic_score must be a float between 0.0 and 1.0:
                         found_any = True
                         break
                 if not found_any:
-                    violations.append(f\"{constraint_name}: Missing required import (any of {required_imports_any})\")
+                    violations.append(f"{constraint_name}: Missing required import (any of {required_imports_any})")
                     max_penalty = max(max_penalty, penalty)
             
             # Check required imports (all)
-            required_imports = constraint_rules.get(\"required_imports\", [])
+            required_imports = constraint_rules.get("required_imports", [])
             for required in required_imports:
-                if re.search(rf\"\\bimport\\s+{re.escape(required)}\\b\", source_code) is None and \
-                   re.search(rf\"\\bfrom\\s+{re.escape(required)}\\s+import\\b\", source_code) is None:
-                    violations.append(f\"{constraint_name}: Missing required import '{required}'\")
+                if re.search(rf"\bimport\s+{re.escape(required)}\b", source_code) is None and \
+                   re.search(rf"\bfrom\s+{re.escape(required)}\s+import\b", source_code) is None:
+                    violations.append(f"{constraint_name}: Missing required import '{required}'")
                     max_penalty = max(max_penalty, penalty)
             
             # Check forbidden patterns (regex)
-            forbidden_patterns = constraint_rules.get(\"forbidden_patterns\", [])
+            forbidden_patterns = constraint_rules.get("forbidden_patterns", [])
             for pattern in forbidden_patterns:
                 if re.search(pattern, source_code, re.MULTILINE):
-                    violations.append(f\"{constraint_name}: Forbidden pattern '{pattern}'\")
+                    violations.append(f"{constraint_name}: Forbidden pattern '{pattern}'")
                     max_penalty = max(max_penalty, penalty)
                     break
         
         if violations:
-            print(f\"[A-003] Architecture constraint violations for {task_id}:\")
+            print(f"[A-003] Architecture constraint violations for {task_id}:")
             for v in violations:
-                print(f\"  - {v}\")
+                print(f"  - {v}")
         
         return max_penalty
+    
     def _evaluate_test_specificity(self, task_id: str, test_code: str, task_description: str) -> float:
         """
         A-004 Implementation: Evaluate test assertion specificity and coverage.
@@ -415,7 +421,32 @@ Note: `cis_score` = (0.2 * R) + (0.2 * A) + (0.2 * T) + (0.4 * L). Logic Score h
                 eval_data["logic_score_anchored"] = True
             
             # B-002 Implementation: Reweight to 25-25-25-25 (equal component weight)
-            eval_data["cis_score"] = (0.25 * r) + (0.25 * a) + (0.25 * t) + (0.25 * l)
+            raw_cis = (0.25 * r) + (0.25 * a) + (0.25 * t) + (0.25 * l)
+            
+            # Red Agent Integration (H-004): Parse vulnerability report and apply penalty
+            red_penalty_multiplier = 1.0  # Default: no penalty
+            parsed_red_report = None
+            
+            if red_report:
+                try:
+                    parsed_red_report = self.red_parser.parse(red_report)
+                    red_penalty_multiplier = parsed_red_report.get_penalty_multiplier()
+                except Exception as e:
+                    print(f"Warning: Red Agent parsing failed: {e}")
+            
+            # Apply Red Agent vulnerability penalty (multiplicative)
+            eval_data["cis_score"] = raw_cis * red_penalty_multiplier
+            eval_data["red_penalty_applied"] = 1.0 - red_penalty_multiplier
+            
+            # Include structured Red Agent analysis metadata
+            if parsed_red_report:
+                max_sev = parsed_red_report.get_max_severity()
+                eval_data["red_analysis"] = {
+                    "attack_successful": parsed_red_report.attack_successful,
+                    "vulnerability_count": len(parsed_red_report.vulnerabilities),
+                    "max_severity": max_sev.value if max_sev else None,
+                    "penalty_percentage": (1.0 - red_penalty_multiplier) * 100,
+                }
 
             # A-002 Implementation: Store Intent-Code Similarity
             # Separate diagnostic field for Intent vs Code semantic alignment
@@ -438,3 +469,38 @@ Note: `cis_score` = (0.2 * R) + (0.2 * A) + (0.2 * T) + (0.4 * L). Logic Score h
                 "breakdown": f"Scoring failed due to error: {str(e)}",
                 "intent_vector": intent_vector,
             }
+    
+    def _format_red_report(self, report: RedAgentReport) -> str:
+        """
+        Format parsed Red Agent report for human-readable output.
+        
+        Args:
+            report: Parsed RedAgentReport object
+        
+        Returns:
+            Formatted string with vulnerability details
+        """
+        lines = [f"**Attack Successful:** {report.attack_successful}"]
+        
+        if report.vulnerabilities:
+            lines.append(f"**Vulnerabilities Found:** {len(report.vulnerabilities)}")
+            for i, v in enumerate(report.vulnerabilities, 1):
+                lines.append(f"\n{i}. [{v.severity.value.upper()}] {v.title}")
+                lines.append(f"   Category: {v.category}")
+                lines.append(f"   Description: {v.description}")
+                if v.exploit_code:
+                    # Truncate long exploit code
+                    exploit_preview = v.exploit_code[:100]
+                    if len(v.exploit_code) > 100:
+                        exploit_preview += "..."
+                    lines.append(f"   Exploit: `{exploit_preview}`")
+                if v.line_number:
+                    lines.append(f"   Line: {v.line_number}")
+                lines.append(f"   Confidence: {v.confidence}")
+        else:
+            lines.append("**No vulnerabilities detected**")
+        
+        if report.attack_summary:
+            lines.append(f"\n**Summary:** {report.attack_summary}")
+        
+        return "\n".join(lines)

@@ -1,0 +1,78 @@
+{
+  "campaign_name": "stage3-final",
+  "description": "Stage 3 Campaign - Final evaluation with validated CIS formula",
+  "target_battles": 100,
+  "tasks": [
+    "task-001",
+    "task-002",
+    "task-003",
+    "task-004"
+  ],
+  "agents": [
+    {
+      "name": "gpt-4o",
+      "model": "gpt-4o",
+      "enabled": true
+    },
+    {
+      "name": "claude-sonnet-3-5",
+      "model": "claude-3-5-sonnet-20241022",
+      "enabled": true
+    },
+    {
+      "name": "qwen-2.5-coder-32b",
+      "model": "Qwen/Qwen2.5-Coder-32B-Instruct-AWQ",
+      "enabled": true
+    },
+    {
+      "name": "o1-mini",
+      "model": "o1-mini",
+      "enabled": true
+    },
+    {
+      "name": "o1-preview",
+      "model": "o1-preview",
+      "enabled": false,
+      "note": "Disabled due to rate limits"
+    }
+  ],
+  "scoring_config": {
+    "formula_version": "v2_validated",
+    "components": {
+      "rationale": 0.25,
+      "architecture": 0.25,
+      "testing": 0.25,
+      "logic": 0.25
+    },
+    "enhancements": [
+      "A-003: Architecture constraints (task-specific)",
+      "A-004: Test specificity evaluation",
+      "H-004: Red Agent vulnerability penalties"
+    ]
+  },
+  "validation": {
+    "expert_review_completed": false,
+    "correlation_threshold": 0.70,
+    "agreement_threshold_kappa": 0.60,
+    "agreement_threshold_icc": 0.70,
+    "note": "Run Phase C validation before Stage 3 launch"
+  },
+  "execution": {
+    "timeout_per_battle": 300,
+    "sandbox_enabled": true,
+    "red_agent_enabled": false,
+    "parallel_execution": false,
+    "note": "Red Agent disabled pending A2A infrastructure setup"
+  },
+  "output": {
+    "dbom_directory": "data/dboms/",
+    "results_directory": "results/stage3/",
+    "campaign_log": "campaign_stage3.txt"
+  },
+  "metadata": {
+    "created": "2026-01-14",
+    "paper_version": "v1_2026-01-14",
+    "formula_validated": false,
+    "ready_for_launch": false
+  }
+}
