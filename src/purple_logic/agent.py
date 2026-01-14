@@ -19,12 +19,12 @@ def run_purple_agent(host: str, port: int):
     # We use the host/port provided to construct the URL
     agent_card = AgentCard(
         name="purple_agent",
-        description="Polyglot Purple Agent (Defender)",
+        description="Polyglot Purple Agent (Defender) - Streaming Enabled",
         url=f"http://{host}:{port}/",
         version="1.0.0",
         default_input_modes=["text"],
         default_output_modes=["text"],
-        capabilities=AgentCapabilities(streaming=False),
+        capabilities=AgentCapabilities(streaming=True),  # Enable streaming
         skills=[]
     )
 

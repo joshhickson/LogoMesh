@@ -1331,6 +1331,125 @@ Should we delay Stage 3 to first validate Stage 2 data with human experts? Or pr
 
 ---
 
+## Final Addendum: Code Changes Summary
+
+**Status:** Uncommitted code changes from Stage 2 execution are being integrated into the feature branch.
+
+This addendum documents the production code modifications made during Stage 2 campaign execution that were not previously committed.
+
+### Overview of Changes
+
+Five source files were modified during Stage 2 to support intelligent timeout handling, schema compatibility, and streaming enablement:
+
+### 1. scripts/green_logic/smart_campaign.py (222 insertions, 73 deletions)
+
+**Purpose:** Enhanced campaign runner with intelligent task-specific timeouts and database schema compatibility.
+
+**Key Changes:**
+
+- **Task Skip Mechanism (Lines 35-39):**
+  - Added `DEFAULT_SKIP_TASK_IDS = {"task-001"}` to skip Email Validator by default (was failing due to sandbox network restriction)
+  - Environment variable override: `SKIP_TASK_IDS` allows dynamic task exclusion
+  - Validates at least one task remains active
+
+- **Task-Specific Timeout Map (Lines 41-46):**
+  ```python
+  TASK_TIMEOUT_MAP = {
+      "Email Validator": 90,      # Regex pattern matching
+      "Rate Limiter": 75,         # Algorithmic logic
+      "LRU Cache": 100,           # Data structure complexity
+      "Recursive Fibonacci": 120,  # Deep recursion analysis
+  }
+  ```
+  - Empirically tuned based on vLLM inference times observed during Stage 2
+  - Replaces blanket 180s timeout with task-aware timeouts
+  - Base timeout 120s with 60s backoff on retry, max 2 retries
+
+- **Health Check Function (Lines 54-62):**
+  - Added `is_server_alive(url)` for quick Green Agent availability verification
+  - 5s timeout on HTTP GET to /docs endpoint
+  - Returns boolean status before attempting campaign run
+
+- **Schema Migration (Lines 91-115):**
+  - Detects legacy schema vs. server schema
+  - If legacy `task_title` column present, adds missing server columns (`score`, `breakdown`, `dbom_hash`)
+  - If server schema present, no migration needed
+  - Ensures backwards compatibility during transition
+
+- **Coverage Stats Parsing (Lines 121-157):**
+  - Enhanced `get_coverage_stats()` to handle both legacy and server schemas
+  - Legacy path: Query `task_title` column directly
+  - Server path: Parse `raw_result` JSON and extract task from `$.task` field
+  - Dynamically determines which path to use based on detected schema
+
+**Rationale:** Stage 2 revealed that blanket 180s timeouts were inefficient for fast tasks (Rate Limiter: 30-45s) and insufficiently aggressive for complex tasks (Fibonacci: 150-200s). Task-specific timeouts reduced false timeouts while maintaining execution speed.
+
+### 2. scripts/green_logic/campaign_analyst.py (10 insertions, 1 deletion)
+
+**Purpose:** Fixed SQL query to extract task information from JSON.
+
+**Key Changes:**
+
+- **Query Refactoring (Lines 25-35):**
+  - OLD: `SELECT battle_id, task_title, timestamp, raw_result FROM battles`
+  - NEW: `SELECT battle_id, timestamp, raw_result, json_extract(raw_result, '$.task') as task_title FROM battles`
+  - Reason: `task_title` column doesn't exist in server schema; task is stored in JSON
+
+- **Comment Added (Line 24):**
+  - "Extract task from JSON (field is 'task', not 'task_title')" documents the fix
+
+**Rationale:** Campaign Report generation (Campaign-Report-20260114.md) failed to load task information because analyst expected a column that doesn't exist. This change extracts task dynamically from JSON at query time.
+
+### 3. src/purple_logic/agent.py (3 insertions, 3 deletions)
+
+**Purpose:** Enable streaming capabilities for Purple Agent.
+
+**Key Changes:**
+
+- **Agent Card Description (Line 22):**
+  - Added "(Streaming Enabled)" to description for clarity
+
+- **Streaming Capability (Line 28):**
+  - Changed `capabilities=AgentCapabilities(streaming=False)` → `streaming=True`
+  - Added comment: `# Enable streaming`
+
+**Rationale:** Security Arena competition mode requires streaming support for real-time token delivery. Investigated in parallel with Stage 2 campaign (A2A-Streaming-Debug-Plan.md in workspace).
+
+### 4. scenarios/security_arena/agents/generic_defender.py (23 insertions, 3 deletions)
+
+**Purpose:** Implement streaming token delivery in defender agent responses.
+
+**Key Changes:**
+
+- **Response Handler (Lines 93-120):**
+  - OLD: `response = await self.client.chat.completions.create(...)` then `assistant_message = response.choices[0].message.content`
+  - NEW: `stream = await self.client.chat.completions.create(..., stream=True)` with async iteration
+  - Collects tokens: `async for chunk in stream:` checks `chunk.choices[0].delta.content`
+  - **Streaming Update (Lines 112-117):** Each token immediately sent via `updater.update_status()` with new `new_agent_text_message(token)`
+  - Final completion status sent at line 123-125
+
+- **Agent Card Description (Line 154):**
+  - Added "(streaming enabled)" for consistency
+
+- **Streaming Capability (Line 161):**
+  - Changed `streaming=False` → `streaming=True`
+
+**Rationale:** Competition rules may require streaming support for latency-sensitive evaluation. Enables real-time token streaming to observers/judges rather than waiting for full response completion.
+
+### 5. data/battles.db
+
+**Status:** Updated with Stage 2 execution results.
+
+- **Original Size:** 163,840 bytes (legacy Stage 1 data)
+- **Final Size:** 1,101,824 bytes (77 new battles added)
+- **Contents:**
+  - 27 LRU Cache battles
+  - 25 Rate Limiter battles
+  - 25 Recursive Fibonacci battles
+- **Schema:** Server-compatible with `id`, `battle_id`, `timestamp`, `score`, `breakdown`, `raw_result` (JSON), `dbom_hash`
+
+---
+
 ## Master Action Item Index (Sequential Execution Order)
 
 **Status Legend:** 🔴 BLOCKING (must complete before Stage 3) | 🟡 HIGH PRIORITY | 🟢 OPTIONAL

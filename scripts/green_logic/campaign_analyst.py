@@ -22,7 +22,15 @@ def load_data():
         return pd.DataFrame()
 
     conn = sqlite3.connect(DB_PATH)
-    query = "SELECT battle_id, task_title, timestamp, raw_result FROM battles"
+    # Extract task from JSON (field is "task", not "task_title")
+    query = """
+    SELECT 
+        battle_id, 
+        timestamp, 
+        raw_result,
+        json_extract(raw_result, '$.task') as task_title
+    FROM battles
+    """
     df = pd.read_sql_query(query, conn)
     conn.close()
 
