@@ -1,14 +1,19 @@
 ---
-status: ACTIVE
+status: DEPRECATED
 type: Guide
 ---
 > **Context:**
 > *   [2026-01-14]: Distribution protocol for CIS expert validation study (Phase C workflow)
-> **Parent Document:** [Phase1-Yin-Campaign-20260113.md](../../../docs/04-Operations/Intent-Log/Josh/Phase1-Yin-Campaign-20260113.md)
+> **Status:** DEPRECATED - Project pivoted to Model Diversity + LLM-as-Judge approach (C-NEW-001, C-NEW-002, C-NEW-003)
+> **Superseded By:** New validation strategy in [MASTER-ACTION-ITEM-INDEX.md](../docs/04-Operations/Intent-Log/Josh/MASTER-ACTION-ITEM-INDEX.md)
+> **Parent Document:** [Phase1-Yin-Campaign-20260113.md](../docs/04-Operations/Intent-Log/Josh/Phase1-Yin-Campaign-20260113.md)
+> **Note:** Infrastructure preserved for future human expert validation if needed post-Stage 3
 
 ---
 
-# Expert Validation Distribution Protocol (C-006)
+# Expert Validation Distribution Protocol (C-006) [DEPRECATED]
+
+**⚠️ This workflow is no longer active. Project now uses automated Model Diversity + LLM-as-Judge validation.**
 
 ## Overview
 

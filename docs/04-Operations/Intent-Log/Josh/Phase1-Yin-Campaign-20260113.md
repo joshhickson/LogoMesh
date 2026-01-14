@@ -7,6 +7,9 @@ type: Log
 > *   [2026-01-13]: Phase 1 (Yin) execution begins. Environment fully hydrated (Python 3.12, uv, pnpm installed). Proceeding with Smart Campaign Runner to fill coverage buckets (Target: 400 battles).
 > **Strategic Stance:** Commercial paused; research mode active for Contextual Debt paper testing.
 > **Next Phase:** [Phase2-Action-Items-Implementation-20260114.md](./Phase2-Action-Items-Implementation-20260114.md) - Implementation of A-001, B-001, B-002, A-000, G-001
+> **References:**
+>    - Master checklist: [MASTER-ACTION-ITEM-INDEX.md](./MASTER-ACTION-ITEM-INDEX.md) (comprehensive status + logistics)
+>    - Expert briefing: [EXPERT-LETTER.md](./EXPERT-LETTER.md) (expert instructions for Phase C validation)
 
 ---
 
@@ -1452,6 +1455,8 @@ Five source files were modified during Stage 2 to support intelligent timeout ha
 ---
 
 ## Master Action Item Index (Sequential Execution Order)
+
+> **📋 NOTE:** A comprehensive master checklist with logistics, dependencies, and timelines is now maintained in [MASTER-ACTION-ITEM-INDEX.md](./MASTER-ACTION-ITEM-INDEX.md). This section provides the original source; the master checklist provides current status and next steps.
 
 **Status Legend:** 🔴 BLOCKING (must complete before Stage 3) | 🟡 HIGH PRIORITY | 🟢 OPTIONAL
 
