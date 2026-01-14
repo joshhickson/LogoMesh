@@ -22,6 +22,7 @@ class SendTaskRequest(BaseModel):
     battle_id: str
     task_id: str | None = None  # Force a specific task
     files: dict[str, str] | None = None # For Task 1.5: Input Contract Definition
+    custom_task: dict[str, str] | None = None
 
 class ReportResultRequest(BaseModel):
     battle_id: str
@@ -169,6 +170,13 @@ IMPORTANT: Respond with valid JSON only:
     "testCode": "...",
     "rationale": "..."
 }}"""
+    elif request.custom_task:
+        task_title = request.custom_task.get("title", "Custom Task")
+        task_desc = request.custom_task.get("description", "")
+        task_constraints = {}
+        hidden_tests = None
+        task_prompt = f"CODING TASK: {task_title}\n\n{task_desc}\n\nIMPORTANT: Respond with valid JSON only..."
+
     else:
         if request.task_id:
             try:

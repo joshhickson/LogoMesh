@@ -207,7 +207,8 @@ if __name__ == "__main__":
                 mem_limit="128m",        # Memory limit
                 cpu_period=100000,
                 cpu_quota=50000,         # 50% CPU limit
-                detach=True
+                detach=True,
+                pids_limit=50            # Limit number of processes
             )
 
             # Start container

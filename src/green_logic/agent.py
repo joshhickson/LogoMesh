@@ -73,7 +73,7 @@ class GreenAgent:
             os.makedirs("data", exist_ok=True)
 
             db_path = os.path.join("data", "battles.db")
-            conn = sqlite3.connect(db_path)
+            conn = sqlite3.connect(db_path, check_same_thread=False)
             cursor = conn.cursor()
 
             # Create table if it doesn't exist
@@ -94,7 +94,7 @@ class GreenAgent:
 
             # Prepare data
             timestamp = datetime.datetime.now().isoformat()
-            raw_result = json.dumps(result)
+            raw_result = json.dumps(result, sort_keys=True)
             dbom_hash = dbom["h_delta"]
 
             # Insert record
