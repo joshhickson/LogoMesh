@@ -135,6 +135,11 @@ The logic_score must be a float between 0.0 and 1.0:
         # Compare Source Code with Test Code
         t_vector_score = self.vector_scorer.calculate_similarity(source_code, test_code)
 
+        # A-002 Implementation: Explicit Cosine Similarity for Intent vs Code
+        # Compute and store intent_code_similarity as separate diagnostic field
+        # (Not yet used in CIS formula; reserved for validation analysis and reporting)
+        intent_code_similarity = self.vector_scorer.calculate_similarity(task_description, source_code)
+
         # Capture Intent Vector for DBOM (Task 1.6)
         intent_vector = self.vector_scorer.get_embedding(task_description).tolist()
 
@@ -270,6 +275,11 @@ Note: `cis_score` = (0.2 * R) + (0.2 * A) + (0.2 * T) + (0.4 * L). Logic Score h
             
             # B-002 Implementation: Reweight to 25-25-25-25 (equal component weight)
             eval_data["cis_score"] = (0.25 * r) + (0.25 * a) + (0.25 * t) + (0.25 * l)
+
+            # A-002 Implementation: Store Intent-Code Similarity
+            # Separate diagnostic field for Intent vs Code semantic alignment
+            # Reserved for validation analysis and future R(Δ) redefinition studies
+            eval_data["intent_code_similarity"] = intent_code_similarity
 
             # Attach the real Intent Vector for the DBOM Generator
             eval_data["intent_vector"] = intent_vector

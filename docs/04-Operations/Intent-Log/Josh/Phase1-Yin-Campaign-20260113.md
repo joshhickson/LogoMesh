@@ -2046,8 +2046,3 @@ This ensures future readers (including judges) can verify the system actually im
 **↓ NEXT PHASE ↓**
 
 **[Phase 2: Action Items Implementation (2026-01-14)](./Phase2-Action-Items-Implementation-20260114.md)**
-- A-001: Document CIS Weight Formula
-- B-001: Anchor Logic Score to Test Results
-- B-002: Reweight Formula to 25-25-25-25
-- A-000: Update Email Validator Task Description
-- G-001: Implement Paper Versioning Protocol
