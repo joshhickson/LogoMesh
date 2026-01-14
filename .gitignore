@@ -16,3 +16,5 @@ coverage/
 
 .claude/commands
 docs/_build
+
+data/*.db
