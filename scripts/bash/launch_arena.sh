@@ -22,7 +22,7 @@ fi
 
 # 1. remove old containers to avoid conflicts
 echo -e "${BLUE}[arena] cleaning up old containers...${NC}"
-sudo docker rm -f vllm-server green-agent purple-agent > /dev/null 2>&1
+sudo docker rm -f vllm-server green-agent purple-agent red-agent > /dev/null 2>&1
 
 # 2. start the vllm brain
 echo -e "${BLUE}[arena] launching vllm with ${MODEL}...${NC}"
@@ -75,10 +75,20 @@ sudo docker run -d --name purple-agent --network host \
   polyglot-agent:latest \
   uv run python main.py --role PURPLE --host localhost --port 9001
 
+# 6. start the attacker (red agent)
+echo -e "${RED}[arena] launching the attacker on port 9021...${NC}"
+sudo docker run -d --name red-agent --network host \
+  -e OPENAI_BASE_URL=http://localhost:8000/v1 \
+  -e OPENAI_API_KEY=EMPTY \
+  -e OPENAI_MODEL=$MODEL \
+  polyglot-agent:latest \
+  uv run python main.py --role RED --port 9021
+
 echo -e "${GREEN}[success] arena is live and ready.${NC}"
 echo -e "${GREEN}------------------------------------------${NC}"
 echo -e "judge:    http://localhost:9000"
 echo -e "defender: http://localhost:9001"
+echo -e "attacker: http://localhost:9021"
 echo -e "brain:    http://localhost:8000"
 echo -e "${GREEN}------------------------------------------${NC}"
 echo -e "you can run the battle curl command now."
