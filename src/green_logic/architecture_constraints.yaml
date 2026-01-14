@@ -149,3 +149,159 @@ task-004:
 # - Multiple violations: Apply max penalty (not cumulative)
 # - Static analysis checks: imports, patterns (AST-based)
 # - Dynamic checks: Tested via sandbox (e.g., recursion depth, actual behavior)
+
+# =============================================================================
+# A-004 Implementation: Test Requirements for testing_score evaluation
+# Purpose: Define acceptance criteria patterns that tests should verify
+# =============================================================================
+
+# Task: task-001 (Email Validator)
+task-001-tests:
+  title: "Email Validator Test Requirements"
+  required_test_patterns:
+    edge_case_empty:
+      description: "Must test empty string input"
+      patterns:
+        - 'assert.*["\']\\s*["\']'
+        - 'assert.*""'
+        - "assert.*''"
+      weight: 0.15
+    
+    edge_case_no_at:
+      description: "Must test email without @ symbol"
+      patterns:
+        - 'assert.*valid.*False'
+        - 'assert.*not.*valid'
+      weight: 0.15
+    
+    edge_case_multiple_at:
+      description: "Must test multiple @ symbols"
+      patterns:
+        - 'assert.*@@'
+        - 'assert.*@.*@'
+      weight: 0.15
+    
+    edge_case_no_domain:
+      description: "Must test missing domain (e.g., user@)"
+      patterns:
+        - 'assert.*@["\'].*False'
+      weight: 0.10
+    
+    valid_case:
+      description: "Must test valid email format"
+      patterns:
+        - 'assert.*@.*\\.'
+        - 'assert.*valid.*True'
+      weight: 0.10
+
+# Task: task-002 (Rate Limiter)
+task-002-tests:
+  title: "Rate Limiter Test Requirements"
+  required_test_patterns:
+    timing_verification:
+      description: "Must verify time-based rate limiting"
+      patterns:
+        - 'time\\.sleep'
+        - 'assert.*time'
+      weight: 0.20
+    
+    limit_enforcement:
+      description: "Must test request limit (10 per minute)"
+      patterns:
+        - 'assert.*False'  # After limit reached
+        - 'assert.*not.*allowed'
+        - 'for.*range.*10'
+        - 'for.*range.*11'
+      weight: 0.25
+    
+    multiple_clients:
+      description: "Must test different client IDs"
+      patterns:
+        - 'client.*1'
+        - 'client.*2'
+        - 'user.*[AB]'
+      weight: 0.15
+    
+    count_accuracy:
+      description: "Must verify exact count tracking"
+      patterns:
+        - 'assert.*==.*True'
+        - 'assert.*==.*10'
+      weight: 0.10
+
+# Task: task-003 (LRU Cache)
+task-003-tests:
+  title: "LRU Cache Test Requirements"
+  required_test_patterns:
+    eviction_order:
+      description: "Must verify LRU eviction (least recently used first)"
+      patterns:
+        - 'assert.*get.*None'  # Evicted key returns None
+        - 'assert.*not.*in'
+        - 'capacity'
+      weight: 0.30
+    
+    get_updates_recency:
+      description: "Must test that get() updates recency"
+      patterns:
+        - 'get.*put.*get'  # Pattern: access, add new, check old still exists
+        - 'assert.*get.*!='
+      weight: 0.20
+    
+    capacity_limit:
+      description: "Must test capacity constraint"
+      patterns:
+        - 'capacity.*='
+        - 'LRUCache\\([0-9]+'
+      weight: 0.15
+    
+    put_get_basic:
+      description: "Must test basic put/get operations"
+      patterns:
+        - 'put\\('
+        - 'get\\('
+        - 'assert.*=='
+      weight: 0.10
+
+# Task: task-004 (Recursive Fibonacci)
+task-004-tests:
+  title: "Recursive Fibonacci Test Requirements"
+  required_test_patterns:
+    base_cases:
+      description: "Must test fib(0)=0 and fib(1)=1"
+      patterns:
+        - 'assert.*fibonacci\\(0\\).*==.*0'
+        - 'assert.*fibonacci\\(1\\).*==.*1'
+      weight: 0.25
+    
+    small_values:
+      description: "Must test small Fibonacci numbers"
+      patterns:
+        - 'fibonacci\\([2-5]\\)'
+        - 'assert.*fibonacci\\([2-9]\\)'
+      weight: 0.20
+    
+    negative_input:
+      description: "Must test negative input handling"
+      patterns:
+        - 'fibonacci\\(-'
+        - 'assert.*-.*==.*0'
+      weight: 0.15
+    
+    known_values:
+      description: "Must test known Fibonacci values (e.g., fib(10)=55)"
+      patterns:
+        - 'assert.*55'
+        - 'assert.*89'
+        - 'assert.*144'
+      weight: 0.10
+
+# Test Evaluation Notes (A-004):
+# - Specificity multiplier: 0.6-1.0 (weak to excellent test quality)
+# - Pattern matching: Case-insensitive regex search
+# - Scoring: Sum weights of matched patterns, clamp to [0.6, 1.0]
+# - Base formula: testing_score = vector_score * specificity_multiplier
+# - 1.0 = All key patterns matched (comprehensive tests)
+# - 0.8-0.9 = Most patterns matched (good coverage)
+# - 0.6-0.7 = Few/no patterns matched (generic tests)
+

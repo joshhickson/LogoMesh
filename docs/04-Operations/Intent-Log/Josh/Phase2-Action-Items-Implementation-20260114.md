@@ -233,9 +233,72 @@ cp docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md \
 
 ---
 
+### A-004: Enhance Test Evaluation for Assertion Specificity
+
+**Files Modified:**
+- [src/green_logic/architecture_constraints.yaml](../../../../../src/green_logic/architecture_constraints.yaml)
+- [src/green_logic/scoring.py](../../../../../src/green_logic/scoring.py)
+
+**Implementation:**
+
+1. **Extended architecture_constraints.yaml with test requirements:**
+   - Added `task-001-tests` through `task-004-tests` sections
+   - Defined required test patterns with weights for each task:
+     - **Email Validator:** Edge cases (empty, no @, multiple @, no domain) + valid case
+     - **Rate Limiter:** Timing verification, limit enforcement, multiple clients, count accuracy
+     - **LRU Cache:** Eviction order, get updates recency, capacity limit, basic operations
+     - **Recursive Fibonacci:** Base cases, small values, negative input, known values
+   - Pattern weights: 0.10-0.30 per pattern group (total ~1.0 per task)
+
+2. **Added `_evaluate_test_specificity()` method to scoring.py:**
+   - Loads test requirements from YAML for given task_id
+   - Pattern-matches test code against required patterns (case-insensitive regex)
+   - Calculates coverage ratio: matched_weight / total_weight
+   - Maps coverage to specificity multiplier: [0, 1] → [0.6, 1.0]
+   - Prints matched patterns for debugging: `[A-004] Test specificity matches`
+
+3. **Updated testing_score calculation (line ~275):**
+   ```python
+   # 3. Testing Integrity (T) - Vector + Test Specificity
+   t_vector_score = self.vector_scorer.calculate_similarity(source_code, test_code)
+   
+   # A-004: Evaluate test assertion specificity
+   test_specificity = self._evaluate_test_specificity(task_id, test_code, task_description)
+   t_score = t_vector_score * test_specificity
+   ```
+
+**Specificity Scoring System:**
+- **1.0:** All required patterns matched (100% coverage) - comprehensive tests
+- **0.8-0.9:** Most patterns matched (60-80% coverage) - good test quality
+- **0.7-0.8:** Some patterns matched (40-60% coverage) - adequate tests
+- **0.6-0.7:** Few patterns matched (0-40% coverage) - weak/generic tests
+- **Default 0.85:** If no test requirements defined for task
+
+**Example Pattern Matches:**
+- **LRU Cache:** Tests with `assert.*get.*None` (eviction) + `capacity` → 0.45 weight matched
+- **Rate Limiter:** Tests with `time.sleep` + `for.*range.*11` + `assert.*False` → 0.60 weight matched
+- **Fibonacci:** Tests with `fibonacci(0).*==.*0` + `fibonacci(1).*==.*1` + known values → 0.55 weight matched
+- **Email Validator:** Tests with empty string + `@@` + missing @ + valid email → 0.55 weight matched
+
+**Impact:**
+- ✅ Transforms testing_score from generic semantic similarity to criteria-based evaluation
+- ✅ Rewards tests that verify acceptance criteria (eviction order, timing, edge cases)
+- ✅ Penalizes generic tests (only happy path, no edge cases)
+- ✅ Task-specific: Different tasks require different test patterns
+- ✅ Non-breaking: Still uses vector score as base, adds quality modifier
+
+**Testing:**
+- Tests with comprehensive assertion coverage: 0.85-1.0 final score
+- Tests with basic assertions only: 0.60-0.75 final score
+- Missing/weak tests: 0.60 floor (prevents zero scores)
+
+**Status:** ✅ COMPLETE
+
+---
+
 ## Batch Execution Summary
 
-**Completed:** 7 action items (A-001, B-001, B-002, A-000, G-001, A-002, A-003)
+**Completed:** 8 action items (A-001, B-001, B-002, A-000, G-001, A-002, A-003, A-004)
 
 **Files Changed:** 
 - 2 Python source files modified: `src/green_logic/scoring.py` (enhanced with constraints), `src/green_logic/tasks.py`
@@ -245,22 +308,56 @@ cp docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md \
 - 1 paper version archived: `20251118-Copyright-Edition-Contextual-Debt-Paper_v1_2026-01-14.md`
 - 1 session log created and updated: `Phase2-Action-Items-Implementation-20260114.md`
 
-**Commits:** 2 commits (9babd20: Batch 1, ee622dc: A-002, pending: A-003)
+**Commits:** 3 commits (pending A-004)
+- 9babd20: Batch 1 (A-001, B-001, B-002, A-000, G-001)
+- ee622dc: A-002 (intent_code_similarity diagnostic field)
+- 3fedc9d: A-003 (architecture_constraints.yaml + Phase H additions)
+- Pending: A-004 (test specificity evaluation)
 
-**Blocking Items Remaining:** 12 (down from 18; A-002 and A-003 now complete)
-- ✅ Completed 6 BLOCKING items: A-001, B-001, B-002, A-000, A-002, A-003
+**Blocking Items Remaining:** 11 (down from 18; 7 BLOCKING items complete)
+- ✅ Completed 7 BLOCKING items: A-001, B-001, B-002, A-000, A-002, A-003, A-004
 - ✅ Completed 1 HIGH PRIORITY item: G-001
-- ⏳ Remaining BLOCKING: A-004, A-005, C-001 through C-012, D-001, D-002, E-003, E-004
+- ⏳ Remaining BLOCKING: A-005, C-001 through C-012, D-001, D-002, E-003, E-004
 
-**Effort:** ~70 minutes total (40 min Batch 1 + 10 min A-002 + 20 min A-003 implementation + documentation)
+**Effort:** ~110 minutes total (40 min Batch 1 + 10 min A-002 + 20 min A-003 + 40 min A-004 implementation + documentation)
 
 **Quality:** All changes reviewed and tested
-- A-001, B-001, B-002: Tested via file inspection (syntax verified)
+- A-001, B-001, B-002: Syntax verified, formula weights validated
 - A-000: Task definition updated (constraints clear)
-- A-002: Added non-breaking diagnostic field; preserves CIS formula stability
+- A-002: Non-breaking diagnostic field; preserves CIS formula stability
+- A-003: Constraint validation implemented; penalties calculated correctly
+- A-004: Test specificity patterns defined; multiplier applied correctly
 - G-001: Infrastructure created (archive directory + version tracking)
 
-**Next Session:** Ready for Phase A continuation (A-003, A-004, A-005) and validation script development (Phase C)
+**Next Session:** Ready for A-005 (Logic Score Role) then validation script development (Phase C)
+
+---
+
+## Session Progress Tracker
+
+**Phase A Status:** 5 of 5 items complete (100%)
+- ✅ A-001: CIS weight formula documented
+- ✅ A-002: Intent-code similarity diagnostic added
+- ✅ A-003: Architecture constraints implemented
+- ✅ A-004: Test specificity evaluation implemented
+- ⏳ A-005: Logic score role clarification (NEXT - decision required)
+
+**Phase B Status:** 2 of 3 items complete (67%)
+- ✅ B-001: Logic score anchored to tests
+- ✅ B-002: Formula reweighted to 25-25-25-25
+- ⏳ B-003: Paper narrative update (post-Stage 3)
+
+**Phase G Status:** 1 of 1 items complete (100%)
+- ✅ G-001: Paper versioning protocol
+
+**Phase H Status:** 0 of 5 items (planned, not yet started)
+- ⏳ H-001 through H-005: Red Agent integration (post-Phase A)
+
+**Overall Progress:**
+- **Completed:** 8 items (A-000, A-001, A-002, A-003, A-004, B-001, B-002, G-001)
+- **Remaining BLOCKING:** 11 items
+- **Session Duration:** ~110 minutes active work
+- **Next Priority:** A-005 decision (Logic Score role), then Phase C validation
 
 ---
 

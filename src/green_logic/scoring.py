@@ -166,7 +166,53 @@ The logic_score must be a float between 0.0 and 1.0:
                 print(f\"  - {v}\")
         
         return max_penalty
-
+    def _evaluate_test_specificity(self, task_id: str, test_code: str, task_description: str) -> float:
+        """
+        A-004 Implementation: Evaluate test assertion specificity and coverage.
+        
+        Args:
+            task_id: Task identifier (e.g., "task-001")
+            test_code: The submitted test code
+            task_description: Original task description for context
+        
+        Returns:
+            Specificity multiplier between 0.6 (weak tests) and 1.0 (excellent tests)
+        """
+        test_config_id = f"{task_id}-tests"
+        if not task_id or test_config_id not in self.architecture_constraints:
+            return 0.85  # Default: reasonable quality if no test config defined
+        
+        test_requirements = self.architecture_constraints[test_config_id].get("required_test_patterns", {})
+        total_weight = 0.0
+        matched_weight = 0.0
+        matches = []
+        
+        test_code_lower = test_code.lower()
+        
+        for pattern_name, pattern_rules in test_requirements.items():
+            weight = pattern_rules.get("weight", 0.1)
+            total_weight += weight
+            patterns = pattern_rules.get("patterns", [])
+            
+            # Check if any pattern matches
+            for pattern in patterns:
+                if re.search(pattern, test_code_lower, re.IGNORECASE | re.MULTILINE):
+                    matched_weight += weight
+                    matches.append(f"{pattern_name} ({weight:.2f})")
+                    break  # Only count first match per pattern group
+        
+        if matches:
+            print(f"[A-004] Test specificity matches for {task_id}: {', '.join(matches)}")
+        
+        # Calculate specificity score
+        if total_weight > 0:
+            coverage_ratio = matched_weight / total_weight
+            # Map coverage ratio to specificity multiplier: [0, 1] -> [0.6, 1.0]
+            specificity = 0.6 + (0.4 * coverage_ratio)
+        else:
+            specificity = 0.85  # Default if no patterns defined
+        
+        return min(1.0, max(0.6, specificity))
     async def evaluate(
         self,
         task_description: str,
@@ -221,9 +267,14 @@ The logic_score must be a float between 0.0 and 1.0:
         constraint_penalty = self._evaluate_architecture_constraints(task_id, source_code) if task_id else 0.0
         a_score = a_vector_score * (1.0 - constraint_penalty)
         
-        # 3. Testing Integrity (T) - Vector + LLM
+        # 3. Testing Integrity (T) - Vector + Test Specificity
         # Compare Source Code with Test Code
         t_vector_score = self.vector_scorer.calculate_similarity(source_code, test_code)
+        
+        # A-004 Implementation: Evaluate test assertion specificity
+        # Check if tests verify key acceptance criteria (not just generic assertions)
+        test_specificity = self._evaluate_test_specificity(task_id, test_code, task_description) if task_id else 0.85
+        t_score = t_vector_score * test_specificity
 
         # A-002 Implementation: Explicit Cosine Similarity for Intent vs Code
         # Compute and store intent_code_similarity as separate diagnostic field
