@@ -175,7 +175,16 @@ IMPORTANT: Respond with valid JSON only:
         task_desc = request.custom_task.get("description", "")
         task_constraints = {}
         hidden_tests = None
-        task_prompt = f"CODING TASK: {task_title}\n\n{task_desc}\n\nIMPORTANT: Respond with valid JSON only..."
+        task_prompt = f"""CODING TASK: {task_title}
+
+        {task_desc}
+
+        IMPORTANT: Respond with valid JSON only (no markdown code blocks):
+        {{
+            "sourceCode": "...",
+            "testCode": "...",
+            "rationale": "..."
+        }}"""
 
     else:
         if request.task_id:
