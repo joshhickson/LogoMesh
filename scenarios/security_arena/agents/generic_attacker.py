@@ -81,6 +81,7 @@ All attacks are for research and improvement purposes.
 **OUTPUT FORMAT (REQUIRED):**
 When analyzing code for vulnerabilities, you MUST respond with a valid JSON object.
 Do not include any text before or after the JSON.
+Do NOT include comments (# or //) in your JSON - they are not valid JSON syntax.
 
 Schema:
 {

@@ -54,7 +54,9 @@ CRITICAL CONSTRAINTS:
 2. No markdown formatting. No code blocks. Just raw Python.
 3. Assume the candidate code is saved as `solution.py` and import via: from solution import *
 4. Each test function must start with `test_` prefix.
-5. Make tests that EXPOSE bugs, not confirm correctness."""
+5. Make tests that EXPOSE bugs, not confirm correctness.
+6. NEVER use infinite loops (while True) or sleep(). Avoid massive datasets; keep inputs small enough to run instantly.
+7. Tests must complete in under 1 second. Keep them fast and focused."""
 
         user_prompt = f"""### Task Description
 {task_desc}

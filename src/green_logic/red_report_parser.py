@@ -96,7 +96,7 @@ class RedReportParser:
         """Extract text content from A2A JSON-RPC response."""
         try:
             # A2A structure: result -> status -> message -> parts[0] -> text
-            return (
+            text = (
                 red_result_data
                 .get("result", {})
                 .get("status", {})
@@ -104,9 +104,24 @@ class RedReportParser:
                 .get("parts", [{}])[0]
                 .get("text", "")
             )
-        except (KeyError, IndexError, TypeError):
-            # If structure doesn't match, try to stringify
-            return str(red_result_data)
+            if text:
+                print(f"DEBUG RedParser: Extracted text from A2A structure ({len(text)} chars)")
+                return text
+
+            # Fallback: Check if it's a direct text response
+            if "text" in red_result_data:
+                print(f"DEBUG RedParser: Using direct 'text' field")
+                return red_result_data["text"]
+
+            # Fallback: Use JSON serialization (not str()) to preserve valid JSON format
+            print(f"DEBUG RedParser: A2A extraction empty, falling back to JSON serialization")
+            print(f"DEBUG RedParser: Available keys: {list(red_result_data.keys())}")
+            return json.dumps(red_result_data)
+
+        except (KeyError, IndexError, TypeError) as e:
+            # If structure doesn't match, serialize as JSON (not str() which uses single quotes)
+            print(f"DEBUG RedParser: Extraction failed ({e}), using JSON fallback")
+            return json.dumps(red_result_data)
 
     def _try_parse_structured(self, raw_text: str) -> Optional[RedAgentReport]:
         """Attempt to parse response as structured JSON."""
@@ -118,10 +133,25 @@ class RedReportParser:
                 clean_text = re.sub(r"```(?:json)?\s*\n?", "", clean_text)
                 clean_text = clean_text.rstrip("`").strip()
 
+            # Remove inline comments that LLMs sometimes add (invalid in JSON)
+            # Pattern: matches `// comment` or `# comment` outside of strings
+            # Simple approach: remove lines that are just comments, and trailing comments
+            lines = clean_text.split('\n')
+            cleaned_lines = []
+            for line in lines:
+                # Remove trailing comments (not inside strings - simplified heuristic)
+                # Look for # or // that appears after a closing " or digit
+                line = re.sub(r'(["\d\]},])\s*#[^"]*$', r'\1', line)
+                line = re.sub(r'(["\d\]},])\s*//[^"]*$', r'\1', line)
+                cleaned_lines.append(line)
+            clean_text = '\n'.join(cleaned_lines)
+
             data = json.loads(clean_text)
+            print(f"DEBUG RedParser: JSON parsed successfully, keys: {list(data.keys())}")
 
             # Validate required fields
             if "attack_successful" not in data:
+                print(f"DEBUG RedParser: Missing 'attack_successful' field, falling back to keyword parsing")
                 return None
 
             vulnerabilities = []
@@ -141,12 +171,16 @@ class RedReportParser:
                     confidence=v.get("confidence", "medium"),
                 ))
 
-            return RedAgentReport(
+            report = RedAgentReport(
                 attack_successful=data.get("attack_successful", False),
                 vulnerabilities=vulnerabilities,
                 attack_summary=data.get("attack_summary", ""),
             )
-        except (json.JSONDecodeError, ValueError, KeyError, TypeError):
+            print(f"DEBUG RedParser: Structured parsing SUCCESS - attack_successful={report.attack_successful}, vulns={len(vulnerabilities)}")
+            return report
+        except (json.JSONDecodeError, ValueError, KeyError, TypeError) as e:
+            print(f"DEBUG RedParser: Structured parsing FAILED: {type(e).__name__}: {e}")
+            print(f"DEBUG RedParser: Raw text preview: {raw_text[:200]}...")
             return None
 
     def _parse_with_keywords(self, raw_text: str) -> RedAgentReport:
