@@ -7,19 +7,19 @@ name = "agentbeats-tutorial"
 version = "0.1.0"
 description = "Agentbeats Tutorial"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11,<3.14"  # ray 2.53.0 requires 3.11-3.13; vllm needs 3.11+
 dependencies = [
-    "a2a-sdk>=0.3.5",
-    "docker>=7.0.0",
-    "google-adk>=1.14.1",
-    "google-genai>=1.36.0",
-    "openai>=2.8.1",
-    "pydantic>=2.11.9",
-    "python-dotenv>=1.1.1",
-    "uvicorn>=0.35.0",
-    "vllm>=0.6.0 ; sys_platform == 'linux'",
-    "sentence-transformers>=3.0.0",
-    "scipy>=1.10.0",
+    "a2a-sdk>=0.3.5",              # Agent-to-Agent protocol
+    "docker>=7.0.0",                # Container orchestration
+    "google-adk>=1.14.1",           # Google AI Development Kit
+    "google-genai>=1.36.0",         # Google Generative AI
+    "openai>=2.8.1",                # OpenAI API client
+    "pydantic>=2.11.9",             # Data validation
+    "python-dotenv>=1.1.1",         # Environment management
+    "uvicorn>=0.35.0",              # ASGI server
+    "vllm>=0.6.0,<0.7.0 ; sys_platform == 'linux'",  # LLM inference (Linux only, GPU required)
+    "sentence-transformers>=3.0.0", # Embedding models for CIS computation
+    "scipy>=1.10.0",                # Scientific computing (cosine similarity, KL divergence)
 ]
 
 [project.scripts]

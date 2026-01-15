@@ -4,20 +4,18 @@
 
 ---
 
-> **🚀 Onboarding Start Here**
+> **� Setup Documentation**
 >
-> **For the best onboarding experience, please start by viewing our interactive documentation hub.**
+> **New to LogoMesh? Choose your path:**
 >
-> 1.  Navigate to the `onboarding` directory in your terminal:
->     ```bash
->     cd onboarding
->     ```
-> 2.  Follow the instructions in that directory's `README.md` file to start the local web server.
-> 3.  Open the site in your browser (usually at `http://localhost:3000`).
+> - **🚀 Quick Start (5 min):** [QUICK_SETUP.md](QUICK_SETUP.md) - Copy-paste commands for Lambda Labs
+> - **📖 Detailed Guide (15-20 min):** [SETUP_GUIDE.md](SETUP_GUIDE.md) - Complete step-by-step instructions
+> - **🔧 Technical Deep-Dive:** [TECHNICAL_RECOMMENDATIONS.md](TECHNICAL_RECOMMENDATIONS.md) - Version compatibility analysis
 >
-> **Don't want to run a server?**
-> *   **Current Roadmap:** Read the [Discovery Sprint Plan](docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md)
-> *   **Theory:** Read the [Contextual Debt Research Paper](docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md)
+> **Already set up?**
+> - **Interactive Docs:** `cd onboarding && pnpm start` (opens at `http://localhost:3000`)
+> - **Current Roadmap:** [Discovery Sprint Plan](docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md)
+> - **Theory:** [Contextual Debt Research Paper](docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md)
 
 # LogoMesh: Security Assessment Benchmark with Integrated Adversarial Testing
 
@@ -95,15 +93,20 @@ Launch the LogoMesh Security Benchmark to evaluate defender agents against adver
 Follow these steps if you need to develop features or debug the Python/Node.js source directly.
 
 ### Prerequisites
-*   **Python 3.12+**
+
+⚠️ **IMPORTANT - Version Requirements:**
+*   **Python 3.11, 3.12, or 3.13** (NOT 3.14+ - incompatible with `ray` package)
+*   **Node.js v20+** (NOT v12.x - Lambda default is too old)
 *   **uv** (Python Package Manager): `pip install uv`
-*   **Node.js v20+**
 *   **pnpm** (`corepack enable`)
+
+> **Lambda Labs instances require Python 3.11 installation and Node.js upgrade.**  
+> See [SETUP_GUIDE.md](SETUP_GUIDE.md) for detailed instructions.
 
 ### Installation
 1.  **Install Python Dependencies**
     ```bash
-    uv sync
+    uv sync --python 3.11
     ```
 
 2.  **Install Node.js Dependencies**

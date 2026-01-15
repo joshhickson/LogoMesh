@@ -9,6 +9,7 @@
   },
   "packageManager": "pnpm@8.15.7",
   "scripts": {
+    "preinstall": "node -e \"const v=process.version;const major=parseInt(v.slice(1));if(major<20){console.error('❌ Node.js v20+ required. Current:',v);process.exit(1)}\"",
     "build": "turbo run build",
     "lint": "eslint packages/**/*.{ts,tsx}",
     "lint:strict": "eslint packages/**/*.{ts,tsx} --max-warnings 0",

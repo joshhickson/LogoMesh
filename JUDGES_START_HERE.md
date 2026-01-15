@@ -8,29 +8,58 @@ If you are evaluating this submission, follow these exact steps to spin up the e
 
 ---
 
-## 1. The One-Minute Setup (Prerequisites)
+## 1. Setup Options
 
-We assume you are on a standard Linux environment (e.g., Lambda Cloud, Ubuntu).
+We assume you are on a standard Linux environment (e.g., Lambda Cloud, Ubuntu). Choose your preferred setup method:
 
-### A. Configure Environment
+### ⭐ Option A: Automated Setup (Recommended)
+
+**Fastest method - runs all prerequisites automatically:**
+
+```bash
+cd /home/ubuntu/LogoMesh
+./scripts/bash/setup_all.sh
+```
+
+This single script will:
+- Create .env file
+- Install Python 3.11 (if needed)
+- Install uv and sync dependencies
+- Upgrade Node.js to v20 (if needed)
+- Install pnpm and Node dependencies
+- Verify Docker access
+
+**Time:** ~15-20 minutes (one-time setup)
+
+Then skip to **Section 2: The "Big Red Button"** below.
+
+---
+
+### Option B: Manual Setup
+
+If you prefer to run commands individually:
+
+#### A. Configure Environment
 The system needs an environment file to run (even if API keys are empty/mocked).
 ```bash
 cp .env.example .env
 ```
 
-### B. Install Dependencies (`uv`)
+#### B. Install Dependencies (`uv`)
 We use `uv` for fast Python package management.
 ```bash
 pip install uv
 uv sync --python 3.11
 ```
 
-### C. Verify Docker
+#### C. Verify Docker
 Ensure Docker is running and you have `sudo` access.
 ```bash
 sudo docker ps
 # If this lists headers (CONTAINER ID...), you are good.
 ```
+
+**Note:** For complete step-by-step instructions, see [SETUP_GUIDE.md](SETUP_GUIDE.md).
 
 ---
 
