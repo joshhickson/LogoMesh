@@ -170,7 +170,33 @@ LogoMesh conducts multi-round adversarial evaluations where attackers adapt base
 
 ---
 
-## 📝 Demo Video
+## � Adversarial Testing: Red Agent Proof of Concept
+
+LogoMesh's integrated Red Agent successfully identifies vulnerabilities through sophisticated adversarial attacks. 
+
+**Proof-of-Concept Results** (4 adversarial battles, January 14-15, 2026):
+
+| Scenario | Score | Red Agent Discovery | Status |
+|----------|-------|-------------------|--------|
+| Blockchain (Coinbase) | 0.465 | Proof-of-work validation bypass, debug mode enabled | 🔴 Critical |
+| Concurrency (Safe) | **0.67** | **No vulnerabilities found** | ✅ Passed |
+| Concurrency (Variant) | 0.465 | SQL injection, authentication bypass, hardcoded secrets | 🔴 Critical |
+| General Security | 0.4675 | Edge case handling failures | 🔴 High |
+
+**Key Capabilities Demonstrated:**
+- ✅ Cryptocurrency vulnerability detection (proof-of-work validation flaws)
+- ✅ Concurrency safety analysis (identifying race conditions, data corruption)
+- ✅ SQL injection discovery
+- ✅ Authentication bypass detection
+- ✅ Defense success validation (0.67 CIS score when no critical vulnerabilities found)
+
+**Data:** See `data/teammatetestbattles.db` for complete adversarial battle records and CIS breakdowns.
+
+This demonstrates that LogoMesh's unified architecture successfully integrates attack generation (Red Agent) with defense evaluation (Purple Agent) for comprehensive security assessment.
+
+---
+
+## �📝 Demo Video
 
 **➡️ [Watch 3-Minute Demo](https://youtube.com/placeholder)** *(Link will be updated before submission)*
 
