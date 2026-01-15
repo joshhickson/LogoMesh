@@ -59,6 +59,9 @@ sudo docker run -d --name green-agent --network host \
   -e OPENAI_BASE_URL=http://localhost:8000/v1 \
   -e OPENAI_API_KEY=EMPTY \
   -e MODEL_NAME=$MODEL \
+  -e QWEN_BASE_URL=http://localhost:8000/v1 \
+  -e QWEN_API_KEY=EMPTY \
+  -e QWEN_MODEL_NAME=$MODEL \
   -v $(pwd)/data:/app/data \
   -v /var/run/docker.sock:/var/run/docker.sock \
   polyglot-agent:latest \
