@@ -380,6 +380,13 @@ Provide a proof-of-concept exploit if possible."""
             evaluation['sandbox_failed'] = True
             evaluation['sandbox_output'] = sandbox_result['output'][:500]  # Truncate for response size
 
+        # Log Red Agent penalty if applied (Keep your local debug logs)
+        if evaluation.get("red_penalty_applied", 0) > 0:
+            red_analysis = evaluation.get("red_analysis", {})
+            print(f"DEBUG: Red Agent penalty applied: {evaluation['red_penalty_applied'] * 100:.1f}%")
+            print(f"DEBUG: Red Agent found {red_analysis.get('vulnerability_count', 0)} vulnerabilities "
+                    f"(max severity: {red_analysis.get('max_severity', 'none')})")
+
         # --- Step 5: Return Combined Result ---
         result = {
             "battle_id": request.battle_id,
