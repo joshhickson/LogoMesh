@@ -126,8 +126,12 @@ class RedReportParser:
     def _try_parse_structured(self, raw_text: str) -> Optional[RedAgentReport]:
         """Attempt to parse response as structured JSON."""
         try:
-            # Clean potential markdown code blocks
-            clean_text = raw_text.strip()
+            json_match = re.search(r'(\{[\s\S]*\})', raw_text)
+            if not json_match:
+                print("DEBUG RedParser: No JSON object found in text.")
+                return None
+
+            clean_text = json_match.group(1)
             if clean_text.startswith("```"):
                 # Remove ```json or ``` prefix
                 clean_text = re.sub(r"```(?:json)?\s*\n?", "", clean_text)
