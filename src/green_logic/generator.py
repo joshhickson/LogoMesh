@@ -91,29 +91,32 @@ Generate 3 adversarial pytest test functions targeting edge cases in this code."
 
     def _sanitize_output(self, raw: str) -> str:
         """
-        Strip markdown code blocks from LLM response.
-
-        Handles patterns like:
-        - ```python ... ```
-        - ``` ... ```
-        - ```py ... ```
+        Aggressively sanitize LLM output to extract ONLY valid Python code.
         """
         if not raw:
             return self.FALLBACK_TEST
 
-        # Remove markdown code fences (```python, ```py, or just ```)
-        sanitized = re.sub(
-            r"```(?:python|py)?\s*\n?(.*?)```",
-            r"\1",
-            raw,
-            flags=re.DOTALL | re.IGNORECASE,
-        )
+        # 1. Try to find code inside markdown blocks (```python ... ```)
+        # Matches ```python, ```py, or just ```
+        code_match = re.search(r"```(?:python|py)?\s*\n(.*?)```", raw, re.DOTALL | re.IGNORECASE)
 
-        # Strip leading/trailing whitespace
-        sanitized = sanitized.strip()
+        if code_match:
+            clean_code = code_match.group(1)
+        else:
+            # 2. If no markdown, assume the whole text is code but strip "Here is the code:" logic
+            # This regex looks for the first import or def and keeps everything after
+            match = re.search(r"^(?:import|from|def|class)\s+.*", raw, re.MULTILINE | re.DOTALL)
+            if match:
+                clean_code = match.group(0)
+            else:
+                # Fallback: Just try to use the raw text if it looks vaguely like python
+                clean_code = raw
 
-        # If sanitization resulted in empty string, return fallback
-        if not sanitized:
+        # 3. Final cleanup of whitespace
+        clean_code = clean_code.strip()
+
+        # 4. Emergency Sanity Check: If it's empty or doesn't look like code, return fallback
+        if not clean_code or "def test_" not in clean_code:
             return self.FALLBACK_TEST
 
-        return sanitized
+        return clean_code
