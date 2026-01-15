@@ -162,7 +162,7 @@ task-001-tests:
     edge_case_empty:
       description: "Must test empty string input"
       patterns:
-        - 'assert.*["\']\\s*["\']'
+        - 'assert.*["\'']\s*["\''"]'
         - 'assert.*""'
         - "assert.*''"
       weight: 0.15
@@ -184,7 +184,7 @@ task-001-tests:
     edge_case_no_domain:
       description: "Must test missing domain (e.g., user@)"
       patterns:
-        - 'assert.*@["\'].*False'
+        - 'assert.*@["\''"].*False'
       weight: 0.10
     
     valid_case:

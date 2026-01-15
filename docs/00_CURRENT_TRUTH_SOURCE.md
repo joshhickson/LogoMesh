@@ -62,6 +62,11 @@ type: Spec
 *   [Lambda Test Protocol](../04-Operations/Intent-Log/Josh/20260101-Lambda-Test-Protocol.md): How to run the test.
 *   [Instance Restart Guide](../04-Operations/Intent-Log/Josh/20260103-Instance-Restart-Guide.md): **CRITICAL** procedure for recovering the ephemeral H100 environment.
 *   [Team Briefing Draft](../04-Operations/Intent-Log/Josh/20260101-Team-Briefing-Draft.md): Announcement of the "Red Zone" sprint.
+*   **Phase 2.7: C-NEW-001 Infrastructure Setup (2026-01-14)**
+    - [Setup & Execution Log](../04-Operations/Intent-Log/Josh/Phase2.7-C-NEW-001-Infrastructure-Setup-20260114.md): Sequential deployment of Mistral/Qwen/gpt-oss trio
+    - Status: **READY FOR EXECUTION** (25 battles × 3 tiers, ~12-16 hours)
+    - Automation: `scripts/run_c_new_001_diversity_test.sh`, `scripts/analyze_c_new_001_results.py`
+    - Expected CIS deltas: 0.33 (Tier 1→3), validates metric hypothesis
 
 ---
 

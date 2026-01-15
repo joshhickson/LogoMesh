@@ -1,0 +1,1216 @@
+nohup: ignoring input
+warning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead
+Creating table 'battles' (server-compatible schema)...
+Starting Smart Campaign Runner
+Target: 25 samples per task
+Agent URL: http://localhost:9000
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     0 │ [                    ] │
+│ Rate Limiter        │     0 │ [                    ] │
+│ LRU Cache           │     0 │ [                    ] │
+│ Recursive Fibonacci │     0 │ [                    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 0)
+(timeout: 90s) Success! Battle ID: auto_1768424743_6682
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     1 │ [                    ] │
+│ Rate Limiter        │     0 │ [                    ] │
+│ LRU Cache           │     0 │ [                    ] │
+│ Recursive Fibonacci │     0 │ [                    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 0)
+(timeout: 100s) Success! Battle ID: auto_1768424761_1182
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     1 │ [                    ] │
+│ Rate Limiter        │     0 │ [                    ] │
+│ LRU Cache           │     1 │ [                    ] │
+│ Recursive Fibonacci │     0 │ [                    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 0)
+(timeout: 75s) Success! Battle ID: auto_1768424780_6088
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     1 │ [                    ] │
+│ Rate Limiter        │     1 │ [                    ] │
+│ LRU Cache           │     1 │ [                    ] │
+│ Recursive Fibonacci │     0 │ [                    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 0)
+(timeout: 120s) Success! Battle ID: auto_1768424798_5079
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     1 │ [                    ] │
+│ Rate Limiter        │     1 │ [                    ] │
+│ LRU Cache           │     1 │ [                    ] │
+│ Recursive Fibonacci │     1 │ [                    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 1)
+(timeout: 90s) Success! Battle ID: auto_1768424815_9522
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     2 │ [=                   ] │
+│ Rate Limiter        │     1 │ [                    ] │
+│ LRU Cache           │     1 │ [                    ] │
+│ Recursive Fibonacci │     1 │ [                    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 1)
+(timeout: 100s) Success! Battle ID: auto_1768424833_3816
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     2 │ [=                   ] │
+│ Rate Limiter        │     1 │ [                    ] │
+│ LRU Cache           │     2 │ [=                   ] │
+│ Recursive Fibonacci │     1 │ [                    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 1)
+(timeout: 75s) Success! Battle ID: auto_1768424851_6407
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     2 │ [=                   ] │
+│ Rate Limiter        │     2 │ [=                   ] │
+│ LRU Cache           │     2 │ [=                   ] │
+│ Recursive Fibonacci │     1 │ [                    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 1)
+(timeout: 120s) Success! Battle ID: auto_1768424869_2026
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     2 │ [=                   ] │
+│ Rate Limiter        │     2 │ [=                   ] │
+│ LRU Cache           │     2 │ [=                   ] │
+│ Recursive Fibonacci │     2 │ [=                   ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 2)
+(timeout: 90s) Success! Battle ID: auto_1768424885_3957
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     3 │ [==                  ] │
+│ Rate Limiter        │     2 │ [=                   ] │
+│ LRU Cache           │     2 │ [=                   ] │
+│ Recursive Fibonacci │     2 │ [=                   ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 2)
+(timeout: 100s) Success! Battle ID: auto_1768424903_1009
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     3 │ [==                  ] │
+│ Rate Limiter        │     2 │ [=                   ] │
+│ LRU Cache           │     3 │ [==                  ] │
+│ Recursive Fibonacci │     2 │ [=                   ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 2)
+(timeout: 75s) Success! Battle ID: auto_1768424921_6924
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     3 │ [==                  ] │
+│ Rate Limiter        │     3 │ [==                  ] │
+│ LRU Cache           │     3 │ [==                  ] │
+│ Recursive Fibonacci │     2 │ [=                   ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 2)
+(timeout: 120s) Success! Battle ID: auto_1768424939_3944
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     3 │ [==                  ] │
+│ Rate Limiter        │     3 │ [==                  ] │
+│ LRU Cache           │     3 │ [==                  ] │
+│ Recursive Fibonacci │     3 │ [==                  ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 3)
+(timeout: 90s) Success! Battle ID: auto_1768424956_4055
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     4 │ [===                 ] │
+│ Rate Limiter        │     3 │ [==                  ] │
+│ LRU Cache           │     3 │ [==                  ] │
+│ Recursive Fibonacci │     3 │ [==                  ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 3)
+(timeout: 100s) Success! Battle ID: auto_1768424974_3701
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     4 │ [===                 ] │
+│ Rate Limiter        │     3 │ [==                  ] │
+│ LRU Cache           │     4 │ [===                 ] │
+│ Recursive Fibonacci │     3 │ [==                  ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 3)
+(timeout: 75s) Success! Battle ID: auto_1768424992_3606
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     4 │ [===                 ] │
+│ Rate Limiter        │     4 │ [===                 ] │
+│ LRU Cache           │     4 │ [===                 ] │
+│ Recursive Fibonacci │     3 │ [==                  ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 3)
+(timeout: 120s) Success! Battle ID: auto_1768425010_7575
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     4 │ [===                 ] │
+│ Rate Limiter        │     4 │ [===                 ] │
+│ LRU Cache           │     4 │ [===                 ] │
+│ Recursive Fibonacci │     4 │ [===                 ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 4)
+(timeout: 90s) Success! Battle ID: auto_1768425027_3710
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     5 │ [====                ] │
+│ Rate Limiter        │     4 │ [===                 ] │
+│ LRU Cache           │     4 │ [===                 ] │
+│ Recursive Fibonacci │     4 │ [===                 ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 4)
+(timeout: 100s) Success! Battle ID: auto_1768425045_9833
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     5 │ [====                ] │
+│ Rate Limiter        │     4 │ [===                 ] │
+│ LRU Cache           │     5 │ [====                ] │
+│ Recursive Fibonacci │     4 │ [===                 ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 4)
+(timeout: 75s) Success! Battle ID: auto_1768425063_2344
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     5 │ [====                ] │
+│ Rate Limiter        │     5 │ [====                ] │
+│ LRU Cache           │     5 │ [====                ] │
+│ Recursive Fibonacci │     4 │ [===                 ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 4)
+(timeout: 120s) Success! Battle ID: auto_1768425081_8865
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     5 │ [====                ] │
+│ Rate Limiter        │     5 │ [====                ] │
+│ LRU Cache           │     5 │ [====                ] │
+│ Recursive Fibonacci │     5 │ [====                ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 5)
+(timeout: 90s) Success! Battle ID: auto_1768425098_8739
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     6 │ [====                ] │
+│ Rate Limiter        │     5 │ [====                ] │
+│ LRU Cache           │     5 │ [====                ] │
+│ Recursive Fibonacci │     5 │ [====                ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 5)
+(timeout: 100s) Success! Battle ID: auto_1768425116_1103
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     6 │ [====                ] │
+│ Rate Limiter        │     5 │ [====                ] │
+│ LRU Cache           │     6 │ [====                ] │
+│ Recursive Fibonacci │     5 │ [====                ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 5)
+(timeout: 75s) Success! Battle ID: auto_1768425134_1935
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     6 │ [====                ] │
+│ Rate Limiter        │     6 │ [====                ] │
+│ LRU Cache           │     6 │ [====                ] │
+│ Recursive Fibonacci │     5 │ [====                ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 5)
+(timeout: 120s) Success! Battle ID: auto_1768425152_7347
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     6 │ [====                ] │
+│ Rate Limiter        │     6 │ [====                ] │
+│ LRU Cache           │     6 │ [====                ] │
+│ Recursive Fibonacci │     6 │ [====                ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 6)
+(timeout: 90s) Success! Battle ID: auto_1768425168_6632
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     7 │ [=====               ] │
+│ Rate Limiter        │     6 │ [====                ] │
+│ LRU Cache           │     6 │ [====                ] │
+│ Recursive Fibonacci │     6 │ [====                ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 6)
+(timeout: 100s) Success! Battle ID: auto_1768425187_6966
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     7 │ [=====               ] │
+│ Rate Limiter        │     6 │ [====                ] │
+│ LRU Cache           │     7 │ [=====               ] │
+│ Recursive Fibonacci │     6 │ [====                ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 6)
+(timeout: 75s) Success! Battle ID: auto_1768425205_1298
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     7 │ [=====               ] │
+│ Rate Limiter        │     7 │ [=====               ] │
+│ LRU Cache           │     7 │ [=====               ] │
+│ Recursive Fibonacci │     6 │ [====                ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 6)
+(timeout: 120s) Success! Battle ID: auto_1768425223_6537
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     7 │ [=====               ] │
+│ Rate Limiter        │     7 │ [=====               ] │
+│ LRU Cache           │     7 │ [=====               ] │
+│ Recursive Fibonacci │     7 │ [=====               ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 7)
+(timeout: 90s) Success! Battle ID: auto_1768425239_7969
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     8 │ [======              ] │
+│ Rate Limiter        │     7 │ [=====               ] │
+│ LRU Cache           │     7 │ [=====               ] │
+│ Recursive Fibonacci │     7 │ [=====               ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 7)
+(timeout: 100s) Success! Battle ID: auto_1768425258_3420
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     8 │ [======              ] │
+│ Rate Limiter        │     7 │ [=====               ] │
+│ LRU Cache           │     8 │ [======              ] │
+│ Recursive Fibonacci │     7 │ [=====               ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 7)
+(timeout: 75s) Success! Battle ID: auto_1768425275_8013
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     8 │ [======              ] │
+│ Rate Limiter        │     8 │ [======              ] │
+│ LRU Cache           │     8 │ [======              ] │
+│ Recursive Fibonacci │     7 │ [=====               ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 7)
+(timeout: 120s) Success! Battle ID: auto_1768425293_4178
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     8 │ [======              ] │
+│ Rate Limiter        │     8 │ [======              ] │
+│ LRU Cache           │     8 │ [======              ] │
+│ Recursive Fibonacci │     8 │ [======              ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 8)
+(timeout: 90s) Success! Battle ID: auto_1768425310_9063
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     9 │ [=======             ] │
+│ Rate Limiter        │     8 │ [======              ] │
+│ LRU Cache           │     8 │ [======              ] │
+│ Recursive Fibonacci │     8 │ [======              ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 8)
+(timeout: 100s) Success! Battle ID: auto_1768425329_9136
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     9 │ [=======             ] │
+│ Rate Limiter        │     8 │ [======              ] │
+│ LRU Cache           │     9 │ [=======             ] │
+│ Recursive Fibonacci │     8 │ [======              ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 8)
+(timeout: 75s) Success! Battle ID: auto_1768425347_2990
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     9 │ [=======             ] │
+│ Rate Limiter        │     9 │ [=======             ] │
+│ LRU Cache           │     9 │ [=======             ] │
+│ Recursive Fibonacci │     8 │ [======              ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 8)
+(timeout: 120s) Success! Battle ID: auto_1768425365_6629
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │     9 │ [=======             ] │
+│ Rate Limiter        │     9 │ [=======             ] │
+│ LRU Cache           │     9 │ [=======             ] │
+│ Recursive Fibonacci │     9 │ [=======             ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 9)
+(timeout: 90s) Success! Battle ID: auto_1768425381_3349
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    10 │ [========            ] │
+│ Rate Limiter        │     9 │ [=======             ] │
+│ LRU Cache           │     9 │ [=======             ] │
+│ Recursive Fibonacci │     9 │ [=======             ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 9)
+(timeout: 100s) Success! Battle ID: auto_1768425399_3545
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    10 │ [========            ] │
+│ Rate Limiter        │     9 │ [=======             ] │
+│ LRU Cache           │    10 │ [========            ] │
+│ Recursive Fibonacci │     9 │ [=======             ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 9)
+(timeout: 75s) Success! Battle ID: auto_1768425418_8685
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    10 │ [========            ] │
+│ Rate Limiter        │    10 │ [========            ] │
+│ LRU Cache           │    10 │ [========            ] │
+│ Recursive Fibonacci │     9 │ [=======             ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 9)
+(timeout: 120s) Success! Battle ID: auto_1768425436_5115
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    10 │ [========            ] │
+│ Rate Limiter        │    10 │ [========            ] │
+│ LRU Cache           │    10 │ [========            ] │
+│ Recursive Fibonacci │    10 │ [========            ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 10)
+(timeout: 90s) Success! Battle ID: auto_1768425452_6081
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    11 │ [========            ] │
+│ Rate Limiter        │    10 │ [========            ] │
+│ LRU Cache           │    10 │ [========            ] │
+│ Recursive Fibonacci │    10 │ [========            ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 10)
+(timeout: 100s) Success! Battle ID: auto_1768425470_2692
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    11 │ [========            ] │
+│ Rate Limiter        │    10 │ [========            ] │
+│ LRU Cache           │    11 │ [========            ] │
+│ Recursive Fibonacci │    10 │ [========            ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 10)
+(timeout: 75s) Success! Battle ID: auto_1768425489_1249
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    11 │ [========            ] │
+│ Rate Limiter        │    11 │ [========            ] │
+│ LRU Cache           │    11 │ [========            ] │
+│ Recursive Fibonacci │    10 │ [========            ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 10)
+(timeout: 120s) Success! Battle ID: auto_1768425507_6096
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    11 │ [========            ] │
+│ Rate Limiter        │    11 │ [========            ] │
+│ LRU Cache           │    11 │ [========            ] │
+│ Recursive Fibonacci │    11 │ [========            ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 11)
+(timeout: 90s) Success! Battle ID: auto_1768425523_8461
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    12 │ [=========           ] │
+│ Rate Limiter        │    11 │ [========            ] │
+│ LRU Cache           │    11 │ [========            ] │
+│ Recursive Fibonacci │    11 │ [========            ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 11)
+(timeout: 100s) Success! Battle ID: auto_1768425541_1336
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    12 │ [=========           ] │
+│ Rate Limiter        │    11 │ [========            ] │
+│ LRU Cache           │    12 │ [=========           ] │
+│ Recursive Fibonacci │    11 │ [========            ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 11)
+(timeout: 75s) Success! Battle ID: auto_1768425559_5406
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    12 │ [=========           ] │
+│ Rate Limiter        │    12 │ [=========           ] │
+│ LRU Cache           │    12 │ [=========           ] │
+│ Recursive Fibonacci │    11 │ [========            ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 11)
+(timeout: 120s) Success! Battle ID: auto_1768425577_4203
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    12 │ [=========           ] │
+│ Rate Limiter        │    12 │ [=========           ] │
+│ LRU Cache           │    12 │ [=========           ] │
+│ Recursive Fibonacci │    12 │ [=========           ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 12)
+(timeout: 90s) Success! Battle ID: auto_1768425594_6698
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    13 │ [==========          ] │
+│ Rate Limiter        │    12 │ [=========           ] │
+│ LRU Cache           │    12 │ [=========           ] │
+│ Recursive Fibonacci │    12 │ [=========           ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 12)
+(timeout: 100s) Success! Battle ID: auto_1768425612_8350
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    13 │ [==========          ] │
+│ Rate Limiter        │    12 │ [=========           ] │
+│ LRU Cache           │    13 │ [==========          ] │
+│ Recursive Fibonacci │    12 │ [=========           ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 12)
+(timeout: 75s) Success! Battle ID: auto_1768425630_6389
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    13 │ [==========          ] │
+│ Rate Limiter        │    13 │ [==========          ] │
+│ LRU Cache           │    13 │ [==========          ] │
+│ Recursive Fibonacci │    12 │ [=========           ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 12)
+(timeout: 120s) Success! Battle ID: auto_1768425648_7688
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    13 │ [==========          ] │
+│ Rate Limiter        │    13 │ [==========          ] │
+│ LRU Cache           │    13 │ [==========          ] │
+│ Recursive Fibonacci │    13 │ [==========          ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 13)
+(timeout: 90s) Success! Battle ID: auto_1768425665_3355
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    14 │ [===========         ] │
+│ Rate Limiter        │    13 │ [==========          ] │
+│ LRU Cache           │    13 │ [==========          ] │
+│ Recursive Fibonacci │    13 │ [==========          ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 13)
+(timeout: 100s) Success! Battle ID: auto_1768425683_1620
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    14 │ [===========         ] │
+│ Rate Limiter        │    13 │ [==========          ] │
+│ LRU Cache           │    14 │ [===========         ] │
+│ Recursive Fibonacci │    13 │ [==========          ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 13)
+(timeout: 75s) Success! Battle ID: auto_1768425701_4910
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    14 │ [===========         ] │
+│ Rate Limiter        │    14 │ [===========         ] │
+│ LRU Cache           │    14 │ [===========         ] │
+│ Recursive Fibonacci │    13 │ [==========          ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 13)
+(timeout: 120s) Success! Battle ID: auto_1768425719_8772
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    14 │ [===========         ] │
+│ Rate Limiter        │    14 │ [===========         ] │
+│ LRU Cache           │    14 │ [===========         ] │
+│ Recursive Fibonacci │    14 │ [===========         ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 14)
+(timeout: 90s) Success! Battle ID: auto_1768425736_3439
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    15 │ [============        ] │
+│ Rate Limiter        │    14 │ [===========         ] │
+│ LRU Cache           │    14 │ [===========         ] │
+│ Recursive Fibonacci │    14 │ [===========         ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 14)
+(timeout: 100s) Success! Battle ID: auto_1768425754_2091
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    15 │ [============        ] │
+│ Rate Limiter        │    14 │ [===========         ] │
+│ LRU Cache           │    15 │ [============        ] │
+│ Recursive Fibonacci │    14 │ [===========         ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 14)
+(timeout: 75s) Success! Battle ID: auto_1768425772_8452
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    15 │ [============        ] │
+│ Rate Limiter        │    15 │ [============        ] │
+│ LRU Cache           │    15 │ [============        ] │
+│ Recursive Fibonacci │    14 │ [===========         ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 14)
+(timeout: 120s) Success! Battle ID: auto_1768425790_9237
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    15 │ [============        ] │
+│ Rate Limiter        │    15 │ [============        ] │
+│ LRU Cache           │    15 │ [============        ] │
+│ Recursive Fibonacci │    15 │ [============        ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 15)
+(timeout: 90s) Success! Battle ID: auto_1768425807_8439
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    16 │ [============        ] │
+│ Rate Limiter        │    15 │ [============        ] │
+│ LRU Cache           │    15 │ [============        ] │
+│ Recursive Fibonacci │    15 │ [============        ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 15)
+(timeout: 100s) Success! Battle ID: auto_1768425825_9478
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    16 │ [============        ] │
+│ Rate Limiter        │    15 │ [============        ] │
+│ LRU Cache           │    16 │ [============        ] │
+│ Recursive Fibonacci │    15 │ [============        ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 15)
+(timeout: 75s) Success! Battle ID: auto_1768425843_9444
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    16 │ [============        ] │
+│ Rate Limiter        │    16 │ [============        ] │
+│ LRU Cache           │    16 │ [============        ] │
+│ Recursive Fibonacci │    15 │ [============        ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 15)
+(timeout: 120s) Success! Battle ID: auto_1768425861_9013
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    16 │ [============        ] │
+│ Rate Limiter        │    16 │ [============        ] │
+│ LRU Cache           │    16 │ [============        ] │
+│ Recursive Fibonacci │    16 │ [============        ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 16)
+(timeout: 90s) Success! Battle ID: auto_1768425878_7859
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    17 │ [=============       ] │
+│ Rate Limiter        │    16 │ [============        ] │
+│ LRU Cache           │    16 │ [============        ] │
+│ Recursive Fibonacci │    16 │ [============        ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 16)
+(timeout: 100s) Success! Battle ID: auto_1768425895_9212
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    17 │ [=============       ] │
+│ Rate Limiter        │    16 │ [============        ] │
+│ LRU Cache           │    17 │ [=============       ] │
+│ Recursive Fibonacci │    16 │ [============        ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 16)
+(timeout: 75s) Success! Battle ID: auto_1768425913_1435
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    17 │ [=============       ] │
+│ Rate Limiter        │    17 │ [=============       ] │
+│ LRU Cache           │    17 │ [=============       ] │
+│ Recursive Fibonacci │    16 │ [============        ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 16)
+(timeout: 120s) Success! Battle ID: auto_1768425931_1039
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    17 │ [=============       ] │
+│ Rate Limiter        │    17 │ [=============       ] │
+│ LRU Cache           │    17 │ [=============       ] │
+│ Recursive Fibonacci │    17 │ [=============       ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 17)
+(timeout: 90s) Success! Battle ID: auto_1768425948_1769
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    18 │ [==============      ] │
+│ Rate Limiter        │    17 │ [=============       ] │
+│ LRU Cache           │    17 │ [=============       ] │
+│ Recursive Fibonacci │    17 │ [=============       ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 17)
+(timeout: 100s) Success! Battle ID: auto_1768425966_5264
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    18 │ [==============      ] │
+│ Rate Limiter        │    17 │ [=============       ] │
+│ LRU Cache           │    18 │ [==============      ] │
+│ Recursive Fibonacci │    17 │ [=============       ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 17)
+(timeout: 75s) Success! Battle ID: auto_1768425984_6460
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    18 │ [==============      ] │
+│ Rate Limiter        │    18 │ [==============      ] │
+│ LRU Cache           │    18 │ [==============      ] │
+│ Recursive Fibonacci │    17 │ [=============       ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 17)
+(timeout: 120s) Success! Battle ID: auto_1768426002_8018
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    18 │ [==============      ] │
+│ Rate Limiter        │    18 │ [==============      ] │
+│ LRU Cache           │    18 │ [==============      ] │
+│ Recursive Fibonacci │    18 │ [==============      ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 18)
+(timeout: 90s) Success! Battle ID: auto_1768426019_2614
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    19 │ [===============     ] │
+│ Rate Limiter        │    18 │ [==============      ] │
+│ LRU Cache           │    18 │ [==============      ] │
+│ Recursive Fibonacci │    18 │ [==============      ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 18)
+(timeout: 100s) Success! Battle ID: auto_1768426037_1264
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    19 │ [===============     ] │
+│ Rate Limiter        │    18 │ [==============      ] │
+│ LRU Cache           │    19 │ [===============     ] │
+│ Recursive Fibonacci │    18 │ [==============      ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 18)
+(timeout: 75s) Success! Battle ID: auto_1768426055_5407
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    19 │ [===============     ] │
+│ Rate Limiter        │    19 │ [===============     ] │
+│ LRU Cache           │    19 │ [===============     ] │
+│ Recursive Fibonacci │    18 │ [==============      ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 18)
+(timeout: 120s) Success! Battle ID: auto_1768426073_5474
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    19 │ [===============     ] │
+│ Rate Limiter        │    19 │ [===============     ] │
+│ LRU Cache           │    19 │ [===============     ] │
+│ Recursive Fibonacci │    19 │ [===============     ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 19)
+(timeout: 90s) Success! Battle ID: auto_1768426089_4238
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    20 │ [================    ] │
+│ Rate Limiter        │    19 │ [===============     ] │
+│ LRU Cache           │    19 │ [===============     ] │
+│ Recursive Fibonacci │    19 │ [===============     ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 19)
+(timeout: 100s) Success! Battle ID: auto_1768426107_2481
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    20 │ [================    ] │
+│ Rate Limiter        │    19 │ [===============     ] │
+│ LRU Cache           │    20 │ [================    ] │
+│ Recursive Fibonacci │    19 │ [===============     ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 19)
+(timeout: 75s) Success! Battle ID: auto_1768426125_8133
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    20 │ [================    ] │
+│ Rate Limiter        │    20 │ [================    ] │
+│ LRU Cache           │    20 │ [================    ] │
+│ Recursive Fibonacci │    19 │ [===============     ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 19)
+(timeout: 120s) Success! Battle ID: auto_1768426143_5840
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    20 │ [================    ] │
+│ Rate Limiter        │    20 │ [================    ] │
+│ LRU Cache           │    20 │ [================    ] │
+│ Recursive Fibonacci │    20 │ [================    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 20)
+(timeout: 90s) Success! Battle ID: auto_1768426160_1823
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    21 │ [================    ] │
+│ Rate Limiter        │    20 │ [================    ] │
+│ LRU Cache           │    20 │ [================    ] │
+│ Recursive Fibonacci │    20 │ [================    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 20)
+(timeout: 100s) Success! Battle ID: auto_1768426178_1745
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    21 │ [================    ] │
+│ Rate Limiter        │    20 │ [================    ] │
+│ LRU Cache           │    21 │ [================    ] │
+│ Recursive Fibonacci │    20 │ [================    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 20)
+(timeout: 75s) Success! Battle ID: auto_1768426196_6070
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    21 │ [================    ] │
+│ Rate Limiter        │    21 │ [================    ] │
+│ LRU Cache           │    21 │ [================    ] │
+│ Recursive Fibonacci │    20 │ [================    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 20)
+(timeout: 120s) Success! Battle ID: auto_1768426214_8030
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    21 │ [================    ] │
+│ Rate Limiter        │    21 │ [================    ] │
+│ LRU Cache           │    21 │ [================    ] │
+│ Recursive Fibonacci │    21 │ [================    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 21)
+(timeout: 90s) Success! Battle ID: auto_1768426231_8809
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    22 │ [=================   ] │
+│ Rate Limiter        │    21 │ [================    ] │
+│ LRU Cache           │    21 │ [================    ] │
+│ Recursive Fibonacci │    21 │ [================    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 21)
+(timeout: 100s) Success! Battle ID: auto_1768426249_9726
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    22 │ [=================   ] │
+│ Rate Limiter        │    21 │ [================    ] │
+│ LRU Cache           │    22 │ [=================   ] │
+│ Recursive Fibonacci │    21 │ [================    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 21)
+(timeout: 75s) Success! Battle ID: auto_1768426267_3757
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    22 │ [=================   ] │
+│ Rate Limiter        │    22 │ [=================   ] │
+│ LRU Cache           │    22 │ [=================   ] │
+│ Recursive Fibonacci │    21 │ [================    ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 21)
+(timeout: 120s) Success! Battle ID: auto_1768426285_9480
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    22 │ [=================   ] │
+│ Rate Limiter        │    22 │ [=================   ] │
+│ LRU Cache           │    22 │ [=================   ] │
+│ Recursive Fibonacci │    22 │ [=================   ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 22)
+(timeout: 90s) Success! Battle ID: auto_1768426302_9359
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    23 │ [==================  ] │
+│ Rate Limiter        │    22 │ [=================   ] │
+│ LRU Cache           │    22 │ [=================   ] │
+│ Recursive Fibonacci │    22 │ [=================   ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 22)
+(timeout: 100s) Success! Battle ID: auto_1768426320_9843
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    23 │ [==================  ] │
+│ Rate Limiter        │    22 │ [=================   ] │
+│ LRU Cache           │    23 │ [==================  ] │
+│ Recursive Fibonacci │    22 │ [=================   ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 22)
+(timeout: 75s) Success! Battle ID: auto_1768426339_4997
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    23 │ [==================  ] │
+│ Rate Limiter        │    23 │ [==================  ] │
+│ LRU Cache           │    23 │ [==================  ] │
+│ Recursive Fibonacci │    22 │ [=================   ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 22)
+(timeout: 120s) Success! Battle ID: auto_1768426357_8986
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    23 │ [==================  ] │
+│ Rate Limiter        │    23 │ [==================  ] │
+│ LRU Cache           │    23 │ [==================  ] │
+│ Recursive Fibonacci │    23 │ [==================  ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 23)
+(timeout: 90s) Success! Battle ID: auto_1768426373_5505
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    24 │ [=================== ] │
+│ Rate Limiter        │    23 │ [==================  ] │
+│ LRU Cache           │    23 │ [==================  ] │
+│ Recursive Fibonacci │    23 │ [==================  ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 23)
+(timeout: 100s) Success! Battle ID: auto_1768426391_6942
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    24 │ [=================== ] │
+│ Rate Limiter        │    23 │ [==================  ] │
+│ LRU Cache           │    24 │ [=================== ] │
+│ Recursive Fibonacci │    23 │ [==================  ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 23)
+(timeout: 75s) Success! Battle ID: auto_1768426409_2514
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    24 │ [=================== ] │
+│ Rate Limiter        │    24 │ [=================== ] │
+│ LRU Cache           │    24 │ [=================== ] │
+│ Recursive Fibonacci │    23 │ [==================  ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 23)
+(timeout: 120s) Success! Battle ID: auto_1768426427_6540
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    24 │ [=================== ] │
+│ Rate Limiter        │    24 │ [=================== ] │
+│ LRU Cache           │    24 │ [=================== ] │
+│ Recursive Fibonacci │    24 │ [=================== ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Email Validator (Current: 24)
+(timeout: 90s) Success! Battle ID: auto_1768426444_3606
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    25 │ DONE                   │
+│ Rate Limiter        │    24 │ [=================== ] │
+│ LRU Cache           │    24 │ [=================== ] │
+│ Recursive Fibonacci │    24 │ [=================== ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 24)
+(timeout: 100s) Success! Battle ID: auto_1768426462_9402
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    25 │ DONE                   │
+│ Rate Limiter        │    24 │ [=================== ] │
+│ LRU Cache           │    25 │ DONE                   │
+│ Recursive Fibonacci │    24 │ [=================== ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 24)
+(timeout: 75s) Success! Battle ID: auto_1768426481_9799
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Email Validator     │    25 │ DONE                   │
+│ Rate Limiter        │    25 │ DONE                   │
+│ LRU Cache           │    25 │ DONE                   │
+│ Recursive Fibonacci │    24 │ [=================== ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 24)
+(timeout: 120s) Success! Battle ID: auto_1768426499_3787
+Cooling down for 10s...
+            Campaign Coverage             
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━┩
+│ Email Validator     │    25 │ DONE     │
+│ Rate Limiter        │    25 │ DONE     │
+│ LRU Cache           │    25 │ DONE     │
+│ Recursive Fibonacci │    25 │ DONE     │
+└─────────────────────┴───────┴──────────┘
+All targets met! Campaign complete.

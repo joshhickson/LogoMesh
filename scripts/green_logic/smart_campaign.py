@@ -32,8 +32,10 @@ except ImportError:
         {"id": "task-004", "title": "Recursive Fibonacci"},
     ]
 
-# Allow temporarily skipping tasks (e.g., task-001 Email Validator) to unblock execution.
-DEFAULT_SKIP_TASK_IDS = {"task-001"}
+# Allow temporarily skipping tasks via environment variable (e.g., SKIP_TASK_IDS="task-001")
+# Email Validator (task-001) is now RE-ENABLED per A-000
+# To skip specific tasks, use: export SKIP_TASK_IDS="task-001,task-002"
+DEFAULT_SKIP_TASK_IDS = set()  # A-000 COMPLETE: Email Validator re-enabled for Stage 3
 env_skip = os.getenv("SKIP_TASK_IDS", "").strip()
 ENV_SKIP_TASK_IDS = {tid.strip() for tid in env_skip.split(",") if tid.strip()} if env_skip else set()
 SKIP_TASK_IDS = DEFAULT_SKIP_TASK_IDS.union(ENV_SKIP_TASK_IDS)

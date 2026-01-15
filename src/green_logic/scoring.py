@@ -10,6 +10,7 @@ from openai import AsyncOpenAI
 from .compare_vectors import VectorScorer
 from .red_report_parser import RedReportParser
 from .red_report_types import RedAgentReport
+from .harmony_parser import HarmonyParser
 
 class ContextualIntegrityScorer:
     def __init__(self):
@@ -33,6 +34,12 @@ class ContextualIntegrityScorer:
         
         # Red Agent Integration: Initialize Red Report Parser
         self.red_parser = RedReportParser()
+        
+        # Harmony Protocol Integration: Initialize Harmony Parser for gpt-oss models
+        self.harmony_parser = HarmonyParser()
+        
+        # Model detection: Track which model is being used
+        self.current_model = os.getenv("MODEL_NAME", "unknown")
 
     async def _perform_logic_review(
         self, task_description: str, source_code: str
@@ -106,6 +113,64 @@ The logic_score must be a float between 0.0 and 1.0:
             return {"logic_score": 0.5, "critique": "Logic review timed out."}
         except Exception as e:
             return {"logic_score": 0.5, "critique": f"Logic review failed: {str(e)}"}
+
+    def _parse_purple_response(self, purple_response: dict) -> dict:
+        """
+        Parse Purple Agent response, handling Harmony format if detected.
+        
+        For gpt-oss models using Harmony protocol, extracts:
+        - analysis channel → rationale (for Requirements scoring)
+        - final channel → sourceCode (for implementation)
+        
+        Args:
+            purple_response: Raw response dict from Purple Agent
+            
+        Returns:
+            Normalized dict with sourceCode, testCode, rationale
+        """
+        # Default extraction (standard A2A format)
+        source_code = purple_response.get("sourceCode", "")
+        test_code = purple_response.get("testCode", "")
+        rationale = purple_response.get("rationale", "")
+        
+        # Detect if response uses Harmony format
+        # Check if sourceCode contains Harmony channel tags
+        if source_code and ("<|channel|" in source_code or self.current_model.lower().startswith("gpt-oss")):
+            print(f"[Harmony] Detected Harmony format in Purple Agent response (model: {self.current_model})")
+            
+            # Parse Harmony channels
+            parsed = self.harmony_parser.parse(source_code)
+            
+            if parsed['format_detected']:
+                print(f"[Harmony] Channels found: {list(parsed['channels'].keys())}")
+                
+                # Extract code from 'final' channel
+                if parsed['final']:
+                    extracted_code = self.harmony_parser.extract_code_from_final(parsed['final'])
+                    if extracted_code:
+                        source_code = extracted_code
+                        print(f"[Harmony] Extracted {len(source_code)} chars from <|channel|final>")
+                
+                # Extract rationale from 'analysis' channel
+                if parsed['analysis']:
+                    extracted_rationale = self.harmony_parser.extract_rationale_from_analysis(parsed['analysis'])
+                    if extracted_rationale:
+                        # Prepend analysis to existing rationale (if any)
+                        if rationale:
+                            rationale = f"{extracted_rationale}\n\n{rationale}"
+                        else:
+                            rationale = extracted_rationale
+                        print(f"[Harmony] Extracted {len(rationale)} chars from <|channel|analysis>")
+                
+                # Store raw Harmony response for debugging
+                purple_response['_harmony_parsed'] = parsed
+        
+        return {
+            "sourceCode": source_code,
+            "testCode": test_code,
+            "rationale": rationale,
+            "task_id": purple_response.get("task_id")
+        }
 
     def _evaluate_architecture_constraints(self, task_id: str, source_code: str) -> float:
         """
@@ -242,9 +307,13 @@ The logic_score must be a float between 0.0 and 1.0:
             sandbox_result: Optional dynamic execution result from Sandbox
         """
         
-        source_code = purple_response.get("sourceCode", "")
-        rationale = purple_response.get("rationale", "")
-        test_code = purple_response.get("testCode", "")
+        # Harmony Protocol Integration: Parse Purple Agent response
+        # Handles both standard A2A format and Harmony format (gpt-oss models)
+        parsed_response = self._parse_purple_response(purple_response)
+        
+        source_code = parsed_response.get("sourceCode", "")
+        rationale = parsed_response.get("rationale", "")
+        test_code = parsed_response.get("testCode", "")
         
         red_feedback = "No Red Agent audit performed."
         if red_report:
@@ -379,7 +448,7 @@ Return a JSON object with this EXACT structure:
   "logic_critique": "{logic_critique[:100]}...",
   "breakdown": "Explanation including vector score influence, logic review, and Tier 2 analysis..."
 }}
-Note: `cis_score` = (0.2 * R) + (0.2 * A) + (0.2 * T) + (0.4 * L). Logic Score has the highest weight.
+Note: `cis_score` = (0.25 * R) + (0.25 * A) + (0.25 * T) + (0.25 * L). Equal weighting across all dimensions.
 """
 
         try:
