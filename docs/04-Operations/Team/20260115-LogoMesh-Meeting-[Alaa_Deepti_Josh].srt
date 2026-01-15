@@ -1,0 +1,3236 @@
+1
+01:00:00,250 --> 01:00:02,458
+<b>Hmm we don't</b>
+
+2
+01:00:02,833 --> 01:00:06,666
+<b>So yeah, she had that yesterday and</b>
+
+3
+01:00:06,666 --> 01:00:08,875
+<b>hopefully she's gonna start feeling better</b>
+
+4
+01:00:09,666 --> 01:00:13,583
+<b>Yeah called her a few minutes ago, but she didn't answer so</b>
+
+5
+01:00:13,583 --> 01:00:16,166
+<b>I'm hoping she's just sleeping or something</b>
+
+6
+01:00:16,208 --> 01:00:20,875
+<b>But yeah, I got I got a check-in with her pretty soon</b>
+
+7
+01:00:21,833 --> 01:00:22,500
+<b>Yeah</b>
+
+8
+01:00:23,208 --> 01:00:24,458
+<b>Brition you're the best</b>
+
+9
+01:00:24,458 --> 01:00:26,500
+<b>Oh, yeah</b>
+
+10
+01:00:27,625 --> 01:00:29,041
+<b>since you're looking up now that she's</b>
+
+11
+01:00:29,041 --> 01:00:30,791
+<b>been approved for the infusions because</b>
+
+12
+01:00:31,583 --> 01:00:35,291
+<b>She's been waiting for months for that and it it took like</b>
+
+13
+01:00:35,291 --> 01:00:38,833
+<b>I don't know it just took a long time to get things going</b>
+
+14
+01:00:38,833 --> 01:00:39,250
+<b>so</b>
+
+15
+01:00:39,583 --> 01:00:40,291
+<b>you</b>
+
+16
+01:00:40,291 --> 01:00:43,458
+<b>at that point</b>
+
+17
+01:00:44,458 --> 01:00:47,291
+<b>Awesome. Yeah, yeah</b>
+
+18
+01:00:48,708 --> 01:00:50,875
+<b>Yeah, and then like as for the</b>
+
+19
+01:00:51,458 --> 01:00:54,833
+<b>this for the whole logo mesh thing I finally managed to</b>
+
+20
+01:00:55,791 --> 01:00:59,166
+<b>Test some battles. I wrote some scripts</b>
+
+21
+01:00:59,458 --> 01:01:01,833
+<b>Yeah, like ransom battles with</b>
+
+22
+01:01:01,833 --> 01:01:04,583
+<b>different large language models</b>
+
+23
+01:01:05,333 --> 01:01:08,541
+<b>Because yeah, I was like I was looking at the the draft</b>
+
+24
+01:01:09,250 --> 01:01:10,875
+<b>Research paper that's written up</b>
+
+25
+01:01:10,875 --> 01:01:12,500
+<b>and I'm like, well, we need to provide</b>
+
+26
+01:01:13,166 --> 01:01:15,208
+<b>like evidence that</b>
+
+27
+01:01:15,708 --> 01:01:19,791
+<b>What we've built is like quantifiable proof that</b>
+
+28
+01:01:19,791 --> 01:01:24,250
+<b>That the theories in the paper may have potential</b>
+
+29
+01:01:25,500 --> 01:01:28,541
+<b>So what I did was like I used a</b>
+
+30
+01:01:28,541 --> 01:01:32,125
+<b>tiny model. I think I used a mistral</b>
+
+31
+01:01:32,625 --> 01:01:36,125
+<b>Language model and then I yeah, I</b>
+
+32
+01:01:36,125 --> 01:01:39,583
+<b>ran it with like three scenarios</b>
+
+33
+01:01:41,041 --> 01:01:42,500
+<b>45 times oh here</b>
+
+34
+01:01:50,625 --> 01:01:51,000
+<b>Hello</b>
+
+35
+01:01:52,625 --> 01:01:56,416
+<b>Happy new year to you. I laugh within me a new year. Yeah</b>
+
+36
+01:01:57,416 --> 01:02:01,250
+<b>Sorry for joining late. I am my camera on</b>
+
+37
+01:02:01,250 --> 01:02:04,166
+<b>the computer, but somehow I moved it somewhere</b>
+
+38
+01:02:04,166 --> 01:02:05,916
+<b>So I had to join in two places</b>
+
+39
+01:02:05,916 --> 01:02:08,375
+<b>on the screen and on the phone</b>
+
+40
+01:02:09,666 --> 01:02:12,083
+<b>So I'm here on both</b>
+
+41
+01:02:13,541 --> 01:02:13,875
+<b>Awesome</b>
+
+42
+01:02:19,791 --> 01:02:20,375
+<b>Thank you</b>
+
+43
+01:02:22,250 --> 01:02:24,458
+<b>Yeah, yeah</b>
+
+44
+01:02:24,458 --> 01:02:32,875
+<b>Thank you for arranging this meeting really appreciate</b>
+
+45
+01:02:32,875 --> 01:02:35,750
+<b>thank you for waiting for me as well</b>
+
+46
+01:02:35,750 --> 01:02:42,625
+<b>I was kind of just I just started</b>
+
+47
+01:02:43,333 --> 01:02:47,500
+<b>Talking about you know, let me share my screen here. Oh,</b>
+
+48
+01:02:47,500 --> 01:02:51,125
+<b>yes. And also could you send me the link for the paper?</b>
+
+49
+01:02:52,958 --> 01:02:56,875
+<b>You know</b>
+
+50
+01:03:12,708 --> 01:03:16,333
+<b>Okay</b>
+
+51
+01:03:16,333 --> 01:03:20,916
+<b>Okay, so</b>
+
+52
+01:03:22,500 --> 01:03:25,041
+<b>Yeah, let's go here</b>
+
+53
+01:03:26,625 --> 01:03:30,541
+<b>Okay, so let me get you that link</b>
+
+54
+01:03:36,500 --> 01:03:39,875
+<b>Okay, I'll just I'll put it in the</b>
+
+55
+01:03:39,875 --> 01:03:41,500
+<b>Google meet chat and then I'll send it to</b>
+
+56
+01:03:42,833 --> 01:03:43,875
+<b>You on discord</b>
+
+57
+01:03:50,208 --> 01:03:55,000
+<b>I'm remoting into my PC here. Hold on. Hold on</b>
+
+58
+01:03:55,458 --> 01:03:58,333
+<b>Maybe I can find if it's in the repository. Um</b>
+
+59
+01:03:58,916 --> 01:03:59,208
+<b>so</b>
+
+60
+01:04:00,208 --> 01:04:03,458
+<b>Yeah, I mean if you just go to the github website and you</b>
+
+61
+01:04:03,458 --> 01:04:05,416
+<b>go to the logo mesh repository</b>
+
+62
+01:04:05,416 --> 01:04:09,208
+<b>If you just type in the search bar</b>
+
+63
+01:04:10,500 --> 01:04:11,208
+<b>2025</b>
+
+64
+01:04:12,666 --> 01:04:14,458
+<b>Which is</b>
+
+65
+01:04:15,625 --> 01:04:19,666
+<b>November 18th, 2025. That's that's when I dated the paper</b>
+
+66
+01:04:20,500 --> 01:04:23,541
+<b>Then you'll find it you'll find the most recent draft</b>
+
+67
+01:04:24,750 --> 01:04:26,666
+<b>Agent text submission paper</b>
+
+68
+01:04:28,041 --> 01:04:31,208
+<b>Yeah, no, it's I think it's I think it's contextual debt</b>
+
+69
+01:04:31,208 --> 01:04:34,833
+<b>paper copyright edition or some silly name like that</b>
+
+70
+01:04:35,708 --> 01:04:38,125
+<b>I didn't I didn't have the naming conventions</b>
+
+71
+01:04:40,125 --> 01:04:41,166
+<b>Down very well</b>
+
+72
+01:04:42,375 --> 01:04:44,208
+<b>2025 11</b>
+
+73
+01:04:45,500 --> 01:04:46,458
+<b>With a</b>
+
+74
+01:04:47,500 --> 01:04:48,041
+<b>one</b>
+
+75
+01:04:48,916 --> 01:04:51,166
+<b>Here it is and then I have the link here. So</b>
+
+76
+01:04:52,333 --> 01:04:53,083
+<b>Okay, awesome</b>
+
+77
+01:04:53,083 --> 01:05:00,166
+<b>Yep, got it</b>
+
+78
+01:05:00,166 --> 01:05:07,875
+<b>And then i'll try and find on google drive really quick</b>
+
+79
+01:05:14,208 --> 01:05:14,833
+<b>Oh</b>
+
+80
+01:05:14,833 --> 01:05:16,166
+<b>I don't actually think it</b>
+
+81
+01:05:16,166 --> 01:05:22,541
+<b>Oh, you know what this one's this</b>
+
+82
+01:05:22,541 --> 01:05:24,958
+<b>one's an outdated version of the papers so</b>
+
+83
+01:05:27,083 --> 01:05:28,041
+<b>Yeah, okay</b>
+
+84
+01:05:28,916 --> 01:05:30,291
+<b>Yeah, the the one that I have in</b>
+
+85
+01:05:30,291 --> 01:05:32,500
+<b>google drive doesn't include all of the math</b>
+
+86
+01:05:33,333 --> 01:05:33,708
+<b>Okay</b>
+
+87
+01:05:36,041 --> 01:05:38,166
+<b>Okay, here we go, okay</b>
+
+88
+01:05:38,666 --> 01:05:39,000
+<b>um</b>
+
+89
+01:05:40,666 --> 01:05:41,541
+<b>Yeah, so</b>
+
+90
+01:05:43,541 --> 01:05:45,166
+<b>Anyway, uh this version of the</b>
+
+91
+01:05:45,166 --> 01:05:49,125
+<b>paper includes um, I think it's</b>
+
+92
+01:05:49,541 --> 01:05:51,125
+<b>All the way down in</b>
+
+93
+01:05:54,916 --> 01:05:57,791
+<b>Yeah, it's called section three formalization the</b>
+
+94
+01:05:57,791 --> 01:05:59,791
+<b>contextual integrity score that's</b>
+
+95
+01:05:59,791 --> 01:06:01,541
+<b>where like the math is first introduced</b>
+
+96
+01:06:03,625 --> 01:06:04,166
+<b>And</b>
+
+97
+01:06:07,500 --> 01:06:08,500
+<b>There's kind of like</b>
+
+98
+01:06:10,416 --> 01:06:12,375
+<b>I don't know. There's kind of a suggested loop</b>
+
+99
+01:06:13,750 --> 01:06:17,416
+<b>Um, which I i'm 99 sure is what</b>
+
+100
+01:06:17,416 --> 01:06:19,750
+<b>i've translated into the actual arena</b>
+
+101
+01:06:20,833 --> 01:06:21,500
+<b>Which is good</b>
+
+102
+01:06:24,916 --> 01:06:27,791
+<b>And uh, and then basically like what i'm going to do is</b>
+
+103
+01:06:27,791 --> 01:06:30,958
+<b>like update the paper and include the results</b>
+
+104
+01:06:31,875 --> 01:06:33,666
+<b>of some tests by</b>
+
+105
+01:06:34,666 --> 01:06:36,041
+<b>kind of visualizing</b>
+
+106
+01:06:39,791 --> 01:06:41,583
+<b>A few database files</b>
+
+107
+01:06:43,708 --> 01:06:45,791
+<b>I have to I just realized</b>
+
+108
+01:06:46,125 --> 01:06:46,750
+<b>um</b>
+
+109
+01:06:48,375 --> 01:06:49,500
+<b>I just realized I accidentally</b>
+
+110
+01:06:49,500 --> 01:06:52,083
+<b>weighted the scores differently in one of the</b>
+
+111
+01:06:53,500 --> 01:06:54,333
+<b>One of the logs</b>
+
+112
+01:06:55,791 --> 01:06:57,708
+<b>So we'll have to manually</b>
+
+113
+01:06:58,291 --> 01:06:59,666
+<b>weight the score again, which</b>
+
+114
+01:06:59,666 --> 01:07:01,250
+<b>shouldn't be hard because it's</b>
+
+115
+01:07:01,625 --> 01:07:03,250
+<b>Like all of all the information</b>
+
+116
+01:07:03,250 --> 01:07:05,958
+<b>exists to do that so I can fix that</b>
+
+117
+01:07:06,458 --> 01:07:08,458
+<b>um, but I was kind of hoping for</b>
+
+118
+01:07:09,750 --> 01:07:12,958
+<b>Your guys is helping like visualizing the data that we did</b>
+
+119
+01:07:12,958 --> 01:07:15,083
+<b>collect because what I did do</b>
+
+120
+01:07:15,291 --> 01:07:16,291
+<b>was I ran</b>
+
+121
+01:07:16,833 --> 01:07:18,125
+<b>25 battles</b>
+
+122
+01:07:19,166 --> 01:07:23,625
+<b>in an in the agent arena with uh three scenarios</b>
+
+123
+01:07:24,500 --> 01:07:25,500
+<b>And I did that</b>
+
+124
+01:07:25,916 --> 01:07:29,500
+<b>Three times free per agent. I need to tell</b>
+
+125
+01:07:29,500 --> 01:07:32,041
+<b>my dog to be quiet. Hold on. I gotta mute</b>
+
+126
+01:07:32,750 --> 01:07:34,791
+<b>so you try different combinations</b>
+
+127
+01:07:34,791 --> 01:07:38,500
+<b>of agents for different tasks like or</b>
+
+128
+01:07:41,875 --> 01:07:42,500
+<b>Yeah, so</b>
+
+129
+01:07:44,500 --> 01:07:49,083
+<b>Hold on I'll I'll get you the file path for</b>
+
+130
+01:07:49,083 --> 01:07:53,416
+<b>the scenarios. I think it's just right here</b>
+
+131
+01:07:54,125 --> 01:07:56,291
+<b>Okay, judge no</b>
+
+132
+01:07:58,666 --> 01:08:00,166
+<b>Um</b>
+
+133
+01:08:02,041 --> 01:08:04,916
+<b>Hold on hold on these are for the red agent</b>
+
+134
+01:08:06,458 --> 01:08:07,791
+<b>Um</b>
+
+135
+01:08:09,583 --> 01:08:12,375
+<b>Yeah, look I need I need like 15 seconds</b>
+
+136
+01:08:12,375 --> 01:08:25,500
+<b>Yeah, what I have to do is</b>
+
+137
+01:08:26,416 --> 01:08:27,291
+<b>according to what we're talking</b>
+
+138
+01:08:27,291 --> 01:08:28,500
+<b>about in this meeting I have to</b>
+
+139
+01:08:29,333 --> 01:08:31,791
+<b>Create a briefing document at the same time. So I just</b>
+
+140
+01:08:31,791 --> 01:08:33,291
+<b>finished doing all this last night</b>
+
+141
+01:08:34,583 --> 01:08:35,125
+<b>um</b>
+
+142
+01:08:36,458 --> 01:08:40,458
+<b>But from what I understand one of the scenarios is an email</b>
+
+143
+01:08:40,458 --> 01:08:44,125
+<b>validator. So it prompts the purple agent to</b>
+
+144
+01:08:45,708 --> 01:08:46,083
+<b>Um</b>
+
+145
+01:08:47,708 --> 01:08:48,208
+<b>Create</b>
+
+146
+01:08:49,625 --> 01:08:51,333
+<b>an email validation system</b>
+
+147
+01:08:52,583 --> 01:08:53,083
+<b>and</b>
+
+148
+01:08:54,041 --> 01:08:56,333
+<b>it does so in a way that asks for</b>
+
+149
+01:08:57,875 --> 01:09:00,666
+<b>Specific aspects of the code so that it can</b>
+
+150
+01:09:01,208 --> 01:09:03,625
+<b>evaluate those things with the cis metric</b>
+
+151
+01:09:04,458 --> 01:09:06,875
+<b>And what the green agent does is like after it prompts the</b>
+
+152
+01:09:06,875 --> 01:09:08,791
+<b>purple agent it waits for the output</b>
+
+153
+01:09:09,583 --> 01:09:12,583
+<b>And the output is delivered within a json string</b>
+
+154
+01:09:14,041 --> 01:09:15,583
+<b>And then what it does is</b>
+
+155
+01:09:16,291 --> 01:09:19,583
+<b>The green agent has four metrics. It has the three</b>
+
+156
+01:09:19,583 --> 01:09:21,416
+<b>contextual integrity score pillars</b>
+
+157
+01:09:22,125 --> 01:09:24,125
+<b>But then the fourth one is actually just</b>
+
+158
+01:09:25,000 --> 01:09:27,958
+<b>A simple llm as a judge. So whatever</b>
+
+159
+01:09:27,958 --> 01:09:30,250
+<b>whatever model is loaded into the arena</b>
+
+160
+01:09:31,000 --> 01:09:34,375
+<b>Like if mistral is loaded into the arena it will</b>
+
+161
+01:09:34,916 --> 01:09:38,166
+<b>Uh be used for the green agent. It'll be used for the</b>
+
+162
+01:09:38,166 --> 01:09:41,208
+<b>purple agent and if the red agent is turned on</b>
+
+163
+01:09:41,500 --> 01:09:43,000
+<b>Which it was not for these tests</b>
+
+164
+01:09:43,000 --> 01:09:44,791
+<b>because these tests were just for</b>
+
+165
+01:09:45,500 --> 01:09:47,833
+<b>the the contextual integrity score proof</b>
+
+166
+01:09:47,833 --> 01:09:53,583
+<b>Then yeah, so the green so the the fourth</b>
+
+167
+01:09:53,583 --> 01:09:57,250
+<b>metric is logic but let me see if I can find</b>
+
+168
+01:10:00,791 --> 01:10:02,666
+<b>So essentially, um</b>
+
+169
+01:10:04,291 --> 01:10:06,833
+<b>You ran how many models you said</b>
+
+170
+01:10:07,708 --> 01:10:08,416
+<b>just three</b>
+
+171
+01:10:09,125 --> 01:10:12,125
+<b>three models and three scenarios, so</b>
+
+172
+01:10:13,250 --> 01:10:16,166
+<b>I I was just wondering how we ended up with um</b>
+
+173
+01:10:16,833 --> 01:10:18,208
+<b>How many you said 20?</b>
+
+174
+01:10:18,208 --> 01:10:19,916
+<b>I don't know 40</b>
+
+175
+01:10:20,583 --> 01:10:20,916
+<b>right</b>
+
+176
+01:10:20,916 --> 01:10:22,666
+<b>20 25</b>
+
+177
+01:10:23,250 --> 01:10:24,791
+<b>25 battles. Yeah</b>
+
+178
+01:10:25,250 --> 01:10:27,708
+<b>battles per model just as an initial run</b>
+
+179
+01:10:28,833 --> 01:10:30,291
+<b>Uh-huh. So you're you're</b>
+
+180
+01:10:30,291 --> 01:10:33,541
+<b>re-running them with the same scenarios</b>
+
+181
+01:10:34,291 --> 01:10:36,916
+<b>Yeah, and I decided uh, I</b>
+
+182
+01:10:36,916 --> 01:10:38,916
+<b>decided to pick the scenarios at random</b>
+
+183
+01:10:39,833 --> 01:10:40,000
+<b>no</b>
+
+184
+01:10:41,958 --> 01:10:42,375
+<b>I</b>
+
+185
+01:10:42,916 --> 01:10:46,000
+<b>Just I don't know if that's that was I don't know if that</b>
+
+186
+01:10:46,000 --> 01:10:47,708
+<b>was the correct thing to do. So</b>
+
+187
+01:10:48,125 --> 01:10:50,625
+<b>Um, if possible, I can rerun</b>
+
+188
+01:10:51,416 --> 01:10:53,625
+<b>scenarios today if we don't want</b>
+
+189
+01:10:54,583 --> 01:10:56,750
+<b>If we don't want that but I just</b>
+
+190
+01:10:56,750 --> 01:10:58,541
+<b>selected that initially because</b>
+
+191
+01:10:59,875 --> 01:11:01,958
+<b>Um, I just didn't put enough thought into</b>
+
+192
+01:11:03,875 --> 01:11:05,416
+<b>Like whether or not I should do</b>
+
+193
+01:11:06,583 --> 01:11:08,083
+<b>You know like a rounds</b>
+
+194
+01:11:08,583 --> 01:11:11,125
+<b>a number of rounds that's divisible by three like I could</b>
+
+195
+01:11:11,125 --> 01:11:13,666
+<b>have done 30 rounds per agent and then just</b>
+
+196
+01:11:14,333 --> 01:11:17,958
+<b>done, you know 10 rounds of each scenario, but</b>
+
+197
+01:11:18,916 --> 01:11:21,125
+<b>I don't know. I was just I was just</b>
+
+198
+01:11:21,125 --> 01:11:22,458
+<b>trying to get things done yesterday</b>
+
+199
+01:11:22,458 --> 01:11:24,125
+<b>So I just went with whatever my</b>
+
+200
+01:11:24,125 --> 01:11:26,625
+<b>coding agent suggested and it was like okay</b>
+
+201
+01:11:26,625 --> 01:11:29,416
+<b>We'll just just select the rounds randomly and then do 25</b>
+
+202
+01:11:29,416 --> 01:11:31,000
+<b>each and I was like, okay,</b>
+
+203
+01:11:31,000 --> 01:11:32,583
+<b>whatever. We'll just go with that</b>
+
+204
+01:11:33,541 --> 01:11:35,916
+<b>um, but it should roughly amount to</b>
+
+205
+01:11:35,916 --> 01:11:39,333
+<b>We should still have enough</b>
+
+206
+01:11:39,333 --> 01:11:41,208
+<b>data that we need to visualize uh</b>
+
+207
+01:11:41,625 --> 01:11:42,333
+<b>the results</b>
+
+208
+01:11:43,166 --> 01:11:46,166
+<b>It takes it takes a a few hours to rerun everything</b>
+
+209
+01:11:47,166 --> 01:11:48,375
+<b>with the larger models</b>
+
+210
+01:11:49,625 --> 01:11:50,625
+<b>so I could do</b>
+
+211
+01:11:52,375 --> 01:11:54,791
+<b>I could rerun it today if you guys want but</b>
+
+212
+01:11:55,708 --> 01:11:57,208
+<b>My main concern is just basically</b>
+
+213
+01:11:57,208 --> 01:11:58,666
+<b>getting you guys the information</b>
+
+214
+01:11:59,541 --> 01:12:00,041
+<b>um</b>
+
+215
+01:12:01,166 --> 01:12:03,041
+<b>With dt. I was kind of like hoping</b>
+
+216
+01:12:04,208 --> 01:12:06,375
+<b>Uh, so the the round information the</b>
+
+217
+01:12:06,375 --> 01:12:08,666
+<b>results of the rounds, uh, everything was stored</b>
+
+218
+01:12:09,333 --> 01:12:11,166
+<b>in a uh, sqlite</b>
+
+219
+01:12:11,750 --> 01:12:15,458
+<b>Database, so I have okay. I have three separate databases</b>
+
+220
+01:12:16,833 --> 01:12:18,166
+<b>Mm-hmm, and i'll be</b>
+
+221
+01:12:19,333 --> 01:12:22,333
+<b>When I give you guys the briefing document from today's</b>
+
+222
+01:12:22,333 --> 01:12:24,083
+<b>meeting i'll make sure that the file paths are</b>
+
+223
+01:12:25,166 --> 01:12:26,291
+<b>um in this meeting</b>
+
+224
+01:12:28,666 --> 01:12:30,250
+<b>Okay, uh as for</b>
+
+225
+01:12:32,291 --> 01:12:34,875
+<b>The three scenarios, uh, they're all defined</b>
+
+226
+01:12:37,166 --> 01:12:39,041
+<b>Oh email the validator was skipped</b>
+
+227
+01:12:40,666 --> 01:12:40,958
+<b>Okay</b>
+
+228
+01:12:41,875 --> 01:12:43,500
+<b>Yeah, I might I might be running</b>
+
+229
+01:12:43,500 --> 01:12:45,333
+<b>some extra battles today. We'll see</b>
+
+230
+01:12:46,375 --> 01:12:48,208
+<b>but everything's defined in</b>
+
+231
+01:12:49,291 --> 01:12:51,583
+<b>Source screen logic tasks.py.</b>
+
+232
+01:12:51,583 --> 01:12:52,750
+<b>Let's take a look at that really quick</b>
+
+233
+01:12:53,708 --> 01:12:57,250
+<b>Going there source screen green logic. Yep</b>
+
+234
+01:12:58,666 --> 01:12:59,458
+<b>And then</b>
+
+235
+01:13:00,041 --> 01:13:02,041
+<b>Should be tasks.py</b>
+
+236
+01:13:02,875 --> 01:13:06,125
+<b>Task.py just okay. Yeah, so we</b>
+
+237
+01:13:06,125 --> 01:13:08,333
+<b>skipped over the email validator task</b>
+
+238
+01:13:09,500 --> 01:13:10,416
+<b>um because</b>
+
+239
+01:13:11,083 --> 01:13:12,250
+<b>I was running into</b>
+
+240
+01:13:13,333 --> 01:13:15,000
+<b>some dns lookup errors</b>
+
+241
+01:13:16,291 --> 01:13:19,791
+<b>because when the agent was being prompted to</b>
+
+242
+01:13:21,791 --> 01:13:24,458
+<b>Create the email validation function it was like</b>
+
+243
+01:13:24,875 --> 01:13:27,166
+<b>assuming that it was going to have access to the internet,</b>
+
+244
+01:13:27,166 --> 01:13:29,375
+<b>so I just I kept running into</b>
+
+245
+01:13:30,458 --> 01:13:32,500
+<b>To some network denialers. So I</b>
+
+246
+01:13:33,500 --> 01:13:35,291
+<b>I tried to fix it and then I just excluded</b>
+
+247
+01:13:35,291 --> 01:13:37,250
+<b>it because it was taking up too much time</b>
+
+248
+01:13:37,625 --> 01:13:39,750
+<b>So the first task was excluded</b>
+
+249
+01:13:40,666 --> 01:13:42,291
+<b>I used the rate limiter task</b>
+
+250
+01:13:43,416 --> 01:13:44,958
+<b>the lru cache task</b>
+
+251
+01:13:45,791 --> 01:13:49,916
+<b>And the recursive fibonacci task</b>
+
+252
+01:13:51,041 --> 01:13:51,541
+<b>Um</b>
+
+253
+01:13:53,000 --> 01:13:59,041
+<b>One malvalidator rate limiter</b>
+
+254
+01:13:59,708 --> 01:14:01,166
+<b>Recursively bonacci</b>
+
+255
+01:14:01,166 --> 01:14:05,500
+<b>Yeah, while you guys look that over I</b>
+
+256
+01:14:05,500 --> 01:14:08,875
+<b>gotta I gotta let my dogs out really quick</b>
+
+257
+01:14:09,875 --> 01:14:10,125
+<b>Yeah</b>
+
+258
+01:14:13,250 --> 01:14:13,500
+<b>Oh</b>
+
+259
+01:14:40,291 --> 01:14:41,125
+<b>And then um</b>
+
+260
+01:14:41,833 --> 01:14:47,875
+<b>I also have a different teammate who's been running some</b>
+
+261
+01:14:47,875 --> 01:14:50,833
+<b>tasks with a red agent turned</b>
+
+262
+01:14:50,875 --> 01:14:51,250
+<b>on.</b>
+
+263
+01:14:51,541 --> 01:14:53,583
+<b>So he's been like putting in custom scenarios.</b>
+
+264
+01:14:55,375 --> 01:14:58,958
+<b>And he shared a database file with me earlier today.</b>
+
+265
+01:15:00,041 --> 01:15:02,833
+<b>I haven't looked over this, this file.</b>
+
+266
+01:15:07,875 --> 01:15:09,750
+<b>I'll put it inside the repository and</b>
+
+267
+01:15:09,750 --> 01:15:14,458
+<b>just give it a label that it's his database.</b>
+
+268
+01:15:16,625 --> 01:15:18,291
+<b>So this is a Python file.</b>
+
+269
+01:15:19,916 --> 01:15:21,625
+<b>Josh.</b>
+
+270
+01:15:22,416 --> 01:15:22,791
+<b>Yeah.</b>
+
+271
+01:15:25,208 --> 01:15:26,666
+<b>Looks a description.</b>
+
+272
+01:15:29,666 --> 01:15:34,000
+<b>So where is the database file?</b>
+
+273
+01:15:34,041 --> 01:15:38,000
+<b>Is this being used to create a database of all the tasks?</b>
+
+274
+01:15:38,791 --> 01:15:39,666
+<b>Is how I understand.</b>
+
+275
+01:15:44,875 --> 01:15:46,625
+<b>It's complicated, but where you can</b>
+
+276
+01:15:46,625 --> 01:15:50,291
+<b>find the database is in, let me see.</b>
+
+277
+01:15:52,375 --> 01:15:53,000
+<b>Hold on.</b>
+
+278
+01:15:53,250 --> 01:15:53,750
+<b>Hold on.</b>
+
+279
+01:15:54,041 --> 01:15:55,791
+<b>I got to get to the right branch here.</b>
+
+280
+01:15:57,250 --> 01:16:00,000
+<b>My teammate wanted all the databases deleted from master,</b>
+
+281
+01:16:00,000 --> 01:16:01,333
+<b>but they're still existing in</b>
+
+282
+01:16:01,333 --> 01:16:02,875
+<b>my working branch here.</b>
+
+283
+01:16:03,083 --> 01:16:04,875
+<b>I think it's in the data folder.</b>
+
+284
+01:16:06,208 --> 01:16:06,750
+<b>Here we go.</b>
+
+285
+01:16:06,916 --> 01:16:07,083
+<b>Okay.</b>
+
+286
+01:16:07,333 --> 01:16:07,541
+<b>Yeah.</b>
+
+287
+01:16:07,541 --> 01:16:09,458
+<b>Let me show you this specific link so</b>
+
+288
+01:16:09,458 --> 01:16:11,041
+<b>that you guys will be in the right branch.</b>
+
+289
+01:16:12,791 --> 01:16:14,333
+<b>Thank you.</b>
+
+290
+01:16:15,166 --> 01:16:16,875
+<b>My most recent changes were pushed</b>
+
+291
+01:16:16,875 --> 01:16:19,208
+<b>to this branch early this morning.</b>
+
+292
+01:16:23,083 --> 01:16:23,708
+<b>In data.</b>
+
+293
+01:16:24,208 --> 01:16:24,750
+<b>Okay, great.</b>
+
+294
+01:16:25,458 --> 01:16:25,625
+<b>Yeah.</b>
+
+295
+01:16:26,375 --> 01:16:26,541
+<b>Okay.</b>
+
+296
+01:16:26,541 --> 01:16:27,791
+<b>I'm seeing a database.</b>
+
+297
+01:16:29,375 --> 01:16:30,875
+<b>What kind of database is this?</b>
+
+298
+01:16:31,208 --> 01:16:31,916
+<b>Is it a?</b>
+
+299
+01:16:33,750 --> 01:16:37,000
+<b>I think it should be SQLite.</b>
+
+300
+01:16:38,708 --> 01:16:39,541
+<b>SQLite, yes.</b>
+
+301
+01:16:39,875 --> 01:16:40,083
+<b>Okay.</b>
+
+302
+01:16:40,625 --> 01:16:41,375
+<b>Let me verify that.</b>
+
+303
+01:16:43,083 --> 01:16:45,458
+<b>I mean, that's been the goal.</b>
+
+304
+01:16:46,291 --> 01:16:49,125
+<b>So hopefully it stayed that, but I don't know.</b>
+
+305
+01:16:49,333 --> 01:16:50,250
+<b>I've been doing a lot of work.</b>
+
+306
+01:16:55,291 --> 01:16:55,500
+<b>Okay.</b>
+
+307
+01:17:02,250 --> 01:17:05,375
+<b>So all the tasks are in the database or</b>
+
+308
+01:17:05,375 --> 01:17:08,958
+<b>are all the results from the agents logged in</b>
+
+309
+01:17:08,958 --> 01:17:09,541
+<b>the databases.</b>
+
+310
+01:17:10,041 --> 01:17:11,958
+<b>There are a few databases here.</b>
+
+311
+01:17:12,125 --> 01:17:14,541
+<b>So the database, the databases</b>
+
+312
+01:17:14,541 --> 01:17:17,875
+<b>contain logs from Browns that were run.</b>
+
+313
+01:17:19,541 --> 01:17:19,750
+<b>So.</b>
+
+314
+01:17:20,791 --> 01:17:21,166
+<b>Okay.</b>
+
+315
+01:17:22,291 --> 01:17:22,375
+<b>Okay.</b>
+
+316
+01:17:22,500 --> 01:17:24,500
+<b>So it should hopefully contain information</b>
+
+317
+01:17:24,500 --> 01:17:30,500
+<b>about each task that was run, how the task</b>
+
+318
+01:17:30,500 --> 01:17:35,708
+<b>was validated, the results of each scoring, and then the</b>
+
+319
+01:17:35,708 --> 01:17:37,583
+<b>weights of the scoring and then</b>
+
+320
+01:17:37,583 --> 01:17:39,125
+<b>the final combined score.</b>
+
+321
+01:17:40,041 --> 01:17:40,250
+<b>Right.</b>
+
+322
+01:17:40,500 --> 01:17:40,708
+<b>Okay.</b>
+
+323
+01:17:40,875 --> 01:17:43,583
+<b>Because the green agent, it rates</b>
+
+324
+01:17:43,583 --> 01:17:45,791
+<b>it using four different metrics.</b>
+
+325
+01:17:46,000 --> 01:17:47,666
+<b>There's three quantifiable ones,</b>
+
+326
+01:17:48,083 --> 01:17:49,458
+<b>the contextual integrity score.</b>
+
+327
+01:17:50,166 --> 01:17:53,916
+<b>So architectural testing and rationale.</b>
+
+328
+01:17:55,083 --> 01:17:57,500
+<b>A good acronym to remember is RAT.</b>
+
+329
+01:17:58,000 --> 01:18:00,416
+<b>So R for rationale, A for</b>
+
+330
+01:18:00,416 --> 01:18:02,958
+<b>architectural, and T for testing, RAT.</b>
+
+331
+01:18:04,750 --> 01:18:08,250
+<b>So the RAT scores, those are all quantifiable.</b>
+
+332
+01:18:09,083 --> 01:18:12,208
+<b>And then the logic score is ironically</b>
+
+333
+01:18:12,208 --> 01:18:15,375
+<b>an agent as a judge, an LLM as a judge.</b>
+
+334
+01:18:16,291 --> 01:18:18,083
+<b>So that score is finally</b>
+
+335
+01:18:18,083 --> 01:18:23,458
+<b>whatever LLM is loaded into the arena.</b>
+
+336
+01:18:24,208 --> 01:18:27,166
+<b>It's prompted to review the</b>
+
+337
+01:18:27,166 --> 01:18:29,833
+<b>outputted code and provide a score.</b>
+
+338
+01:18:31,416 --> 01:18:32,458
+<b>Is that the green agent?</b>
+
+339
+01:18:33,291 --> 01:18:33,500
+<b>Yeah.</b>
+
+340
+01:18:34,250 --> 01:18:34,416
+<b>Yeah.</b>
+
+341
+01:18:34,416 --> 01:18:35,125
+<b>That's the green agent.</b>
+
+342
+01:18:35,500 --> 01:18:35,666
+<b>Yeah.</b>
+
+343
+01:18:36,583 --> 01:18:39,666
+<b>For these tests, I turned the red agent off.</b>
+
+344
+01:18:43,000 --> 01:18:43,750
+<b>Oh, because.</b>
+
+345
+01:18:44,875 --> 01:18:47,041
+<b>Because I just purely wanted to test</b>
+
+346
+01:18:47,041 --> 01:18:51,041
+<b>what we're trying to argue for in the paper.</b>
+
+347
+01:18:52,916 --> 01:18:55,083
+<b>Right now, I haven't.</b>
+
+348
+01:18:56,166 --> 01:18:56,375
+<b>Okay.</b>
+
+349
+01:18:57,166 --> 01:18:57,500
+<b>Yeah.</b>
+
+350
+01:18:59,041 --> 01:19:02,416
+<b>Because we are only submitting today for the.</b>
+
+351
+01:19:04,875 --> 01:19:09,166
+<b>We need to not submit tomorrow.</b>
+
+352
+01:19:09,500 --> 01:19:10,000
+<b>Is that right?</b>
+
+353
+01:19:10,666 --> 01:19:11,458
+<b>Is that the reason?</b>
+
+354
+01:19:12,708 --> 01:19:13,958
+<b>Yeah.</b>
+
+355
+01:19:14,333 --> 01:19:14,541
+<b>Yeah.</b>
+
+356
+01:19:14,541 --> 01:19:20,375
+<b>But the thing is, if I can clean up, if I</b>
+
+357
+01:19:20,375 --> 01:19:24,083
+<b>can clean up the repository enough, I will</b>
+
+358
+01:19:24,083 --> 01:19:26,875
+<b>leave in the red agent as an option.</b>
+
+359
+01:19:28,166 --> 01:19:28,583
+<b>Okay.</b>
+
+360
+01:19:28,916 --> 01:19:32,833
+<b>And I will be running more arena tests today.</b>
+
+361
+01:19:34,333 --> 01:19:34,666
+<b>Okay.</b>
+
+362
+01:19:35,208 --> 01:19:38,458
+<b>But yesterday, what I wanted to do is I just wanted to</b>
+
+363
+01:19:38,458 --> 01:19:41,958
+<b>create a really simple set of test</b>
+
+364
+01:19:42,000 --> 01:19:42,583
+<b>results.</b>
+
+365
+01:19:43,666 --> 01:19:43,958
+<b>Right.</b>
+
+366
+01:19:44,000 --> 01:19:47,666
+<b>For us to analyze that, just focus on the contextual</b>
+
+367
+01:19:47,666 --> 01:19:52,375
+<b>integrity score and just keep the</b>
+
+368
+01:19:52,375 --> 01:19:54,333
+<b>red agent turned off so that we can</b>
+
+369
+01:19:54,333 --> 01:19:56,833
+<b>kind of just stay focused on the paper.</b>
+
+370
+01:19:56,833 --> 01:20:01,250
+<b>Because it's like, we need proof that what</b>
+
+371
+01:20:01,250 --> 01:20:03,416
+<b>we're arguing for in the paper has value.</b>
+
+372
+01:20:04,750 --> 01:20:08,916
+<b>And I'm hoping that these sets of</b>
+
+373
+01:20:08,916 --> 01:20:13,166
+<b>battles will provide that proof.</b>
+
+374
+01:20:15,166 --> 01:20:18,875
+<b>So let me start creating that briefing</b>
+
+375
+01:20:18,875 --> 01:20:21,041
+<b>document that will provide the file paths.</b>
+
+376
+01:20:21,041 --> 01:20:23,541
+<b>Because there's a lot of database files in that folder.</b>
+
+377
+01:20:24,333 --> 01:20:26,333
+<b>And you'll need the three correct ones.</b>
+
+378
+01:20:27,416 --> 01:20:30,250
+<b>And then one of them has the scores weighted differently.</b>
+
+379
+01:20:30,500 --> 01:20:31,583
+<b>And we'll have to disclose that</b>
+
+380
+01:20:31,583 --> 01:20:33,416
+<b>in the briefing document for today.</b>
+
+381
+01:20:38,250 --> 01:20:38,625
+<b>Okay.</b>
+
+382
+01:21:45,958 --> 01:21:48,708
+<b>So, yeah, basically what should be proven here in this</b>
+
+383
+01:21:48,708 --> 01:21:52,375
+<b>theory is like, even though the</b>
+
+384
+01:21:52,416 --> 01:21:56,541
+<b>green agent is run by an LLM, is</b>
+
+385
+01:21:56,541 --> 01:21:58,750
+<b>the same LLM as the purple agent.</b>
+
+386
+01:22:02,291 --> 01:22:03,833
+<b>Like let's say, you know, like, like</b>
+
+387
+01:22:03,833 --> 01:22:08,833
+<b>Mistral, a really tiny agent versus Quinn, a larger</b>
+
+388
+01:22:08,833 --> 01:22:12,083
+<b>agent and then GPT OSS 20B.</b>
+
+389
+01:22:15,041 --> 01:22:18,500
+<b>Theoretically, the contextual integrity scores should be</b>
+
+390
+01:22:18,500 --> 01:22:21,000
+<b>higher, the better the agent is</b>
+
+391
+01:22:21,041 --> 01:22:25,000
+<b>at coding, even if the agent is grading itself.</b>
+
+392
+01:22:29,500 --> 01:22:32,250
+<b>And then there, you know, it can get deeper than that.</b>
+
+393
+01:22:32,291 --> 01:22:34,416
+<b>There's, there's more things I was trying to prove, but</b>
+
+394
+01:22:34,416 --> 01:22:36,041
+<b>like, that's, that's basically</b>
+
+395
+01:22:36,125 --> 01:22:39,541
+<b>like the simplest conclusion</b>
+
+396
+01:22:39,541 --> 01:22:42,000
+<b>that I wanted to draw from that.</b>
+
+397
+01:22:44,583 --> 01:22:46,125
+<b>I'll be honest, I spent a lot of time</b>
+
+398
+01:22:46,125 --> 01:22:50,375
+<b>setting this up and debugging the past 48 hours.</b>
+
+399
+01:22:50,666 --> 01:22:55,583
+<b>So I'm kind of, yeah, I'm kind of scatterbrained right now.</b>
+
+400
+01:22:56,916 --> 01:22:59,875
+<b>So it would, it would kind of help if you guys have like</b>
+
+401
+01:22:59,875 --> 01:23:04,333
+<b>any other questions, but because</b>
+
+402
+01:23:04,333 --> 01:23:10,500
+<b>like I'll have to spend, I'll have to spend time providing</b>
+
+403
+01:23:10,500 --> 01:23:11,916
+<b>the answers to these questions</b>
+
+404
+01:23:11,958 --> 01:23:12,458
+<b>today.</b>
+
+405
+01:23:13,458 --> 01:23:14,000
+<b>No problems.</b>
+
+406
+01:23:14,916 --> 01:23:14,958
+<b>Yeah.</b>
+
+407
+01:23:15,833 --> 01:23:18,875
+<b>So I won't ask many questions.</b>
+
+408
+01:23:20,083 --> 01:23:23,291
+<b>My main questions are, so are you submitting this whole</b>
+
+409
+01:23:23,291 --> 01:23:27,458
+<b>repo in the competition today,</b>
+
+410
+01:23:27,916 --> 01:23:32,291
+<b>or just the green agent part of the repo?</b>
+
+411
+01:23:33,166 --> 01:23:39,750
+<b>And then the second is, are we, I think you said we were</b>
+
+412
+01:23:39,750 --> 01:23:41,333
+<b>supposed to record a video or</b>
+
+413
+01:23:41,333 --> 01:23:41,666
+<b>something.</b>
+
+414
+01:23:43,291 --> 01:23:49,583
+<b>Oh, because it is due today at 12 o'clock PST.</b>
+
+415
+01:23:51,083 --> 01:23:51,416
+<b>Oh boy.</b>
+
+416
+01:23:51,875 --> 01:23:55,125
+<b>So instead of being, let me see.</b>
+
+417
+01:23:58,000 --> 01:23:58,708
+<b>Oh, great.</b>
+
+418
+01:24:00,958 --> 01:24:04,166
+<b>Oh, instead of the 16th, it's the 15th.</b>
+
+419
+01:24:04,416 --> 01:24:04,583
+<b>Okay.</b>
+
+420
+01:24:05,375 --> 01:24:06,208
+<b>That's, that's fine.</b>
+
+421
+01:24:06,625 --> 01:24:06,833
+<b>Yeah.</b>
+
+422
+01:24:07,458 --> 01:24:13,791
+<b>I will have to produce the video today.</b>
+
+423
+01:24:13,791 --> 01:24:15,708
+<b>I thought we had an extra day.</b>
+
+424
+01:24:16,208 --> 01:24:19,875
+<b>No, we today and you know what will happen?</b>
+
+425
+01:24:20,125 --> 01:24:22,750
+<b>Josh is many people will try to submit at</b>
+
+426
+01:24:22,750 --> 01:24:26,750
+<b>the last minute and the network will, I'm</b>
+
+427
+01:24:26,750 --> 01:24:28,000
+<b>sure there are a lot of people.</b>
+
+428
+01:24:29,500 --> 01:24:35,333
+<b>So and then the third question is, so we, so you will</b>
+
+429
+01:24:35,333 --> 01:24:36,916
+<b>create the video because you have</b>
+
+430
+01:24:36,916 --> 01:24:42,375
+<b>an expertise in all that work of camera and everything.</b>
+
+431
+01:24:43,791 --> 01:24:44,500
+<b>Yeah.</b>
+
+432
+01:24:45,208 --> 01:24:47,208
+<b>And I don't think I'm going to show my face in the video.</b>
+
+433
+01:24:47,458 --> 01:24:53,708
+<b>I think I'm, what I'm basically going to do is create a</b>
+
+434
+01:24:53,708 --> 01:24:56,625
+<b>PowerPoint slide that, you know,</b>
+
+435
+01:24:56,625 --> 01:24:58,291
+<b>shows some good visualizations.</b>
+
+436
+01:24:59,041 --> 01:25:00,750
+<b>I'll probably show some code snippets.</b>
+
+437
+01:25:02,000 --> 01:25:02,208
+<b>Right.</b>
+
+438
+01:25:02,833 --> 01:25:07,500
+<b>And then hopefully if you're able to visualize the results</b>
+
+439
+01:25:07,500 --> 01:25:12,041
+<b>of the tests that I ran yesterday,</b>
+
+440
+01:25:13,041 --> 01:25:15,125
+<b>I'll show some visualizations of that.</b>
+
+441
+01:25:15,708 --> 01:25:17,500
+<b>And then we can also include that in the paper.</b>
+
+442
+01:25:19,500 --> 01:25:23,000
+<b>And then, and then we'll just have to submit what we have.</b>
+
+443
+01:25:25,125 --> 01:25:28,500
+<b>So okay.</b>
+
+444
+01:25:29,250 --> 01:25:32,208
+<b>I thought we were going to have an extra 24 hours here.</b>
+
+445
+01:25:32,250 --> 01:25:35,250
+<b>So where this, this is going to be, we're going to be</b>
+
+446
+01:25:35,250 --> 01:25:36,833
+<b>cutting it close today, for sure.</b>
+
+447
+01:25:38,458 --> 01:25:38,666
+<b>Right.</b>
+
+448
+01:25:38,875 --> 01:25:40,458
+<b>And then that is fine.</b>
+
+449
+01:25:40,458 --> 01:25:41,708
+<b>I think you have done all the</b>
+
+450
+01:25:41,708 --> 01:25:43,750
+<b>work on arranging it together.</b>
+
+451
+01:25:44,333 --> 01:25:47,750
+<b>So now, so we are only submitting for the green agent.</b>
+
+452
+01:25:49,416 --> 01:25:52,875
+<b>You would be able to create the video without your picture</b>
+
+453
+01:25:52,875 --> 01:25:54,625
+<b>and then include a house, whoever</b>
+
+454
+01:25:54,625 --> 01:25:55,166
+<b>you want.</b>
+
+455
+01:25:55,166 --> 01:25:56,833
+<b>If you want any help, let me know.</b>
+
+456
+01:25:57,500 --> 01:25:59,708
+<b>And then the third question is, since we are only</b>
+
+457
+01:25:59,708 --> 01:26:01,750
+<b>submitting for the green agent, when</b>
+
+458
+01:26:01,750 --> 01:26:04,833
+<b>was the, when is the due date for the lambda track?</b>
+
+459
+01:26:04,833 --> 01:26:07,500
+<b>I forgot, but we can check.</b>
+
+460
+01:26:08,125 --> 01:26:12,166
+<b>From what I understand, it says the 16th in that.</b>
+
+461
+01:26:13,166 --> 01:26:13,750
+<b>Okay.</b>
+
+462
+01:26:14,500 --> 01:26:15,416
+<b>But lambda.</b>
+
+463
+01:26:16,416 --> 01:26:18,250
+<b>Yeah, I'm second guessing myself now</b>
+
+464
+01:26:18,250 --> 01:26:20,791
+<b>because I thought it was the 16th for.</b>
+
+465
+01:26:21,458 --> 01:26:22,416
+<b>No, it is.</b>
+
+466
+01:26:23,208 --> 01:26:24,875
+<b>They keep sending emails.</b>
+
+467
+01:26:24,916 --> 01:26:30,291
+<b>It is today and then it is today at 12 p.m.</b>
+
+468
+01:26:30,583 --> 01:26:31,791
+<b>At 12 o'clock midnight.</b>
+
+469
+01:26:32,500 --> 01:26:32,708
+<b>Okay.</b>
+
+470
+01:26:34,833 --> 01:26:34,958
+<b>Okay.</b>
+
+471
+01:26:35,250 --> 01:26:43,416
+<b>Well, lambdas document says November 24th to January 16th.</b>
+
+472
+01:26:43,750 --> 01:26:47,000
+<b>So that could mean, I mean, they</b>
+
+473
+01:26:47,000 --> 01:26:49,041
+<b>don't provide a, what time zone.</b>
+
+474
+01:26:49,875 --> 01:26:51,291
+<b>I'm going to assume it's the same</b>
+
+475
+01:26:51,291 --> 01:26:56,083
+<b>exact time as our competition here.</b>
+
+476
+01:26:56,375 --> 01:26:58,583
+<b>It says, I didn't share with you.</b>
+
+477
+01:26:59,750 --> 01:27:02,083
+<b>It says, remember that agent beats</b>
+
+478
+01:27:02,083 --> 01:27:04,583
+<b>phase one submission deadline is tomorrow.</b>
+
+479
+01:27:05,708 --> 01:27:07,083
+<b>It I received it yesterday.</b>
+
+480
+01:27:07,708 --> 01:27:08,875
+<b>Make sure to submit your</b>
+
+481
+01:27:08,875 --> 01:27:11,958
+<b>projects by January 15th, 11.59 p.m.</b>
+
+482
+01:27:12,458 --> 01:27:12,916
+<b>Pacific time.</b>
+
+483
+01:27:14,208 --> 01:27:14,500
+<b>Okay.</b>
+
+484
+01:27:17,041 --> 01:27:20,125
+<b>So now my third question is.</b>
+
+485
+01:27:22,041 --> 01:27:24,083
+<b>What I opened here.</b>
+
+486
+01:27:24,416 --> 01:27:24,625
+<b>Yeah.</b>
+
+487
+01:27:25,041 --> 01:27:27,500
+<b>Now the diagram that we produced</b>
+
+488
+01:27:27,500 --> 01:27:31,625
+<b>and then you updated it to meet.</b>
+
+489
+01:27:32,083 --> 01:27:32,291
+<b>Yeah.</b>
+
+490
+01:27:34,875 --> 01:27:37,208
+<b>Is I put it here.</b>
+
+491
+01:27:38,000 --> 01:27:43,500
+<b>This diagram, this shows lambda</b>
+
+492
+01:27:43,500 --> 01:27:46,750
+<b>track and also the custom track.</b>
+
+493
+01:27:46,750 --> 01:27:48,541
+<b>I shared it in the meeting.</b>
+
+494
+01:27:50,750 --> 01:27:52,458
+<b>Comment messages here.</b>
+
+495
+01:27:52,916 --> 01:27:53,625
+<b>Let me take a look.</b>
+
+496
+01:27:54,833 --> 01:27:55,041
+<b>Yeah.</b>
+
+497
+01:28:00,083 --> 01:28:04,041
+<b>So now how will this document apply to what we are</b>
+
+498
+01:28:04,041 --> 01:28:05,500
+<b>submitting if you're only submitting</b>
+
+499
+01:28:05,500 --> 01:28:06,250
+<b>the green agent.</b>
+
+500
+01:28:07,583 --> 01:28:10,166
+<b>Do you want me to produce one just for the green agent?</b>
+
+501
+01:28:11,416 --> 01:28:13,625
+<b>That would be awesome if you could.</b>
+
+502
+01:28:14,625 --> 01:28:14,833
+<b>Okay.</b>
+
+503
+01:28:15,541 --> 01:28:15,833
+<b>Yeah.</b>
+
+504
+01:28:16,250 --> 01:28:16,458
+<b>Okay.</b>
+
+505
+01:28:17,375 --> 01:28:18,416
+<b>Then updated this.</b>
+
+506
+01:28:19,000 --> 01:28:21,375
+<b>Do we have a copy a document for</b>
+
+507
+01:28:21,375 --> 01:28:23,958
+<b>the green agent now in the docs?</b>
+
+508
+01:28:27,708 --> 01:28:30,041
+<b>You mean like a high level overview of the current</b>
+
+509
+01:28:30,041 --> 01:28:32,208
+<b>functionality of the green agent?</b>
+
+510
+01:28:33,250 --> 01:28:33,500
+<b>Yeah.</b>
+
+511
+01:28:33,666 --> 01:28:36,291
+<b>Because now we are only submitting the green agent, right?</b>
+
+512
+01:28:39,375 --> 01:28:42,458
+<b>Submitting the lambda track right now.</b>
+
+513
+01:28:43,083 --> 01:28:46,416
+<b>This is tough for me to answer because technically my</b>
+
+514
+01:28:46,416 --> 01:28:50,750
+<b>teammate did a lot of work on using the</b>
+
+515
+01:28:50,750 --> 01:28:54,416
+<b>red agent and kind of incorporating it into the green agent</b>
+
+516
+01:28:54,416 --> 01:28:56,375
+<b>and he's running pretty successful</b>
+
+517
+01:28:56,458 --> 01:28:56,875
+<b>tests.</b>
+
+518
+01:28:57,458 --> 01:29:01,791
+<b>The test that I ran yesterday, I had that turned off</b>
+
+519
+01:29:01,791 --> 01:29:03,083
+<b>because he was working on it.</b>
+
+520
+01:29:03,833 --> 01:29:06,333
+<b>So it's tough because it would be valuable if we...</b>
+
+521
+01:29:07,708 --> 01:29:08,166
+<b>You know what?</b>
+
+522
+01:29:08,166 --> 01:29:12,541
+<b>I would just say for this track, for the custom green agent</b>
+
+523
+01:29:12,541 --> 01:29:14,583
+<b>track, let's just submit it without</b>
+
+524
+01:29:14,583 --> 01:29:15,250
+<b>the red agent.</b>
+
+525
+01:29:16,541 --> 01:29:18,416
+<b>What I'll do is I'll create a branch</b>
+
+526
+01:29:18,416 --> 01:29:23,958
+<b>in the repository where it's removed.</b>
+
+527
+01:29:26,500 --> 01:29:29,500
+<b>And I'll clean up the documentation so that only essential</b>
+
+528
+01:29:29,500 --> 01:29:32,750
+<b>documents exist and make sure</b>
+
+529
+01:29:32,750 --> 01:29:37,666
+<b>that there's no junk files because there's a few.</b>
+
+530
+01:29:40,458 --> 01:29:40,875
+<b>And then...</b>
+
+531
+01:29:41,250 --> 01:29:41,458
+<b>Okay.</b>
+
+532
+01:29:46,333 --> 01:29:46,708
+<b>Yeah.</b>
+
+533
+01:29:46,708 --> 01:29:47,708
+<b>And then once that finishes,</b>
+
+534
+01:29:49,833 --> 01:29:53,916
+<b>you know, we'll see how it goes.</b>
+
+535
+01:29:53,958 --> 01:29:57,916
+<b>But yeah, I'm planning on only submitting the green agent.</b>
+
+536
+01:29:59,000 --> 01:30:01,166
+<b>I mean, I kept it turned off, but</b>
+
+537
+01:30:01,166 --> 01:30:03,291
+<b>I kept the red agent turned off.</b>
+
+538
+01:30:04,791 --> 01:30:07,833
+<b>And the purple agent?</b>
+
+539
+01:30:11,375 --> 01:30:12,333
+<b>The purple agent?</b>
+
+540
+01:30:12,333 --> 01:30:13,041
+<b>Yeah, of course.</b>
+
+541
+01:30:13,041 --> 01:30:14,500
+<b>Of course I'll be including that because</b>
+
+542
+01:30:14,500 --> 01:30:17,125
+<b>that's required as part of the submission.</b>
+
+543
+01:30:19,541 --> 01:30:19,791
+<b>Yes.</b>
+
+544
+01:30:20,250 --> 01:30:22,750
+<b>Okay. And I'll provide documentation</b>
+
+545
+01:30:22,750 --> 01:30:24,500
+<b>for how that functions as well.</b>
+
+546
+01:30:24,875 --> 01:30:27,625
+<b>But yeah.</b>
+
+547
+01:30:28,958 --> 01:30:30,583
+<b>Oh man, this is a lot.</b>
+
+548
+01:30:32,083 --> 01:30:32,291
+<b>Okay.</b>
+
+549
+01:30:36,500 --> 01:30:39,541
+<b>So lambda drag what red agent submission?</b>
+
+550
+01:30:40,500 --> 01:30:42,833
+<b>I'm checking the red line.</b>
+
+551
+01:30:42,875 --> 01:30:47,333
+<b>Red agent.</b>
+
+552
+01:30:52,458 --> 01:30:53,125
+<b>Green agent.</b>
+
+553
+01:30:53,458 --> 01:30:54,583
+<b>Tomorrow is a judging.</b>
+
+554
+01:30:56,291 --> 01:30:56,500
+<b>Okay.</b>
+
+555
+01:30:57,583 --> 01:31:01,000
+<b>And then purple agent is February 2.</b>
+
+556
+01:31:02,583 --> 01:31:04,250
+<b>Phase 1 is just the green agent.</b>
+
+557
+01:31:05,000 --> 01:31:06,916
+<b>The purple agent is February 2.</b>
+
+558
+01:31:07,333 --> 01:31:08,291
+<b>And then the red agent.</b>
+
+559
+01:31:09,125 --> 01:31:13,500
+<b>It's yet to be announced.</b>
+
+560
+01:31:16,750 --> 01:31:17,791
+<b>Lambda drag, right?</b>
+
+561
+01:31:22,958 --> 01:31:25,541
+<b>Yeah, it's yet to be announced because they will be for</b>
+
+562
+01:31:25,541 --> 01:31:26,666
+<b>phase 2, they'll be selecting</b>
+
+563
+01:31:26,666 --> 01:31:29,041
+<b>the green agents from phase 1.</b>
+
+564
+01:31:29,708 --> 01:31:29,916
+<b>Okay.</b>
+
+565
+01:31:30,041 --> 01:31:35,041
+<b>So okay, then I think we got a bit of work to do.</b>
+
+566
+01:31:35,125 --> 01:31:38,166
+<b>If you can pull a branch with only the red agent related to</b>
+
+567
+01:31:38,166 --> 01:31:40,166
+<b>green agent related information,</b>
+
+568
+01:31:40,416 --> 01:31:40,583
+<b>right?</b>
+
+569
+01:31:41,208 --> 01:31:42,333
+<b>And then let me know.</b>
+
+570
+01:31:42,916 --> 01:31:45,791
+<b>And then if there is a document just for the green agent,</b>
+
+571
+01:31:45,791 --> 01:31:48,166
+<b>then I focus on building this</b>
+
+572
+01:31:48,166 --> 01:31:51,208
+<b>pictorial just for the green agent.</b>
+
+573
+01:31:51,500 --> 01:31:52,458
+<b>What do you think, Allah?</b>
+
+574
+01:31:53,000 --> 01:31:53,625
+<b>Is that good?</b>
+
+575
+01:31:55,208 --> 01:31:58,083
+<b>Yeah, I mean, it sounds like</b>
+
+576
+01:31:58,083 --> 01:32:00,291
+<b>you have things sorted outside.</b>
+
+577
+01:32:00,333 --> 01:32:03,291
+<b>I don't want to be disruptive, but if I</b>
+
+578
+01:32:03,291 --> 01:32:05,791
+<b>can help speed anything up, let me know.</b>
+
+579
+01:32:06,583 --> 01:32:06,791
+<b>Okay.</b>
+
+580
+01:32:07,416 --> 01:32:07,583
+<b>Yeah.</b>
+
+581
+01:32:08,083 --> 01:32:08,541
+<b>Yeah.</b>
+
+582
+01:32:09,166 --> 01:32:10,875
+<b>No problem.</b>
+
+583
+01:32:11,125 --> 01:32:13,666
+<b>I may need help with publishing on archive.</b>
+
+584
+01:32:14,041 --> 01:32:15,083
+<b>I've never done that before.</b>
+
+585
+01:32:16,916 --> 01:32:18,458
+<b>So I'll need to make sure that</b>
+
+586
+01:32:18,458 --> 01:32:20,458
+<b>I have the formatting correct.</b>
+
+587
+01:32:21,583 --> 01:32:21,750
+<b>Yeah.</b>
+
+588
+01:32:23,708 --> 01:32:26,583
+<b>If you could send me the complete paper,</b>
+
+589
+01:32:26,583 --> 01:32:28,833
+<b>then I'll have to turn into latex and then</b>
+
+590
+01:32:28,875 --> 01:32:32,166
+<b>PDF, then we can put it here.</b>
+
+591
+01:32:32,541 --> 01:32:32,750
+<b>Yeah.</b>
+
+592
+01:32:33,541 --> 01:32:36,250
+<b>So is it okay if I just give you a plain markdown file?</b>
+
+593
+01:32:36,250 --> 01:32:38,708
+<b>Would that be possible?</b>
+
+594
+01:32:39,791 --> 01:32:40,166
+<b>Yeah.</b>
+
+595
+01:32:40,166 --> 01:32:40,416
+<b>Yeah.</b>
+
+596
+01:32:40,416 --> 01:32:40,625
+<b>Yeah.</b>
+
+597
+01:32:40,958 --> 01:32:41,166
+<b>Okay.</b>
+
+598
+01:32:42,250 --> 01:32:43,666
+<b>I'll do the rest myself.</b>
+
+599
+01:32:44,083 --> 01:32:45,958
+<b>So okay.</b>
+
+600
+01:32:45,958 --> 01:32:46,500
+<b>Thank you.</b>
+
+601
+01:32:46,500 --> 01:32:46,625
+<b>Yeah.</b>
+
+602
+01:32:46,625 --> 01:32:49,750
+<b>If you can handle that, that would be absolutely perfect.</b>
+
+603
+01:32:50,583 --> 01:32:51,041
+<b>Mm hmm.</b>
+
+604
+01:32:52,833 --> 01:32:55,833
+<b>And then, um, yeah, deep tea.</b>
+
+605
+01:32:56,208 --> 01:32:59,916
+<b>I'm going to send you, I'm first going to send you the, the</b>
+
+606
+01:32:59,916 --> 01:33:01,958
+<b>briefing document that provides</b>
+
+607
+01:33:03,000 --> 01:33:07,000
+<b>links to all of the database, the three database files that</b>
+
+608
+01:33:07,000 --> 01:33:11,791
+<b>you need and explains how the scoring</b>
+
+609
+01:33:12,500 --> 01:33:14,083
+<b>was weighted differently in one of them.</b>
+
+610
+01:33:14,375 --> 01:33:16,458
+<b>And I'll try and repair that.</b>
+
+611
+01:33:16,458 --> 01:33:17,583
+<b>If I can't repair that.</b>
+
+612
+01:33:19,500 --> 01:33:23,666
+<b>So you can just visualize like the individual pillars of</b>
+
+613
+01:33:23,666 --> 01:33:25,000
+<b>the scoring instead of the final</b>
+
+614
+01:33:25,000 --> 01:33:25,666
+<b>weighted score.</b>
+
+615
+01:33:27,250 --> 01:33:31,875
+<b>Cause like two of the, two of the database documents were</b>
+
+616
+01:33:31,875 --> 01:33:36,083
+<b>created with a equal 25% weight</b>
+
+617
+01:33:36,833 --> 01:33:38,916
+<b>between all four parts of the score.</b>
+
+618
+01:33:39,708 --> 01:33:43,125
+<b>You know, the rat score 25% per each of that.</b>
+
+619
+01:33:43,125 --> 01:33:45,291
+<b>And then 25% for the logic score.</b>
+
+620
+01:33:46,750 --> 01:33:50,083
+<b>But one of them is 20, 20, 20, 40.</b>
+
+621
+01:33:51,416 --> 01:33:53,250
+<b>The logic score got a 40% weight.</b>
+
+622
+01:33:54,458 --> 01:33:55,833
+<b>So I want to fix that.</b>
+
+623
+01:33:55,833 --> 01:33:57,666
+<b>I think the information, there's enough information in the</b>
+
+624
+01:33:57,666 --> 01:33:59,541
+<b>database to fix that because it's just</b>
+
+625
+01:33:59,541 --> 01:34:00,583
+<b>a final score weight.</b>
+
+626
+01:34:03,250 --> 01:34:04,833
+<b>But if I, for some reason cannot do</b>
+
+627
+01:34:04,833 --> 01:34:06,500
+<b>that, we'll have to work around that.</b>
+
+628
+01:34:07,708 --> 01:34:07,916
+<b>Okay.</b>
+
+629
+01:34:08,083 --> 01:34:08,833
+<b>It should be pretty simple.</b>
+
+630
+01:34:10,375 --> 01:34:12,875
+<b>And then I can get you the information for</b>
+
+631
+01:34:12,875 --> 01:34:22,791
+<b>what exactly was done to like what battles</b>
+
+632
+01:34:22,791 --> 01:34:23,375
+<b>were ran.</b>
+
+633
+01:34:24,500 --> 01:34:25,958
+<b>I can give you like names of specific</b>
+
+634
+01:34:25,958 --> 01:34:30,500
+<b>models if you want in the briefing document.</b>
+
+635
+01:34:30,500 --> 01:34:32,791
+<b>I will continue to update the briefing document too.</b>
+
+636
+01:34:34,208 --> 01:34:37,875
+<b>So in the same working branch.</b>
+
+637
+01:34:39,375 --> 01:34:39,708
+<b>Okay.</b>
+
+638
+01:34:39,708 --> 01:34:42,375
+<b>So once you update, then let me know and then I'll add the</b>
+
+639
+01:34:42,375 --> 01:34:44,125
+<b>pictorial there with the link</b>
+
+640
+01:34:44,291 --> 01:34:45,708
+<b>to the dogs, right?</b>
+
+641
+01:34:47,166 --> 01:34:47,666
+<b>Is that good?</b>
+
+642
+01:34:49,333 --> 01:34:49,708
+<b>Yeah.</b>
+
+643
+01:34:51,000 --> 01:34:51,166
+<b>Okay.</b>
+
+644
+01:34:51,250 --> 01:35:01,541
+<b>And then by, I will be out from 6 30 to 9 Eastern time.</b>
+
+645
+01:35:03,625 --> 01:35:05,833
+<b>So I can do before that or after that.</b>
+
+646
+01:35:06,708 --> 01:35:11,625
+<b>If you are able to do it by three, which is by into a</b>
+
+647
+01:35:11,625 --> 01:35:17,500
+<b>before 330 your time, then I can</b>
+
+648
+01:35:17,500 --> 01:35:19,208
+<b>update before or I'll do afterwards.</b>
+
+649
+01:35:19,541 --> 01:35:19,791
+<b>That good.</b>
+
+650
+01:35:20,375 --> 01:35:20,583
+<b>Yeah.</b>
+
+651
+01:35:21,208 --> 01:35:22,291
+<b>Let me know on Slack.</b>
+
+652
+01:35:22,750 --> 01:35:22,958
+<b>Okay.</b>
+
+653
+01:35:23,208 --> 01:35:24,666
+<b>Around 3pm Pacific time.</b>
+
+654
+01:35:26,333 --> 01:35:27,291
+<b>Yes.</b>
+
+655
+01:35:28,291 --> 01:35:30,500
+<b>Before you will be cutting close because I</b>
+
+656
+01:35:30,500 --> 01:35:33,666
+<b>have to leave at 330 Pacific, but I'll be</b>
+
+657
+01:35:33,666 --> 01:35:33,916
+<b>back.</b>
+
+658
+01:35:34,583 --> 01:35:38,166
+<b>I can do later today or I can, if you have time now,</b>
+
+659
+01:35:38,416 --> 01:35:39,875
+<b>whichever way we can just play</b>
+
+660
+01:35:39,875 --> 01:35:41,875
+<b>by the discord messages, right?</b>
+
+661
+01:35:41,875 --> 01:35:42,916
+<b>I'll keep checking.</b>
+
+662
+01:35:43,333 --> 01:35:43,541
+<b>Yeah.</b>
+
+663
+01:35:44,041 --> 01:35:44,583
+<b>Okay.</b>
+
+664
+01:35:45,250 --> 01:35:45,875
+<b>Yeah, that works great.</b>
+
+665
+01:35:46,958 --> 01:35:47,208
+<b>Yeah.</b>
+
+666
+01:35:47,500 --> 01:35:51,375
+<b>And then the time to submit is 11 59pm.</b>
+
+667
+01:35:51,708 --> 01:35:54,500
+<b>So as I said, usually it becomes</b>
+
+668
+01:35:54,500 --> 01:35:57,166
+<b>very hard to submit towards the end.</b>
+
+669
+01:35:57,208 --> 01:36:01,916
+<b>So let's target submitting by like 11pm</b>
+
+670
+01:36:01,916 --> 01:36:05,125
+<b>PST and maybe have a dry run before that.</b>
+
+671
+01:36:05,708 --> 01:36:07,500
+<b>I don't know if you want to.</b>
+
+672
+01:36:07,791 --> 01:36:10,291
+<b>I'll aim for 10 so that we have an extra.</b>
+
+673
+01:36:10,916 --> 01:36:11,500
+<b>Yeah.</b>
+
+674
+01:36:11,750 --> 01:36:13,208
+<b>I'll try and have everything in</b>
+
+675
+01:36:13,208 --> 01:36:16,250
+<b>order by 10pm, including the video.</b>
+
+676
+01:36:18,541 --> 01:36:20,666
+<b>I'm probably not going to focus too much on the video.</b>
+
+677
+01:36:20,666 --> 01:36:23,916
+<b>I'm probably just going to make sure that there's enough</b>
+
+678
+01:36:23,916 --> 01:36:25,750
+<b>for them to be satisfied, but</b>
+
+679
+01:36:25,750 --> 01:36:27,375
+<b>I'm not going to go overboard since we</b>
+
+680
+01:36:27,375 --> 01:36:29,875
+<b>only have a few hours to complete it.</b>
+
+681
+01:36:30,458 --> 01:36:30,666
+<b>Yes.</b>
+
+682
+01:36:31,041 --> 01:36:31,250
+<b>Okay.</b>
+
+683
+01:36:32,208 --> 01:36:32,500
+<b>Thank you.</b>
+
+684
+01:36:33,000 --> 01:36:33,208
+<b>Yeah.</b>
+
+685
+01:36:33,833 --> 01:36:34,083
+<b>Right.</b>
+
+686
+01:36:35,208 --> 01:36:35,250
+<b>Okay.</b>
+
+687
+01:36:37,875 --> 01:36:38,083
+<b>Yeah.</b>
+
+688
+01:36:38,083 --> 01:36:39,208
+<b>I recorded this meeting.</b>
+
+689
+01:36:39,208 --> 01:36:40,208
+<b>I'm going to.</b>
+
+690
+01:36:40,875 --> 01:36:42,750
+<b>Yeah.</b>
+
+691
+01:36:42,750 --> 01:36:46,208
+<b>I'm going to save the transcript of this</b>
+
+692
+01:36:46,208 --> 01:36:47,666
+<b>meeting and then I'm going to use it to copy</b>
+
+693
+01:36:47,666 --> 01:36:48,666
+<b>the briefing document that</b>
+
+694
+01:36:48,666 --> 01:36:50,250
+<b>contains all the information that we need.</b>
+
+695
+01:36:50,958 --> 01:36:52,333
+<b>And that document will be ready</b>
+
+696
+01:36:52,333 --> 01:36:54,291
+<b>within like the next hour or so.</b>
+
+697
+01:36:55,083 --> 01:36:55,333
+<b>Okay.</b>
+
+698
+01:36:55,625 --> 01:36:59,416
+<b>I also shared the link for the Overleaf project where I'll</b>
+
+699
+01:36:59,416 --> 01:37:02,000
+<b>be creating the Latex document.</b>
+
+700
+01:37:02,541 --> 01:37:06,416
+<b>So in case you want to make any last minute changes after I</b>
+
+701
+01:37:06,416 --> 01:37:08,083
+<b>convert everything, then yeah,</b>
+
+702
+01:37:08,083 --> 01:37:08,958
+<b>you could do that.</b>
+
+703
+01:37:10,041 --> 01:37:10,416
+<b>Yeah.</b>
+
+704
+01:37:10,625 --> 01:37:11,666
+<b>Thank you so much.</b>
+
+705
+01:37:12,125 --> 01:37:12,625
+<b>No worries.</b>
+
+706
+01:37:13,750 --> 01:37:15,625
+<b>If you also want to hang on</b>
+
+707
+01:37:15,625 --> 01:37:16,750
+<b>the educator quickly, it's fine.</b>
+
+708
+01:37:17,208 --> 01:37:17,416
+<b>Yeah.</b>
+
+709
+01:37:18,041 --> 01:37:19,083
+<b>Oh, not register.</b>
+
+710
+01:37:19,083 --> 01:37:19,833
+<b>Oh, I have to register.</b>
+
+711
+01:37:21,125 --> 01:37:23,541
+<b>Let me see. Let me see.</b>
+
+712
+01:37:25,500 --> 01:37:28,500
+<b>And then I saw one of your messages,</b>
+
+713
+01:37:29,833 --> 01:37:31,916
+<b>Josh, about lambda track registration.</b>
+
+714
+01:37:32,375 --> 01:37:33,000
+<b>I don't know.</b>
+
+715
+01:37:33,000 --> 01:37:36,333
+<b>I couldn't find that message again on Slack.</b>
+
+716
+01:37:36,583 --> 01:37:37,250
+<b>Was it sent?</b>
+
+717
+01:37:37,250 --> 01:37:39,708
+<b>Usually it is a new message that box up.</b>
+
+718
+01:37:40,166 --> 01:37:40,750
+<b>So it's in.</b>
+
+719
+01:37:42,125 --> 01:37:43,791
+<b>So let me show you here.</b>
+
+720
+01:37:44,666 --> 01:37:46,083
+<b>So Discord's kind of funny.</b>
+
+721
+01:37:46,791 --> 01:37:48,625
+<b>Where the direct messages are stored.</b>
+
+722
+01:37:48,750 --> 01:37:52,250
+<b>They're actually stored where this logo is in the top left.</b>
+
+723
+01:37:52,541 --> 01:37:54,041
+<b>Can you see my screen that I'm sharing?</b>
+
+724
+01:37:55,583 --> 01:37:55,791
+<b>Yeah.</b>
+
+725
+01:37:56,375 --> 01:38:01,500
+<b>So if you just click here and then you find my name here.</b>
+
+726
+01:38:02,333 --> 01:38:03,458
+<b>Oh, let me see.</b>
+
+727
+01:38:04,708 --> 01:38:05,458
+<b>Direct messages.</b>
+
+728
+01:38:06,125 --> 01:38:08,125
+<b>Oh, oh yeah.</b>
+
+729
+01:38:08,125 --> 01:38:09,125
+<b>I found it now.</b>
+
+730
+01:38:09,583 --> 01:38:09,875
+<b>Why couldn't find it?</b>
+
+731
+01:38:09,916 --> 01:38:12,500
+<b>Well, it's okay.</b>
+
+732
+01:38:13,666 --> 01:38:20,666
+<b>Because if you didn't sign up the team.</b>
+
+733
+01:38:21,083 --> 01:38:24,541
+<b>I thought you signed up the team a couple of months ago for</b>
+
+734
+01:38:24,541 --> 01:38:26,916
+<b>the lambda track after a meeting.</b>
+
+735
+01:38:27,541 --> 01:38:28,708
+<b>But it's okay if you did.</b>
+
+736
+01:38:30,000 --> 01:38:31,125
+<b>It's okay if you did not.</b>
+
+737
+01:38:31,125 --> 01:38:33,250
+<b>I can take care of that today.</b>
+
+738
+01:38:34,125 --> 01:38:36,958
+<b>I just needed to know whether you did or not.</b>
+
+739
+01:38:37,958 --> 01:38:39,958
+<b>No, I didn't do the registration.</b>
+
+740
+01:38:40,208 --> 01:38:41,750
+<b>We were discussing about whether</b>
+
+741
+01:38:41,750 --> 01:38:43,750
+<b>to use lambda and the other track.</b>
+
+742
+01:38:44,125 --> 01:38:47,041
+<b>So if you want me to register, I can do that.</b>
+
+743
+01:38:47,875 --> 01:38:49,083
+<b>Or otherwise you can do it.</b>
+
+744
+01:38:49,250 --> 01:38:50,000
+<b>Whichever way is fine.</b>
+
+745
+01:38:51,125 --> 01:38:51,208
+<b>Okay.</b>
+
+746
+01:38:51,208 --> 01:38:52,000
+<b>That's fine.</b>
+
+747
+01:38:53,125 --> 01:38:55,208
+<b>Yeah, I'm just going to do that.</b>
+
+748
+01:38:55,625 --> 01:38:58,125
+<b>Let me see if I can find it.</b>
+
+749
+01:38:58,333 --> 01:38:58,500
+<b>Yeah.</b>
+
+750
+01:38:59,583 --> 01:39:01,125
+<b>Don't worry about it.</b>
+
+751
+01:39:04,875 --> 01:39:07,125
+<b>I'll make sure that's added to the team</b>
+
+752
+01:39:07,125 --> 01:39:09,291
+<b>briefing document too as an action item.</b>
+
+753
+01:39:11,166 --> 01:39:11,583
+<b>Okay.</b>
+
+754
+01:39:11,583 --> 01:39:13,416
+<b>I have to sign up.</b>
+
+755
+01:39:15,500 --> 01:39:15,666
+<b>Okay.</b>
+
+756
+01:39:16,083 --> 01:39:16,750
+<b>I have to team sign up.</b>
+
+757
+01:39:18,958 --> 01:39:19,625
+<b>Okay, no worries.</b>
+
+758
+01:39:22,625 --> 01:39:25,750
+<b>Yeah, I think we covered everything.</b>
+
+759
+01:39:27,166 --> 01:39:27,375
+<b>Yeah.</b>
+
+760
+01:39:27,708 --> 01:39:29,083
+<b>It's kind of a lot to do today.</b>
+
+761
+01:39:29,625 --> 01:39:31,416
+<b>I also got to call my mom check in with</b>
+
+762
+01:39:31,416 --> 01:39:33,583
+<b>her because I haven't heard from her yet.</b>
+
+763
+01:39:35,333 --> 01:39:38,000
+<b>I got to make sure she's doing well too.</b>
+
+764
+01:39:39,416 --> 01:39:41,000
+<b>But yeah, I will continue to give</b>
+
+765
+01:39:41,000 --> 01:39:45,208
+<b>you guys updates throughout today.</b>
+
+766
+01:39:45,500 --> 01:39:48,083
+<b>And the first thing I'll create is that briefing document.</b>
+
+767
+01:39:49,000 --> 01:39:49,375
+<b>Okay, great.</b>
+
+768
+01:39:49,666 --> 01:39:49,875
+<b>Cool.</b>
+
+769
+01:39:50,708 --> 01:39:50,958
+<b>Yeah.</b>
+
+770
+01:39:51,708 --> 01:39:57,500
+<b>So I'll start converting the copyright research paper as</b>
+
+771
+01:39:57,500 --> 01:39:59,083
+<b>well and just start putting it there</b>
+
+772
+01:39:59,083 --> 01:40:00,875
+<b>and then whatever small changes</b>
+
+773
+01:40:00,875 --> 01:40:02,500
+<b>we need to make later we can make.</b>
+
+774
+01:40:02,833 --> 01:40:03,041
+<b>Yeah.</b>
+
+775
+01:40:03,833 --> 01:40:04,500
+<b>Oh, sweet.</b>
+
+776
+01:40:04,875 --> 01:40:08,166
+<b>Using the Overleaf website?</b>
+
+777
+01:40:09,125 --> 01:40:09,583
+<b>Yeah, yeah.</b>
+
+778
+01:40:09,583 --> 01:40:11,750
+<b>The same project link that I shared with you.</b>
+
+779
+01:40:14,375 --> 01:40:16,416
+<b>I think this way you could save time, right?</b>
+
+780
+01:40:17,125 --> 01:40:17,916
+<b>I started working.</b>
+
+781
+01:40:18,375 --> 01:40:18,541
+<b>Yeah.</b>
+
+782
+01:40:20,250 --> 01:40:20,750
+<b>Absolutely.</b>
+
+783
+01:40:21,750 --> 01:40:21,958
+<b>Yeah.</b>
+
+784
+01:40:21,958 --> 01:40:25,833
+<b>Well, thank you so much for attending, guys.</b>
+
+785
+01:40:26,083 --> 01:40:27,166
+<b>I really appreciate it.</b>
+
+786
+01:40:27,166 --> 01:40:28,166
+<b>Thank you for meeting with me.</b>
+
+787
+01:40:28,708 --> 01:40:32,666
+<b>You guys are being a great help right now because I would</b>
+
+788
+01:40:32,666 --> 01:40:33,583
+<b>not be ready for a submission</b>
+
+789
+01:40:33,750 --> 01:40:34,666
+<b>without you guys.</b>
+
+790
+01:40:34,666 --> 01:40:37,791
+<b>So I really, really appreciate it.</b>
+
+791
+01:40:38,250 --> 01:40:39,666
+<b>Yeah, thank you.</b>
+
+792
+01:40:39,666 --> 01:40:40,000
+<b>Thank you.</b>
+
+793
+01:40:40,291 --> 01:40:40,916
+<b>We got this.</b>
+
+794
+01:40:41,666 --> 01:40:42,500
+<b>Right, guys?</b>
+
+795
+01:40:43,166 --> 01:40:43,791
+<b>We got this.</b>
+
+796
+01:40:45,333 --> 01:40:45,666
+<b>Yeah.</b>
+
+797
+01:40:45,916 --> 01:40:46,125
+<b>Yeah.</b>
+
+798
+01:40:46,875 --> 01:40:47,833
+<b>We'll be done soon.</b>
+
+799
+01:40:48,333 --> 01:40:50,625
+<b>Just we'll keep checking this card also.</b>
+
+800
+01:40:51,166 --> 01:40:51,375
+<b>Okay.</b>
+
+801
+01:40:51,750 --> 01:40:52,000
+<b>Yeah.</b>
+
+802
+01:40:52,333 --> 01:40:52,541
+<b>Yeah.</b>
+
+803
+01:40:53,000 --> 01:40:53,416
+<b>I got you.</b>
+
+804
+01:40:53,625 --> 01:40:53,833
+<b>Thanks.</b>
+
+805
+01:40:54,000 --> 01:40:54,791
+<b>Have a good one, guys.</b>
+
+806
+01:40:55,500 --> 01:40:55,875
+<b>Bye-bye.</b>
+
+807
+01:40:56,208 --> 01:40:56,625
+<b>Bye-bye.</b>
+
+808
+01:40:57,541 --> 01:40:57,958
+<b>Thank you.</b>
+
+809
+01:40:59,875 --> 01:41:00,041
+<b>Bye-bye.</b>
+
