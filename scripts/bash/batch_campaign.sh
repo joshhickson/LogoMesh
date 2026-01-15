@@ -15,7 +15,7 @@ do
     echo "[${i}/${ITERATIONS}] initiating battle: ${BATTLE_ID}"
     
     # Send request with timeout
-    RESPONSE=$(curl -m 120 -s -X POST "${GREEN_AGENT_URL}" \
+    RESPONSE=$(curl -m 600 -s -X POST "${GREEN_AGENT_URL}" \
          -H "Content-Type: application/json" \
          -d "{
                \"battle_id\": \"${BATTLE_ID}\",
