@@ -1,0 +1,64 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/LogoMesh/scripts/run_tier2_qwen.py", line 7, in <module>
+    import httpx
+ModuleNotFoundError: No module named 'httpx'
+warning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead
+[Tier2Qwen] Database initialized: data/battles_tier2_qwen.db
+[Tier2Qwen] Battle 1/25: tier2-qwen-001... [Tier2Qwen] Saved: tier2-qwen-001 score=0.68
+✓ 303.4s score=0.68
+[Tier2Qwen] Battle 2/25: tier2-qwen-002... [Tier2Qwen] Saved: tier2-qwen-002 score=0.76
+✓ 238.0s score=0.76
+[Tier2Qwen] Battle 3/25: tier2-qwen-003... [Tier2Qwen] Saved: tier2-qwen-003 score=0.76
+✓ 191.7s score=0.76
+[Tier2Qwen] Battle 4/25: tier2-qwen-004... [Tier2Qwen] Saved: tier2-qwen-004 score=0.64
+✓ 283.6s score=0.64
+[Tier2Qwen] Battle 5/25: tier2-qwen-005... [Tier2Qwen] Saved: tier2-qwen-005 score=0.76
+✓ 196.8s score=0.76
+[Tier2Qwen] Battle 6/25: tier2-qwen-006... [Tier2Qwen] Saved: tier2-qwen-006 score=0.74
+✓ 194.7s score=0.74
+[Tier2Qwen] Battle 7/25: tier2-qwen-007... [Tier2Qwen] Saved: tier2-qwen-007 score=0.42
+✓ 203.7s score=0.42
+[Tier2Qwen] Battle 8/25: tier2-qwen-008... [Tier2Qwen] Saved: tier2-qwen-008 score=0.44
+✓ 204.3s score=0.44
+[Tier2Qwen] Battle 9/25: tier2-qwen-009... [Tier2Qwen] Saved: tier2-qwen-009 score=0.62
+✓ 258.2s score=0.62
+[Tier2Qwen] Battle 10/25: tier2-qwen-010... [Tier2Qwen] Saved: tier2-qwen-010 score=0.42
+✓ 227.2s score=0.42
+[Tier2Qwen] Battle 11/25: tier2-qwen-011... [Tier2Qwen] Saved: tier2-qwen-011 score=0.58
+✓ 227.8s score=0.58
+[Tier2Qwen] Battle 12/25: tier2-qwen-012... [Tier2Qwen] Saved: tier2-qwen-012 score=0.52
+✓ 183.0s score=0.52
+[Tier2Qwen] Battle 13/25: tier2-qwen-013... [Tier2Qwen] Saved: tier2-qwen-013 score=0.64
+✓ 257.6s score=0.64
+[Tier2Qwen] Battle 14/25: tier2-qwen-014... [Tier2Qwen] Saved: tier2-qwen-014 score=0.76
+✓ 280.6s score=0.76
+[Tier2Qwen] Battle 15/25: tier2-qwen-015... [Tier2Qwen] Saved: tier2-qwen-015 score=0.78
+✓ 237.7s score=0.78
+[Tier2Qwen] Battle 16/25: tier2-qwen-016... [Tier2Qwen] Saved: tier2-qwen-016 score=0.84
+✓ 152.9s score=0.84
+[Tier2Qwen] Battle 17/25: tier2-qwen-017... [Tier2Qwen] Saved: tier2-qwen-017 score=0.54
+✓ 236.8s score=0.54
+[Tier2Qwen] Battle 18/25: tier2-qwen-018... [Tier2Qwen] Saved: tier2-qwen-018 score=0.67
+✓ 303.8s score=0.67
+[Tier2Qwen] Battle 19/25: tier2-qwen-019... [Tier2Qwen] Saved: tier2-qwen-019 score=0.84
+✓ 171.7s score=0.84
+[Tier2Qwen] Battle 20/25: tier2-qwen-020... [Tier2Qwen] Saved: tier2-qwen-020 score=0.76
+✓ 266.6s score=0.76
+[Tier2Qwen] Battle 21/25: tier2-qwen-021... [Tier2Qwen] Saved: tier2-qwen-021 score=0.62
+✓ 261.3s score=0.62
+[Tier2Qwen] Battle 22/25: tier2-qwen-022... [Tier2Qwen] Saved: tier2-qwen-022 score=0.75
+✓ 218.9s score=0.75
+[Tier2Qwen] Battle 23/25: tier2-qwen-023... [Tier2Qwen] Saved: tier2-qwen-023 score=0.70
+✓ 216.8s score=0.70
+[Tier2Qwen] Battle 24/25: tier2-qwen-024... [Tier2Qwen] Saved: tier2-qwen-024 score=0.79
+✓ 274.6s score=0.79
+[Tier2Qwen] Battle 25/25: tier2-qwen-025... [Tier2Qwen] Saved: tier2-qwen-025 score=0.63
+✓ 259.5s score=0.63
+
+================================================================================
+Tier 2 (Qwen) Execution Complete
+  Successful: 25/25
+  Failed: 0/25
+  Database: data/battles_tier2_qwen.db
+  Log: results/c_new_001_diversity_test/tier2_qwen_battles.log
+================================================================================

@@ -90,16 +90,28 @@ class GenericDefenderExecutor(AgentExecutor):
                 "content": message_text
             })
 
-            # Call OpenAI
-            response = await self.client.chat.completions.create(
+            # Call OpenAI with streaming enabled
+            stream = await self.client.chat.completions.create(
                 model=self.model,
                 messages=[
                     {"role": "system", "content": self.system_prompt},
                     *self.conversation_history[context_id]
-                ]
+                ],
+                stream=True  # Enable token streaming
             )
 
-            assistant_message = response.choices[0].message.content
+            # Collect full response while streaming tokens
+            assistant_message = ""
+            async for chunk in stream:
+                if chunk.choices and chunk.choices[0].delta.content:
+                    token = chunk.choices[0].delta.content
+                    assistant_message += token
+                    
+                    # Send token as incremental update
+                    await updater.update_status(
+                        TaskState.working,
+                        new_agent_text_message(token)
+                    )
 
             # Add assistant response to history
             self.conversation_history[context_id].append({
@@ -109,7 +121,7 @@ class GenericDefenderExecutor(AgentExecutor):
 
             logger.info(f"Defender completed task ({len(assistant_message)} chars)")
 
-            # Send response
+            # Send final completion status
             await updater.update_status(
                 TaskState.completed,
                 new_agent_text_message(assistant_message)
@@ -139,12 +151,12 @@ def main():
     # Create agent card
     agent_card = AgentCard(
         name="generic_defender",
-        description="Generic defensive agent with security hardening",
+        description="Generic defensive agent with security hardening (streaming enabled)",
         url=f"http://{args.host}:{args.port}/",
         version="1.0.0",
         default_input_modes=["text"],
         default_output_modes=["text"],
-        capabilities=AgentCapabilities(streaming=False),
+        capabilities=AgentCapabilities(streaming=True),  # Enable streaming
         skills=[]
     )
 

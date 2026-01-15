@@ -1,0 +1,307 @@
+# Architecture Constraints for CIS Evaluation
+# A-003 Implementation: Task-specific architectural rules for architecture_score calculation
+# Purpose: Transform architecture_score from generic placeholder (0.7) to compliance-based evaluation
+
+# Task: task-001 (Email Validator)
+task-001:
+  title: "Email Validator"
+  constraints:
+    no_network_calls:
+      description: "Must NOT use socket, dns, urllib, or any network libraries"
+      forbidden_imports:
+        - "socket"
+        - "dns"
+        - "urllib"
+        - "requests"
+        - "httpx"
+      penalty: 0.8  # 80% penalty if violated
+      rationale: "Sandbox has network_disabled=True; network calls will fail"
+    
+    regex_only:
+      description: "Must use regex pattern matching for validation"
+      required_imports:
+        - "re"
+      penalty: 0.5  # 50% penalty if missing
+      rationale: "Task explicitly requires Regex ONLY approach"
+    
+    no_external_services:
+      description: "No email verification APIs or external validation services"
+      forbidden_patterns:
+        - "api.hunter.io"
+        - "zerobounce"
+        - "mailgun"
+        - "sendgrid"
+      penalty: 1.0  # 100% penalty (critical violation)
+
+# Task: task-002 (Rate Limiter)
+task-002:
+  title: "Rate Limiter"
+  constraints:
+    no_global_state:
+      description: "Must NOT use global variables for storing rate limit state"
+      forbidden_patterns:
+        - "^\\s*[A-Z_]+\\s*=\\s*\\{.*\\}\\s*$"  # Global dict assignment
+      penalty: 0.6  # 60% penalty
+      rationale: "Global state violates OOP principles and causes test pollution"
+    
+    time_module_required:
+      description: "Must use time module for timestamp tracking"
+      required_imports:
+        - "time"
+      penalty: 0.4  # 40% penalty if missing
+      rationale: "Rate limiting requires accurate time measurement"
+    
+    no_threading:
+      description: "Must NOT use threading or multiprocessing"
+      forbidden_imports:
+        - "threading"
+        - "multiprocessing"
+        - "asyncio"
+      penalty: 0.5  # 50% penalty
+      rationale: "Simple in-memory solution required; threading adds complexity"
+    
+    data_structure_allowed:
+      description: "Should use dict or collections for state management"
+      recommended_imports:
+        - "collections"
+      penalty: 0.0  # No penalty, just recommendation
+
+# Task: task-003 (LRU Cache)
+task-003:
+  title: "LRU Cache"
+  constraints:
+    no_http_calls:
+      description: "Must NOT make HTTP requests or use web APIs"
+      forbidden_imports:
+        - "requests"
+        - "urllib"
+        - "httpx"
+        - "http"
+      penalty: 1.0  # 100% penalty (critical violation)
+      rationale: "Cache should be local data structure, not network-dependent"
+    
+    no_file_io:
+      description: "Must NOT use file system for persistence"
+      forbidden_imports:
+        - "pickle"
+        - "shelve"
+        - "json"  # If used for file operations
+      forbidden_patterns:
+        - "open\\("
+        - "with\\s+open"
+      penalty: 0.7  # 70% penalty
+      rationale: "In-memory cache required; file I/O violates spec"
+    
+    allowed_data_structures:
+      description: "Should use OrderedDict or dict+list for LRU tracking"
+      required_imports_any:  # At least one of these
+        - "collections.OrderedDict"
+        - "collections"
+      penalty: 0.3  # 30% penalty if neither used
+      rationale: "OrderedDict is standard approach for LRU implementation"
+    
+    o1_complexity:
+      description: "Operations should be O(1) - suggests dict + doubly-linked list or OrderedDict"
+      penalty: 0.0  # Checked via logic review, not static analysis
+
+# Task: task-004 (Recursive Fibonacci)
+task-004:
+  title: "Recursive Fibonacci"
+  constraints:
+    no_global_variables:
+      description: "Must NOT use global variables for memoization cache"
+      forbidden_patterns:
+        - "^\\s*[a-z_]+\\s*=\\s*\\{.*\\}\\s*$"  # Global dict outside function
+        - "^\\s*global\\s+"
+      penalty: 0.6  # 60% penalty
+      rationale: "Global state violates functional programming principles"
+    
+    recursion_required:
+      description: "Must use recursive function calls (checked separately in analyzer)"
+      penalty: 1.0  # 100% penalty if loops detected
+      rationale: "Task explicitly requires recursion"
+    
+    no_loops:
+      description: "No for/while loops allowed"
+      forbidden_patterns:
+        - "\\bfor\\s+"
+        - "\\bwhile\\s+"
+      penalty: 1.0  # 100% penalty (critical constraint)
+      rationale: "Task explicitly forbids loops"
+    
+    no_forbidden_imports:
+      description: "No os, sys, subprocess imports"
+      forbidden_imports:
+        - "os"
+        - "sys"
+        - "subprocess"
+      penalty: 1.0  # 100% penalty (security violation)
+      rationale: "Prevents shell injection or system manipulation"
+    
+    memoization_allowed:
+      description: "functools.lru_cache or manual memoization decorator allowed"
+      recommended_imports:
+        - "functools"
+      penalty: 0.0  # No penalty, optimization is optional
+
+# Constraint Evaluation Notes:
+# - Penalties are multiplicative: architecture_score = base_score * (1 - penalty)
+# - Multiple violations: Apply max penalty (not cumulative)
+# - Static analysis checks: imports, patterns (AST-based)
+# - Dynamic checks: Tested via sandbox (e.g., recursion depth, actual behavior)
+
+# =============================================================================
+# A-004 Implementation: Test Requirements for testing_score evaluation
+# Purpose: Define acceptance criteria patterns that tests should verify
+# =============================================================================
+
+# Task: task-001 (Email Validator)
+task-001-tests:
+  title: "Email Validator Test Requirements"
+  required_test_patterns:
+    edge_case_empty:
+      description: "Must test empty string input"
+      patterns:
+        - 'assert.*["\'']\s*["\''"]'
+        - 'assert.*""'
+        - "assert.*''"
+      weight: 0.15
+    
+    edge_case_no_at:
+      description: "Must test email without @ symbol"
+      patterns:
+        - 'assert.*valid.*False'
+        - 'assert.*not.*valid'
+      weight: 0.15
+    
+    edge_case_multiple_at:
+      description: "Must test multiple @ symbols"
+      patterns:
+        - 'assert.*@@'
+        - 'assert.*@.*@'
+      weight: 0.15
+    
+    edge_case_no_domain:
+      description: "Must test missing domain (e.g., user@)"
+      patterns:
+        - 'assert.*@["\''"].*False'
+      weight: 0.10
+    
+    valid_case:
+      description: "Must test valid email format"
+      patterns:
+        - 'assert.*@.*\\.'
+        - 'assert.*valid.*True'
+      weight: 0.10
+
+# Task: task-002 (Rate Limiter)
+task-002-tests:
+  title: "Rate Limiter Test Requirements"
+  required_test_patterns:
+    timing_verification:
+      description: "Must verify time-based rate limiting"
+      patterns:
+        - 'time\\.sleep'
+        - 'assert.*time'
+      weight: 0.20
+    
+    limit_enforcement:
+      description: "Must test request limit (10 per minute)"
+      patterns:
+        - 'assert.*False'  # After limit reached
+        - 'assert.*not.*allowed'
+        - 'for.*range.*10'
+        - 'for.*range.*11'
+      weight: 0.25
+    
+    multiple_clients:
+      description: "Must test different client IDs"
+      patterns:
+        - 'client.*1'
+        - 'client.*2'
+        - 'user.*[AB]'
+      weight: 0.15
+    
+    count_accuracy:
+      description: "Must verify exact count tracking"
+      patterns:
+        - 'assert.*==.*True'
+        - 'assert.*==.*10'
+      weight: 0.10
+
+# Task: task-003 (LRU Cache)
+task-003-tests:
+  title: "LRU Cache Test Requirements"
+  required_test_patterns:
+    eviction_order:
+      description: "Must verify LRU eviction (least recently used first)"
+      patterns:
+        - 'assert.*get.*None'  # Evicted key returns None
+        - 'assert.*not.*in'
+        - 'capacity'
+      weight: 0.30
+    
+    get_updates_recency:
+      description: "Must test that get() updates recency"
+      patterns:
+        - 'get.*put.*get'  # Pattern: access, add new, check old still exists
+        - 'assert.*get.*!='
+      weight: 0.20
+    
+    capacity_limit:
+      description: "Must test capacity constraint"
+      patterns:
+        - 'capacity.*='
+        - 'LRUCache\\([0-9]+'
+      weight: 0.15
+    
+    put_get_basic:
+      description: "Must test basic put/get operations"
+      patterns:
+        - 'put\\('
+        - 'get\\('
+        - 'assert.*=='
+      weight: 0.10
+
+# Task: task-004 (Recursive Fibonacci)
+task-004-tests:
+  title: "Recursive Fibonacci Test Requirements"
+  required_test_patterns:
+    base_cases:
+      description: "Must test fib(0)=0 and fib(1)=1"
+      patterns:
+        - 'assert.*fibonacci\\(0\\).*==.*0'
+        - 'assert.*fibonacci\\(1\\).*==.*1'
+      weight: 0.25
+    
+    small_values:
+      description: "Must test small Fibonacci numbers"
+      patterns:
+        - 'fibonacci\\([2-5]\\)'
+        - 'assert.*fibonacci\\([2-9]\\)'
+      weight: 0.20
+    
+    negative_input:
+      description: "Must test negative input handling"
+      patterns:
+        - 'fibonacci\\(-'
+        - 'assert.*-.*==.*0'
+      weight: 0.15
+    
+    known_values:
+      description: "Must test known Fibonacci values (e.g., fib(10)=55)"
+      patterns:
+        - 'assert.*55'
+        - 'assert.*89'
+        - 'assert.*144'
+      weight: 0.10
+
+# Test Evaluation Notes (A-004):
+# - Specificity multiplier: 0.6-1.0 (weak to excellent test quality)
+# - Pattern matching: Case-insensitive regex search
+# - Scoring: Sum weights of matched patterns, clamp to [0.6, 1.0]
+# - Base formula: testing_score = vector_score * specificity_multiplier
+# - 1.0 = All key patterns matched (comprehensive tests)
+# - 0.8-0.9 = Most patterns matched (good coverage)
+# - 0.6-0.7 = Few/no patterns matched (generic tests)
+

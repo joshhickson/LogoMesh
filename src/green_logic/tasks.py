@@ -11,16 +11,18 @@ Implement an email validation function with the following requirements:
 3. Check for:
    - Presence of exactly one @ symbol
    - Non-empty local part (before @)
-   - Valid domain (after @) with at least one dot
+   - Syntactically valid domain (after @) with at least one dot using Regex ONLY
    - No spaces allowed
+   - **IMPORTANT: Use Regex pattern matching ONLY. NO network calls (no socket, dns, urllib)**
+   - **NO DNS lookups, NO MX record validation, NO HTTP requests**
 4. Handle edge cases gracefully
 
 Provide your response as JSON with:
-- sourceCode: Your implementation
+- sourceCode: Your implementation (Regex-based validation only)
 - testCode: Unit tests (recommended)
 - rationale: Explain your design decisions
 """,
-        "constraints": {}  # No special constraints
+        "constraints": {"no_network_calls": True, "regex_only": True}  # A-000 constraint
     },
     {
         "id": "task-002",

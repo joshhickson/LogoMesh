@@ -1,10 +1,16 @@
 import asyncio
 import json
 import os
+import re
+import yaml
+from pathlib import Path
 
 from openai import AsyncOpenAI
 
 from .compare_vectors import VectorScorer
+from .red_report_parser import RedReportParser
+from .red_report_types import RedAgentReport
+from .harmony_parser import HarmonyParser
 
 class ContextualIntegrityScorer:
     def __init__(self):
@@ -16,6 +22,24 @@ class ContextualIntegrityScorer:
         # Initialize Vector Scorer for math-based evaluation
         self.vector_scorer = VectorScorer()
         self.logic_review_timeout = 85
+        
+        # A-003 Implementation: Load architecture constraints
+        constraints_path = Path(__file__).parent / "architecture_constraints.yaml"
+        try:
+            with open(constraints_path, 'r') as f:
+                self.architecture_constraints = yaml.safe_load(f)
+        except FileNotFoundError:
+            print(f"Warning: Architecture constraints file not found at {constraints_path}")
+            self.architecture_constraints = {}
+        
+        # Red Agent Integration: Initialize Red Report Parser
+        self.red_parser = RedReportParser()
+        
+        # Harmony Protocol Integration: Initialize Harmony Parser for gpt-oss models
+        self.harmony_parser = HarmonyParser()
+        
+        # Model detection: Track which model is being used
+        self.current_model = os.getenv("MODEL_NAME", "unknown")
 
     async def _perform_logic_review(
         self, task_description: str, source_code: str
@@ -90,6 +114,176 @@ The logic_score must be a float between 0.0 and 1.0:
         except Exception as e:
             return {"logic_score": 0.5, "critique": f"Logic review failed: {str(e)}"}
 
+    def _parse_purple_response(self, purple_response: dict) -> dict:
+        """
+        Parse Purple Agent response, handling Harmony format if detected.
+        
+        For gpt-oss models using Harmony protocol, extracts:
+        - analysis channel → rationale (for Requirements scoring)
+        - final channel → sourceCode (for implementation)
+        
+        Args:
+            purple_response: Raw response dict from Purple Agent
+            
+        Returns:
+            Normalized dict with sourceCode, testCode, rationale
+        """
+        # Default extraction (standard A2A format)
+        source_code = purple_response.get("sourceCode", "")
+        test_code = purple_response.get("testCode", "")
+        rationale = purple_response.get("rationale", "")
+        
+        # Detect if response uses Harmony format
+        # Check if sourceCode contains Harmony channel tags
+        if source_code and ("<|channel|" in source_code or self.current_model.lower().startswith("gpt-oss")):
+            print(f"[Harmony] Detected Harmony format in Purple Agent response (model: {self.current_model})")
+            
+            # Parse Harmony channels
+            parsed = self.harmony_parser.parse(source_code)
+            
+            if parsed['format_detected']:
+                print(f"[Harmony] Channels found: {list(parsed['channels'].keys())}")
+                
+                # Extract code from 'final' channel
+                if parsed['final']:
+                    extracted_code = self.harmony_parser.extract_code_from_final(parsed['final'])
+                    if extracted_code:
+                        source_code = extracted_code
+                        print(f"[Harmony] Extracted {len(source_code)} chars from <|channel|final>")
+                
+                # Extract rationale from 'analysis' channel
+                if parsed['analysis']:
+                    extracted_rationale = self.harmony_parser.extract_rationale_from_analysis(parsed['analysis'])
+                    if extracted_rationale:
+                        # Prepend analysis to existing rationale (if any)
+                        if rationale:
+                            rationale = f"{extracted_rationale}\n\n{rationale}"
+                        else:
+                            rationale = extracted_rationale
+                        print(f"[Harmony] Extracted {len(rationale)} chars from <|channel|analysis>")
+                
+                # Store raw Harmony response for debugging
+                purple_response['_harmony_parsed'] = parsed
+        
+        return {
+            "sourceCode": source_code,
+            "testCode": test_code,
+            "rationale": rationale,
+            "task_id": purple_response.get("task_id")
+        }
+
+    def _evaluate_architecture_constraints(self, task_id: str, source_code: str) -> float:
+        """
+        A-003 Implementation: Evaluate task-specific architectural constraints.
+        
+        Args:
+            task_id: Task identifier (e.g., "task-001", "task-002")
+            source_code: The submitted source code to validate
+        
+        Returns:
+            Penalty value between 0.0 (no violations) and 1.0 (critical violations)
+        """
+        if not task_id or task_id not in self.architecture_constraints:
+            return 0.0  # No constraints defined, no penalty
+        
+        task_constraints = self.architecture_constraints[task_id].get("constraints", {})
+        max_penalty = 0.0  # Track highest penalty (not cumulative)
+        violations = []
+        
+        for constraint_name, constraint_rules in task_constraints.items():
+            penalty = constraint_rules.get("penalty", 0.0)
+            
+            # Check forbidden imports
+            forbidden_imports = constraint_rules.get("forbidden_imports", [])
+            for forbidden in forbidden_imports:
+                if re.search(rf"\bimport\s+{re.escape(forbidden)}\b", source_code) or \
+                   re.search(rf"\bfrom\s+{re.escape(forbidden)}\s+import\b", source_code):
+                    violations.append(f"{constraint_name}: Forbidden import '{forbidden}'")
+                    max_penalty = max(max_penalty, penalty)
+                    break
+            
+            # Check required imports (any)
+            required_imports_any = constraint_rules.get("required_imports_any", [])
+            if required_imports_any:
+                found_any = False
+                for required in required_imports_any:
+                    if required in source_code:
+                        found_any = True
+                        break
+                if not found_any:
+                    violations.append(f"{constraint_name}: Missing required import (any of {required_imports_any})")
+                    max_penalty = max(max_penalty, penalty)
+            
+            # Check required imports (all)
+            required_imports = constraint_rules.get("required_imports", [])
+            for required in required_imports:
+                if re.search(rf"\bimport\s+{re.escape(required)}\b", source_code) is None and \
+                   re.search(rf"\bfrom\s+{re.escape(required)}\s+import\b", source_code) is None:
+                    violations.append(f"{constraint_name}: Missing required import '{required}'")
+                    max_penalty = max(max_penalty, penalty)
+            
+            # Check forbidden patterns (regex)
+            forbidden_patterns = constraint_rules.get("forbidden_patterns", [])
+            for pattern in forbidden_patterns:
+                if re.search(pattern, source_code, re.MULTILINE):
+                    violations.append(f"{constraint_name}: Forbidden pattern '{pattern}'")
+                    max_penalty = max(max_penalty, penalty)
+                    break
+        
+        if violations:
+            print(f"[A-003] Architecture constraint violations for {task_id}:")
+            for v in violations:
+                print(f"  - {v}")
+        
+        return max_penalty
+    
+    def _evaluate_test_specificity(self, task_id: str, test_code: str, task_description: str) -> float:
+        """
+        A-004 Implementation: Evaluate test assertion specificity and coverage.
+        
+        Args:
+            task_id: Task identifier (e.g., "task-001")
+            test_code: The submitted test code
+            task_description: Original task description for context
+        
+        Returns:
+            Specificity multiplier between 0.6 (weak tests) and 1.0 (excellent tests)
+        """
+        test_config_id = f"{task_id}-tests"
+        if not task_id or test_config_id not in self.architecture_constraints:
+            return 0.85  # Default: reasonable quality if no test config defined
+        
+        test_requirements = self.architecture_constraints[test_config_id].get("required_test_patterns", {})
+        total_weight = 0.0
+        matched_weight = 0.0
+        matches = []
+        
+        test_code_lower = test_code.lower()
+        
+        for pattern_name, pattern_rules in test_requirements.items():
+            weight = pattern_rules.get("weight", 0.1)
+            total_weight += weight
+            patterns = pattern_rules.get("patterns", [])
+            
+            # Check if any pattern matches
+            for pattern in patterns:
+                if re.search(pattern, test_code_lower, re.IGNORECASE | re.MULTILINE):
+                    matched_weight += weight
+                    matches.append(f"{pattern_name} ({weight:.2f})")
+                    break  # Only count first match per pattern group
+        
+        if matches:
+            print(f"[A-004] Test specificity matches for {task_id}: {', '.join(matches)}")
+        
+        # Calculate specificity score
+        if total_weight > 0:
+            coverage_ratio = matched_weight / total_weight
+            # Map coverage ratio to specificity multiplier: [0, 1] -> [0.6, 1.0]
+            specificity = 0.6 + (0.4 * coverage_ratio)
+        else:
+            specificity = 0.85  # Default if no patterns defined
+        
+        return min(1.0, max(0.6, specificity))
     async def evaluate(
         self,
         task_description: str,
@@ -113,9 +307,13 @@ The logic_score must be a float between 0.0 and 1.0:
             sandbox_result: Optional dynamic execution result from Sandbox
         """
         
-        source_code = purple_response.get("sourceCode", "")
-        rationale = purple_response.get("rationale", "")
-        test_code = purple_response.get("testCode", "")
+        # Harmony Protocol Integration: Parse Purple Agent response
+        # Handles both standard A2A format and Harmony format (gpt-oss models)
+        parsed_response = self._parse_purple_response(purple_response)
+        
+        source_code = parsed_response.get("sourceCode", "")
+        rationale = parsed_response.get("rationale", "")
+        test_code = parsed_response.get("testCode", "")
         
         red_feedback = "No Red Agent audit performed."
         if red_report:
@@ -127,13 +325,36 @@ The logic_score must be a float between 0.0 and 1.0:
         # Compare Intent (task_description) with Rationale
         r_score = self.vector_scorer.calculate_similarity(task_description, rationale)
 
-        # 2. Architectural Integrity (A) - Vector + LLM
+        # 2. Architectural Integrity (A) - Vector + Constraints
         # Compare Rationale with Source Code
         a_vector_score = self.vector_scorer.calculate_similarity(rationale, source_code)
         
-        # 3. Testing Integrity (T) - Vector + LLM
+        # A-003 Implementation: Apply task-specific architectural constraints
+        # Extract task_id from task_description or purple_response metadata
+        task_id = purple_response.get("task_id") if isinstance(purple_response, dict) else None
+        if not task_id:
+            # Try to infer from task_description (fallback)
+            for tid in ["task-001", "task-002", "task-003", "task-004"]:
+                if tid in str(task_description).lower() or self.architecture_constraints.get(tid, {}).get("title", "").lower() in task_description.lower():
+                    task_id = tid
+                    break
+        
+        constraint_penalty = self._evaluate_architecture_constraints(task_id, source_code) if task_id else 0.0
+        a_score = a_vector_score * (1.0 - constraint_penalty)
+        
+        # 3. Testing Integrity (T) - Vector + Test Specificity
         # Compare Source Code with Test Code
         t_vector_score = self.vector_scorer.calculate_similarity(source_code, test_code)
+        
+        # A-004 Implementation: Evaluate test assertion specificity
+        # Check if tests verify key acceptance criteria (not just generic assertions)
+        test_specificity = self._evaluate_test_specificity(task_id, test_code, task_description) if task_id else 0.85
+        t_score = t_vector_score * test_specificity
+
+        # A-002 Implementation: Explicit Cosine Similarity for Intent vs Code
+        # Compute and store intent_code_similarity as separate diagnostic field
+        # (Not yet used in CIS formula; reserved for validation analysis and reporting)
+        intent_code_similarity = self.vector_scorer.calculate_similarity(task_description, source_code)
 
         # Capture Intent Vector for DBOM (Task 1.6)
         intent_vector = self.vector_scorer.get_embedding(task_description).tolist()
@@ -227,7 +448,7 @@ Return a JSON object with this EXACT structure:
   "logic_critique": "{logic_critique[:100]}...",
   "breakdown": "Explanation including vector score influence, logic review, and Tier 2 analysis..."
 }}
-Note: `cis_score` = (0.2 * R) + (0.2 * A) + (0.2 * T) + (0.4 * L). Logic Score has the highest weight.
+Note: `cis_score` = (0.25 * R) + (0.25 * A) + (0.25 * T) + (0.25 * L). Equal weighting across all dimensions.
 """
 
         try:
@@ -250,11 +471,56 @@ Note: `cis_score` = (0.2 * R) + (0.2 * A) + (0.2 * T) + (0.4 * L). Logic Score h
                 eval_data["logic_critique"] = logic_critique
 
             # Recalculate CIS with the weighted formula to ensure consistency
+            # A-001 Documentation: CIS Weight Rationale
+            # - R(Δ) [0.25]: Semantic alignment between task intent and rationale
+            # - A(Δ) [0.25]: Architectural soundness of implementation structure
+            # - T(Δ) [0.25]: Test coverage quality and assertion specificity
+            # - L(Δ) [0.25]: Logic correctness via senior code review (LLM-based)
+            # Equal weighting (25-25-25-25) ensures no single dimension dominates
+            # and maintains defensibility against judge criticism of unvalidated metrics.
             r = float(eval_data.get("rationale_score", 0.0))
             a = float(eval_data.get("architecture_score", 0.0))
             t = float(eval_data.get("testing_score", 0.0))
             l = float(eval_data.get("logic_score", logic_score))
-            eval_data["cis_score"] = (0.2 * r) + (0.2 * a) + (0.2 * t) + (0.4 * l)
+            
+            # B-001 Implementation: Anchor Logic Score to Test Results
+            # If sandbox tests failed, cap logic_score at 0.3 (tests are ground truth)
+            if sandbox_result and not sandbox_result.get("success", False):
+                l = min(l, 0.3)
+                eval_data["logic_score_anchored"] = True
+            
+            # B-002 Implementation: Reweight to 25-25-25-25 (equal component weight)
+            raw_cis = (0.25 * r) + (0.25 * a) + (0.25 * t) + (0.25 * l)
+            
+            # Red Agent Integration (H-004): Parse vulnerability report and apply penalty
+            red_penalty_multiplier = 1.0  # Default: no penalty
+            parsed_red_report = None
+            
+            if red_report:
+                try:
+                    parsed_red_report = self.red_parser.parse(red_report)
+                    red_penalty_multiplier = parsed_red_report.get_penalty_multiplier()
+                except Exception as e:
+                    print(f"Warning: Red Agent parsing failed: {e}")
+            
+            # Apply Red Agent vulnerability penalty (multiplicative)
+            eval_data["cis_score"] = raw_cis * red_penalty_multiplier
+            eval_data["red_penalty_applied"] = 1.0 - red_penalty_multiplier
+            
+            # Include structured Red Agent analysis metadata
+            if parsed_red_report:
+                max_sev = parsed_red_report.get_max_severity()
+                eval_data["red_analysis"] = {
+                    "attack_successful": parsed_red_report.attack_successful,
+                    "vulnerability_count": len(parsed_red_report.vulnerabilities),
+                    "max_severity": max_sev.value if max_sev else None,
+                    "penalty_percentage": (1.0 - red_penalty_multiplier) * 100,
+                }
+
+            # A-002 Implementation: Store Intent-Code Similarity
+            # Separate diagnostic field for Intent vs Code semantic alignment
+            # Reserved for validation analysis and future R(Δ) redefinition studies
+            eval_data["intent_code_similarity"] = intent_code_similarity
 
             # Attach the real Intent Vector for the DBOM Generator
             eval_data["intent_vector"] = intent_vector
@@ -272,3 +538,38 @@ Note: `cis_score` = (0.2 * R) + (0.2 * A) + (0.2 * T) + (0.4 * L). Logic Score h
                 "breakdown": f"Scoring failed due to error: {str(e)}",
                 "intent_vector": intent_vector,
             }
+    
+    def _format_red_report(self, report: RedAgentReport) -> str:
+        """
+        Format parsed Red Agent report for human-readable output.
+        
+        Args:
+            report: Parsed RedAgentReport object
+        
+        Returns:
+            Formatted string with vulnerability details
+        """
+        lines = [f"**Attack Successful:** {report.attack_successful}"]
+        
+        if report.vulnerabilities:
+            lines.append(f"**Vulnerabilities Found:** {len(report.vulnerabilities)}")
+            for i, v in enumerate(report.vulnerabilities, 1):
+                lines.append(f"\n{i}. [{v.severity.value.upper()}] {v.title}")
+                lines.append(f"   Category: {v.category}")
+                lines.append(f"   Description: {v.description}")
+                if v.exploit_code:
+                    # Truncate long exploit code
+                    exploit_preview = v.exploit_code[:100]
+                    if len(v.exploit_code) > 100:
+                        exploit_preview += "..."
+                    lines.append(f"   Exploit: `{exploit_preview}`")
+                if v.line_number:
+                    lines.append(f"   Line: {v.line_number}")
+                lines.append(f"   Confidence: {v.confidence}")
+        else:
+            lines.append("**No vulnerabilities detected**")
+        
+        if report.attack_summary:
+            lines.append(f"\n**Summary:** {report.attack_summary}")
+        
+        return "\n".join(lines)

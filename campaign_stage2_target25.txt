@@ -1,0 +1,285 @@
+nohup: ignoring input
+warning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead
+Detected server schema; reading will parse raw_result.
+Starting Smart Campaign Runner
+Target: 25 samples per task
+Agent URL: http://localhost:9000
+Skipping tasks: Email Validator
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │     7 │ [=====               ] │
+│ LRU Cache           │     6 │ [====                ] │
+│ Recursive Fibonacci │     5 │ [====                ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 5)
+(timeout: 120s) Timeout detected (server alive). Retrying with 180.0s timeout (attempt 1/2)...
+(timeout: 180.0s) Success! Battle ID: auto_1768354883_3939
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │     7 │ [=====               ] │
+│ LRU Cache           │     6 │ [====                ] │
+│ Recursive Fibonacci │     7 │ [=====               ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 6)
+(timeout: 100s) Timeout detected (server alive). Retrying with 160.0s timeout (attempt 1/2)...
+(timeout: 160.0s) Timeout detected (server alive). Retrying with 280.0s timeout (attempt 2/2)...
+(timeout: 280.0s) Success! Battle ID: auto_1768355166_1370
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │     7 │ [=====               ] │
+│ LRU Cache           │     9 │ [=======             ] │
+│ Recursive Fibonacci │     7 │ [=====               ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 7)
+(timeout: 75s) Timeout detected (server alive). Retrying with 135.0s timeout (attempt 1/2)...
+(timeout: 135.0s) Timeout detected (server alive). Retrying with 255.0s timeout (attempt 2/2)...
+(timeout: 255.0s) Timeout (after 2 retries)
+Error: timed out
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │     9 │ [=======             ] │
+│ LRU Cache           │     9 │ [=======             ] │
+│ Recursive Fibonacci │     7 │ [=====               ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 7)
+(timeout: 120s) Timeout detected (server alive). Retrying with 180.0s timeout (attempt 1/2)...
+(timeout: 180.0s) Success! Battle ID: auto_1768356181_5055
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    10 │ [========            ] │
+│ LRU Cache           │     9 │ [=======             ] │
+│ Recursive Fibonacci │     9 │ [=======             ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 9)
+(timeout: 100s) Timeout detected (server alive). Retrying with 160.0s timeout (attempt 1/2)...
+(timeout: 160.0s) Timeout detected (server alive). Retrying with 280.0s timeout (attempt 2/2)...
+(timeout: 280.0s) Success! Battle ID: auto_1768356479_2936
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    10 │ [========            ] │
+│ LRU Cache           │    12 │ [=========           ] │
+│ Recursive Fibonacci │     9 │ [=======             ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 9)
+(timeout: 120s) Timeout detected (server alive). Retrying with 180.0s timeout (attempt 1/2)...
+(timeout: 180.0s) Timeout detected (server alive). Retrying with 300.0s timeout (attempt 2/2)...
+(timeout: 300.0s) Success! Battle ID: auto_1768357008_4228
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    10 │ [========            ] │
+│ LRU Cache           │    12 │ [=========           ] │
+│ Recursive Fibonacci │    12 │ [=========           ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 10)
+(timeout: 75s) Timeout detected (server alive). Retrying with 135.0s timeout (attempt 1/2)...
+(timeout: 135.0s) Timeout detected (server alive). Retrying with 255.0s timeout (attempt 2/2)...
+(timeout: 255.0s) Timeout (after 2 retries)
+Error: timed out
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    12 │ [=========           ] │
+│ LRU Cache           │    12 │ [=========           ] │
+│ Recursive Fibonacci │    12 │ [=========           ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 12)
+(timeout: 100s) Timeout detected (server alive). Retrying with 160.0s timeout (attempt 1/2)...
+(timeout: 160.0s) Timeout detected (server alive). Retrying with 280.0s timeout (attempt 2/2)...
+(timeout: 280.0s) Success! Battle ID: auto_1768357977_3978
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    13 │ [==========          ] │
+│ LRU Cache           │    15 │ [============        ] │
+│ Recursive Fibonacci │    12 │ [=========           ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 12)
+(timeout: 120s) Timeout detected (server alive). Retrying with 180.0s timeout (attempt 1/2)...
+(timeout: 180.0s) Success! Battle ID: auto_1768358440_6439
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    13 │ [==========          ] │
+│ LRU Cache           │    15 │ [============        ] │
+│ Recursive Fibonacci │    14 │ [===========         ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 13)
+(timeout: 75s) Timeout detected (server alive). Retrying with 135.0s timeout (attempt 1/2)...
+(timeout: 135.0s) Timeout detected (server alive). Retrying with 255.0s timeout (attempt 2/2)...
+(timeout: 255.0s) Timeout (after 2 retries)
+Error: timed out
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    15 │ [============        ] │
+│ LRU Cache           │    15 │ [============        ] │
+│ Recursive Fibonacci │    14 │ [===========         ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 14)
+(timeout: 120s) Timeout detected (server alive). Retrying with 180.0s timeout (attempt 1/2)...
+(timeout: 180.0s) Success! Battle ID: auto_1768359217_3848
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    16 │ [============        ] │
+│ LRU Cache           │    15 │ [============        ] │
+│ Recursive Fibonacci │    16 │ [============        ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 15)
+(timeout: 100s) Timeout detected (server alive). Retrying with 160.0s timeout (attempt 1/2)...
+(timeout: 160.0s) Timeout detected (server alive). Retrying with 280.0s timeout (attempt 2/2)...
+(timeout: 280.0s) Success! Battle ID: auto_1768359509_7967
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    16 │ [============        ] │
+│ LRU Cache           │    18 │ [==============      ] │
+│ Recursive Fibonacci │    16 │ [============        ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 16)
+(timeout: 75s) Timeout detected (server alive). Retrying with 135.0s timeout (attempt 1/2)...
+(timeout: 135.0s) Timeout detected (server alive). Retrying with 255.0s timeout (attempt 2/2)...
+(timeout: 255.0s) Success! Battle ID: auto_1768359996_2874
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    19 │ [===============     ] │
+│ LRU Cache           │    18 │ [==============      ] │
+│ Recursive Fibonacci │    16 │ [============        ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 16)
+(timeout: 120s) Timeout detected (server alive). Retrying with 180.0s timeout (attempt 1/2)...
+(timeout: 180.0s) Timeout detected (server alive). Retrying with 300.0s timeout (attempt 2/2)...
+(timeout: 300.0s) Success! Battle ID: auto_1768360464_8568
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    19 │ [===============     ] │
+│ LRU Cache           │    18 │ [==============      ] │
+│ Recursive Fibonacci │    19 │ [===============     ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 18)
+(timeout: 100s) Timeout detected (server alive). Retrying with 160.0s timeout (attempt 1/2)...
+(timeout: 160.0s) Timeout detected (server alive). Retrying with 280.0s timeout (attempt 2/2)...
+(timeout: 280.0s) Success! Battle ID: auto_1768360952_8362
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    19 │ [===============     ] │
+│ LRU Cache           │    21 │ [================    ] │
+│ Recursive Fibonacci │    19 │ [===============     ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 19)
+(timeout: 75s) Timeout detected (server alive). Retrying with 135.0s timeout (attempt 1/2)...
+(timeout: 135.0s) Timeout detected (server alive). Retrying with 255.0s timeout (attempt 2/2)...
+(timeout: 255.0s) Success! Battle ID: auto_1768361453_7521
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    22 │ [=================   ] │
+│ LRU Cache           │    21 │ [================    ] │
+│ Recursive Fibonacci │    19 │ [===============     ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 19)
+(timeout: 120s) Timeout detected (server alive). Retrying with 180.0s timeout (attempt 1/2)...
+(timeout: 180.0s) Timeout detected (server alive). Retrying with 300.0s timeout (attempt 2/2)...
+(timeout: 300.0s) Success! Battle ID: auto_1768361924_5133
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    22 │ [=================   ] │
+│ LRU Cache           │    21 │ [================    ] │
+│ Recursive Fibonacci │    22 │ [=================   ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 21)
+(timeout: 100s) Timeout detected (server alive). Retrying with 160.0s timeout (attempt 1/2)...
+(timeout: 160.0s) Timeout detected (server alive). Retrying with 280.0s timeout (attempt 2/2)...
+(timeout: 280.0s) Success! Battle ID: auto_1768362412_2353
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    22 │ [=================   ] │
+│ LRU Cache           │    24 │ [=================== ] │
+│ Recursive Fibonacci │    22 │ [=================   ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Rate Limiter (Current: 22)
+(timeout: 75s) Timeout detected (server alive). Retrying with 135.0s timeout (attempt 1/2)...
+(timeout: 135.0s) Timeout detected (server alive). Retrying with 255.0s timeout (attempt 2/2)...
+(timeout: 255.0s) Timeout (after 2 retries)
+Error: timed out
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    24 │ [=================== ] │
+│ LRU Cache           │    24 │ [=================== ] │
+│ Recursive Fibonacci │    22 │ [=================   ] │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: Recursive Fibonacci (Current: 22)
+(timeout: 120s) Timeout detected (server alive). Retrying with 180.0s timeout (attempt 1/2)...
+(timeout: 180.0s) Timeout detected (server alive). Retrying with 300.0s timeout (attempt 2/2)...
+(timeout: 300.0s) Success! Battle ID: auto_1768363380_7768
+Cooling down for 10s...
+                   Campaign Coverage                    
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress               ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Rate Limiter        │    25 │ DONE                   │
+│ LRU Cache           │    24 │ [=================== ] │
+│ Recursive Fibonacci │    25 │ DONE                   │
+└─────────────────────┴───────┴────────────────────────┘
+Next Target: LRU Cache (Current: 24)
+(timeout: 100s) Timeout detected (server alive). Retrying with 160.0s timeout (attempt 1/2)...
+(timeout: 160.0s) Timeout detected (server alive). Retrying with 280.0s timeout (attempt 2/2)...
+(timeout: 280.0s) Success! Battle ID: auto_1768363861_1457
+Cooling down for 10s...
+            Campaign Coverage             
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━┓
+┃ Task                ┃ Count ┃ Progress ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━┩
+│ Rate Limiter        │    25 │ DONE     │
+│ LRU Cache           │    27 │ DONE     │
+│ Recursive Fibonacci │    25 │ DONE     │
+└─────────────────────┴───────┴──────────┘
+All targets met! Campaign complete.

@@ -41,17 +41,32 @@ type: Spec
 
 ### Strategy & IP
 *   [Contextual Debt Paper (Draft)](../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md): The core theory.
+*   **Paper Versioning Protocol (G-001):** Before any paper update, copy current to archive with timestamp. All versions tracked in this file.
+    - **Current Version:** v1 (2026-01-14) - Validates Stage 2 Campaign (77 battles)
+    - **Archive:** [00-Strategy/IP/archive/](../00-Strategy/IP/archive/)
+    - **Process:** `cp paper.md archive/paper_v[N]_YYYY-MM-DD.md` before edits; update CURRENT_TRUTH_SOURCE.md after
 *   [Competition Requirements](../05-Competition/20251221-Submission-Requirements-Matrix.md): The rules we must follow.
 
 ### Architecture
 *   [Agent Arena Upgrade Plan](../04-Operations/Intent-Log/Technical/20260101-Agent-Arena-Upgrade-Plan.md): The technical roadmap for the competition.
 *   [Embedding Vectors Specs](../04-Operations/Embedding-Vectors/README.md): Mathematical specifications for CIS.
+*   **CIS Metrics Tracking (A-002):** 
+    - **Formula (Post-B-002):** `CIS = (0.25 × R) + (0.25 × A) + (0.25 × T) + (0.25 × L)` 
+    - **Components:** rationale_score (Intent↔Rationale), architecture_score, testing_score, logic_score (anchored to sandbox success per B-001)
+    - **New Diagnostic (A-002):** `intent_code_similarity` (cos(task_description, source_code)) stored separately in evaluation JSON
+    - **Purpose:** Intent↔Code metric reserved for validation analysis to test against Intent↔Rationale for R(Δ) definition accuracy
+    - **Status:** Non-breaking addition; preserved Stage 2 comparability; enables future R(Δ) refinement post-validation
 
 ### Operations
 *   [Master Log](../04-Operations/Intent-Log/Technical/20251231-Polyglot-Consolidation-Master-Log.md): History of the Polyglot merge.
 *   [Lambda Test Protocol](../04-Operations/Intent-Log/Josh/20260101-Lambda-Test-Protocol.md): How to run the test.
 *   [Instance Restart Guide](../04-Operations/Intent-Log/Josh/20260103-Instance-Restart-Guide.md): **CRITICAL** procedure for recovering the ephemeral H100 environment.
 *   [Team Briefing Draft](../04-Operations/Intent-Log/Josh/20260101-Team-Briefing-Draft.md): Announcement of the "Red Zone" sprint.
+*   **Phase 2.7: C-NEW-001 Infrastructure Setup (2026-01-14)**
+    - [Setup & Execution Log](../04-Operations/Intent-Log/Josh/Phase2.7-C-NEW-001-Infrastructure-Setup-20260114.md): Sequential deployment of Mistral/Qwen/gpt-oss trio
+    - Status: **READY FOR EXECUTION** (25 battles × 3 tiers, ~12-16 hours)
+    - Automation: `scripts/run_c_new_001_diversity_test.sh`, `scripts/analyze_c_new_001_results.py`
+    - Expected CIS deltas: 0.33 (Tier 1→3), validates metric hypothesis
 
 ---
 
