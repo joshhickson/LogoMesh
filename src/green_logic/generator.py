@@ -18,12 +18,14 @@ class TestGenerator:
     FALLBACK_TEST = "def test_fallback(): assert True"
 
     def __init__(self):
-        """Initialize AsyncOpenAI client with Qwen configuration."""
+        """Initialize AsyncOpenAI client for vLLM (OpenAI-compatible API)."""
+        # Priority: LLM_* > OPENAI_* (for backwards compatibility)
         self.client = AsyncOpenAI(
-            api_key=os.getenv("QWEN_API_KEY"),
-            base_url=os.getenv("QWEN_BASE_URL"),
+            api_key=os.getenv("LLM_API_KEY", os.getenv("OPENAI_API_KEY", "dummy")),
+            base_url=os.getenv("LLM_BASE_URL", os.getenv("OPENAI_BASE_URL")),
         )
-        self.timeout_seconds = 10
+        self.model = os.getenv("LLM_MODEL_NAME", os.getenv("MODEL_NAME", "Qwen/Qwen2.5-Coder-32B-Instruct-AWQ"))
+        self.timeout_seconds = 30  # vLLM can be slow on first request
 
     async def generate_adversarial_tests(
         self, task_desc: str, candidate_code: str
@@ -65,7 +67,7 @@ Generate 3 adversarial pytest test functions targeting edge cases in this code."
         try:
             response = await asyncio.wait_for(
                 self.client.chat.completions.create(
-                    model=os.getenv("QWEN_MODEL_NAME", "qwen-2.5-coder"),
+                    model=self.model,
                     messages=[
                         {"role": "system", "content": system_prompt},
                         {"role": "user", "content": user_prompt},
@@ -79,8 +81,10 @@ Generate 3 adversarial pytest test functions targeting edge cases in this code."
             return self._sanitize_output(raw_output)
 
         except asyncio.TimeoutError:
+            print("DEBUG: TestGenerator timed out")
             return self.FALLBACK_TEST
-        except Exception:
+        except Exception as e:
+            print(f"DEBUG: TestGenerator failed: {e}")
             return self.FALLBACK_TEST
 
     def _sanitize_output(self, raw: str) -> str:

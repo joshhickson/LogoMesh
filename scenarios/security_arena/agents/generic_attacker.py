@@ -156,7 +156,8 @@ class GenericAttackerExecutor(AgentExecutor):
                 messages=[
                     {"role": "system", "content": self.system_prompt},
                     *self.conversation_history[context_id]
-                ]
+                ],
+                temperature=0.7,  # Higher creativity for finding novel attack vectors
             )
 
             assistant_message = response.choices[0].message.content
