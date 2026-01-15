@@ -93,6 +93,8 @@ The logic_score must be a float between 0.0 and 1.0:
                         {"role": "user", "content": review_prompt},
                     ],
                     response_format={"type": "json_object"},
+                    temperature=0,  # Deterministic for reproducibility
+                    seed=42,        # Fixed seed for consistent results
                 ),
                 timeout=self.logic_review_timeout,
             )
@@ -458,7 +460,9 @@ Note: `cis_score` = (0.25 * R) + (0.25 * A) + (0.25 * T) + (0.25 * L). Equal wei
                     {"role": "system", "content": "You are a strict code evaluator."},
                     {"role": "user", "content": prompt}
                 ],
-                response_format={"type": "json_object"}
+                response_format={"type": "json_object"},
+                temperature=0,  # Deterministic for reproducibility
+                seed=42,        # Fixed seed for consistent results
             )
             
             content = response.choices[0].message.content
