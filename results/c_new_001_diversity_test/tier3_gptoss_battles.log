@@ -103,3 +103,56 @@ Model: openai/gpt-oss-20b (Harmony Protocol)
      Harmony: NO
      Status: ✓
 
+[18] tier3-gptoss-018
+     Duration: 2.9s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[19] tier3-gptoss-019
+     Duration: 2.9s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[20] tier3-gptoss-020
+     Duration: 2.9s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[21] tier3-gptoss-021
+     Duration: 3.0s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[22] tier3-gptoss-022
+     Duration: 2.8s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[23] tier3-gptoss-023
+     Duration: 2.8s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[24] tier3-gptoss-024
+     Duration: 2.9s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[25] tier3-gptoss-025
+     Duration: 2.6s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+================================================================================
+Execution Summary
+  Successful: 23/25
+  Failed: 2/25
+  End Time: 2026-01-15T11:07:04.528082
