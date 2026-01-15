@@ -17,7 +17,7 @@ This document outlines the status of the C-NEW-001 Model Diversity Test (Tiers 1
 
 **Current Status (22:00 UTC):**
 *   **Tier 2 (Qwen):** Rerun Complete (200s timeout fix applied). Validation pending.
-*   **Tier 1 (Mistral):** Automation failed (`scripts/finish_the_job.sh`). **Manual Rerun In Progress.**
+*   **Tier 1 (Mistral):** Automation failed (`scripts/finish_the_job.sh`). **BLOCKED (Windows) -> PIVOTING TO CLOUD.**
 *   **Tier 3 (GPT-OSS):** Pending Manual Execution.
 
 ---
@@ -27,7 +27,9 @@ This document outlines the status of the C-NEW-001 Model Diversity Test (Tiers 1
 Derived from `20260115-LogoMesh-Meeting-[Alaa_Deepti_Josh].srt`.
 
 ### Critical Path: Submission (Owner: Josh)
-- [-] **Manual Rerun Tier 1 (Mistral):** Execute 25 battles manually (Automation script failed). **[IN PROGRESS]**
+- [ ] **Provision Lambda Instance:** Spin up A100/H100 instance for Tier 1 Rerun. (Windows Local attempt abandoned).
+    -   *Plan:* [20260115-Lambda-Provisioning-Plan.md](../../Intent-Log/Technical/20260115-Lambda-Provisioning-Plan.md)
+- [ ] **Manual Rerun Tier 1 (Mistral):** Execute 25 battles manually on Lambda.
 - [ ] **Submission Gap Analysis:** Verify repository structure against `docs/05-Competition/20260115-AGENTBEATS-SUBMISSION-FORMAT-WEBSITE-EXPORT.md`.
     -   *Plan:* [20260115-Submission-Gap-Analysis-Plan.md](../../Intent-Log/Technical/20260115-Submission-Gap-Analysis-Plan.md)
 - [ ] **Manual Rerun Tier 3 (GPT-OSS):** Execute 25 battles manually.
@@ -65,9 +67,9 @@ Derived from `20260115-LogoMesh-Meeting-[Alaa_Deepti_Josh].srt`.
 
 ### Tier 1: Mistral-7B (Baseline)
 *   **Database File:** `data/battles_tier1_mistral.db`
-*   **Status:** 🟡 **MANUAL RERUN IN PROGRESS**
-    *   Previous attempts contained API errors.
-    *   Automation script failed to execute.
+*   **Status:** 🟠 **RESTARTING ON CLOUD**
+    *   Windows Local attempt failed.
+    *   Pivoting to Lambda Labs A100 environment.
 
 ### Tier 2: Qwen-32B (Competitor)
 *   **Database File:** `data/battles_tier2_qwen.db`
