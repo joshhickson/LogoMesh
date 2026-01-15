@@ -1,136 +1,136 @@
 Tier 2 (Qwen) Battle Execution Log
-Start Time: 2026-01-15T00:52:20.599170
+Start Time: 2026-01-15T07:55:52.183669
 Total Battles: 25
 Database: data/battles_tier2_qwen.db
 ================================================================================
 
 [01] tier2-qwen-001
-     Duration: 303.4s
-     Score: 0.68
+     Duration: 187.9s
+     Score: 0.69
      Status: ✓
 
 [02] tier2-qwen-002
-     Duration: 238.0s
-     Score: 0.76
+     Duration: 161.6s
+     Score: 0.80
      Status: ✓
 
 [03] tier2-qwen-003
-     Duration: 191.7s
-     Score: 0.76
+     Duration: 178.4s
+     Score: 0.38
      Status: ✓
 
 [04] tier2-qwen-004
-     Duration: 283.6s
-     Score: 0.64
-     Status: ✓
-
-[05] tier2-qwen-005
-     Duration: 196.8s
-     Score: 0.76
-     Status: ✓
-
-[06] tier2-qwen-006
-     Duration: 194.7s
-     Score: 0.74
-     Status: ✓
-
-[07] tier2-qwen-007
-     Duration: 203.7s
-     Score: 0.42
-     Status: ✓
-
-[08] tier2-qwen-008
-     Duration: 204.3s
-     Score: 0.44
-     Status: ✓
-
-[09] tier2-qwen-009
-     Duration: 258.2s
-     Score: 0.62
-     Status: ✓
-
-[10] tier2-qwen-010
-     Duration: 227.2s
-     Score: 0.42
-     Status: ✓
-
-[11] tier2-qwen-011
-     Duration: 227.8s
-     Score: 0.58
-     Status: ✓
-
-[12] tier2-qwen-012
-     Duration: 183.0s
-     Score: 0.52
-     Status: ✓
-
-[13] tier2-qwen-013
-     Duration: 257.6s
-     Score: 0.64
-     Status: ✓
-
-[14] tier2-qwen-014
-     Duration: 280.6s
-     Score: 0.76
-     Status: ✓
-
-[15] tier2-qwen-015
-     Duration: 237.7s
-     Score: 0.78
-     Status: ✓
-
-[16] tier2-qwen-016
-     Duration: 152.9s
-     Score: 0.84
-     Status: ✓
-
-[17] tier2-qwen-017
-     Duration: 236.8s
-     Score: 0.54
-     Status: ✓
-
-[18] tier2-qwen-018
-     Duration: 303.8s
-     Score: 0.67
-     Status: ✓
-
-[19] tier2-qwen-019
-     Duration: 171.7s
-     Score: 0.84
-     Status: ✓
-
-[20] tier2-qwen-020
-     Duration: 266.6s
-     Score: 0.76
-     Status: ✓
-
-[21] tier2-qwen-021
-     Duration: 261.3s
-     Score: 0.62
-     Status: ✓
-
-[22] tier2-qwen-022
-     Duration: 218.9s
+     Duration: 187.0s
      Score: 0.75
      Status: ✓
 
-[23] tier2-qwen-023
-     Duration: 216.8s
-     Score: 0.70
+[05] tier2-qwen-005
+     Duration: 309.3s
+     Score: 0.64
      Status: ✓
 
-[24] tier2-qwen-024
-     Duration: 274.6s
+[06] tier2-qwen-006
+     Duration: 333.2s
+     Score: 0.77
+     Status: ✓
+
+[07] tier2-qwen-007
+     Duration: 172.0s
+     Score: 0.80
+     Status: ✓
+
+[08] tier2-qwen-008
+     Duration: 163.1s
      Score: 0.79
      Status: ✓
 
+[09] tier2-qwen-009
+     Duration: 229.8s
+     Score: 0.74
+     Status: ✓
+
+[10] tier2-qwen-010
+     Duration: 140.3s
+     Score: 0.72
+     Status: ✓
+
+[11] tier2-qwen-011
+     Duration: 219.6s
+     Score: 0.55
+     Status: ✓
+
+[12] tier2-qwen-012
+     Duration: 241.0s
+     Score: 0.50
+     Status: ✓
+
+[13] tier2-qwen-013
+     Duration: 312.6s
+     Score: 0.74
+     Status: ✓
+
+[14] tier2-qwen-014
+     Duration: 296.0s
+     Score: 0.74
+     Status: ✓
+
+[15] tier2-qwen-015
+     Duration: 279.6s
+     Score: 0.81
+     Status: ✓
+
+[16] tier2-qwen-016
+     Duration: 247.3s
+     Score: 0.70
+     Status: ✓
+
+[17] tier2-qwen-017
+     Duration: 280.3s
+     Score: 0.76
+     Status: ✓
+
+[18] tier2-qwen-018
+     Duration: 363.6s
+     Score: 0.74
+     Status: ✓
+
+[19] tier2-qwen-019
+     Duration: 149.8s
+     Score: 0.76
+     Status: ✓
+
+[20] tier2-qwen-020
+     Duration: 291.2s
+     Score: 0.81
+     Status: ✓
+
+[21] tier2-qwen-021
+     Duration: 315.6s
+     Score: 0.74
+     Status: ✓
+
+[22] tier2-qwen-022
+     Duration: 227.8s
+     Score: 0.66
+     Status: ✓
+
+[23] tier2-qwen-023
+     Duration: 142.6s
+     Score: 0.71
+     Status: ✓
+
+[24] tier2-qwen-024
+     Duration: 190.6s
+     Score: 0.32
+     Status: ✓
+
 [25] tier2-qwen-025
-     Duration: 259.5s
-     Score: 0.63
+     Duration: 3080.9s
+     Score: 0.16
      Status: ✓
 
 ================================================================================
 Execution Summary
   Successful: 25/25
   Failed: 0/25
-  End Time: 2026-01-15T02:30:39.911673
+  End Time: 2026-01-15T10:21:41.777555

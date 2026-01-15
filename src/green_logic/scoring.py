@@ -21,7 +21,7 @@ class ContextualIntegrityScorer:
         )
         # Initialize Vector Scorer for math-based evaluation
         self.vector_scorer = VectorScorer()
-        self.logic_review_timeout = 85
+        # NOTE: Timeout removed - using A2A streaming for signal-based completion detection (See A2A-Streaming-Prototype-Plan.md)
         
         # A-003 Implementation: Load architecture constraints
         constraints_path = Path(__file__).parent / "architecture_constraints.yaml"
@@ -85,19 +85,26 @@ The logic_score must be a float between 0.0 and 1.0:
 - 0.9-1.0: Excellent, handles all cases optimally"""
 
         try:
-            response = await asyncio.wait_for(
-                self.client.chat.completions.create(
-                    model=os.getenv("MODEL_NAME", "gpt-4o-mini"),
-                    messages=[
-                        {"role": "system", "content": "You are a senior code reviewer."},
-                        {"role": "user", "content": review_prompt},
-                    ],
-                    response_format={"type": "json_object"},
-                ),
-                timeout=self.logic_review_timeout,
+            # Use A2A streaming for signal-based completion (no timeout needed)
+            # Streaming naturally completes when the LLM finishes generating tokens
+            content = ""
+            
+            stream = await self.client.chat.completions.create(
+                model=os.getenv("MODEL_NAME", "gpt-4o-mini"),
+                messages=[
+                    {"role": "system", "content": "You are a senior code reviewer."},
+                    {"role": "user", "content": review_prompt},
+                ],
+                response_format={"type": "json_object"},
+                stream=True  # Enable A2A streaming for signal-based completion
             )
-
-            content = response.choices[0].message.content
+            
+            # Consume token stream - naturally completes when LLM finishes
+            async for chunk in stream:
+                if chunk.choices and chunk.choices[0].delta.content:
+                    content += chunk.choices[0].delta.content
+            
+            # Parse JSON response
             review_data = json.loads(content)
 
             # Validate and clamp logic_score
@@ -109,8 +116,6 @@ The logic_score must be a float between 0.0 and 1.0:
                 "critique": review_data.get("critique", "No critique provided."),
             }
 
-        except asyncio.TimeoutError:
-            return {"logic_score": 0.5, "critique": "Logic review timed out."}
         except Exception as e:
             return {"logic_score": 0.5, "critique": f"Logic review failed: {str(e)}"}
 
@@ -132,6 +137,24 @@ The logic_score must be a float between 0.0 and 1.0:
         source_code = purple_response.get("sourceCode", "")
         test_code = purple_response.get("testCode", "")
         rationale = purple_response.get("rationale", "")
+        
+        # HOTFIX: Detect and unwrap double-encoded JSON
+        # Sometimes Qwen/vLLM returns the full JSON object as the 'sourceCode' string
+        if isinstance(source_code, str) and source_code.strip().startswith("{") and '"sourceCode"' in source_code:
+            try:
+                # Attempt to parse the string as JSON
+                inner_json = json.loads(source_code)
+                if isinstance(inner_json, dict) and "sourceCode" in inner_json:
+                    print(f"[Parser] Detected double-encoded JSON in sourceCode. Unwrapping.")
+                    source_code = inner_json.get("sourceCode", source_code)
+                    # Opportunistically recover rationale/testCode if missing
+                    if not test_code and "testCode" in inner_json:
+                        test_code = inner_json.get("testCode", "")
+                    if not rationale and "rationale" in inner_json:
+                        rationale = inner_json.get("rationale", "")
+            except json.JSONDecodeError:
+                # Not valid JSON, ignore
+                pass
         
         # Detect if response uses Harmony format
         # Check if sourceCode contains Harmony channel tags

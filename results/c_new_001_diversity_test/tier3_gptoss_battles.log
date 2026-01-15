@@ -1,0 +1,105 @@
+Tier 3 (gpt-oss-20b) Battle Execution Log
+Start Time: 2026-01-15T11:05:01.515439
+Total Battles: 25
+Database: data/battles_tier3_gptoss.db
+Model: openai/gpt-oss-20b (Harmony Protocol)
+================================================================================
+
+[01] tier3-gptoss-001
+     Duration: 0.0s
+     Error: ConnectError: [Errno 111] Connection refused
+
+[02] tier3-gptoss-002
+     Duration: 0.0s
+     Error: ConnectError: [Errno 111] Connection refused
+
+[03] tier3-gptoss-003
+     Duration: 4.5s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[04] tier3-gptoss-004
+     Duration: 3.0s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[05] tier3-gptoss-005
+     Duration: 2.9s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[06] tier3-gptoss-006
+     Duration: 2.9s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[07] tier3-gptoss-007
+     Duration: 2.8s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[08] tier3-gptoss-008
+     Duration: 3.4s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[09] tier3-gptoss-009
+     Duration: 2.9s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[10] tier3-gptoss-010
+     Duration: 3.0s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[11] tier3-gptoss-011
+     Duration: 3.0s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[12] tier3-gptoss-012
+     Duration: 3.1s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[13] tier3-gptoss-013
+     Duration: 2.9s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[14] tier3-gptoss-014
+     Duration: 2.8s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[15] tier3-gptoss-015
+     Duration: 3.0s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[16] tier3-gptoss-016
+     Duration: 2.9s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+
+[17] tier3-gptoss-017
+     Duration: 2.9s
+     Score: 0.16
+     Harmony: NO
+     Status: ✓
+

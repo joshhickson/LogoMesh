@@ -1,0 +1,9 @@
+warning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead
+[Tier2Qwen] Database initialized: data/battles_tier2_qwen.db
+[Tier2Qwen] Battle 1/25: tier2-qwen-001... [Tier2Qwen] Saved: tier2-qwen-001 score=0.59
+✓ 15.2s score=0.59
+[Tier2Qwen] Battle 2/25: tier2-qwen-002... [Tier2Qwen] Saved: tier2-qwen-002 score=0.73
+✓ 15.3s score=0.73
+[Tier2Qwen] Battle 3/25: tier2-qwen-003... [Tier2Qwen] Saved: tier2-qwen-003 score=0.60
+✓ 14.9s score=0.60
+[Tier2Qwen] Battle 4/25: tier2-qwen-004... 

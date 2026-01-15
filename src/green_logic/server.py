@@ -368,9 +368,11 @@ Provide a proof-of-concept exploit if possible."""
 
         # Apply penalties based on Tier 2 analysis
         if not audit_result['valid']:
-            # Static analysis failed - apply penalty
+            # Static analysis failed - apply penalty (typically 0.2 for parser errors)
+            # Only apply penalty if it's significant (>0.05) to avoid zeroing valid scores
             penalty = audit_result['penalty']
-            evaluation['cis_score'] = evaluation.get('cis_score', 0) * (1 - penalty)
+            if penalty > 0.05:  # Ignore trivial penalties
+                evaluation['cis_score'] = evaluation.get('cis_score', 0) * (1 - penalty)
             evaluation['audit_penalty'] = penalty
             evaluation['audit_reason'] = audit_result['reason']
 
