@@ -137,6 +137,58 @@ class RateLimiter:
         "expected_severity": "HIGH",
         "expected_category": "constraint_violation"  # Missing threading
     },
+    {
+        "name": "ERC20 Tautology Authorization Bypass (task-012)",
+        "task_id": "task-012",
+        "code": '''
+class ERC20Token:
+    def __init__(self, name: str, symbol: str, total_supply: int, owner: str):
+        self.name = name
+        self.symbol = symbol
+        self.total_supply = total_supply
+        self.owner = owner
+        self.balances = {owner: total_supply}
+
+    def _require(self, condition: bool, message: str):
+        if not condition:
+            raise ValueError(message)
+
+    def mint(self, to: str, amount: int) -> bool:
+        # CRITICAL BUG: self.owner == self.owner is ALWAYS True!
+        # This check is completely broken - ANYONE can mint!
+        self._require(self.owner == self.owner, 'Only owner can mint')
+        self.balances[to] = self.balances.get(to, 0) + amount
+        self.total_supply += amount
+        return True
+
+    def burn(self, from_: str, amount: int) -> bool:
+        # Same bug - anyone can burn!
+        self._require(self.owner == self.owner, 'Only owner can burn')
+        self.balances[from_] = self.balances.get(from_, 0) - amount
+        self.total_supply -= amount
+        return True
+
+    def blacklist(self, address: str) -> bool:
+        # Same bug - anyone can blacklist!
+        self._require(self.owner == self.owner, 'Only owner can blacklist')
+        return True
+''',
+        "expected_severity": "CRITICAL",
+        "expected_category": "authorization_bypass"
+    },
+    {
+        "name": "Simple Tautology (always True comparison)",
+        "task_id": None,
+        "code": '''
+def check_admin(user_id, admin_id):
+    # Bug: comparing admin_id to itself instead of user_id
+    if admin_id == admin_id:  # ALWAYS True!
+        return True
+    return False
+''',
+        "expected_severity": "CRITICAL",
+        "expected_category": "logic_flaw"
+    },
 ]
 
 

@@ -15,7 +15,7 @@ echo -e "${BLUE}[arena] starting the full setup...${NC}"
 # (Optimization: Only build if missing)
 if [[ "$(sudo docker images -q polyglot-agent:latest 2> /dev/null)" == "" ]]; then
   echo -e "${GREEN}[LaunchArena] Building Docker Image...${NC}"
-  sudo docker build -t polyglot-agent:latest -f Dockerfile.gpu .
+  sudo docker build --network=host -t polyglot-agent:latest -f Dockerfile.gpu .
 else
   echo -e "${GREEN}[LaunchArena] Image found. Skipping build.${NC}"
 fi

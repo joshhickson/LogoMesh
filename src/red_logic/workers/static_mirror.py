@@ -113,6 +113,12 @@ class StaticMirrorWorker(BaseWorker):
         # Check 6: Deep nesting
         vulnerabilities.extend(self._check_nesting(tree))
 
+        # Check 7: Tautological comparisons (critical logic flaws)
+        vulnerabilities.extend(self._check_tautologies(tree))
+
+        # Check 8: Broken authorization patterns
+        vulnerabilities.extend(self._check_broken_authorization(tree, code))
+
         return WorkerResult(
             worker_name=self.name,
             vulnerabilities=vulnerabilities,
@@ -354,3 +360,134 @@ class StaticMirrorWorker(BaseWorker):
                 max_depth = max(max_depth, child_max)
 
         return max_depth
+
+    def _check_tautologies(self, tree: ast.AST) -> list[Vulnerability]:
+        """
+        Check for tautological comparisons that are always true or false.
+
+        Examples:
+        - self.owner == self.owner  (always True)
+        - x != x  (always False for most types)
+        - self.var == self.var  (always True)
+
+        These often indicate broken authorization or logic bugs.
+        """
+        vulns = []
+
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Compare):
+                # Handle single comparisons (most common)
+                if len(node.ops) == 1 and len(node.comparators) == 1:
+                    left = ast.dump(node.left)
+                    right = ast.dump(node.comparators[0])
+                    op = node.ops[0]
+
+                    if left == right:
+                        # Same expression on both sides
+                        if isinstance(op, (ast.Eq, ast.Is)):
+                            # x == x or x is x -> always True
+                            vulns.append(self._create_vulnerability(
+                                severity=Severity.CRITICAL,
+                                category="logic_flaw",
+                                title="Tautological comparison (always True)",
+                                description=f"Comparison is always True: comparing an expression to itself. "
+                                           f"This likely indicates a broken security check or authorization bypass. "
+                                           f"The condition will ALWAYS pass regardless of actual values.",
+                                line_number=node.lineno,
+                                exploit_code="# This check is broken:\n"
+                                            "# self.owner == self.owner is ALWAYS True!\n"
+                                            "# Anyone can pass this check, not just the owner.\n"
+                                            "# Fix: Compare against the caller/sender, not self-reference",
+                                confidence="high"
+                            ))
+                        elif isinstance(op, (ast.NotEq, ast.IsNot)):
+                            # x != x or x is not x -> always False
+                            vulns.append(self._create_vulnerability(
+                                severity=Severity.HIGH,
+                                category="logic_flaw",
+                                title="Tautological comparison (always False)",
+                                description=f"Comparison is always False: comparing an expression to itself with inequality. "
+                                           f"This code path can never execute, indicating dead code or logic error.",
+                                line_number=node.lineno,
+                                confidence="high"
+                            ))
+
+        return vulns
+
+    def _check_broken_authorization(self, tree: ast.AST, code: str) -> list[Vulnerability]:
+        """
+        Check for broken authorization patterns.
+
+        Patterns detected:
+        1. require(owner == owner) - self-comparison in auth check
+        2. _require(self.x == self.x) - same pattern in method call
+        3. assert self.admin == self.admin - assertion that always passes
+        4. if caller == caller: - always-true branch guard
+        """
+        vulns = []
+        lines = code.split("\n")
+
+        # Pattern 1: Function calls with tautological arguments (e.g., _require(self.x == self.x))
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                func_name = None
+                if isinstance(node.func, ast.Name):
+                    func_name = node.func.id
+                elif isinstance(node.func, ast.Attribute):
+                    func_name = node.func.attr
+
+                # Check if this looks like an authorization/validation function
+                auth_keywords = ["require", "assert", "check", "verify", "validate", "authorize", "ensure"]
+                if func_name and any(kw in func_name.lower() for kw in auth_keywords):
+                    # Check arguments for tautological comparisons
+                    for arg in node.args:
+                        if isinstance(arg, ast.Compare):
+                            if len(arg.ops) == 1 and len(arg.comparators) == 1:
+                                left = ast.dump(arg.left)
+                                right = ast.dump(arg.comparators[0])
+                                if left == right and isinstance(arg.ops[0], (ast.Eq, ast.Is)):
+                                    vulns.append(self._create_vulnerability(
+                                        severity=Severity.CRITICAL,
+                                        category="authorization_bypass",
+                                        title=f"Broken authorization in {func_name}()",
+                                        description=f"Authorization check '{func_name}()' contains a tautological "
+                                                   f"comparison that is always True. This completely bypasses "
+                                                   f"the intended access control. ANYONE can call this function.",
+                                        line_number=node.lineno,
+                                        exploit_code=f"# CRITICAL: {func_name}(x == x) is ALWAYS True!\n"
+                                                    f"# This means the 'Only owner can...' check is fake.\n"
+                                                    f"# Any user can call mint/burn/blacklist.\n"
+                                                    f"token.mint('attacker_address', 1_000_000_000)  # Works for anyone!",
+                                        confidence="high"
+                                    ))
+
+        # Pattern 2: Check for suspicious patterns in raw code
+        # e.g., self._require(self.owner == self.owner, ...)
+        suspicious_patterns = [
+            (r"self\.owner\s*==\s*self\.owner", "owner check always passes"),
+            (r"self\.admin\s*==\s*self\.admin", "admin check always passes"),
+            (r"msg\.sender\s*==\s*msg\.sender", "sender check always passes"),
+            (r"caller\s*==\s*caller", "caller check always passes"),
+        ]
+
+        for lineno, line in enumerate(lines, 1):
+            for pattern, desc in suspicious_patterns:
+                if re.search(pattern, line):
+                    # Only add if not already caught by AST analysis
+                    already_found = any(
+                        v.line_number == lineno and v.category == "authorization_bypass"
+                        for v in vulns
+                    )
+                    if not already_found:
+                        vulns.append(self._create_vulnerability(
+                            severity=Severity.CRITICAL,
+                            category="authorization_bypass",
+                            title=f"Broken authorization: {desc}",
+                            description=f"Line contains a self-comparison in what appears to be an "
+                                       f"authorization check. The condition '{pattern}' is always True, "
+                                       f"meaning any caller can bypass this check.",
+                            line_number=lineno,
+                            confidence="high"
+                        ))
+
+        return vulns
