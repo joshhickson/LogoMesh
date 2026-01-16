@@ -1,8 +1,79 @@
 # System Architecture Diagrams
 
-This document contains Mermaid diagrams illustrating the architecture and data flow of the LogoMesh Green Agent.
+This document contains Mermaid diagrams illustrating the architecture and data flow of the LogoMesh Agent Arena.
 
-## Original System Architecture
+## Agent Arena Architecture (Current)
+
+```mermaid
+graph TD
+    subgraph Arena["Agent Arena (Docker)"]
+        Green["GREEN AGENT<br/>Judge/Assessor<br/>Port 9000"]
+        Purple["PURPLE AGENT<br/>Defender/Assessee<br/>Port 9001"]
+        Red["RED AGENT<br/>Attacker<br/>Port 9021"]
+        Brain["vLLM BRAIN<br/>Qwen2.5-Coder-32B<br/>Port 8000"]
+
+        Green -->|1. Send Task| Purple
+        Purple -->|2. Return Solution| Green
+        Green -->|3. Send Code| Red
+        Red -->|4. Return Vulns| Green
+        Green -->|5. Compute CIS| Report[Final Report]
+
+        Green -.->|LLM Calls| Brain
+        Purple -.->|LLM Calls| Brain
+        Red -.->|LLM Calls| Brain
+    end
+```
+
+## Red Agent V2 Internal Architecture
+
+```mermaid
+graph TD
+    subgraph RedAgent["Red Agent V2"]
+        Input[Purple's Code] --> L1
+
+        subgraph L1["Layer 1: Static Analysis"]
+            SM[StaticMirrorWorker]
+            CB[ConstraintBreakerWorker]
+        end
+
+        L1 --> Decision{Critical<br/>Found?}
+        Decision -->|No| L2
+        Decision -->|Yes| Output
+
+        subgraph L2["Layer 2: Smart Reasoning"]
+            LLM[LLM Analysis]
+        end
+
+        L2 --> Decision2{Critical<br/>Found?}
+        Decision2 -->|No| L3
+        Decision2 -->|Yes| Output
+
+        subgraph L3["Layer 3: Reflection"]
+            Deep[Deep Analysis]
+        end
+
+        L3 --> Output[Vulnerability Report]
+    end
+```
+
+## CIS Scoring Components
+
+```mermaid
+graph LR
+    subgraph CIS["Contextual Integrity Score"]
+        R["R (Rationale)<br/>25%"]
+        A["A (Architecture)<br/>25%"]
+        T["T (Testing)<br/>25%"]
+        L["L (Logic)<br/>25%"]
+
+        R --> Final["CIS = 0.25R + 0.25A + 0.25T + 0.25L"]
+        A --> Final
+        T --> Final
+        L --> Final
+    end
+```
+
+## Legacy System Architecture (Deprecated)
 
 ```mermaid
 graph TD
