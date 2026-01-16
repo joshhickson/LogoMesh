@@ -933,6 +933,123 @@ def fibonacci(n: int) -> int:
 
 **End of Root Cause Investigation - xgrammar Bug Identified and Fixed**
 
+---
+
+## FINAL ASSESSMENT: FUNDAMENTAL INSTABILITY
+
+**Date:** 2026-01-16  
+**Time:** 00:40:00 UTC  
+**Status:** ❌ UNSTABLE - NOT PRODUCTION READY
+
+### Attempted Solutions Summary
+
+After extensive investigation and multiple workaround attempts, **vLLM 0.6.6.post1 + Python 3.12.12 remains fundamentally unstable** for sustained production workloads.
+
+**Solutions Attempted:**
+
+1. ✅ **Surgical config.json fix** - Successfully resolved initial `head_dim=None` crash
+   - Result: vLLM starts successfully
+   - Limitation: Only fixes startup, not runtime stability
+
+2. ✅ **xgrammar backend workaround** - Switched to `lm-format-enforcer`
+   - Result: Avoided xgrammar AttributeError crash
+   - Limitation: System still unstable under load
+
+3. ❌ **Tier 1 test execution (25 battles)**
+   - Attempt 1: All 26 battles scored 0.16 with "Connection error"
+   - Attempt 2: Test hangs on first battle indefinitely
+   - Result: Unable to complete full test suite
+
+### Root Cause: Runtime Instability
+
+**Observed Behavior:**
+- vLLM starts successfully ✅
+- First 1-2 requests succeed ✅
+- Engine becomes unresponsive or crashes ❌
+- Subsequent requests hang indefinitely or return connection errors ❌
+- Pattern repeats across multiple restart attempts ❌
+
+**Successful Test Results (When Working):**
+- test-fixed-001: Fibonacci code generated (112 chars, score 0.44)
+- Code quality: Valid structure, indentation errors
+- Proves Mistral CAN generate code when vLLM is stable
+
+**Failure Pattern:**
+```
+Battle 1: [Hangs indefinitely] or [Connection error]
+Battle 2-25: [Not reached] or [Connection error: 0.16 score]
+```
+
+### Technical Analysis
+
+**The Problem is NOT:**
+- ❌ Model configuration (surgical fix resolves this)
+- ❌ Network connectivity (containers can communicate)
+- ❌ GPU resources (40GB available, minimal usage)
+- ❌ Purple agent configuration (works when vLLM is stable)
+
+**The Problem IS:**
+- ✅ vLLM 0.6.6.post1 runtime stability with Python 3.12.12
+- ✅ Guided decoding subsystem (xgrammar AND lm-format-enforcer both problematic)
+- ✅ Engine recovery after JSON-constrained generation requests
+- ✅ Sustained multi-request workload handling
+
+### Comparison: Working vs. Failing States
+
+| Metric | Yesterday (Qwen) | Today (Mistral) |
+|--------|------------------|-----------------|
+| vLLM Version | 0.6.6.post1 | 0.6.6.post1 |
+| Python | 3.12.12 | 3.12.12 |
+| Model | Qwen-2.5-Coder-32B-AWQ | Mistral-7B-Instruct-v0.2 |
+| Startup | ✅ Success | ✅ Success (with fix) |
+| 25 Battles | ✅ Complete (avg 0.67) | ❌ Hangs/Crashes |
+| Code Quality | 579 chars, valid syntax | 112 chars (when working) |
+| Stability | ✅ Stable | ❌ Unstable |
+
+**Key Difference:** Qwen worked yesterday with same vLLM/Python versions, suggesting **model-specific compatibility issue** with Mistral + vLLM 0.6.6.post1.
+
+### Dead Ends Encountered
+
+1. **Python 3.11 downgrade** - Blocked by Lambda Labs network restrictions
+2. **vLLM 0.5.x downgrade** - Dependency hell (pyairports/outlines conflicts)
+3. **xgrammar backend swap** - Improved but still unstable
+4. **Model version change (v0.3)** - Same startup crash
+5. **Multiple vLLM restarts** - Pattern repeats
+
+### Viable Path Forward (Requires Major Change)
+
+**Option A: Switch to Qwen Model**
+- Pro: Known to work with current stack (yesterday's proof)
+- Pro: Better code quality (0.67 avg vs 0.44)
+- Con: Not testing Mistral-7B baseline
+
+**Option B: Different Inference Engine**
+- Try: Hugging Face TGI (Text Generation Inference)
+- Try: vLLM 0.7.x (when stable) or older 0.4.x
+- Con: Significant architectural change
+
+**Option C: Python 3.11 Environment**
+- Rebuild Docker on unrestricted machine, push to registry
+- Use uv python management (bypasses apt)
+- Con: Time-intensive, may not resolve runtime issues
+
+**Option D: Accept Limitations**
+- Document Mistral-7B as incompatible with vLLM 0.6.6.post1
+- Focus Tier 1 testing on Qwen or Llama models
+- Revisit when vLLM 0.7.x is stable
+
+### Recommendation
+
+**STOP attempting workarounds with Mistral-7B + vLLM 0.6.6.post1.** The combination is fundamentally incompatible for production workloads despite startup fixes.
+
+**IMMEDIATE ACTION:** Switch to Qwen-2.5-Coder-32B-AWQ for Tier 1 testing, which has proven stability on this stack.
+
+**LONG-TERM:** Wait for vLLM 0.7.x or migrate to Python 3.11 environment when practical.
+
+---
+
+**End of Investigation - Fundamental Incompatibility Documented**
+
 
 ## INJECTED GEMINI 3 INSIGHT FROM OUTSIDE THE REPO:
 
