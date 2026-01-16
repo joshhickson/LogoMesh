@@ -1,0 +1,1100 @@
+==============================================================
+Guild: agentic-ai-mooc
+Channel: AgentX - AgentBeats / competition-q-and-a
+After: 01/07/2026 00:00
+Before: 01/16/2026 00:00
+==============================================================
+
+[01/07/2026 02:12] onyxy
+Hi <@1377074409587871880>  our submission will be somewhat different than the one we proposed during team sign-up. Would this be an issue?
+
+
+[01/07/2026 03:14] promptscholar
+Hi <@1377074409587871880> - I'm planning my Phase 1 submission and want to confirm eligibility before committing.
+Proposal: A green agent that wraps Princeton's WebShop benchmark but adds significant new evaluation:
+
+80 new tasks across 5 categories not in the original benchmark (budget-constrained multi-item shopping, preference memory across sessions, negative constraints/ingredient avoidance, comparative reasoning with justification, error recovery)
+Stateful evaluation - original WebShop is stateless; ours tests cross-session memory
+Multi-dimensional scoring - budget efficiency, constraint compliance, reasoning quality (vs. WebShop's binary success metric)
+
+The core shopping environment is WebShop (1.18M products), but the task design, state management, and evaluation logic are original work.
+Given your earlier comment that "simply agentifying [a benchmark] would not get credit" - does this level of extension qualify for Track 1 credit? Or would we need to build the environment from scratch?
+Thanks!
+
+
+[01/07/2026 13:34] whats2000_
+Hello! I hope you’re doing well. I wanted to ask for a little help with an issue I’ve encountered while using the evaluator leaderboard. During my local tests, submission queries run smoothly. However, when I try the same submission with the same query set on the deployed site, it doesn’t seem to work, and no error message appears. This has made it hard for me to understand what might be going wrong, which feels a bit unusual.
+
+**Helpful links for context:**
+* Evaluator website: https://agentbeats.dev/whats2000/osce-medical-judge
+* Leaderboard repository: https://github.com/MadGAA-Lab/OSCE-AgentBeats-Leaderboard
+
+**What I’ve tried so far**
+To make sure I wasn’t missing anything, I’ve done the following:
+* Ran a full end-to-end evaluation and queried the result locally using the test script `tests/test_queries.py`
+  (available here: https://github.com/MadGAA-Lab/OSCE-AgentBeats-Leaderboard/blob/main/tests/test_queries.py)
+* Tested submissions on the site with both a single query and a complete query set.
+* Double-checked that my input format follows the expected schema.
+
+**What I expected to see**
+From a user’s perspective, I was hoping the system would either:
+* Display a clear error message if there was an issue with my submission, or
+* Process the evaluation successfully and show the results.
+At the moment, the submission seems to fail silently on the site, even though the same request works well in my local environment.
+
+If anyone has ideas about what might cause this difference in behavior, or could point me toward ways to enable more detailed logging on the deployed website, I would be very grateful. Thank you very much for your time and for any guidance you may be able to share!
+
+{Attachments}
+https://cdn.discordapp.com/attachments/1428456399985311905/1458453686165704736/image.png?ex=696ae717&is=69699597&hm=4a5be0a83f7384f5f1f9073ef64ab87580dce80ad8f52bc4727e9651cf0bbc64&
+
+{Embed}
+https://github.com/MadGAA-Lab/OSCE-AgentBeats-Leaderboard
+GitHub - MadGAA-Lab/OSCE-AgentBeats-Leaderboard: The leaderboard fo...
+The leaderboard for Objective Structured Clinical Examination Evaluator (OSCE-Project) - MadGAA-Lab/OSCE-AgentBeats-Leaderboard
+https://images-ext-1.discordapp.net/external/XvWB0pYXQjwi96zvoLEni04fcnV6i7s6ahu7hs3Lwm4/https/opengraph.githubassets.com/17d79a22d2de152849cbfce1ce892edd5dab384ee56b11f2cb76a4aadaa64b14/MadGAA-Lab/OSCE-AgentBeats-Leaderboard
+
+
+[01/07/2026 17:11] armanradmanesh
+<@1377074409587871880> I’m trying to get the leaderboard running, but I’m running into an error I can’t figure out.
+
+After the GitHub Action is triggered, both the evaluator and my agents start and run normally. You can see from the logs that the services come up successfully and respond to health/metadata requests:
+design2code-agent | INFO: Started server process [22]
+design2code-agent | INFO: Waiting for application startup.
+design2code-agent | INFO: Application startup complete.
+design2code-agent | INFO: Uvicorn running on http://0.0.0.0:9009
+design2code-agent | INFO: 127.0.0.1 - "GET /.well-known/agent-card.json" 200 OK
+
+green-agent | INFO: Started server process [22]
+green-agent | INFO: Waiting for application startup.
+green-agent | INFO: Application startup complete.
+green-agent | INFO: Uvicorn running on http://0.0.0.0:9009
+green-agent | INFO: 127.0.0.1 - "GET /.well-known/agent-card.json" 200 OK
+
+However, shortly after startup, the workflow fails with the following JSON-RPC error:
+A2AClientJSONRPCError: JSON-RPC Error code=-32602 message="Missing roles: {'agent'}"
+
+Relevant error trace:
+green-agent | sse_starlette.sse - DEBUG - chunk:
+  data: {"error":{"code":-32602,"message":"Missing roles: {'agent'}"}}
+green-agent | default_request_handler - ERROR - Background task cleanup_producer failed
+agentbeats-client | A2AClientJSONRPCError: JSON-RPC Error code=-32602
+
+Has anyone encountered this issue before?
+
+Repos:
+Green & Purple agent: https://github.com/radmanesh/agentbeats-design2code
+Leaderboard: https://github.com/radmanesh/design2code-bench
+
+Any guidance on how to resolve the “Missing roles: {‘agent’}” error would be greatly appreciated.
+
+{Embed}
+https://github.com/radmanesh/agentbeats-design2code
+GitHub - radmanesh/agentbeats-design2code
+Contribute to radmanesh/agentbeats-design2code development by creating an account on GitHub.
+
+{Embed}
+https://github.com/radmanesh/design2code-bench
+GitHub - radmanesh/design2code-bench: AgentBeats leaderboard for de...
+AgentBeats leaderboard for design2code. Contribute to radmanesh/design2code-bench development by creating an account on GitHub.
+https://images-ext-1.discordapp.net/external/gjvp213brhFBPeDH81bsOMHI4e8TuKSP2VXWskZEx4I/https/opengraph.githubassets.com/926844dffd1e7bebbb9ae96255da32b019e46c806469c309c765a8cc4349e172/radmanesh/design2code-bench
+
+
+[01/07/2026 17:23] frababa1
+<@1377074409587871880> i have DM'd you
+
+
+[01/07/2026 18:35] jennifer_492442
+Totally fine, thanks!
+
+{Reactions}
+👍
+
+[01/07/2026 19:32] jennifer_492442
+Hi Kirill, A2A agents should use the context_id (https://a2a-protocol.org/latest/topics/life-of-a-task/#group-related-interactions) to manage their internal state. See a simple example of this here: https://github.com/RDI-Foundation/agent-template/blob/main/src/executor.py.
+
+{Embed}
+https://a2a-protocol.org/latest/topics/life-of-a-task/
+Life of a Task - A2A Protocol
+The official documentation for the Agent2Agent (A2A) protocol. The A2A protocol is an open standard that allows different AI agents to securely communicate, collaborate, and solve complex problems together.
+
+{Reactions}
+🙏
+
+[01/07/2026 19:32] jennifer_492442
+You are right that the messenger doesn't support this out of the box. Feel free to modify it to support concurrent conversations with the same agent url.
+
+{Reactions}
+👍
+
+[01/07/2026 19:33] jennifer_492442
+Yes, this should be fine!
+
+{Reactions}
+🫡
+
+[01/07/2026 19:34] promptscholar
+Thank you!
+
+
+[01/07/2026 22:51] nahidai
+not sure where to ask this question but how do we participate and submit for open env challenge? What is the deadline? it is not clear from the announcement https://berkeleyrdi.substack.com/p/agentic-ai-weekly-berkeley-rdi-january?utm_campaign=email-half-post&r=wg271&utm_source=substack&utm_medium=email
+
+{Embed}
+https://berkeleyrdi.substack.com/p/agentic-ai-weekly-berkeley-rdi-january?utm_campaign=email-half-post&r=wg271&utm_source=substack&utm_medium=email
+Agentic AI Weekly | Berkeley RDI | January 7, 2026
+AgentBeats Phase 1 Submissions, OpenEnv Custom Track, and Prize / Sponsor Updates; Agentic AI Summit 2026; Trends This Week
+https://images-ext-1.discordapp.net/external/01IM9wIuAJ8M1vWfnXRZRy9dQlfaAwJ3diK_b2MwR3c/https/substackcdn.com/image/fetch/%24s_%21dr6U%21%2Cf_auto%2Cq_auto%3Abest%2Cfl_progressive%3Asteep/https%253A%252F%252Fberkeleyrdi.substack.com%252Fapi%252Fv1%252Fpost_preview%252F183574848%252Ftwitter.jpg%253Fversion%253D4
+
+
+[01/08/2026 04:10] madhu8878
+Hey guys, just joined here. Am I too late to the party?
+
+
+[01/08/2026 23:46] armanradmanesh
+I fixed the error, in the leaderboard the name of the green agent should be 'agent' and if you enter anything else then you will receive an error
+
+
+[01/09/2026 02:28] armanradmanesh
+<@1377074409587871880> 
+The updated tutorial introduces a new action called purple-agent-workflow.yml, which runs the leaderboard runner.
+
+In the provided code, line 11 currently references the wrong workflow file:
+uses: RDI-Foundation/agentbeats-leaderboard-template/.github/workflows/runner.yml@main
+
+It should instead reference:
+uses: RDI-Foundation/agentbeats-leaderboard-template/.github/workflows/run-scenario.yml@main
+
+Thanks!
+
+
+[01/09/2026 17:10] jesslily_
+Sorry to hear you're encountering difficulty! If you could answer these questions, we could better assist you with debugging
+> During my local tests, submission queries run smoothly.
+Can you describe what local tests you ran? The query in duckdb right? Would you be willing to share the JSON document that you paste into the agentbeats leaderboard config, and a sample results JSON file?
+> no error message appears.
+That's really frustrating! What do you see if you navigate directly to the manual refresh endpoint https://agentbeats.dev/api/agents/{creator}/{agent}/leaderboard/refresh (replacing {creator}/{agent} with your agent like agentbeater/demo-agent )? The error there normally shows up in the UI, so it's surprising that you're not seeing anything.
+Also, you might want to check that your leaderboard repository is formatted exactly like the template one, having a results/ directory filled with result JSON files; also that it's configured on your agentbeats.dev green agent page like in the tutorial. If you can provide a link to your green agent, your leaderboard repository, and your leaderboard config, we can help you debug more effectively. 
+Thanks for your patience!
+
+{Reactions}
+👍
+
+[01/09/2026 17:26] jesslily_
+not too late at all.. You are more than welcome to sign up and join the competition. The deadline for phase 1 is 1/15.
+
+
+[01/09/2026 17:28] jesslily_
+https://drive.google.com/file/d/1NASall4R84xAhoDdcaMwwJ78Ao3B-EK4/view you can find more details about the OpenEnv challenge in this doc (linked in thenewsletter as well as the agentbeats website). The deadline of this track should be the same as phase 2 (end of Feb). Still a lot of time. Thanks~
+
+{Reactions}
+👍
+
+[01/09/2026 17:33] nyauwumeow
+hey, do you have an estimation of the number of participants/submissions?
+
+
+[01/09/2026 22:03] holyaustin
+i am finding it had to test my agent with the google free tier. The usage restriction is frustrating.. Can agentbeat work with other LLM api?
+
+
+[01/10/2026 05:10] onyxy
+quick question: are we supposed to host a cloud version of our agent accessible through https? I am not clear on the requirements. Can anyone clarify? Thanks
+
+
+[01/10/2026 06:24] wh16
+don't need that for the competition, as long as it runs in the CI setup
+
+
+[01/10/2026 06:26] wh16
+works with other APIs/frameworks, the main thing is you need it to serve over A2A
+
+
+[01/10/2026 07:03] whats2000_
+> Can you describe what local tests you ran? ...
+- I use a script to take the results directory as a database file storage and call each query with duckdb. The script is at https://github.com/MadGAA-Lab/OSCE-AgentBeats-Leaderboard/blob/main/tests/test_queries.py
+- Query JSON I use: https://github.com/MadGAA-Lab/OSCE-AgentBeats-Leaderboard/blob/main/tests/queries.json
+- Sample Results JSON: https://github.com/MadGAA-Lab/OSCE-AgentBeats-Leaderboard/blob/main/results/MadGAA-Lab-20260107-122911.json
+
+> That's really frustrating! What do you see if you navigate directly to the manual refresh endpoint https://agentbeats.dev/api/agents/%7Bcreator%7D/%7Bagent%7D/leaderboard/refresh ...
+Yes, it somehow raises an internal error in the API: https://agentbeats.dev/api/agents/whats2000/osce-medical-judge/leaderboard/refresh
+
+> Also, you might want to check that your leaderboard repository is formatted exactly like the template one...
+Yes, I created by following the tutorial and using the template to create
+
+> If you can provide a link to your green agent, your leaderboard repository, and your leaderboard config, we can help you debug more effectively. 
+- Green Agent: https://github.com/MadGAA-Lab/OSCE-Project/tree/main/scenarios/medical_dialogue/green_agents
+- Leaderboard: https://github.com/MadGAA-Lab/OSCE-AgentBeats-Leaderboard/
+- Config: Identical as https://github.com/MadGAA-Lab/OSCE-AgentBeats-Leaderboard/blob/main/tests/queries.json
+
+
+[01/10/2026 07:05] whats2000_
+Additionally, the webhook is set up correctly without error
+
+{Attachments}
+https://cdn.discordapp.com/attachments/1428456399985311905/1459443070297964597/image.png?ex=696b34c7&is=6969e347&hm=94d77a1e5c627c77c88f789e60b4f3e3c6de74c72591c848a7714e121963058e&
+
+
+[01/10/2026 16:08] armanradmanesh
+Hey everyone, I’m agentifying Design2Code where the agent takes a screenshot as input and generates the corresponding HTML. In some cases, the LLM responds with “**I’m sorry, I can’t assist with that…**”, and once this happens, retries consistently return the same response.
+
+It doesn’t seem tied to a specific task ID, if I rerun the pipeline later, the same task may succeed without any issue. The strange part is that during a failing run, retries never recover.
+
+Has anyone encountered a similar issue? Any suggestions or guidance would be greatly appreciated.
+
+
+[01/10/2026 18:38] abhishek___23413
+Given that for leaderboard submissions we need to run the green and purple agents on a github runner via GitHub actions, are benchmark tasks that require a GPU currently supported, or would we need to restrict submissions to CPU-only benchmark tasks?
+
+{Reactions}
+➕
+
+[01/10/2026 23:06] hoper
+For the tau2 sierra custom track, what are we supposed to submit exactly?
+
+
+[01/11/2026 00:06] hoper
+I ask this because the documentation doesn't spell out a clear submission for custom tracks, like adding new agent benchmarks to tau2-sierra, so it's unclear how to submit it.
+
+
+[01/11/2026 00:07] hoper
+The challenge outlines the deliverables, but it doesn't seem to fit cleanly into the green/purple agent submission for the agentbeats competition https://drive.google.com/file/d/1dYwYLl-BM88pu8egFzyGf6JA5onBlYOl/view
+
+{Embed}
+https://drive.google.com/file/d/1dYwYLl-BM88pu8egFzyGf6JA5onBlYOl/view
+𝜏²-Bench Challenge.pdf
+
+
+[01/11/2026 03:09] onyxy
+Hi there, can someone please clarify what the baseline purple agent should do?  Is it supposed to be an actual LLM based agent?
+
+
+[01/11/2026 03:11] onyxy
+Additional question <@1377074409587871880>  - our green agent is simply to benchmark accuracy of structured  information extraction from certain websites. Would this be acceptable as an entry to the competion? Thanks.
+
+
+[01/11/2026 21:34] hisandan
+maybe try a different model? it could happen that you are exceding rate limiting or sometimes when i tested with free openrouter models they werent available all the time so i did not received responses reliably.
+
+{Reactions}
+👍
+
+[01/11/2026 21:40] hisandan
+---
+Hi everyone, we are working on the leaderboard of our werevolve game agent, i am wondering if  **is there a way to access the source filename or a unique result identifier in leaderboard queries?** I want users to click on a leaderboard row that would contain URLs to be able to see the full execution of the agents in our own frontend that is adapted to the werewolve game benchamark we are developing/adapting.  This would be a cool feature we would love to keep.
+
+
+[01/11/2026 21:49] hisandan
+---
+Secondly, Our Werewolf Arena benchmark has a unique challenge: it's a **multiplayer competitive game** where participants' agents play **against each other** (not against a fixed environment).
+
+  **Current limitations we're facing:**
+
+  1. **Matchmaking control:** Currently, participants define who they play against in their scenario.toml. This means they could choose to only play against weaker opponents, which undermines fair competition.
+
+  2. **ELO calculation:** We want to use a proper ELO system where beating a strong opponent (ELO 1500) gives more points than beating a weak one (ELO 900). But this requires:
+     - Knowing each agent's current ELO *before* the game starts
+     - Storing/updating ELO ratings persistently between games
+
+     Currently we can only calculate simplified scores in DuckDB queries (which reset each refresh).
+
+  **What we're wondering:**
+
+  1. Is there a way for AgentBeats to handle **centralized matchmaking**? (i.e., the platform decides which agents play against each other, rather than letting participants choose)
+
+  2. Is there a way to **persist state between runs**? (e.g., store current ELO ratings that carry over between games)
+
+  3. Or is there a recommended pattern for **tournament-style benchmarks** where multiple agents compete against each other?
+
+  Thanks for any guidance!
+
+
+[01/12/2026 03:02] _hui_xu
+If we submit 2 evaluation tracks, should we submit 2 AgentX - AgentBeats Competition Submission Forms (Phase 1 - Green Agent)? For the question, "Which agent evaluation track(s)? (Pick up to 3 tracks)", should we always select 2 tracks for these 2 submitted forms?
+
+
+[01/12/2026 17:11] wh16
+forwarding to agentbeats team, thanks
+
+{Reactions}
+❤️
+
+[01/12/2026 17:20] jesslily_
+if it's the same green agent, then you only need to submit one form. If it's two completely different agents, then submit 2 forms, tks
+
+{Reactions}
+👍
+
+[01/12/2026 17:22] wh16
+for the competition we're calling for entries that we can try reproducing without a GPU setup 🙏
+
+
+[01/12/2026 17:24] wh16
+yes, should be, I think. the example project ideas were all based on tasks suited for LLMs
+
+
+[01/12/2026 17:25] jesslily_
+For tau2, Your deliverable will be a high-quality Pull Request
+to the main τ2-Bench repository. thanks~  It'll be judged and evaluated separately by the sponsor (Sierra)
+
+
+[01/12/2026 17:45] wh16
+closest thing would probably be to add an ID in the green agent's data output, i.e. with the scores, and then work out how to have the leaderboard query show the applicable ID(s) in a row. we don't have a way to put clickable links in the leaderboard though.
+
+{Reactions}
+👍
+
+[01/12/2026 17:56] wh16
+posting some thoughts on this, and other people on the team may have different opinions
+- part of the agentbeats ecosystem is open source software that ought to let people run these scenarios as they choose
+- acceptance of results into a leaderboard, however, is up to the leaderboard admin. if you want to limit the results in your leaderboard to only scenarios that a matchmaking service called for, then I think you'd need some system for approving the result PRs in a way that agrees with the matchmaking system
+- for Elo, I heard there was a gnarly way to do it in duckdb, still involving stepping through the whole history of matches. but yeah it would be good to have state in the leaderboard system
+
+{Reactions}
+👍
+
+[01/12/2026 17:58] wh16
+tournament style benchmarks sound like it's supported already, with the participants being an array. as long as the green agent for it can coordinate them, it ought to work
+
+{Reactions}
+👍
+
+[01/12/2026 18:17] wh16
+the most I've heard regarding this is:
+- yes on having encountered a similar issue
+- maybe try switching models
+
+
+[01/12/2026 18:52] promptscholar
+What are folks doing for inference on agentbeats platform? Seems like you have to pay $25 to be able to use the nebius credits lol. Google AI studio?
+
+
+[01/13/2026 01:49] kmadorin
+Hi <@854480138150215690> ! I'm having trouble with my leaderboard not displaying results too. Could you help me with debugging?
+
+The query executes without errors, but shows "This leaderboard has not published any results yet."
+
+ My query:
+```
+  SELECT
+    t.participants.agent AS id,
+    r.result.detail.levels_completed AS 'Levels Completed',
+    r.result.detail.levels_attempted AS 'Levels Attempted',
+    ROUND(r.result.detail.success_rate * 100, 1) AS 'Success Rate %',
+    ROUND(r.result.detail.avg_turns_per_level, 1) AS 'Avg Turns',
+    ROUND(r.result.detail.total_time_seconds, 1) AS 'Total Time (s)'
+  FROM results t
+  CROSS JOIN UNNEST(t.results) AS r(result)
+  ORDER BY r.result.detail.levels_completed DESC, r.result.detail.success_rate DESC
+```
+
+Commit with results: https://github.com/kmadorin/ethernaut_arena_leaderboard/commit/7f7b61ba590752337f4c1f02ba6894d84e8bdb2e
+
+The manual refresh endpoint returns {"status":"finished","error":null} but no data appears. Webhook is configured and delivering (202 responses). 
+Last updated shows my commit hash. Any ideas what might be wrong?
+
+Setup:
+Green Agent: kmadorin/ethernaut-arena-green-agent
+    https://github.com/kmadorin/ethernaut_arena_green_agent
+Purple Agent (baseline): kmadorin/ethernaut-arena-solver
+    https://github.com/kmadorin/ethernaut_arena_purple_agent
+Leaderboard Repo: https://github.com/kmadorin/ethernaut_arena_leaderboard
+
+
+[01/13/2026 02:15] promptscholar
+My implementation is actually a wrapped purple agent where the a2a portion of the purple agent gets the MCP url from the green agent and then passes the tools to its internal agent. Green agent hosts the MCP server. I understand this may not be a generic purple agent, but it fits the competition pattern of "Traced Environment" via MCP. <@1377074409587871880> this should still work as long as we are making the requirements for purple agents clear, right? i.e. accept MCP url from the green agents via a2a at the beginning of the assessment.
+
+
+[01/13/2026 02:17] promptscholar
+cc <@854480138150215690>
+
+
+[01/13/2026 02:18] kolleida
+Dumb question, but does the leaderboard webhook support deleting submissions (e.g. test submissions made when debugging)?
+
+
+[01/13/2026 05:16] whats2000_
+Thank you so much for helping us ❤️
+[Updated] This is solved! But somehow the error message is not displayed in the UI is still a weird behavior. (Seems it appears in the https://agentbeats.dev/api/agents/%7Bcreator%7D/%7Bagent%7D/leaderboard/refresh somehow)
+
+
+[01/13/2026 07:06] nhynes
+Not a dumb question. The leaderboard webhook is sent any time there is a new commit on the main branch. The agentbeats backend will recompute the leaderboard based on the latest data, so if some data is removed, it will no longer exist in the leaderboard
+
+{Reactions}
+👍
+
+[01/13/2026 08:21] nhynes
+`skipping invalid leaderboard row leaderboard=Ethernaut Leaderboard row_index=0 error=leaderboard Ethernaut Leaderboard row id kmadorin/ethernaut-arena-solver is invalid: invalid character: expected an optional prefix of `urn:uuid:` followed by [0-9a-fA-F-], found `k` at 1`
+
+the `id` column is supposed to be the agent UUID, not the `username/slug`. I'll modify the status endpoint so that it returns warnings as well
+
+in your scenario.toml, you have
+```
+[[participants]]
+agentbeats_id = "kmadorin/ethernaut-arena-solver"
+```
+but the `agentbeats_id` for this agent is `019bb4ab-c686-7f71-8aba-1c8bae81f334`. if you update the participant object in the `results.json`and the `scenario.toml`, you can fix the leaderboard without having to rerun the scenario
+
+the attached screenshot shows where you can  get the agent id
+
+I get that it feels unnecessary to have two ways of identifying an agent, but the reason it's like this is because agent names can change, and we don't want people being able to game results or confuse others by running a benchmark, then changing the name to a different agent. we're working on ways to make the user experience nicer
+
+{Attachments}
+https://cdn.discordapp.com/attachments/1428456399985311905/1460549331227639869/image.png?ex=696b4690&is=6969f510&hm=c643c629d0e81300adc04680b4174eb6e660308488ee45f49e9e80ac044ffd16&
+
+{Reactions}
+🙏
+
+[01/13/2026 08:49] nhynes
+Don't use `read_json_auto`. The system does that for you. Use these queries instead (I replaced `read_json_auto('results/*.json') AS results` with just `results`)
+
+{Attachments}
+https://cdn.discordapp.com/attachments/1428456399985311905/1460556465843470431/queries.json?ex=696b4d35&is=6969fbb5&hm=c562909ff708624181e6d3bb4c9640208e2531bb005bb19346bfab033ffda7e9&
+
+
+[01/13/2026 08:59] promptscholar
+<@960824724986925086> could you please take a look at this question? Thanks!
+
+
+[01/13/2026 09:06] nhynes
+I understand your question to mean: "If I submit a wrapped purple agent that negotiate to receive an MCP URL from the green agent, although this is not an unmodified agent, is it still valid for submission?"
+
+I would say that this is acceptable. It may reduce the upfront impact of your benchmark if agents need special tooling to use it, but it's reasonable to think that future agents will be able to use tools that they receive from chat.
+
+If I could suggest an alternative approach, it would be to configure the purple agent with a tool wrapper tool upfront (which many agents support either directly or through their LLM router) and then have the tool wrapper receive the tools from the green agent, and only once received will it start to respond to the purple agent.
+
+It's getting close to the deadline, so maybe you want to submit what you have. We're rolling out a new software that should make the `green -> wrapper -> unmodified_purple` a bit easier. Check it out if you get a chance. Feedback is appreciated! https://github.com/rdi-foundation/amber
+
+{Embed}
+https://github.com/rdi-foundation/amber
+GitHub - RDI-Foundation/amber: Capability-based OS for AI agents
+Capability-based OS for AI agents. Contribute to RDI-Foundation/amber development by creating an account on GitHub.
+https://images-ext-1.discordapp.net/external/e_0Eb4TTYUf0pAD-PZE_XXrSasPYRRmDwnF8thLjFBw/https/opengraph.githubassets.com/f22a8897679286f132fc18b903b043c6f9efead2057a4b4a802c1238c0c9894e/RDI-Foundation/amber
+
+
+[01/13/2026 09:09] promptscholar
+Thanks! I was wondering how to do set up the tracing environment via MCP and this is the best I could come up with. Its not a negotiation but its definitely a special contract via a2a. One could reason that a production agent could also be setup to get its tools from the calling environment and the format is well advertised. Appreciate your help!
+
+
+[01/13/2026 09:10] nhynes
+> setup to get its tools from the calling environment and the format is well advertised
+totally agree. I wish the A2A protocol were a bit more structured about what happens inside of the protocol, but so it is. If you document clearly the contract your green agent expects, it should be fine for submission
+
+{Reactions}
+🫡
+
+[01/13/2026 09:11] promptscholar
+Tool wrapper tool also sounds cool, yes though another way of tool discovery by the purple agent via some meta protocol 🙂
+
+
+[01/13/2026 09:12] promptscholar
+Totally agree on a2a lacking structure but the documentation says its on purpose 🙂
+
+
+[01/13/2026 13:07] whats2000_
+Yes, that works correctly, thank you so much! 🙂
+
+
+[01/13/2026 13:09] _gabes.
+Hey! I'm having trouble getting my leaderboard to work and could use some help.
+
+  I registered my green agent (Meta-Game Negotiation Assessor) and set up the webhook - GitHub shows the webhook delivery is successful, but when I try to refresh the leaderboard I just get "An unexpected error occurred. Please try again later."
+
+  Here's what happened:
+
+  First I was getting a DuckDB error saying agent_name wasn't found and it could only see green_agent, assessment_id, timestamp. I realized my JSON had a nested structure, so I fixed it,  now I have flat JSON files in /results/ where each file looks like:
+
+`  {
+    "agent_name": "soft",
+    "mene_regret": 0.0,
+    "uw_percent": 76.70,
+    ...
+  }`
+
+  I've tried both FROM results and FROM read_json_auto('results/*.json') in my queries neither works. The first gives the generic "unexpected error" and the second says "Database query failed to execute."
+
+  My queries are just simple selects like:
+  SELECT agent_name, mene_regret, mene_regret_se FROM results ORDER BY mene_regret ASC
+
+  I also waited for my Docker builds to finish before trying again, but still no luck.
+
+  Agent page: https://agentbeats.dev/gsmithline/meta-game-negotiation-assessor
+  Repo: https://github.com/gsmithline/tutorial-agent-beats-comp. Here is my agent id as well: 019bb756-e237-7e20-b54f-b431cfae5b73
+
+  Could someone take a look at the server logs or let me know what format the queries/results should be in? I'm kind of stuck here. Thanks!
+
+
+[01/13/2026 13:12] whats2000_
+You may try this script for testing
+```py
+"""
+Test queries from root queries.json file
+"""
+import json
+import duckdb
+from pathlib import Path
+
+# Get root directory (parent of tests/)
+ROOT_DIR = Path(__file__).parent.parent
+
+print("Testing queries from root queries.json...")
+print("="*60)
+
+# Load queries from root
+queries_path = ROOT_DIR / "tests" / "queries.json" # <--- Replace with your query sets as JSON file
+results_pattern = str(ROOT_DIR / "results" / "*.json")
+
+with open(queries_path, 'r', encoding='utf-8') as f:
+    queries = json.load(f)
+
+# Create DuckDB connection and load data
+conn = duckdb.connect()
+conn.execute(f"CREATE TABLE results AS SELECT * FROM read_json('{results_pattern}')")
+
+success = []
+failed = []
+
+for query_info in queries:
+    try:
+        result = conn.sql(query_info['query'])
+        rows = result.fetchall()
+        success.append(query_info['name'])
+        print(f"✓ {query_info['name']}")
+        print(f"  Results: {len(rows)} rows")
+        if len(rows) > 0:
+            print(f"  Sample: {rows[:2]}")
+    except Exception as e:
+        failed.append((query_info['name'], str(e)))
+        print(f"✗ {query_info['name']}: {str(e)[:100]}")
+
+conn.close()
+
+print("\n" + "="*60)
+print(f"Results: {len(success)} passed, {len(failed)} failed")
+
+if failed:
+    print("\nFailed queries:")
+    for name, error in failed:
+        print(f"  - {name}: {error[:100]}")
+```
+
+
+[01/13/2026 13:22] _gabes.
+I ran the test script locally and all 5 queries pass with 6 rows each:
+
+ MENE Regret (Lower is Better) - 6 rows
+ Utilitarian Welfare - 6 rows
+ Nash Welfare - 6 rows
+  Nash Welfare Adjusted - 6 rows
+  Envy-Free (EF1) - 6 rows
+
+  So the queries and JSON structure are valid  DuckDB can read them fine locally. But on AgentBeats I'm still getting "An unexpected error occurred."
+
+  Could there be something different about how AgentBeats loads the results table, or maybe a caching issue on your end?
+
+
+[01/13/2026 13:24] whats2000_
+Aha
+
+```json
+{
+  "refresh": {
+    "requested_at": "2026-01-13T13:04:34.246018Z",
+    "started_at": "2026-01-13T13:04:34.256637Z",
+    "finished_at": "2026-01-13T13:04:34.519278Z",
+    "status": "failed",
+    "error": "unexpected processor failure: \"leaderboard Envy-Free (EF1) must expose id as the first column\"",
+    "error_detail": {
+    "kind": "platform",
+    "error": {
+      "variant": "unexpected",
+      "detail": "\"leaderboard Envy-Free (EF1) must expose id as the first column\""
+    }
+  },
+  "source": "manual"
+  }
+}
+```
+
+
+[01/13/2026 13:25] mstaver
+Hey <@778335636574175254>  the result files should be generated by the CI workflow in your leaderboard repo, not manually commited. If you haven't created your leaderboard repo, please follow instructions here https://github.com/RDI-Foundation/agentbeats-leaderboard-template
+
+Regarding the query, agentbeats expects the first column of your SELECT query to be the agent id. Please see this https://docs.agentbeats.dev/tutorial/#appendix-a-writing-leaderboard-queries
+
+Nested structure in the results should be okay if your query handles it.
+
+{Embed}
+https://github.com/RDI-Foundation/agentbeats-leaderboard-template
+GitHub - RDI-Foundation/agentbeats-leaderboard-template
+Contribute to RDI-Foundation/agentbeats-leaderboard-template development by creating an account on GitHub.
+https://images-ext-1.discordapp.net/external/e_w_X65SOscRQi2WkiUIk2K9gxz1HjvKD4fJQga6ex8/https/opengraph.githubassets.com/c4b9f98001f6db5dd04242dabb724fbde6c950f959049191d58fe1f55dfc411b/RDI-Foundation/agentbeats-leaderboard-template
+
+{Embed}
+https://docs.agentbeats.dev/tutorial/
+AgentBeats Tutorial
+
+
+[01/13/2026 13:37] whats2000_
+I made an adjustment for the test script. I think it may cover most of the common issues.
+Maybe it can help someone else to debug the query!
+
+{Attachments}
+https://cdn.discordapp.com/attachments/1428456399985311905/1460628710096113756/test_queries.py?ex=696ae7bd&is=6969963d&hm=9838c4c452d7b21ebbf5d2f153691ec49a452d57a58b09b0c2bc28c5af92f0a6&
+
+{Reactions}
+🔥 (3)
+
+[01/13/2026 13:44] _gabes.
+<@693886792751120494> Thanks,  I set it up, all the webhooks, etc. But i am still having issues.  I ran the test script provided above, and all 5 queries pass locally:
+
+ MENE Regret (Lower is Better) - 1 row
+    Columns: ['id', 'mene_regret', 'mene_regret_se']
+    Sample: [('019bb756-e237-7e20-b54f-b431cfae5b73', 0.05, 0.01)]
+
+ Utilitarian Welfare - 1 row
+Nash Welfare - 1 row
+Nash Welfare Adjusted - 1 row
+Envy-Free (EF1) - 1 row
+
+  Results: 5 passed, 0 warnings, 0 failed
+
+  But on AgentBeats I still get: "An unexpected error occurred. Please try again later."
+
+  My current setup:
+  -  Leaderboard repo: https://github.com/gsmithline/meta-game-leaderboard
+  - Queries use: SELECT CAST(agent_name AS VARCHAR) AS id, ...
+  -  Result file has agent_name as a UUID string
+
+  Sample result JSON:
+ ` {
+    "participants": {
+      "challenger": "019bb756-e237-7e20-b54f-b431cfae5b73"
+    },
+    "agent_name": "019bb756-e237-7e20-b54f-b431cfae5b73",
+    "mene_regret": 0.05,
+    ...
+  }`
+
+Is there something specific about how AgentBeats loads results that differs from local DuckDB?
+
+
+[01/13/2026 13:47] mstaver
+hmm I think they need to be under the 'results' key, not flat like this. Here is an example https://github.com/RDI-Foundation/agentbeats-debate-leaderboard/blob/main/results/agentbeater-20251126-123032.json
+
+The CI workflow that runs your scenario.toml should automatically place your results under the 'results' key, so you shouldn't be doing this manually (although you can for testing purposes).  Instructions for running the scenario inside CI are here https://docs.agentbeats.dev/tutorial/#3-assessment
+
+
+[01/13/2026 14:13] whats2000_
+How about this? Will it cover most query failures?
+I added a structure check!
+Now it throws a problem in either a submission mismatch or a query statement issue!
+
+{Attachments}
+https://cdn.discordapp.com/attachments/1428456399985311905/1460637968749302056/test_queries.py?ex=696af05d&is=69699edd&hm=364d44cbdafc7110fec345cd08f0fe1ea0e9d725bb935e9de8bd4a915f89bfca&
+
+
+[01/13/2026 14:18] _gabes.
+<@693886792751120494> seems to work now with my tedt data, https://agentbeats.dev/gsmithline/meta-game-negotiation-assessor.  Thanks! I was also wondering if there was say some purple dummy agent one can use to test instead of needing to set up their own?
+
+
+[01/13/2026 14:25] mstaver
+Nice, that looks helpful - thanks!
+
+{Reactions}
+👍
+
+[01/13/2026 14:29] mstaver
+Great! It depends on your green agent, but you can try one of these two
+- simple LLM agent that responds in natural language https://github.com/RDI-Foundation/agentbeats-tutorial-fork/pkgs/container/agentbeats-tutorial-debater
+- simple LLM agent that responds in json https://github.com/RDI-Foundation/agentbeats-tutorial-fork/pkgs/container/agentbeats-tutorial-tau2-agent
+You can find their source code here https://github.com/RDI-Foundation/agentbeats-tutorial/tree/main/scenarios
+
+But it should also be easy to make your own purple agent using this template https://github.com/RDI-Foundation/agent-template
+
+
+[01/13/2026 17:36] promptscholar
+Hi folks stupid question perhaps, but can you update your submission? I am still tweaking the benchmark and environment but want to get my working version in first
+
+
+[01/14/2026 01:58] onyxy
+Not sure if we will be able to wrap up before the deadline. But we will continue working on it.
+
+{Reactions}
+😢
+
+[01/14/2026 02:06] jesslily_
+You can always re-submit before the deadline, tks
+
+{Reactions}
+👍
+
+[01/14/2026 02:45] promptscholar
+Just update the container image then, right?
+
+
+[01/14/2026 02:59] nhynes
+You can update the container image whenever, but the latest commit (and the container images referenced by the scenario.tomls) before the deadline will be used for judging
+
+{Reactions}
+🫡
+
+[01/14/2026 19:49] promptscholar
+Hi folks, I have registered my green agent and ran an assessment against my purple agent that has produced results. But I cannot get the leaderboard to show anything, despite trying the simplest of queries, could someone help? https://agentbeats.dev/mpnikhil/webshop-plus-green
+
+
+[01/14/2026 21:26] peter_rdi
+just took a look. looks like you got it working? 😄
+
+{Reactions}
+🙏
+
+[01/14/2026 21:27] peter_rdi
+i'm curious what the issue ended up being if you don't mind sharing
+
+
+[01/14/2026 21:28] promptscholar
+I am not sure actually just had to try a bunch of queries locally
+
+
+[01/14/2026 21:28] promptscholar
+Thanks for looking
+
+{Reactions}
+👍
+
+[01/15/2026 00:17] gong_cr
+Hi could I just participate in phase 2 and not in phase 1?    I’m getting a bit confused.
+
+
+[01/15/2026 04:52] jesslily_
+If phase 2 only, hang tight, just wait for the phase 2 submission to open (around Feb/March, most likely), tks!
+
+{Reactions}
+👍
+
+[01/15/2026 05:48] gong_cr
+Great!  Thanks!
+
+
+[01/15/2026 06:41] promptscholar
+Folks what are we supposed to demo in the demo video? Are we expected to talk over the code or show logs? 🥲  My green agent prints a lot of logs it looks like matrix lol . Any practical advice <@854480138150215690> <@1377074409587871880> <@1460296389794730027> <@693886792751120494> ?
+
+
+[01/15/2026 06:44] keshavdalmia09
+we have made an eval that checks text2sql, but its different from the spider 2 one mentioned in the excel sheet. In what category will it fall in according to the google form? A new benchmark or extension of an extended one?
+
+
+[01/15/2026 07:09] nhynes
+Treat it like a pitch to someone who is going to use your benchmark: what is it, how it improves on the SotA if at all, useful implementation details, demo of the baseline purple as assessed by the green
+
+
+[01/15/2026 07:11] nhynes
+the judges will have access to your code and results.toml, so the video is your chance to explain the high-level details to guide understanding of your results. you could present some slides, diagrams, a readme, a code or data walkthrough, or anything really
+
+
+[01/15/2026 07:12] nhynes
+If you feel like it significantly takes the existing benchmark in an entirely new direction, you can count it as a new benchmark. If it's more like adding new tasks or a smaller remix, you can count it as agentification and explain in the form what extensions you made to the benchmark
+
+
+[01/15/2026 07:13] keshavdalmia09
+i have a completely new codebase different from the spider 2.0, but i have tried to keep the benchmarks and the metrics almost the same
+
+
+[01/15/2026 07:15] nhynes
+I would suggest to put that in the agentifying the existing benchmark track. If you submit under new benchmarks, your submission will be judged on the tasks and metrics it introduces, which might be harder to demonstrate if it closely follows the SotA
+
+{Reactions}
+👍
+
+[01/15/2026 07:16] nhynes
+A simple test is if it adds a lot of new tasks, new metrics, then it's a new  benchmark. If it keeps the same tasks and metrics, even though it's a rewrite, it would still be agentifying. You can explain in the form what you had to do to agentify, which will give an opportunity to highlight the engineering improvements made to the original
+
+
+[01/15/2026 07:17] keshavdalmia09
+and also we have to start phase 2 after the phase 1 results? as its mentioned top selected green agents will go further in phase 2.
+
+{Reactions}
+👍
+
+[01/15/2026 07:41] promptscholar
+Slides and voice over sounds perfect! Thank you!!
+
+
+[01/15/2026 11:39] rahul_47860
+hi  <@854480138150215690>  <@1377074409587871880>  <@1460296389794730027>  <@693886792751120494> 
+I am trying to submit my AgentX - AgentBeats Competition Submission Form (Phase 1 - Green Agent) and am not sure what to select for `Which agent evaluation track(s)? (Pick up to 3 tracks)`. I am extending an existing benchmark (CRMArena–Pro), but I do not see it listed among the available options. I am unsure which option to select and would appreciate your guidance.
+
+
+[01/15/2026 15:10] nhynes
+I added a new category called Business Process Agent for you. I would tag it as Business Process Agent, Computer Use Agent, and Agent Safety
+
+
+[01/15/2026 16:01] rahul_47860
+Thanks! Just submitted
+
+{Reactions}
+🥳
+
+[01/15/2026 16:22] gong_cr
+The deadline for submitting written article is today but phase 2 hasn’t started yet.  Shall I wait till February for the article submission or write a summary for lectures instead.
+
+
+[01/15/2026 16:29] jesslily_
+we'll extend the deadline for submitting the written ariticles as the form is yet to be released 😉 stay tuned for the announcement, tks~
+
+{Reactions}
+👍 (3)
+
+[01/15/2026 16:57] sudhakarred_10243
+Iam getting this while running   uv run agentbeats-run scenarios/debate/scenario.toml ModuleNotFoundError: No module named 'uvicorn' any help here
+
+
+[01/15/2026 17:01] sudhakarred_10243
+ModuleNotFoundError: No module named 'uvicorn'
+
+
+[01/15/2026 17:01] philipwang2115
+Is anyone else running into this issue on github? Both the green-agent and purple-agent repos are working fine, but somehow the leaderboard repo is down for me.
+
+{Attachments}
+https://cdn.discordapp.com/attachments/1428456399985311905/1461404928974000412/image.png?ex=696b17a6&is=6969c626&hm=414cd489914e1235706258456babfd6740fa51fdcd452dc2ad571821a4fe2dfa&
+
+{Reactions}
+👍
+
+[01/15/2026 17:54] onyxy
+Hi <@854480138150215690>  could you please pin this to the announcements channel or the mooc-questions one?
+
+{Reactions}
+✅
+
+[01/15/2026 17:58] debadev
+if i missed 1stphase submission can i submit in 2nd phase ? <@854480138150215690>
+
+
+[01/15/2026 17:59] johannes_75451
+Hi <@960824724986925086> ,
+I am also not sure which Agents to select in the submission. I created a new benchmark for an In-Car Voice Assistant domain (https://github.com/CAR-bench/car-bench-agentbeats), I would say it is "classic" Tool-Calling Agent evaluation (Planning/Reasoning/Multi-Turn) with novel evaluation tasks, so computer use agent and web agents don't really fit, neither the domains. Happy for any advice!
+
+
+[01/15/2026 18:06] samiratra
+Hello,
+When submitting my agent to the AgentX competition I am getting an email with 
+
+"Thank you for your submission to Phase 1 of the AgentBeats Competition. During our review, we noticed the following issues that need to be addressed:
+
+Docker image not found"
+
+Can you please help me now so I can correct and submit before the deadline?
+
+
+[01/15/2026 18:30] andy_75131
+The issue seems to be that `uvicorn` isn't installed in the uv venv (the [docs may be helpful](https://docs.astral.sh/uv/pip/environments/#using-a-virtual-environment)). Try running `uv pip install uvicorn`?
+
+
+[01/15/2026 18:48] andy_75131
+Hey, could you try  re-registering your agent on agentbeats.dev as a green agent, and then re-submitting [the form](https://docs.google.com/forms/d/e/1FAIpQLSdtqxWcGl2Qg5RPuNF2O3_N07uD0HMJpWBCwZWZbD3dxTuWmg/viewform) with the updated link? It looks like the link in the old submission is to a purple agent which is causing the error
+
+{Embed}
+https://docs.google.com/forms/d/e/1FAIpQLSdtqxWcGl2Qg5RPuNF2O3_N07uD0HMJpWBCwZWZbD3dxTuWmg/viewform
+AgentX - AgentBeats Competition Submission Form (Phase 1 - Green Ag...
+Please fill out this form to submit your project to the AgentX - AgentBeats Competition (Phase 1 - Green Agent)
+Submission deadline: Jan 15, 2026 11:59pm PT.
+https://images-ext-1.discordapp.net/external/_vN1ISEpJAUhXfAEH_ybOHOTZ2_de4Po8UuuZmbDAXo/https/lh4.googleusercontent.com/UNyb2YHa3Y-EUbV8DKsaAmLKWjwsbOJ4oRus80jeFdCzqFfPMJATjpYg72VnEFYaP6HMat9c2VKFxBk%3Dw1200-h630-p
+
+
+[01/15/2026 19:06] n8_a_43539
+For the video we're supposed to upload, can it be just a no-context recording of the cli output for running the benchmark? Are we supposed to explain anything?
+
+
+[01/15/2026 19:57] jesslily_
+the 2nd phase will be for the competition agents (purple agents, not green agents), thanks~
+
+
+[01/15/2026 20:00] jesslily_
+https://discord.com/channels/1280234300012494859/1428456399985311905/1461255881919430826
+
+{Reactions}
+🙏
+
+[01/15/2026 20:40] princeofpersia8715
+🚨🚨Hey there,
+anyone has this error when purple agent trying to run the green (see the last 5-6 lines) ?
+
+Container finance-purple-agent  Creating
+ Container finance-purple-agent  Created
+ Container green-agent  Creating
+ Container green-agent  Created
+ Container agentbeats-client  Creating
+ Container agentbeats-client  Created
+Attaching to agentbeats-client, finance-purple-agent, green-agent
+finance-purple-agent  | 2026-01-15T20:02:38.671148925ZINFO:     Started server process [10]
+finance-purple-agent  | 2026-01-15T20:02:38.671264523ZINFO:     Waiting for application startup.
+finance-purple-agent  | 2026-01-15T20:02:38.671326609ZINFO:     Application startup complete.
+finance-purple-agent  | 2026-01-15T20:02:38.671763123ZINFO:     Uvicorn running on http://0.0.0.0:9009 (Press CTRL+C to quit)
+finance-purple-agent  | 2026-01-15T20:02:41.530156290ZINFO:     127.0.0.1:56326 - "GET /.well-known/agent-card.json HTTP/1.1" 200 OK
+Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: exec: "--host": executable file not found in $PATH
+Error: Process completed with exit code 1.
+
+
+[01/15/2026 20:50] mm035859
+Hi, I’m seeing a repeated leaderboard refresh failure on AgentBeats.
+
+The platform reports:
+“Failed to fetch from https://github.com/.../greenagent-leaderboard (refs/heads/main)”
+
+The repository is public, has a main branch, and works with `git ls-remote` and normal cloning. I’ve also tried forking to a personal repo. It looks like the platform may be fetching via a non-git HTTP path or applying additional constraints.
+
+Is there any known backend limitation or expected repo format for leaderboard fetching? Happy to provide more details if needed.
+
+{Attachments}
+https://cdn.discordapp.com/attachments/1428456399985311905/1461462618400100498/2026-01-15_12.13.20.png?ex=696b4d60&is=6969fbe0&hm=759cf87accde2132ccaf2378181fb89617f24684ac91276c58433b51a572507d&
+
+
+[01/15/2026 21:10] promptscholar
+I have extended webshop. Is web the correct category? E-commerce would be more suitable IMO
+
+
+[01/15/2026 21:12] promptscholar
+Have you created the PR from the assessment run? Check the assessment runner log
+
+
+[01/15/2026 21:13] promptscholar
+Sorry I must have missed this I was solely focused on the phase 1 submission. Is this a requirement for the agentbeats competition? Can someone share more info?
+
+
+[01/15/2026 21:13] jesslily_
+the written article requirement is to get a MOOC certificate, totally separate... Focus on the phase 1 submission today. Good luck!
+
+{Reactions}
+🙏 🫡
+
+[01/15/2026 21:15] whimsical_avocado_36174
+Hello, I’m having an issue with my Phase 1 submission.
+I received an email saying:
+“Docker image not found; Video link invalid or private”
+However:
+My Docker image ghcr.io/yan9620/agentbeats-tutorial-debate-judge:latest is public and I can pull it successfully.
+My demo video https://youtu.be/kepCYTgZzN0
+ is set to Unlisted and opens fine in incognito.
+Could this be a validation or caching issue on the platform side?
+
+{Embed}
+yan
+https://www.youtube.com/watch?v=kepCYTgZzN0
+demo
+https://images-ext-1.discordapp.net/external/3P80GqNJAPvzLATDLGQBZX-Etc8RdKCuCtcQLiCoWjg/https/i.ytimg.com/vi/kepCYTgZzN0/maxresdefault.jpg
+
+
+[01/15/2026 21:16] promptscholar
+Thank you!!
+
+
+[01/15/2026 21:17] promptscholar
+Haven't kept up with the assignments as well sadly 😭. Do I still have time to get the certificate?
+
+
+[01/15/2026 21:18] jesslily_
+yes, we are extending the deadline for that... no worries... you will have time...  we will announce the new deadline for getting the mooc cert soon.
+
+{Reactions}
+🙏 🫡
+
+[01/15/2026 21:20] promptscholar
+Tysm!!!
+
+
+[01/15/2026 21:22] mm035859
+I don’t see any assessment run being triggered for my green agent. There is no run history, no runner log, and no PR created, even though the webhook delivery is successful.
+
+Should green agents manually trigger an assessment run, or is this handled by the platform backend? If it is backend-triggered, could you clarify when and how assessment runs are enabled for AgentX Green Agents, and where we can view the runner logs?
+
+
+[01/15/2026 21:23] promptscholar
+Have you been thru the agentbeats tutorial? The run is triggered through a GitHub action in the leaderboard repo
+
+
+[01/15/2026 21:23] promptscholar
+When you merge a scenario.toml
+
+
+[01/15/2026 21:23] promptscholar
+Actually has to be on a branch
+
+
+[01/15/2026 21:24] peter_rdi
+the problem appears to be there is no `results/` directory in the leaderboard repo. as described in https://docs.agentbeats.dev/tutorial/#appendix-a-writing-leaderboard-queries, agentbeats looks for *.json docs in the `results/` dir
+
+{Embed}
+https://docs.agentbeats.dev/tutorial/
+AgentBeats Tutorial
+
+
+[01/15/2026 21:25] promptscholar
+Actually I ran the agentbeats leaderboard repo through cursor to understand the whole process, it's quite the contraption 🙂
+
+
+[01/15/2026 21:26] mm035859
+OK thanks！ sorry！！1
+
+
+[01/15/2026 21:26] mm035859
+OK！ thanks！！！
+
+
+[01/15/2026 21:31] peter_rdi
+did you define an entrypoint in your dockerfile?
+
+
+[01/15/2026 22:06] kmadorin
+I got the same email after submission, docker image is available, YouTube video is unlisted
+
+Do I need to make any changes to my submission?
+
+
+[01/15/2026 23:10] peter_rdi
+i just checked the validator and i can confirm that your submission is passing validation now
+
+
+[01/15/2026 23:12] peter_rdi
+<@486834292895252489> i can check for you if you share any details about your submission (e.g., the link to your green agent on agentbeats.dev)
+
+
+[01/15/2026 23:13] vardhan9559
+hello received a message “Docker image not found; Video link invalid or private,” but images are present + compose script for leaderboard.
+
+video is also accessible <@854480138150215690> <@1460296389794730027> - team arkhai (agentic-rag)
+
+
+[01/15/2026 23:17] peter_rdi
+check the docker image link on your agent's page on agentbeats.dev. it looks like it doesn't contain the registry (e.g., ghcr or dockerhub)
+
+{Reactions}
+✅
+
+[01/15/2026 23:17] whimsical_avocado_36174
+Thank you so much for checking 🙏
+
+{Reactions}
+👍
+
+[01/15/2026 23:19] vardhan9559
+thanks! and the video is all good?
+
+
+[01/15/2026 23:20] peter_rdi
+video looks good
+
+{Reactions}
+👍
+
+[01/15/2026 23:44] kmadorin
+Thank you, here is the link: https://agentbeats.dev/kmadorin/ethernaut-arena-green-agent
+
+Docker image link: ghcr.io/kmadorin/ethernaut_arena_green_agent:latest
+
+
+==============================================================
+Exported 141 message(s)
+==============================================================
