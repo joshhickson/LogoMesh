@@ -43,7 +43,7 @@ RUN pnpm install --frozen-lockfile
 # 4. Python Dependencies (Agents + vLLM)
 COPY pyproject.toml uv.lock README.md ./
 # Sync dependencies (This will install vllm because we are on Linux)
-RUN uv sync --frozen
+RUN uv sync
 
 # 5. Copy Source Code
 COPY src/ src/

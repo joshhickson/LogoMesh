@@ -6,8 +6,8 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-# using 32b awq for better logic on the lambda gpu
-MODEL="Qwen/Qwen2.5-Coder-32B-Instruct-AWQ"
+# Testing Mistral-7B-Instruct-v0.3 (newer version may fix head_dim=None bug)
+MODEL="mistralai/Mistral-7B-Instruct-v0.2"
 
 echo -e "${BLUE}[arena] starting the full setup...${NC}"
 
@@ -26,15 +26,12 @@ sudo docker rm -f vllm-server green-agent purple-agent > /dev/null 2>&1
 
 # 2. start the vllm brain
 echo -e "${BLUE}[arena] launching vllm with ${MODEL}...${NC}"
-# CRITICAL FIX 1: Added --quantization and --max-model-len to prevent OOM crashes
-# CRITICAL FIX 2: Mounted host HF cache to avoid redownloading models
+# Note: Mistral-7B uses full precision (no quantization needed on A100 80GB)
+# Mounted host HF cache to avoid redownloading models
 sudo docker run --gpus all --network host --name vllm-server -d \
   -v /home/ubuntu/.cache/huggingface:/root/.cache/huggingface \
   polyglot-agent:latest \
-  uv run vllm serve $MODEL \
-  --port 8000 --trust-remote-code \
-  --quantization awq \
-  --max-model-len 16384
+  bash -lc "uv pip install -q pyairports && uv run vllm serve $MODEL --port 8000 --trust-remote-code --max-model-len 16384"
 
 # 3. wait for the server to actually start
 echo -e "${BLUE}[arena] waiting for vllm to be ready (usually takes 2 mins)...${NC}"
