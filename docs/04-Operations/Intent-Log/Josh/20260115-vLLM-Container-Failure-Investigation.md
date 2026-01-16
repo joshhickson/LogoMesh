@@ -785,6 +785,23 @@ The patched Mistral config (`head_dim: 128` + `sliding_window: 4096`) completely
 
 **No Docker rebuilds or Python downgrades were necessary.**
 
+### Battle Execution Analysis
+
+**Post-Battle Investigation (2026-01-16):**
+
+Upon detailed analysis of the battle results, all 26 battles in `battles_tier1_mistral_surgical_fix.db` show:
+- **Score:** 0.16 (uniform across all battles)
+- **Generated Code:** `"Error: Connection error."` (24 characters)
+- **Audit Reason:** `"Parser error (may be Unicode/formatting): invalid syntax (<unknown>, line 1)"`
+
+**Root Cause:** Purple agent (defender) experienced connection errors when attempting to reach the LLM backend during code generation. This prevented actual code generation and testing.
+
+**Verification Status:**
+- ✅ vLLM server: Successfully started and running
+- ✅ Green agent (judge): Running and responsive
+- ✅ Purple agent (defender): Running but unable to connect to LLM
+- ❌ Code generation: Failed due to connectivity issues
+
 ### Comparison: Original vs. Surgical Fix
 
 | Metric | Original (Failing) | Surgical Fix (Working) |
@@ -792,13 +809,129 @@ The patched Mistral config (`head_dim: 128` + `sliding_window: 4096`) completely
 | vLLM Version | 0.6.6.post1 | 0.6.6.post1 |
 | Python | 3.12.12 | 3.12.12 |
 | Startup Success | ❌ TypeError | ✅ Success |
-| Battles Executed | 0 | 25 |
+| Battles Executed | 0 | 26 |
+| Code Generated | N/A | ❌ Connection errors |
 | Time to Fix | N/A (Docker rebuild required) | ~5 minutes (config patch) |
 | Risk Level | High (deep refactoring) | Low (single file edit) |
 
+### Comparison with Tier 2 Qwen Results (Previous Day)
+
+For context, yesterday's Tier 2 battles with Qwen-2.5-Coder-32B-AWQ showed successful code generation:
+
+**Example: tier2-qwen-015 (Score: 0.8125)**
+```python
+class LRUCache:
+    def __init__(self, capacity: int):
+        from collections import OrderedDict
+        self.cache = OrderedDict()
+        self.capacity = capacity
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        else:
+            self.cache.move_to_end(key)
+            return self.cache[key]
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            del self.cache[key]
+        self.cache[key] = value
+        if len(self.cache) > self.capacity:
+            self.cache.popitem(last=False)
+```
+- **Code Length:** 579 characters
+- **Audit Valid:** True
+- **Audit Reason:** "All constraints satisfied"
+
+**Key Differences:**
+- Qwen: Generated valid, working Python code with proper LRU Cache implementation
+- Mistral (post-surgical fix): Connection errors prevented code generation
+- The surgical fix successfully resolved vLLM startup, but arena configuration issues prevented successful battles
+
+### Conclusion
+
+**✅ Surgical Fix Status: SUCCESS** (for vLLM startup)
+
+The patched Mistral-7B-Instruct-v0.2 config.json successfully resolved the vLLM 0.6.6.post1 startup failure on Python 3.12.12. However, subsequent battle execution encountered connection errors between the purple agent and the LLM backend, preventing actual code generation testing.
+
 ---
 
-**End of Investigation Report - Tier 1 Battles Verified Complete****
+## ROOT CAUSE: XGRAMMAR GUIDED DECODING BUG
+
+**Date:** 2026-01-16  
+**Time:** 00:05:00 UTC  
+**Status:** ✅ IDENTIFIED & FIXED
+
+### The Actual Problem
+
+After detailed investigation, the connection errors were NOT network issues. The real root cause was an **xgrammar compatibility bug** that crashed the vLLM engine during JSON-schema constrained generation.
+
+**Error Details:**
+```
+AttributeError: type object 'xgrammar.xgrammar_bindings.TokenizerInfo' 
+has no attribute 'from_huggingface'
+```
+
+**Location:** vLLM's guided decoding layer (`xgrammar_decoding.py:136`)
+
+**Trigger:** When the second request in a battle used `guided_decoding=GuidedDecodingParams(json_object=True)` to enforce JSON output format, xgrammar library tried to call `TokenizerInfo.from_huggingface()` method that doesn't exist in this version.
+
+**Result:** vLLM engine crashed, all subsequent requests got connection errors (the purple agent couldn't reach the dead backend).
+
+### Timeline of Failures
+
+1. **First request (00:00:39):** ✅ Email validation task succeeded
+2. **Second request (00:00:48):** ❌ JSON-constrained review request triggered xgrammar bug
+3. **Engine crash:** vLLM engine died with AttributeError
+4. **Cascade failure:** All subsequent requests got "Engine loop is not running"
+5. **Container exit (00:00:48):** Engine death caused vLLM container to exit with status 0
+
+### Solution Implemented
+
+**Switch guided decoding backend from xgrammar to lm-format-enforcer:**
+
+```bash
+vllm serve mistralai/Mistral-7B-Instruct-v0.2 \
+  --port 8000 \
+  --guided-decoding-backend lm-format-enforcer
+```
+
+**Result:** ✅ vLLM stays alive, battles execute successfully
+
+### Verification Test
+
+**Test Battle: test-fixed-001**
+- Status: ✅ Completed successfully
+- Code Generated: ✅ Yes (112 chars)
+- Score: 0.44 (vs 0.16 with crashes)
+- Output: Fibonacci function with indentation error
+- Error Type: Parser error (real code quality issue, not backend crash)
+
+### Code Sample from Successful Generation
+
+```python
+def fibonacci(n: int) -> int:
+ if n < 0:
+ return 0
+ if n <= 1:
+ return n
+ return fibonacci(n-1) + fibonacci(n-2)
+```
+
+**Analysis:** Code structure is valid, Python syntax has indentation issues (missing indents), score 0.44 reflects this weakness. Mistral is generating code, but with quality issues.
+
+### Key Findings
+
+1. **The surgical fix worked:** vLLM 0.6.6.post1 + Python 3.12.12 is compatible when config is patched
+2. **New blocker discovered:** xgrammar guided decoding backend incompatible with vLLM 0.6.6.post1
+3. **Workaround applied:** Using lm-format-enforcer backend resolves crashes
+4. **Real code quality:** Mistral generates code at ~0.44 quality (indentation/syntax issues)
+5. **Not a network issue:** Purple agent was unable to connect because vLLM crashed, not due to misconfiguration
+
+---
+
+**End of Root Cause Investigation - xgrammar Bug Identified and Fixed**
 
 
 ## INJECTED GEMINI 3 INSIGHT FROM OUTSIDE THE REPO:
