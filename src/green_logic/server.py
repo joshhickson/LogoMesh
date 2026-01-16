@@ -23,6 +23,8 @@ class SendTaskRequest(BaseModel):
     task_id: str | None = None  # Force a specific task
     files: dict[str, str] | None = None # For Task 1.5: Input Contract Definition
     custom_task: dict[str, str] | None = None
+    # AgentBeats participant IDs (UUIDs) for leaderboard tracking
+    participant_ids: dict[str, str] | None = None  # e.g., {"baseline": "019bc6a4-..."}
 
 class ReportResultRequest(BaseModel):
     battle_id: str
@@ -405,7 +407,13 @@ Provide a proof-of-concept exploit if possible."""
                     f"(max severity: {red_analysis.get('max_severity', 'none')})")
 
         # --- Step 5: Return Combined Result ---
+        # Build participants map for AgentBeats leaderboard
+        # Use participant_ids if provided, otherwise use a placeholder
+        # The key should match the 'name' field in scenario.toml participants
+        participants = request.participant_ids or {"agent": request.battle_id}
+
         result = {
+            "participants": participants,  # Required for AgentBeats leaderboard
             "battle_id": request.battle_id,
             "task": task_title,
             "purple_response": purple_data,
