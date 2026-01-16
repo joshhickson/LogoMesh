@@ -1109,3 +1109,38 @@ You are currently waiting on "Build 2" because of `pyairports`.
 4. **Verify** if the `TypeError` is gone.
 
 If that fails, proceed with the `uv python install 3.11` method. The vLLM downgrade should be your last resort.
+
+---
+
+## Final Session Closure (2026-01-16 01:20 UTC)
+
+**Outcome:** We failed to achieve a stable Tier 1 run with either Mistral-7B or Qwen-2.5-Coder on the current vLLM 0.6.6.post1 + Python 3.12 stack.
+
+**Qwen Attempt Summary:**
+- Switched vLLM to `Qwen/Qwen2.5-Coder-32B-Instruct-AWQ` (model listed via `/v1/models`).
+- Restarted `green-agent` and `purple-agent` using `src.green_logic.server:app` and `src.purple_logic.server:app`.
+- Verified agents responded to `/docs`, but battle runner consistently received `[Errno 111] Connection refused` from purple-agent.
+- Executed 25 Qwen Tier 1 battles: all scored 0.1600 with uniform connection errors; database saved at `data/battles_tier1_qwen.db`.
+
+**Observed Pattern (consistent with Mistral tests):**
+- vLLM reports healthy startup; model is listed and loaded.
+- Agents intermittently start, but the defender endpoint is unreachable from the runner context during execution.
+- All battle requests fail fast with connection errors; no valid code generation recorded.
+
+**Assessment:**
+- The arena infrastructure exhibits connectivity instability under this Docker networking configuration (host vs container routing), leading to uniform failures across models.
+- Combined with prior xgrammar/runtime issues, the stack is not production-ready for sustained Tier 1 execution.
+
+**Action Taken:**
+- Documentation updated to reflect failure outcome and Qwen attempt results.
+- Preparing to push final commit and close the SSH session.
+
+**Recommended Next Steps (for future work):**
+- Run all services via `docker-compose` with explicit healthchecks and dependency ordering, or run agents on the host (no container) while keeping vLLM in Docker.
+- Alternatively, rebuild on a Python 3.11 environment or test a different inference server (e.g., TGI) to isolate vLLM-specific instability.
+
+**Artifacts:**
+- Qwen Tier 1 DB: `data/battles_tier1_qwen.db` (25 rows, all 0.1600).
+- Logs: `results/c_new_001_diversity_test/tier1_qwen_battles.log` (connection refused traces).
+
+Status: SNAPSHOT (session closed – unresolved)

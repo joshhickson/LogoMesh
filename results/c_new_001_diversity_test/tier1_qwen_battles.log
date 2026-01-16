@@ -1,0 +1,368 @@
+[2026-01-16T01:05:01.172163] Starting 25 Tier 1 battles with Qwen-2.5-Coder-32B-AWQ
+[2026-01-16T01:05:01.172262] Database: data/battles_tier1_qwen.db
+[2026-01-16T01:05:01.172293] Green Agent (Judge): http://localhost:9000
+[2026-01-16T01:05:01.172314] Purple Agent (Defender): http://localhost:9001
+[2026-01-16T01:05:01.175914] Battle tier1-qwen-001: Starting
+[2026-01-16T01:05:01.364385] Battle tier1-qwen-001: Requesting prompt from Purple Agent
+[2026-01-16T01:05:01.365689] Battle tier1-qwen-001: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:01.369059] Battle tier1-qwen-002: Starting
+[2026-01-16T01:05:01.411780] Battle tier1-qwen-002: Requesting prompt from Purple Agent
+[2026-01-16T01:05:01.412196] Battle tier1-qwen-002: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:01.415037] Battle tier1-qwen-003: Starting
+[2026-01-16T01:05:01.457779] Battle tier1-qwen-003: Requesting prompt from Purple Agent
+[2026-01-16T01:05:01.458184] Battle tier1-qwen-003: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:01.460806] Battle tier1-qwen-004: Starting
+[2026-01-16T01:05:01.503577] Battle tier1-qwen-004: Requesting prompt from Purple Agent
+[2026-01-16T01:05:01.503996] Battle tier1-qwen-004: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:01.506403] Battle tier1-qwen-005: Starting
+[2026-01-16T01:05:01.549353] Battle tier1-qwen-005: Requesting prompt from Purple Agent
+[2026-01-16T01:05:01.549759] Battle tier1-qwen-005: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:01.552318] Battle tier1-qwen-006: Starting
+[2026-01-16T01:05:01.595061] Battle tier1-qwen-006: Requesting prompt from Purple Agent
+[2026-01-16T01:05:01.595446] Battle tier1-qwen-006: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:01.597775] Battle tier1-qwen-007: Starting
+[2026-01-16T01:05:01.640577] Battle tier1-qwen-007: Requesting prompt from Purple Agent
+[2026-01-16T01:05:01.640960] Battle tier1-qwen-007: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:01.643192] Battle tier1-qwen-008: Starting
+[2026-01-16T01:05:01.686000] Battle tier1-qwen-008: Requesting prompt from Purple Agent
+[2026-01-16T01:05:01.686409] Battle tier1-qwen-008: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:01.688686] Battle tier1-qwen-009: Starting
+[2026-01-16T01:05:01.731508] Battle tier1-qwen-009: Requesting prompt from Purple Agent
+[2026-01-16T01:05:01.731865] Battle tier1-qwen-009: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:01.734098] Battle tier1-qwen-010: Starting
+[2026-01-16T01:05:01.776839] Battle tier1-qwen-010: Requesting prompt from Purple Agent
+[2026-01-16T01:05:01.777189] Battle tier1-qwen-010: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:01.779393] Battle tier1-qwen-011: Starting
+[2026-01-16T01:05:01.822227] Battle tier1-qwen-011: Requesting prompt from Purple Agent
+[2026-01-16T01:05:01.822598] Battle tier1-qwen-011: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:01.824921] Battle tier1-qwen-012: Starting
+[2026-01-16T01:05:01.867644] Battle tier1-qwen-012: Requesting prompt from Purple Agent
+[2026-01-16T01:05:01.868003] Battle tier1-qwen-012: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:01.870291] Battle tier1-qwen-013: Starting
+[2026-01-16T01:05:01.913079] Battle tier1-qwen-013: Requesting prompt from Purple Agent
+[2026-01-16T01:05:01.913440] Battle tier1-qwen-013: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:01.915693] Battle tier1-qwen-014: Starting
+[2026-01-16T01:05:01.958607] Battle tier1-qwen-014: Requesting prompt from Purple Agent
+[2026-01-16T01:05:01.958963] Battle tier1-qwen-014: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:01.961301] Battle tier1-qwen-015: Starting
+[2026-01-16T01:05:02.004114] Battle tier1-qwen-015: Requesting prompt from Purple Agent
+[2026-01-16T01:05:02.004469] Battle tier1-qwen-015: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:02.006841] Battle tier1-qwen-016: Starting
+[2026-01-16T01:05:02.049631] Battle tier1-qwen-016: Requesting prompt from Purple Agent
+[2026-01-16T01:05:02.049983] Battle tier1-qwen-016: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:02.052301] Battle tier1-qwen-017: Starting
+[2026-01-16T01:05:02.095080] Battle tier1-qwen-017: Requesting prompt from Purple Agent
+[2026-01-16T01:05:02.095436] Battle tier1-qwen-017: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:02.097734] Battle tier1-qwen-018: Starting
+[2026-01-16T01:05:02.140480] Battle tier1-qwen-018: Requesting prompt from Purple Agent
+[2026-01-16T01:05:02.140850] Battle tier1-qwen-018: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:02.143127] Battle tier1-qwen-019: Starting
+[2026-01-16T01:05:02.185897] Battle tier1-qwen-019: Requesting prompt from Purple Agent
+[2026-01-16T01:05:02.186254] Battle tier1-qwen-019: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:02.188462] Battle tier1-qwen-020: Starting
+[2026-01-16T01:05:02.231254] Battle tier1-qwen-020: Requesting prompt from Purple Agent
+[2026-01-16T01:05:02.231624] Battle tier1-qwen-020: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:02.234149] Battle tier1-qwen-021: Starting
+[2026-01-16T01:05:02.276882] Battle tier1-qwen-021: Requesting prompt from Purple Agent
+[2026-01-16T01:05:02.277233] Battle tier1-qwen-021: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:02.279393] Battle tier1-qwen-022: Starting
+[2026-01-16T01:05:02.322190] Battle tier1-qwen-022: Requesting prompt from Purple Agent
+[2026-01-16T01:05:02.322561] Battle tier1-qwen-022: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:02.325106] Battle tier1-qwen-023: Starting
+[2026-01-16T01:05:02.367825] Battle tier1-qwen-023: Requesting prompt from Purple Agent
+[2026-01-16T01:05:02.368176] Battle tier1-qwen-023: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:02.370582] Battle tier1-qwen-024: Starting
+[2026-01-16T01:05:02.413300] Battle tier1-qwen-024: Requesting prompt from Purple Agent
+[2026-01-16T01:05:02.413671] Battle tier1-qwen-024: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:02.416035] Battle tier1-qwen-025: Starting
+[2026-01-16T01:05:02.458821] Battle tier1-qwen-025: Requesting prompt from Purple Agent
+[2026-01-16T01:05:02.459173] Battle tier1-qwen-025: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:05:02.461581] 
+============================================================
+[2026-01-16T01:05:02.461629] SUMMARY
+[2026-01-16T01:05:02.461654] ============================================================
+[2026-01-16T01:05:02.461734] Total Battles: 25
+[2026-01-16T01:05:02.461773] Average Score: 0.1600
+[2026-01-16T01:05:02.461795] Min Score: 0.1600
+[2026-01-16T01:05:02.461812] Max Score: 0.1600
+[2026-01-16T01:05:02.461897] 
+Score Distribution:
+[2026-01-16T01:05:02.461939]   0.00-0.19: 25
+[2026-01-16T01:05:02.461999] 
+Tier 1 Qwen testing complete!
+[2026-01-16T01:11:47.869988] Starting 25 Tier 1 battles with Qwen-2.5-Coder-32B-AWQ
+[2026-01-16T01:11:47.870059] Database: data/battles_tier1_qwen.db
+[2026-01-16T01:11:47.870090] Green Agent (Judge): http://localhost:9000
+[2026-01-16T01:11:47.870114] Purple Agent (Defender): http://localhost:9001
+[2026-01-16T01:11:47.874439] Battle tier1-qwen-001: Starting
+[2026-01-16T01:11:48.063085] Battle tier1-qwen-001: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.064353] Battle tier1-qwen-001: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.067822] Battle tier1-qwen-002: Starting
+[2026-01-16T01:11:48.110566] Battle tier1-qwen-002: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.110995] Battle tier1-qwen-002: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.113521] Battle tier1-qwen-003: Starting
+[2026-01-16T01:11:48.156215] Battle tier1-qwen-003: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.156652] Battle tier1-qwen-003: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.159141] Battle tier1-qwen-004: Starting
+[2026-01-16T01:11:48.201878] Battle tier1-qwen-004: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.202297] Battle tier1-qwen-004: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.204779] Battle tier1-qwen-005: Starting
+[2026-01-16T01:11:48.247511] Battle tier1-qwen-005: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.247901] Battle tier1-qwen-005: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.250284] Battle tier1-qwen-006: Starting
+[2026-01-16T01:11:48.293004] Battle tier1-qwen-006: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.293395] Battle tier1-qwen-006: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.295862] Battle tier1-qwen-007: Starting
+[2026-01-16T01:11:48.338513] Battle tier1-qwen-007: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.338898] Battle tier1-qwen-007: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.341291] Battle tier1-qwen-008: Starting
+[2026-01-16T01:11:48.384046] Battle tier1-qwen-008: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.384464] Battle tier1-qwen-008: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.386774] Battle tier1-qwen-009: Starting
+[2026-01-16T01:11:48.429530] Battle tier1-qwen-009: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.429894] Battle tier1-qwen-009: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.432219] Battle tier1-qwen-010: Starting
+[2026-01-16T01:11:48.475000] Battle tier1-qwen-010: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.475359] Battle tier1-qwen-010: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.477729] Battle tier1-qwen-011: Starting
+[2026-01-16T01:11:48.520431] Battle tier1-qwen-011: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.520804] Battle tier1-qwen-011: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.523296] Battle tier1-qwen-012: Starting
+[2026-01-16T01:11:48.566032] Battle tier1-qwen-012: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.566393] Battle tier1-qwen-012: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.568806] Battle tier1-qwen-013: Starting
+[2026-01-16T01:11:48.611535] Battle tier1-qwen-013: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.611898] Battle tier1-qwen-013: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.614200] Battle tier1-qwen-014: Starting
+[2026-01-16T01:11:48.656990] Battle tier1-qwen-014: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.657346] Battle tier1-qwen-014: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.659801] Battle tier1-qwen-015: Starting
+[2026-01-16T01:11:48.702527] Battle tier1-qwen-015: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.702882] Battle tier1-qwen-015: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.705228] Battle tier1-qwen-016: Starting
+[2026-01-16T01:11:48.747998] Battle tier1-qwen-016: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.748357] Battle tier1-qwen-016: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.750838] Battle tier1-qwen-017: Starting
+[2026-01-16T01:11:48.793548] Battle tier1-qwen-017: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.793908] Battle tier1-qwen-017: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.796192] Battle tier1-qwen-018: Starting
+[2026-01-16T01:11:48.838930] Battle tier1-qwen-018: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.839290] Battle tier1-qwen-018: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.841997] Battle tier1-qwen-019: Starting
+[2026-01-16T01:11:48.884729] Battle tier1-qwen-019: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.885088] Battle tier1-qwen-019: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.887395] Battle tier1-qwen-020: Starting
+[2026-01-16T01:11:48.930136] Battle tier1-qwen-020: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.930523] Battle tier1-qwen-020: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.932926] Battle tier1-qwen-021: Starting
+[2026-01-16T01:11:48.975714] Battle tier1-qwen-021: Requesting prompt from Purple Agent
+[2026-01-16T01:11:48.976071] Battle tier1-qwen-021: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:48.978571] Battle tier1-qwen-022: Starting
+[2026-01-16T01:11:49.021283] Battle tier1-qwen-022: Requesting prompt from Purple Agent
+[2026-01-16T01:11:49.021657] Battle tier1-qwen-022: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:49.024042] Battle tier1-qwen-023: Starting
+[2026-01-16T01:11:49.066745] Battle tier1-qwen-023: Requesting prompt from Purple Agent
+[2026-01-16T01:11:49.067101] Battle tier1-qwen-023: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:49.069483] Battle tier1-qwen-024: Starting
+[2026-01-16T01:11:49.112180] Battle tier1-qwen-024: Requesting prompt from Purple Agent
+[2026-01-16T01:11:49.112558] Battle tier1-qwen-024: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:49.115037] Battle tier1-qwen-025: Starting
+[2026-01-16T01:11:49.157783] Battle tier1-qwen-025: Requesting prompt from Purple Agent
+[2026-01-16T01:11:49.158139] Battle tier1-qwen-025: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:11:49.160439] 
+============================================================
+[2026-01-16T01:11:49.160488] SUMMARY
+[2026-01-16T01:11:49.160533] ============================================================
+[2026-01-16T01:11:49.160620] Total Battles: 25
+[2026-01-16T01:11:49.160660] Average Score: 0.1600
+[2026-01-16T01:11:49.160683] Min Score: 0.1600
+[2026-01-16T01:11:49.160701] Max Score: 0.1600
+[2026-01-16T01:11:49.160788] 
+Score Distribution:
+[2026-01-16T01:11:49.160830]   0.00-0.19: 25
+[2026-01-16T01:11:49.160891] 
+Tier 1 Qwen testing complete!
+[2026-01-16T01:16:14.949442] Starting 25 Tier 1 battles with Qwen-2.5-Coder-32B-AWQ
+[2026-01-16T01:16:14.949514] Database: data/battles_tier1_qwen.db
+[2026-01-16T01:16:14.949549] Green Agent (Judge): http://localhost:9000
+[2026-01-16T01:16:14.949574] Purple Agent (Defender): http://localhost:9001
+[2026-01-16T01:16:14.952625] Battle tier1-qwen-001: Starting
+[2026-01-16T01:16:15.039106] Battle tier1-qwen-001: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.040473] Battle tier1-qwen-001: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.042979] Battle tier1-qwen-002: Starting
+[2026-01-16T01:16:15.085638] Battle tier1-qwen-002: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.086052] Battle tier1-qwen-002: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.088460] Battle tier1-qwen-003: Starting
+[2026-01-16T01:16:15.131073] Battle tier1-qwen-003: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.131486] Battle tier1-qwen-003: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.134871] Battle tier1-qwen-004: Starting
+[2026-01-16T01:16:15.177458] Battle tier1-qwen-004: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.177880] Battle tier1-qwen-004: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.180380] Battle tier1-qwen-005: Starting
+[2026-01-16T01:16:15.222958] Battle tier1-qwen-005: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.223365] Battle tier1-qwen-005: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.225722] Battle tier1-qwen-006: Starting
+[2026-01-16T01:16:15.268325] Battle tier1-qwen-006: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.268750] Battle tier1-qwen-006: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.271194] Battle tier1-qwen-007: Starting
+[2026-01-16T01:16:15.313766] Battle tier1-qwen-007: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.314174] Battle tier1-qwen-007: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.316534] Battle tier1-qwen-008: Starting
+[2026-01-16T01:16:15.359134] Battle tier1-qwen-008: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.359560] Battle tier1-qwen-008: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.361848] Battle tier1-qwen-009: Starting
+[2026-01-16T01:16:15.404457] Battle tier1-qwen-009: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.404877] Battle tier1-qwen-009: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.407193] Battle tier1-qwen-010: Starting
+[2026-01-16T01:16:15.449825] Battle tier1-qwen-010: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.450226] Battle tier1-qwen-010: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.452560] Battle tier1-qwen-011: Starting
+[2026-01-16T01:16:15.495173] Battle tier1-qwen-011: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.495588] Battle tier1-qwen-011: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.497879] Battle tier1-qwen-012: Starting
+[2026-01-16T01:16:15.540461] Battle tier1-qwen-012: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.540876] Battle tier1-qwen-012: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.543046] Battle tier1-qwen-013: Starting
+[2026-01-16T01:16:15.585671] Battle tier1-qwen-013: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.586076] Battle tier1-qwen-013: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.588307] Battle tier1-qwen-014: Starting
+[2026-01-16T01:16:15.630952] Battle tier1-qwen-014: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.631355] Battle tier1-qwen-014: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.633660] Battle tier1-qwen-015: Starting
+[2026-01-16T01:16:15.676248] Battle tier1-qwen-015: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.676668] Battle tier1-qwen-015: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.679088] Battle tier1-qwen-016: Starting
+[2026-01-16T01:16:15.721657] Battle tier1-qwen-016: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.722061] Battle tier1-qwen-016: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.724377] Battle tier1-qwen-017: Starting
+[2026-01-16T01:16:15.766970] Battle tier1-qwen-017: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.767377] Battle tier1-qwen-017: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.769733] Battle tier1-qwen-018: Starting
+[2026-01-16T01:16:15.812379] Battle tier1-qwen-018: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.812808] Battle tier1-qwen-018: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.815188] Battle tier1-qwen-019: Starting
+[2026-01-16T01:16:15.857776] Battle tier1-qwen-019: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.858178] Battle tier1-qwen-019: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.860560] Battle tier1-qwen-020: Starting
+[2026-01-16T01:16:15.903183] Battle tier1-qwen-020: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.903603] Battle tier1-qwen-020: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.905870] Battle tier1-qwen-021: Starting
+[2026-01-16T01:16:15.948407] Battle tier1-qwen-021: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.948824] Battle tier1-qwen-021: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.951346] Battle tier1-qwen-022: Starting
+[2026-01-16T01:16:15.993966] Battle tier1-qwen-022: Requesting prompt from Purple Agent
+[2026-01-16T01:16:15.994366] Battle tier1-qwen-022: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:15.996760] Battle tier1-qwen-023: Starting
+[2026-01-16T01:16:16.039353] Battle tier1-qwen-023: Requesting prompt from Purple Agent
+[2026-01-16T01:16:16.039773] Battle tier1-qwen-023: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:16.042278] Battle tier1-qwen-024: Starting
+[2026-01-16T01:16:16.084834] Battle tier1-qwen-024: Requesting prompt from Purple Agent
+[2026-01-16T01:16:16.085231] Battle tier1-qwen-024: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:16.087537] Battle tier1-qwen-025: Starting
+[2026-01-16T01:16:16.130159] Battle tier1-qwen-025: Requesting prompt from Purple Agent
+[2026-01-16T01:16:16.130584] Battle tier1-qwen-025: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:16.132892] 
+============================================================
+[2026-01-16T01:16:16.132940] SUMMARY
+[2026-01-16T01:16:16.132966] ============================================================
+[2026-01-16T01:16:16.133045] Total Battles: 25
+[2026-01-16T01:16:16.133094] Average Score: 0.1600
+[2026-01-16T01:16:16.133118] Min Score: 0.1600
+[2026-01-16T01:16:16.133137] Max Score: 0.1600
+[2026-01-16T01:16:16.133226] 
+Score Distribution:
+[2026-01-16T01:16:16.133268]   0.00-0.19: 25
+[2026-01-16T01:16:16.133320] 
+Tier 1 Qwen testing complete!
+[2026-01-16T01:16:55.276253] Starting 25 Tier 1 battles with Qwen-2.5-Coder-32B-AWQ
+[2026-01-16T01:16:55.276326] Database: data/battles_tier1_qwen.db
+[2026-01-16T01:16:55.276362] Green Agent (Judge): http://localhost:9000
+[2026-01-16T01:16:55.276391] Purple Agent (Defender): http://localhost:9001
+[2026-01-16T01:16:55.293448] Battle tier1-qwen-001: Starting
+[2026-01-16T01:16:55.525006] Battle tier1-qwen-001: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.530851] Battle tier1-qwen-001: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.535793] Battle tier1-qwen-002: Starting
+[2026-01-16T01:16:55.542332] Battle tier1-qwen-002: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.542781] Battle tier1-qwen-002: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.545662] Battle tier1-qwen-003: Starting
+[2026-01-16T01:16:55.552160] Battle tier1-qwen-003: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.552608] Battle tier1-qwen-003: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.555210] Battle tier1-qwen-004: Starting
+[2026-01-16T01:16:55.561749] Battle tier1-qwen-004: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.562184] Battle tier1-qwen-004: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.569403] Battle tier1-qwen-005: Starting
+[2026-01-16T01:16:55.575898] Battle tier1-qwen-005: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.576300] Battle tier1-qwen-005: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.582421] Battle tier1-qwen-006: Starting
+[2026-01-16T01:16:55.588901] Battle tier1-qwen-006: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.589307] Battle tier1-qwen-006: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.595893] Battle tier1-qwen-007: Starting
+[2026-01-16T01:16:55.602451] Battle tier1-qwen-007: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.602873] Battle tier1-qwen-007: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.605554] Battle tier1-qwen-008: Starting
+[2026-01-16T01:16:55.612058] Battle tier1-qwen-008: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.612514] Battle tier1-qwen-008: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.615401] Battle tier1-qwen-009: Starting
+[2026-01-16T01:16:55.621957] Battle tier1-qwen-009: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.622342] Battle tier1-qwen-009: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.624957] Battle tier1-qwen-010: Starting
+[2026-01-16T01:16:55.631450] Battle tier1-qwen-010: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.631846] Battle tier1-qwen-010: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.634571] Battle tier1-qwen-011: Starting
+[2026-01-16T01:16:55.641062] Battle tier1-qwen-011: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.641434] Battle tier1-qwen-011: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.643956] Battle tier1-qwen-012: Starting
+[2026-01-16T01:16:55.650438] Battle tier1-qwen-012: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.650824] Battle tier1-qwen-012: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.653583] Battle tier1-qwen-013: Starting
+[2026-01-16T01:16:55.660057] Battle tier1-qwen-013: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.660442] Battle tier1-qwen-013: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.663040] Battle tier1-qwen-014: Starting
+[2026-01-16T01:16:55.669593] Battle tier1-qwen-014: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.669966] Battle tier1-qwen-014: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.672343] Battle tier1-qwen-015: Starting
+[2026-01-16T01:16:55.678827] Battle tier1-qwen-015: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.679208] Battle tier1-qwen-015: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.681735] Battle tier1-qwen-016: Starting
+[2026-01-16T01:16:55.688199] Battle tier1-qwen-016: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.688598] Battle tier1-qwen-016: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.691395] Battle tier1-qwen-017: Starting
+[2026-01-16T01:16:55.698732] Battle tier1-qwen-017: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.699108] Battle tier1-qwen-017: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.701799] Battle tier1-qwen-018: Starting
+[2026-01-16T01:16:55.708325] Battle tier1-qwen-018: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.708713] Battle tier1-qwen-018: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.711524] Battle tier1-qwen-019: Starting
+[2026-01-16T01:16:55.718001] Battle tier1-qwen-019: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.718372] Battle tier1-qwen-019: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.720923] Battle tier1-qwen-020: Starting
+[2026-01-16T01:16:55.727391] Battle tier1-qwen-020: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.727777] Battle tier1-qwen-020: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.730572] Battle tier1-qwen-021: Starting
+[2026-01-16T01:16:55.737037] Battle tier1-qwen-021: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.737405] Battle tier1-qwen-021: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.739963] Battle tier1-qwen-022: Starting
+[2026-01-16T01:16:55.746460] Battle tier1-qwen-022: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.746845] Battle tier1-qwen-022: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.749582] Battle tier1-qwen-023: Starting
+[2026-01-16T01:16:55.756055] Battle tier1-qwen-023: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.756425] Battle tier1-qwen-023: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.758891] Battle tier1-qwen-024: Starting
+[2026-01-16T01:16:55.765438] Battle tier1-qwen-024: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.765823] Battle tier1-qwen-024: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.768677] Battle tier1-qwen-025: Starting
+[2026-01-16T01:16:55.775153] Battle tier1-qwen-025: Requesting prompt from Purple Agent
+[2026-01-16T01:16:55.775546] Battle tier1-qwen-025: ❌ Error: [Errno 111] Connection refused
+[2026-01-16T01:16:55.778084] 
+============================================================
+[2026-01-16T01:16:55.778358] SUMMARY
+[2026-01-16T01:16:55.778389] ============================================================
+[2026-01-16T01:16:55.778486] Total Battles: 25
+[2026-01-16T01:16:55.778553] Average Score: 0.1600
+[2026-01-16T01:16:55.778582] Min Score: 0.1600
+[2026-01-16T01:16:55.778606] Max Score: 0.1600
+[2026-01-16T01:16:55.778690] 
+Score Distribution:
+[2026-01-16T01:16:55.778737]   0.00-0.19: 25
+[2026-01-16T01:16:55.778804] 
+Tier 1 Qwen testing complete!
