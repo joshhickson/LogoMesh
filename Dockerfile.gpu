@@ -1,18 +1,19 @@
 # GPU-Enabled Dockerfile for Lambda Cloud (H100/A100)
-# Base: Nvidia CUDA 12.1 with Ubuntu 24.04 (has Python 3.12 built-in, no PPA needed)
-FROM nvidia/cuda:12.1.0-devel-ubuntu24.04
+# Base: Nvidia CUDA 12.1 with Ubuntu 22.04 (the working combo)
+FROM nvidia/cuda:12.1.0-devel-ubuntu22.04
 
 # Avoid interactive prompts during apt installs
 ENV DEBIAN_FRONTEND=noninteractive
 
 # 1. Install System Dependencies
-# - Ubuntu 24.04 has Python 3.12 by default (no deadsnakes PPA needed!)
+# - Ubuntu 22.04 has Python 3.10 by default - that's fine for our needs
 # - curl, git: for tools
 # - Node.js 20: via nodesource
 RUN apt-get update && apt-get install -y \
     curl \
     git \
     python3 \
+    python3-pip \
     python3-venv \
     python3-dev \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
