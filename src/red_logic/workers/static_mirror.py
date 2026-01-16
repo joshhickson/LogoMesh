@@ -1,0 +1,356 @@
+"""
+Static Mirror Worker - Mirrors Green Agent's SemanticAuditor checks.
+
+This worker knows EXACTLY what Green Agent checks for and finds those issues.
+If this worker finds a vulnerability, Green WILL penalize it.
+
+Reference: src/green_logic/analyzer.py
+"""
+
+import ast
+import re
+import time
+from typing import Optional
+
+from .base import BaseWorker, WorkerResult
+from green_logic.red_report_types import Vulnerability, Severity
+
+
+class StaticMirrorWorker(BaseWorker):
+    """
+    Mirrors Green Agent's SemanticAuditor to find violations.
+
+    Green checks for:
+    1. Forbidden imports: os, sys, subprocess, shutil, socket, ctypes
+    2. Dangerous functions: eval, exec, compile, __import__
+    3. SQL injection patterns (f-strings, % formatting with SQL)
+    4. Command injection (shell=True, os.system with f-strings)
+    5. High cyclomatic complexity (>10 per function)
+    6. Deep nesting (>4 levels)
+
+    This worker finds these EXACT issues to report as vulnerabilities.
+    """
+
+    # Mirrors FORBIDDEN_IMPORTS from analyzer.py
+    FORBIDDEN_IMPORTS = {"os", "sys", "subprocess", "shutil", "socket", "ctypes"}
+
+    # Mirrors DANGEROUS_FUNCTIONS from analyzer.py
+    DANGEROUS_FUNCTIONS = {
+        "eval": (Severity.CRITICAL, "Arbitrary code execution via eval()"),
+        "exec": (Severity.CRITICAL, "Arbitrary code execution via exec()"),
+        "compile": (Severity.HIGH, "Dynamic code compilation can execute arbitrary code"),
+        "__import__": (Severity.HIGH, "Dynamic import can bypass security restrictions"),
+    }
+
+    # Mirrors SQL_PATTERNS from analyzer.py
+    SQL_PATTERNS = [
+        (r"f['\"].*SELECT\s+.*\{", "f-string SQL SELECT"),
+        (r"f['\"].*INSERT\s+.*\{", "f-string SQL INSERT"),
+        (r"f['\"].*UPDATE\s+.*\{", "f-string SQL UPDATE"),
+        (r"f['\"].*DELETE\s+.*\{", "f-string SQL DELETE"),
+        (r"['\"]SELECT\s+.+FROM\s+.+['\"].*%", "% formatting SQL SELECT"),
+        (r"['\"]INSERT\s+INTO\s+.+['\"].*%", "% formatting SQL INSERT"),
+        (r"['\"]UPDATE\s+.+SET\s+.+['\"].*%", "% formatting SQL UPDATE"),
+        (r"['\"]DELETE\s+FROM\s+.+['\"].*%", "% formatting SQL DELETE"),
+    ]
+
+    # Complexity thresholds (from analyzer.py)
+    MAX_CYCLOMATIC_COMPLEXITY = 10
+    MAX_NESTING_DEPTH = 4
+
+    @property
+    def name(self) -> str:
+        return "StaticMirrorWorker"
+
+    def analyze(self, code: str, task_id: Optional[str] = None) -> WorkerResult:
+        """
+        Analyze code for issues that Green Agent's SemanticAuditor checks.
+
+        Args:
+            code: Source code to analyze
+            task_id: Optional task identifier (not used by this worker)
+
+        Returns:
+            WorkerResult with found vulnerabilities
+        """
+        start_time = time.time()
+        vulnerabilities = []
+
+        # Parse AST
+        try:
+            tree = ast.parse(code)
+        except SyntaxError as e:
+            # Syntax error is itself a finding
+            vulnerabilities.append(self._create_vulnerability(
+                severity=Severity.HIGH,
+                category="syntax_error",
+                title="Code has syntax errors",
+                description=f"Cannot parse code: {e}",
+                line_number=getattr(e, 'lineno', None),
+                confidence="high"
+            ))
+            return WorkerResult(
+                worker_name=self.name,
+                vulnerabilities=vulnerabilities,
+                execution_time_ms=(time.time() - start_time) * 1000
+            )
+
+        # Check 1: Forbidden imports
+        vulnerabilities.extend(self._check_forbidden_imports(tree))
+
+        # Check 2: Dangerous function calls
+        vulnerabilities.extend(self._check_dangerous_functions(tree))
+
+        # Check 3: SQL injection patterns
+        vulnerabilities.extend(self._check_sql_injection(code))
+
+        # Check 4: Command injection
+        vulnerabilities.extend(self._check_command_injection(tree, code))
+
+        # Check 5: High complexity
+        vulnerabilities.extend(self._check_complexity(tree))
+
+        # Check 6: Deep nesting
+        vulnerabilities.extend(self._check_nesting(tree))
+
+        return WorkerResult(
+            worker_name=self.name,
+            vulnerabilities=vulnerabilities,
+            execution_time_ms=(time.time() - start_time) * 1000
+        )
+
+    def _check_forbidden_imports(self, tree: ast.AST) -> list[Vulnerability]:
+        """Check for imports that Green Agent forbids."""
+        vulns = []
+        forbidden_found = set()
+
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    module_name = alias.name.split(".")[0]
+                    if module_name in self.FORBIDDEN_IMPORTS:
+                        forbidden_found.add((module_name, node.lineno))
+
+            elif isinstance(node, ast.ImportFrom):
+                if node.module:
+                    module_name = node.module.split(".")[0]
+                    if module_name in self.FORBIDDEN_IMPORTS:
+                        forbidden_found.add((module_name, node.lineno))
+
+        for module, lineno in forbidden_found:
+            vulns.append(self._create_vulnerability(
+                severity=Severity.HIGH,
+                category="forbidden_import",
+                title=f"Forbidden import: {module}",
+                description=f"Import of '{module}' is forbidden by Green Agent's security policy. "
+                           f"This module can be used for system access, file operations, or command execution.",
+                line_number=lineno,
+                exploit_code=f"# The imported module '{module}' allows:\n"
+                            f"# - os: file/process operations\n"
+                            f"# - sys: interpreter access\n"
+                            f"# - subprocess: command execution\n"
+                            f"# - socket: network access",
+                confidence="high"
+            ))
+
+        return vulns
+
+    def _check_dangerous_functions(self, tree: ast.AST) -> list[Vulnerability]:
+        """Check for dangerous function calls like eval(), exec()."""
+        vulns = []
+
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                func_name = None
+
+                if isinstance(node.func, ast.Name):
+                    func_name = node.func.id
+                elif isinstance(node.func, ast.Attribute):
+                    func_name = node.func.attr
+
+                if func_name and func_name in self.DANGEROUS_FUNCTIONS:
+                    severity, description = self.DANGEROUS_FUNCTIONS[func_name]
+
+                    # Check if user input might flow into this function
+                    has_variable_arg = any(
+                        isinstance(arg, (ast.Name, ast.Subscript, ast.Attribute, ast.Call))
+                        for arg in node.args
+                    )
+
+                    vulns.append(self._create_vulnerability(
+                        severity=severity,
+                        category="dangerous_function",
+                        title=f"Dangerous function: {func_name}()",
+                        description=description + (
+                            " The function receives a variable argument, making code injection likely."
+                            if has_variable_arg else ""
+                        ),
+                        line_number=node.lineno,
+                        exploit_code=f"# Exploit for {func_name}():\n"
+                                    f"malicious_input = \"__import__('os').system('id')\"\n"
+                                    f"{func_name}(malicious_input)  # Executes arbitrary code",
+                        confidence="high" if has_variable_arg else "medium"
+                    ))
+
+        return vulns
+
+    def _check_sql_injection(self, code: str) -> list[Vulnerability]:
+        """Check for SQL injection vulnerabilities."""
+        vulns = []
+        lines = code.split("\n")
+
+        for pattern, desc in self.SQL_PATTERNS:
+            for lineno, line in enumerate(lines, 1):
+                if re.search(pattern, line, re.IGNORECASE):
+                    vulns.append(self._create_vulnerability(
+                        severity=Severity.CRITICAL,
+                        category="sql_injection",
+                        title=f"SQL Injection: {desc}",
+                        description=f"SQL query built with string interpolation instead of parameterized queries. "
+                                   f"User input can modify the query structure.",
+                        line_number=lineno,
+                        exploit_code="# SQL Injection exploit:\n"
+                                    "user_input = \"' OR '1'='1' --\"\n"
+                                    "# Or for data extraction:\n"
+                                    "user_input = \"' UNION SELECT password FROM users --\"",
+                        confidence="high"
+                    ))
+                    break  # One finding per pattern
+
+        return vulns
+
+    def _check_command_injection(self, tree: ast.AST, code: str) -> list[Vulnerability]:
+        """Check for command injection vulnerabilities."""
+        vulns = []
+
+        # Check for shell=True
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                for keyword in node.keywords:
+                    if keyword.arg == "shell":
+                        if isinstance(keyword.value, ast.Constant) and keyword.value.value is True:
+                            vulns.append(self._create_vulnerability(
+                                severity=Severity.CRITICAL,
+                                category="command_injection",
+                                title="Command injection via shell=True",
+                                description="Using shell=True with subprocess allows shell metacharacter injection. "
+                                           "Attackers can chain commands using ; | && etc.",
+                                line_number=node.lineno,
+                                exploit_code="# Command injection exploit:\n"
+                                            "user_input = \"file.txt; cat /etc/passwd\"\n"
+                                            "subprocess.run(f\"cat {user_input}\", shell=True)\n"
+                                            "# Executes: cat file.txt; cat /etc/passwd",
+                                confidence="high"
+                            ))
+
+        # Check for os.system with f-strings
+        lines = code.split("\n")
+        for lineno, line in enumerate(lines, 1):
+            if re.search(r"os\.system\s*\(\s*f['\"]", line):
+                vulns.append(self._create_vulnerability(
+                    severity=Severity.CRITICAL,
+                    category="command_injection",
+                    title="Command injection via os.system with f-string",
+                    description="os.system() with f-string allows arbitrary command execution.",
+                    line_number=lineno,
+                    exploit_code="# Exploit:\n"
+                                "user_input = \"file.txt; rm -rf /\"\n"
+                                "os.system(f\"cat {user_input}\")  # Disaster",
+                    confidence="high"
+                ))
+
+            if re.search(r"os\.popen\s*\(\s*f['\"]", line):
+                vulns.append(self._create_vulnerability(
+                    severity=Severity.CRITICAL,
+                    category="command_injection",
+                    title="Command injection via os.popen with f-string",
+                    description="os.popen() with f-string allows arbitrary command execution.",
+                    line_number=lineno,
+                    confidence="high"
+                ))
+
+        return vulns
+
+    def _check_complexity(self, tree: ast.AST) -> list[Vulnerability]:
+        """Check for high cyclomatic complexity."""
+        vulns = []
+
+        for node in ast.walk(tree):
+            if isinstance(node, ast.FunctionDef):
+                complexity = self._calculate_complexity(node)
+                if complexity > self.MAX_CYCLOMATIC_COMPLEXITY:
+                    vulns.append(self._create_vulnerability(
+                        severity=Severity.LOW,
+                        category="complexity",
+                        title=f"High cyclomatic complexity in {node.name}()",
+                        description=f"Function has complexity {complexity} (max allowed: {self.MAX_CYCLOMATIC_COMPLEXITY}). "
+                                   f"High complexity often indicates hard-to-test code with potential edge case bugs.",
+                        line_number=node.lineno,
+                        confidence="medium"
+                    ))
+
+        return vulns
+
+    def _calculate_complexity(self, func_node: ast.FunctionDef) -> int:
+        """Calculate cyclomatic complexity for a function."""
+        complexity = 1
+
+        for node in ast.walk(func_node):
+            if isinstance(node, (ast.If, ast.For, ast.While, ast.ExceptHandler, ast.Assert)):
+                complexity += 1
+            elif isinstance(node, ast.BoolOp):
+                complexity += len(node.values) - 1
+            elif isinstance(node, (ast.ListComp, ast.SetComp, ast.GeneratorExp, ast.DictComp)):
+                for gen in node.generators:
+                    complexity += len(gen.ifs)
+            elif isinstance(node, ast.IfExp):
+                complexity += 1
+
+        return complexity
+
+    def _check_nesting(self, tree: ast.AST) -> list[Vulnerability]:
+        """Check for excessive nesting depth."""
+        vulns = []
+
+        for node in ast.walk(tree):
+            if isinstance(node, ast.FunctionDef):
+                max_depth = self._measure_nesting(node.body, 0)
+                if max_depth > self.MAX_NESTING_DEPTH:
+                    vulns.append(self._create_vulnerability(
+                        severity=Severity.LOW,
+                        category="deep_nesting",
+                        title=f"Deep nesting in {node.name}()",
+                        description=f"Function has nesting depth {max_depth} (max: {self.MAX_NESTING_DEPTH}). "
+                                   f"Deep nesting makes code hard to follow and prone to logic errors.",
+                        line_number=node.lineno,
+                        confidence="medium"
+                    ))
+
+        return vulns
+
+    def _measure_nesting(self, body: list, depth: int) -> int:
+        """Recursively measure maximum nesting depth."""
+        max_depth = depth
+
+        for node in body:
+            child_body = None
+            new_depth = depth
+
+            if isinstance(node, (ast.If, ast.For, ast.While, ast.With)):
+                new_depth = depth + 1
+                child_body = node.body
+                if hasattr(node, "orelse") and node.orelse:
+                    else_depth = self._measure_nesting(node.orelse, depth + 1)
+                    max_depth = max(max_depth, else_depth)
+            elif isinstance(node, ast.Try):
+                new_depth = depth + 1
+                child_body = node.body
+                for handler in node.handlers:
+                    handler_depth = self._measure_nesting(handler.body, depth + 1)
+                    max_depth = max(max_depth, handler_depth)
+
+            if child_body:
+                child_max = self._measure_nesting(child_body, new_depth)
+                max_depth = max(max_depth, child_max)
+
+        return max_depth
