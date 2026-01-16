@@ -83,7 +83,7 @@ echo -e "${RED}[arena] launching the attacker on port 9021...${NC}"
 sudo docker run -d --name red-agent --network host \
   -e OPENAI_BASE_URL=http://localhost:8000/v1 \
   -e OPENAI_API_KEY=EMPTY \
-  -e OPENAI_MODEL=$MODEL \
+  -e MODEL_NAME=$MODEL \
   polyglot-agent:latest \
   uv run python main.py --role RED --port 9021
 
