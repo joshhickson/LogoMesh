@@ -1,0 +1,3 @@
+FROM ghcr.io/sszz01/logomesh:latest
+ENV PATH="/app/.venv/bin:$PATH"
+ENTRYPOINT ["python3", "main.py", "--role", "GREEN"]

@@ -43,5 +43,6 @@ COPY main.py .
 # Ensure we use the virtual environment created by uv
 ENV PATH="/app/.venv/bin:$PATH"
 
-# Default Command
-CMD ["python3", "main.py", "--help"]
+# Default entrypoint - AgentBeats will pass --host and --port as args
+ENTRYPOINT ["python3", "main.py"]
+CMD ["--help"]
