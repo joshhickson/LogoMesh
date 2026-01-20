@@ -48,6 +48,29 @@ app = FastAPI(
     description="Agent for evaluating contextual debt of other agents.",
 )
 
+# --- Agent Card (required for AgentBeats health checks) ---
+AGENT_CARD = {
+    "name": "green_agent",
+    "description": "Polyglot Green Agent (Evaluator) - LogoMesh Arena",
+    "url": "",  # Will be set dynamically
+    "version": "1.0.0",
+    "defaultInputModes": ["text"],
+    "defaultOutputModes": ["text"],
+    "capabilities": {"streaming": False},
+    "skills": [
+        {
+            "id": "send_coding_task",
+            "name": "Send Coding Task",
+            "description": "Orchestrates evaluation of Purple agents"
+        }
+    ]
+}
+
+@app.get("/.well-known/agent-card.json")
+async def get_agent_card():
+    """Return agent card for A2A protocol discovery."""
+    return AGENT_CARD
+
 # In a real app, this might be a singleton or have a more complex lifecycle
 agent = GreenAgent()
 scorer = ContextualIntegrityScorer()
