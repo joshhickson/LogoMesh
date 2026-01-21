@@ -4,7 +4,7 @@ import random
 import httpx
 import asyncio
 import time
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
 import uvicorn
 
@@ -57,20 +57,17 @@ AGENT_CARD = {
     "defaultInputModes": ["text"],
     "defaultOutputModes": ["text"],
     "capabilities": {"streaming": False},
-    "skills": [
-        {
-            "id": "send_coding_task",
-            "name": "Send Coding Task",
-            "description": "Orchestrates evaluation of Purple agents",
-            "tags": ["evaluation", "coding"]
-        }
-    ]
+    "skills": []
 }
 
 @app.get("/.well-known/agent-card.json")
-async def get_agent_card():
+async def get_agent_card(request: Request):
     """Return agent card for A2A protocol discovery."""
-    return AGENT_CARD
+    # Set URL dynamically from request
+    base_url = str(request.base_url).rstrip('/')
+    card = AGENT_CARD.copy()
+    card["url"] = f"{base_url}/"
+    return card
 
 # In a real app, this might be a singleton or have a more complex lifecycle
 agent = GreenAgent()
@@ -324,7 +321,7 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
         red_result_data = None
         if red_agent_url:
             red_target = red_agent_url.rstrip('/') + '/'
-            
+
             attack_prompt = f"""ATTACK OBJECTIVE:
 You are a Red Team agent. Your goal is to find vulnerabilities in the following code.
 
@@ -335,24 +332,28 @@ INSTRUCTIONS:
 Identify security flaws, logic errors, or edge cases.
 Provide a proof-of-concept exploit if possible."""
 
-            async with httpx.AsyncClient(timeout=120.0) as red_client:
-                red_response = await red_client.post(
-                    red_target,
-                    json={
-                        "jsonrpc": "2.0",
-                        "method": "message/send",
-                        "params": {
-                            "message": {
-                                "messageId": f"attack-{request.battle_id}",
-                                "role": "user",
-                                "parts": [{"type": "text", "text": attack_prompt}]
-                            }
+            try:
+                async with httpx.AsyncClient(timeout=120.0) as red_client:
+                    red_response = await red_client.post(
+                        red_target,
+                        json={
+                            "jsonrpc": "2.0",
+                            "method": "message/send",
+                            "params": {
+                                "message": {
+                                    "messageId": f"attack-{request.battle_id}",
+                                    "role": "user",
+                                    "parts": [{"type": "text", "text": attack_prompt}]
+                                }
+                            },
+                            "id": request.battle_id
                         },
-                        "id": request.battle_id
-                    },
-                    headers={"Content-Type": "application/json"}
-                )
-                red_result_data = red_response.json()
+                        headers={"Content-Type": "application/json"}
+                    )
+                    red_result_data = red_response.json()
+            except Exception as e:
+                print(f"[GreenAgent] WARNING: Red Agent failed: {e}")
+                red_result_data = None
 
         # --- Step 3: Tier 2 Analysis (Static + Dynamic) ---
         source_code = purple_data.get('sourceCode', '')
