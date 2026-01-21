@@ -61,7 +61,8 @@ AGENT_CARD = {
         {
             "id": "send_coding_task",
             "name": "Send Coding Task",
-            "description": "Orchestrates evaluation of Purple agents"
+            "description": "Orchestrates evaluation of Purple agents",
+            "tags": ["evaluation", "coding"]
         }
     ]
 }
