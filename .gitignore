@@ -18,3 +18,7 @@ coverage/
 docs/_build
 
 data/*.db
+
+# IDE and local config
+.idea/
+.claude/
