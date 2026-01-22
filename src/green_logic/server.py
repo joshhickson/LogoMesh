@@ -115,54 +115,93 @@ async def handle_a2a_message(request: Request):
             message_text = part.get("text", "")
             break
 
-    # Extract configuration from params (agentbeats sends this)
-    # Try multiple possible locations for config and participants
-    config = params.get("config", {}) or body.get("config", {})
-    participants = params.get("participants", []) or body.get("participants", [])
+    # The agentbeats-client sends participants and config in the MESSAGE TEXT as JSON
+    # Format: {"participants": {"role-name": "http://endpoint:port"}, "config": {...}}
+    config = {}
+    participants = {}
 
-    # Also check if config/participants are in the message text as JSON
-    if not participants and message_text:
+    # Primary: Parse from message text (this is how agentbeats-client sends it)
+    if message_text:
         try:
             msg_json = json.loads(message_text)
             if isinstance(msg_json, dict):
-                config = config or msg_json.get("config", {})
-                participants = participants or msg_json.get("participants", [])
-        except json.JSONDecodeError:
-            pass
+                participants = msg_json.get("participants", {})
+                config = msg_json.get("config", {})
+                print(f"[A2A] Parsed from message text: participants={list(participants.keys())}, config keys={list(config.keys())}")
+        except json.JSONDecodeError as e:
+            print(f"[A2A] Message text is not JSON: {e}")
+
+    # Fallback: Check params and body root (for compatibility)
+    if not participants:
+        participants = params.get("participants", {}) or body.get("participants", {})
+    if not config:
+        config = params.get("config", {}) or body.get("config", {})
 
     print(f"[A2A] Message text length: {len(message_text)}")
     print(f"[A2A] Config: {config}")
     print(f"[A2A] Participants: {participants}")
+    print(f"[A2A] Participants type: {type(participants)}")
 
     # Get task_id from config or default
     task_id = config.get("task_id", "task-001")
 
     # Find purple agent URL from participants
+    # participants can be:
+    # - dict: {"role-name": "http://endpoint"} or {"role-name": {"endpoint": "...", "agentbeats_id": "..."}}
+    # - list: [{"role": "...", "endpoint": "...", "agentbeats_id": "..."}]
     purple_agent_url = None
     red_agent_url = None
     participant_ids = {}
 
-    for p in participants:
-        role = p.get("role", "")
-        endpoint = p.get("endpoint", "")
-        agentbeats_id = p.get("agentbeats_id", "")
+    if isinstance(participants, dict):
+        # Dict format: {"purple-agent": "http://..." } or {"purple-agent": {"endpoint": "..."}}
+        for role, value in participants.items():
+            if isinstance(value, str):
+                endpoint = value
+                agentbeats_id = None
+            elif isinstance(value, dict):
+                endpoint = value.get("endpoint", "")
+                agentbeats_id = value.get("agentbeats_id")
+            else:
+                continue
 
-        if "purple" in role.lower() or role == "purple-agent":
-            purple_agent_url = endpoint
-            if agentbeats_id:
-                participant_ids["purple-agent"] = agentbeats_id
-        elif "red" in role.lower():
-            red_agent_url = endpoint
-            if agentbeats_id:
-                participant_ids["red-agent"] = agentbeats_id
+            if "purple" in role.lower() or role == "agent":
+                purple_agent_url = endpoint
+                if agentbeats_id:
+                    participant_ids[role] = agentbeats_id
+            elif "red" in role.lower():
+                red_agent_url = endpoint
+                if agentbeats_id:
+                    participant_ids[role] = agentbeats_id
+            else:
+                # Default: first participant is purple
+                if not purple_agent_url:
+                    purple_agent_url = endpoint
+                    if agentbeats_id:
+                        participant_ids[role] = agentbeats_id
+    elif isinstance(participants, list):
+        # List format: [{"role": "...", "endpoint": "...", "agentbeats_id": "..."}]
+        for p in participants:
+            role = p.get("role", "")
+            endpoint = p.get("endpoint", "")
+            agentbeats_id = p.get("agentbeats_id", "")
 
-    if not purple_agent_url:
+            if "purple" in role.lower() or role == "purple-agent" or role == "agent":
+                purple_agent_url = endpoint
+                if agentbeats_id:
+                    participant_ids[role] = agentbeats_id
+            elif "red" in role.lower():
+                red_agent_url = endpoint
+                if agentbeats_id:
+                    participant_ids[role] = agentbeats_id
+
         # Fallback: try first participant
-        if participants:
+        if not purple_agent_url and participants:
             purple_agent_url = participants[0].get("endpoint", "")
             agentbeats_id = participants[0].get("agentbeats_id", "")
+            role = participants[0].get("role", "agent")
             if agentbeats_id:
-                participant_ids["agent"] = agentbeats_id
+                participant_ids[role] = agentbeats_id
 
     if not purple_agent_url:
         return {
