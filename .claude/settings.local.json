@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv sync:*)",
+      "Bash(python -m py_compile:*)",
+      "Bash(git log:*)"
+    ]
+  }
+}

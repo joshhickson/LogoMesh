@@ -111,7 +111,9 @@ async def handle_a2a_message(request: Request):
     message_parts = message.get("parts", [])
     message_text = ""
     for part in message_parts:
-        if part.get("type") == "text":
+        # A2A uses "kind" not "type" for part type
+        part_type = part.get("kind") or part.get("type")
+        if part_type == "text":
             message_text = part.get("text", "")
             break
 

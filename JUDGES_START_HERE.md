@@ -1,102 +1,87 @@
-# ⚖️ Judges: Start Here
+# For Judges
 
-**Welcome to the Green Agent (The Judge).**
+Quick setup guide to evaluate this submission.
 
-This repository houses the **Green Agent**, an automated evaluator designed to measure "Contextual Debt" in AI-generated code. It serves as a benchmark for the AgentBeats competition.
+## What You're Looking At
 
-If you are evaluating this submission, follow these exact steps to spin up the entire arena (Judge, Defender, and LLM Brain) in under 5 minutes.
+LogoMesh is an **agent evaluation arena**:
+- **Green Agent** (our submission) = Judges other agents' code
+- **Purple Agent** = Gets judged (competitors build these)
+- **Red Agent** = Attacks Purple's code to find vulnerabilities
+
+The Green Agent calculates a **Contextual Integrity Score (CIS)** based on code quality, test coverage, and security.
 
 ---
 
-## 1. The One-Minute Setup (Prerequisites)
+## Run It (5 minutes)
 
-We assume you are on a standard Linux environment (e.g., Lambda Cloud, Ubuntu).
+### Prerequisites
+- Docker running
+- Python 3.11+
 
-### A. Configure Environment
-The system needs an environment file to run (even if API keys are empty/mocked).
+### Steps
+
 ```bash
+# 1. Clone and enter
+git clone https://github.com/sszz01/LogoMesh.git
+cd LogoMesh
+
+# 2. Setup
 cp .env.example .env
-```
+pip install uv && uv sync
 
-### B. Install Dependencies (`uv`)
-We use `uv` for fast Python package management.
-```bash
-pip install uv
-uv sync --python 3.11
-```
-
-### C. Verify Docker
-Ensure Docker is running and you have `sudo` access.
-```bash
-sudo docker ps
-# If this lists headers (CONTAINER ID...), you are good.
-```
-
----
-
-## 2. The "Big Red Button" (Launch)
-
-We have consolidated the entire build and launch process into a single script. This script will:
-1.  **Build** the `polyglot-agent` Docker image (includes all dependencies).
-2.  **Launch vLLM** (The "Brain" - Qwen 2.5 Coder 32B).
-3.  **Launch Green Agent** (The Judge) on Port **9000**.
-4.  **Launch Purple Agent** (The Defender) on Port **9001**.
-
-**Run this command:**
-```bash
+# 3. Launch everything
 sudo ./scripts/bash/launch_arena.sh
 ```
 
-> **Wait:** It will take **2-3 minutes** for the vLLM server to load the model weights. The script will poll until it is ready.
+Wait 2-3 minutes for models to load.
 
----
+### Test It
 
-## 3. Run Your First Evaluation
-
-Once the arena is live, act as the "User" and send a task to the Judge.
-
-**Run the Test Script:**
 ```bash
+# Run a test evaluation
 sudo ./scripts/bash/test_agents.sh
 ```
 
-**Or run manually via curl:**
+Or manually:
 ```bash
 curl -X POST http://localhost:9000/actions/send_coding_task \
   -H "Content-Type: application/json" \
-  -d '{
-    "battle_id": "judge-eval-001",
-    "purple_agent_url": "http://localhost:9001"
-  }'
+  -d '{"battle_id": "test-001", "purple_agent_url": "http://localhost:9001"}'
 ```
 
 ---
 
-## 4. Verify the Evidence
+## What to Look For
 
-The core novelty of this submission is the **Decision Bill of Materials (DBOM)**—a cryptographic proof of the evaluation.
+1. **Green Agent logs** - Shows scoring in real-time
+   ```bash
+   sudo docker logs -f green-agent
+   ```
 
-### A. Check the Logs
-Look at the Green Agent logs to see the "Contextual Integrity Score" (CIS) being calculated in real-time.
-```bash
-sudo docker logs -f green-agent
-```
-
-### B. Find the Artifacts
-After a successful run, verify that the cryptographic proof was generated:
-```bash
-ls -l data/dboms/
-# You should see: dbom_judge-eval-001.json
-```
+2. **Score output** - CIS score between 0-1
+3. **DBOM artifacts** - Cryptographic proof in `data/dboms/`
 
 ---
 
-## 5. Advanced QA
+## Key Files
 
-For detailed test cases (including negative testing and security constraints), see the **[QA Testing Plan](docs/04-Operations/Intent-Log/Josh/20260110-pr-88-testing-plan.md)**.
+| File | What it does |
+|------|--------------|
+| `src/green_logic/server.py` | Green Agent main logic |
+| `src/green_logic/scoring.py` | CIS scoring algorithm |
+| `scenarios/security_arena/agents/generic_defender.py` | Purple Agent |
 
 ---
 
-## 📚 Deep Dive
-*   **Full Documentation:** [docs/04-Operations/Dual-Track-Arena/green-agent/20260109-Green-Agent-README.md](docs/04-Operations/Dual-Track-Arena/green-agent/20260109-Green-Agent-README.md)
-*   **Troubleshooting:** [docs/04-Operations/Dual-Track-Arena/20260110-Quick-Start-Scripts.md](docs/04-Operations/Dual-Track-Arena/20260110-Quick-Start-Scripts.md)
+## The Innovation
+
+**Contextual Integrity Score (CIS)** measures:
+- How well code matches requirements
+- Test coverage quality
+- Security (Red Agent finds vulnerabilities)
+- Logic correctness (LLM review)
+
+Formula: `CIS = 0.25*R + 0.25*A + 0.25*T + 0.25*L`
+
+See `docs/03-Research/Theory/` for the research paper.
