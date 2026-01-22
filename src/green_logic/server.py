@@ -84,6 +84,11 @@ async def handle_a2a_message(request: Request):
 
     body = await request.json()
 
+    # DEBUG: Log full request body to understand message format
+    print(f"[A2A] === FULL REQUEST BODY ===")
+    print(json.dumps(body, indent=2, default=str)[:2000])
+    print(f"[A2A] === END REQUEST BODY ===")
+
     # Parse JSON-RPC request
     jsonrpc_id = body.get("id", str(uuid.uuid4()))
     method = body.get("method", "")
@@ -111,8 +116,19 @@ async def handle_a2a_message(request: Request):
             break
 
     # Extract configuration from params (agentbeats sends this)
-    config = params.get("config", {})
-    participants = params.get("participants", [])
+    # Try multiple possible locations for config and participants
+    config = params.get("config", {}) or body.get("config", {})
+    participants = params.get("participants", []) or body.get("participants", [])
+
+    # Also check if config/participants are in the message text as JSON
+    if not participants and message_text:
+        try:
+            msg_json = json.loads(message_text)
+            if isinstance(msg_json, dict):
+                config = config or msg_json.get("config", {})
+                participants = participants or msg_json.get("participants", [])
+        except json.JSONDecodeError:
+            pass
 
     print(f"[A2A] Message text length: {len(message_text)}")
     print(f"[A2A] Config: {config}")
