@@ -57,7 +57,10 @@ AGENT_CARD = {
     "defaultInputModes": ["text"],
     "defaultOutputModes": ["text"],
     "capabilities": {"streaming": False},
-    "skills": []
+    "skills": [],
+    # Required for A2A client transport selection
+    "preferredTransport": "JSONRPC",
+    "protocolVersion": "0.3.0"
 }
 
 @app.get("/.well-known/agent-card.json")
@@ -68,6 +71,146 @@ async def get_agent_card(request: Request):
     card = AGENT_CARD.copy()
     card["url"] = f"{base_url}/"
     return card
+
+
+# --- A2A JSON-RPC Message Handler ---
+@app.post("/")
+async def handle_a2a_message(request: Request):
+    """
+    Handle A2A JSON-RPC messages from agentbeats-client.
+    This is the main entry point for the A2A protocol.
+    """
+    import uuid
+
+    body = await request.json()
+
+    # Parse JSON-RPC request
+    jsonrpc_id = body.get("id", str(uuid.uuid4()))
+    method = body.get("method", "")
+    params = body.get("params", {})
+
+    print(f"[A2A] Received method: {method}, id: {jsonrpc_id}")
+
+    if method != "message/send":
+        return {
+            "jsonrpc": "2.0",
+            "id": jsonrpc_id,
+            "error": {
+                "code": -32601,
+                "message": f"Method not found: {method}"
+            }
+        }
+
+    # Extract message from params
+    message = params.get("message", {})
+    message_parts = message.get("parts", [])
+    message_text = ""
+    for part in message_parts:
+        if part.get("type") == "text":
+            message_text = part.get("text", "")
+            break
+
+    # Extract configuration from params (agentbeats sends this)
+    config = params.get("config", {})
+    participants = params.get("participants", [])
+
+    print(f"[A2A] Message text length: {len(message_text)}")
+    print(f"[A2A] Config: {config}")
+    print(f"[A2A] Participants: {participants}")
+
+    # Get task_id from config or default
+    task_id = config.get("task_id", "task-001")
+
+    # Find purple agent URL from participants
+    purple_agent_url = None
+    red_agent_url = None
+    participant_ids = {}
+
+    for p in participants:
+        role = p.get("role", "")
+        endpoint = p.get("endpoint", "")
+        agentbeats_id = p.get("agentbeats_id", "")
+
+        if "purple" in role.lower() or role == "purple-agent":
+            purple_agent_url = endpoint
+            if agentbeats_id:
+                participant_ids["purple-agent"] = agentbeats_id
+        elif "red" in role.lower():
+            red_agent_url = endpoint
+            if agentbeats_id:
+                participant_ids["red-agent"] = agentbeats_id
+
+    if not purple_agent_url:
+        # Fallback: try first participant
+        if participants:
+            purple_agent_url = participants[0].get("endpoint", "")
+            agentbeats_id = participants[0].get("agentbeats_id", "")
+            if agentbeats_id:
+                participant_ids["agent"] = agentbeats_id
+
+    if not purple_agent_url:
+        return {
+            "jsonrpc": "2.0",
+            "id": jsonrpc_id,
+            "error": {
+                "code": -32602,
+                "message": "No purple agent endpoint found in participants"
+            }
+        }
+
+    print(f"[A2A] Using Purple Agent: {purple_agent_url}")
+    print(f"[A2A] Using Red Agent: {red_agent_url}")
+    print(f"[A2A] Task ID: {task_id}")
+
+    # Create internal request and call send_coding_task_action
+    internal_request = SendTaskRequest(
+        purple_agent_url=purple_agent_url,
+        red_agent_url=red_agent_url,
+        battle_id=jsonrpc_id,
+        task_id=task_id,
+        participant_ids=participant_ids if participant_ids else None
+    )
+
+    try:
+        result = await send_coding_task_action(internal_request)
+
+        # Format response as A2A JSON-RPC
+        return {
+            "jsonrpc": "2.0",
+            "id": jsonrpc_id,
+            "result": {
+                "status": {
+                    "state": "completed",
+                    "message": {
+                        "role": "agent",
+                        "parts": [{
+                            "type": "text",
+                            "text": json.dumps(result, indent=2)
+                        }]
+                    }
+                }
+            }
+        }
+    except HTTPException as e:
+        return {
+            "jsonrpc": "2.0",
+            "id": jsonrpc_id,
+            "error": {
+                "code": -32000,
+                "message": str(e.detail)
+            }
+        }
+    except Exception as e:
+        print(f"[A2A] Error: {e}")
+        return {
+            "jsonrpc": "2.0",
+            "id": jsonrpc_id,
+            "error": {
+                "code": -32000,
+                "message": str(e)
+            }
+        }
+
 
 # In a real app, this might be a singleton or have a more complex lifecycle
 agent = GreenAgent()
