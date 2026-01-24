@@ -1,60 +1,62 @@
-version: '3.8'
+# Auto-generated from scenario.toml
 
 services:
-  redis:
-    build: ./docker-redis
-    ports:
-      - '6379:6379'
+  green-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    container_name: green-agent
+    command: ["--role", "GREEN", "--host", "0.0.0.0", "--port", "9009", "--card-url", "http://green-agent:9009"]
+    environment:
+      - PYTHONUNBUFFERED=1
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 1s
+      test: ["CMD", "curl", "-f", "http://localhost:9009/.well-known/agent-card.json"]
+      interval: 5s
       timeout: 3s
-      retries: 30
-
-  api-server:
-    build: .
-    command: pnpm --filter @logomesh/server start
-    ports:
-      - '3001:3001'
+      retries: 10
+      start_period: 30s
     depends_on:
-      redis:
+      purple-agent:
         condition: service_healthy
-    environment:
-      - NODE_ENV=test
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+    networks:
+      - agent-network
 
-  safe-workers:
-    build: .
-    command: >
-      sh -c "pnpm --filter @logomesh/workers start:rationale &
-             pnpm --filter @logomesh/workers start:architectural &
-             wait"
+  purple-agent:
+    image: ghcr.io/sszz01/logomesh:purple
+    platform: linux/amd64
+    container_name: purple-agent
+    command: ["--host", "0.0.0.0", "--port", "9009", "--card-url", "http://purple-agent:9009"]
+    environment:
+      - PYTHONUNBUFFERED=1
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - MODEL_NAME=gpt-4o-mini
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9009/.well-known/agent-card.json"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 30s
+    networks:
+      - agent-network
+
+  agentbeats-client:
+    image: ghcr.io/agentbeats/agentbeats-client:v1.0.0
+    platform: linux/amd64
+    container_name: agentbeats-client
+    volumes:
+      - ./a2a-scenario.toml:/app/scenario.toml
+      - ./output:/app/output
+    command: ["scenario.toml", "output/results.json"]
     depends_on:
-      redis:
+      green-agent:
         condition: service_healthy
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-
-  testing-worker:
-    build: .
-    command: pnpm --filter @logomesh/workers start:testing
-    depends_on:
-      redis:
+      purple-agent:
         condition: service_healthy
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+    networks:
+      - agent-network
 
-  e2e-tester:
-    build: .
-    command: pnpm --filter @logomesh/server test
-    depends_on:
-      - api-server
-      - safe-workers
-      - testing-worker
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - API_SERVER_URL=http://api-server:3001
+networks:
+  agent-network:
+    driver: bridge

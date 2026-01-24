@@ -1,0 +1,10 @@
+[green_agent]
+endpoint = "http://green-agent:9009"
+
+[[participants]]
+role = "purple-agent"
+endpoint = "http://purple-agent:9009"
+agentbeats_id = "019bc6a4-5dbb-7d11-b1ba-2f48b31ab6e0"
+
+[config]
+task_id = "task-001"

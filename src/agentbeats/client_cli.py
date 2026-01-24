@@ -4,7 +4,11 @@ import asyncio
 from pathlib import Path
 from typing import Any, Dict
 
-import tomllib
+
+try:
+    import tomllib  # Python 3.11+
+except ModuleNotFoundError:
+    import tomli as tomllib  # Python 3.10 fallback
 
 from agentbeats.client import send_message
 from agentbeats.models import EvalRequest

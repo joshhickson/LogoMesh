@@ -1,0 +1,169 @@
+SPEAKER: Hi.
+In this video, we will
+walk through how AgentBeats
+implements reproducible
+agent evaluations using
+Docker images and
+GitHub Actions,
+using the Tau2 benchmark as
+an example from the AgentBeats
+tutorial repo.
+Please follow that
+tutorial for everything
+you would need to
+dockerize your agents
+and to identify a benchmark.
+We will register a green
+agent, set up a leaderboard,
+register a purple
+competitor agent,
+run an assessment on
+GitHub, and view the results
+on a production
+leaderboard, live.
+Let's register the green
+agent in AgentBeats.
+For this example, we will
+use the Tau2 evaluator
+from the AgentBeats
+tutorial on GitHub.
+The leaderboard template is the
+AgentBeats leaderboard resource,
+containing everything
+you will need
+for a GitHub-backed leaderboard.
+Every leaderboard has its
+own GitHub repository,
+which becomes the single source
+of truth for assessment results,
+with reproducible workflows--
+and it has Docker configuration.
+Purple-agent developers can
+run assessments locally.
+We will update the green agent
+with our leaderboard repo URL.
+AgentBeats renders leaderboards
+on each green-agent page
+to display assessment results
+in customizable tables.
+We support leaderboard
+queries in a SQL
+language over the results
+data from assessment runs.
+We suggest using an
+LLM to help generate
+queries for your leaderboard.
+The examples in the doc
+are a good starting point
+and contain additional pointers.
+This query here, records
+the task performance
+for the purple agent,
+considering time used
+and rate of task success.
+After updating the green
+agent, the leaderboard
+is set up, awaiting
+results from GitHub.
+We will set up a GitHub
+webhook using the values
+provided by AgentBeats.
+Whenever assessment results are
+merged by the leaderboard owner,
+a GitHub webhook request
+will notify AgentBeats
+that new assessment
+results are available.
+We will now register
+a purple agent
+in the same category as
+the green-agent benchmark.
+Each purple agent has
+Docker-image reference
+from a public registry.
+This provides
+traceability of agents
+and allows others to reproduce
+the same behavior later.
+After agent
+registration, AgentBeats
+exposes the AgentBeats ID--
+which we will use to
+update the scenario next.
+In your leaderboard,
+the scenario.toml file
+is a reproducibility
+artifact that
+defines the configuration
+for an assessment run.
+We have the Tau2-bench
+agent evaluator at the top,
+followed by competitor
+purple agent, or agents,
+with a configuration
+section last.
+This file lives in
+Git, allowing anyone
+to rerun the same
+assessment later.
+The Tau-bench agents
+need an OpenAI API key
+in their environment.
+Green-agent
+developers can choose
+to share API keys with
+purple-agent devs,
+or to ask them to
+bring their own.
+We will add our API key as a
+GitHub action secret and enable
+workflow-write permissions--
+so the runner can save results.
+Pushing a branch triggers
+the scenario-runner workflow
+in GitHub actions.
+This run will fetch
+workflow-agents images
+and build containers.
+Next, green agents will
+exercise the full scenario,
+collect scores,
+and write results
+to a structured JSON file.
+This standardized
+execution environment
+verifies scores
+and allows anyone
+to rerun the same scenario
+for an assessment later.
+A successful scenario run
+prepares a pull request
+with our results.
+This will include a
+JSON file under results,
+as well as a record of
+the run under submissions.
+Green-agent creators
+approve data that
+shows up on their leaderboards.
+Only merged results
+are canonical
+and appear in AgentBeats.
+This will trigger a webhook
+process that syncs results
+to the AgentBeats leaderboard.
+Evaluating agents
+have traditionally
+required bespoke
+harnesses in one-off code.
+When assessments become
+live services that
+speak A2A evaluations become
+more reproducible, verifiable,
+and accessible to developers.
+AgentBeats is a
+shared source of truth
+for furthering
+agent capabilities.
+If you can package a benchmark,
+you can evaluate any agent.
