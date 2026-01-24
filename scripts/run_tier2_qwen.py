@@ -13,9 +13,11 @@ import sys
 from datetime import datetime
 
 # Configuration
+
 GREEN_URL = "http://localhost:9000"
 PURPLE_URL = "http://localhost:9001"
-TOTAL_BATTLES = 25
+RED_URL = "http://localhost:9021"
+TOTAL_BATTLES = 5  # Reduced for quick testing
 DB_PATH = "data/battles_tier2_qwen.db"
 LOG_DIR = "results/c_new_001_diversity_test"
 
@@ -79,6 +81,7 @@ def save_result(battle_data):
 def run_battles():
     """Execute 25 battles against Green Agent (Qwen backend)."""
     init_db()
+    # Red Agent health check disabled for this test run
     
     with open(log_file, "w", encoding="utf-8") as f:
         f.write(f"Tier 2 (Qwen) Battle Execution Log\n")
