@@ -15,7 +15,7 @@ from .generator import TestGenerator
 
 
 def _init_sandbox():
-    """Initialize sandbox with fallback if Docker unavailable."""
+    """initialize sandbox with fallback if docker unavailable."""
     try:
         from .sandbox import Sandbox
         sb = Sandbox(timeout=5)
@@ -47,7 +47,7 @@ app = FastAPI(
     description="Agent for evaluating contextual debt of other agents.",
 )
 
-# A2A Agent Card - https://a2a-protocol.org/latest/specification/
+# a2a agent card - https://a2a-protocol.org/latest/specification/
 AGENT_CARD = {
     "name": "green_agent",
     "description": "Polyglot Green Agent (Evaluator) - LogoMesh Arena",
@@ -64,7 +64,7 @@ AGENT_CARD = {
 @app.get("/.well-known/agent-card.json")
 @app.get("/.well-known/agent.json")
 async def get_agent_card(request: Request):
-    """Return agent card for A2A protocol discovery."""
+    """return agent card for a2a protocol discovery."""
     base_url = str(request.base_url).rstrip('/')
     card = AGENT_CARD.copy()
     card["url"] = f"{base_url}/"
@@ -73,7 +73,7 @@ async def get_agent_card(request: Request):
 
 @app.post("/")
 async def handle_a2a_message(request: Request):
-    """Handle A2A JSON-RPC messages from agentbeats-client."""
+    """handle a2a json-rpc messages from agentbeats-client."""
     import uuid
 
     body = await request.json()
@@ -90,7 +90,7 @@ async def handle_a2a_message(request: Request):
             "error": {"code": -32601, "message": f"Method not found: {method}"}
         }
 
-    # Extract message text from parts (A2A uses "kind" not "type")
+    # extract message text from parts (a2a uses "kind" not "type")
     message = params.get("message", {})
     message_parts = message.get("parts", [])
     message_text = ""
@@ -100,7 +100,7 @@ async def handle_a2a_message(request: Request):
             message_text = part.get("text", "")
             break
 
-    # Parse participants and config from message text JSON
+    # parse participants and config from message text json
     config = {}
     participants = {}
     if message_text:
@@ -112,7 +112,7 @@ async def handle_a2a_message(request: Request):
         except json.JSONDecodeError:
             pass
 
-    # Fallback to params/body root
+    # fallback to params/body root
     if not participants:
         participants = params.get("participants", {}) or body.get("participants", {})
     if not config:
@@ -120,7 +120,7 @@ async def handle_a2a_message(request: Request):
 
     task_id = config.get("task_id", "task-001")
 
-    # Extract purple/red agent URLs from participants (handles dict and list formats)
+    # extract purple/red agent urls from participants (handles dict and list formats)
     purple_agent_url = None
     red_agent_url = None
     participant_ids = {}
@@ -219,7 +219,7 @@ STALL_THRESHOLD = 30.0  # seconds without activity = hung inference
 
 
 async def stream_purple_response(client: httpx.AsyncClient, purple_url: str, payload: dict, battle_id: str):
-    """Call Purple Agent with stall detection. Returns extracted response text."""
+    """call purple agent with stall detection. returns extracted response text."""
     purple_target = purple_url.rstrip('/') + '/'
     last_activity = time.time()
 
@@ -231,7 +231,7 @@ async def stream_purple_response(client: httpx.AsyncClient, purple_url: str, pay
             content_type = response.headers.get("content-type", "")
 
             if "text/event-stream" in content_type or "application/x-ndjson" in content_type:
-                # SSE streaming response
+                # sse streaming response
                 accumulated_text = ""
                 async for line in response.aiter_lines():
                     if time.time() - last_activity > STALL_THRESHOLD:
@@ -256,12 +256,12 @@ async def stream_purple_response(client: httpx.AsyncClient, purple_url: str, pay
                 return accumulated_text
 
             else:
-                # Non-streaming JSON response
+                # non-streaming json response
                 content = await response.aread()
                 purple_result = json.loads(content)
                 result = purple_result.get("result", {})
 
-                # Handle both Task and Message response formats
+                # handle both task and message response formats
                 purple_text = ""
                 if result:
                     result_kind = result.get("kind", "")
@@ -274,7 +274,7 @@ async def stream_purple_response(client: httpx.AsyncClient, purple_url: str, pay
                         if parts:
                             purple_text = parts[0].get("text", "")
                     else:
-                        # Fallback paths
+                        # fallback paths
                         parts = result.get("status", {}).get("message", {}).get("parts", [])
                         if parts:
                             purple_text = parts[0].get("text", "")
@@ -299,10 +299,10 @@ async def stream_purple_response(client: httpx.AsyncClient, purple_url: str, pay
 @app.post("/actions/send_coding_task")
 async def send_coding_task_action(request: SendTaskRequest):
     """
-    Orchestrates the evaluation loop:
-    1. Send coding task to Purple Agent (Defender)
-    2. Optionally send Purple's code to Red Agent (Attacker)
-    3. Evaluate using Contextual Integrity Score
+    orchestrates the evaluation loop:
+    1. send coding task to purple agent (defender)
+    2. optionally send purple's code to red agent (attacker)
+    3. evaluate using contextual integrity score
     """
     task_constraints = {}
     hidden_tests = None
@@ -362,7 +362,7 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
     red_agent_url = os.getenv("RED_AGENT_URL", request.red_agent_url)
 
     try:
-        # Step 1: Purple Agent (Defense)
+        # step 1: purple agent (defense)
         async with httpx.AsyncClient() as client:
             try:
                 purple_text = await stream_purple_response(
@@ -392,7 +392,7 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             except Exception as e:
                 return {"battle_id": request.battle_id, "task_id": request.task_id, "error": f"Purple Agent failed: {e}", "outcome": "ERROR", "timestamp": time.time()}
 
-        # Parse Purple response JSON
+        # parse purple response json
         try:
             clean_text = purple_text.strip()
             if clean_text.startswith("```json"):
@@ -405,7 +405,7 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
         except json.JSONDecodeError:
             purple_data = {"sourceCode": purple_text, "rationale": "Parsing failed", "testCode": ""}
 
-        # Step 2: Red Agent (Attack) - optional
+        # step 2: red agent (attack) - optional
         red_result_data = None
         if red_agent_url:
             attack_prompt = f"""ATTACK OBJECTIVE:
@@ -441,10 +441,10 @@ Provide a proof-of-concept exploit if possible."""
             except Exception as e:
                 print(f"[Red] WARNING: Red Agent failed: {e}")
 
-        # Step 3: Static + Dynamic Analysis
+        # step 3: static + dynamic analysis
         source_code = purple_data.get('sourceCode', '')
 
-        # Handle multi-file JSON payload
+        # handle multi-file json payload
         sandbox_payload = source_code
         if isinstance(source_code, str) and source_code.strip().startswith('{') and source_code.strip().endswith('}'):
             try:
@@ -452,11 +452,11 @@ Provide a proof-of-concept exploit if possible."""
             except json.JSONDecodeError:
                 pass
 
-        # Static analysis
+        # static analysis
         audit_source = "\n\n".join(sandbox_payload.values()) if isinstance(sandbox_payload, dict) else source_code
         audit_result = auditor.analyze(audit_source, task_constraints)
 
-        # Dynamic execution
+        # dynamic execution
         sandbox_result = {"success": True, "output": "No tests provided", "duration": 0.0}
         tests_used = "none"
 
@@ -476,7 +476,7 @@ Provide a proof-of-concept exploit if possible."""
             sandbox_result = sandbox.run(sandbox_payload, "")
             tests_used = "embedded"
 
-        # Step 4: Evaluation
+        # step 4: evaluation
         evaluation = await scorer.evaluate(
             task_description=task_desc,
             purple_response=purple_data,
@@ -485,7 +485,7 @@ Provide a proof-of-concept exploit if possible."""
             sandbox_result=sandbox_result
         )
 
-        # Apply penalties
+        # apply penalties
         if not audit_result['valid']:
             penalty = audit_result['penalty']
             evaluation['cis_score'] = evaluation.get('cis_score', 0) * (1 - penalty)
@@ -497,7 +497,7 @@ Provide a proof-of-concept exploit if possible."""
             evaluation['sandbox_failed'] = True
             evaluation['sandbox_output'] = sandbox_result['output'][:500]
 
-        # Step 5: Return result
+        # step 5: return result
         participants = request.participant_ids or {"agent": request.battle_id}
 
         result = {
@@ -525,7 +525,7 @@ Provide a proof-of-concept exploit if possible."""
 
 @app.post("/actions/report_result")
 async def report_result_action(request: ReportResultRequest):
-    """Receives and logs the final evaluation result."""
+    """receives and logs the final evaluation result."""
     result_data = {"battle_id": request.battle_id, "score": request.score, "breakdown": request.breakdown}
     agent.submit_result(result_data)
     return {"status": "reported", "battle_id": request.battle_id}

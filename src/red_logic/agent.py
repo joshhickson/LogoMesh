@@ -5,10 +5,10 @@ from a2a.server.request_handlers import DefaultRequestHandler
 from a2a.server.tasks import InMemoryTaskStore
 from a2a.types import AgentCard, AgentCapabilities
 
-# Import executors
+# import executors
 from scenarios.security_arena.agents.generic_attacker import GenericAttackerExecutor
 
-# Try to import the new V2 executor
+# try to import the new v2 executor
 try:
     from .executor import RedAgentV2Executor
     from .orchestrator import AttackConfig
@@ -20,21 +20,21 @@ except ImportError as e:
 
 def run_red_agent(host: str, port: int, use_v2: bool = True):
     """
-    Starts the Red Agent (Attacker) service.
+    starts the red agent (attacker) service.
 
-    Args:
-        host: Host to bind to
-        port: Port to bind to
-        use_v2: If True, use the new hybrid RedAgentV2. If False, use legacy GenericAttacker.
+    args:
+        host: host to bind to
+        port: port to bind to
+        use_v2: if true, use the new hybrid redagentv2. if false, use legacy genericattacker.
     """
-    # Check environment variable override
+    # check environment variable override
     use_v2_env = os.getenv("RED_AGENT_V2", "true").lower() == "true"
     use_v2 = use_v2 and use_v2_env and V2_AVAILABLE
 
     version = "2.0.0 (Hybrid)" if use_v2 else "1.0.0 (Legacy)"
     print(f"[RedAgent] Starting Attacker v{version} on {host}:{port}")
 
-    # Create agent card
+    # create agent card
     agent_card = AgentCard(
         name="red_agent_v2" if use_v2 else "red_agent",
         description="Hybrid Red Agent with multi-layer attack engine" if use_v2 else "Polyglot Red Agent (Attacker)",
@@ -46,9 +46,9 @@ def run_red_agent(host: str, port: int, use_v2: bool = True):
         skills=[]
     )
 
-    # Create executor based on version
+    # create executor based on version
     if use_v2:
-        # Configure the attack engine
+        # configure the attack engine
         config = AttackConfig(
             enable_smart_layer=True,
             enable_reflection=True,
@@ -62,12 +62,12 @@ def run_red_agent(host: str, port: int, use_v2: bool = True):
         print(f"  - Reflection: enabled (timeout: {config.reflection_timeout}s)")
         print(f"  - Max total time: {config.max_total_time}s")
     else:
-        # Legacy executor
+        # legacy executor
         model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
         executor = GenericAttackerExecutor(model=model)
         print(f"[RedAgent] Using legacy GenericAttacker with model: {model}")
 
-    # Create A2A application
+    # create a2a application
     task_store = InMemoryTaskStore()
     request_handler = DefaultRequestHandler(
         agent_executor=executor,
@@ -79,5 +79,5 @@ def run_red_agent(host: str, port: int, use_v2: bool = True):
         http_handler=request_handler
     )
 
-    # Start server
+    # start server
     uvicorn.run(app.build(), host=host, port=port)

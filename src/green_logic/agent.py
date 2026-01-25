@@ -6,30 +6,30 @@ import hashlib
 
 class GreenAgent:
     """
-    The Green Agent is responsible for evaluating the performance of other agents
-    based on the "Contextual Debt" framework.
+    the green agent is responsible for evaluating the performance of other agents
+    based on the "contextual debt" framework.
     """
 
     def generate_dbom(self, result: dict) -> dict:
         """
-        Implements Task 1.6: Decision Bill of Materials (DBOM) Generator.
-        DBOM = < H(Delta), v_intent, Score_CIS, sigma_Judge >
+        implements task 1.6: decision bill of materials (dbom) generator.
+        dbom = < h(delta), v_intent, score_cis, sigma_judge >
         """
         battle_id = result.get("battle_id", "N/A")
         raw_result = json.dumps(result)
         
-        # 1. H(Delta) - Hash of the change/result
+        # 1. h(delta) - hash of the change/result
         h_delta = hashlib.sha256(raw_result.encode()).hexdigest()
-        
-        # 2. v_intent - Real Intent Vector (Task 1.6)
-        # Extract the actual embedding vector from the evaluation results
+
+        # 2. v_intent - real intent vector (task 1.6)
+        # extract the actual embedding vector from the evaluation results
         v_intent = result.get("evaluation", {}).get("intent_vector", [0.0] * 384)
-        
-        # 3. Score_CIS - The final score
+
+        # 3. score_cis - the final score
         score_cis = result.get("evaluation", {}).get("cis_score", 0.0)
-        
-        # 4. sigma_Judge - Simulated signature (HMAC or similar)
-        # For now, we simulate this with a unique string.
+
+        # 4. sigma_judge - simulated signature (hmac or similar)
+        # for now, we simulate this with a unique string.
         sigma_judge = f"SIG_GREEN_{battle_id}_{h_delta[:8]}"
 
         dbom = {
@@ -42,7 +42,7 @@ class GreenAgent:
             "timestamp": datetime.datetime.now().isoformat()
         }
         
-        # Save to file system
+        # save to file system
         os.makedirs("data/dboms", exist_ok=True)
         dbom_path = os.path.join("data/dboms", f"dbom_{battle_id}.json")
         with open(dbom_path, "w") as f:
@@ -52,10 +52,10 @@ class GreenAgent:
 
     def submit_result(self, result: dict):
         """
-        Submits the final evaluation result.
+        submits the final evaluation result.
 
-        Args:
-            result: A dictionary containing the evaluation results, including
+        args:
+            result: a dictionary containing the evaluation results, including
                     'battle_id', 'score', and 'breakdown'.
         """
         battle_id = result.get("battle_id", "N/A")
@@ -63,20 +63,20 @@ class GreenAgent:
         score = evaluation.get("cis_score", result.get("score", 0.0))
         breakdown = evaluation.get("breakdown", result.get("breakdown", "No breakdown provided."))
 
-        # Generate DBOM (Task 1.6)
+        # generate dbom (task 1.6)
         dbom = self.generate_dbom(result)
         print(f"[GreenAgent] DBOM generated: data/dboms/dbom_{battle_id}.json")
 
-        # SQLite Persistence Implementation
+        # sqlite persistence implementation
         try:
-            # Ensure data directory exists
+            # ensure data directory exists
             os.makedirs("data", exist_ok=True)
 
             db_path = os.path.join("data", "battles.db")
             conn = sqlite3.connect(db_path, check_same_thread=False)
             cursor = conn.cursor()
 
-            # Create table if it doesn't exist
+            # create table if it doesn't exist
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS battles (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -89,15 +89,15 @@ class GreenAgent:
                 )
             """)
             
-            # Enable Write-Ahead Logging for crash-proof persistence (Task 1.3)
+            # enable write-ahead logging for crash-proof persistence (task 1.3)
             cursor.execute("PRAGMA journal_mode=WAL;")
 
-            # Prepare data
+            # prepare data
             timestamp = datetime.datetime.now().isoformat()
             raw_result = json.dumps(result, sort_keys=True)
             dbom_hash = dbom["h_delta"]
 
-            # Insert record
+            # insert record
             cursor.execute("""
                 INSERT INTO battles (battle_id, timestamp, score, breakdown, raw_result, dbom_hash)
                 VALUES (?, ?, ?, ?, ?, ?)
@@ -110,7 +110,7 @@ class GreenAgent:
         except Exception as e:
             print(f"[GreenAgent] Error saving result to database: {e}")
 
-        # Print to console for visibility (fallback from original implementation)
+        # print to console for visibility (fallback from original implementation)
         print("\n" + "=" * 60)
         print(f"BATTLE EVALUATION COMPLETE: {battle_id}")
         print("=" * 60)
@@ -120,8 +120,8 @@ class GreenAgent:
         print(breakdown)
         print("=" * 60 + "\n")
 
-        # The original tool returned a JSON string for confirmation.
-        # This can be logged or sent to another service in the future.
+        # the original tool returned a json string for confirmation.
+        # this can be logged or sent to another service in the future.
         confirmation = {
             "status": "reported",
             "battle_id": battle_id,
