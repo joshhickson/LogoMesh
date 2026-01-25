@@ -64,6 +64,7 @@ AGENT_CARD = {
 }
 
 @app.get("/.well-known/agent-card.json")
+@app.get("/.well-known/agent.json")  # Alias for older A2A clients
 async def get_agent_card(request: Request):
     """Return agent card for A2A protocol discovery."""
     # Set URL dynamically from request
