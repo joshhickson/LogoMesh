@@ -199,7 +199,13 @@ async def handle_a2a_message(request: Request):
                         "role": "agent",
                         "parts": [{"kind": "text", "text": json.dumps(result, indent=2)}]
                     }
-                }
+                },
+                "artifacts": [
+                    {
+                        "artifactId": str(uuid.uuid4()),
+                        "parts": [{"kind": "text", "text": json.dumps(result, indent=2)}]
+                    }
+                ]
             }
         }
     except HTTPException as e:
