@@ -1,3 +1,44 @@
-FROM ghcr.io/sszz01/logomesh:latest
+# Standalone Green Agent Dockerfile
+# Builds from scratch to ensure latest code is always included
+FROM node:20-bookworm
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    python3 \
+    python3-pip \
+    python3-venv \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install uv
+RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR="/usr/local/bin" sh
+
+# Install pnpm
+RUN npm install -g pnpm
+
+WORKDIR /app
+
+# Node.js dependencies
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY packages/ packages/
+RUN pnpm install --frozen-lockfile
+
+# Python dependencies
+COPY pyproject.toml uv.lock README.md ./
+RUN uv sync --frozen
+
+# Copy source code
+COPY src/ src/
+COPY scenarios/ scenarios/
+COPY main.py .
+
+# Runtime configuration
 ENV PATH="/app/.venv/bin:$PATH"
+
+# Green Agent entrypoint
 ENTRYPOINT ["python3", "main.py", "--role", "GREEN"]
+CMD ["--host", "0.0.0.0", "--port", "9009"]

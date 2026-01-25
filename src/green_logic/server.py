@@ -49,6 +49,7 @@ app = FastAPI(
 )
 
 # --- Agent Card (required for AgentBeats health checks) ---
+# A2A spec: https://a2a-protocol.org/latest/specification/
 AGENT_CARD = {
     "name": "green_agent",
     "description": "Polyglot Green Agent (Evaluator) - LogoMesh Arena",
@@ -58,9 +59,8 @@ AGENT_CARD = {
     "defaultOutputModes": ["text"],
     "capabilities": {"streaming": False},
     "skills": [],
-    # Required for A2A client transport selection
-    "preferredTransport": "JSONRPC",
-    "protocolVersion": "0.3.0"
+    # A2A protocol requirements
+    "protocolVersions": ["0.3.0"],  # Array per A2A spec
 }
 
 @app.get("/.well-known/agent-card.json")
@@ -232,15 +232,18 @@ async def handle_a2a_message(request: Request):
         result = await send_coding_task_action(internal_request)
 
         # Format response as A2A JSON-RPC with all required fields
+        # See: https://a2a-protocol.org/latest/specification/
         return {
             "jsonrpc": "2.0",
             "id": jsonrpc_id,
             "result": {
+                "kind": "task",  # Required discriminator
                 "id": jsonrpc_id,  # Task ID (required)
                 "contextId": jsonrpc_id,  # Context ID (required)
                 "status": {
                     "state": "completed",
                     "message": {
+                        "kind": "message",  # Required discriminator
                         "messageId": str(uuid.uuid4()),  # Message ID (required)
                         "role": "agent",
                         "parts": [{
@@ -357,18 +360,52 @@ async def stream_purple_response(client: httpx.AsyncClient, purple_url: str, pay
                 print(f"[Natural Completion] Non-streaming response, reading complete JSON")
                 content = await response.aread()
                 last_activity = time.time()
-                
+
                 purple_result = json.loads(content)
                 print(f"[Natural Completion] Response received naturally")
-                
-                # Extract the response text from the standard A2A format
-                purple_text = purple_result.get("result", {}).get("status", {}).get("message", {}).get("parts", [{}])[0].get("text", "")
-                
+                print(f"[Natural Completion] Raw response keys: {list(purple_result.keys())}")
+
+                # Extract text from A2A response - handle both Task and Message formats
+                purple_text = ""
+                result = purple_result.get("result", {})
+
+                if result:
+                    result_kind = result.get("kind", "")
+                    print(f"[Natural Completion] Result kind: {result_kind}")
+
+                    if result_kind == "task" or "status" in result:
+                        # Task format: result.status.message.parts[0].text
+                        status = result.get("status", {})
+                        message = status.get("message", {})
+                        parts = message.get("parts", [])
+                        if parts:
+                            purple_text = parts[0].get("text", "")
+                            print(f"[Natural Completion] Extracted from Task.status.message")
+                    elif result_kind == "message" or "parts" in result:
+                        # Message format: result.parts[0].text
+                        parts = result.get("parts", [])
+                        if parts:
+                            purple_text = parts[0].get("text", "")
+                            print(f"[Natural Completion] Extracted from Message.parts")
+                    else:
+                        # Unknown format - try common paths
+                        print(f"[Natural Completion] Unknown result format, trying fallbacks")
+                        # Try nested status.message.parts
+                        parts = result.get("status", {}).get("message", {}).get("parts", [])
+                        if parts:
+                            purple_text = parts[0].get("text", "")
+                        # Try direct parts
+                        if not purple_text:
+                            parts = result.get("parts", [])
+                            if parts:
+                                purple_text = parts[0].get("text", "")
+
                 if purple_text:
                     print(f"[Natural Completion] Extracted {len(purple_text)} chars from Purple Agent")
                     return purple_text
                 else:
                     print(f"[Natural Completion] WARNING: No text found in response")
+                    print(f"[Natural Completion] Full result: {json.dumps(result, indent=2)[:500]}")
                     return ""
                     
     except httpx.TimeoutException:
@@ -460,16 +497,17 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
         async with httpx.AsyncClient() as client:
             try:
                 purple_text = await stream_purple_response(
-                    client, 
-                    purple_agent_url, 
+                    client,
+                    purple_agent_url,
                     {
                         "jsonrpc": "2.0",
                         "method": "message/send",
                         "params": {
                             "message": {
+                                "kind": "message",  # A2A required
                                 "messageId": f"task-{request.battle_id}",
                                 "role": "user",
-                                "parts": [{"type": "text", "text": task_prompt}]
+                                "parts": [{"kind": "text", "text": task_prompt}]  # A2A uses "kind"
                             }
                         },
                         "id": request.battle_id
@@ -544,9 +582,10 @@ Provide a proof-of-concept exploit if possible."""
                             "method": "message/send",
                             "params": {
                                 "message": {
+                                    "kind": "message",  # A2A required
                                     "messageId": f"attack-{request.battle_id}",
                                     "role": "user",
-                                    "parts": [{"type": "text", "text": attack_prompt}]
+                                    "parts": [{"kind": "text", "text": attack_prompt}]  # A2A uses "kind"
                                 }
                             },
                             "id": request.battle_id
