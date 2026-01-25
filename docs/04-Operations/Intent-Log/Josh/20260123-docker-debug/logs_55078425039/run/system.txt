@@ -1,0 +1,9 @@
+2026-01-22T09:44:33.7580000Z Requested labels: ubuntu-latest
+2026-01-22T09:44:33.7580000Z Job defined at: sszz01/logomesh-leaderboard-2/.github/workflows/run-scenario.yml@refs/heads/testing-branch
+2026-01-22T09:44:33.7580000Z Waiting for a runner to pick up this job...
+2026-01-22T09:44:33.7810000Z Job is waiting for a hosted runner to come online.
+2026-01-22T09:44:33.7460000Z Evaluating run.if
+2026-01-22T09:44:33.7460000Z Evaluating: (success() && (((github.event.repository.fork == true) || (github.ref != 'refs/heads/main'))))
+2026-01-22T09:44:33.7460000Z Expanded: (true && ((false == true) || ('refs/heads/testing-branch' != 'refs/heads/main')))
+2026-01-22T09:44:33.7460000Z Result: true
+2026-01-22T09:44:33.7820000Z Job is about to start running on the hosted runner: GitHub Actions 1000000191
