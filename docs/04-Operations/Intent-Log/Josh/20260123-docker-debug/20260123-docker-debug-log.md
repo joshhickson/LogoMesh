@@ -298,4 +298,13 @@ Both green and purple agent images were successfully retagged and pushed to Dock
 
 These images are now ready for competition submission and should be compatible with bots and validation scripts expecting Docker Hub links.
 
+## Version Control Update: Added Leaderboard Repository Copies (2026-01-25)
+
+The following directories were added to version control as part of the 20260123-debug-docker branch:
+
+- `external/[20261023-copy]logomesh-leaderboard-2/`
+- `external/logomesh-leaderboard-2/`
+
+These contain the working and reference copies of the leaderboard repository used for scenario testing, configuration validation, and reproducibility. Their inclusion ensures that all analysis, comparisons, and workflow changes are fully tracked and auditable.
+
 
