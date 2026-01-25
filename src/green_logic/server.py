@@ -231,17 +231,20 @@ async def handle_a2a_message(request: Request):
     try:
         result = await send_coding_task_action(internal_request)
 
-        # Format response as A2A JSON-RPC
+        # Format response as A2A JSON-RPC with all required fields
         return {
             "jsonrpc": "2.0",
             "id": jsonrpc_id,
             "result": {
+                "id": jsonrpc_id,  # Task ID (required)
+                "contextId": jsonrpc_id,  # Context ID (required)
                 "status": {
                     "state": "completed",
                     "message": {
+                        "messageId": str(uuid.uuid4()),  # Message ID (required)
                         "role": "agent",
                         "parts": [{
-                            "type": "text",
+                            "kind": "text",  # A2A uses "kind" not "type"
                             "text": json.dumps(result, indent=2)
                         }]
                     }
