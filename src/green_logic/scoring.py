@@ -292,21 +292,23 @@ The logic_score must be a float between 0.0 and 1.0:
         purple_response: dict,
         red_report: dict | None,
         audit_result: dict | None = None,
-        sandbox_result: dict | None = None
+        sandbox_result: dict | None = None,
+        red_report_obj: RedAgentReport | None = None
     ) -> dict:
         """
         Evaluates the Purple Agent's submission using the Contextual Integrity framework,
         incorporating the Red Agent's security audit, Tier 2 analysis, and LLM-based logic review.
 
         Reference: docs/00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md
-        Formula: CIS = (0.2 * R) + (0.2 * A) + (0.2 * T) + (0.4 * Logic_Score)
+        Formula: CIS = (0.25 * R) + (0.25 * A) + (0.25 * T) + (0.25 * Logic_Score)
 
         Args:
             task_description: The original task description
             purple_response: Purple Agent's response with sourceCode, rationale, testCode
-            red_report: Optional Red Agent attack report
+            red_report: Optional Red Agent attack report (dict format, will be parsed)
             audit_result: Optional static analysis result from SemanticAuditor
             sandbox_result: Optional dynamic execution result from Sandbox
+            red_report_obj: Optional RedAgentReport object (bypasses parsing if provided)
         """
         
         # Harmony Protocol Integration: Parse Purple Agent response
@@ -499,8 +501,13 @@ Note: `cis_score` = (0.25 * R) + (0.25 * A) + (0.25 * T) + (0.25 * L). Equal wei
             # Red Agent Integration (H-004): Parse vulnerability report and apply penalty
             red_penalty_multiplier = 1.0  # Default: no penalty
             parsed_red_report = None
-            
-            if red_report:
+
+            # Use direct RedAgentReport object if provided (bypasses parsing)
+            if red_report_obj:
+                parsed_red_report = red_report_obj
+                red_penalty_multiplier = parsed_red_report.get_penalty_multiplier()
+                print(f"[Scoring] Using direct RedAgentReport: {len(parsed_red_report.vulnerabilities)} vulns, penalty={1.0 - red_penalty_multiplier:.0%}")
+            elif red_report:
                 try:
                     parsed_red_report = self.red_parser.parse(red_report)
                     red_penalty_multiplier = parsed_red_report.get_penalty_multiplier()

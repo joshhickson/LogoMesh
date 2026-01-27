@@ -15,16 +15,28 @@ from openai import AsyncOpenAI
 class TestGenerator:
     """Generates adversarial pytest cases using Qwen-2.5-Coder."""
 
-    FALLBACK_TEST = "def test_fallback(): assert True"
+    FALLBACK_TEST = """import unittest
+from solution import *
+
+class TestFallback(unittest.TestCase):
+    def test_fallback(self):
+        self.assertTrue(True)
+"""
 
     def __init__(self):
         """Initialize AsyncOpenAI client for vLLM (OpenAI-compatible API)."""
         # Priority: LLM_* > OPENAI_* (for backwards compatibility)
+        base_url = os.getenv("LLM_BASE_URL", os.getenv("OPENAI_BASE_URL"))
         self.client = AsyncOpenAI(
             api_key=os.getenv("LLM_API_KEY", os.getenv("OPENAI_API_KEY", "dummy")),
-            base_url=os.getenv("LLM_BASE_URL", os.getenv("OPENAI_BASE_URL")),
+            base_url=base_url,
         )
-        self.model = os.getenv("LLM_MODEL_NAME", os.getenv("MODEL_NAME", "Qwen/Qwen2.5-Coder-32B-Instruct-AWQ"))
+        # Auto-detect: if no custom base_url, we're using OpenAI directly
+        if base_url is None or "openai.com" in (base_url or ""):
+            default_model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+        else:
+            default_model = "Qwen/Qwen2.5-Coder-32B-Instruct-AWQ"
+        self.model = os.getenv("LLM_MODEL_NAME", os.getenv("MODEL_NAME", default_model))
         self.timeout_seconds = 30  # vLLM can be slow on first request
 
     async def generate_adversarial_tests(
@@ -50,13 +62,24 @@ Analyze the candidate code provided and identify exactly 3 specific edge cases t
 - Division by zero scenarios
 
 CRITICAL CONSTRAINTS:
-1. Output ONLY valid Python code using pytest. No explanations.
+1. Output ONLY valid Python code using unittest. No explanations.
 2. No markdown formatting. No code blocks. Just raw Python.
-3. Assume the candidate code is saved as `solution.py` and import via: from solution import *
-4. Each test function must start with `test_` prefix.
+3. Import the solution with: from solution import *
+4. Create a TestCase class with test methods starting with `test_` prefix.
 5. Make tests that EXPOSE bugs, not confirm correctness.
-6. NEVER use infinite loops (while True) or sleep(). Avoid massive datasets; keep inputs small enough to run instantly.
-7. Tests must complete in under 1 second. Keep them fast and focused."""
+6. NEVER use infinite loops (while True) or sleep(). Keep inputs small.
+7. Tests must complete in under 1 second.
+8. DO NOT import pytest. Use only unittest and assert methods like self.assertEqual(), self.assertRaises(), etc.
+
+Example format:
+import unittest
+from solution import *
+
+class TestEdgeCases(unittest.TestCase):
+    def test_empty_input(self):
+        self.assertIsNone(func(None))
+    def test_boundary(self):
+        self.assertEqual(func(0), expected)"""
 
         user_prompt = f"""### Task Description
 {task_desc}

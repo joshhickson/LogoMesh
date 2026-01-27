@@ -12,6 +12,7 @@ from .tasks import CODING_TASKS
 from .scoring import ContextualIntegrityScorer
 from .analyzer import SemanticAuditor
 from .generator import TestGenerator
+from .red_report_types import RedAgentReport
 
 
 def _init_sandbox():
@@ -23,6 +24,25 @@ def _init_sandbox():
         return sb
     except Exception as e:
         print(f"[GreenAgent] WARNING: Docker unavailable ({e}), sandbox disabled")
+        return None
+
+
+def _init_red_agent():
+    """initialize embedded red agent for internal vulnerability scanning."""
+    try:
+        from src.red_logic.orchestrator import RedAgentV2, AttackConfig
+        config = AttackConfig(
+            enable_smart_layer=True,
+            enable_reflection=True,
+            max_total_time=float(os.getenv("RED_AGENT_TIMEOUT", "60")),
+            smart_layer_timeout=float(os.getenv("RED_SMART_TIMEOUT", "30")),
+            reflection_timeout=float(os.getenv("RED_REFLECT_TIMEOUT", "20")),
+        )
+        red = RedAgentV2(config)
+        print("[GreenAgent] Embedded Red Agent initialized")
+        return red
+    except Exception as e:
+        print(f"[GreenAgent] WARNING: Red Agent unavailable ({e}), security scanning disabled")
         return None
 
 
@@ -219,6 +239,7 @@ agent = GreenAgent()
 scorer = ContextualIntegrityScorer()
 auditor = SemanticAuditor()
 sandbox = _init_sandbox()
+red_agent = _init_red_agent()
 test_generator = TestGenerator()
 
 STALL_THRESHOLD = 30.0  # seconds without activity = hung inference
@@ -411,45 +432,48 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
         except json.JSONDecodeError:
             purple_data = {"sourceCode": purple_text, "rationale": "Parsing failed", "testCode": ""}
 
-        # step 2: red agent (attack) - optional
+        # step 2: red agent (attack) - embedded, always runs if available
         red_result_data = None
-        if red_agent_url:
-            attack_prompt = f"""ATTACK OBJECTIVE:
-You are a Red Team agent. Your goal is to find vulnerabilities in the following code.
-
-TARGET CODE:
-{purple_data.get('sourceCode', '')}
-
-INSTRUCTIONS:
-Identify security flaws, logic errors, or edge cases.
-Provide a proof-of-concept exploit if possible."""
-
-            try:
-                async with httpx.AsyncClient(timeout=120.0) as red_client:
-                    red_response = await red_client.post(
-                        red_agent_url.rstrip('/') + '/',
-                        json={
-                            "jsonrpc": "2.0",
-                            "method": "message/send",
-                            "params": {
-                                "message": {
-                                    "kind": "message",
-                                    "messageId": f"attack-{request.battle_id}",
-                                    "role": "user",
-                                    "parts": [{"kind": "text", "text": attack_prompt}]
-                                }
-                            },
-                            "id": request.battle_id
-                        },
-                        headers={"Content-Type": "application/json"}
-                    )
-                    red_result_data = red_response.json()
-            except Exception as e:
-                print(f"[Red] WARNING: Red Agent failed: {e}")
-
-        # step 3: static + dynamic analysis
+        red_report_obj = None
         source_code = purple_data.get('sourceCode', '')
 
+        # Normalize escaped newlines (Purple may return literal \n instead of actual newlines)
+        if isinstance(source_code, str) and '\\n' in source_code:
+            source_code = source_code.replace('\\n', '\n').replace('\\t', '\t')
+            purple_data['sourceCode'] = source_code
+
+        if red_agent:
+            print(f"[Red] Running embedded Red Agent attack on {len(source_code)} chars of code")
+            try:
+                red_report_obj = await red_agent.attack(
+                    code=source_code,
+                    task_id=request.task_id,
+                    task_description=task_desc
+                )
+                # Convert RedAgentReport to dict for backward compatibility with scorer
+                red_result_data = {
+                    "attack_successful": red_report_obj.attack_successful,
+                    "vulnerabilities": [
+                        {
+                            "severity": v.severity.value,
+                            "category": v.category,
+                            "title": v.title,
+                            "description": v.description,
+                            "exploit_code": v.exploit_code,
+                            "line_number": v.line_number,
+                            "confidence": v.confidence,
+                        }
+                        for v in red_report_obj.vulnerabilities
+                    ],
+                    "attack_summary": red_report_obj.attack_summary
+                }
+                print(f"[Red] Attack complete: {len(red_report_obj.vulnerabilities)} vulnerabilities found")
+            except Exception as e:
+                print(f"[Red] WARNING: Embedded Red Agent failed: {e}")
+        else:
+            print("[Red] Red Agent not available, skipping security scan")
+
+        # step 3: static + dynamic analysis
         # handle multi-file json payload
         sandbox_payload = source_code
         if isinstance(source_code, str) and source_code.strip().startswith('{') and source_code.strip().endswith('}'):
@@ -465,13 +489,28 @@ Provide a proof-of-concept exploit if possible."""
         # dynamic execution
         sandbox_result = {"success": True, "output": "No tests provided", "duration": 0.0}
         tests_used = "none"
+        purple_tests = purple_data.get('testCode', '')
+
+        # Normalize escaped newlines in test code too
+        if isinstance(purple_tests, str) and '\\n' in purple_tests:
+            purple_tests = purple_tests.replace('\\n', '\n').replace('\\t', '\t')
 
         if hidden_tests and hidden_tests.strip():
+            # Priority 1: Use hidden tests (task-defined, Purple can't see these)
             tests_to_run = hidden_tests
             tests_used = "hidden"
         else:
+            # Priority 2: Generate adversarial tests (independent of Purple)
             tests_to_run = await test_generator.generate_adversarial_tests(task_desc, source_code)
             tests_used = "generated"
+
+            # Also run Purple's tests as sanity check (if they fail their own tests, that's bad)
+            if purple_tests and purple_tests.strip():
+                # Inject import so Purple's tests can access the solution
+                purple_tests_with_import = "from solution import *\n" + purple_tests
+                tests_to_run = tests_to_run + "\n\n# === Purple's Own Tests (sanity check) ===\n" + purple_tests_with_import
+                tests_used = "generated+purple"
+                print(f"[Sandbox] Running generated tests + Purple's tests as sanity check")
 
         if sandbox is None:
             sandbox_result = {"success": True, "output": "Sandbox unavailable (no Docker)", "duration": 0.0}
@@ -488,7 +527,8 @@ Provide a proof-of-concept exploit if possible."""
             purple_response=purple_data,
             red_report=red_result_data,
             audit_result=audit_result,
-            sandbox_result=sandbox_result
+            sandbox_result=sandbox_result,
+            red_report_obj=red_report_obj  # Pass direct object to skip parsing
         )
 
         # apply penalties

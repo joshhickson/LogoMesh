@@ -118,79 +118,18 @@ class Sandbox:
                     "conftest.py": "import sys; sys.path.insert(0, '/workspace')"
                 }
 
-            # Generate dynamic runner based on available test files
-            # Find any file that looks like a test
-            test_modules = [
-                f.replace('.py', '') 
-                for f in files.keys() 
-                if f.startswith('test_') and f.endswith('.py')
-            ]
-            
-            # Fallback for legacy single-file if named differently, though logic above forces test_solution
-            if not test_modules and "test_solution.py" in files:
-                test_modules = ["test_solution"]
-
-            # Safe string formatting for the python list
-            test_modules_str = str(test_modules)
-
-            runner_code = f"""
+            # Generate dynamic runner (no pytest dependency)
+            runner_code = """
 import sys
-import inspect
-import importlib
+import unittest
 
-def run_tests():
-    test_modules_names = {test_modules_str}
-    if not test_modules_names:
-        print("No test modules found (looking for test_*.py)!")
-        sys.exit(1)
-
-    all_tests = []
-    
-    for mod_name in test_modules_names:
-        try:
-            mod = importlib.import_module(mod_name)
-            # Find all functions starting with test_
-            tests = [
-                obj for name, obj in inspect.getmembers(mod)
-                if name.startswith('test_') and inspect.isfunction(obj)
-            ]
-            if tests:
-                print(f"Found {{len(tests)}} tests in {{mod_name}}...")
-                all_tests.extend(tests)
-            else:
-                print(f"No tests found in {{mod_name}}.")
-        except ImportError as e:
-            print(f"ERROR: Could not import {{mod_name}}: {{e}}")
-            # Continue to other modules? Or fail? Let's fail hard for now to be safe.
-            sys.exit(1)
-        except Exception as e:
-            print(f"ERROR: loading {{mod_name}}: {{e}}")
-            sys.exit(1)
-    
-    if not all_tests:
-        print("No test functions found in any modules!")
-        sys.exit(1)
-        
-    print(f"Running total {{len(all_tests)}} tests...")
-    failures = 0
-    
-    for test_func in all_tests:
-        try:
-            test_func()
-            print(f"PASS: {{test_func.__name__}}")
-        except Exception as e:
-            print(f"FAIL: {{test_func.__name__}} - {{e}}")
-            failures += 1
-            
-    if failures > 0:
-        print(f"FAILED: {{failures}}/{{len(all_tests)}} tests failed.")
-        sys.exit(1)
-    else:
-        print("SUCCESS: All tests passed.")
-        sys.exit(0)
-
+# Run all test_*.py files
 if __name__ == "__main__":
-    run_tests()
+    loader = unittest.TestLoader()
+    suite = loader.discover('/workspace', pattern='test_*.py')
+    runner = unittest.TextTestRunner(verbosity=2)
+    result = runner.run(suite)
+    sys.exit(0 if result.wasSuccessful() else 1)
 """
             files["runner.py"] = runner_code
 
@@ -217,7 +156,7 @@ if __name__ == "__main__":
             # Copy files into the container using put_archive
             container.put_archive("/workspace", tar_stream)
 
-            # Execute the test command using our custom runner (no pip install needed)
+            # Execute tests using unittest runner (no pytest needed)
             exec_result = container.exec_run(
                 cmd=["sh", "-c", "timeout 5s python3 runner.py 2>&1"],
                 workdir="/workspace",
