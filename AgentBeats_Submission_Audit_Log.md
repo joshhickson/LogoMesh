@@ -20,7 +20,7 @@ This log will record findings, action items, and decisions, and serve as a hando
 - [x] List and review all main agent logic files (src/green_logic/, src/purple_logic/, src/red_logic/)
   - Complete file-by-file audit of all agent logic files, with structured summaries in this log.
 
-- [ ] Review and triage documentation in priority order, with the explicit intent to prepare /docs/ for a near-complete overhaul:
+- [x] Review and triage documentation in priority order, with the explicit intent to prepare /docs/ for a near-complete overhaul:
   1. **Docs root folder:**
     - 00_CURRENT_TRUTH_SOURCE.md (master index)
     - Docs-Management-Instruction-Manual.md (documentation protocol)
@@ -333,6 +333,50 @@ To systematically review, triage, and consolidate source code and documentation 
   - Provides a clear usage guide and re-exports orchestrator, executor, and agent entrypoints.
   - No logic; serves as a package aggregator and documentation point.
 
+### Documentation Audit Findings
+
+#### Root Folder (`docs/`)
+- **00_CURRENT_TRUTH_SOURCE.md**: [ACTIVE] Critical Master Index.
+- **Docs-Management-Instruction-Manual.md**: [ACTIVE] Critical for Sphinx/ReadTheDocs.
+- **index.rst**: [ACTIVE] Navigation root.
+- **TEMPLATE_DOC.md**: [ACTIVE] Standard template.
+
+#### Competition (`docs/05-Competition/`)
+- **Agent-Architecture.md**: [ACTIVE] Primary technical architecture doc. Referenced by Master Index.
+- **Submission-Requirements-Matrix.md**: [ACTIVE] Referenced in Master Index.
+- **Judges-Start-Here.md**: [ACTIVE] Referenced in Master Index.
+- **Green-Agent-Detailed-Guide.md**: [REVIEW] Referenced by `Agent-Architecture.md` but contains extensive "Phase 1" context (Oct-Dec 2025). Recommend checking for obsolete content or consolidating.
+- **Purple-Agent-Detailed-Guide.md**: [REVIEW] Similar to Green Guide. Likely contains historical Phase 1 info.
+- **AgentBeats-Competition-Summary.md**: [REVIEW] Potential duplicate of `00_CURRENT_TRUTH_SOURCE.md` or `Judges-Start-Here.md`.
+
+#### Operations (`docs/04-Operations/`)
+- **Intent-Log/Technical/**: Contains ~40 legacy logs from Nov/Dec 2025.
+  - **Status**: Mostly obsolete. Master Index only references `20251231-Polyglot-Consolidation-Master-Log.md` and `20260101-Agent-Arena-Upgrade-Plan.md`.
+  - **Action**: Bulk archive pre-2026 logs to `docs/Archive/Logs/Technical/`.
+
+#### Strategy (`docs/00-Strategy/`)
+- **IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md**: [ACTIVE] Core theory document defining "Contextual Debt" and "CIS". Referenced by Master Index.
+
 ## Action Items
+
+- [ ] Archive pre-2026 logs in `docs/04-Operations/Intent-Log/Technical/`.
+- [ ] Review `docs/05-Competition/Green-Agent-Detailed-Guide.md` and `Purple-Agent-Detailed-Guide.md` for consolidation.
+- [ ] Verify `docs/00_CURRENT_TRUTH_SOURCE.md` links are robust after any moves.
+
+## Prompts for Future Sessions
+
+To the next agent: Please execute the following "Documentation Cleanup" plan based on the findings above:
+
+1.  **Archive Legacy Logs**:
+    -   Create a directory `docs/Archive/Logs/Technical/`.
+    -   Move all files in `docs/04-Operations/Intent-Log/Technical/` that are dated **before 2025-12-31** to this archive folder.
+    -   Exceptions: Keep `20251231-Polyglot-Consolidation-Master-Log.md`.
+
+2.  **Consolidate Competition Docs**:
+    -   Review `docs/05-Competition/Green-Agent-Detailed-Guide.md`. If it is purely historical (Phase 1 rules), move it to `docs/Archive/Phase1/`. If it contains valid implementation details, ensure they are present in `Agent-Architecture.md` and then archive the guide.
+    -   Do the same for `docs/05-Competition/Purple-Agent-Detailed-Guide.md`.
+
+3.  **Sanity Check Links**:
+    -   After moving files, run a quick grep or search to ensure `docs/00_CURRENT_TRUTH_SOURCE.md` and `docs/index.rst` do not point to missing files. Update links if necessary to point to the `Archive` location or the new consolidated location.
 
 ## Notes
