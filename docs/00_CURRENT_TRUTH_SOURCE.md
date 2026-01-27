@@ -60,11 +60,11 @@ type: Spec
     - **Status:** Non-breaking addition; preserved Stage 2 comparability; enables future R(Δ) refinement post-validation
 
 *   **Agent Arena Architecture (2026-01-15):**
-    - **Green Agent (Judge):** Orchestrates battles, assigns tasks, computes CIS scores, runs sandbox. Port 9000.
+    - **Green Agent (Judge):** Orchestrates battles, assigns tasks, computes CIS scores, runs sandbox. Port 9040.
     - **Purple Agent (Defender):** Generates code solutions with rationale and tests. Port 9001.
-    - **Red Agent V2 (Attacker):** Hybrid 3-layer vulnerability detection (Static→Smart→Reflection). Port 9021.
+    - **Red Agent V2 (Attacker):** Hybrid 3-layer vulnerability detection. Embedded in Green Agent (preferred) or Port 9021 (microservice).
     - **vLLM Brain:** Qwen2.5-Coder-32B-Instruct-AWQ on Port 8000.
-    - **Key Features:** Tautology detection, authorization bypass detection, constraint violation checking.
+    - **Key Features:** Tautology detection, authorization bypass detection, constraint violation checking, programmatic fuzzing.
     - **Deployment:** `./scripts/bash/launch_arena.sh` on Lambda H100/A100.
 
 ### Operations
