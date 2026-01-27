@@ -20,7 +20,7 @@ This log will record findings, action items, and decisions, and serve as a hando
 - [x] List and review all main agent logic files (src/green_logic/, src/purple_logic/, src/red_logic/)
   - Complete file-by-file audit of all agent logic files, with structured summaries in this log.
 
-- [ ] Review and triage documentation in priority order, with the explicit intent to prepare /docs/ for a near-complete overhaul:
+- [x] Review and triage documentation in priority order, with the explicit intent to prepare /docs/ for a near-complete overhaul:
   1. **Docs root folder:**
     - 00_CURRENT_TRUTH_SOURCE.md (master index)
     - Docs-Management-Instruction-Manual.md (documentation protocol)
@@ -38,7 +38,7 @@ This log will record findings, action items, and decisions, and serve as a hando
   - Mark files as DEPRECATED or SNAPSHOT as appropriate.
   - Log all findings in this audit log.
 
-- [ ] Cross-reference code and documentation for coverage and gaps:
+- [x] Cross-reference code and documentation for coverage and gaps:
   - Ensure all critical code features and architecture are documented in ACTIVE or REVIEW docs.
   - Note any missing, outdated, or inconsistent documentation.
 
@@ -333,6 +333,76 @@ To systematically review, triage, and consolidate source code and documentation 
   - Provides a clear usage guide and re-exports orchestrator, executor, and agent entrypoints.
   - No logic; serves as a package aggregator and documentation point.
 
+### Documentation Audit Findings
+
+#### Root Folder (`docs/`)
+- **00_CURRENT_TRUTH_SOURCE.md**: [ACTIVE] Critical Master Index.
+- **Docs-Management-Instruction-Manual.md**: [ACTIVE] Critical for Sphinx/ReadTheDocs.
+- **index.rst**: [ACTIVE] Navigation root.
+- **TEMPLATE_DOC.md**: [ACTIVE] Standard template.
+
+#### Competition (`docs/05-Competition/`)
+- **Agent-Architecture.md**: [ACTIVE] Primary technical architecture doc. Referenced by Master Index.
+- **Submission-Requirements-Matrix.md**: [ACTIVE] Referenced in Master Index.
+- **Judges-Start-Here.md**: [ACTIVE] Referenced in Master Index.
+- **Green-Agent-Detailed-Guide.md**: [REVIEW] Referenced by `Agent-Architecture.md` but contains extensive "Phase 1" context (Oct-Dec 2025). Recommend checking for obsolete content or consolidating.
+- **Purple-Agent-Detailed-Guide.md**: [REVIEW] Similar to Green Guide. Likely contains historical Phase 1 info.
+- **AgentBeats-Competition-Summary.md**: [REVIEW] Potential duplicate of `00_CURRENT_TRUTH_SOURCE.md` or `Judges-Start-Here.md`.
+
+#### Operations (`docs/04-Operations/`)
+- **Intent-Log/Technical/**: Contains ~40 legacy logs from Nov/Dec 2025.
+  - **Status**: Mostly obsolete. Master Index only references `20251231-Polyglot-Consolidation-Master-Log.md` and `20260101-Agent-Arena-Upgrade-Plan.md`.
+  - **Action**: Bulk archive pre-2026 logs to `docs/Archive/Logs/Technical/`.
+
+#### Strategy (`docs/00-Strategy/`)
+- **IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md**: [ACTIVE] Core theory document defining "Contextual Debt" and "CIS". Referenced by Master Index.
+
+### Findings - Code vs. Documentation Gaps
+
+A direct comparison between `src/` and `docs/05-Competition/Agent-Architecture.md` reveals the following discrepancies that must be reconciled:
+
+1.  **Green Agent Filenames (Structural Drift):**
+    -   **Documentation:** Lists `src/green_logic/orchestrator.py` and `src/green_logic/cis_scorer.py`.
+    -   **Codebase:** Actual files are `src/green_logic/server.py` and `src/green_logic/scoring.py`.
+    -   **Action:** Update `Agent-Architecture.md` to reflect actual filenames.
+
+2.  **Scoring Formula (Logic Drift):**
+    -   **Documentation:** Section 4 lists "Rationale Debt 33%, Architectural Debt 33%, Testing Debt 33%" (Total 100%).
+    -   **Codebase:** `src/green_logic/scoring.py` implements Equal Weighting (0.25 each) for R, A, T, and L (Logic Score).
+    -   **Action:** Update `Agent-Architecture.md` to match the 4-part CIS formula found in code and `00_CURRENT_TRUTH_SOURCE.md`.
+
+3.  **Default Ports (Configuration Drift):**
+    -   **Documentation:** Lists Green Agent on Port 9000.
+    -   **Codebase:** `src/green_logic/server.py` defaults to Port 9040.
+    -   **Action:** Verify intended port configuration and synchronize docs/code.
+
 ## Action Items
+
+- [ ] **Fix `docs/05-Competition/Agent-Architecture.md`**: Update filenames, scoring weights, and port numbers to match `src/green_logic/`.
+- [ ] Archive pre-2026 logs in `docs/04-Operations/Intent-Log/Technical/`.
+- [ ] Review `docs/05-Competition/Green-Agent-Detailed-Guide.md` and `Purple-Agent-Detailed-Guide.md` for consolidation.
+- [ ] Verify `docs/00_CURRENT_TRUTH_SOURCE.md` links are robust after any moves.
+
+## Prompts for Future Sessions
+
+To the next agent: Please execute the following "Documentation Cleanup" plan based on the findings above:
+
+1.  **Archive Legacy Logs**:
+    -   Create a directory `docs/Archive/Logs/Technical/`.
+    -   Move all files in `docs/04-Operations/Intent-Log/Technical/` that are dated **before 2025-12-31** to this archive folder.
+    -   Exceptions: Keep `20251231-Polyglot-Consolidation-Master-Log.md`.
+
+2.  **Consolidate Competition Docs**:
+    -   Review `docs/05-Competition/Green-Agent-Detailed-Guide.md`. If it is purely historical (Phase 1 rules), move it to `docs/Archive/Phase1/`. If it contains valid implementation details, ensure they are present in `Agent-Architecture.md` and then archive the guide.
+    -   Do the same for `docs/05-Competition/Purple-Agent-Detailed-Guide.md`.
+
+3.  **Sanity Check Links**:
+    -   After moving files, run a quick grep or search to ensure `docs/00_CURRENT_TRUTH_SOURCE.md` and `docs/index.rst` do not point to missing files. Update links if necessary to point to the `Archive` location or the new consolidated location.
+
+4.  **reconcile Agent Architecture**:
+    -   Edit `docs/05-Competition/Agent-Architecture.md`.
+    -   Replace `orchestrator.py` with `server.py` and `cis_scorer.py` with `scoring.py` in the file structure tree.
+    -   Update the "Contextual Debt Framework" table to reflect the 4-part CIS formula (Rationale, Architecture, Testing, Logic - 25% each).
+    -   Update the Green Agent port to 9040 (or update code to 9000 if that is the standard).
 
 ## Notes
