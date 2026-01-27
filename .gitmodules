@@ -1,4 +1,0 @@
-[submodule "external/logomesh-leaderboard-2"]
-	path = external/logomesh-leaderboard-2
-	url = https://github.com/joshhickson/logomesh-leaderboard-2.git
-	branch = testing-branch
