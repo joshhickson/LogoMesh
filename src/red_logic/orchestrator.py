@@ -12,7 +12,8 @@ Architecture:
 ├─────────────────────────────────────────┤
 │  Layer 1: Static Workers (Always runs) │
 │  ├── StaticMirrorWorker                │
-│  └── ConstraintBreakerWorker           │
+│  ├── ConstraintBreakerWorker           │
+│  └── DependencyAnalyzer (context-aware)│
 ├─────────────────────────────────────────┤
 │  Layer 2: Smart Reasoning (If needed)  │
 │  └── SmartReasoningLayer               │
@@ -32,6 +33,7 @@ from green_logic.red_report_types import RedAgentReport, Vulnerability, Severity
 from .workers.static_mirror import StaticMirrorWorker
 from .workers.constraint_breaker import ConstraintBreakerWorker
 from .reasoning import SmartReasoningLayer, ReflectionLayer
+from .dependency_analyzer import analyze_dependencies, findings_to_vulnerabilities
 
 
 @dataclass
@@ -110,11 +112,30 @@ class RedAgentV2:
         print(f"[RedAgentV2] Starting Layer 1: Static Analysis")
         static_start = time.time()
 
-        # Run both static workers
+        # Run all static workers
         mirror_result = self.static_mirror.analyze(code, task_id)
         constraint_result = self.constraint_breaker.analyze(code, task_id)
 
-        static_vulns = mirror_result.vulnerabilities + constraint_result.vulnerabilities
+        # Run context-aware dependency analysis
+        dep_findings = analyze_dependencies(code)
+        dep_vulns_raw = findings_to_vulnerabilities(dep_findings)
+        dep_vulns = [
+            Vulnerability(
+                severity=Severity(v["severity"]),
+                category=v["category"],
+                title=v["title"],
+                description=v["description"],
+                exploit_code=v.get("exploit_code"),
+                line_number=v.get("line_number"),
+                confidence=v.get("confidence", "medium")
+            )
+            for v in dep_vulns_raw
+        ]
+
+        if dep_vulns:
+            print(f"[RedAgentV2] Dependency analyzer found {len(dep_vulns)} issues")
+
+        static_vulns = mirror_result.vulnerabilities + constraint_result.vulnerabilities + dep_vulns
         all_vulnerabilities.extend(static_vulns)
 
         metrics.static_time_ms = (time.time() - static_start) * 1000
