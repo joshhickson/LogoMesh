@@ -35,7 +35,19 @@ def _init_red_agent():
     """initialize embedded red agent for internal vulnerability scanning."""
     try:
         # Use RedAgentV3 - MCTS enabled by default for smarter exploration
-        from src.red_logic.orchestrator import RedAgentV3
+        # Try multiple import paths for Docker compatibility
+        try:
+            from src.red_logic.orchestrator import RedAgentV3
+        except ImportError:
+            try:
+                from red_logic.orchestrator import RedAgentV3
+            except ImportError:
+                # Last resort: add parent path manually
+                import sys
+                _src_path = os.path.dirname(os.path.dirname(__file__))
+                if _src_path not in sys.path:
+                    sys.path.insert(0, _src_path)
+                from red_logic.orchestrator import RedAgentV3
 
         # OPTIMIZED DEFAULTS: MCTS with fewer steps = smart but fast
         use_mcts = os.getenv("RED_AGENT_MCTS", "true").lower() == "true"  # MCTS on by default

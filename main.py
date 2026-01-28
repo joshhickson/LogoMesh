@@ -2,11 +2,20 @@ import argparse
 import os
 import sys
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# Add project root and src directory to path for both local and Docker environments
+_project_root = os.path.dirname(os.path.abspath(__file__))
+_src_path = os.path.join(_project_root, "src")
+for p in [_project_root, _src_path]:
+    if p not in sys.path:
+        sys.path.insert(0, p)
 
 
 def start_green_agent(args):
-    from src.green_logic.server import run_server
+    # Try multiple import paths for Docker compatibility
+    try:
+        from src.green_logic.server import run_server
+    except ImportError:
+        from green_logic.server import run_server
     print("[Polyglot] Starting Green Agent...")
     if args.host:
         os.environ["HOST"] = args.host
@@ -16,13 +25,19 @@ def start_green_agent(args):
 
 
 def start_purple_agent(args):
-    from src.purple_logic.agent import run_purple_agent
+    try:
+        from src.purple_logic.agent import run_purple_agent
+    except ImportError:
+        from purple_logic.agent import run_purple_agent
     print("[Polyglot] Starting Purple Agent...")
     run_purple_agent(args.host, args.port)
 
 
 def start_red_agent(args):
-    from src.red_logic.agent import run_red_agent
+    try:
+        from src.red_logic.agent import run_red_agent
+    except ImportError:
+        from red_logic.agent import run_red_agent
     print("[Polyglot] Starting Red Agent...")
     run_red_agent(args.host, args.port)
 
