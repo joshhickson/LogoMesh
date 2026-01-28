@@ -1,23 +1,30 @@
 """
-Sandbox module for secure code execution in isolated Docker containers.
+Sandbox module for secure code execution.
 
-This module provides a Sandbox class that:
-- Spins up temporary Python 3.12 containers
-- Copies code directly into containers via put_archive (no volume mounts)
-- Executes code with pytest in isolation
-- Enforces strict timeouts
-- Ensures cleanup even on crashes/timeouts
+Supports two modes:
+1. Docker mode (secure): Isolated containers with resource limits
+2. Subprocess mode (fallback): Local execution when Docker unavailable
 
-NOTE: Uses put_archive instead of volume mounts to support Docker-in-Docker
-environments where host path resolution would fail.
+NOTE: In AgentBeats competition, Docker may not be available. The subprocess
+fallback allows the Green Agent to still run tests, just with less isolation.
 """
 
 import io
+import os
 import tarfile
+import tempfile
 import time
+import subprocess
+import shutil
 
-import docker
-from docker.errors import ContainerError, ImageNotFound, APIError
+# Docker is optional - fallback to subprocess if unavailable
+try:
+    import docker
+    from docker.errors import ContainerError, ImageNotFound, APIError
+    DOCKER_AVAILABLE = True
+except ImportError:
+    DOCKER_AVAILABLE = False
+    docker = None
 
 
 def _create_tar_stream(files: dict[str, str]) -> io.BytesIO:
@@ -75,10 +82,24 @@ class Sandbox:
         """
         self.image = image
         self.timeout = timeout
-        self.client = docker.from_env()
+        self._docker_mode = False
+        self._has_pytest = False
 
-        # Ensure the image is available
-        self._ensure_image()
+        if DOCKER_AVAILABLE:
+            try:
+                # Try to connect to Docker daemon
+                self.client = docker.from_env()
+                self.client.ping()  # Test connection
+                self._docker_mode = True
+                # Ensure the image is available
+                self._ensure_image()
+            except Exception as e:
+                # Docker module available but daemon not running
+                print(f"[Sandbox] Docker daemon unavailable ({e}), using subprocess mode")
+                self._docker_mode = False
+        else:
+            # Docker module not installed
+            print("[Sandbox] Docker not installed, using subprocess mode")
 
     def _ensure_image(self) -> None:
         """Ensure Docker image is available, falling back to base image if needed."""
@@ -133,91 +154,147 @@ class Sandbox:
                     "conftest.py": "import sys; sys.path.insert(0, '/workspace')"
                 }
 
-            # No runner needed - we'll use pytest directly
+            if self._docker_mode:
+                # Docker mode: Create container and use put_archive
+                # No runner needed - we'll use pytest directly
 
-            # Create tar archive of the files
-            tar_stream = _create_tar_stream(files)
+                # Create tar archive of the files
+                tar_stream = _create_tar_stream(files)
 
-            # Create container WITHOUT volume mounts
-            # Use 'tail -f /dev/null' to keep container running while we copy files
-            # Network disabled if pytest pre-installed, enabled if we need pip install
-            container = self.client.containers.create(
-                image=self.image,
-                command=["tail", "-f", "/dev/null"],
-                working_dir="/workspace",
-                network_disabled=self._has_pytest,  # Disable network if pytest pre-installed
-                mem_limit="128m",        # Memory limit
-                cpu_period=100000,
-                cpu_quota=50000,         # 50% CPU limit
-                detach=True,
-                pids_limit=50            # Limit number of processes
-            )
+                # Create container WITHOUT volume mounts
+                # Use 'tail -f /dev/null' to keep container running while we copy files
+                # Network disabled if pytest pre-installed, enabled if we need pip install
+                container = self.client.containers.create(
+                    image=self.image,
+                    command=["tail", "-f", "/dev/null"],
+                    working_dir="/workspace",
+                    network_disabled=self._has_pytest,  # Disable network if pytest pre-installed
+                    mem_limit="128m",        # Memory limit
+                    cpu_period=100000,
+                    cpu_quota=50000,         # 50% CPU limit
+                    detach=True,
+                    pids_limit=50            # Limit number of processes
+                )
 
-            # Start container
-            container.start()
+                # Start container
+                container.start()
 
-            # Copy files into the container using put_archive
-            container.put_archive("/workspace", tar_stream)
+                # Copy files into the container using put_archive
+                container.put_archive("/workspace", tar_stream)
 
-            # Run pytest - install first if using fallback image without pytest
-            if self._has_pytest:
-                # Fast path: pytest pre-installed
-                cmd = f"timeout {self.timeout}s python3 -m pytest -v --timeout=10 test_*.py 2>&1"
-            else:
-                # Slow path: install pytest first (fallback image)
-                cmd = f"pip install -q pytest pytest-timeout 2>/dev/null && timeout {self.timeout}s python3 -m pytest -v --timeout=10 test_*.py 2>&1"
+                # Run pytest with shell timeout (OS level, always works)
+                if self._has_pytest:
+                    # Fast path: pytest pre-installed
+                    cmd = f"timeout {self.timeout}s python3 -m pytest -v test_*.py 2>&1"
+                else:
+                    # Slow path: install pytest first (fallback image)
+                    cmd = f"pip install -q pytest 2>/dev/null && timeout {self.timeout}s python3 -m pytest -v test_*.py 2>&1"
 
-            exec_result = container.exec_run(
-                cmd=["sh", "-c", cmd],
-                workdir="/workspace",
-                demux=False
-            )
+                exec_result = container.exec_run(
+                    cmd=["sh", "-c", cmd],
+                    workdir="/workspace",
+                    demux=False
+                )
 
-            # For exec_run, we need to handle timeout differently
-            # Since exec_run is synchronous, we use container.wait with timeout
-            # But exec_run already ran, so we check exit code directly
-            exit_code = exec_result.exit_code
-            output = exec_result.output.decode("utf-8", errors="replace") if exec_result.output else ""
+                # For exec_run, we need to handle timeout differently
+                # Since exec_run is synchronous, we use container.wait with timeout
+                # But exec_run already ran, so we check exit code directly
+                exit_code = exec_result.exit_code
+                output = exec_result.output.decode("utf-8", errors="replace") if exec_result.output else ""
 
-            duration = time.time() - start_time
+                duration = time.time() - start_time
 
-            # Check for timeout (if duration exceeded)
-            if duration > self.timeout:
-                output = f"TIMEOUT: Execution exceeded {self.timeout} seconds\n" + output
+                # Check for timeout (if duration exceeded)
+                if duration > self.timeout:
+                    output = f"TIMEOUT: Execution exceeded {self.timeout} seconds\n" + output
+                    return {
+                        "success": False,
+                        "output": output,
+                        "duration": duration
+                    }
+
+                # Determine success
+                success = exit_code == 0
+
                 return {
-                    "success": False,
+                    "success": success,
                     "output": output,
                     "duration": duration
                 }
 
-            # Determine success
-            success = exit_code == 0
+            else:
+                # Subprocess mode: Execute directly using Python subprocess
+                # Create a temporary directory for the test
+                with tempfile.TemporaryDirectory() as temp_dir:
+                    # Write all files to temp directory
+                    for filename, content in files.items():
+                        filepath = os.path.join(temp_dir, filename)
+                        with open(filepath, "w") as f:
+                            f.write(content)
 
-            return {
-                "success": success,
-                "output": output,
-                "duration": duration
-            }
+                    # Create conftest.py to set up the Python path (use temp_dir, not /workspace)
+                    conftest_path = os.path.join(temp_dir, "conftest.py")
+                    with open(conftest_path, "w") as f:
+                        f.write(f"import sys; sys.path.insert(0, '{temp_dir}')")
 
-        except ContainerError as e:
-            duration = time.time() - start_time
-            return {
-                "success": False,
-                "output": f"Container error: {str(e)}",
-                "duration": duration
-            }
-        except APIError as e:
-            duration = time.time() - start_time
-            return {
-                "success": False,
-                "output": f"Docker API error: {str(e)}",
-                "duration": duration
-            }
+                    # Check if pytest is available, otherwise use unittest
+                    try:
+                        subprocess.run(["python3", "-m", "pytest", "--version"],
+                                      capture_output=True, timeout=5, check=True)
+                        use_pytest = True
+                    except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
+                        use_pytest = False
+
+                    if use_pytest:
+                        # Construct the pytest command (no --timeout, use subprocess timeout instead)
+                        cmd = [
+                            "python3", "-m", "pytest",
+                            "-v",
+                            os.path.join(temp_dir, "test_solution.py")
+                        ]
+                    else:
+                        # Fallback to unittest
+                        cmd = [
+                            "python3", "-m", "unittest",
+                            "discover", "-s", temp_dir, "-p", "test_*.py", "-v"
+                        ]
+
+                    # Run the command with a timeout
+                    try:
+                        result = subprocess.run(
+                            cmd,
+                            cwd=temp_dir,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE,
+                            text=True,
+                            timeout=self.timeout
+                        )
+                        output = result.stdout + result.stderr
+                        success = result.returncode == 0
+                    except subprocess.CalledProcessError as e:
+                        output = (e.stdout or "") + (e.stderr or "")
+                        success = False
+                    except subprocess.TimeoutExpired:
+                        output = f"TIMEOUT: Execution exceeded {self.timeout} seconds\n"
+                        success = False
+                    except FileNotFoundError:
+                        output = "ERROR: Python not found in PATH"
+                        success = False
+
+                    duration = time.time() - start_time
+
+                    return {
+                        "success": success,
+                        "output": output,
+                        "duration": duration
+                    }
+
         except Exception as e:
             duration = time.time() - start_time
+            error_type = type(e).__name__
             return {
                 "success": False,
-                "output": f"Unexpected error: {str(e)}",
+                "output": f"{error_type}: {str(e)}",
                 "duration": duration
             }
         finally:
