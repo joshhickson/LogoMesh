@@ -4,7 +4,8 @@ type: Plan
 ---
 > **Context:**
 > *   Target Audience: AgentX Judges.
-> *   Goal: Replace the "Live Run" section (01:51-02:44) of the existing video with a new, denser demo showing Variance, Iteration, and Leaderboard.
+> *   Goal: Replace the "Live Run" section (01:51-02:44) of the existing video.
+> *   Constraint: **NO NEW CODE.** Use existing `Task 012` (ERC-20 Token) and `Task 002` (Rate Limiter) if needed, but preference is ERC-20 for audio continuity.
 
 # Video Demo Plan: "The Unknowable Code" (Revised Insert)
 
@@ -16,7 +17,7 @@ The video has just explained the Red Agent V2 architecture (Layers 1-3).
 *   **Outgoing Audio (02:44):** "The verdict is clear... (Conclusion)"
 
 **The New Insert (approx 60s):**
-We replace the single "Disaster Run" with a 3-part "Scientific Proof" of the system's capabilities.
+We replace the single "Disaster Run" with a 3-part "Scientific Proof" using the existing **ERC-20 Token Task (Task 012)** to match the intro audio ("...build a secure and exchange grade cryptocurrency token...").
 
 ### New Narrative Arc
 1.  **Stability (The Variance Test):** Prove we aren't just "vibes-based." We are a scientific instrument.
@@ -33,26 +34,59 @@ We replace the single "Disaster Run" with a 3-part "Scientific Proof" of the sys
 | **00:40 - 00:50** | **Leaderboard View:** Scrolling list. Top agents (Green) vs. Dangerous agents (Red). | "This isn't just a debugger. It's a market signal. The Leaderboard exposes the hidden liability in every agent." | `external/logomesh-leaderboard-2` |
 | **00:50 - 00:55** | **Transition:** Fade to "The Verdict is Clear" text. | (Transition back to original audio: "The verdict is clear...") | N/A |
 
-## 3. Technical Assets (Feasibility Scripts)
+## 3. Technical Prerequisites (The Feasibility Spike)
 
-We update the scripts to use **ERC20 Token** payloads instead of LRU Cache to match the video's earlier setup ("We're going to ask our purple agent to build a secure... cryptocurrency token").
+We use the existing scripts which are already configured for **ERC-20 (Task 012)** payloads.
 
-### 3.1 Updated Payloads (`tests/demo_payloads.py`)
-*   **ERC20 Golden:** Perfect implementation + rationale.
-*   **ERC20 Lazy:** Same code, "Here is the token" rationale.
-*   **ERC20 Vulnerable:** Contains a hidden backdoor (e.g., `_mint` accessible to `subprocess` or `eval` usage).
+### 3.1 Scenario A: Variance (`scripts/demo_scenario_a_variance.py`)
+*   **Goal:** Calculate statistical stability.
+*   **Math:**
+    *   $\mu$ (Mean) = Average of 5 CIS scores.
+    *   $\sigma$ (Standard Deviation) = $\sqrt{\frac{1}{N}\sum(x_i - \mu)^2}$
+*   **Target:** $\sigma < 0.05$.
 
-### 3.2 Scenario A: Variance (`scripts/demo_scenario_a_variance.py`)
-*   Runs `ERC20 Golden` 5 times.
-*   Success: Std Dev < 0.05.
+### 3.2 Scenario B: Iteration (`scripts/demo_scenario_b_iteration.py`)
+*   **Narrative:**
+    *   *Iter 1 (Golden):* Secure implementation, Full Rationale. (CIS > 0.8)
+    *   *Iter 2 (Lazy):* Same code, Rationale replaced with "Updated token." (CIS Drops ~0.2)
+    *   *Iter 3 (Vulnerable):* Code adds `admin_debug` function with `subprocess.run`. (CIS Crashes < 0.4)
 
-### 3.3 Scenario B: Iteration (`scripts/demo_scenario_b_iteration.py`)
-*   **Turn 1:** `ERC20 Golden` (Score ~0.85).
-*   **Turn 2:** `ERC20 Lazy` (Score ~0.65).
-*   **Turn 3:** `ERC20 Vulnerable` (Score < 0.40).
+## 4. Scoring Upgrade Specification (For Future Agent)
 
-## 4. Execution Plan for Filming
-1.  **Setup:** Open 3 terminal windows.
-2.  **Record A:** Run `python scripts/demo_scenario_a_variance.py`. Capture the consistent output.
-3.  **Record B:** Run `python scripts/demo_scenario_b_iteration.py`. Capture the dramatic drop.
-4.  **Record C:** Open `localhost:3000` (Leaderboard). Scroll slowly.
+To achieve the "depth/detail" goal without writing new code now, we specify the schema changes required for the `scoring.py` output.
+
+**Target JSON Structure:**
+```json
+{
+  "cis_score": 0.75,
+  "components": {
+    "rationale": {
+      "score": 0.8,
+      "vector_alignment": 0.85,
+      "specificity_penalty": 0.0
+    },
+    "architecture": {
+      "score": 0.7,
+      "constraint_violations": [],
+      "red_agent_penalty": 0.0
+    },
+    "testing": {
+      "score": 0.6,
+      "coverage": 0.8,
+      "assertion_quality": 0.4
+    },
+    "logic": {
+      "score": 0.9,
+      "llm_confidence": 0.95
+    }
+  }
+}
+```
+*Action:* Future task is to update `scoring.py` to populate this nested structure.
+
+## 5. Data Visualization Plan
+
+For the video, we will use **Terminal UI (TUI)** output from the scripts.
+*   **Tool:** Standard Python `print` with ANSI escape codes (already in scripts).
+*   **Style:** "Hacker/Cyberpunk" green text on black background.
+*   **Backup:** `visidata` on the generated CSV log files if the terminal is too fast.
