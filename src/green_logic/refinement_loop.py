@@ -753,12 +753,50 @@ class ScientificMethodEngine:
                 line=vuln.get("line_number")
             )
 
-        # Observations from test output
-        if "error" in test_output.lower() or "failed" in test_output.lower():
+        # Observations from test output - be comprehensive to trigger Scientific Method
+        output_lower = test_output.lower()
+
+        # Check for explicit failures
+        if "failed" in output_lower:
             memory.add_observation(
                 source="test_output",
                 category="test_failure",
                 description="Tests failed during execution",
+                evidence=test_output[:500]
+            )
+        # Check for errors (but not ImportError which is infra)
+        elif "error" in output_lower and "importerror" not in output_lower and "modulenotfounderror" not in output_lower:
+            memory.add_observation(
+                source="test_output",
+                category="test_error",
+                description="Errors occurred during test execution",
+                evidence=test_output[:500]
+            )
+        # Check for timeout
+        elif "timeout" in output_lower:
+            memory.add_observation(
+                source="test_output",
+                category="test_timeout",
+                description="Tests timed out during execution",
+                evidence=test_output[:500]
+            )
+        # Check for incomplete test run (truncated output - no final pytest summary)
+        elif "passed" in output_lower:
+            last_200_chars = test_output[-200:] if len(test_output) > 200 else test_output
+            if "====" not in last_200_chars and "OK" not in last_200_chars:
+                memory.add_observation(
+                    source="test_output",
+                    category="test_incomplete",
+                    description="Test run appears incomplete or truncated",
+                    evidence=test_output[:500]
+                )
+
+        # Check for traceback even in passing tests
+        if "traceback" in output_lower:
+            memory.add_observation(
+                source="test_output",
+                category="test_issue",
+                description="Traceback detected in test output",
                 evidence=test_output[:500]
             )
 
