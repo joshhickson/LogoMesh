@@ -13,6 +13,7 @@ from .scoring import ContextualIntegrityScorer
 from .analyzer import SemanticAuditor
 from .generator import TestGenerator
 from .red_report_types import RedAgentReport
+from .refinement_loop import RefinementLoop, create_refinement_task_prompt
 
 
 def _init_sandbox():
@@ -241,8 +242,11 @@ auditor = SemanticAuditor()
 sandbox = _init_sandbox()
 red_agent = _init_red_agent()
 test_generator = TestGenerator()
+refinement_loop = RefinementLoop(max_iterations=int(os.getenv("MAX_REFINEMENT_ITERATIONS", "3")))
 
 STALL_THRESHOLD = 30.0  # seconds without activity = hung inference
+# AGENTIC MODE: Enable refinement loop by default for true agent behavior
+ENABLE_REFINEMENT = os.getenv("ENABLE_REFINEMENT_LOOP", "true").lower() == "true"
 
 
 async def stream_purple_response(client: httpx.AsyncClient, purple_url: str, payload: dict, battle_id: str):
@@ -542,6 +546,153 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             evaluation['cis_score'] = min(evaluation.get('cis_score', 0), 0.5)
             evaluation['sandbox_failed'] = True
             evaluation['sandbox_output'] = sandbox_result['output'][:500]
+
+        # === AGENTIC REFINEMENT LOOP ===
+        # If enabled, iteratively help Purple improve their code
+        iteration = 1
+        refinement_history = []
+
+        if ENABLE_REFINEMENT:
+            critical_vulns = len([v for v in (red_report_obj.vulnerabilities if red_report_obj else [])
+                                  if v.severity.value == "critical"])
+
+            while refinement_loop.should_continue(
+                iteration=iteration,
+                test_passed=sandbox_result['success'],
+                score=evaluation.get('cis_score', 0),
+                critical_vulns=critical_vulns
+            ):
+                print(f"[Refinement] Iteration {iteration}: score={evaluation.get('cis_score', 0):.2f}, "
+                      f"tests_passed={sandbox_result['success']}, critical_vulns={critical_vulns}")
+
+                # Generate targeted feedback using self-reflection
+                feedback = await refinement_loop.generate_feedback_message(
+                    task_description=task_desc,
+                    source_code=source_code,
+                    test_output=sandbox_result.get('output', ''),
+                    red_vulnerabilities=[
+                        {"severity": v.severity.value, "category": v.category,
+                         "title": v.title, "description": v.description}
+                        for v in (red_report_obj.vulnerabilities if red_report_obj else [])
+                    ],
+                    audit_issues=audit_result.get('issues', []),
+                    iteration=iteration
+                )
+
+                # Store this iteration's results
+                refinement_history.append({
+                    "iteration": iteration,
+                    "score": evaluation.get('cis_score', 0),
+                    "passed": sandbox_result['success'],
+                    "feedback": feedback[:500]
+                })
+
+                # Send feedback to Purple and get new code
+                iteration += 1
+                refinement_prompt = create_refinement_task_prompt(task_prompt, feedback, iteration)
+
+                async with httpx.AsyncClient() as client:
+                    try:
+                        purple_text = await stream_purple_response(
+                            client,
+                            purple_agent_url,
+                            {
+                                "jsonrpc": "2.0",
+                                "method": "message/send",
+                                "params": {
+                                    "message": {
+                                        "kind": "message",
+                                        "messageId": f"task-{request.battle_id}-iter{iteration}",
+                                        "role": "user",
+                                        "parts": [{"kind": "text", "text": refinement_prompt}]
+                                    }
+                                },
+                                "id": f"{request.battle_id}-iter{iteration}"
+                            },
+                            request.battle_id
+                        )
+
+                        if not purple_text:
+                            print(f"[Refinement] Purple returned empty response on iteration {iteration}")
+                            break
+
+                        # Parse new response
+                        clean_text = purple_text.strip()
+                        if clean_text.startswith("```json"):
+                            clean_text = clean_text[7:]
+                        elif clean_text.startswith("```"):
+                            clean_text = clean_text[3:]
+                        if clean_text.endswith("```"):
+                            clean_text = clean_text[:-3]
+
+                        try:
+                            purple_data = json.loads(clean_text.strip())
+                        except json.JSONDecodeError:
+                            print(f"[Refinement] Failed to parse Purple response on iteration {iteration}")
+                            break
+
+                        source_code = purple_data.get('sourceCode', '')
+                        if isinstance(source_code, str) and '\\n' in source_code:
+                            source_code = source_code.replace('\\n', '\n').replace('\\t', '\t')
+                            purple_data['sourceCode'] = source_code
+
+                        # Re-run evaluation pipeline
+                        if red_agent:
+                            red_report_obj = await red_agent.attack(
+                                code=source_code,
+                                task_id=request.task_id,
+                                task_description=task_desc
+                            )
+                            red_result_data = {
+                                "attack_successful": red_report_obj.attack_successful,
+                                "vulnerabilities": [
+                                    {"severity": v.severity.value, "category": v.category,
+                                     "title": v.title, "description": v.description,
+                                     "exploit_code": v.exploit_code, "line_number": v.line_number,
+                                     "confidence": v.confidence}
+                                    for v in red_report_obj.vulnerabilities
+                                ],
+                                "attack_summary": red_report_obj.attack_summary
+                            }
+                            critical_vulns = len([v for v in red_report_obj.vulnerabilities
+                                                  if v.severity.value == "critical"])
+
+                        sandbox_payload = source_code
+                        audit_source = source_code
+                        audit_result = auditor.analyze(audit_source, task_constraints)
+
+                        tests_to_run = await test_generator.generate_adversarial_tests(task_desc, source_code)
+                        if sandbox:
+                            sandbox_result = sandbox.run(sandbox_payload, tests_to_run)
+
+                        evaluation = await scorer.evaluate(
+                            task_description=task_desc,
+                            purple_response=purple_data,
+                            red_report=red_result_data,
+                            audit_result=audit_result,
+                            sandbox_result=sandbox_result,
+                            red_report_obj=red_report_obj
+                        )
+
+                        if not audit_result['valid']:
+                            evaluation['cis_score'] = evaluation.get('cis_score', 0) * (1 - audit_result['penalty'])
+                        if not sandbox_result['success']:
+                            evaluation['cis_score'] = min(evaluation.get('cis_score', 0), 0.5)
+
+                        print(f"[Refinement] Iteration {iteration} complete: new score={evaluation.get('cis_score', 0):.2f}")
+
+                    except Exception as e:
+                        print(f"[Refinement] Error on iteration {iteration}: {e}")
+                        break
+
+            # Calculate improvement
+            if refinement_history:
+                initial_score = refinement_history[0]['score']
+                final_score = evaluation.get('cis_score', 0)
+                evaluation['refinement_improvement'] = final_score - initial_score
+                evaluation['refinement_iterations'] = iteration
+                evaluation['refinement_history'] = refinement_history
+                print(f"[Refinement] Complete: {iteration} iterations, improvement={final_score - initial_score:.2f}")
 
         # step 5: return result
         participants = request.participant_ids or {"agent": request.battle_id}

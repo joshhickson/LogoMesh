@@ -34,6 +34,7 @@ from .workers.static_mirror import StaticMirrorWorker
 from .workers.constraint_breaker import ConstraintBreakerWorker
 from .reasoning import SmartReasoningLayer, ReflectionLayer
 from .dependency_analyzer import analyze_dependencies, findings_to_vulnerabilities
+from .semantic_analyzer import analyze_with_semantics, SecurityVerdict
 
 
 @dataclass
@@ -221,11 +222,48 @@ class RedAgentV2:
         # Deduplicate by title
         unique_vulns = self._deduplicate(all_vulnerabilities)
 
+        # ============================================================
+        # SEMANTIC ANALYSIS: Filter false positives with code understanding
+        # ============================================================
+        print(f"[RedAgentV2] Running semantic analysis to filter false positives...")
+
+        # Convert to dict format for semantic analyzer
+        vuln_dicts = [
+            {
+                "severity": v.severity.value,
+                "category": v.category,
+                "title": v.title,
+                "description": v.description,
+                "line_number": v.line_number,
+                "confidence": v.confidence
+            }
+            for v in unique_vulns
+        ]
+
+        # Apply semantic analysis
+        filtered_dicts, reasoning = analyze_with_semantics(code, vuln_dicts)
+        print(f"[RedAgentV2] Semantic analysis: {reasoning}")
+
+        # Convert back to Vulnerability objects
+        unique_vulns = [
+            Vulnerability(
+                severity=Severity(d["severity"]),
+                category=d["category"],
+                title=d["title"],
+                description=d["description"],
+                line_number=d.get("line_number"),
+                confidence=d.get("confidence", "medium")
+            )
+            for d in filtered_dicts
+        ]
+
         # Sort by severity (critical first)
         unique_vulns.sort(key=lambda v: self._severity_rank(v.severity), reverse=True)
 
         # Build summary
         summary = self._build_summary(unique_vulns, metrics)
+        if reasoning:
+            summary += f" Semantic analysis: {reasoning}"
 
         print(f"[RedAgentV2] Attack complete: {len(unique_vulns)} unique findings in {metrics.total_time_ms:.0f}ms")
         print(f"[RedAgentV2] Layers: {', '.join(metrics.layers_executed)}")

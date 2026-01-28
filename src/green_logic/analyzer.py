@@ -8,6 +8,7 @@ This module provides a SemanticAuditor class that:
 - Calculates cyclomatic complexity
 - Detects security vulnerabilities (eval, exec, SQL injection patterns)
 - Identifies code smells (deep nesting, too many parameters, long functions)
+- Context-aware dependency analysis (imported from Red Agent)
 - Returns structured audit results with penalties and warnings
 """
 
@@ -15,6 +16,20 @@ import ast
 import re
 from dataclasses import dataclass, field
 from typing import Any
+
+# Import context-aware dependency analyzer from Red Agent
+try:
+    from src.red_logic.dependency_analyzer import analyze_dependencies, RiskLevel
+    HAS_DEPENDENCY_ANALYZER = True
+except ImportError:
+    HAS_DEPENDENCY_ANALYZER = False
+
+# Import semantic analyzer for AGI-like code understanding
+try:
+    from src.red_logic.semantic_analyzer import QueryBuilderDetector, SecurityVerdict
+    HAS_SEMANTIC_ANALYZER = True
+except ImportError:
+    HAS_SEMANTIC_ANALYZER = False
 
 
 @dataclass
@@ -98,17 +113,29 @@ class SemanticAuditor:
         "input": ("low", "User input - ensure proper validation"),
     }
 
-    # SQL injection patterns (for string formatting with SQL keywords)
+    # SQL injection patterns - ONLY match actual string formatting, NOT parameterized queries
+    # DANGEROUS: "SELECT * FROM t WHERE id = %s" % var  (string formatting)
+    # SAFE: cursor.execute("SELECT * FROM t WHERE id = %s", (var,))  (parameterized)
     SQL_PATTERNS = [
-        r"['\"]SELECT\s+.+\s+FROM\s+.+['\"].*%",
-        r"['\"]INSERT\s+INTO\s+.+['\"].*%",
-        r"['\"]UPDATE\s+.+\s+SET\s+.+['\"].*%",
-        r"['\"]DELETE\s+FROM\s+.+['\"].*%",
+        # f-strings with SQL - ALWAYS dangerous
         r"f['\"].*SELECT.*\{",
         r"f['\"].*INSERT.*\{",
         r"f['\"].*UPDATE.*\{",
         r"f['\"].*DELETE.*\{",
+        # % formatting - only when followed by % and variable (not in .execute() with params)
+        r"['\"]SELECT\s+.+\s+FROM\s+.+['\"]\s*%\s*[\(\w]",
+        r"['\"]INSERT\s+INTO\s+.+['\"]\s*%\s*[\(\w]",
+        r"['\"]UPDATE\s+.+\s+SET\s+.+['\"]\s*%\s*[\(\w]",
+        r"['\"]DELETE\s+FROM\s+.+['\"]\s*%\s*[\(\w]",
+        # String concatenation - ALWAYS dangerous
+        r"['\"]SELECT\s+.+['\"]\s*\+",
+        r"['\"]INSERT\s+.+['\"]\s*\+",
+        r"['\"]UPDATE\s+.+['\"]\s*\+",
+        r"['\"]DELETE\s+.+['\"]\s*\+",
     ]
+
+    # Pattern to detect SAFE parameterized queries (to exclude from SQL injection checks)
+    PARAMETERIZED_QUERY_PATTERN = r"\.execute\s*\([^)]*['\"][^'\"]*['\"],\s*[\(\[]"
 
     # Thresholds for code quality
     MAX_CYCLOMATIC_COMPLEXITY = 10  # Per function
@@ -199,6 +226,22 @@ class SemanticAuditor:
         # Check 6: Command injection patterns
         cmd_issues = self._check_command_injection(tree)
         security_issues.extend(cmd_issues)
+
+        # Check 7: Context-aware dependency analysis (AGI-like taint tracking)
+        if HAS_DEPENDENCY_ANALYZER:
+            dep_findings = analyze_dependencies(source_code)
+            for finding in dep_findings:
+                # Only add if it's actually dangerous (not INFO level)
+                if finding.risk_level in (RiskLevel.CRITICAL, RiskLevel.HIGH, RiskLevel.MEDIUM):
+                    security_issues.append(
+                        SecurityIssue(
+                            severity=finding.risk_level.value,
+                            issue_type=finding.category,
+                            description=f"{finding.title}: {finding.description}",
+                            line=finding.line_number,
+                            confidence="high" if finding.risk_level == RiskLevel.CRITICAL else "medium",
+                        )
+                    )
 
         # Apply penalty for high-severity security issues
         high_severity_count = sum(1 for s in security_issues if s.severity == "high")
@@ -379,7 +422,17 @@ class SemanticAuditor:
 
     def _check_sql_injection(self, source_code: str) -> list[SecurityIssue]:
         """
-        Check for SQL injection vulnerabilities using pattern matching.
+        Check for SQL injection vulnerabilities using AGI-LIKE SEMANTIC ANALYSIS.
+
+        This method goes beyond pattern matching to understand code semantics:
+        - Detects QueryBuilder patterns that use parameterized queries
+        - Understands that f-strings for structure (columns, tables) are safe
+        - Only flags REAL vulnerabilities where user input can reach SQL
+
+        IMPORTANT: This method distinguishes between:
+        - DANGEROUS: Direct user input in SQL without parameterization
+        - SAFE: QueryBuilder patterns with placeholders and parameters list
+        - SAFE: cursor.execute("...%s...", (var,)) parameterized queries
 
         Returns:
             List of SecurityIssue objects for SQL injection patterns.
@@ -387,16 +440,71 @@ class SemanticAuditor:
         issues = []
         lines = source_code.split("\n")
 
+        # AGI ENHANCEMENT: Use semantic analysis to detect QueryBuilder patterns
+        parameterized_class_ranges = []
+        if HAS_SEMANTIC_ANALYZER:
+            try:
+                detector = QueryBuilderDetector(source_code)
+                class_info = detector.analyze()
+
+                # Find all parameterized QueryBuilder classes and their line ranges
+                for class_name, info in class_info.items():
+                    if info.get("is_parameterized", False):
+                        start_line = info.get("line_start", 0)
+                        end_line = info.get("line_end", 0)
+                        parameterized_class_ranges.append((start_line, end_line, class_name))
+            except Exception:
+                pass  # Fall back to basic pattern matching
+
+        def is_in_parameterized_class(line_no: int) -> tuple[bool, str]:
+            """Check if a line is within a parameterized QueryBuilder class."""
+            for start, end, name in parameterized_class_ranges:
+                if start <= line_no <= end:
+                    return True, name
+            return False, ""
+
         for pattern in self.SQL_PATTERNS:
             for line_no, line in enumerate(lines, 1):
                 if re.search(pattern, line, re.IGNORECASE):
+                    # AGI CHECK: Is this line inside a parameterized QueryBuilder?
+                    in_safe_class, class_name = is_in_parameterized_class(line_no)
+                    if in_safe_class:
+                        # This is inside a class that uses parameterized queries
+                        # F-strings here are for structure (columns, tables), not user values
+                        # This is a FALSE POSITIVE - skip it
+                        continue
+
+                    # Check if this line is a SAFE parameterized query
+                    if re.search(self.PARAMETERIZED_QUERY_PATTERN, line, re.IGNORECASE):
+                        # This is parameterized - NOT vulnerable, skip
+                        continue
+
+                    # Check for .execute() with comma (likely parameterized)
+                    if ".execute(" in line:
+                        # Split on .execute( and check if there's a comma after the query
+                        after_execute = line.split(".execute(")[1] if ".execute(" in line else ""
+                        # If there's a comma followed by something that looks like params, it's likely safe
+                        if re.search(r"['\"][^'\"]*['\"],\s*[\(\[\{]", after_execute):
+                            continue
+
+                    # Determine confidence based on pattern type
+                    if "f['\"]" in pattern:
+                        confidence = "high"  # f-strings are definitely vulnerable
+                        description = "SQL injection via f-string interpolation"
+                    elif r"\+" in pattern:
+                        confidence = "high"  # String concat is definitely vulnerable
+                        description = "SQL injection via string concatenation"
+                    else:
+                        confidence = "medium"  # % formatting might be false positive
+                        description = "Possible SQL injection via string formatting"
+
                     issues.append(
                         SecurityIssue(
                             severity="high",
                             issue_type="sql_injection",
-                            description="Possible SQL injection via string formatting",
+                            description=description,
                             line=line_no,
-                            confidence="medium",
+                            confidence=confidence,
                         )
                     )
                     break  # One issue per pattern
