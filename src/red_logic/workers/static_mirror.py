@@ -12,8 +12,7 @@ import re
 import time
 from typing import Optional
 
-from .base import BaseWorker, WorkerResult
-from green_logic.red_report_types import Vulnerability, Severity
+from .base import BaseWorker, WorkerResult, Vulnerability, Severity
 
 
 class StaticMirrorWorker(BaseWorker):

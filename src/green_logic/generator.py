@@ -152,10 +152,9 @@ def generate_fuzz_tests(code: str) -> str:
     analyzer.visit(tree)
 
     test_lines = [
-        "import unittest",
+        "import pytest",
         "from solution import *",
         "",
-        "class TestFuzzEdgeCases(unittest.TestCase):",
     ]
 
     test_count = 0
@@ -172,25 +171,25 @@ def generate_fuzz_tests(code: str) -> str:
         # Test 1: Empty/default construction
         if not init_params or all(p.get("default") for p in init_params):
             test_lines.append(f"")
-            test_lines.append(f"    def test_{class_name.lower()}_empty_init(self):")
-            test_lines.append(f"        '''Test {class_name} with no arguments'''")
-            test_lines.append(f"        try:")
-            test_lines.append(f"            obj = {class_name}()")
-            test_lines.append(f"            self.assertIsNotNone(obj)")
-            test_lines.append(f"        except (TypeError, ValueError) as e:")
-            test_lines.append(f"            pass  # Expected if required params")
+            test_lines.append(f"def test_{class_name.lower()}_empty_init():")
+            test_lines.append(f"    '''Test {class_name} with no arguments'''")
+            test_lines.append(f"    try:")
+            test_lines.append(f"        obj = {class_name}()")
+            test_lines.append(f"        assert obj is not None")
+            test_lines.append(f"    except (TypeError, ValueError) as e:")
+            test_lines.append(f"        pass  # Expected if required params")
             test_count += 1
 
         # Test 2: None arguments
         if init_params:
             test_lines.append(f"")
-            test_lines.append(f"    def test_{class_name.lower()}_none_args(self):")
-            test_lines.append(f"        '''Test {class_name} with None arguments'''")
-            test_lines.append(f"        try:")
+            test_lines.append(f"def test_{class_name.lower()}_none_args():")
+            test_lines.append(f"    '''Test {class_name} with None arguments'''")
+            test_lines.append(f"    try:")
             none_args = ", ".join(["None"] * len(init_params))
-            test_lines.append(f"            obj = {class_name}({none_args})")
-            test_lines.append(f"        except (TypeError, ValueError, AttributeError) as e:")
-            test_lines.append(f"            pass  # May be expected")
+            test_lines.append(f"        obj = {class_name}({none_args})")
+            test_lines.append(f"    except (TypeError, ValueError, AttributeError) as e:")
+            test_lines.append(f"        pass  # May be expected")
             test_count += 1
 
         # Test methods with edge cases
@@ -216,9 +215,9 @@ def generate_fuzz_tests(code: str) -> str:
                     break
 
                 test_lines.append(f"")
-                test_lines.append(f"    def test_{class_name.lower()}_{method_name}_fuzz{i}(self):")
-                test_lines.append(f"        '''Fuzz {class_name}.{method_name} with {repr(fuzz_val)[:30]}'''")
-                test_lines.append(f"        try:")
+                test_lines.append(f"def test_{class_name.lower()}_{method_name}_fuzz{i}():")
+                test_lines.append(f"    '''Fuzz {class_name}.{method_name} with {repr(fuzz_val)[:30]}'''")
+                test_lines.append(f"    try:")
 
                 # Build init args (use simple defaults)
                 if init_params:
@@ -233,13 +232,13 @@ def generate_fuzz_tests(code: str) -> str:
                             init_args.append("1")
                         else:
                             init_args.append("None")
-                    test_lines.append(f"            obj = {class_name}({', '.join(init_args)})")
+                    test_lines.append(f"        obj = {class_name}({', '.join(init_args)})")
                 else:
-                    test_lines.append(f"            obj = {class_name}()")
+                    test_lines.append(f"        obj = {class_name}()")
 
-                test_lines.append(f"            result = obj.{method_name}({repr(fuzz_val)})")
-                test_lines.append(f"        except (TypeError, ValueError, KeyError, IndexError, AttributeError, ZeroDivisionError) as e:")
-                test_lines.append(f"            pass  # Edge case handled")
+                test_lines.append(f"        result = obj.{method_name}({repr(fuzz_val)})")
+                test_lines.append(f"    except (TypeError, ValueError, KeyError, IndexError, AttributeError, ZeroDivisionError) as e:")
+                test_lines.append(f"        pass  # Edge case handled")
                 test_count += 1
 
     # Generate tests for standalone functions
@@ -257,13 +256,13 @@ def generate_fuzz_tests(code: str) -> str:
 
         # Test with None
         test_lines.append(f"")
-        test_lines.append(f"    def test_{func_name}_none_input(self):")
-        test_lines.append(f"        '''Test {func_name} with None'''")
-        test_lines.append(f"        try:")
+        test_lines.append(f"def test_{func_name}_none_input():")
+        test_lines.append(f"    '''Test {func_name} with None'''")
+        test_lines.append(f"    try:")
         none_args = ", ".join(["None"] * len(params))
-        test_lines.append(f"            result = {func_name}({none_args})")
-        test_lines.append(f"        except (TypeError, ValueError, AttributeError) as e:")
-        test_lines.append(f"            pass  # May be expected")
+        test_lines.append(f"        result = {func_name}({none_args})")
+        test_lines.append(f"    except (TypeError, ValueError, AttributeError) as e:")
+        test_lines.append(f"        pass  # May be expected")
         test_count += 1
 
     if test_count == 0:
@@ -275,12 +274,11 @@ def generate_fuzz_tests(code: str) -> str:
 class TestGenerator:
     """Generates adversarial pytest cases using Qwen-2.5-Coder."""
 
-    FALLBACK_TEST = """import unittest
+    FALLBACK_TEST = """import pytest
 from solution import *
 
-class TestFallback(unittest.TestCase):
-    def test_fallback(self):
-        self.assertTrue(True)
+def test_fallback():
+    assert True
 """
 
     def __init__(self):
@@ -314,7 +312,7 @@ class TestFallback(unittest.TestCase):
             candidate_code: The Purple Agent's submitted source code.
 
         Returns:
-            A string of valid Python unittest code, or a safe fallback on failure.
+            A string of valid Python pytest code, or a safe fallback on failure.
         """
         # Generate programmatic fuzz tests first (fast, guaranteed)
         fuzz_tests = generate_fuzz_tests(candidate_code)
@@ -332,24 +330,28 @@ Analyze the candidate code provided and identify exactly 3 specific edge cases t
 - Division by zero scenarios
 
 CRITICAL CONSTRAINTS:
-1. Output ONLY valid Python code using unittest. No explanations.
+1. Output ONLY valid Python code using pytest. No explanations.
 2. No markdown formatting. No code blocks. Just raw Python.
 3. Import the solution with: from solution import *
-4. Create a TestCase class with test methods starting with `test_` prefix.
+4. Use simple test functions starting with `test_` prefix (NOT unittest.TestCase classes).
 5. Make tests that EXPOSE bugs, not confirm correctness.
 6. NEVER use infinite loops (while True) or sleep(). Keep inputs small.
 7. Tests must complete in under 1 second.
-8. DO NOT import pytest. Use only unittest and assert methods like self.assertEqual(), self.assertRaises(), etc.
+8. Use plain assert statements (pytest style), NOT self.assertEqual().
 
 Example format:
-import unittest
+import pytest
 from solution import *
 
-class TestEdgeCases(unittest.TestCase):
-    def test_empty_input(self):
-        self.assertIsNone(func(None))
-    def test_boundary(self):
-        self.assertEqual(func(0), expected)"""
+def test_empty_input():
+    assert func(None) is None
+
+def test_boundary():
+    assert func(0) == expected
+
+def test_negative():
+    with pytest.raises(ValueError):
+        func(-1)"""
 
         user_prompt = f"""### Task Description
 {task_desc}
@@ -391,7 +393,7 @@ Generate 3 adversarial pytest test functions targeting edge cases in this code."
                 # Append LLM tests as additional test class
                 combined += "\n\n# === LLM-Generated Adversarial Tests ===\n"
                 # Remove duplicate imports from LLM tests
-                llm_tests_clean = re.sub(r'^import unittest\n', '', llm_tests)
+                llm_tests_clean = re.sub(r'^import pytest\n', '', llm_tests)
                 llm_tests_clean = re.sub(r'^from solution import \*\n', '', llm_tests_clean)
                 combined += llm_tests_clean
             else:

@@ -16,13 +16,40 @@ import os
 import re
 import sys
 from typing import Optional
+from enum import Enum
+from dataclasses import dataclass
 
 from openai import AsyncOpenAI
 
 # Add parent path to allow imports from green_logic (for Docker compatibility)
-sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+_src_path = os.path.dirname(os.path.dirname(__file__))
+if _src_path not in sys.path:
+    sys.path.insert(0, _src_path)
 
-from green_logic.red_report_types import Vulnerability, Severity
+# Try multiple import paths for Docker compatibility
+try:
+    from green_logic.red_report_types import Vulnerability, Severity
+except ImportError:
+    try:
+        from src.green_logic.red_report_types import Vulnerability, Severity
+    except ImportError:
+        # Fallback: define locally if imports fail
+        class Severity(Enum):
+            CRITICAL = "critical"
+            HIGH = "high"
+            MEDIUM = "medium"
+            LOW = "low"
+            INFO = "info"
+
+        @dataclass
+        class Vulnerability:
+            severity: Severity
+            category: str
+            title: str
+            description: str
+            exploit_code: str = ""
+            line_number: Optional[int] = None
+            confidence: float = 0.8
 
 
 class SmartReasoningLayer:

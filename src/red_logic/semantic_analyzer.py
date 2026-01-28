@@ -223,9 +223,11 @@ class SemanticSQLAnalyzer:
         class_info = self.qb_detector.analyze()
 
         # Check if any class is a parameterized QueryBuilder
+        # Handle case where analyze() returns early with error dict
         has_parameterized_builder = any(
             info.get("is_parameterized", False)
             for info in class_info.values()
+            if isinstance(info, dict)
         )
 
         for vuln in potential_vulns:
@@ -237,19 +239,23 @@ class SemanticSQLAnalyzer:
             # Find which class this line belongs to
             containing_class = None
             for class_name, info in class_info.items():
-                if info["line_start"] <= line_num <= info.get("line_end", line_num + 100):
+                if not isinstance(info, dict):
+                    continue
+                if info.get("line_start", 0) <= line_num <= info.get("line_end", line_num + 100):
                     containing_class = class_name
                     break
 
             # Determine verdict based on context
             if containing_class and class_info[containing_class].get("is_parameterized"):
-                # This is inside a parameterized QueryBuilder - likely SAFE
+                # This is inside a parameterized QueryBuilder
+                # BUT: f-string SQL can still be vulnerable for column/table injection
+                # Be conservative: mark as UNCERTAIN so it gets reported
                 finding = SemanticFinding(
                     category="sql_injection",
-                    title=vuln.get("title", "SQL Pattern Detected"),
-                    description="F-string detected in SQL builder, but values are parameterized.",
+                    title=vuln.get("title", "SQL Pattern in QueryBuilder"),
+                    description="F-string detected in parameterized SQL builder. Values may be safe but structure (columns/tables) could be injectable.",
                     line_number=line_num,
-                    verdict=SecurityVerdict.SAFE,
+                    verdict=SecurityVerdict.UNCERTAIN,
                     reasoning=f"Class '{containing_class}' implements parameterized queries. "
                              f"F-strings are used for structure (columns, tables) only. "
                              f"Values go through placeholders and parameters list.",
@@ -260,18 +266,18 @@ class SemanticSQLAnalyzer:
                         f"build() method returns (sql, params) tuple"
                     ]
                 )
-            elif has_parameterized_builder:
-                # There's a parameterized builder but this line might be elsewhere
+            elif containing_class and class_info[containing_class].get("is_query_builder"):
+                # Inside a QueryBuilder class, but NOT parameterized - uncertain
                 finding = SemanticFinding(
                     category="sql_injection",
                     title=vuln.get("title", "SQL Pattern Detected"),
-                    description=vuln.get("description", "Potential SQL injection"),
+                    description=vuln.get("description", "Potential SQL injection in QueryBuilder"),
                     line_number=line_num,
-                    verdict=SecurityVerdict.LIKELY_SAFE,
-                    reasoning="Code contains parameterized QueryBuilder pattern. "
-                             "This line may be part of the safe implementation.",
-                    confidence=0.7,
-                    evidence=["Parameterized QueryBuilder detected in codebase"]
+                    verdict=SecurityVerdict.UNCERTAIN,
+                    reasoning=f"Class '{containing_class}' is a QueryBuilder but may not use parameterized queries. "
+                             f"Manual review recommended.",
+                    confidence=0.5,
+                    evidence=[f"Class {containing_class} is a QueryBuilder but parameterization uncertain"]
                 )
             else:
                 # No QueryBuilder pattern - this might be a real vulnerability
@@ -344,15 +350,18 @@ class AGICodeAnalyzer:
         filtered_out = []
 
         for finding in semantic_sql_findings:
-            if finding.verdict in (SecurityVerdict.VULNERABLE, SecurityVerdict.LIKELY_VULNERABLE):
-                # Keep this as a real vulnerability
+            # Keep VULNERABLE, LIKELY_VULNERABLE, and UNCERTAIN findings
+            if finding.verdict in (SecurityVerdict.VULNERABLE, SecurityVerdict.LIKELY_VULNERABLE, SecurityVerdict.UNCERTAIN):
+                severity = "critical" if finding.verdict == SecurityVerdict.VULNERABLE else "high"
+                if finding.verdict == SecurityVerdict.UNCERTAIN:
+                    severity = "medium"  # Uncertain findings get medium severity
                 real_sql_vulns.append({
-                    "severity": "critical" if finding.verdict == SecurityVerdict.VULNERABLE else "high",
+                    "severity": severity,
                     "category": finding.category,
                     "title": finding.title,
                     "description": f"{finding.description}\n\nReasoning: {finding.reasoning}",
                     "line_number": finding.line_number,
-                    "confidence": "high" if finding.confidence > 0.8 else "medium"
+                    "confidence": "high" if finding.confidence > 0.7 else "medium"
                 })
             else:
                 filtered_out.append(finding)
@@ -392,14 +401,19 @@ class AGICodeAnalyzer:
         filtered_out = []
 
         for finding in semantic_sql_findings:
-            if finding.verdict in (SecurityVerdict.VULNERABLE, SecurityVerdict.LIKELY_VULNERABLE):
+            # Keep VULNERABLE, LIKELY_VULNERABLE, and UNCERTAIN findings
+            # Only filter out SAFE and LIKELY_SAFE
+            if finding.verdict in (SecurityVerdict.VULNERABLE, SecurityVerdict.LIKELY_VULNERABLE, SecurityVerdict.UNCERTAIN):
+                severity = "critical" if finding.verdict == SecurityVerdict.VULNERABLE else "high"
+                if finding.verdict == SecurityVerdict.UNCERTAIN:
+                    severity = "medium"  # Uncertain findings get medium severity
                 real_sql_vulns.append({
-                    "severity": "critical" if finding.verdict == SecurityVerdict.VULNERABLE else "high",
+                    "severity": severity,
                     "category": finding.category,
                     "title": finding.title,
                     "description": f"{finding.description}\n\nReasoning: {finding.reasoning}",
                     "line_number": finding.line_number,
-                    "confidence": "high" if finding.confidence > 0.8 else "medium"
+                    "confidence": "high" if finding.confidence > 0.7 else "medium"
                 })
             else:
                 filtered_out.append(finding)

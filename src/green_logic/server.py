@@ -1,6 +1,7 @@
 import os
 import json
 import random
+import re
 import httpx
 import time
 from fastapi import FastAPI, HTTPException, Request
@@ -19,28 +20,37 @@ from .refinement_loop import RefinementLoop, create_refinement_task_prompt
 def _init_sandbox():
     """initialize sandbox with fallback if docker unavailable."""
     try:
-        from .sandbox import Sandbox
-        sb = Sandbox(timeout=5)
-        print("[GreenAgent] Docker sandbox initialized")
+        from .sandbox import Sandbox, DOCKER_AVAILABLE
+        timeout = int(os.getenv("SANDBOX_TIMEOUT", "15"))  # Default 15 seconds
+        sb = Sandbox(timeout=timeout)
+        mode = "Docker" if DOCKER_AVAILABLE else "subprocess"
+        print(f"[GreenAgent] Sandbox initialized ({mode} mode, timeout={timeout}s)")
         return sb
     except Exception as e:
-        print(f"[GreenAgent] WARNING: Docker unavailable ({e}), sandbox disabled")
+        print(f"[GreenAgent] WARNING: Sandbox unavailable ({e}), tests disabled")
         return None
 
 
 def _init_red_agent():
     """initialize embedded red agent for internal vulnerability scanning."""
     try:
-        from src.red_logic.orchestrator import RedAgentV2, AttackConfig
-        config = AttackConfig(
-            enable_smart_layer=True,
-            enable_reflection=True,
-            max_total_time=float(os.getenv("RED_AGENT_TIMEOUT", "60")),
-            smart_layer_timeout=float(os.getenv("RED_SMART_TIMEOUT", "30")),
-            reflection_timeout=float(os.getenv("RED_REFLECT_TIMEOUT", "20")),
+        # Use RedAgentV3 - MCTS enabled by default for smarter exploration
+        from src.red_logic.orchestrator import RedAgentV3
+
+        # OPTIMIZED DEFAULTS: MCTS with fewer steps = smart but fast
+        use_mcts = os.getenv("RED_AGENT_MCTS", "true").lower() == "true"  # MCTS on by default
+        max_steps = int(os.getenv("RED_AGENT_STEPS", "5"))  # 5 steps = good coverage
+        timeout = float(os.getenv("RED_AGENT_TIMEOUT", "20"))  # 20s budget
+        mcts_branches = int(os.getenv("RED_AGENT_MCTS_BRANCHES", "2"))  # 2 branches (not 3)
+
+        red = RedAgentV3(
+            max_steps=max_steps,
+            max_time_seconds=timeout,
+            use_mcts=use_mcts,
+            mcts_branches=mcts_branches
         )
-        red = RedAgentV2(config)
-        print("[GreenAgent] Embedded Red Agent initialized")
+        mode = f"MCTS-{mcts_branches}b" if use_mcts else "ReAct"
+        print(f"[GreenAgent] Embedded Red Agent V3 ({mode}, {max_steps} steps, {timeout}s) initialized")
         return red
     except Exception as e:
         print(f"[GreenAgent] WARNING: Red Agent unavailable ({e}), security scanning disabled")
@@ -53,7 +63,7 @@ class SendTaskRequest(BaseModel):
     battle_id: str
     task_id: str | None = None
     files: dict[str, str] | None = None
-    custom_task: dict[str, str] | None = None
+    custom_task: dict[str, str | None] | None = None
     participant_ids: dict[str, str] | None = None
 
 
@@ -242,11 +252,13 @@ auditor = SemanticAuditor()
 sandbox = _init_sandbox()
 red_agent = _init_red_agent()
 test_generator = TestGenerator()
-refinement_loop = RefinementLoop(max_iterations=int(os.getenv("MAX_REFINEMENT_ITERATIONS", "3")))
+refinement_loop = RefinementLoop(max_iterations=int(os.getenv("MAX_REFINEMENT_ITERATIONS", "2")))  # Reduced from 3
 
 STALL_THRESHOLD = 30.0  # seconds without activity = hung inference
 # AGENTIC MODE: Enable refinement loop by default for true agent behavior
 ENABLE_REFINEMENT = os.getenv("ENABLE_REFINEMENT_LOOP", "true").lower() == "true"
+# Scientific Method can be disabled for faster runs
+ENABLE_SCIENTIFIC_METHOD = os.getenv("ENABLE_SCIENTIFIC_METHOD", "true").lower() == "true"
 
 
 async def stream_purple_response(client: httpx.AsyncClient, purple_url: str, payload: dict, battle_id: str):
@@ -545,7 +557,14 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
         if not sandbox_result['success']:
             evaluation['cis_score'] = min(evaluation.get('cis_score', 0), 0.5)
             evaluation['sandbox_failed'] = True
-            evaluation['sandbox_output'] = sandbox_result['output'][:500]
+            # Show more output - especially the failure details at the end
+            output = sandbox_result['output']
+            # pytest puts failures at the end, so prioritize the tail
+            if len(output) > 1500:
+                # Show first 500 + last 1000 to capture both context and failures
+                evaluation['sandbox_output'] = output[:500] + "\n...[truncated]...\n" + output[-1000:]
+            else:
+                evaluation['sandbox_output'] = output
 
         # === AGENTIC REFINEMENT LOOP ===
         # If enabled, iteratively help Purple improve their code
@@ -566,18 +585,67 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
                       f"tests_passed={sandbox_result['success']}, critical_vulns={critical_vulns}")
 
                 # Generate targeted feedback using self-reflection
-                feedback = await refinement_loop.generate_feedback_message(
-                    task_description=task_desc,
-                    source_code=source_code,
-                    test_output=sandbox_result.get('output', ''),
-                    red_vulnerabilities=[
-                        {"severity": v.severity.value, "category": v.category,
-                         "title": v.title, "description": v.description}
-                        for v in (red_report_obj.vulnerabilities if red_report_obj else [])
-                    ],
-                    audit_issues=audit_result.get('issues', []),
-                    iteration=iteration
-                )
+                # Scientific Method can be slow (many LLM calls) - skip if disabled
+                if ENABLE_SCIENTIFIC_METHOD:
+                    feedback = await refinement_loop.generate_feedback_message(
+                        task_description=task_desc,
+                        source_code=source_code,
+                        test_output=sandbox_result.get('output', ''),
+                        red_vulnerabilities=[
+                            {"severity": v.severity.value, "category": v.category,
+                             "title": v.title, "description": v.description}
+                            for v in (red_report_obj.vulnerabilities if red_report_obj else [])
+                        ],
+                        audit_issues=audit_result.get('issues', []),
+                        iteration=iteration,
+                        sandbox_runner=sandbox
+                    )
+                else:
+                    # Fast fallback: Send structured feedback without Scientific Method analysis
+                    output = sandbox_result.get('output', 'No output')
+                    # Prioritize the end of output where pytest shows failures
+                    if len(output) > 1200:
+                        output_display = output[:400] + "\n...[truncated]...\n" + output[-800:]
+                    else:
+                        output_display = output
+
+                    # Extract specific errors from output
+                    import re
+                    errors_found = []
+                    for pattern, desc in [
+                        (r'AssertionError:?\s*(.{1,100})', 'Assertion failed'),
+                        (r'TypeError:?\s*(.{1,100})', 'Type error'),
+                        (r'ValueError:?\s*(.{1,100})', 'Value error'),
+                        (r'NameError:?\s*(.{1,100})', 'Undefined name'),
+                        (r'AttributeError:?\s*(.{1,100})', 'Missing attribute'),
+                    ]:
+                        match = re.search(pattern, output, re.IGNORECASE)
+                        if match:
+                            errors_found.append(f"- {desc}: {match.group(1)[:80]}")
+
+                    errors_section = "\n".join(errors_found[:5]) if errors_found else "Review the test output below for details."
+
+                    feedback = f"""## Iteration {iteration} Feedback
+
+Your code has issues that need fixing.
+
+### Issues Found
+{errors_section}
+
+### Test Output
+```
+{output_display}
+```
+
+### Instructions
+Fix the issues above and resubmit. Respond with:
+```json
+{{
+    "sourceCode": "your fixed code",
+    "testCode": "your tests",
+    "rationale": "what you changed"
+}}
+```"""
 
                 # Store this iteration's results
                 refinement_history.append({
@@ -685,14 +753,26 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
                         print(f"[Refinement] Error on iteration {iteration}: {e}")
                         break
 
-            # Calculate improvement
+            # Calculate improvement and use best iteration
             if refinement_history:
                 initial_score = refinement_history[0]['score']
                 final_score = evaluation.get('cis_score', 0)
-                evaluation['refinement_improvement'] = final_score - initial_score
+
+                # Use best iteration score if final regressed
+                best_score = max(h['score'] for h in refinement_history)
+                if final_score < best_score:
+                    print(f"[Refinement] Using best score {best_score:.2f} instead of final {final_score:.2f}")
+                    # Note: We keep the final evaluation but report the best score
+                    evaluation['cis_score'] = best_score
+                    evaluation['used_best_iteration'] = True
+
+                evaluation['refinement_improvement'] = best_score - initial_score
                 evaluation['refinement_iterations'] = iteration
                 evaluation['refinement_history'] = refinement_history
-                print(f"[Refinement] Complete: {iteration} iterations, improvement={final_score - initial_score:.2f}")
+                print(f"[Refinement] Complete: {iteration} iterations, improvement={best_score - initial_score:.2f}")
+
+            # Reset refinement loop state for next battle
+            refinement_loop.reset()
 
         # step 5: return result
         participants = request.participant_ids or {"agent": request.battle_id}
@@ -708,7 +788,10 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
                 "success": sandbox_result['success'],
                 "duration": sandbox_result['duration'],
                 "tests_used": tests_used,
-                "output": sandbox_result['output'][:1000]
+                # Show more output - prioritize end where pytest shows failures
+                "output": (sandbox_result['output'][:500] + "\n...[truncated]...\n" + sandbox_result['output'][-1500:])
+                          if len(sandbox_result['output']) > 2000
+                          else sandbox_result['output']
             },
             "evaluation": evaluation
         }
@@ -727,6 +810,24 @@ async def report_result_action(request: ReportResultRequest):
     agent.submit_result(result_data)
     return {"status": "reported", "battle_id": request.battle_id}
 
+
+# ============================================================================
+# PERFORMANCE TUNING (via environment variables)
+# ============================================================================
+# RED_AGENT_MCTS=true       - Enable MCTS Tree of Thoughts (default: true)
+# RED_AGENT_MCTS_BRANCHES=2 - MCTS branches per step (default: 2, max 3)
+# RED_AGENT_STEPS=5         - Max investigation steps (default: 5)
+# RED_AGENT_TIMEOUT=20      - Timeout in seconds (default: 20)
+# MAX_REFINEMENT_ITERATIONS=2 - Refinement iterations (default: 2)
+# SANDBOX_TIMEOUT=15        - Sandbox timeout (default: 15)
+# ENABLE_SCIENTIFIC_METHOD=true - Enable property-based testing (default: true)
+# ENABLE_REFINEMENT_LOOP=true   - Enable refinement loop (default: true)
+#
+# PRESETS:
+# FAST MODE:    RED_AGENT_MCTS=false RED_AGENT_STEPS=3 MAX_REFINEMENT_ITERATIONS=1 ENABLE_SCIENTIFIC_METHOD=false
+# BALANCED:     RED_AGENT_MCTS=true RED_AGENT_MCTS_BRANCHES=2 RED_AGENT_STEPS=5 MAX_REFINEMENT_ITERATIONS=2 (DEFAULT)
+# FULL AGI:     RED_AGENT_MCTS=true RED_AGENT_MCTS_BRANCHES=3 RED_AGENT_STEPS=10 MAX_REFINEMENT_ITERATIONS=3
+# ============================================================================
 
 def run_server():
     host = os.getenv("HOST", "0.0.0.0")
