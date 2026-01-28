@@ -53,14 +53,16 @@ class Sandbox:
     """
     A secure sandbox for executing Python code in isolated Docker containers.
 
-    Uses python:3.12-slim as the base image and runs pytest with strict timeouts.
+    Uses logomesh-sandbox image (with pytest pre-installed) for fast execution.
+    Falls back to python:3.12-slim if custom image not available.
     Ensures containers are always cleaned up, even on errors or timeouts.
 
     NOTE: Uses put_archive to copy files into the container instead of volume
     mounts. This ensures compatibility with Docker-in-Docker environments.
     """
 
-    DEFAULT_IMAGE = "python:3.12-slim"
+    DEFAULT_IMAGE = "logomesh-sandbox:latest"
+    FALLBACK_IMAGE = "python:3.12-slim"
     DEFAULT_TIMEOUT = 5  # seconds
 
     def __init__(self, image: str = DEFAULT_IMAGE, timeout: int = DEFAULT_TIMEOUT):
@@ -79,12 +81,25 @@ class Sandbox:
         self._ensure_image()
 
     def _ensure_image(self) -> None:
-        """Pull the Docker image if not available locally."""
+        """Ensure Docker image is available, falling back to base image if needed."""
         try:
             self.client.images.get(self.image)
+            self._has_pytest = True
         except ImageNotFound:
-            print(f"[Sandbox] Pulling image {self.image}...")
-            self.client.images.pull(self.image)
+            if self.image == self.DEFAULT_IMAGE:
+                # Custom image not found, fall back to base image
+                print(f"[Sandbox] Custom image not found, using {self.FALLBACK_IMAGE}")
+                self.image = self.FALLBACK_IMAGE
+                self._has_pytest = False
+                try:
+                    self.client.images.get(self.image)
+                except ImageNotFound:
+                    print(f"[Sandbox] Pulling image {self.image}...")
+                    self.client.images.pull(self.image)
+            else:
+                print(f"[Sandbox] Pulling image {self.image}...")
+                self.client.images.pull(self.image)
+                self._has_pytest = "sandbox" in self.image.lower()
 
     def run(self, source_code: str | dict[str, str], test_code: str = "") -> dict:
         """
@@ -118,31 +133,19 @@ class Sandbox:
                     "conftest.py": "import sys; sys.path.insert(0, '/workspace')"
                 }
 
-            # Generate dynamic runner (no pytest dependency)
-            runner_code = """
-import sys
-import unittest
-
-# Run all test_*.py files
-if __name__ == "__main__":
-    loader = unittest.TestLoader()
-    suite = loader.discover('/workspace', pattern='test_*.py')
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
-    sys.exit(0 if result.wasSuccessful() else 1)
-"""
-            files["runner.py"] = runner_code
+            # No runner needed - we'll use pytest directly
 
             # Create tar archive of the files
             tar_stream = _create_tar_stream(files)
 
             # Create container WITHOUT volume mounts
             # Use 'tail -f /dev/null' to keep container running while we copy files
+            # Network disabled if pytest pre-installed, enabled if we need pip install
             container = self.client.containers.create(
                 image=self.image,
                 command=["tail", "-f", "/dev/null"],
                 working_dir="/workspace",
-                network_disabled=True,  # Security: no network access
+                network_disabled=self._has_pytest,  # Disable network if pytest pre-installed
                 mem_limit="128m",        # Memory limit
                 cpu_period=100000,
                 cpu_quota=50000,         # 50% CPU limit
@@ -156,9 +159,16 @@ if __name__ == "__main__":
             # Copy files into the container using put_archive
             container.put_archive("/workspace", tar_stream)
 
-            # Execute tests using unittest runner (no pytest needed)
+            # Run pytest - install first if using fallback image without pytest
+            if self._has_pytest:
+                # Fast path: pytest pre-installed
+                cmd = "timeout 5s python3 -m pytest -v test_*.py 2>&1"
+            else:
+                # Slow path: install pytest first (fallback image)
+                cmd = "pip install -q pytest 2>/dev/null && timeout 5s python3 -m pytest -v test_*.py 2>&1"
+
             exec_result = container.exec_run(
-                cmd=["sh", "-c", "timeout 5s python3 runner.py 2>&1"],
+                cmd=["sh", "-c", cmd],
                 workdir="/workspace",
                 demux=False
             )

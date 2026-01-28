@@ -576,7 +576,8 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
                         for v in (red_report_obj.vulnerabilities if red_report_obj else [])
                     ],
                     audit_issues=audit_result.get('issues', []),
-                    iteration=iteration
+                    iteration=iteration,
+                    sandbox_runner=sandbox
                 )
 
                 # Store this iteration's results

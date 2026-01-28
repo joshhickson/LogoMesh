@@ -1,0 +1,14 @@
+# Sandbox image with pytest pre-installed
+# Build: docker build -t logomesh-sandbox:latest -f Dockerfile.sandbox .
+FROM python:3.12-slim
+
+# Install pytest and common testing dependencies
+RUN pip install --no-cache-dir \
+    pytest>=8.0.0 \
+    hypothesis>=6.0.0
+
+# Clean up
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Default working directory
+WORKDIR /workspace
