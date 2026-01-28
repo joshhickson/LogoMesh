@@ -63,7 +63,7 @@ class Sandbox:
 
     DEFAULT_IMAGE = "logomesh-sandbox:latest"
     FALLBACK_IMAGE = "python:3.12-slim"
-    DEFAULT_TIMEOUT = 5  # seconds
+    DEFAULT_TIMEOUT = 15  # seconds (increased from 5 to handle complex/property-based tests)
 
     def __init__(self, image: str = DEFAULT_IMAGE, timeout: int = DEFAULT_TIMEOUT):
         """
@@ -162,10 +162,10 @@ class Sandbox:
             # Run pytest - install first if using fallback image without pytest
             if self._has_pytest:
                 # Fast path: pytest pre-installed
-                cmd = "timeout 5s python3 -m pytest -v test_*.py 2>&1"
+                cmd = f"timeout {self.timeout}s python3 -m pytest -v --timeout=10 test_*.py 2>&1"
             else:
                 # Slow path: install pytest first (fallback image)
-                cmd = "pip install -q pytest 2>/dev/null && timeout 5s python3 -m pytest -v test_*.py 2>&1"
+                cmd = f"pip install -q pytest pytest-timeout 2>/dev/null && timeout {self.timeout}s python3 -m pytest -v --timeout=10 test_*.py 2>&1"
 
             exec_result = container.exec_run(
                 cmd=["sh", "-c", cmd],

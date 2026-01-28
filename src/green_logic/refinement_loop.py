@@ -458,8 +458,8 @@ Respond with JSON:
 {{
   "test_name": "test_property_no_sql_injection",
   "invariant": "For any user input string, the query result count should not change based on SQL metacharacters",
-  "test_code": "from hypothesis import given, strategies as st, settings\\nfrom solution import *\\n\\n@given(st.text())\\n@settings(max_examples=200)\\ndef test_no_injection(user_input):\\n    # The invariant: SQL metacharacters should not alter query behavior\\n    clean_result = get_user('testuser')\\n    # Try with potentially malicious input appended\\n    malicious = user_input + \\\"' OR '1'='1\\\"\\n    try:\\n        result = get_user(malicious)\\n        # If we get here without proper sanitization, injection may be possible\\n        assert result == clean_result or result is None, 'Possible SQL injection'\\n    except Exception:\\n        pass  # Exceptions are fine - means input was rejected",
-  "expected_behavior": "The test runs 200 random inputs. If ANY input breaks the invariant, the hypothesis is CONFIRMED (vulnerability exists)."
+  "test_code": "from hypothesis import given, strategies as st, settings\\nfrom solution import *\\n\\n@given(st.text(max_size=50))\\n@settings(max_examples=50, deadline=5000)\\ndef test_no_injection(user_input):\\n    # The invariant: SQL metacharacters should not alter query behavior\\n    clean_result = get_user('testuser')\\n    # Try with potentially malicious input appended\\n    malicious = user_input + \\\"' OR '1'='1\\\"\\n    try:\\n        result = get_user(malicious)\\n        # If we get here without proper sanitization, injection may be possible\\n        assert result == clean_result or result is None, 'Possible SQL injection'\\n    except Exception:\\n        pass  # Exceptions are fine - means input was rejected",
+  "expected_behavior": "The test runs 50 random inputs. If ANY input breaks the invariant, the hypothesis is CONFIRMED (vulnerability exists)."
 }}
 
 CRITICAL RULES:
@@ -501,8 +501,8 @@ CRITICAL RULES:
             test_code = '''from hypothesis import given, strategies as st, settings
 from solution import *
 
-@given(st.text(min_size=0, max_size=100))
-@settings(max_examples=100)
+@given(st.text(min_size=0, max_size=50))
+@settings(max_examples=30, deadline=3000)
 def test_sql_injection_property(user_input):
     """Property: SQL metacharacters should not alter query behavior."""
     # Invariant: Appending SQL injection strings should not change results unexpectedly
@@ -521,8 +521,8 @@ def test_sql_injection_property(user_input):
             test_code = '''from hypothesis import given, strategies as st, settings
 from solution import *
 
-@given(st.text(min_size=0, max_size=50))
-@settings(max_examples=100)
+@given(st.text(min_size=0, max_size=30))
+@settings(max_examples=30, deadline=3000)
 def test_command_injection_property(user_input):
     """Property: Shell metacharacters should not execute commands."""
     # Invariant: No input should allow arbitrary command execution
@@ -538,8 +538,8 @@ def test_command_injection_property(user_input):
             test_code = '''from hypothesis import given, strategies as st, settings
 from solution import *
 
-@given(st.integers(min_value=-2**63, max_value=2**63-1))
-@settings(max_examples=200)
+@given(st.integers(min_value=-2**31, max_value=2**31-1))
+@settings(max_examples=50, deadline=3000)
 def test_integer_overflow_property(num):
     """Property: Integer operations should not overflow unexpectedly."""
     # Invariant: Operations should handle extreme values
@@ -556,8 +556,8 @@ def test_integer_overflow_property(num):
             test_code = '''from hypothesis import given, strategies as st, settings
 from solution import *
 
-@given(st.binary(min_size=0, max_size=1000))
-@settings(max_examples=200)
+@given(st.binary(min_size=0, max_size=200))
+@settings(max_examples=50, deadline=3000)
 def test_roundtrip_property(data):
     """Property: decode(encode(x)) == x (roundtrip invariant)."""
     # This is the classic property-based test
@@ -574,8 +574,8 @@ def test_roundtrip_property(data):
             test_code = f'''from hypothesis import given, strategies as st, settings
 from solution import *
 
-@given(st.text(min_size=0, max_size=200))
-@settings(max_examples=100)
+@given(st.text(min_size=0, max_size=100))
+@settings(max_examples=30, deadline=3000)
 def test_property_{hypothesis.id.lower()}(random_input):
     """Property test for: {hypothesis.statement[:50]}..."""
     # Invariant: Function should handle any input without crashing

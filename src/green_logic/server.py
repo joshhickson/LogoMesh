@@ -20,8 +20,9 @@ def _init_sandbox():
     """initialize sandbox with fallback if docker unavailable."""
     try:
         from .sandbox import Sandbox
-        sb = Sandbox(timeout=5)
-        print("[GreenAgent] Docker sandbox initialized")
+        timeout = int(os.getenv("SANDBOX_TIMEOUT", "15"))  # Default 15 seconds
+        sb = Sandbox(timeout=timeout)
+        print(f"[GreenAgent] Docker sandbox initialized (timeout={timeout}s)")
         return sb
     except Exception as e:
         print(f"[GreenAgent] WARNING: Docker unavailable ({e}), sandbox disabled")
