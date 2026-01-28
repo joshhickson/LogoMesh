@@ -1,0 +1,136 @@
+name: Run Scenario
+
+on:
+  push:
+    paths:
+      - 'scenario.toml'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    if: github.event.repository.fork == true || github.ref != 'refs/heads/main'
+    permissions:
+      contents: write
+      packages: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install tomli tomli-w pyyaml requests
+
+      - name: Generate docker-compose.yml
+        run: python generate_compose.py --scenario scenario.toml
+
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          docker system prune -af
+          df -h
+
+      - name: Pull images
+        run: |
+          if ! docker compose pull; then
+            echo ""
+            echo "Error: Failed to pull one or more images."
+            echo "Ensure all images are publicly accessible."
+            echo "For ghcr.io images, check package settings at:"
+            echo "  https://github.com/orgs/YOUR_ORG/packages or"
+            echo "  https://github.com/users/YOUR_USER/packages"
+            exit 1
+          fi
+
+      - name: Create output directory
+        run: mkdir -p output && chmod 777 output
+
+      - name: Export secrets as environment variables
+        env:
+          SECRETS_JSON: ${{ toJSON(secrets) }}
+        run: |
+          echo "$SECRETS_JSON" | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > .env
+
+      - name: Check if GHCR_TOKEN is available
+        id: check_ghcr
+        env:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+        run: |
+          if [ -n "$GHCR_TOKEN" ]; then
+            echo "has_token=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_token=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Login to GitHub Container Registry
+        if: steps.check_ghcr.outputs.has_token == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_TOKEN }}
+
+      - name: Run assessment
+        run: docker compose up --timestamps --no-color --exit-code-from agentbeats-client --abort-on-container-exit
+
+      - name: Record provenance
+        run: python record_provenance.py --compose docker-compose.yml --output output/provenance.json
+
+      - name: Generate submission metadata
+        id: metadata
+        run: |
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+          USERNAME=${{ github.repository_owner }}
+          UNIQUE_NAME="${USERNAME}-${TIMESTAMP}"
+          echo "unique_name=$UNIQUE_NAME" >> $GITHUB_OUTPUT
+          echo "branch_name=submission-${UNIQUE_NAME}" >> $GITHUB_OUTPUT
+
+      - name: Copy files to submission directory
+        run: |
+          cp scenario.toml submissions/${{ steps.metadata.outputs.unique_name }}.toml
+          cp output/results.json results/${{ steps.metadata.outputs.unique_name }}.json
+          cp output/provenance.json submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json
+
+      - name: Determine target repository
+        id: target
+        env:
+            GH_TOKEN: ${{ github.token }}
+        run: |
+            PARENT_REPO=$(gh api repos/${{ github.repository }} --jq '.parent.full_name // "${{ github.repository }}"')
+            echo "Target repository: $PARENT_REPO"
+            echo "repo=$PARENT_REPO" >> $GITHUB_OUTPUT
+
+      - name: Create submission branch
+        run: |
+          git remote add upstream https://github.com/${{ steps.target.outputs.repo }}.git
+          git fetch upstream
+          git checkout -b ${{ steps.metadata.outputs.branch_name }} upstream/main
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add submissions/${{ steps.metadata.outputs.unique_name }}.toml submissions/${{ steps.metadata.outputs.unique_name }}.provenance.json results/${{ steps.metadata.outputs.unique_name }}.json
+          git commit -m "Submission: ${{ steps.metadata.outputs.unique_name }}
+
+          Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          git push origin ${{ steps.metadata.outputs.branch_name }}
+          echo "::notice title=Submission Branch Created::Your results are ready for submission on branch: ${{ steps.metadata.outputs.branch_name }}"
+
+      - name: Output PR link
+        run: |
+          echo "### Submit your results" >> $GITHUB_STEP_SUMMARY
+          echo "[Click here to open a pull request](https://github.com/${{ steps.target.outputs.repo }}/compare/main...${{ github.repository_owner }}:${{ github.event.repository.name }}:${{ steps.metadata.outputs.branch_name }}?expand=1)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "⚠️ When creating the PR, UNCHECK 'Allow edits and access to secrets by maintainers' to protect your secrets." >> $GITHUB_STEP_SUMMARY
+
+      - name: Cleanup
+        if: always()
+        run: docker compose down -v || true
