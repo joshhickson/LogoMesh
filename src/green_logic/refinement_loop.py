@@ -892,7 +892,7 @@ class ScientificMethodEngine:
                             f"2. Run: {experiment.test_name}",
                             f"3. Observe: {experiment.expected_behavior}"
                         ],
-                        suggested_fix=hypothesis.root_cause
+                        suggested_fix=self._generate_fix_suggestion(hypothesis, source_code)
                     ))
                 elif status == HypothesisStatus.REJECTED:
                     hypothesis.evidence_against.append(f"Test disproved")
@@ -1018,6 +1018,102 @@ class ScientificMethodEngine:
             return "xss"
         else:
             return "security_flaw"
+
+    def _generate_fix_suggestion(self, hypothesis: Hypothesis, source_code: str) -> str:
+        """
+        Generate ACTIONABLE fix suggestion for Purple Agent.
+
+        Instead of just explaining WHY the issue exists (root_cause),
+        this tells Purple exactly WHAT code change to make.
+        """
+        statement_lower = hypothesis.statement.lower()
+
+        # SQL Injection fixes
+        if "sql" in statement_lower:
+            if "f-string" in hypothesis.root_cause.lower() or "format" in hypothesis.root_cause.lower():
+                return """**FIX REQUIRED**: Replace string formatting with parameterized queries.
+
+WRONG (vulnerable):
+```python
+query = f"SELECT * FROM users WHERE id = {user_id}"
+cursor.execute(query)
+```
+
+CORRECT (safe):
+```python
+query = "SELECT * FROM users WHERE id = ?"
+cursor.execute(query, (user_id,))
+```
+
+For PostgreSQL use %s, for MySQL use %s, for SQLite use ?"""
+            else:
+                return """**FIX REQUIRED**: Use parameterized queries instead of string concatenation.
+Replace any `execute(f"...")` or `execute("..." + var)` with `execute("...?...", (var,))`"""
+
+        # Command Injection fixes
+        elif "command" in statement_lower or "shell" in statement_lower:
+            return """**FIX REQUIRED**: Never use shell=True with user input.
+
+WRONG (vulnerable):
+```python
+subprocess.run(f"cmd {user_input}", shell=True)
+```
+
+CORRECT (safe):
+```python
+subprocess.run(["cmd", user_input], shell=False)  # Pass args as list
+```
+
+Or use shlex.quote() if shell=True is absolutely required."""
+
+        # Eval/Exec Code Injection fixes
+        elif "eval" in statement_lower or "exec" in statement_lower:
+            return """**FIX REQUIRED**: Remove eval/exec or use ast.literal_eval for safe parsing.
+
+WRONG (vulnerable):
+```python
+result = eval(user_input)
+```
+
+CORRECT (safe):
+```python
+import ast
+result = ast.literal_eval(user_input)  # Only parses literals
+```
+
+Or better: Use json.loads() for JSON data, avoid eval entirely."""
+
+        # XSS fixes
+        elif "xss" in statement_lower or "script" in statement_lower:
+            return """**FIX REQUIRED**: Escape HTML output or use a templating engine.
+
+WRONG (vulnerable):
+```python
+html = f"<div>{user_input}</div>"
+```
+
+CORRECT (safe):
+```python
+from html import escape
+html = f"<div>{escape(user_input)}</div>"
+```"""
+
+        # Auth bypass fixes
+        elif "auth" in statement_lower or "bypass" in statement_lower:
+            return """**FIX REQUIRED**: Validate authentication on EVERY request.
+- Check session/token validity
+- Use constant-time comparison for secrets
+- Never trust client-side auth state"""
+
+        # Generic fix
+        else:
+            return f"""**FIX REQUIRED**: {hypothesis.root_cause}
+
+Review the code and ensure:
+1. All user inputs are validated/sanitized
+2. No dangerous functions (eval, exec, shell) with user data
+3. Use parameterized queries for databases
+4. Escape output for web contexts"""
 
     def _build_report(self, memory: ScientificMemory, source_code: str) -> Dict[str, Any]:
         """Build the final scientific report."""
@@ -1260,18 +1356,123 @@ class RefinementLoop:
         if result["feedback_for_purple"]:
             return result["feedback_for_purple"]
         else:
-            # Fallback to basic feedback
-            return f"""## Iteration {iteration} Feedback
+            # Generate actionable fallback feedback by analyzing test output
+            return self._generate_fallback_feedback(
+                test_output, red_vulnerabilities, audit_issues, iteration
+            )
 
-Your code passed scientific verification. However, please review:
+    def _generate_fallback_feedback(
+        self,
+        test_output: str,
+        red_vulnerabilities: List[Dict],
+        audit_issues: List[str],
+        iteration: int
+    ) -> str:
+        """Generate actionable feedback when Scientific Method doesn't find verified issues."""
+        feedback_parts = [f"## Iteration {iteration} Feedback", ""]
 
-### Test Output
-{test_output[:500]}
+        # Parse test output for specific failures
+        output_lower = test_output.lower()
+        specific_issues = []
 
-### Suggestions
-Review the test output and ensure all edge cases are handled.
+        # Check for assertion failures
+        if "assertionerror" in output_lower or "assert" in output_lower and "failed" in output_lower:
+            # Try to extract the assertion that failed
+            assertion_match = re.search(r'AssertionError:?\s*(.{1,200})', test_output, re.IGNORECASE)
+            if assertion_match:
+                specific_issues.append(f"Assertion failed: {assertion_match.group(1)[:100]}")
+            else:
+                specific_issues.append("An assertion in your tests failed - check test expectations")
 
-Please resubmit with any improvements."""
+        # Check for type errors
+        if "typeerror" in output_lower:
+            type_match = re.search(r'TypeError:?\s*(.{1,200})', test_output, re.IGNORECASE)
+            if type_match:
+                specific_issues.append(f"Type error: {type_match.group(1)[:100]}")
+
+        # Check for attribute errors
+        if "attributeerror" in output_lower:
+            attr_match = re.search(r'AttributeError:?\s*(.{1,200})', test_output, re.IGNORECASE)
+            if attr_match:
+                specific_issues.append(f"Missing attribute: {attr_match.group(1)[:100]}")
+
+        # Check for name errors (undefined variables)
+        if "nameerror" in output_lower:
+            name_match = re.search(r'NameError:?\s*(.{1,200})', test_output, re.IGNORECASE)
+            if name_match:
+                specific_issues.append(f"Undefined name: {name_match.group(1)[:100]}")
+
+        # Check for value errors
+        if "valueerror" in output_lower:
+            val_match = re.search(r'ValueError:?\s*(.{1,200})', test_output, re.IGNORECASE)
+            if val_match:
+                specific_issues.append(f"Invalid value: {val_match.group(1)[:100]}")
+
+        # Check for index/key errors
+        if "indexerror" in output_lower or "keyerror" in output_lower:
+            specific_issues.append("Index or key access failed - check bounds and key existence")
+
+        # Add specific issues to feedback
+        if specific_issues:
+            feedback_parts.extend([
+                "### Specific Issues Found",
+                ""
+            ])
+            for issue in specific_issues[:5]:  # Limit to 5 issues
+                feedback_parts.append(f"- {issue}")
+            feedback_parts.append("")
+
+        # Add Red Agent vulnerabilities if any
+        if red_vulnerabilities:
+            feedback_parts.extend([
+                "### Security Issues (from Red Agent)",
+                ""
+            ])
+            for vuln in red_vulnerabilities[:3]:
+                feedback_parts.append(f"- **{vuln.get('severity', 'unknown').upper()}**: {vuln.get('title', 'Unknown')}")
+                if vuln.get('description'):
+                    feedback_parts.append(f"  {vuln['description'][:150]}")
+            feedback_parts.append("")
+
+        # Add audit issues if any
+        if audit_issues:
+            feedback_parts.extend([
+                "### Code Quality Issues",
+                ""
+            ])
+            for issue in audit_issues[:3]:
+                feedback_parts.append(f"- {issue}")
+            feedback_parts.append("")
+
+        # If no specific issues found, show raw output
+        if not specific_issues and not red_vulnerabilities and not audit_issues:
+            feedback_parts.extend([
+                "### Test Output",
+                "```",
+                test_output[:800] if test_output else "No output available",
+                "```",
+                ""
+            ])
+
+        # Add instructions
+        feedback_parts.extend([
+            "### What to Fix",
+            "1. Address the specific issues listed above",
+            "2. Ensure all functions handle edge cases (None, empty, negative values)",
+            "3. Check that all imports are correct",
+            "4. Verify return types match expectations",
+            "",
+            "Please fix these issues and resubmit your solution with the same JSON format:",
+            "```json",
+            "{",
+            '    "sourceCode": "your fixed code",',
+            '    "testCode": "your updated tests",',
+            '    "rationale": "what you changed and why"',
+            "}",
+            "```"
+        ])
+
+        return "\n".join(feedback_parts)
 
     def calculate_improvement(self, iterations: List[RefinementResult]) -> float:
         """Calculate how much the score improved across iterations."""

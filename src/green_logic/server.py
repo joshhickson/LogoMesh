@@ -1,6 +1,7 @@
 import os
 import json
 import random
+import re
 import httpx
 import time
 from fastapi import FastAPI, HTTPException, Request
@@ -33,17 +34,22 @@ def _init_sandbox():
 def _init_red_agent():
     """initialize embedded red agent for internal vulnerability scanning."""
     try:
-        # Use RedAgentV3 - MCTS can be enabled via env var for deeper analysis
+        # Use RedAgentV3 - MCTS enabled by default for smarter exploration
         from src.red_logic.orchestrator import RedAgentV3
-        use_mcts = os.getenv("RED_AGENT_MCTS", "false").lower() == "true"
-        max_steps = int(os.getenv("RED_AGENT_STEPS", "3"))  # Reduced from 10 for speed
-        timeout = float(os.getenv("RED_AGENT_TIMEOUT", "15"))  # Reduced from 60
+
+        # OPTIMIZED DEFAULTS: MCTS with fewer steps = smart but fast
+        use_mcts = os.getenv("RED_AGENT_MCTS", "true").lower() == "true"  # MCTS on by default
+        max_steps = int(os.getenv("RED_AGENT_STEPS", "5"))  # 5 steps = good coverage
+        timeout = float(os.getenv("RED_AGENT_TIMEOUT", "20"))  # 20s budget
+        mcts_branches = int(os.getenv("RED_AGENT_MCTS_BRANCHES", "2"))  # 2 branches (not 3)
+
         red = RedAgentV3(
             max_steps=max_steps,
             max_time_seconds=timeout,
-            use_mcts=use_mcts
+            use_mcts=use_mcts,
+            mcts_branches=mcts_branches
         )
-        mode = "MCTS" if use_mcts else "ReAct"
+        mode = f"MCTS-{mcts_branches}b" if use_mcts else "ReAct"
         print(f"[GreenAgent] Embedded Red Agent V3 ({mode}, {max_steps} steps, {timeout}s) initialized")
         return red
     except Exception as e:
@@ -551,7 +557,14 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
         if not sandbox_result['success']:
             evaluation['cis_score'] = min(evaluation.get('cis_score', 0), 0.5)
             evaluation['sandbox_failed'] = True
-            evaluation['sandbox_output'] = sandbox_result['output'][:500]
+            # Show more output - especially the failure details at the end
+            output = sandbox_result['output']
+            # pytest puts failures at the end, so prioritize the tail
+            if len(output) > 1500:
+                # Show first 500 + last 1000 to capture both context and failures
+                evaluation['sandbox_output'] = output[:500] + "\n...[truncated]...\n" + output[-1000:]
+            else:
+                evaluation['sandbox_output'] = output
 
         # === AGENTIC REFINEMENT LOOP ===
         # If enabled, iteratively help Purple improve their code
@@ -588,15 +601,51 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
                         sandbox_runner=sandbox
                     )
                 else:
-                    # Fast fallback: Just send test output without Scientific Method analysis
+                    # Fast fallback: Send structured feedback without Scientific Method analysis
+                    output = sandbox_result.get('output', 'No output')
+                    # Prioritize the end of output where pytest shows failures
+                    if len(output) > 1200:
+                        output_display = output[:400] + "\n...[truncated]...\n" + output[-800:]
+                    else:
+                        output_display = output
+
+                    # Extract specific errors from output
+                    import re
+                    errors_found = []
+                    for pattern, desc in [
+                        (r'AssertionError:?\s*(.{1,100})', 'Assertion failed'),
+                        (r'TypeError:?\s*(.{1,100})', 'Type error'),
+                        (r'ValueError:?\s*(.{1,100})', 'Value error'),
+                        (r'NameError:?\s*(.{1,100})', 'Undefined name'),
+                        (r'AttributeError:?\s*(.{1,100})', 'Missing attribute'),
+                    ]:
+                        match = re.search(pattern, output, re.IGNORECASE)
+                        if match:
+                            errors_found.append(f"- {desc}: {match.group(1)[:80]}")
+
+                    errors_section = "\n".join(errors_found[:5]) if errors_found else "Review the test output below for details."
+
                     feedback = f"""## Iteration {iteration} Feedback
 
-Your code needs improvement. Review the test output:
+Your code has issues that need fixing.
+
+### Issues Found
+{errors_section}
 
 ### Test Output
-{sandbox_result.get('output', 'No output')[:800]}
+```
+{output_display}
+```
 
-Please fix the issues and resubmit."""
+### Instructions
+Fix the issues above and resubmit. Respond with:
+```json
+{{
+    "sourceCode": "your fixed code",
+    "testCode": "your tests",
+    "rationale": "what you changed"
+}}
+```"""
 
                 # Store this iteration's results
                 refinement_history.append({
@@ -739,7 +788,10 @@ Please fix the issues and resubmit."""
                 "success": sandbox_result['success'],
                 "duration": sandbox_result['duration'],
                 "tests_used": tests_used,
-                "output": sandbox_result['output'][:1000]
+                # Show more output - prioritize end where pytest shows failures
+                "output": (sandbox_result['output'][:500] + "\n...[truncated]...\n" + sandbox_result['output'][-1500:])
+                          if len(sandbox_result['output']) > 2000
+                          else sandbox_result['output']
             },
             "evaluation": evaluation
         }
@@ -762,15 +814,19 @@ async def report_result_action(request: ReportResultRequest):
 # ============================================================================
 # PERFORMANCE TUNING (via environment variables)
 # ============================================================================
-# RED_AGENT_MCTS=false      - Disable MCTS (default: false for speed)
-# RED_AGENT_STEPS=3         - Max investigation steps (default: 3)
-# RED_AGENT_TIMEOUT=15      - Timeout in seconds (default: 15)
+# RED_AGENT_MCTS=true       - Enable MCTS Tree of Thoughts (default: true)
+# RED_AGENT_MCTS_BRANCHES=2 - MCTS branches per step (default: 2, max 3)
+# RED_AGENT_STEPS=5         - Max investigation steps (default: 5)
+# RED_AGENT_TIMEOUT=20      - Timeout in seconds (default: 20)
 # MAX_REFINEMENT_ITERATIONS=2 - Refinement iterations (default: 2)
 # SANDBOX_TIMEOUT=15        - Sandbox timeout (default: 15)
 # ENABLE_SCIENTIFIC_METHOD=true - Enable property-based testing (default: true)
+# ENABLE_REFINEMENT_LOOP=true   - Enable refinement loop (default: true)
 #
-# FAST MODE: RED_AGENT_MCTS=false RED_AGENT_STEPS=3 MAX_REFINEMENT_ITERATIONS=1
-# FULL AGI: RED_AGENT_MCTS=true RED_AGENT_STEPS=10 MAX_REFINEMENT_ITERATIONS=3
+# PRESETS:
+# FAST MODE:    RED_AGENT_MCTS=false RED_AGENT_STEPS=3 MAX_REFINEMENT_ITERATIONS=1 ENABLE_SCIENTIFIC_METHOD=false
+# BALANCED:     RED_AGENT_MCTS=true RED_AGENT_MCTS_BRANCHES=2 RED_AGENT_STEPS=5 MAX_REFINEMENT_ITERATIONS=2 (DEFAULT)
+# FULL AGI:     RED_AGENT_MCTS=true RED_AGENT_MCTS_BRANCHES=3 RED_AGENT_STEPS=10 MAX_REFINEMENT_ITERATIONS=3
 # ============================================================================
 
 def run_server():

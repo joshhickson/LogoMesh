@@ -341,36 +341,43 @@ Propose 3 DIFFERENT strategic paths to investigate. Return JSON only."""
         # Sort by score descending
         scored_nodes.sort(key=lambda x: x[1], reverse=True)
 
+        # Log the valuations for debugging
+        print(f"[MCTS] Valuations:")
+        for node, score in scored_nodes:
+            tool = node.action.get("tool", "?")
+            prior = node.prior
+            print(f"  - {tool}: score={score:.2f} (prior={prior:.2f}, visits={node.visits})")
+
         return scored_nodes
 
     def select(self, scored_nodes: List[Tuple[ThoughtNode, float]]) -> ThoughtNode:
         """
         SELECTION: Pick the best branch to explore.
 
-        Uses softmax selection with temperature to allow some randomness,
-        preventing the agent from always picking the same path.
+        Uses GREEDY selection with small epsilon for exploration.
+        This ensures high-value paths are prioritized while occasionally
+        exploring alternatives when scores are close.
         """
         if not scored_nodes:
             raise ValueError("No nodes to select from")
 
-        # Softmax with temperature for probabilistic selection
-        temperature = 0.5
-        scores = [s for _, s in scored_nodes]
-        max_score = max(scores)
-        exp_scores = [math.exp((s - max_score) / temperature) for s in scores]
-        sum_exp = sum(exp_scores)
-        probabilities = [e / sum_exp for e in exp_scores]
+        # Greedy epsilon selection (much better than softmax for exploitation)
+        epsilon = 0.1  # 10% chance to explore randomly
 
-        # Weighted random selection
-        r = random.random()
-        cumulative = 0.0
-        for (node, _), prob in zip(scored_nodes, probabilities):
-            cumulative += prob
-            if r <= cumulative:
-                return node
+        best_node, best_score = scored_nodes[0]
 
-        # Fallback to best node
-        return scored_nodes[0][0]
+        # Check if we should explore instead of exploit
+        if random.random() < epsilon and len(scored_nodes) > 1:
+            # Only explore if alternative scores are reasonably close (within 0.3)
+            alternatives = [(n, s) for n, s in scored_nodes[1:] if s >= best_score - 0.3]
+            if alternatives:
+                selected = random.choice(alternatives)
+                print(f"[MCTS] 🎲 Exploring: {selected[0].action.get('tool')} (score={selected[1]:.2f}) instead of {best_node.action.get('tool')} (score={best_score:.2f})")
+                return selected[0]
+
+        # Greedy: pick the highest-scored node
+        print(f"[MCTS] ✓ Selected: {best_node.action.get('tool')} (score={best_score:.2f})")
+        return best_node
 
     def backpropagate(self, node: ThoughtNode, reward: float):
         """
@@ -1337,7 +1344,8 @@ class RedAgentV3:
         max_steps: int = 10,
         max_time_seconds: float = 60.0,
         model: str = None,
-        use_mcts: bool = True  # New flag to enable/disable MCTS
+        use_mcts: bool = True,  # Enable MCTS by default
+        mcts_branches: int = 2  # Number of branches to explore (2-3 recommended)
     ):
         # Support both old style (AttackConfig as first arg) and new style (kwargs)
         if config is not None:
@@ -1350,6 +1358,7 @@ class RedAgentV3:
             self.config = None
 
         self.use_mcts = use_mcts
+        self.mcts_branches = max(1, min(mcts_branches, 5))  # Clamp to reasonable range
 
         # Initialize LLM client
         if HAS_OPENAI:
@@ -1402,7 +1411,7 @@ class RedAgentV3:
             self.mcts_planner = MCTSPlanner(
                 client=self.client,
                 model=self.model,
-                num_branches=2,  # Reduced from 3 for speed
+                num_branches=self.mcts_branches,
                 exploration_weight=1.414
             )
             print(f"[RedAgent] 🌳 Using MCTS/Tree of Thoughts with {self.mcts_planner.num_branches} branches")
