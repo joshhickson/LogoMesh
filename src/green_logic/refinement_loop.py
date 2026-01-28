@@ -65,6 +65,67 @@ try:
 except ImportError:
     HAS_SEMANTIC_ANALYZER = False
 
+import re  # For Meta-Agent tool validation
+
+
+# =============================================================================
+# META-AGENT: Dynamic Experiment Generator (AGI-Level Capability)
+# =============================================================================
+
+class DynamicExperimentBuilder:
+    """
+    AGI Meta-Agent Capability for Green Agent: Build custom experiments at runtime.
+
+    When the Scientific Method needs a specialized property-based test that
+    doesn't fit the standard templates, it can CREATE one dynamically.
+
+    Example:
+    - "I need to test a custom encoding roundtrip" → creates custom Hypothesis test
+    - "I need to verify a specific invariant" → creates property test
+    """
+
+    def __init__(self):
+        self.created_experiments: dict[str, str] = {}  # name -> test code
+
+    def create_experiment(
+        self,
+        experiment_name: str,
+        invariant: str,
+        test_code: str
+    ) -> tuple[bool, str]:
+        """
+        Create a custom experiment/test at runtime.
+
+        Args:
+            experiment_name: Unique name for the experiment
+            invariant: The property being tested
+            test_code: Python code for the property-based test
+
+        Returns:
+            (success, message) tuple
+        """
+        # Security validation
+        dangerous_patterns = [
+            r'\bos\.system\b', r'\bsubprocess\b', r'\beval\b', r'\bexec\b',
+            r'\b__import__\b', r'\bopen\s*\([^)]*["\']w', r'\bshutil\b'
+        ]
+        for pattern in dangerous_patterns:
+            if re.search(pattern, test_code):
+                return False, f"Security violation: Dangerous pattern in test code"
+
+        # Ensure it has proper structure
+        if 'from hypothesis import' not in test_code and 'import unittest' not in test_code:
+            return False, "Test code must use hypothesis or unittest"
+
+        self.created_experiments[experiment_name] = test_code
+        print(f"[MetaAgent] 🧪 Created custom experiment: {experiment_name}")
+        print(f"[MetaAgent] 📐 Invariant: {invariant[:80]}...")
+        return True, f"Custom experiment '{experiment_name}' created"
+
+    def get_experiment(self, name: str) -> Optional[str]:
+        """Get a created experiment's code."""
+        return self.created_experiments.get(name)
+
 
 # =============================================================================
 # DATA STRUCTURES: Scientific reasoning primitives
@@ -1138,6 +1199,8 @@ class RefinementLoop:
         self.max_iterations = max_iterations
         self.engine = ScientificMethodEngine(max_iterations=max_iterations)
         self.reflection_engine = SelfReflectionEngine()
+        self.best_score = 0.0  # Track best score to detect regression
+        self.best_iteration = 0
 
     def should_continue(
         self,
@@ -1147,11 +1210,32 @@ class RefinementLoop:
         critical_vulns: int
     ) -> bool:
         """Decide if we should ask Purple for another iteration."""
+        # Track best score
+        if score > self.best_score:
+            self.best_score = score
+            self.best_iteration = iteration
+
+        # Stop if max iterations reached
         if iteration >= self.max_iterations:
             return False
-        if test_passed and critical_vulns == 0 and score >= 0.8:
+
+        # SUCCESS: Stop if tests pass with no critical vulns and decent score
+        # Lowered threshold from 0.8 to 0.7 - a passing score is good enough
+        if test_passed and critical_vulns == 0 and score >= 0.7:
+            print(f"[Refinement] ✅ Success! Score {score:.2f} >= 0.7 with passing tests")
             return False
+
+        # REGRESSION DETECTION: Stop if score dropped significantly from best
+        if iteration > 1 and score < self.best_score - 0.1:
+            print(f"[Refinement] ⚠️ Score regressed from {self.best_score:.2f} to {score:.2f}, stopping")
+            return False
+
         return True
+
+    def reset(self):
+        """Reset state for a new battle."""
+        self.best_score = 0.0
+        self.best_iteration = 0
 
     async def generate_feedback_message(
         self,

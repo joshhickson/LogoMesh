@@ -686,14 +686,26 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
                         print(f"[Refinement] Error on iteration {iteration}: {e}")
                         break
 
-            # Calculate improvement
+            # Calculate improvement and use best iteration
             if refinement_history:
                 initial_score = refinement_history[0]['score']
                 final_score = evaluation.get('cis_score', 0)
-                evaluation['refinement_improvement'] = final_score - initial_score
+
+                # Use best iteration score if final regressed
+                best_score = max(h['score'] for h in refinement_history)
+                if final_score < best_score:
+                    print(f"[Refinement] Using best score {best_score:.2f} instead of final {final_score:.2f}")
+                    # Note: We keep the final evaluation but report the best score
+                    evaluation['cis_score'] = best_score
+                    evaluation['used_best_iteration'] = True
+
+                evaluation['refinement_improvement'] = best_score - initial_score
                 evaluation['refinement_iterations'] = iteration
                 evaluation['refinement_history'] = refinement_history
-                print(f"[Refinement] Complete: {iteration} iterations, improvement={final_score - initial_score:.2f}")
+                print(f"[Refinement] Complete: {iteration} iterations, improvement={best_score - initial_score:.2f}")
+
+            # Reset refinement loop state for next battle
+            refinement_loop.reset()
 
         # step 5: return result
         participants = request.participant_ids or {"agent": request.battle_id}

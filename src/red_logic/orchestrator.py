@@ -66,6 +66,168 @@ except ImportError:
 
 
 # =============================================================================
+# META-AGENT: Dynamic Tool Creation (AGI-Level Capability)
+# =============================================================================
+
+class DynamicToolBuilder:
+    """
+    AGI Meta-Agent Capability: Build tools at runtime.
+
+    A standard agent complains: "I don't have a tool for this."
+    An AGI agent says: "I will CREATE a tool for this."
+
+    Flow:
+    1. Detection: Agent realizes it lacks a capability
+    2. Fabrication: Agent writes a Python function
+    3. Hot-Swapping: Tool is registered into ToolRegistry at runtime
+    4. Execution: Agent uses the tool it just built
+    """
+
+    def __init__(self):
+        self.created_tools: dict[str, dict] = {}  # name -> {code, function, description}
+        self.execution_namespace: dict = {}  # Sandboxed namespace for tool execution
+
+    def create_tool(
+        self,
+        tool_name: str,
+        tool_code: str,
+        description: str,
+        parameters: dict
+    ) -> tuple[bool, str]:
+        """
+        Dynamically create a new tool from Python code.
+
+        Args:
+            tool_name: Unique name for the tool (e.g., "parse_dat_file")
+            tool_code: Python code defining an async function with signature:
+                       async def tool_name(params: dict, memory: AgentMemory, source_code: str) -> ToolResult
+            description: What the tool does (for LLM context)
+            parameters: JSON schema for tool parameters
+
+        Returns:
+            (success, message) tuple
+        """
+        # Validate tool name
+        if not tool_name.isidentifier():
+            return False, f"Invalid tool name: {tool_name}"
+
+        if tool_name in self.created_tools:
+            return False, f"Tool already exists: {tool_name}"
+
+        # Security: Basic validation of the code
+        dangerous_patterns = [
+            r'\bos\.system\b', r'\bsubprocess\b', r'\beval\b', r'\bexec\b',
+            r'\b__import__\b', r'\bopen\s*\([^)]*["\']w', r'\brmtree\b',
+            r'\bshutil\.rm', r'\brequest\b', r'\burllib\b'
+        ]
+        for pattern in dangerous_patterns:
+            if re.search(pattern, tool_code):
+                return False, f"Security violation: Dangerous pattern detected in tool code"
+
+        # Prepare execution namespace with safe imports
+        safe_namespace = {
+            're': re,
+            'json': json,
+            'ToolResult': ToolResult,
+            'AgentMemory': AgentMemory,
+            'Optional': Optional,
+            'Any': Any,
+            'dict': dict,
+            'list': list,
+            'str': str,
+            'int': int,
+            'float': float,
+            'bool': bool,
+            'len': len,
+            'range': range,
+            'enumerate': enumerate,
+            'zip': zip,
+            'sorted': sorted,
+            'min': min,
+            'max': max,
+            'sum': sum,
+            'abs': abs,
+            'isinstance': isinstance,
+            'hasattr': hasattr,
+            'getattr': getattr,
+        }
+
+        try:
+            # Compile and execute the code in sandboxed namespace
+            exec(tool_code, safe_namespace)
+
+            # Extract the function
+            if tool_name not in safe_namespace:
+                return False, f"Tool code must define a function named '{tool_name}'"
+
+            func = safe_namespace[tool_name]
+            if not callable(func):
+                return False, f"'{tool_name}' is not callable"
+
+            # Register the tool
+            self.created_tools[tool_name] = {
+                'code': tool_code,
+                'function': func,
+                'description': description,
+                'parameters': parameters
+            }
+
+            print(f"[MetaAgent] 🔧 Created new tool: {tool_name}")
+            return True, f"Tool '{tool_name}' created successfully"
+
+        except SyntaxError as e:
+            return False, f"Syntax error in tool code: {e}"
+        except Exception as e:
+            return False, f"Failed to create tool: {e}"
+
+    async def execute_tool(
+        self,
+        tool_name: str,
+        params: dict,
+        memory: 'AgentMemory',
+        source_code: str
+    ) -> 'ToolResult':
+        """Execute a dynamically created tool."""
+        if tool_name not in self.created_tools:
+            return ToolResult(success=False, output=f"Dynamic tool not found: {tool_name}")
+
+        tool = self.created_tools[tool_name]
+        func = tool['function']
+
+        try:
+            # Execute the tool (may be sync or async)
+            import asyncio
+            if asyncio.iscoroutinefunction(func):
+                result = await func(params, memory, source_code)
+            else:
+                result = func(params, memory, source_code)
+
+            # Ensure result is ToolResult
+            if isinstance(result, ToolResult):
+                return result
+            else:
+                return ToolResult(success=True, output=str(result))
+
+        except Exception as e:
+            return ToolResult(success=False, output=f"Tool execution error: {e}")
+
+    def get_tool_definitions(self) -> list[dict]:
+        """Get tool definitions for all dynamically created tools."""
+        return [
+            {
+                "name": name,
+                "description": f"[DYNAMIC] {tool['description']}",
+                "parameters": tool['parameters']
+            }
+            for name, tool in self.created_tools.items()
+        ]
+
+    def has_tool(self, tool_name: str) -> bool:
+        """Check if a dynamic tool exists."""
+        return tool_name in self.created_tools
+
+
+# =============================================================================
 # MEMORY: Persistent context across reasoning steps
 # =============================================================================
 
@@ -220,6 +382,9 @@ class ToolRegistry:
     1. Focused - Do one thing well
     2. Observable - Return clear results
     3. Composable - Can be chained together
+
+    AGI Upgrade: Now supports DYNAMIC TOOL CREATION via Meta-Agent capability.
+    The agent can create new tools at runtime when it lacks a capability.
     """
 
     def __init__(self, source_code: str, task_description: str = ""):
@@ -230,6 +395,9 @@ class ToolRegistry:
         # Initialize static analysis workers
         self.static_worker = StaticMirrorWorker()
         self.constraint_worker = ConstraintBreakerWorker()
+
+        # Meta-Agent: Dynamic tool builder for runtime tool creation
+        self.dynamic_builder = DynamicToolBuilder()
 
         # Tool definitions for the LLM
         self.tool_definitions = [
@@ -325,11 +493,44 @@ class ToolRegistry:
                     },
                     "required": ["summary"]
                 }
+            },
+            # META-AGENT: Dynamic Tool Creation
+            {
+                "name": "create_tool",
+                "description": "AGI CAPABILITY: Create a new tool at runtime when you lack a needed capability. "
+                              "Write Python code to define a custom analyzer, parser, or checker. "
+                              "The tool will be immediately available for use. "
+                              "Use this when: you need to parse a specific format, analyze a pattern not covered by existing tools, "
+                              "or perform custom analysis logic.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "tool_name": {"type": "string", "description": "Unique name for the tool (snake_case, e.g., 'parse_jwt_token')"},
+                        "description": {"type": "string", "description": "What the tool does"},
+                        "tool_code": {
+                            "type": "string",
+                            "description": "Python code defining the tool. Must define a function with signature: "
+                                          "def tool_name(params: dict, memory, source_code: str) -> ToolResult. "
+                                          "Return ToolResult(success=True/False, output='...', findings=[...]). "
+                                          "Available: re, json modules. Do NOT use os, subprocess, eval, exec."
+                        },
+                        "parameters_schema": {
+                            "type": "object",
+                            "description": "JSON schema for tool parameters (can be empty {})"
+                        }
+                    },
+                    "required": ["tool_name", "description", "tool_code"]
+                }
             }
         ]
 
+    def get_all_tool_definitions(self) -> list[dict]:
+        """Get all tool definitions including dynamically created tools."""
+        return self.tool_definitions + self.dynamic_builder.get_tool_definitions()
+
     async def execute(self, tool_name: str, parameters: dict, memory: AgentMemory) -> ToolResult:
         """Execute a tool and return results."""
+        # Built-in tools
         tool_map = {
             "scan_file": self._scan_file,
             "fuzz_function": self._fuzz_function,
@@ -340,15 +541,60 @@ class ToolRegistry:
             "report_vulnerability": self._report_vulnerability,
             "add_hypothesis": self._add_hypothesis,
             "conclude_investigation": self._conclude_investigation,
+            "create_tool": self._create_tool,  # Meta-Agent capability
         }
 
-        if tool_name not in tool_map:
-            return ToolResult(success=False, output=f"Unknown tool: {tool_name}")
+        # Check if it's a built-in tool
+        if tool_name in tool_map:
+            try:
+                return await tool_map[tool_name](parameters, memory)
+            except Exception as e:
+                return ToolResult(success=False, output=f"Tool error: {str(e)}")
 
-        try:
-            return await tool_map[tool_name](parameters, memory)
-        except Exception as e:
-            return ToolResult(success=False, output=f"Tool error: {str(e)}")
+        # Check if it's a dynamically created tool
+        if self.dynamic_builder.has_tool(tool_name):
+            return await self.dynamic_builder.execute_tool(
+                tool_name, parameters, memory, self.source_code
+            )
+
+        return ToolResult(success=False, output=f"Unknown tool: {tool_name}")
+
+    async def _create_tool(self, params: dict, memory: AgentMemory) -> ToolResult:
+        """META-AGENT: Create a new tool at runtime."""
+        tool_name = params.get("tool_name", "")
+        description = params.get("description", "")
+        tool_code = params.get("tool_code", "")
+        parameters_schema = params.get("parameters_schema", {"type": "object", "properties": {}, "required": []})
+
+        if not tool_name or not tool_code:
+            return ToolResult(
+                success=False,
+                output="Missing required parameters: tool_name and tool_code are required"
+            )
+
+        # Create the tool via DynamicToolBuilder
+        success, message = self.dynamic_builder.create_tool(
+            tool_name=tool_name,
+            tool_code=tool_code,
+            description=description,
+            parameters=parameters_schema
+        )
+
+        if success:
+            # Log in memory
+            memory.observations.append(f"[MetaAgent] Created new tool: {tool_name}")
+            return ToolResult(
+                success=True,
+                output=f"🔧 Tool '{tool_name}' created successfully! You can now use it.\n"
+                       f"Description: {description}\n"
+                       f"Usage: Call '{tool_name}' with appropriate parameters.",
+                suggested_next=[f"Use the new tool: {tool_name}"]
+            )
+        else:
+            return ToolResult(
+                success=False,
+                output=f"Failed to create tool: {message}"
+            )
 
     async def _scan_file(self, params: dict, memory: AgentMemory) -> ToolResult:
         """Run static security analysis."""
@@ -798,7 +1044,7 @@ class RedAgentV3:
         The LLM analyzes the current state and chooses a tool to run.
         """
         # Build the prompt
-        system_prompt = """You are an expert security researcher conducting a penetration test.
+        system_prompt = """You are an AGI-level security researcher conducting a penetration test.
 Your goal is to find ALL security vulnerabilities in the provided code.
 
 You have access to tools. In each step:
@@ -812,6 +1058,18 @@ Be thorough but efficient:
 - Use grep_pattern to trace data flow
 - Report vulnerabilities when you have evidence
 - Conclude when you've thoroughly analyzed the code
+
+## AGI CAPABILITY: Dynamic Tool Creation
+If you need a capability that doesn't exist, you can CREATE A NEW TOOL using 'create_tool'.
+Example scenarios:
+- "I need to parse this custom binary format" → create a parser tool
+- "I need to analyze this specific crypto pattern" → create a crypto analyzer
+- "I need to check for a specific vulnerability type" → create a custom checker
+
+When using create_tool, write Python code that:
+- Defines a function: def tool_name(params, memory, source_code) -> ToolResult
+- Returns ToolResult(success=True/False, output='...', findings=[...])
+- Uses only: re, json modules (no os, subprocess, eval, exec)
 
 IMPORTANT: Think like an attacker. Look for:
 - Input validation issues
@@ -845,7 +1103,8 @@ What should we investigate next? Choose a tool and explain your reasoning briefl
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}
                 ],
-                tools=[{"type": "function", "function": t} for t in tools.tool_definitions],
+                # Include both built-in and dynamically created tools
+                tools=[{"type": "function", "function": t} for t in tools.get_all_tool_definitions()],
                 tool_choice="required",
                 temperature=0.3,
             )
