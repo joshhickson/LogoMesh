@@ -1195,7 +1195,7 @@ class SelfReflectionEngine:
 class RefinementLoop:
     """Backwards-compatible wrapper around ScientificMethodEngine."""
 
-    def __init__(self, max_iterations: int = 3):
+    def __init__(self, max_iterations: int = 2):
         self.max_iterations = max_iterations
         self.engine = ScientificMethodEngine(max_iterations=max_iterations)
         self.reflection_engine = SelfReflectionEngine()
