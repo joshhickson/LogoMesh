@@ -25,8 +25,13 @@ Architecture:
 
 import asyncio
 import time
+import sys
+import os
 from dataclasses import dataclass, field
 from typing import Optional
+
+# Add parent path to allow imports from green_logic (for Docker compatibility)
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from green_logic.red_report_types import RedAgentReport, Vulnerability, Severity
 

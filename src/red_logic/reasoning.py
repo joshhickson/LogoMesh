@@ -14,9 +14,13 @@ import asyncio
 import json
 import os
 import re
+import sys
 from typing import Optional
 
 from openai import AsyncOpenAI
+
+# Add parent path to allow imports from green_logic (for Docker compatibility)
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from green_logic.red_report_types import Vulnerability, Severity
 
