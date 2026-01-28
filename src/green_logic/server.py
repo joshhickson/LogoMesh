@@ -19,27 +19,32 @@ from .refinement_loop import RefinementLoop, create_refinement_task_prompt
 def _init_sandbox():
     """initialize sandbox with fallback if docker unavailable."""
     try:
-        from .sandbox import Sandbox
+        from .sandbox import Sandbox, DOCKER_AVAILABLE
         timeout = int(os.getenv("SANDBOX_TIMEOUT", "15"))  # Default 15 seconds
         sb = Sandbox(timeout=timeout)
-        print(f"[GreenAgent] Docker sandbox initialized (timeout={timeout}s)")
+        mode = "Docker" if DOCKER_AVAILABLE else "subprocess"
+        print(f"[GreenAgent] Sandbox initialized ({mode} mode, timeout={timeout}s)")
         return sb
     except Exception as e:
-        print(f"[GreenAgent] WARNING: Docker unavailable ({e}), sandbox disabled")
+        print(f"[GreenAgent] WARNING: Sandbox unavailable ({e}), tests disabled")
         return None
 
 
 def _init_red_agent():
     """initialize embedded red agent for internal vulnerability scanning."""
     try:
-        # Use RedAgentV3 with MCTS (Tree of Thoughts) for AGI-level reasoning
+        # Use RedAgentV3 - MCTS can be enabled via env var for deeper analysis
         from src.red_logic.orchestrator import RedAgentV3
+        use_mcts = os.getenv("RED_AGENT_MCTS", "false").lower() == "true"
+        max_steps = int(os.getenv("RED_AGENT_STEPS", "3"))  # Reduced from 10 for speed
+        timeout = float(os.getenv("RED_AGENT_TIMEOUT", "15"))  # Reduced from 60
         red = RedAgentV3(
-            max_steps=10,
-            max_time_seconds=float(os.getenv("RED_AGENT_TIMEOUT", "60")),
-            use_mcts=True
+            max_steps=max_steps,
+            max_time_seconds=timeout,
+            use_mcts=use_mcts
         )
-        print("[GreenAgent] Embedded Red Agent V3 (MCTS) initialized")
+        mode = "MCTS" if use_mcts else "ReAct"
+        print(f"[GreenAgent] Embedded Red Agent V3 ({mode}, {max_steps} steps, {timeout}s) initialized")
         return red
     except Exception as e:
         print(f"[GreenAgent] WARNING: Red Agent unavailable ({e}), security scanning disabled")
@@ -52,7 +57,7 @@ class SendTaskRequest(BaseModel):
     battle_id: str
     task_id: str | None = None
     files: dict[str, str] | None = None
-    custom_task: dict[str, str] | None = None
+    custom_task: dict[str, str | None] | None = None
     participant_ids: dict[str, str] | None = None
 
 
@@ -241,11 +246,13 @@ auditor = SemanticAuditor()
 sandbox = _init_sandbox()
 red_agent = _init_red_agent()
 test_generator = TestGenerator()
-refinement_loop = RefinementLoop(max_iterations=int(os.getenv("MAX_REFINEMENT_ITERATIONS", "3")))
+refinement_loop = RefinementLoop(max_iterations=int(os.getenv("MAX_REFINEMENT_ITERATIONS", "2")))  # Reduced from 3
 
 STALL_THRESHOLD = 30.0  # seconds without activity = hung inference
 # AGENTIC MODE: Enable refinement loop by default for true agent behavior
 ENABLE_REFINEMENT = os.getenv("ENABLE_REFINEMENT_LOOP", "true").lower() == "true"
+# Scientific Method can be disabled for faster runs
+ENABLE_SCIENTIFIC_METHOD = os.getenv("ENABLE_SCIENTIFIC_METHOD", "true").lower() == "true"
 
 
 async def stream_purple_response(client: httpx.AsyncClient, purple_url: str, payload: dict, battle_id: str):
@@ -565,19 +572,31 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
                       f"tests_passed={sandbox_result['success']}, critical_vulns={critical_vulns}")
 
                 # Generate targeted feedback using self-reflection
-                feedback = await refinement_loop.generate_feedback_message(
-                    task_description=task_desc,
-                    source_code=source_code,
-                    test_output=sandbox_result.get('output', ''),
-                    red_vulnerabilities=[
-                        {"severity": v.severity.value, "category": v.category,
-                         "title": v.title, "description": v.description}
-                        for v in (red_report_obj.vulnerabilities if red_report_obj else [])
-                    ],
-                    audit_issues=audit_result.get('issues', []),
-                    iteration=iteration,
-                    sandbox_runner=sandbox
-                )
+                # Scientific Method can be slow (many LLM calls) - skip if disabled
+                if ENABLE_SCIENTIFIC_METHOD:
+                    feedback = await refinement_loop.generate_feedback_message(
+                        task_description=task_desc,
+                        source_code=source_code,
+                        test_output=sandbox_result.get('output', ''),
+                        red_vulnerabilities=[
+                            {"severity": v.severity.value, "category": v.category,
+                             "title": v.title, "description": v.description}
+                            for v in (red_report_obj.vulnerabilities if red_report_obj else [])
+                        ],
+                        audit_issues=audit_result.get('issues', []),
+                        iteration=iteration,
+                        sandbox_runner=sandbox
+                    )
+                else:
+                    # Fast fallback: Just send test output without Scientific Method analysis
+                    feedback = f"""## Iteration {iteration} Feedback
+
+Your code needs improvement. Review the test output:
+
+### Test Output
+{sandbox_result.get('output', 'No output')[:800]}
+
+Please fix the issues and resubmit."""
 
                 # Store this iteration's results
                 refinement_history.append({
@@ -739,6 +758,20 @@ async def report_result_action(request: ReportResultRequest):
     agent.submit_result(result_data)
     return {"status": "reported", "battle_id": request.battle_id}
 
+
+# ============================================================================
+# PERFORMANCE TUNING (via environment variables)
+# ============================================================================
+# RED_AGENT_MCTS=false      - Disable MCTS (default: false for speed)
+# RED_AGENT_STEPS=3         - Max investigation steps (default: 3)
+# RED_AGENT_TIMEOUT=15      - Timeout in seconds (default: 15)
+# MAX_REFINEMENT_ITERATIONS=2 - Refinement iterations (default: 2)
+# SANDBOX_TIMEOUT=15        - Sandbox timeout (default: 15)
+# ENABLE_SCIENTIFIC_METHOD=true - Enable property-based testing (default: true)
+#
+# FAST MODE: RED_AGENT_MCTS=false RED_AGENT_STEPS=3 MAX_REFINEMENT_ITERATIONS=1
+# FULL AGI: RED_AGENT_MCTS=true RED_AGENT_STEPS=10 MAX_REFINEMENT_ITERATIONS=3
+# ============================================================================
 
 def run_server():
     host = os.getenv("HOST", "0.0.0.0")

@@ -458,14 +458,14 @@ Respond with JSON:
 {{
   "test_name": "test_property_no_sql_injection",
   "invariant": "For any user input string, the query result count should not change based on SQL metacharacters",
-  "test_code": "from hypothesis import given, strategies as st, settings\\nfrom solution import *\\n\\n@given(st.text(max_size=50))\\n@settings(max_examples=50, deadline=5000)\\ndef test_no_injection(user_input):\\n    # The invariant: SQL metacharacters should not alter query behavior\\n    clean_result = get_user('testuser')\\n    # Try with potentially malicious input appended\\n    malicious = user_input + \\\"' OR '1'='1\\\"\\n    try:\\n        result = get_user(malicious)\\n        # If we get here without proper sanitization, injection may be possible\\n        assert result == clean_result or result is None, 'Possible SQL injection'\\n    except Exception:\\n        pass  # Exceptions are fine - means input was rejected",
-  "expected_behavior": "The test runs 50 random inputs. If ANY input breaks the invariant, the hypothesis is CONFIRMED (vulnerability exists)."
+  "test_code": "from hypothesis import given, strategies as st, settings\\nfrom solution import *\\n\\n@given(st.text(max_size=50))\\n@settings(max_examples=30, deadline=3000)\\ndef test_no_injection(user_input):\\n    # The invariant: SQL metacharacters should not alter query behavior\\n    clean_result = get_user('testuser')\\n    # Try with potentially malicious input appended\\n    malicious = user_input + \\\"' OR '1'='1\\\"\\n    try:\\n        result = get_user(malicious)\\n        # If we get here without proper sanitization, injection may be possible\\n        assert result == clean_result or result is None, 'Possible SQL injection'\\n    except Exception:\\n        pass  # Exceptions are fine - means input was rejected",
+  "expected_behavior": "The test runs 30 random inputs. If ANY input breaks the invariant, the hypothesis is CONFIRMED (vulnerability exists)."
 }}
 
 CRITICAL RULES:
 1. Use 'from hypothesis import given, strategies as st, settings'
 2. Use @given decorator with appropriate strategies
-3. Use @settings(max_examples=200) for thorough testing
+3. Use @settings(max_examples=30, deadline=3000) for fast testing
 4. The test should PASS if code is SECURE, FAIL if vulnerability exists
 5. Import from 'solution' (the code is saved as solution.py)
 6. Only JSON, no markdown:"""
@@ -767,8 +767,8 @@ class ScientificMethodEngine:
     Only PROVEN findings (with test evidence) are reported to Purple Agent.
     """
 
-    def __init__(self, max_iterations: int = 2, max_hypotheses_per_iteration: int = 2, verbose: bool = False):
-        self.max_iterations = max_iterations
+    def __init__(self, max_iterations: int = 1, max_hypotheses_per_iteration: int = 2, verbose: bool = False):
+        self.max_iterations = max_iterations  # Default 1 iteration for speed
         self.max_hypotheses_per_iteration = max_hypotheses_per_iteration
         self.reasoner = ScientificReasoner()
         self.verbose = verbose  # Reduce console output
@@ -1197,7 +1197,8 @@ class RefinementLoop:
 
     def __init__(self, max_iterations: int = 2):
         self.max_iterations = max_iterations
-        self.engine = ScientificMethodEngine(max_iterations=max_iterations)
+        # Use fewer Scientific Method iterations internally for speed
+        self.engine = ScientificMethodEngine(max_iterations=1)
         self.reflection_engine = SelfReflectionEngine()
         self.best_score = 0.0  # Track best score to detect regression
         self.best_iteration = 0

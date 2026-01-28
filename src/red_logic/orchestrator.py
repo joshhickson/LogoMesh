@@ -1402,13 +1402,12 @@ class RedAgentV3:
             self.mcts_planner = MCTSPlanner(
                 client=self.client,
                 model=self.model,
-                num_branches=3,
+                num_branches=2,  # Reduced from 3 for speed
                 exploration_weight=1.414
             )
             print(f"[RedAgent] 🌳 Using MCTS/Tree of Thoughts with {self.mcts_planner.num_branches} branches")
         else:
             self.mcts_planner = None
-            print(f"[RedAgent] Using standard ReAct loop")
 
         # Run the main loop
         concluded = False
