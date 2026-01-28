@@ -129,13 +129,63 @@ DANGEROUS_PATTERNS = {
         "remediation": "Avoid marshal for untrusted data"
     },
 
-    # SQL injection (when using string formatting)
+    # SQL injection - ALL database APIs
+    # NOTE: These are only flagged when using string formatting, NOT parameterized queries
     ("sqlite3", "execute"): {
-        "user_input": RiskLevel.HIGH,  # Will check for string formatting
+        "user_input": RiskLevel.CRITICAL,
         "hardcoded": RiskLevel.INFO,
+        "parameterized": RiskLevel.INFO,  # SAFE when parameterized
+        "category": "sql_injection",
+        "description": "SQL query may be vulnerable to injection",
+        "remediation": "Use parameterized queries: cursor.execute('SELECT * FROM t WHERE id = ?', (id,))"
+    },
+    ("sqlite3", "executemany"): {
+        "user_input": RiskLevel.CRITICAL,
+        "hardcoded": RiskLevel.INFO,
+        "parameterized": RiskLevel.INFO,
         "category": "sql_injection",
         "description": "SQL query may be vulnerable to injection",
         "remediation": "Use parameterized queries with ? placeholders"
+    },
+    ("cursor", "execute"): {
+        "user_input": RiskLevel.CRITICAL,
+        "hardcoded": RiskLevel.INFO,
+        "parameterized": RiskLevel.INFO,
+        "category": "sql_injection",
+        "description": "SQL query may be vulnerable to injection",
+        "remediation": "Use parameterized queries: cursor.execute('SELECT * FROM t WHERE id = %s', (id,))"
+    },
+    ("cursor", "executemany"): {
+        "user_input": RiskLevel.CRITICAL,
+        "hardcoded": RiskLevel.INFO,
+        "parameterized": RiskLevel.INFO,
+        "category": "sql_injection",
+        "description": "SQL query may be vulnerable to injection",
+        "remediation": "Use parameterized queries with placeholders"
+    },
+    ("connection", "execute"): {
+        "user_input": RiskLevel.CRITICAL,
+        "hardcoded": RiskLevel.INFO,
+        "parameterized": RiskLevel.INFO,
+        "category": "sql_injection",
+        "description": "SQL query may be vulnerable to injection",
+        "remediation": "Use parameterized queries"
+    },
+    ("db", "execute"): {
+        "user_input": RiskLevel.CRITICAL,
+        "hardcoded": RiskLevel.INFO,
+        "parameterized": RiskLevel.INFO,
+        "category": "sql_injection",
+        "description": "SQL query may be vulnerable to injection",
+        "remediation": "Use parameterized queries"
+    },
+    ("session", "execute"): {
+        "user_input": RiskLevel.CRITICAL,
+        "hardcoded": RiskLevel.INFO,
+        "parameterized": RiskLevel.INFO,
+        "category": "sql_injection",
+        "description": "SQL query may be vulnerable to injection (SQLAlchemy)",
+        "remediation": "Use parameterized queries or ORM methods"
     },
 
     # File operations
@@ -159,6 +209,54 @@ DANGEROUS_PATTERNS = {
         "category": "path_traversal",
         "description": "shutil.rmtree can recursively delete directories",
         "remediation": "Validate paths are within allowed directories"
+    },
+
+    # XSS / HTML injection
+    ("jinja2", "Template"): {
+        "user_input": RiskLevel.HIGH,
+        "hardcoded": RiskLevel.INFO,
+        "category": "xss",
+        "description": "Jinja2 Template with user input may allow XSS",
+        "remediation": "Use autoescape=True and avoid |safe filter"
+    },
+    ("flask", "render_template_string"): {
+        "user_input": RiskLevel.CRITICAL,
+        "hardcoded": RiskLevel.INFO,
+        "category": "xss",
+        "description": "render_template_string with user input enables SSTI/XSS",
+        "remediation": "Use render_template() with pre-defined templates"
+    },
+    ("django.utils.safestring", "mark_safe"): {
+        "user_input": RiskLevel.CRITICAL,
+        "hardcoded": RiskLevel.LOW,
+        "category": "xss",
+        "description": "mark_safe with user input disables XSS protection",
+        "remediation": "Avoid mark_safe on user input"
+    },
+
+    # LDAP injection
+    ("ldap", "search_s"): {
+        "user_input": RiskLevel.CRITICAL,
+        "hardcoded": RiskLevel.INFO,
+        "category": "ldap_injection",
+        "description": "LDAP query with user input may allow injection",
+        "remediation": "Use ldap.filter.escape_filter_chars() on user input"
+    },
+
+    # XML External Entity (XXE)
+    ("xml.etree.ElementTree", "parse"): {
+        "user_input": RiskLevel.HIGH,
+        "hardcoded": RiskLevel.INFO,
+        "category": "xxe",
+        "description": "XML parsing may be vulnerable to XXE attacks",
+        "remediation": "Use defusedxml library for untrusted XML"
+    },
+    ("lxml.etree", "parse"): {
+        "user_input": RiskLevel.HIGH,
+        "hardcoded": RiskLevel.INFO,
+        "category": "xxe",
+        "description": "lxml parsing may be vulnerable to XXE",
+        "remediation": "Disable external entity resolution"
     },
 
     # Weak crypto
@@ -411,6 +509,62 @@ class DependencyAnalyzer(ast.NodeVisitor):
                 if isinstance(first_arg.func, ast.Attribute):
                     if first_arg.func.attr == "format":
                         return True
+            # Check for string concatenation with + operator
+            if isinstance(first_arg, ast.BinOp) and isinstance(first_arg.op, ast.Add):
+                return True
+        return False
+
+    def _is_parameterized_query(self, node: ast.Call) -> bool:
+        """
+        Check if SQL execute call is using parameterized queries (SAFE).
+
+        Parameterized queries have:
+        1. Two arguments: execute(query, params)
+        2. Query string contains placeholders: ?, %s, :name, $1
+        3. Second arg is a tuple, list, or dict
+
+        Examples of SAFE queries:
+        - cursor.execute("SELECT * FROM t WHERE id = ?", (id,))
+        - cursor.execute("SELECT * FROM t WHERE id = %s", [id])
+        - cursor.execute("SELECT * FROM t WHERE id = :id", {"id": id})
+        """
+        if len(node.args) < 2:
+            # Only one arg = no params = check for string formatting
+            return False
+
+        # Has second argument - check if it looks like params
+        second_arg = node.args[1]
+
+        # If second arg is tuple, list, or dict literal - definitely parameterized
+        if isinstance(second_arg, (ast.Tuple, ast.List, ast.Dict)):
+            return True
+
+        # If second arg is a variable, check if it looks like params
+        if isinstance(second_arg, ast.Name):
+            name_lower = second_arg.id.lower()
+            # Common param variable names
+            if any(hint in name_lower for hint in ["param", "args", "values", "data", "bind"]):
+                return True
+            # If it doesn't look like user input, assume it's params
+            if not self._is_user_input(second_arg):
+                return True
+
+        # Check first arg for placeholder patterns
+        first_arg = node.args[0]
+        if isinstance(first_arg, ast.Constant) and isinstance(first_arg.value, str):
+            query = first_arg.value
+            # Look for placeholder patterns
+            import re
+            placeholders = [
+                r'\?',           # SQLite style: ?
+                r'%s',           # psycopg2/MySQL style: %s
+                r':\w+',         # Oracle/SQLAlchemy style: :name
+                r'\$\d+',        # PostgreSQL native: $1
+            ]
+            for pattern in placeholders:
+                if re.search(pattern, query):
+                    return True
+
         return False
 
     def visit_FunctionDef(self, node: ast.FunctionDef):
@@ -436,9 +590,72 @@ class DependencyAnalyzer(ast.NodeVisitor):
         """Handle async functions same as regular functions."""
         self.visit_FunctionDef(node)  # type: ignore
 
+    def _looks_like_sql_execute(self, node: ast.Call) -> bool:
+        """
+        Check if a call looks like SQL execution (generic detection).
+
+        This catches cases like:
+        - conn.execute("SELECT...")
+        - db.run_query("SELECT...")
+        - session.query("SELECT...")
+
+        Even if we don't know the exact module/class.
+        """
+        if not node.args:
+            return False
+
+        first_arg = node.args[0]
+
+        # Check if first arg is a string containing SQL keywords
+        if isinstance(first_arg, ast.Constant) and isinstance(first_arg.value, str):
+            sql_keywords = ["SELECT", "INSERT", "UPDATE", "DELETE", "CREATE", "DROP", "ALTER"]
+            query_upper = first_arg.value.upper()
+            return any(kw in query_upper for kw in sql_keywords)
+
+        # Check if first arg is an f-string or formatted string with SQL
+        if isinstance(first_arg, ast.JoinedStr):
+            # f-string - check the constant parts
+            for value in first_arg.values:
+                if isinstance(value, ast.Constant) and isinstance(value.value, str):
+                    sql_keywords = ["SELECT", "INSERT", "UPDATE", "DELETE"]
+                    if any(kw in value.value.upper() for kw in sql_keywords):
+                        return True
+
+        return False
+
     def visit_Call(self, node: ast.Call):
         """Analyze function calls for dangerous patterns."""
         target = self._resolve_call_target(node)
+
+        # GENERAL SQL DETECTION: Catch ANY .execute() or similar that looks like SQL
+        # This is the "AGI" approach - reason about the code, not just pattern match
+        if isinstance(node.func, ast.Attribute):
+            method_name = node.func.attr.lower()
+            sql_methods = ["execute", "executemany", "raw", "query", "run_query", "exec_sql"]
+
+            if method_name in sql_methods and self._looks_like_sql_execute(node):
+                # Detected a SQL execution pattern
+                is_parameterized = self._is_parameterized_query(node)
+                uses_formatting = self._check_sql_string_formatting(node)
+
+                if is_parameterized:
+                    # SAFE - parameterized query, skip
+                    pass
+                elif uses_formatting:
+                    # DANGEROUS - string formatting in SQL
+                    line = self._get_line(node.lineno)
+                    finding = DependencyFinding(
+                        risk_level=RiskLevel.CRITICAL,
+                        category="sql_injection",
+                        title=f"SQL Injection via string formatting in {method_name}()",
+                        description="SQL query is built using string formatting (f-string, %, .format(), or +). "
+                                   "User input can modify the query structure.",
+                        line_number=node.lineno,
+                        code_snippet=line,
+                        remediation="Use parameterized queries: execute('SELECT * FROM t WHERE id = ?', (id,))"
+                    )
+                    self.findings.append(finding)
+                # If neither, don't flag - might be safe
 
         if target:
             module, func = target
@@ -472,19 +689,26 @@ class DependencyAnalyzer(ast.NodeVisitor):
                         is_hardcoded = False
 
                 # Special case: SQL injection check
+                is_parameterized = False
                 if pattern["category"] == "sql_injection":
-                    if self._check_sql_string_formatting(node):
+                    # First check if it's a SAFE parameterized query
+                    if self._is_parameterized_query(node):
+                        is_parameterized = True
+                        risk_level = pattern.get("parameterized", RiskLevel.INFO)
+                    # Then check if it's DANGEROUS string formatting
+                    elif self._check_sql_string_formatting(node):
                         has_user_input = True
                         is_hardcoded = False
 
-                # Determine risk level
-                if has_user_input:
-                    risk_level = pattern["user_input"]
-                elif is_hardcoded:
-                    risk_level = pattern["hardcoded"]
-                else:
-                    # Unknown source - be cautious
-                    risk_level = RiskLevel.MEDIUM
+                # Determine risk level (if not already set by SQL check)
+                if not is_parameterized:
+                    if has_user_input:
+                        risk_level = pattern["user_input"]
+                    elif is_hardcoded:
+                        risk_level = pattern["hardcoded"]
+                    else:
+                        # Unknown source - be cautious
+                        risk_level = RiskLevel.MEDIUM
 
                 # Only report if risk is meaningful
                 if risk_level in (RiskLevel.CRITICAL, RiskLevel.HIGH, RiskLevel.MEDIUM):

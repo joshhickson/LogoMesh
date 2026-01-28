@@ -43,15 +43,26 @@ class StaticMirrorWorker(BaseWorker):
     }
 
     # Mirrors SQL_PATTERNS from analyzer.py
+    # CRITICAL: These patterns must distinguish DANGEROUS string formatting from SAFE parameterized queries
+    # DANGEROUS: "SELECT ... %s" % var  (string formatting - variable substitution)
+    # SAFE: cursor.execute("SELECT ... %s", (var,))  (parameterized query - %s is placeholder)
     SQL_PATTERNS = [
+        # f-string patterns - ALWAYS dangerous (direct interpolation)
         (r"f['\"].*SELECT\s+.*\{", "f-string SQL SELECT"),
         (r"f['\"].*INSERT\s+.*\{", "f-string SQL INSERT"),
         (r"f['\"].*UPDATE\s+.*\{", "f-string SQL UPDATE"),
         (r"f['\"].*DELETE\s+.*\{", "f-string SQL DELETE"),
-        (r"['\"]SELECT\s+.+FROM\s+.+['\"].*%", "% formatting SQL SELECT"),
-        (r"['\"]INSERT\s+INTO\s+.+['\"].*%", "% formatting SQL INSERT"),
-        (r"['\"]UPDATE\s+.+SET\s+.+['\"].*%", "% formatting SQL UPDATE"),
-        (r"['\"]DELETE\s+FROM\s+.+['\"].*%", "% formatting SQL DELETE"),
+        # Old-style % formatting - only dangerous when followed by % and a variable/tuple
+        # Pattern: "SQL..." % var OR "SQL..." % (var,) - NOT cursor.execute("SQL...", (var,))
+        (r"['\"]SELECT\s+.+FROM\s+.+['\"]\s*%\s*[\(\w]", "% formatting SQL SELECT"),
+        (r"['\"]INSERT\s+INTO\s+.+['\"]\s*%\s*[\(\w]", "% formatting SQL INSERT"),
+        (r"['\"]UPDATE\s+.+SET\s+.+['\"]\s*%\s*[\(\w]", "% formatting SQL UPDATE"),
+        (r"['\"]DELETE\s+FROM\s+.+['\"]\s*%\s*[\(\w]", "% formatting SQL DELETE"),
+        # String concatenation with SQL - ALWAYS dangerous
+        (r"['\"]SELECT\s+.+['\"]\s*\+", "string concat SQL SELECT"),
+        (r"['\"]INSERT\s+.+['\"]\s*\+", "string concat SQL INSERT"),
+        (r"['\"]UPDATE\s+.+['\"]\s*\+", "string concat SQL UPDATE"),
+        (r"['\"]DELETE\s+.+['\"]\s*\+", "string concat SQL DELETE"),
     ]
 
     # Complexity thresholds (from analyzer.py)
@@ -201,26 +212,60 @@ class StaticMirrorWorker(BaseWorker):
         return vulns
 
     def _check_sql_injection(self, code: str) -> list[Vulnerability]:
-        """Check for SQL injection vulnerabilities."""
+        """Check for SQL injection vulnerabilities.
+
+        IMPORTANT: This method distinguishes between:
+        - DANGEROUS: String formatting/concatenation for SQL (f-strings, %, +)
+        - SAFE: Parameterized queries (cursor.execute("...", (params,)))
+        """
         vulns = []
         lines = code.split("\n")
+
+        # Pattern to detect parameterized query usage (SAFE pattern)
+        # e.g., execute("SELECT...", (var,)) or execute("SELECT...", [var])
+        parameterized_pattern = r"\.execute\s*\([^)]*['\"][^'\"]*['\"],\s*[\(\[]"
 
         for pattern, desc in self.SQL_PATTERNS:
             for lineno, line in enumerate(lines, 1):
                 if re.search(pattern, line, re.IGNORECASE):
-                    vulns.append(self._create_vulnerability(
-                        severity=Severity.CRITICAL,
-                        category="sql_injection",
-                        title=f"SQL Injection: {desc}",
-                        description=f"SQL query built with string interpolation instead of parameterized queries. "
-                                   f"User input can modify the query structure.",
-                        line_number=lineno,
-                        exploit_code="# SQL Injection exploit:\n"
-                                    "user_input = \"' OR '1'='1' --\"\n"
-                                    "# Or for data extraction:\n"
-                                    "user_input = \"' UNION SELECT password FROM users --\"",
-                        confidence="high"
-                    ))
+                    # Check if this line looks like a parameterized query (SAFE)
+                    if re.search(parameterized_pattern, line, re.IGNORECASE):
+                        # This is a parameterized query, NOT vulnerable
+                        continue
+
+                    # Check for .execute() with comma-separated args (another safe pattern)
+                    # e.g., cursor.execute(query, params)
+                    if ".execute(" in line and "," in line.split(".execute(")[1] if ".execute(" in line else False:
+                        # Likely parameterized - needs more context to be sure
+                        # Reduce confidence instead of skipping
+                        vulns.append(self._create_vulnerability(
+                            severity=Severity.MEDIUM,  # Downgraded - might be false positive
+                            category="sql_injection",
+                            title=f"Potential SQL Injection: {desc}",
+                            description=f"SQL query appears to use string formatting. "
+                                       f"Verify this is NOT a parameterized query. "
+                                       f"Parameterized: cursor.execute('...%s...', (var,)) is SAFE.",
+                            line_number=lineno,
+                            exploit_code="# If this is string formatting (not parameterized):\n"
+                                        "user_input = \"' OR '1'='1' --\"\n"
+                                        "# Verify: Is the second arg to execute() used for params?",
+                            confidence="medium"
+                        ))
+                    else:
+                        # Definitely looks like string formatting/interpolation
+                        vulns.append(self._create_vulnerability(
+                            severity=Severity.CRITICAL,
+                            category="sql_injection",
+                            title=f"SQL Injection: {desc}",
+                            description=f"SQL query built with string interpolation instead of parameterized queries. "
+                                       f"User input can modify the query structure.",
+                            line_number=lineno,
+                            exploit_code="# SQL Injection exploit:\n"
+                                        "user_input = \"' OR '1'='1' --\"\n"
+                                        "# Or for data extraction:\n"
+                                        "user_input = \"' UNION SELECT password FROM users --\"",
+                            confidence="high"
+                        ))
                     break  # One finding per pattern
 
         return vulns
