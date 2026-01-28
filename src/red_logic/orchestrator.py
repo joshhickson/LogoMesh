@@ -62,9 +62,46 @@ from typing import Optional, Any, Callable, Awaitable, List, Dict, Tuple
 from enum import Enum
 
 # Add parent path to allow imports from green_logic (for Docker compatibility)
-sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+_src_path = os.path.dirname(os.path.dirname(__file__))
+if _src_path not in sys.path:
+    sys.path.insert(0, _src_path)
 
-from green_logic.red_report_types import RedAgentReport, Vulnerability, Severity
+# Try multiple import paths for Docker compatibility
+try:
+    from green_logic.red_report_types import RedAgentReport, Vulnerability, Severity
+except ImportError:
+    try:
+        from src.green_logic.red_report_types import RedAgentReport, Vulnerability, Severity
+    except ImportError:
+        # Fallback: define locally if all imports fail
+        from enum import Enum
+        from dataclasses import dataclass, field
+        from typing import List, Optional
+
+        class Severity(Enum):
+            CRITICAL = "critical"
+            HIGH = "high"
+            MEDIUM = "medium"
+            LOW = "low"
+            INFO = "info"
+
+        @dataclass
+        class Vulnerability:
+            severity: Severity
+            category: str
+            title: str
+            description: str
+            exploit_code: str = ""
+            line_number: Optional[int] = None
+            confidence: float = 0.8
+
+        @dataclass
+        class RedAgentReport:
+            attack_successful: bool
+            vulnerabilities: List[Vulnerability] = field(default_factory=list)
+            attack_summary: str = ""
+            execution_time_ms: float = 0.0
+            tools_used: List[str] = field(default_factory=list)
 
 from .workers.static_mirror import StaticMirrorWorker
 from .workers.constraint_breaker import ConstraintBreakerWorker
