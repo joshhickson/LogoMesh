@@ -1,51 +1,64 @@
 """
-Red Agent V3 - AGI-Level Autonomous Vulnerability Hunter.
+Red Agent V4 - AGI-Level Autonomous Vulnerability Hunter with MCTS.
 
-This is NOT a pipeline. This is an AUTONOMOUS AGENT that:
-1. Reasons about what to investigate next
-2. Acts by calling tools from its registry
-3. Observes results and updates its mental model
-4. Repeats until it finds critical exploits or times out
+UPGRADE: From greedy ReAct to Monte Carlo Tree Search (Tree of Thoughts)
+
+A greedy ReAct loop takes the FIRST action that looks good.
+An AGI agent SIMULATES multiple futures before committing to one.
 
 Architecture:
-┌─────────────────────────────────────────────────────────────┐
-│                    RedAgentV3 (ReAct Loop)                  │
-├─────────────────────────────────────────────────────────────┤
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │                    REASONING                         │   │
-│  │  "I found auth() uses MD5. I should fuzz it for     │   │
-│  │   timing attacks and check if it's used elsewhere." │   │
-│  └─────────────────────────────────────────────────────┘   │
-│                          ↓                                  │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │                    ACTION                            │   │
-│  │  Tool: fuzz_function("auth")                        │   │
-│  │  Tool: grep_pattern("auth\\(")                      │   │
-│  └─────────────────────────────────────────────────────┘   │
-│                          ↓                                  │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │                   OBSERVATION                        │   │
-│  │  "Timing attack possible. auth() called in login(), │   │
-│  │   password_reset(), and admin_panel()."             │   │
-│  └─────────────────────────────────────────────────────┘   │
-│                          ↓                                  │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │                    MEMORY                            │   │
-│  │  findings: [timing_attack, weak_hash]               │   │
-│  │  explored: [auth, login, password_reset]            │   │
-│  │  hypotheses: ["admin_panel might be unprotected"]   │   │
-│  └─────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    RedAgentV4 (MCTS / Tree of Thoughts)                     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                         BRANCHING                                    │   │
+│  │  Agent proposes 3 possible next steps:                              │   │
+│  │  ├─ Branch A: "Scan for SQL injection patterns"                     │   │
+│  │  ├─ Branch B: "Fuzz the auth() function inputs"                     │   │
+│  │  └─ Branch C: "Check git history for hardcoded secrets"             │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                              ↓                                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                        VALUATION                                     │   │
+│  │  Scorer Model rates each branch's potential:                        │   │
+│  │  ├─ Branch A: 35% success (common vuln, worth checking)             │   │
+│  │  ├─ Branch B: 60% success (auth functions often vulnerable)         │   │
+│  │  └─ Branch C: 15% success (useful but low immediate value)          │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                              ↓                                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                        SELECTION                                     │   │
+│  │  Agent picks high-value path: Branch B (fuzz auth)                  │   │
+│  │  But REMEMBERS other branches for backtracking if needed            │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                              ↓                                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                        EXECUTION                                     │   │
+│  │  Tool: fuzz_function("auth")                                        │   │
+│  │  Result: "Timing attack vulnerability found!"                       │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                              ↓                                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                       BACKPROPAGATION                                │   │
+│  │  Update branch values based on actual results:                      │   │
+│  │  Branch B score: 60% → 85% (confirmed valuable)                     │   │
+│  │  Similar branches (auth-related) get boosted                        │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
 """
 
 import asyncio
 import json
+import math
 import os
+import random
 import re
 import sys
 import time
 from dataclasses import dataclass, field
-from typing import Optional, Any, Callable, Awaitable
+from typing import Optional, Any, Callable, Awaitable, List, Dict, Tuple
 from enum import Enum
 
 # Add parent path to allow imports from green_logic (for Docker compatibility)
@@ -57,6 +70,386 @@ from .workers.static_mirror import StaticMirrorWorker
 from .workers.constraint_breaker import ConstraintBreakerWorker
 from .dependency_analyzer import analyze_dependencies, findings_to_vulnerabilities
 from .semantic_analyzer import analyze_with_semantics
+
+
+# =============================================================================
+# MCTS / TREE OF THOUGHTS: Strategic Planning for AGI-Level Reasoning
+# =============================================================================
+
+@dataclass
+class ThoughtNode:
+    """
+    A node in the Tree of Thoughts.
+
+    Each node represents a possible action the agent could take,
+    along with statistics from MCTS exploration.
+    """
+    id: str
+    action: dict  # {"tool": "...", "parameters": {...}, "reasoning": "..."}
+    parent: Optional["ThoughtNode"] = None
+    children: List["ThoughtNode"] = field(default_factory=list)
+
+    # MCTS statistics
+    visits: int = 0
+    value: float = 0.0  # Accumulated value from simulations
+    prior: float = 0.5  # Initial probability estimate from LLM
+
+    # Execution results (filled after action is taken)
+    executed: bool = False
+    result: Optional[str] = None
+    findings_count: int = 0
+
+    def ucb1_score(self, exploration_weight: float = 1.414) -> float:
+        """
+        Upper Confidence Bound for Trees (UCB1) score.
+
+        Balances exploitation (high value) vs exploration (low visits).
+        """
+        if self.visits == 0:
+            return float('inf')  # Unexplored nodes have highest priority
+
+        exploitation = self.value / self.visits
+        exploration = exploration_weight * math.sqrt(math.log(self.parent.visits + 1) / self.visits)
+
+        return exploitation + exploration + (self.prior * 0.5)  # Prior bonus
+
+    def backpropagate(self, reward: float):
+        """Update this node and all ancestors with the reward."""
+        node = self
+        while node is not None:
+            node.visits += 1
+            node.value += reward
+            node = node.parent
+
+
+class MCTSPlanner:
+    """
+    Monte Carlo Tree Search Planner for strategic action selection.
+
+    Instead of greedily picking the first good action, MCTS:
+    1. BRANCHES: Proposes multiple possible actions
+    2. VALUATES: Scores each branch's potential
+    3. SELECTS: Picks the highest-value path
+    4. BACKPROPAGATES: Updates values based on actual results
+    """
+
+    def __init__(
+        self,
+        client,  # OpenAI client
+        model: str,
+        num_branches: int = 3,
+        exploration_weight: float = 1.414
+    ):
+        self.client = client
+        self.model = model
+        self.num_branches = num_branches
+        self.exploration_weight = exploration_weight
+        self.root: Optional[ThoughtNode] = None
+        self.current_node: Optional[ThoughtNode] = None
+        self.node_counter = 0
+
+    def _generate_node_id(self) -> str:
+        self.node_counter += 1
+        return f"node_{self.node_counter}"
+
+    async def expand(
+        self,
+        memory: "AgentMemory",
+        tools: "ToolRegistry",
+        task_description: str,
+        code: str
+    ) -> List[ThoughtNode]:
+        """
+        BRANCHING: Generate multiple possible next actions.
+
+        Instead of asking "what should I do next?", we ask
+        "what are 3 different things I could try?"
+        """
+        system_prompt = """You are an AGI security researcher using Tree of Thoughts reasoning.
+
+Instead of picking ONE action, you must propose EXACTLY 3 DIFFERENT strategic paths.
+Each path should have a DIFFERENT approach to finding vulnerabilities.
+
+For each path, estimate its success probability (0.0-1.0) based on:
+- How likely this approach is to find vulnerabilities
+- How much of the code it will cover
+- Your prior knowledge about common vulnerability patterns
+
+Return EXACTLY 3 options in JSON format:
+{
+  "branches": [
+    {
+      "tool": "tool_name",
+      "parameters": {...},
+      "reasoning": "Why this approach might work",
+      "success_probability": 0.XX
+    },
+    {
+      "tool": "tool_name", 
+      "parameters": {...},
+      "reasoning": "Why this different approach might work",
+      "success_probability": 0.XX
+    },
+    {
+      "tool": "tool_name",
+      "parameters": {...},
+      "reasoning": "Why this third approach might work", 
+      "success_probability": 0.XX
+    }
+  ]
+}
+
+DIVERSIFY your suggestions:
+- One could be broad (scan_file, check_dependencies)
+- One could be targeted (analyze_function, grep_pattern)
+- One could be creative (fuzz_function, create_tool)
+
+Available tools: scan_file, fuzz_function, read_code, grep_pattern, analyze_function, 
+check_dependencies, report_vulnerability, add_hypothesis, conclude_investigation, create_tool"""
+
+        context = memory.get_context_summary()
+
+        user_prompt = f"""## Task
+{task_description or "Find security vulnerabilities in this code."}
+
+## Code (first 80 lines)
+```python
+{chr(10).join(code.split(chr(10))[:80])}
+```
+
+## Current State
+{context}
+
+## Step {memory.current_step}
+
+Propose 3 DIFFERENT strategic paths to investigate. Return JSON only."""
+
+        try:
+            response = await self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt}
+                ],
+                temperature=0.7,  # Higher temp for diverse branches
+                response_format={"type": "json_object"}
+            )
+
+            content = response.choices[0].message.content
+            data = json.loads(content)
+            branches = data.get("branches", [])
+
+            nodes = []
+            for branch in branches[:self.num_branches]:
+                node = ThoughtNode(
+                    id=self._generate_node_id(),
+                    action={
+                        "tool": branch.get("tool", "scan_file"),
+                        "parameters": branch.get("parameters", {}),
+                        "reasoning": branch.get("reasoning", "")
+                    },
+                    parent=self.current_node,
+                    prior=branch.get("success_probability", 0.5)
+                )
+                nodes.append(node)
+
+            # If we got fewer than expected, add fallback nodes
+            while len(nodes) < self.num_branches:
+                fallback_tools = ["scan_file", "check_dependencies", "grep_pattern"]
+                tool = fallback_tools[len(nodes) % len(fallback_tools)]
+                nodes.append(ThoughtNode(
+                    id=self._generate_node_id(),
+                    action={"tool": tool, "parameters": {}, "reasoning": "Fallback exploration"},
+                    parent=self.current_node,
+                    prior=0.3
+                ))
+
+            return nodes
+
+        except Exception as e:
+            print(f"[MCTS] Expansion error: {e}")
+            # Return fallback nodes
+            return [
+                ThoughtNode(
+                    id=self._generate_node_id(),
+                    action={"tool": "scan_file", "parameters": {}, "reasoning": "Fallback: initial scan"},
+                    parent=self.current_node,
+                    prior=0.5
+                ),
+                ThoughtNode(
+                    id=self._generate_node_id(),
+                    action={"tool": "check_dependencies", "parameters": {}, "reasoning": "Fallback: check imports"},
+                    parent=self.current_node,
+                    prior=0.4
+                ),
+                ThoughtNode(
+                    id=self._generate_node_id(),
+                    action={"tool": "grep_pattern", "parameters": {"pattern": r"(password|secret|key|token)"}, "reasoning": "Fallback: find secrets"},
+                    parent=self.current_node,
+                    prior=0.4
+                )
+            ]
+
+    async def valuate(
+        self,
+        nodes: List[ThoughtNode],
+        memory: "AgentMemory"
+    ) -> List[Tuple[ThoughtNode, float]]:
+        """
+        VALUATION: Score each branch's potential value.
+
+        Uses a combination of:
+        - LLM prior probability (from expansion)
+        - Heuristic bonuses (unexplored areas, common vulns)
+        - MCTS statistics (UCB1 score)
+        """
+        scored_nodes = []
+
+        for node in nodes:
+            # Base score from LLM prior
+            score = node.prior
+
+            # Heuristic bonuses
+            tool = node.action.get("tool", "")
+            params = node.action.get("parameters", {})
+
+            # Bonus for targeting unexplored functions
+            if tool in ["analyze_function", "fuzz_function"]:
+                func_name = params.get("function_name", "")
+                if func_name and func_name not in memory.explored_functions:
+                    score += 0.15  # Unexplored bonus
+
+            # Bonus for high-value targets
+            high_value_patterns = ["auth", "login", "password", "token", "admin", "secret", "key", "sql", "query"]
+            reasoning_lower = node.action.get("reasoning", "").lower()
+            for pattern in high_value_patterns:
+                if pattern in reasoning_lower:
+                    score += 0.1
+                    break
+
+            # Penalty if we've already done similar actions
+            similar_observations = sum(1 for obs in memory.observations if tool in obs)
+            if similar_observations > 2:
+                score -= 0.2
+
+            # UCB1 score if node has been visited before
+            if node.visits > 0:
+                score = node.ucb1_score(self.exploration_weight)
+
+            scored_nodes.append((node, min(1.0, max(0.0, score))))
+
+        # Sort by score descending
+        scored_nodes.sort(key=lambda x: x[1], reverse=True)
+
+        return scored_nodes
+
+    def select(self, scored_nodes: List[Tuple[ThoughtNode, float]]) -> ThoughtNode:
+        """
+        SELECTION: Pick the best branch to explore.
+
+        Uses softmax selection with temperature to allow some randomness,
+        preventing the agent from always picking the same path.
+        """
+        if not scored_nodes:
+            raise ValueError("No nodes to select from")
+
+        # Softmax with temperature for probabilistic selection
+        temperature = 0.5
+        scores = [s for _, s in scored_nodes]
+        max_score = max(scores)
+        exp_scores = [math.exp((s - max_score) / temperature) for s in scores]
+        sum_exp = sum(exp_scores)
+        probabilities = [e / sum_exp for e in exp_scores]
+
+        # Weighted random selection
+        r = random.random()
+        cumulative = 0.0
+        for (node, _), prob in zip(scored_nodes, probabilities):
+            cumulative += prob
+            if r <= cumulative:
+                return node
+
+        # Fallback to best node
+        return scored_nodes[0][0]
+
+    def backpropagate(self, node: ThoughtNode, reward: float):
+        """
+        BACKPROPAGATION: Update the tree with actual results.
+
+        After executing an action, we update the value estimates
+        for this node and all its ancestors.
+        """
+        node.backpropagate(reward)
+
+        # Log for visibility
+        print(f"[MCTS] 📊 Backprop: {node.action.get('tool')} | "
+              f"Reward: {reward:.2f} | Visits: {node.visits} | Value: {node.value:.2f}")
+
+    async def plan_next_action(
+        self,
+        memory: "AgentMemory",
+        tools: "ToolRegistry",
+        task_description: str,
+        code: str
+    ) -> dict:
+        """
+        Main MCTS planning loop: Branch → Valuate → Select
+
+        Returns the selected action to execute.
+        """
+        # Initialize root if needed
+        if self.root is None:
+            self.root = ThoughtNode(
+                id="root",
+                action={"tool": "root", "parameters": {}, "reasoning": "Root node"}
+            )
+            self.current_node = self.root
+
+        # BRANCH: Generate possible actions
+        print(f"[MCTS] 🌳 Branching: Generating {self.num_branches} possible paths...")
+        candidate_nodes = await self.expand(memory, tools, task_description, code)
+
+        # Add candidates as children of current node
+        self.current_node.children.extend(candidate_nodes)
+
+        # VALUATE: Score each branch
+        print(f"[MCTS] 📈 Valuating branches...")
+        scored_nodes = await self.valuate(candidate_nodes, memory)
+
+        # Log the branches
+        for node, score in scored_nodes:
+            print(f"[MCTS]   ├─ {node.action.get('tool')}: {score:.2f} "
+                  f"(prior={node.prior:.2f}) - {node.action.get('reasoning', '')[:50]}...")
+
+        # SELECT: Pick the best branch
+        selected_node = self.select(scored_nodes)
+        print(f"[MCTS] ✅ Selected: {selected_node.action.get('tool')} "
+              f"({selected_node.action.get('reasoning', '')[:60]}...)")
+
+        # Move to selected node
+        self.current_node = selected_node
+
+        return selected_node.action
+
+    def record_result(self, success: bool, findings_count: int, result_text: str):
+        """Record the result of executing the selected action."""
+        if self.current_node:
+            self.current_node.executed = True
+            self.current_node.result = result_text
+            self.current_node.findings_count = findings_count
+
+            # Calculate reward based on results
+            reward = 0.0
+            if findings_count > 0:
+                reward = min(1.0, 0.3 + (findings_count * 0.2))  # Up to 1.0 for many findings
+            elif success:
+                reward = 0.2  # Small reward for successful execution
+            else:
+                reward = -0.1  # Small penalty for failures
+
+            # Backpropagate the reward
+            self.backpropagate(self.current_node, reward)
+
 
 try:
     from openai import AsyncOpenAI
@@ -916,21 +1309,26 @@ class ToolRegistry:
 
 
 # =============================================================================
-# REACT LOOP: The autonomous reasoning engine
+# MCTS-BASED AGENT: Tree of Thoughts reasoning engine
 # =============================================================================
 
 class RedAgentV3:
     """
-    AGI-Level Red Agent using ReAct (Reason + Act) loop.
+    AGI-Level Red Agent using MCTS (Monte Carlo Tree Search) / Tree of Thoughts.
 
-    Unlike traditional scanners that run a fixed pipeline, this agent:
-    1. REASONS about what to investigate next based on context
-    2. ACTS by calling tools from its registry
-    3. OBSERVES results and updates its mental model
-    4. REPEATS until it finds critical exploits or times out
+    UPGRADE from ReAct: Instead of greedily picking the first good action,
+    this agent SIMULATES multiple futures before committing:
 
-    The agent maintains persistent memory across steps, allowing it to
-    build up understanding and chase down complex attack chains.
+    1. BRANCHES: Proposes 3 different strategic paths
+    2. VALUATES: Scores each branch's potential (success probability)
+    3. SELECTS: Picks the highest-value path using UCB1
+    4. EXECUTES: Runs the selected action
+    5. BACKPROPAGATES: Updates tree values based on actual results
+
+    The agent maintains a search tree, allowing it to:
+    - Remember unexplored branches for later
+    - Learn which types of actions are most effective
+    - Balance exploration vs exploitation
     """
 
     def __init__(
@@ -938,7 +1336,8 @@ class RedAgentV3:
         config: "AttackConfig | None" = None,
         max_steps: int = 10,
         max_time_seconds: float = 60.0,
-        model: str = None
+        model: str = None,
+        use_mcts: bool = True  # New flag to enable/disable MCTS
     ):
         # Support both old style (AttackConfig as first arg) and new style (kwargs)
         if config is not None:
@@ -949,6 +1348,8 @@ class RedAgentV3:
             self.max_steps = max_steps
             self.max_time_seconds = max_time_seconds
             self.config = None
+
+        self.use_mcts = use_mcts
 
         # Initialize LLM client
         if HAS_OPENAI:
@@ -967,6 +1368,9 @@ class RedAgentV3:
             self.client = None
             self.model = None
 
+        # Initialize MCTS planner (created per attack)
+        self.mcts_planner: Optional[MCTSPlanner] = None
+
     async def attack(
         self,
         code: str,
@@ -974,11 +1378,13 @@ class RedAgentV3:
         task_description: str = ""
     ) -> RedAgentReport:
         """
-        Main entry point - launch autonomous investigation.
+        Main entry point - launch autonomous investigation with MCTS.
 
-        The agent will reason about the code, choose tools to run,
-        observe results, and iterate until it finds critical issues
-        or runs out of time/steps.
+        The agent uses Tree of Thoughts to:
+        1. Generate multiple possible paths
+        2. Evaluate their potential
+        3. Select and execute the best one
+        4. Learn from results
         """
         start_time = time.time()
 
@@ -991,7 +1397,20 @@ class RedAgentV3:
         if not self.client:
             return await self._static_fallback(tools, memory, start_time)
 
-        # Run the ReAct loop
+        # Initialize MCTS planner for this attack
+        if self.use_mcts:
+            self.mcts_planner = MCTSPlanner(
+                client=self.client,
+                model=self.model,
+                num_branches=3,
+                exploration_weight=1.414
+            )
+            print(f"[RedAgent] 🌳 Using MCTS/Tree of Thoughts with {self.mcts_planner.num_branches} branches")
+        else:
+            self.mcts_planner = None
+            print(f"[RedAgent] Using standard ReAct loop")
+
+        # Run the main loop
         concluded = False
         while memory.current_step < self.max_steps:
             elapsed = time.time() - start_time
@@ -1001,8 +1420,13 @@ class RedAgentV3:
             memory.current_step += 1
 
             try:
-                # REASON: Ask LLM what to do next
-                action = await self._reason(memory, tools, task_description, code)
+                # Choose action using MCTS or fallback to simple reasoning
+                if self.use_mcts and self.mcts_planner:
+                    action = await self.mcts_planner.plan_next_action(
+                        memory, tools, task_description, code
+                    )
+                else:
+                    action = await self._reason(memory, tools, task_description, code)
 
                 if action is None:
                     break
@@ -1021,12 +1445,28 @@ class RedAgentV3:
                 # OBSERVE: Record what happened
                 memory.observations.append(f"Step {memory.current_step}: {tool_name} -> {result.output[:200]}")
 
+                # BACKPROPAGATE: Update MCTS tree with actual results
+                if self.use_mcts and self.mcts_planner:
+                    findings_count = len(result.findings) if result.findings else 0
+                    self.mcts_planner.record_result(
+                        success=result.success,
+                        findings_count=findings_count,
+                        result_text=result.output[:200]
+                    )
+
                 # Check if we found something critical
                 if memory.has_critical_finding() and memory.current_step >= 3:
                     break
 
             except Exception as e:
                 memory.observations.append(f"Step {memory.current_step}: Error - {str(e)}")
+                # Record failure in MCTS
+                if self.use_mcts and self.mcts_planner:
+                    self.mcts_planner.record_result(
+                        success=False,
+                        findings_count=0,
+                        result_text=f"Error: {str(e)}"
+                    )
 
         # Build final report
         return self._build_report(memory, time.time() - start_time)

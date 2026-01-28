@@ -31,16 +31,14 @@ def _init_sandbox():
 def _init_red_agent():
     """initialize embedded red agent for internal vulnerability scanning."""
     try:
-        from src.red_logic.orchestrator import RedAgentV2, AttackConfig
-        config = AttackConfig(
-            enable_smart_layer=True,
-            enable_reflection=True,
-            max_total_time=float(os.getenv("RED_AGENT_TIMEOUT", "60")),
-            smart_layer_timeout=float(os.getenv("RED_SMART_TIMEOUT", "30")),
-            reflection_timeout=float(os.getenv("RED_REFLECT_TIMEOUT", "20")),
+        # Use RedAgentV3 with MCTS (Tree of Thoughts) for AGI-level reasoning
+        from src.red_logic.orchestrator import RedAgentV3
+        red = RedAgentV3(
+            max_steps=10,
+            max_time_seconds=float(os.getenv("RED_AGENT_TIMEOUT", "60")),
+            use_mcts=True
         )
-        red = RedAgentV2(config)
-        print("[GreenAgent] Embedded Red Agent initialized")
+        print("[GreenAgent] Embedded Red Agent V3 (MCTS) initialized")
         return red
     except Exception as e:
         print(f"[GreenAgent] WARNING: Red Agent unavailable ({e}), security scanning disabled")
