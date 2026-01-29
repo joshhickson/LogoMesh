@@ -42,6 +42,7 @@ COPY main.py .
 # 6. Runtime Configuration
 # Ensure we use the virtual environment created by uv
 ENV PATH="/app/.venv/bin:$PATH"
+ENV PYTHONPATH="/app:/app/src:$PYTHONPATH"
 
 # Default entrypoint - AgentBeats will pass --host and --port as args
 ENTRYPOINT ["python3", "main.py"]

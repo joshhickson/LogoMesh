@@ -46,7 +46,7 @@ def main():
     parser = argparse.ArgumentParser(description="AgentBeats Polyglot Entrypoint")
     parser.add_argument("--role", choices=["GREEN", "PURPLE", "RED"], required=True)
     parser.add_argument("--host", default="0.0.0.0")
-    parser.add_argument("--port", type=int, default=8000)
+    parser.add_argument("--port", type=int, default=9009)
     parser.add_argument("--card-url", default="")
 
     args = parser.parse_args()

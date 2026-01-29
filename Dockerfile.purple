@@ -38,6 +38,7 @@ COPY main.py .
 
 # Runtime configuration
 ENV PATH="/app/.venv/bin:$PATH"
+ENV PYTHONPATH="/app:/app/src:$PYTHONPATH"
 
 # Purple Agent entrypoint
 ENTRYPOINT ["python3", "main.py", "--role", "PURPLE"]
