@@ -31,7 +31,7 @@ This session focused on synchronizing the repository documentation with recent c
 *   **`docs/00_CURRENT_TRUTH_SOURCE.md`**
     *   *Action:* Updated Architecture section to match the new reality.
 
-### B. Video Demo Assets (Creation)
+### B. Draft Video Demo Assets (Creation)
 *   **`docs/05-Competition/Video-Demo-Plan-Bank-Scenario.md`**
     *   *Content:* The active plan for the "Financial Liability" video insert (01:51-02:44).
 *   **`docs/05-Competition/Video-Demo-Plan.md`**
@@ -46,14 +46,39 @@ This session focused on synchronizing the repository documentation with recent c
     *   *Content:* Verification script for Red Agent static analysis.
 
 ### C. Archival (Cleanup)
-*   **Moved to `docs/Archive/Phase1/`**:
+*   **Attempted to Move `docs/Archive/Phase1/` (failed)**:
     *   `docs/05-Competition/Green-Agent-Detailed-Guide.md`
     *   `docs/05-Competition/Purple-Agent-Detailed-Guide.md`
-*   **Moved to `docs/Archive/Logs/Technical/`**:
-    *   ~50 outdated log files from `docs/04-Operations/Intent-Log/Technical/`.
+*   **Attempted to Move to `docs/Archive/Logs/Technical/`**:
+    *   ~50 outdated log files from `docs/04-Operations/Intent-Log/Technical/` (this failed; no files were moved).
 
 ## 4. Next Steps for Execution
 
-1.  **Filming:** Run `python scripts/demo_scenario_a_variance.py` and `python scripts/demo_scenario_b_iteration.py` and screen-record the terminal output.
-2.  **Voiceover:** Record the new script from `Video-Demo-Plan-Bank-Scenario.md`.
-3.  **Scoring Upgrade:** A future agent needs to implement the `scoring.py` JSON schema expansion (detailed in the plan) to add the requested "depth" to the output.
+1. **Review files that were changed by sszz01 during our Documentation Cleanup and Draft Session (he continued to focus on upgrading the red agent and moving it to be hosted within the green agent for GitHub Actions runtime compatibility). Evaluate how these changes affect the now outdated context that exists within `AgentBeats_Submission_Audit_Log.md`. Decide how to consolidate the information within `docs/04-Operations/Dual-Track-Arena` (which is now very outdated). Josh has determined that keeping all of this context within a single Audit Log is inefficient and prone to making mistakes. Using the existing folder instead will help.:**
+#### Formatted Changed File List
+* `data/dboms/dbom_test-123.json`
+* `docker/sandbox.Dockerfile`
+* `Dockerfile`
+* `Dockerfile.gpu`
+* `Dockerfile.green`
+* `Dockerfile.purple`
+* `Dockerfile.sandbox`
+* `main.py`
+* `pyproject.toml`
+* `src/green_logic/analyzer.py`
+* `src/green_logic/generator.py`
+* `src/green_logic/refinement_loop.py`
+* `src/green_logic/sandbox.py`
+* `src/green_logic/scoring.py`
+* `src/green_logic/server.py`
+* `src/llm_utils.py`
+* `src/red_logic/dependency_analyzer.py`
+* `src/red_logic/orchestrator.py`
+* `src/red_logic/reasoning.py`
+* `src/red_logic/semantic_analyzer.py`
+* `src/red_logic/workers/base.py`
+* `src/red_logic/workers/constraint_breaker.py`
+* `src/red_logic/workers/static_mirror.py`
+* `uv.lock`
+
+2. **Archive files that were attempted to be archived**
