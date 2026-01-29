@@ -234,9 +234,9 @@ To systematically review, triage, and consolidate source code and documentation 
     - Model detection logic for triggering Harmony parsing.
   - Includes assertions and print statements for step-by-step validation and debugging.
 
- 
- 
- 
+
+
+
 
 #### src/purple_logic/
 
