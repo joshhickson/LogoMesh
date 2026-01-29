@@ -38,6 +38,8 @@ COPY main.py .
 
 # Runtime configuration
 ENV PATH="/app/.venv/bin:$PATH"
+# CRITICAL: Add both /app and /app/src to PYTHONPATH for proper imports
+ENV PYTHONPATH="/app:/app/src:$PYTHONPATH"
 
 # Green Agent entrypoint
 ENTRYPOINT ["python3", "main.py", "--role", "GREEN"]

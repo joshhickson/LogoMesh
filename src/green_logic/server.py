@@ -35,7 +35,19 @@ def _init_red_agent():
     """initialize embedded red agent for internal vulnerability scanning."""
     try:
         # Use RedAgentV3 - MCTS enabled by default for smarter exploration
-        from src.red_logic.orchestrator import RedAgentV3
+        # Try multiple import paths for Docker compatibility
+        try:
+            from src.red_logic.orchestrator import RedAgentV3
+        except ImportError:
+            try:
+                from red_logic.orchestrator import RedAgentV3
+            except ImportError:
+                # Last resort: add parent path manually
+                import sys
+                _src_path = os.path.dirname(os.path.dirname(__file__))
+                if _src_path not in sys.path:
+                    sys.path.insert(0, _src_path)
+                from red_logic.orchestrator import RedAgentV3
 
         # OPTIMIZED DEFAULTS: MCTS with fewer steps = smart but fast
         use_mcts = os.getenv("RED_AGENT_MCTS", "true").lower() == "true"  # MCTS on by default
@@ -555,10 +567,27 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             evaluation['audit_reason'] = audit_result['reason']
 
         if not sandbox_result['success']:
-            evaluation['cis_score'] = min(evaluation.get('cis_score', 0), 0.5)
-            evaluation['sandbox_failed'] = True
-            # Show more output - especially the failure details at the end
+            # Calculate pass rate from output to scale penalty fairly
             output = sandbox_result['output']
+            pass_rate = 0.5  # default assumption
+            import re
+            # Try to extract "X passed, Y failed" from pytest output
+            match = re.search(r'(\d+)\s+passed.*?(\d+)\s+failed', output)
+            if match:
+                passed = int(match.group(1))
+                failed = int(match.group(2))
+                total = passed + failed
+                if total > 0:
+                    pass_rate = passed / total
+
+            # Scale score based on pass rate instead of hard cap at 0.5
+            # 100% pass = no penalty, 0% pass = cap at 0.4
+            # Formula: max_score = 0.4 + (0.6 * pass_rate)
+            max_allowed = 0.4 + (0.6 * pass_rate)
+            evaluation['cis_score'] = min(evaluation.get('cis_score', 0), max_allowed)
+            evaluation['sandbox_failed'] = True
+            evaluation['test_pass_rate'] = pass_rate
+            # Show more output - especially the failure details at the end
             # pytest puts failures at the end, so prioritize the tail
             if len(output) > 1500:
                 # Show first 500 + last 1000 to capture both context and failures
@@ -601,51 +630,45 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
                         sandbox_runner=sandbox
                     )
                 else:
-                    # Fast fallback: Send structured feedback without Scientific Method analysis
+                    # Fast fallback: DIRECT feedback without Scientific Method
                     output = sandbox_result.get('output', 'No output')
-                    # Prioritize the end of output where pytest shows failures
-                    if len(output) > 1200:
-                        output_display = output[:400] + "\n...[truncated]...\n" + output[-800:]
-                    else:
-                        output_display = output
 
-                    # Extract specific errors from output
-                    import re
-                    errors_found = []
-                    for pattern, desc in [
-                        (r'AssertionError:?\s*(.{1,100})', 'Assertion failed'),
-                        (r'TypeError:?\s*(.{1,100})', 'Type error'),
-                        (r'ValueError:?\s*(.{1,100})', 'Value error'),
-                        (r'NameError:?\s*(.{1,100})', 'Undefined name'),
-                        (r'AttributeError:?\s*(.{1,100})', 'Missing attribute'),
-                    ]:
-                        match = re.search(pattern, output, re.IGNORECASE)
+                    # Extract errors with specific fixes
+                    fixes = []
+                    if 'AssertionError' in output:
+                        match = re.search(r'AssertionError:?\s*(.{1,80})', output)
+                        fixes.append(f"ASSERTION FAILED: {match.group(1) if match else 'check return values'}")
+                    if 'TypeError' in output:
+                        match = re.search(r'TypeError:?\s*(.{1,80})', output)
+                        fixes.append(f"TYPE ERROR: {match.group(1) if match else 'check argument types'}")
+                    if 'NameError' in output:
+                        match = re.search(r"name '(\w+)'", output)
+                        fixes.append(f"UNDEFINED: '{match.group(1) if match else 'variable'}' - define it or check imports")
+                    if 'KeyError' in output:
+                        fixes.append("KEY NOT FOUND: use .get(key, default) instead of [key]")
+                    if 'IndexError' in output:
+                        fixes.append("INDEX ERROR: check list length before accessing")
+                    if 'AttributeError' in output:
+                        match = re.search(r"'(\w+)' object has no attribute '(\w+)'", output)
                         if match:
-                            errors_found.append(f"- {desc}: {match.group(1)[:80]}")
+                            fixes.append(f"MISSING: '{match.group(1)}' has no '{match.group(2)}'")
 
-                    errors_section = "\n".join(errors_found[:5]) if errors_found else "Review the test output below for details."
+                    # Add security issues if red agent found any
+                    vulns = red_report_obj.vulnerabilities if red_report_obj else []
+                    for v in vulns[:2]:
+                        cat = v.category.lower()
+                        if 'sql' in cat:
+                            fixes.append(f"SQL INJECTION: use parameterized queries, not f-strings")
+                        elif 'command' in cat:
+                            fixes.append(f"COMMAND INJECTION: use shell=False, pass args as list")
 
-                    feedback = f"""## Iteration {iteration} Feedback
+                    fixes_text = "\n".join(fixes) if fixes else f"TEST OUTPUT: {output[:200]}"
 
-Your code has issues that need fixing.
+                    feedback = f"""BUGS IN YOUR CODE - FIX THESE:
 
-### Issues Found
-{errors_section}
+{fixes_text}
 
-### Test Output
-```
-{output_display}
-```
-
-### Instructions
-Fix the issues above and resubmit. Respond with:
-```json
-{{
-    "sourceCode": "your fixed code",
-    "testCode": "your tests",
-    "rationale": "what you changed"
-}}
-```"""
+RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what you fixed>"}}"""
 
                 # Store this iteration's results
                 refinement_history.append({

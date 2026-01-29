@@ -237,27 +237,20 @@ class Sandbox:
                     with open(conftest_path, "w") as f:
                         f.write(f"import sys; sys.path.insert(0, '{temp_dir}')")
 
-                    # Check if pytest is available, otherwise use unittest
+                    # Ensure pytest is available (install if missing)
                     try:
                         subprocess.run(["python3", "-m", "pytest", "--version"],
                                       capture_output=True, timeout=5, check=True)
-                        use_pytest = True
                     except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
-                        use_pytest = False
+                        print("[Sandbox] pytest not found, installing...")
+                        subprocess.run(["python3", "-m", "pip", "install", "-q", "pytest"],
+                                      capture_output=True, timeout=30)
 
-                    if use_pytest:
-                        # Construct the pytest command (no --timeout, use subprocess timeout instead)
-                        cmd = [
-                            "python3", "-m", "pytest",
-                            "-v",
-                            os.path.join(temp_dir, "test_solution.py")
-                        ]
-                    else:
-                        # Fallback to unittest
-                        cmd = [
-                            "python3", "-m", "unittest",
-                            "discover", "-s", temp_dir, "-p", "test_*.py", "-v"
-                        ]
+                    cmd = [
+                        "python3", "-m", "pytest",
+                        "-v",
+                        os.path.join(temp_dir, "test_solution.py")
+                    ]
 
                     # Run the command with a timeout
                     try:
