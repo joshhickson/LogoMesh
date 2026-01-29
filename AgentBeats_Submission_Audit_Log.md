@@ -131,13 +131,15 @@ To systematically review, triage, and consolidate source code and documentation 
   - Code is modern, focused, and production-ready, with clear docstrings and robust handling of edge cases.
 
 - generator.py
-  - Implements the TestGenerator class for dynamic adversarial test generation using both an LLM (Qwen-2.5-Coder) and a programmatic fuzzer.
+  - Implements the TestGenerator class for dynamic adversarial test generation using an LLM (Qwen-2.5-Coder) via OpenAI-compatible API.
   - Key features:
-    - **Programmatic Fuzzer:** Includes `CodeAnalyzer` (AST-based) and `generate_fuzz_tests` to systematically generate edge case tests (empty inputs, boundaries, type confusion) without LLM dependency.
-    - **LLM-Based Generation:** `generate_adversarial_tests` prompts the LLM to generate 3 additional adversarial tests targeting complex logic gaps.
-    - **Hybrid Strategy:** Combines deterministic fuzz tests with creative LLM tests for maximum coverage.
-    - Robust error handling: Falls back to fuzz tests if LLM fails, or a safe `FALLBACK_TEST` if both fail.
-  - Code is modern, robust, and now significantly enhanced with deterministic testing capabilities.
+    - AsyncOpenAI client is initialized with environment-based configuration for API keys and model name (supports both LLM_* and OPENAI_* env vars).
+    - generate_adversarial_tests(task_desc, candidate_code): Async method that prompts the LLM to generate 3 adversarial pytest test functions targeting edge cases and vulnerabilities in the candidate code. Uses a strict system prompt to enforce output format and test quality.
+    - _sanitize_output(raw): Cleans and validates LLM output, extracting only valid Python test code. Falls back to a safe default if output is invalid or missing.
+    - FALLBACK_TEST: Provides a minimal valid test in case of LLM failure or timeout.
+  - Handles timeouts and exceptions robustly, always returning valid Python code.
+  - Supports the “sandbox execute” and “test specificity” parts of the CIS pipeline by generating edge-case tests for Purple Agent submissions.
+  - Code is modern, robust, and production-ready, with clear docstrings and strong error handling.
 
 - harmony_parser.py
   - Implements the HarmonyParser class for parsing responses from gpt-oss-20b models using the Harmony Response Format.
@@ -175,34 +177,43 @@ To systematically review, triage, and consolidate source code and documentation 
   - Code is modern, type-annotated, and production-ready, with clear docstrings and robust handling of edge cases.
 
 - sandbox.py
-  - Implements the Sandbox class for secure, isolated code execution using Docker containers.
+  - Implements the Sandbox class for secure, isolated code execution using Docker containers (python:3.12-slim).
   - Key features:
-    - **Security Upgrade:** Uses `put_archive` to copy files into containers (no volume mounts), ensuring compatibility with Docker-in-Docker (dind) environments and improving isolation.
-    - **No-Pytest Dependency:** Generates a dynamic `runner.py` to execute tests using the standard `unittest` library, reducing dependencies inside the container.
-    - **Strict Isolation:** Runs with `network_disabled=True`, memory limits (128m), and CPU quotas to prevent resource exhaustion attacks.
-    - Robust cleanup: Ensures containers are stopped/removed even on timeout or error.
-  - Code is modern, secure, and production-ready.
+    - Copies code into containers using put_archive (no volume mounts), supporting Docker-in-Docker environments.
+    - Runs code/tests with strict timeouts, memory, CPU, and process limits; enforces cleanup even on errors/timeouts.
+    - run(source_code, test_code): Main method to execute code and tests, supporting both single-file and multi-file modes. Returns success, output, and duration.
+    - Generates a dynamic runner.py to discover and run all test functions, reporting pass/failures.
+    - Handles all Docker errors robustly, always cleaning up containers.
+  - Includes a run_in_sandbox() convenience function for one-off execution.
+  - Code is modern, robust, and production-ready, with clear docstrings and strong error handling.
+  - Critical for the "sandbox execute" step in the CIS pipeline, ensuring safe and reproducible test execution.
 
 - scoring.py
   - Implements the ContextualIntegrityScorer class, the core of the Green Agent’s CIS scoring pipeline.
   - Key features:
-    - **Embedded Red Agent Support:** Now accepts a direct `RedAgentReport` object (skipping parsing) to support the embedded Red Agent architecture.
     - Integrates LLM-based logic review, vector similarity scoring, static/dynamic analysis, and Red Agent vulnerability reports.
     - Loads architecture and test constraints from YAML; applies penalties for violations.
     - _perform_logic_review(): Prompts LLM for code review and logic scoring, deterministic with fixed seed/temperature.
-    - evaluate(): Main async method. Computes all scores (R, A, T, L), applies Red Agent penalties, anchors logic score to test results, and returns a detailed evaluation dict.
+    - _parse_purple_response(): Handles both standard and Harmony-formatted Purple Agent responses, extracting code, rationale, and tests.
+    - _evaluate_architecture_constraints() and _evaluate_test_specificity(): Apply task-specific penalties and test coverage multipliers.
+    - evaluate(): Main async method. Computes all scores, applies Red Agent penalties, anchors logic score to test results, and returns a detailed evaluation dict for reporting and DBOM.
+    - _format_red_report(): Formats Red Agent findings for human-readable output.
   - Handles all error cases robustly, with clear debug output and fallback logic.
   - Code is modern, modular, and production-ready, with extensive docstrings and comments.
+  - Central to the CIS pipeline, integrating all agent outputs and evaluation logic for leaderboard and reporting.
 
 - server.py
   - Implements the FastAPI server for the Green Agent, orchestrating the full evaluation pipeline.
   - Key features:
-    - **Embedded Red Agent:** Directly initializes `RedAgentV2` from `src.red_logic` if available, removing the need for a separate Red Agent microservice for local/internal checks.
     - Exposes endpoints for A2A protocol, agent card discovery, and coding task evaluation.
-    - **Orchestration:** Coordinates Purple Agent (Defender) and Red Agent (Attacker) execution.
-    - `send_coding_task_action`: Sends task to Purple Agent, invokes embedded Red Agent (if active), runs static/dynamic analysis, and computes CIS.
+    - Handles incoming tasks, coordinates Purple and Red Agent calls, and manages all evaluation steps (static, dynamic, scoring).
     - Integrates GreenAgent, ContextualIntegrityScorer, SemanticAuditor, TestGenerator, and Docker-based Sandbox.
-  - Code is modern, modular, and production-ready. **Major architectural shift: Monolith capability (embedded Red Agent) now supported.**
+    - send_coding_task_action(): Main orchestration method. Sends tasks to Purple Agent, invokes Red Agent, runs static/dynamic analysis, and computes CIS.
+    - Robust error handling, fallback logic for missing agents, and detailed debug output.
+    - Supports both single-file and multi-file evaluation, with dynamic test generation and hidden test support.
+    - Persists results and DBOMs, and enforces reproducibility and traceability for leaderboard and reporting.
+  - Code is modern, modular, and production-ready, with clear docstrings and strong separation of concerns.
+  - Central to the Green Agent’s deployment and competition integration, ensuring all evaluation logic is accessible via API.
 
 - tasks.py
   - Defines the CODING_TASKS list, a comprehensive set of coding challenges for Purple Agent evaluation.
@@ -217,7 +228,15 @@ To systematically review, triage, and consolidate source code and documentation 
 - test_harmony_integration.py
   - Integration test for the Harmony Protocol parser and ContextualIntegrityScorer.
   - Tests end-to-end parsing of gpt-oss-20b Harmony-formatted and standard A2A Purple Agent responses.
-  - Verifies extraction and normalization of code, rationale, and test code from Harmony channels.
+  - Verifies:
+    - Extraction and normalization of code, rationale, and test code from Harmony channels.
+    - Fallback to standard parsing for non-Harmony responses.
+    - Model detection logic for triggering Harmony parsing.
+  - Includes assertions and print statements for step-by-step validation and debugging.
+
+
+
+
 
 #### src/purple_logic/
 
@@ -248,15 +267,6 @@ To systematically review, triage, and consolidate source code and documentation 
     - Handles ImportError gracefully if V2 is unavailable.
   - Code is modern, robust, and production-ready, with clear separation of agent configuration, execution, and serving logic.
 
-- dependency_analyzer.py
-  - **New File:** Implements `DependencyAnalyzer` and `analyze_dependencies` for context-aware static analysis.
-  - Key features:
-    - Uses Python AST to analyze imports and usage patterns (data flow analysis).
-    - Flags dangerous patterns (e.g., `subprocess.run`, `eval`, `pickle.loads`) with risk levels based on context.
-    - Distinguishes between CRITICAL risks (user input) and lower risks (hardcoded values).
-    - Includes heuristics for detecting user input (variable names, function parameters).
-  - Significantly enhances the Red Agent's static analysis capabilities beyond simple regex.
-
 - executor.py
   - Implements RedAgentV2Executor, the A2A protocol executor for the hybrid Red Agent.
   - Key features:
@@ -269,7 +279,6 @@ To systematically review, triage, and consolidate source code and documentation 
 - orchestrator.py
   - Main orchestrator and core engine for RedAgentV2, the hybrid multi-layer vulnerability detection system.
   - Key features:
-    - **Integrated Dependency Analyzer:** Now incorporates `dependency_analyzer` into Layer 1 (Static Analysis) for deeper, context-aware checks.
     - Orchestrates three layers: static workers, smart reasoning (LLM), and optional reflection.
     - Defines AttackConfig and AttackMetrics dataclasses for configuration and metrics.
     - Integrates static workers (StaticMirrorWorker, ConstraintBreakerWorker) and reasoning layers.
@@ -367,20 +376,9 @@ A direct comparison between `src/` and `docs/05-Competition/Agent-Architecture.m
     -   **Codebase:** `src/green_logic/server.py` defaults to Port 9040.
     -   **Action:** Verify intended port configuration and synchronize docs/code.
 
-4.  **Agent Architecture (Embedding Drift):**
-    -   **Documentation:** Likely describes Red Agent as a distinct microservice communicating via HTTP/A2A.
-    -   **Codebase:** `src/green_logic/server.py` now supports and prefers an **Embedded Red Agent** (library mode) for internal vulnerability scanning, bypassing the network layer.
-    -   **Action:** Update architecture documentation to reflect this dual-mode capability (Microservice vs. Embedded).
-
-5.  **Testing Strategy (Capability Drift):**
-    -   **Documentation:** Describes LLM-based test generation.
-    -   **Codebase:** `src/green_logic/generator.py` now includes a **Programmatic Fuzzer** that generates deterministic edge case tests (AST-based) in addition to LLM tests.
-    -   **Action:** Document the "Hybrid Testing Strategy" (Deterministic Fuzzing + Probabilistic LLM) in the Green Agent guide.
-
 ## Action Items
 
-- [ ] **Fix `docs/05-Competition/Agent-Architecture.md`**: Update filenames, scoring weights, port numbers, and Red Agent embedding details.
-- [ ] **Update Testing Documentation**: Document the new Programmatic Fuzzer in `Green-Agent-Detailed-Guide.md` or Architecture docs.
+- [ ] **Fix `docs/05-Competition/Agent-Architecture.md`**: Update filenames, scoring weights, and port numbers to match `src/green_logic/`.
 - [ ] Archive pre-2026 logs in `docs/04-Operations/Intent-Log/Technical/`.
 - [ ] Review `docs/05-Competition/Green-Agent-Detailed-Guide.md` and `Purple-Agent-Detailed-Guide.md` for consolidation.
 - [ ] Verify `docs/00_CURRENT_TRUTH_SOURCE.md` links are robust after any moves.
@@ -401,12 +399,10 @@ To the next agent: Please execute the following "Documentation Cleanup" plan bas
 3.  **Sanity Check Links**:
     -   After moving files, run a quick grep or search to ensure `docs/00_CURRENT_TRUTH_SOURCE.md` and `docs/index.rst` do not point to missing files. Update links if necessary to point to the `Archive` location or the new consolidated location.
 
-4.  **Reconcile Agent Architecture**:
+4.  **reconcile Agent Architecture**:
     -   Edit `docs/05-Competition/Agent-Architecture.md`.
     -   Replace `orchestrator.py` with `server.py` and `cis_scorer.py` with `scoring.py` in the file structure tree.
     -   Update the "Contextual Debt Framework" table to reflect the 4-part CIS formula (Rationale, Architecture, Testing, Logic - 25% each).
-    -   Update the Green Agent port to 9040.
-    -   Add a section describing the "Embedded Red Agent" capability.
-    -   Add a section describing the "Programmatic Fuzzer" in the Testing module.
+    -   Update the Green Agent port to 9040 (or update code to 9000 if that is the standard).
 
 ## Notes
