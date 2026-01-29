@@ -21,6 +21,8 @@ dependencies = [
     "sentence-transformers>=3.0.0",
     "scipy>=1.10.0",
     "pytest>=8.0.0",
+    "pyyaml>=6.0.0",
+    "hypothesis>=6.0.0",
 ]
 
 [project.scripts]
