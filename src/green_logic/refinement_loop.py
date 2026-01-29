@@ -1105,15 +1105,17 @@ html = f"<div>{escape(user_input)}</div>"
 - Use constant-time comparison for secrets
 - Never trust client-side auth state"""
 
-        # Generic fix
+        # Logic/functional bugs (not security)
         else:
-            return f"""**FIX REQUIRED**: {hypothesis.root_cause}
+            # For non-security issues, provide the root cause directly
+            # Don't suggest security fixes for logic bugs
+            root = hypothesis.root_cause if hypothesis.root_cause else hypothesis.statement
+            return f"""**FIX REQUIRED**: {root[:200]}
 
-Review the code and ensure:
-1. All user inputs are validated/sanitized
-2. No dangerous functions (eval, exec, shell) with user data
-3. Use parameterized queries for databases
-4. Escape output for web contexts"""
+Check your implementation:
+1. Handle edge cases (None, empty, boundary values)
+2. Ensure return values match expected types
+3. Verify state changes are applied correctly"""
 
     def _build_report(self, memory: ScientificMemory, source_code: str) -> Dict[str, Any]:
         """Build the final scientific report."""
@@ -1165,56 +1167,110 @@ Review the code and ensure:
         }
 
     def _generate_feedback(self, memory: ScientificMemory, source_code: str) -> str:
-        """Generate targeted feedback for Purple Agent based on verified findings."""
+        """
+        Generate DIRECT, ACTIONABLE feedback for Purple Agent.
+
+        Key principles:
+        1. Be IMPERATIVE - tell Purple exactly what to do
+        2. Show EXACT code changes, not patterns
+        3. Reference LINE NUMBERS when possible
+        4. Keep it SHORT - LLMs get confused by walls of text
+        """
+        lines = source_code.split('\n')
 
         feedback_parts = [
-            f"## Scientific Analysis - Iteration {memory.iteration}",
-            "",
-            "Your code has PROVEN vulnerabilities. Here's the evidence:",
+            "BUGS FOUND - FIX THESE:",
             ""
         ]
 
         for i, finding in enumerate(memory.verified_findings, 1):
+            # Extract line number if available
+            line_info = ""
+            if hasattr(finding, 'experiment') and finding.experiment:
+                # Try to find the problematic line in source
+                for j, line in enumerate(lines, 1):
+                    if any(keyword in line.lower() for keyword in ['eval', 'exec', 'execute', 'system', 'shell', 'format', 'f"', "f'"]):
+                        if finding.category in line.lower() or any(k in line.lower() for k in ['sql', 'query', 'cmd', 'shell']):
+                            line_info = f" (line {j})"
+                            break
+
+            feedback_parts.append(f"BUG {i}{line_info}: {finding.hypothesis.statement[:100]}")
+            feedback_parts.append(f"FIX: {self._extract_fix_action(finding.suggested_fix)}")
+            feedback_parts.append("")
+
+        # Add a concrete example if we have SQL injection
+        has_sql = any('sql' in f.category.lower() for f in memory.verified_findings)
+        has_cmd = any('command' in f.category.lower() or 'shell' in f.category.lower() for f in memory.verified_findings)
+        has_eval = any('eval' in f.category.lower() or 'exec' in f.category.lower() for f in memory.verified_findings)
+
+        if has_sql:
             feedback_parts.extend([
-                f"### Finding {i}: {finding.hypothesis.statement}",
-                "",
-                f"**Severity:** {finding.severity.upper()}",
-                f"**Category:** {finding.category}",
-                "",
-                "**Proof:**",
-                finding.proof,
-                "",
-                "**Reproduction Steps:**"
+                "EXAMPLE FIX FOR SQL:",
+                "BEFORE: cursor.execute(f\"SELECT * FROM users WHERE id = {user_id}\")",
+                "AFTER:  cursor.execute(\"SELECT * FROM users WHERE id = ?\", (user_id,))",
+                ""
             ])
-            for step in finding.reproduction_steps:
-                feedback_parts.append(f"  {step}")
+        if has_cmd:
             feedback_parts.extend([
-                "",
-                f"**Root Cause:** {finding.suggested_fix}",
+                "EXAMPLE FIX FOR COMMAND INJECTION:",
+                "BEFORE: subprocess.run(f\"cmd {user_input}\", shell=True)",
+                "AFTER:  subprocess.run([\"cmd\", user_input], shell=False)",
+                ""
+            ])
+        if has_eval:
+            feedback_parts.extend([
+                "EXAMPLE FIX FOR EVAL:",
+                "BEFORE: result = eval(user_input)",
+                "AFTER:  result = ast.literal_eval(user_input)  # or json.loads()",
                 ""
             ])
 
-        if memory.false_positives:
-            feedback_parts.extend([
-                "### Note: False Positives Filtered",
-                "The following were initially flagged but scientifically disproven:",
-            ])
-            for fp in memory.false_positives[:3]:
-                feedback_parts.append(f"- {fp}")
-            feedback_parts.append("")
-
         feedback_parts.extend([
-            "Please fix these issues and resubmit. Respond with the same JSON format:",
-            "```json",
-            "{",
-            '    "sourceCode": "...",',
-            '    "testCode": "...",',
-            '    "rationale": "..."',
-            "}",
-            "```"
+            "Resubmit with fixed code:",
+            "{\"sourceCode\": \"<your fixed code>\", \"testCode\": \"<tests>\", \"rationale\": \"<what you fixed>\"}"
         ])
 
         return "\n".join(feedback_parts)
+
+    def _extract_fix_action(self, suggested_fix: str) -> str:
+        """Extract the key action from a verbose fix suggestion."""
+        # If it's already short, return as-is
+        if len(suggested_fix) < 100:
+            return suggested_fix
+
+        # Try to extract just the key instruction based on SPECIFIC patterns
+        lower = suggested_fix.lower()
+
+        # SQL injection - very specific match
+        if 'parameterized quer' in lower or 'execute(' in lower and '?' in lower:
+            return "Use parameterized queries: execute('...?...', (val,))"
+
+        # Command injection - require both shell and subprocess context
+        if 'shell=false' in lower and ('subprocess' in lower or 'command' in lower):
+            return "Use shell=False and pass args as list"
+
+        # Eval/exec
+        if 'literal_eval' in lower or ('eval' in lower and 'ast' in lower):
+            return "Replace eval() with ast.literal_eval() or json.loads()"
+
+        # XSS/HTML
+        if 'escape' in lower and ('html' in lower or 'xss' in lower):
+            return "Escape user input before outputting to HTML"
+
+        # For non-security issues, just return a clean summary
+        # Extract first sentence or line that looks like an action
+        lines = suggested_fix.split('\n')
+        for line in lines:
+            line = line.strip()
+            # Skip markdown headers and code blocks
+            if line.startswith('**') or line.startswith('```') or line.startswith('#'):
+                continue
+            if line and len(line) > 10:
+                # Return first substantive line, truncated
+                return line[:100] + "..." if len(line) > 100 else line
+
+        # Fallback: return first 80 chars
+        return suggested_fix[:80] + "..." if len(suggested_fix) > 80 else suggested_fix
 
 
 # =============================================================================
@@ -1369,106 +1425,95 @@ class RefinementLoop:
         iteration: int
     ) -> str:
         """Generate actionable feedback when Scientific Method doesn't find verified issues."""
-        feedback_parts = [f"## Iteration {iteration} Feedback", ""]
-
-        # Parse test output for specific failures
+        # Parse test output for specific failures - be DIRECT
         output_lower = test_output.lower()
-        specific_issues = []
+        feedback_parts = ["ISSUES TO FIX:", ""]
 
-        # Check for assertion failures
-        if "assertionerror" in output_lower or "assert" in output_lower and "failed" in output_lower:
-            # Try to extract the assertion that failed
-            assertion_match = re.search(r'AssertionError:?\s*(.{1,200})', test_output, re.IGNORECASE)
-            if assertion_match:
-                specific_issues.append(f"Assertion failed: {assertion_match.group(1)[:100]}")
-            else:
-                specific_issues.append("An assertion in your tests failed - check test expectations")
+        # Extract specific errors with actionable fixes
+        error_fixes = []
 
-        # Check for type errors
+        if "assertionerror" in output_lower:
+            match = re.search(r'AssertionError:?\s*(.{1,150})', test_output, re.IGNORECASE)
+            if match:
+                error_fixes.append(f"ASSERTION FAILED: {match.group(1)[:80]}")
+                error_fixes.append("  → Check your function's return value matches expected")
+
         if "typeerror" in output_lower:
-            type_match = re.search(r'TypeError:?\s*(.{1,200})', test_output, re.IGNORECASE)
-            if type_match:
-                specific_issues.append(f"Type error: {type_match.group(1)[:100]}")
+            match = re.search(r'TypeError:?\s*(.{1,150})', test_output, re.IGNORECASE)
+            if match:
+                error_fixes.append(f"TYPE ERROR: {match.group(1)[:80]}")
+                error_fixes.append("  → Check argument types, add type validation")
 
-        # Check for attribute errors
         if "attributeerror" in output_lower:
-            attr_match = re.search(r'AttributeError:?\s*(.{1,200})', test_output, re.IGNORECASE)
-            if attr_match:
-                specific_issues.append(f"Missing attribute: {attr_match.group(1)[:100]}")
+            match = re.search(r"AttributeError:?\s*.*'(\w+)'.*'(\w+)'", test_output, re.IGNORECASE)
+            if match:
+                error_fixes.append(f"MISSING ATTRIBUTE: '{match.group(2)}' on '{match.group(1)}'")
+                error_fixes.append(f"  → Add the missing attribute or check object type")
 
-        # Check for name errors (undefined variables)
         if "nameerror" in output_lower:
-            name_match = re.search(r'NameError:?\s*(.{1,200})', test_output, re.IGNORECASE)
-            if name_match:
-                specific_issues.append(f"Undefined name: {name_match.group(1)[:100]}")
+            match = re.search(r"NameError:?\s*name '(\w+)'", test_output, re.IGNORECASE)
+            if match:
+                error_fixes.append(f"UNDEFINED: '{match.group(1)}'")
+                error_fixes.append(f"  → Define '{match.group(1)}' or check spelling/imports")
 
-        # Check for value errors
-        if "valueerror" in output_lower:
-            val_match = re.search(r'ValueError:?\s*(.{1,200})', test_output, re.IGNORECASE)
-            if val_match:
-                specific_issues.append(f"Invalid value: {val_match.group(1)[:100]}")
+        if "keyerror" in output_lower:
+            match = re.search(r"KeyError:?\s*['\"]?(\w+)['\"]?", test_output, re.IGNORECASE)
+            if match:
+                error_fixes.append(f"KEY NOT FOUND: '{match.group(1)}'")
+                error_fixes.append("  → Use .get() with default or check key exists first")
 
-        # Check for index/key errors
-        if "indexerror" in output_lower or "keyerror" in output_lower:
-            specific_issues.append("Index or key access failed - check bounds and key existence")
+        if "indexerror" in output_lower:
+            error_fixes.append("INDEX OUT OF BOUNDS")
+            error_fixes.append("  → Check list length before accessing, handle empty lists")
 
-        # Add specific issues to feedback
-        if specific_issues:
-            feedback_parts.extend([
-                "### Specific Issues Found",
-                ""
-            ])
-            for issue in specific_issues[:5]:  # Limit to 5 issues
-                feedback_parts.append(f"- {issue}")
+        if "zerodivisionerror" in output_lower:
+            error_fixes.append("DIVISION BY ZERO")
+            error_fixes.append("  → Add check: if divisor != 0 before dividing")
+
+        # Add error fixes
+        if error_fixes:
+            feedback_parts.extend(error_fixes)
             feedback_parts.append("")
 
-        # Add Red Agent vulnerabilities if any
+        # Add security issues - be direct
         if red_vulnerabilities:
-            feedback_parts.extend([
-                "### Security Issues (from Red Agent)",
-                ""
-            ])
+            feedback_parts.append("SECURITY BUGS:")
             for vuln in red_vulnerabilities[:3]:
-                feedback_parts.append(f"- **{vuln.get('severity', 'unknown').upper()}**: {vuln.get('title', 'Unknown')}")
-                if vuln.get('description'):
-                    feedback_parts.append(f"  {vuln['description'][:150]}")
+                sev = vuln.get('severity', 'medium').upper()
+                title = vuln.get('title', 'Security issue')
+                feedback_parts.append(f"  [{sev}] {title}")
+                # Add specific fix based on category
+                cat = vuln.get('category', '').lower()
+                if 'sql' in cat:
+                    feedback_parts.append("  → Use parameterized queries: execute(\"...?\", (val,))")
+                elif 'command' in cat or 'shell' in cat:
+                    feedback_parts.append("  → Use shell=False, pass args as list")
+                elif 'eval' in cat:
+                    feedback_parts.append("  → Replace eval() with ast.literal_eval()")
             feedback_parts.append("")
 
-        # Add audit issues if any
+        # Add audit issues briefly
         if audit_issues:
-            feedback_parts.extend([
-                "### Code Quality Issues",
-                ""
-            ])
-            for issue in audit_issues[:3]:
-                feedback_parts.append(f"- {issue}")
+            feedback_parts.append("CODE ISSUES:")
+            for issue in audit_issues[:2]:
+                feedback_parts.append(f"  - {issue[:80]}")
             feedback_parts.append("")
 
-        # If no specific issues found, show raw output
-        if not specific_issues and not red_vulnerabilities and not audit_issues:
-            feedback_parts.extend([
-                "### Test Output",
-                "```",
-                test_output[:800] if test_output else "No output available",
-                "```",
-                ""
-            ])
+        # If nothing specific found, show key test output
+        if not error_fixes and not red_vulnerabilities and not audit_issues:
+            # Extract the most relevant part of test output
+            if "FAILED" in test_output:
+                failed_match = re.search(r'(FAILED.*?)(?:\n|$)', test_output)
+                if failed_match:
+                    feedback_parts.append(f"TEST FAILED: {failed_match.group(1)[:100]}")
+            elif test_output:
+                feedback_parts.append(f"OUTPUT: {test_output[:200]}")
+            feedback_parts.append("")
 
-        # Add instructions
+        # Simple, direct resubmit instruction
         feedback_parts.extend([
-            "### What to Fix",
-            "1. Address the specific issues listed above",
-            "2. Ensure all functions handle edge cases (None, empty, negative values)",
-            "3. Check that all imports are correct",
-            "4. Verify return types match expectations",
-            "",
-            "Please fix these issues and resubmit your solution with the same JSON format:",
-            "```json",
-            "{",
-            '    "sourceCode": "your fixed code",',
-            '    "testCode": "your updated tests",',
-            '    "rationale": "what you changed and why"',
-            "}",
+            "FIX AND RESUBMIT:",
+            '{\"sourceCode\": \"<fixed code>\", \"testCode\": \"<tests>\", \"rationale\": \"<changes made>\"}',
             "```"
         ])
 
@@ -1486,13 +1531,19 @@ def create_refinement_task_prompt(
     feedback: str,
     iteration: int
 ) -> str:
-    """Create a new task prompt that includes the feedback."""
+    """
+    Create a refinement prompt that Purple can actually follow.
+
+    Key: Be DIRECT. LLMs respond better to imperative instructions.
+    """
     return f"""{original_prompt}
 
 ---
+ITERATION {iteration} - YOUR CODE HAD BUGS. FIX THEM:
+
 {feedback}
 
-This is iteration {iteration}. Please address the scientifically-verified feedback above and resubmit your improved solution."""
+IMPORTANT: Apply the fixes above and return your corrected code in the same JSON format."""
 
 
 # =============================================================================
