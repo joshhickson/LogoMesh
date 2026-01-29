@@ -21,6 +21,15 @@ from dataclasses import dataclass
 
 from openai import AsyncOpenAI
 
+try:
+    from llm_utils import get_temperature_kwargs
+except ImportError:
+    try:
+        from src.llm_utils import get_temperature_kwargs
+    except ImportError:
+        def get_temperature_kwargs(default=0.7):
+            return {"temperature": default}
+
 # Add parent path to allow imports from green_logic (for Docker compatibility)
 _src_path = os.path.dirname(os.path.dirname(__file__))
 if _src_path not in sys.path:
@@ -212,8 +221,8 @@ IMPORTANT:
                         {"role": "user", "content": prompt}
                     ],
                     response_format={"type": "json_object"},
-                    temperature=0.3,  # Some creativity but not too random
-                    max_tokens=2000
+                    max_tokens=2000,
+                    **get_temperature_kwargs(0.3)
                 )
 
                 content = response.choices[0].message.content
@@ -389,8 +398,8 @@ Only report HIGH or CRITICAL severity issues. Be concise."""
                     {"role": "user", "content": prompt}
                 ],
                 response_format={"type": "json_object"},
-                temperature=0.4,
-                max_tokens=1000
+                max_tokens=1000,
+                **get_temperature_kwargs(0.4)
             )
 
             content = response.choices[0].message.content

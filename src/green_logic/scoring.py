@@ -7,6 +7,15 @@ from pathlib import Path
 
 from openai import AsyncOpenAI
 
+try:
+    from llm_utils import get_temperature_kwargs
+except ImportError:
+    try:
+        from src.llm_utils import get_temperature_kwargs
+    except ImportError:
+        def get_temperature_kwargs(default=0.7):
+            return {"temperature": default}
+
 from .compare_vectors import VectorScorer
 from .red_report_parser import RedReportParser
 from .red_report_types import RedAgentReport
@@ -93,8 +102,8 @@ The logic_score must be a float between 0.0 and 1.0:
                         {"role": "user", "content": review_prompt},
                     ],
                     response_format={"type": "json_object"},
-                    temperature=0,  # Deterministic for reproducibility
                     seed=42,        # Fixed seed for consistent results
+                    **get_temperature_kwargs(0),
                 ),
                 timeout=self.logic_review_timeout,
             )
@@ -463,8 +472,8 @@ Note: `cis_score` = (0.25 * R) + (0.25 * A) + (0.25 * T) + (0.25 * L). Equal wei
                     {"role": "user", "content": prompt}
                 ],
                 response_format={"type": "json_object"},
-                temperature=0,  # Deterministic for reproducibility
                 seed=42,        # Fixed seed for consistent results
+                **get_temperature_kwargs(0),
             )
             
             content = response.choices[0].message.content

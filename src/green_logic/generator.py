@@ -17,6 +17,15 @@ from typing import List, Dict, Set, Any, Optional
 
 from openai import AsyncOpenAI
 
+try:
+    from llm_utils import get_temperature_kwargs
+except ImportError:
+    try:
+        from src.llm_utils import get_temperature_kwargs
+    except ImportError:
+        def get_temperature_kwargs(default=0.7):
+            return {"temperature": default}
+
 
 # =============================================================================
 # PROGRAMMATIC FUZZER - Systematic edge case generation
@@ -370,7 +379,7 @@ Generate 3 adversarial pytest test functions targeting edge cases in this code."
                         {"role": "system", "content": system_prompt},
                         {"role": "user", "content": user_prompt},
                     ],
-                    temperature=0.7,
+                    **get_temperature_kwargs(0.7),
                 ),
                 timeout=self.timeout_seconds,
             )
