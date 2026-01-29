@@ -67,6 +67,15 @@ except ImportError:
 
 import re  # For Meta-Agent tool validation
 
+try:
+    from llm_utils import get_temperature_kwargs
+except ImportError:
+    try:
+        from src.llm_utils import get_temperature_kwargs
+    except ImportError:
+        def get_temperature_kwargs(default=0.7):
+            return {"temperature": default}
+
 
 # =============================================================================
 # META-AGENT: Dynamic Experiment Generator (AGI-Level Capability)
@@ -359,7 +368,7 @@ Form 1-3 hypotheses. Be SPECIFIC and TESTABLE. Only JSON, no markdown:"""
                     {"role": "system", "content": "You are a security researcher. Respond with valid JSON only."},
                     {"role": "user", "content": prompt}
                 ],
-                temperature=0.3,
+                **get_temperature_kwargs(0.3),
             )
 
             text = response.choices[0].message.content.strip()
@@ -477,7 +486,7 @@ CRITICAL RULES:
                     {"role": "system", "content": "You are an AGI security researcher specializing in property-based testing. Respond with valid JSON only."},
                     {"role": "user", "content": prompt}
                 ],
-                temperature=0.3,
+                **get_temperature_kwargs(0.3),
             )
 
             text = response.choices[0].message.content.strip()
@@ -675,7 +684,7 @@ Only JSON, no markdown:"""
                     {"role": "system", "content": "You are a security analyst. Respond with valid JSON only."},
                     {"role": "user", "content": prompt}
                 ],
-                temperature=0.2,
+                **get_temperature_kwargs(0.2),
             )
 
             text = response.choices[0].message.content.strip()

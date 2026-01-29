@@ -108,6 +108,11 @@ from .workers.constraint_breaker import ConstraintBreakerWorker
 from .dependency_analyzer import analyze_dependencies, findings_to_vulnerabilities
 from .semantic_analyzer import analyze_with_semantics
 
+try:
+    from llm_utils import get_temperature_kwargs
+except ImportError:
+    from src.llm_utils import get_temperature_kwargs
+
 
 # =============================================================================
 # MCTS / TREE OF THOUGHTS: Strategic Planning for AGI-Level Reasoning
@@ -268,8 +273,8 @@ Propose 3 DIFFERENT strategic paths to investigate. Return JSON only."""
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}
                 ],
-                temperature=0.7,  # Higher temp for diverse branches
-                response_format={"type": "json_object"}
+                response_format={"type": "json_object"},
+                **get_temperature_kwargs(0.7)
             )
 
             content = response.choices[0].message.content
@@ -1591,7 +1596,7 @@ What should we investigate next? Choose a tool and explain your reasoning briefl
                 # Include both built-in and dynamically created tools
                 tools=[{"type": "function", "function": t} for t in tools.get_all_tool_definitions()],
                 tool_choice="required",
-                temperature=0.3,
+                **get_temperature_kwargs(0.3),
             )
 
             message = response.choices[0].message

@@ -768,7 +768,17 @@ RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what 
                         if not audit_result['valid']:
                             evaluation['cis_score'] = evaluation.get('cis_score', 0) * (1 - audit_result['penalty'])
                         if not sandbox_result['success']:
-                            evaluation['cis_score'] = min(evaluation.get('cis_score', 0), 0.5)
+                            # Use pass-rate scaling (same as initial evaluation)
+                            ref_output = sandbox_result.get('output', '')
+                            ref_pass_rate = 0.5
+                            ref_match = re.search(r'(\d+)\s+passed.*?(\d+)\s+failed', ref_output)
+                            if ref_match:
+                                ref_p = int(ref_match.group(1))
+                                ref_f = int(ref_match.group(2))
+                                if ref_p + ref_f > 0:
+                                    ref_pass_rate = ref_p / (ref_p + ref_f)
+                            ref_max = 0.4 + (0.6 * ref_pass_rate)
+                            evaluation['cis_score'] = min(evaluation.get('cis_score', 0), ref_max)
 
                         print(f"[Refinement] Iteration {iteration} complete: new score={evaluation.get('cis_score', 0):.2f}")
 
