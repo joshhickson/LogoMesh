@@ -786,6 +786,17 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
                 print(f"[Refinement] Iteration {iteration}: score={evaluation.get('cis_score', 0):.2f}, "
                       f"tests_passed={sandbox_result['success']}, critical_vulns={critical_vulns}")
 
+                # Detect intent-code mismatch (Purple returned wrong code entirely)
+                intent_sim = evaluation.get('intent_code_similarity', 1.0)
+                intent_mismatch_msg = ""
+                if intent_sim < 0.25:
+                    intent_mismatch_msg = (
+                        f"\n\nCRITICAL: Your code does NOT match the task! "
+                        f"The task asks for: {task_desc[:200]}. "
+                        f"Your code appears to implement something completely different. "
+                        f"REWRITE from scratch to match the task requirements.\n"
+                    )
+
                 # Generate targeted feedback using self-reflection
                 # Scientific Method can be slow (many LLM calls) - skip if disabled
                 if ENABLE_SCIENTIFIC_METHOD:
@@ -852,6 +863,10 @@ RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what 
                     "passed": sandbox_result['success'],
                     "feedback": feedback[:500]
                 })
+
+                # Prepend intent mismatch warning if detected
+                if intent_mismatch_msg:
+                    feedback = intent_mismatch_msg + feedback
 
                 # Send feedback to Purple and get new code
                 iteration += 1

@@ -417,8 +417,8 @@ The logic_score must be a float between 0.0 and 1.0:
             t_score = t_vector_score * test_specificity
 
         # A-002 Implementation: Explicit Cosine Similarity for Intent vs Code
-        # Compute and store intent_code_similarity as separate diagnostic field
-        # (Not yet used in CIS formula; reserved for validation analysis and reporting)
+        # Used as a mismatch penalty: if code doesn't match the task at all,
+        # the entire CIS is penalized (e.g., Purple returns factorial for an LRU cache task)
         intent_code_similarity = self.vector_scorer.calculate_similarity(task_description, source_code)
 
         # Capture Intent Vector for DBOM (Task 1.6)
@@ -557,7 +557,17 @@ Note: cis_score = 0.25*(R + A + T + L). Keep scores within ±0.10 of the ground 
 
             # B-002 Implementation: Reweight to 25-25-25-25 (equal component weight)
             raw_cis = (0.25 * r) + (0.25 * a) + (0.25 * t) + (0.25 * l)
-            
+
+            # Intent-Code Mismatch Penalty: if Purple returns code that doesn't match
+            # the task at all (e.g., factorial for an LRU cache task), penalize heavily.
+            # intent_code_similarity ~0.0 means complete mismatch → multiply CIS by ~0.30
+            # intent_code_similarity ~0.5+ means reasonable match → no penalty (multiplier ~1.0)
+            if intent_code_similarity < 0.35:
+                # Scale: 0.0 similarity → 0.30 multiplier, 0.35 → 1.0 (linear)
+                intent_multiplier = 0.30 + (intent_code_similarity / 0.35) * 0.70
+                raw_cis *= intent_multiplier
+                print(f"[Scoring] Intent-code mismatch detected! similarity={intent_code_similarity:.3f}, penalty multiplier={intent_multiplier:.2f}")
+
             # Red Agent Integration (H-004): Parse vulnerability report and apply penalty
             red_penalty_multiplier = 1.0  # Default: no penalty
             parsed_red_report = None
