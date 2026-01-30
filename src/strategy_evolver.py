@@ -177,7 +177,14 @@ class StrategyEvolver:
 
         total_attempts = sum(s["attempts"] for s in stats.values()) if stats else 0
 
-        # Not enough data — explore randomly
+        # Not enough data — use safe default on first run, then start exploring
+        if total_attempts == 0:
+            config = {**DEFAULT_STRATEGY}
+            config["_strategy_name"] = "default"
+            config["_selection_reason"] = "first run (safe default)"
+            print(f"[StrategyEvolver] First run for {task_id} — using default strategy")
+            return config
+
         if total_attempts < 3:
             variant = random.choice(STRATEGY_VARIANTS)
             config = {**DEFAULT_STRATEGY, **variant["overrides"]}
