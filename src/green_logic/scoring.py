@@ -304,6 +304,7 @@ The logic_score must be a float between 0.0 and 1.0:
         sandbox_result: dict | None = None,
         red_report_obj: RedAgentReport | None = None,
         memory_context: str = "",
+        task_intel=None,
     ) -> dict:
         """
         Evaluates the Purple Agent's submission using the Contextual Integrity framework,
@@ -353,6 +354,17 @@ The logic_score must be a float between 0.0 and 1.0:
                     task_id = tid
                     break
         
+        # For novel tasks not in architecture_constraints.yaml, try dynamic guidance
+        if task_id and task_id not in self.architecture_constraints and task_intel:
+            try:
+                dynamic_guidance = await task_intel.get_architecture_guidance(task_id, task_description)
+                if dynamic_guidance and dynamic_guidance.get("constraints"):
+                    # Temporarily inject dynamic constraints for evaluation
+                    self.architecture_constraints[task_id] = dynamic_guidance
+                    print(f"[Scorer] Using dynamic architecture constraints for novel task {task_id}")
+            except Exception as e:
+                print(f"[Scorer] Dynamic architecture guidance failed: {e}")
+
         constraint_penalty = self._evaluate_architecture_constraints(task_id, source_code) if task_id else 0.0
         a_score = a_vector_score * (1.0 - constraint_penalty)
         

@@ -124,6 +124,7 @@ class SmartReasoningLayer:
         task_description: str,
         static_findings: list[Vulnerability],
         memory_context: str = "",
+        task_intel=None,
     ) -> list[Vulnerability]:
         """
         Use LLM to find vulnerabilities that static analysis missed.
@@ -133,13 +134,14 @@ class SmartReasoningLayer:
             task_id: Task identifier (e.g., "task-001")
             task_description: Full task description
             static_findings: Vulnerabilities already found by static workers
+            task_intel: Optional TaskIntelligence for dynamic hint generation
 
         Returns:
             List of additional vulnerabilities found by LLM
         """
         try:
             return await asyncio.wait_for(
-                self._do_enhance(code, task_id, task_description, static_findings, memory_context),
+                self._do_enhance(code, task_id, task_description, static_findings, memory_context, task_intel),
                 timeout=self.timeout
             )
         except asyncio.TimeoutError:
@@ -156,14 +158,22 @@ class SmartReasoningLayer:
         task_description: str,
         static_findings: list[Vulnerability],
         memory_context: str = "",
+        task_intel=None,
     ) -> list[Vulnerability]:
         """Internal method that does the actual enhancement."""
 
         # Format existing findings
         existing = self._format_existing_findings(static_findings)
 
-        # Get task-specific hints
-        attack_hints = self.TASK_ATTACK_HINTS.get(task_id, "Focus on common vulnerability patterns")
+        # Get task-specific hints — use TaskIntelligence for dynamic generation
+        if task_intel and task_id:
+            try:
+                attack_hints = await task_intel.get_attack_hints(task_id, task_description, code)
+            except Exception as e:
+                print(f"[SmartReasoning] TaskIntelligence failed: {e}")
+                attack_hints = self.TASK_ATTACK_HINTS.get(task_id, "Focus on common vulnerability patterns")
+        else:
+            attack_hints = self.TASK_ATTACK_HINTS.get(task_id, "Focus on common vulnerability patterns")
 
         prompt = f"""You are an expert security researcher performing a deep code review.
 

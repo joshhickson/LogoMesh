@@ -24,6 +24,14 @@ except ImportError:
     except ImportError:
         BattleMemory = None
 
+try:
+    from task_intelligence import TaskIntelligence
+except ImportError:
+    try:
+        from src.task_intelligence import TaskIntelligence
+    except ImportError:
+        TaskIntelligence = None
+
 
 def _init_sandbox():
     """initialize sandbox with fallback if docker unavailable."""
@@ -283,6 +291,14 @@ else:
     battle_memory = None
     print("[GreenAgent] Battle memory unavailable (import failed)")
 
+# Task intelligence: dynamic understanding for novel tasks
+if TaskIntelligence is not None:
+    task_intelligence = TaskIntelligence(battle_memory=battle_memory)
+    print("[GreenAgent] Task intelligence initialized")
+else:
+    task_intelligence = None
+    print("[GreenAgent] Task intelligence unavailable (import failed)")
+
 STALL_THRESHOLD = 30.0  # seconds without activity = hung inference
 # AGENTIC MODE: Enable refinement loop by default for true agent behavior
 ENABLE_REFINEMENT = os.getenv("ENABLE_REFINEMENT_LOOP", "true").lower() == "true"
@@ -411,7 +427,14 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             try:
                 task = next(t for t in CODING_TASKS if t['id'] == request.task_id)
             except StopIteration:
-                raise HTTPException(status_code=404, detail=f"Task {request.task_id} not found")
+                # Novel task — create minimal task object, let pipeline handle dynamically
+                task = {
+                    "id": request.task_id,
+                    "title": request.task_id,
+                    "description": f"Novel task: {request.task_id}",
+                    "constraints": {},
+                }
+                print(f"[GreenAgent] Novel task detected: {request.task_id}")
         else:
             task = random.choice(CODING_TASKS)
 
@@ -514,6 +537,7 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
                     task_id=request.task_id,
                     task_description=task_desc,
                     memory_context=red_memory,
+                    task_intel=task_intelligence,
                 )
                 # Convert RedAgentReport to dict for backward compatibility with scorer
                 red_result_data = {
@@ -597,6 +621,7 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             sandbox_result=sandbox_result,
             red_report_obj=red_report_obj,  # Pass direct object to skip parsing
             memory_context=scoring_memory,
+            task_intel=task_intelligence,
         )
 
         # apply penalties
@@ -777,6 +802,7 @@ RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what 
                                 task_id=request.task_id,
                                 task_description=task_desc,
                                 memory_context=red_memory if battle_memory and task_memory else "",
+                                task_intel=task_intelligence,
                             )
                             red_result_data = {
                                 "attack_successful": red_report_obj.attack_successful,
@@ -811,6 +837,7 @@ RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what 
                             sandbox_result=sandbox_result,
                             red_report_obj=red_report_obj,
                             memory_context=scoring_memory if battle_memory and task_memory else "",
+                            task_intel=task_intelligence,
                         )
 
                         if not audit_result['valid']:

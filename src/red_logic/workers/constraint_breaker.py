@@ -277,6 +277,8 @@ class ConstraintBreakerWorker(BaseWorker):
 
         if not task_id:
             # Can't check constraints without knowing the task
+            # Novel tasks are handled by the LLM reasoning layer instead
+            print(f"[ConstraintBreaker] No task_id inferred — skipping static constraint checks")
             return WorkerResult(
                 worker_name=self.name,
                 vulnerabilities=[],
@@ -285,6 +287,8 @@ class ConstraintBreakerWorker(BaseWorker):
 
         # Get constraints for this task
         task_constraints = [c for c in self.TASK_CONSTRAINTS if c.task_id == task_id]
+        if not task_constraints and task_id:
+            print(f"[ConstraintBreaker] No hardcoded constraints for {task_id} — novel task")
 
         # Check each constraint
         for constraint in task_constraints:
@@ -521,4 +525,5 @@ class ConstraintBreakerWorker(BaseWorker):
         elif "mvcc" in code_lower or "multiversion" in code_lower:
             return "task-020"
 
+        # No heuristic match — reasoning layer handles novel tasks dynamically
         return None
