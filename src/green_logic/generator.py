@@ -380,7 +380,7 @@ Generate 3 adversarial pytest test functions targeting edge cases in this code."
                         {"role": "system", "content": system_prompt},
                         {"role": "user", "content": user_prompt},
                     ],
-                    **get_temperature_kwargs(0.7),
+                    **get_temperature_kwargs(0.3),
                 ),
                 timeout=self.timeout_seconds,
             )
@@ -444,4 +444,61 @@ Generate 3 adversarial pytest test functions targeting edge cases in this code."
         if not clean_code or "def test_" not in clean_code:
             return self.FALLBACK_TEST
 
+        # 5. Syntax validation: compile check to catch hallucinated invalid Python
+        try:
+            compile(clean_code, "<generated_tests>", "exec")
+        except SyntaxError as e:
+            print(f"[TestGenerator] Syntax error in generated tests (line {e.lineno}): {e.msg}")
+            # Try to salvage: extract individual test functions that compile
+            salvaged = self._salvage_valid_tests(clean_code)
+            if salvaged:
+                print(f"[TestGenerator] Salvaged valid test functions from broken output")
+                return salvaged
+            return self.FALLBACK_TEST
+
         return clean_code
+
+    def _salvage_valid_tests(self, code: str) -> str:
+        """Extract individual test functions that compile from broken generated code."""
+        lines = code.split('\n')
+        # Collect import lines and test function blocks
+        imports = []
+        test_blocks = []
+        current_block = []
+        in_test = False
+
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith(('import ', 'from ')):
+                imports.append(line)
+            elif stripped.startswith('def test_'):
+                if in_test and current_block:
+                    test_blocks.append('\n'.join(current_block))
+                current_block = [line]
+                in_test = True
+            elif in_test:
+                if stripped and not stripped.startswith(' ') and not stripped.startswith('\t') and not stripped.startswith('def '):
+                    # Non-indented non-def line ends the block
+                    test_blocks.append('\n'.join(current_block))
+                    current_block = []
+                    in_test = False
+                else:
+                    current_block.append(line)
+
+        if in_test and current_block:
+            test_blocks.append('\n'.join(current_block))
+
+        # Filter to blocks that compile
+        valid_blocks = []
+        for block in test_blocks:
+            full = '\n'.join(imports) + '\n' + block
+            try:
+                compile(full, "<test>", "exec")
+                valid_blocks.append(block)
+            except SyntaxError:
+                continue
+
+        if not valid_blocks:
+            return ""
+
+        return '\n'.join(imports) + '\n\n' + '\n\n'.join(valid_blocks)

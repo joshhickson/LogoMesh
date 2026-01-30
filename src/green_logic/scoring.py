@@ -539,6 +539,33 @@ Note: `cis_score` = (0.25 * R) + (0.25 * A) + (0.25 * T) + (0.25 * L). Equal wei
                 eval_data["logic_score_anchored"] = True
                 eval_data["logic_cap_pass_rate"] = _pass_rate
             
+            # Score floor enforcement: LLM often ignores prompt guidance
+            # Architecture: 0 vulns found → floor at 0.65 (not the LLM's 0.50)
+            if red_report_obj and len(red_report_obj.vulnerabilities) == 0:
+                a = max(a, 0.65)
+            elif red_report and not red_report.get("vulnerabilities"):
+                a = max(a, 0.65)
+
+            # Testing: scale floor by actual pass rate from sandbox
+            if sandbox_result:
+                sb_out = sandbox_result.get("output", "")
+                _pm2 = re.search(r'(\d+)\s+passed', sb_out)
+                _fm2 = re.search(r'(\d+)\s+failed', sb_out)
+                if _pm2 or _fm2:
+                    _p2 = int(_pm2.group(1)) if _pm2 else 0
+                    _f2 = int(_fm2.group(1)) if _fm2 else 0
+                    _total2 = _p2 + _f2
+                    if _total2 > 0:
+                        actual_pass_rate = _p2 / _total2
+                        # 85% pass → floor 0.60, 100% pass → floor 0.75
+                        t_floor = 0.3 + (0.45 * actual_pass_rate)
+                        t = max(t, t_floor)
+
+            eval_data["rationale_score"] = r
+            eval_data["architecture_score"] = a
+            eval_data["testing_score"] = t
+            eval_data["logic_score"] = l
+
             # B-002 Implementation: Reweight to 25-25-25-25 (equal component weight)
             raw_cis = (0.25 * r) + (0.25 * a) + (0.25 * t) + (0.25 * l)
             

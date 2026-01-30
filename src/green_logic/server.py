@@ -32,6 +32,14 @@ except ImportError:
     except ImportError:
         TaskIntelligence = None
 
+try:
+    from strategy_evolver import StrategyEvolver
+except ImportError:
+    try:
+        from src.strategy_evolver import StrategyEvolver
+    except ImportError:
+        StrategyEvolver = None
+
 
 def _init_sandbox():
     """initialize sandbox with fallback if docker unavailable."""
@@ -299,11 +307,69 @@ else:
     task_intelligence = None
     print("[GreenAgent] Task intelligence unavailable (import failed)")
 
+# Strategy evolver: self-improving strategy selection
+if StrategyEvolver is not None:
+    strategy_evolver = StrategyEvolver()
+    print("[GreenAgent] Strategy evolver initialized")
+else:
+    strategy_evolver = None
+    print("[GreenAgent] Strategy evolver unavailable (import failed)")
+
 STALL_THRESHOLD = 30.0  # seconds without activity = hung inference
 # AGENTIC MODE: Enable refinement loop by default for true agent behavior
 ENABLE_REFINEMENT = os.getenv("ENABLE_REFINEMENT_LOOP", "true").lower() == "true"
 # Scientific Method can be disabled for faster runs
 ENABLE_SCIENTIFIC_METHOD = os.getenv("ENABLE_SCIENTIFIC_METHOD", "true").lower() == "true"
+
+
+def classify_task_complexity(source_code: str) -> str:
+    """
+    Classify task complexity from source code using AST analysis (no LLM call).
+
+    Returns: "simple", "moderate", or "complex"
+
+    Simple tasks (skip MCTS, reduce refinement):
+    - Short code with no security-sensitive patterns
+    - Pure computation (math, string ops, data structures)
+
+    Complex tasks (full pipeline):
+    - Security-sensitive code (eval, exec, SQL, subprocess, file I/O)
+    - Large codebase with many classes
+    """
+    import ast as _ast
+    import re as _re
+
+    lines = [l for l in source_code.strip().split('\n') if l.strip() and not l.strip().startswith('#')]
+    loc = len(lines)
+
+    try:
+        tree = _ast.parse(source_code)
+    except SyntaxError:
+        return "moderate"  # Can't parse — play it safe
+
+    num_classes = sum(1 for n in _ast.walk(tree) if isinstance(n, _ast.ClassDef))
+    num_functions = sum(1 for n in _ast.walk(tree) if isinstance(n, (_ast.FunctionDef, _ast.AsyncFunctionDef)))
+    num_imports = sum(1 for n in _ast.walk(tree) if isinstance(n, (_ast.Import, _ast.ImportFrom)))
+
+    # Check for security-sensitive patterns that warrant full MCTS analysis
+    security_patterns = (
+        r'\beval\s*\(', r'\bexec\s*\(', r'\bsubprocess\b', r'\bos\.system\b',
+        r'\bsqlite3\b', r'\bcursor\.execute\b', r'\bSELECT\b', r'\bINSERT\b',
+        r'\bopen\s*\(', r'\bpickle\b', r'\byaml\.load\b', r'\b__import__\b',
+        r'\bsocket\b', r'\brequests\b', r'\burllib\b', r'\bhashlib\b',
+        r'\bpassword\b', r'\bsecret\b', r'\btoken\b', r'\bauth\b',
+    )
+    has_security_patterns = any(_re.search(p, source_code, _re.IGNORECASE) for p in security_patterns)
+
+    # Simple: no security patterns AND (short code OR just a few pure functions)
+    if not has_security_patterns and loc <= 60 and num_classes <= 1 and num_imports <= 5:
+        return "simple"
+
+    # Complex: security-sensitive code, many classes, or large codebase
+    if has_security_patterns or num_classes >= 3 or num_functions >= 8 or loc >= 150:
+        return "complex"
+
+    return "moderate"
 
 
 async def stream_purple_response(client: httpx.AsyncClient, purple_url: str, payload: dict, battle_id: str):
@@ -471,6 +537,14 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             print(f"[Memory] Retrieval failed: {e}")
             task_memory = None
 
+    # === STRATEGY SELECTION (self-improving) ===
+    evolved_strategy = None
+    if strategy_evolver:
+        try:
+            evolved_strategy = strategy_evolver.select_strategy(request.task_id or "unknown")
+        except Exception as e:
+            print(f"[StrategyEvolver] Selection failed: {e}")
+
     purple_agent_url = os.getenv("PURPLE_AGENT_URL", request.purple_agent_url)
     red_agent_url = os.getenv("RED_AGENT_URL", request.red_agent_url)
 
@@ -528,8 +602,27 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             source_code = source_code.replace('\\n', '\n').replace('\\t', '\t')
             purple_data['sourceCode'] = source_code
 
+        # === TASK COMPLEXITY CLASSIFICATION ===
+        # Skip heavy pipeline (MCTS, extra refinement) for simple tasks
+        task_complexity = classify_task_complexity(source_code)
+        print(f"[GreenAgent] Task complexity: {task_complexity} ({len(source_code)} chars)")
+
+        if task_complexity == "simple" and red_agent:
+            # Simple tasks: disable MCTS, reduce steps
+            red_agent.use_mcts = False
+            red_agent.max_steps = 3
+            print(f"[GreenAgent] Simple task detected — MCTS disabled, reduced red agent steps")
+        elif red_agent:
+            # Restore defaults for moderate/complex tasks
+            use_mcts = os.getenv("RED_AGENT_MCTS", "true").lower() == "true"
+            red_agent.use_mcts = use_mcts
+            red_agent.max_steps = int(os.getenv("RED_AGENT_STEPS", "5"))
+
         if red_agent:
             print(f"[Red] Running embedded Red Agent attack on {len(source_code)} chars of code")
+            # Apply evolved MCTS parameters if available
+            if evolved_strategy:
+                red_agent.mcts_branches = evolved_strategy.get("mcts_num_branches", red_agent.mcts_branches)
             try:
                 red_memory = battle_memory.format_for_red_agent(task_memory) if battle_memory and task_memory else ""
                 red_report_obj = await red_agent.attack(
@@ -591,6 +684,9 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
         else:
             # Priority 2: Generate adversarial tests (independent of Purple)
             test_memory = battle_memory.format_for_test_generator(task_memory) if battle_memory and task_memory else ""
+            # Append evolved test focus strategy
+            if evolved_strategy and strategy_evolver:
+                test_memory += strategy_evolver.get_test_focus_prompt(evolved_strategy)
             tests_to_run = await test_generator.generate_adversarial_tests(task_desc, source_code, memory_context=test_memory)
             tests_used = "generated"
 
@@ -613,6 +709,9 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
 
         # step 4: evaluation
         scoring_memory = battle_memory.format_for_scoring(task_memory) if battle_memory and task_memory else ""
+        # Append evolved strategy emphasis to scoring context
+        if evolved_strategy and strategy_evolver:
+            scoring_memory += strategy_evolver.get_scoring_emphasis_prompt(evolved_strategy)
         evaluation = await scorer.evaluate(
             task_description=task_desc,
             purple_response=purple_data,
@@ -663,10 +762,14 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
 
         # === AGENTIC REFINEMENT LOOP ===
         # If enabled, iteratively help Purple improve their code
+        # Simple tasks: skip refinement if score is already decent
         iteration = 1
         refinement_history = []
+        skip_refinement = (task_complexity == "simple" and evaluation.get('cis_score', 0) >= 0.5)
+        if skip_refinement:
+            print(f"[GreenAgent] Simple task with score {evaluation.get('cis_score', 0):.2f} — skipping refinement")
 
-        if ENABLE_REFINEMENT:
+        if ENABLE_REFINEMENT and not skip_refinement:
             critical_vulns = len([v for v in (red_report_obj.vulnerabilities if red_report_obj else [])
                                   if v.severity.value == "critical"])
 
@@ -919,6 +1022,25 @@ RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what 
                 print(f"[Memory] Stored {n} lessons for battle {request.battle_id}")
             except Exception as e:
                 print(f"[Memory] Warning: Failed to store lessons: {e}")
+
+        # Record strategy outcome for self-improvement
+        if strategy_evolver and evolved_strategy:
+            try:
+                cis = result.get("evaluation", {}).get("cis_score", 0.0)
+                strategy_evolver.record_outcome(
+                    task_id=request.task_id or "unknown",
+                    strategy_name=evolved_strategy.get("_strategy_name", "default"),
+                    strategy_config=evolved_strategy,
+                    cis_score=cis,
+                    component_scores={
+                        "R": result.get("evaluation", {}).get("rationale_score"),
+                        "A": result.get("evaluation", {}).get("architecture_score"),
+                        "T": result.get("evaluation", {}).get("testing_score"),
+                        "L": result.get("evaluation", {}).get("logic_score"),
+                    },
+                )
+            except Exception as e:
+                print(f"[StrategyEvolver] Warning: Failed to record outcome: {e}")
 
         return result
 
