@@ -251,6 +251,8 @@ check_dependencies, report_vulnerability, add_hypothesis, conclude_investigation
 
         context = memory.get_context_summary()
 
+        mcts_memory = getattr(self, 'memory_context', '') or ""
+        memory_section = f"\n{mcts_memory}" if mcts_memory else ""
         user_prompt = f"""## Task
 {task_description or "Find security vulnerabilities in this code."}
 
@@ -261,6 +263,7 @@ check_dependencies, report_vulnerability, add_hypothesis, conclude_investigation
 
 ## Current State
 {context}
+{memory_section}
 
 ## Step {memory.current_step}
 
@@ -1426,7 +1429,8 @@ class RedAgentV3:
         self,
         code: str,
         task_id: Optional[str] = None,
-        task_description: str = ""
+        task_description: str = "",
+        memory_context: str = "",
     ) -> RedAgentReport:
         """
         Main entry point - launch autonomous investigation with MCTS.
@@ -1438,6 +1442,7 @@ class RedAgentV3:
         4. Learn from results
         """
         start_time = time.time()
+        self._memory_context = memory_context  # Store for prompt injection
 
         # Initialize memory and tools
         memory = AgentMemory()
@@ -1456,6 +1461,7 @@ class RedAgentV3:
                 num_branches=self.mcts_branches,
                 exploration_weight=1.414
             )
+            self.mcts_planner.memory_context = memory_context
             print(f"[RedAgent] 🌳 Using MCTS/Tree of Thoughts with {self.mcts_planner.num_branches} branches")
         else:
             self.mcts_planner = None
@@ -1571,6 +1577,7 @@ IMPORTANT: Think like an attacker. Look for:
 
         context = memory.get_context_summary()
 
+        memory_section = f"\n{self._memory_context}" if getattr(self, '_memory_context', '') else ""
         user_prompt = f"""## Task
 {task_description or "Analyze this code for security vulnerabilities."}
 
@@ -1581,6 +1588,7 @@ IMPORTANT: Think like an attacker. Look for:
 
 ## Current Investigation State
 {context}
+{memory_section}
 
 ## Step {memory.current_step} of {self.max_steps}
 

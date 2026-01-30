@@ -16,6 +16,14 @@ from .generator import TestGenerator
 from .red_report_types import RedAgentReport
 from .refinement_loop import RefinementLoop, create_refinement_task_prompt
 
+try:
+    from memory import BattleMemory
+except ImportError:
+    try:
+        from src.memory import BattleMemory
+    except ImportError:
+        BattleMemory = None
+
 
 def _init_sandbox():
     """initialize sandbox with fallback if docker unavailable."""
@@ -266,6 +274,15 @@ red_agent = _init_red_agent()
 test_generator = TestGenerator()
 refinement_loop = RefinementLoop(max_iterations=int(os.getenv("MAX_REFINEMENT_ITERATIONS", "2")))  # Reduced from 3
 
+# Persistent memory: learn from past battles
+if BattleMemory is not None:
+    battle_memory = BattleMemory()
+    battle_memory.backfill_from_battles()
+    print("[GreenAgent] Battle memory initialized")
+else:
+    battle_memory = None
+    print("[GreenAgent] Battle memory unavailable (import failed)")
+
 STALL_THRESHOLD = 30.0  # seconds without activity = hung inference
 # AGENTIC MODE: Enable refinement loop by default for true agent behavior
 ENABLE_REFINEMENT = os.getenv("ENABLE_REFINEMENT_LOOP", "true").lower() == "true"
@@ -413,6 +430,24 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
     "rationale": "..."
 }}"""
 
+    # === MEMORY RETRIEVAL ===
+    task_memory = None
+    if battle_memory:
+        try:
+            task_memory = battle_memory.get_task_memory(
+                task_id=request.task_id or "unknown",
+                task_title=task_title,
+            )
+            if task_memory["has_history"]:
+                stats = task_memory["stats"]
+                print(
+                    f"[Memory] Task {request.task_id}: {stats['total_runs']} past runs, "
+                    f"avg score: {stats['avg_score']:.2f}"
+                )
+        except Exception as e:
+            print(f"[Memory] Retrieval failed: {e}")
+            task_memory = None
+
     purple_agent_url = os.getenv("PURPLE_AGENT_URL", request.purple_agent_url)
     red_agent_url = os.getenv("RED_AGENT_URL", request.red_agent_url)
 
@@ -473,10 +508,12 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
         if red_agent:
             print(f"[Red] Running embedded Red Agent attack on {len(source_code)} chars of code")
             try:
+                red_memory = battle_memory.format_for_red_agent(task_memory) if battle_memory and task_memory else ""
                 red_report_obj = await red_agent.attack(
                     code=source_code,
                     task_id=request.task_id,
-                    task_description=task_desc
+                    task_description=task_desc,
+                    memory_context=red_memory,
                 )
                 # Convert RedAgentReport to dict for backward compatibility with scorer
                 red_result_data = {
@@ -529,7 +566,8 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             tests_used = "hidden"
         else:
             # Priority 2: Generate adversarial tests (independent of Purple)
-            tests_to_run = await test_generator.generate_adversarial_tests(task_desc, source_code)
+            test_memory = battle_memory.format_for_test_generator(task_memory) if battle_memory and task_memory else ""
+            tests_to_run = await test_generator.generate_adversarial_tests(task_desc, source_code, memory_context=test_memory)
             tests_used = "generated"
 
             # Also run Purple's tests as sanity check (if they fail their own tests, that's bad)
@@ -550,13 +588,15 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             tests_used = "embedded"
 
         # step 4: evaluation
+        scoring_memory = battle_memory.format_for_scoring(task_memory) if battle_memory and task_memory else ""
         evaluation = await scorer.evaluate(
             task_description=task_desc,
             purple_response=purple_data,
             red_report=red_result_data,
             audit_result=audit_result,
             sandbox_result=sandbox_result,
-            red_report_obj=red_report_obj  # Pass direct object to skip parsing
+            red_report_obj=red_report_obj,  # Pass direct object to skip parsing
+            memory_context=scoring_memory,
         )
 
         # apply penalties
@@ -571,11 +611,12 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             output = sandbox_result['output']
             pass_rate = 0.5  # default assumption
             import re
-            # Try to extract "X passed, Y failed" from pytest output
-            match = re.search(r'(\d+)\s+passed.*?(\d+)\s+failed', output)
-            if match:
-                passed = int(match.group(1))
-                failed = int(match.group(2))
+            # Extract passed/failed counts (pytest can output in either order)
+            _pm = re.search(r'(\d+)\s+passed', output)
+            _fm = re.search(r'(\d+)\s+failed', output)
+            if _pm or _fm:
+                passed = int(_pm.group(1)) if _pm else 0
+                failed = int(_fm.group(1)) if _fm else 0
                 total = passed + failed
                 if total > 0:
                     pass_rate = passed / total
@@ -616,6 +657,7 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
                 # Generate targeted feedback using self-reflection
                 # Scientific Method can be slow (many LLM calls) - skip if disabled
                 if ENABLE_SCIENTIFIC_METHOD:
+                    refinement_memory = battle_memory.format_for_refinement(task_memory) if battle_memory and task_memory else ""
                     feedback = await refinement_loop.generate_feedback_message(
                         task_description=task_desc,
                         source_code=source_code,
@@ -627,7 +669,8 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
                         ],
                         audit_issues=audit_result.get('issues', []),
                         iteration=iteration,
-                        sandbox_runner=sandbox
+                        sandbox_runner=sandbox,
+                        memory_context=refinement_memory,
                     )
                 else:
                     # Fast fallback: DIRECT feedback without Scientific Method
@@ -732,7 +775,8 @@ RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what 
                             red_report_obj = await red_agent.attack(
                                 code=source_code,
                                 task_id=request.task_id,
-                                task_description=task_desc
+                                task_description=task_desc,
+                                memory_context=red_memory if battle_memory and task_memory else "",
                             )
                             red_result_data = {
                                 "attack_successful": red_report_obj.attack_successful,
@@ -752,7 +796,10 @@ RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what 
                         audit_source = source_code
                         audit_result = auditor.analyze(audit_source, task_constraints)
 
-                        tests_to_run = await test_generator.generate_adversarial_tests(task_desc, source_code)
+                        tests_to_run = await test_generator.generate_adversarial_tests(
+                            task_desc, source_code,
+                            memory_context=test_memory if battle_memory and task_memory else "",
+                        )
                         if sandbox:
                             sandbox_result = sandbox.run(sandbox_payload, tests_to_run)
 
@@ -762,7 +809,8 @@ RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what 
                             red_report=red_result_data,
                             audit_result=audit_result,
                             sandbox_result=sandbox_result,
-                            red_report_obj=red_report_obj
+                            red_report_obj=red_report_obj,
+                            memory_context=scoring_memory if battle_memory and task_memory else "",
                         )
 
                         if not audit_result['valid']:
@@ -771,10 +819,11 @@ RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what 
                             # Use pass-rate scaling (same as initial evaluation)
                             ref_output = sandbox_result.get('output', '')
                             ref_pass_rate = 0.5
-                            ref_match = re.search(r'(\d+)\s+passed.*?(\d+)\s+failed', ref_output)
-                            if ref_match:
-                                ref_p = int(ref_match.group(1))
-                                ref_f = int(ref_match.group(2))
+                            _rpm = re.search(r'(\d+)\s+passed', ref_output)
+                            _rfm = re.search(r'(\d+)\s+failed', ref_output)
+                            if _rpm or _rfm:
+                                ref_p = int(_rpm.group(1)) if _rpm else 0
+                                ref_f = int(_rfm.group(1)) if _rfm else 0
                                 if ref_p + ref_f > 0:
                                     ref_pass_rate = ref_p / (ref_p + ref_f)
                             ref_max = 0.4 + (0.6 * ref_pass_rate)
@@ -830,6 +879,20 @@ RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what 
         }
 
         agent.submit_result(result)
+
+        # === MEMORY STORAGE ===
+        if battle_memory:
+            try:
+                n = battle_memory.store_lessons(
+                    task_id=request.task_id or "unknown",
+                    task_title=task_title,
+                    battle_id=request.battle_id,
+                    result=result,
+                )
+                print(f"[Memory] Stored {n} lessons for battle {request.battle_id}")
+            except Exception as e:
+                print(f"[Memory] Warning: Failed to store lessons: {e}")
+
         return result
 
     except Exception as e:
