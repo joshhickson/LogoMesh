@@ -366,6 +366,16 @@ Propose 3 DIFFERENT strategic paths to investigate. Return JSON only."""
 
             # Bonus for high-value targets
             high_value_patterns = ["auth", "login", "password", "token", "admin", "secret", "key", "sql", "query"]
+            # Extend with dynamic patterns from TaskIntelligence for novel tasks
+            if hasattr(self, 'task_intel') and self.task_intel and hasattr(self, 'task_description'):
+                try:
+                    extra = await self.task_intel.get_high_value_patterns(
+                        memory.task_id if hasattr(memory, 'task_id') else "",
+                        self.task_description,
+                    )
+                    high_value_patterns.extend(extra)
+                except Exception:
+                    pass  # Fallback to default patterns
             reasoning_lower = node.action.get("reasoning", "").lower()
             for pattern in high_value_patterns:
                 if pattern in reasoning_lower:
@@ -1431,6 +1441,7 @@ class RedAgentV3:
         task_id: Optional[str] = None,
         task_description: str = "",
         memory_context: str = "",
+        task_intel=None,
     ) -> RedAgentReport:
         """
         Main entry point - launch autonomous investigation with MCTS.
@@ -1443,6 +1454,7 @@ class RedAgentV3:
         """
         start_time = time.time()
         self._memory_context = memory_context  # Store for prompt injection
+        self._task_intel = task_intel  # Store for dynamic pattern generation
 
         # Initialize memory and tools
         memory = AgentMemory()
@@ -1462,6 +1474,8 @@ class RedAgentV3:
                 exploration_weight=1.414
             )
             self.mcts_planner.memory_context = memory_context
+            self.mcts_planner.task_intel = task_intel
+            self.mcts_planner.task_description = task_description
             print(f"[RedAgent] 🌳 Using MCTS/Tree of Thoughts with {self.mcts_planner.num_branches} branches")
         else:
             self.mcts_planner = None
