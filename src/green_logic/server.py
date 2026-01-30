@@ -597,6 +597,19 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
         red_report_obj = None
         source_code = purple_data.get('sourceCode', '')
 
+        # Guard: empty or whitespace-only sourceCode — return early with low score
+        if not source_code or not source_code.strip():
+            print("[GreenAgent] WARNING: Empty sourceCode from Purple agent — returning minimum score")
+            return {
+                "cis_score": 0.10,
+                "component_scores": {"R": 0.10, "A": 0.10, "T": 0.10, "L": 0.10},
+                "rationale": purple_data.get("rationale", ""),
+                "sourceCode": "",
+                "testCode": purple_data.get("testCode", ""),
+                "red_report": None,
+                "error": "Purple agent returned empty sourceCode",
+            }
+
         # Normalize escaped newlines (Purple may return literal \n instead of actual newlines)
         if isinstance(source_code, str) and '\\n' in source_code:
             source_code = source_code.replace('\\n', '\n').replace('\\t', '\t')
@@ -632,24 +645,28 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
                     memory_context=red_memory,
                     task_intel=task_intelligence,
                 )
-                # Convert RedAgentReport to dict for backward compatibility with scorer
-                red_result_data = {
-                    "attack_successful": red_report_obj.attack_successful,
-                    "vulnerabilities": [
-                        {
-                            "severity": v.severity.value,
-                            "category": v.category,
-                            "title": v.title,
-                            "description": v.description,
-                            "exploit_code": v.exploit_code,
-                            "line_number": v.line_number,
-                            "confidence": v.confidence,
-                        }
-                        for v in red_report_obj.vulnerabilities
-                    ],
-                    "attack_summary": red_report_obj.attack_summary
-                }
-                print(f"[Red] Attack complete: {len(red_report_obj.vulnerabilities)} vulnerabilities found")
+                if red_report_obj is None:
+                    print("[Red] WARNING: red_agent.attack() returned None — treating as no vulnerabilities")
+                    red_report_obj = None
+                else:
+                    # Convert RedAgentReport to dict for backward compatibility with scorer
+                    red_result_data = {
+                        "attack_successful": red_report_obj.attack_successful,
+                        "vulnerabilities": [
+                            {
+                                "severity": v.severity.value,
+                                "category": v.category,
+                                "title": v.title,
+                                "description": v.description,
+                                "exploit_code": v.exploit_code,
+                                "line_number": v.line_number,
+                                "confidence": v.confidence,
+                            }
+                            for v in red_report_obj.vulnerabilities
+                        ],
+                        "attack_summary": red_report_obj.attack_summary
+                    }
+                    print(f"[Red] Attack complete: {len(red_report_obj.vulnerabilities)} vulnerabilities found")
             except Exception as e:
                 print(f"[Red] WARNING: Embedded Red Agent failed: {e}")
         else:
@@ -894,19 +911,24 @@ RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what 
                                 memory_context=red_memory if battle_memory and task_memory else "",
                                 task_intel=task_intelligence,
                             )
-                            red_result_data = {
-                                "attack_successful": red_report_obj.attack_successful,
-                                "vulnerabilities": [
-                                    {"severity": v.severity.value, "category": v.category,
-                                     "title": v.title, "description": v.description,
-                                     "exploit_code": v.exploit_code, "line_number": v.line_number,
-                                     "confidence": v.confidence}
-                                    for v in red_report_obj.vulnerabilities
-                                ],
-                                "attack_summary": red_report_obj.attack_summary
-                            }
-                            critical_vulns = len([v for v in red_report_obj.vulnerabilities
-                                                  if v.severity.value == "critical"])
+                            if red_report_obj is None:
+                                print("[Red] WARNING: red_agent.attack() returned None in refinement loop")
+                                red_result_data = None
+                                critical_vulns = 0
+                            else:
+                                red_result_data = {
+                                    "attack_successful": red_report_obj.attack_successful,
+                                    "vulnerabilities": [
+                                        {"severity": v.severity.value, "category": v.category,
+                                         "title": v.title, "description": v.description,
+                                         "exploit_code": v.exploit_code, "line_number": v.line_number,
+                                         "confidence": v.confidence}
+                                        for v in red_report_obj.vulnerabilities
+                                    ],
+                                    "attack_summary": red_report_obj.attack_summary
+                                }
+                                critical_vulns = len([v for v in red_report_obj.vulnerabilities
+                                                      if v.severity.value == "critical"])
 
                         sandbox_payload = source_code
                         audit_source = source_code

@@ -96,7 +96,7 @@ The logic_score must be a float between 0.0 and 1.0:
         try:
             response = await asyncio.wait_for(
                 self.client.chat.completions.create(
-                    model=os.getenv("MODEL_NAME", "gpt-4o-mini"),
+                    model=os.getenv("OPENAI_MODEL", os.getenv("MODEL_NAME", "gpt-4o-mini")),
                     messages=[
                         {"role": "system", "content": "You are a senior code reviewer."},
                         {"role": "user", "content": review_prompt},
@@ -508,7 +508,7 @@ Note: cis_score = 0.25*(R + A + T + L). Keep scores within ±0.10 of the ground 
 
         try:
             response = await self.client.chat.completions.create(
-                model=os.getenv("MODEL_NAME", "gpt-4o-mini"), # Default to a fast model
+                model=os.getenv("OPENAI_MODEL", os.getenv("MODEL_NAME", "gpt-4o-mini")),
                 messages=[
                     {"role": "system", "content": "You are a strict code evaluator."},
                     {"role": "user", "content": prompt}
