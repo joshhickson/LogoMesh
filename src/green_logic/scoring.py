@@ -96,7 +96,7 @@ The logic_score must be a float between 0.0 and 1.0:
         try:
             response = await asyncio.wait_for(
                 self.client.chat.completions.create(
-                    model=os.getenv("MODEL_NAME", "gpt-4o-mini"),
+                    model=os.getenv("OPENAI_MODEL", os.getenv("MODEL_NAME", "gpt-4o-mini")),
                     messages=[
                         {"role": "system", "content": "You are a senior code reviewer."},
                         {"role": "user", "content": review_prompt},
@@ -336,50 +336,89 @@ The logic_score must be a float between 0.0 and 1.0:
             # Assuming Red Agent returns a text description of the attack
             red_feedback = json.dumps(red_report, indent=2)
 
-        # 1. Rationale Integrity (R) - Vector based
+        # 1. Rationale Integrity (R) - Vector similarity + length/quality heuristic
         # Compare Intent (task_description) with Rationale
-        r_score = self.vector_scorer.calculate_similarity(task_description, rationale)
+        r_vector = self.vector_scorer.calculate_similarity(task_description, rationale)
+        # Boost R if rationale is substantive (>100 chars = explains reasoning)
+        r_length_bonus = min(0.1, len(rationale) / 1000) if rationale else 0.0
+        r_score = min(1.0, r_vector + r_length_bonus)
 
-        # 2. Architectural Integrity (A) - Vector + Constraints
-        # Compare Rationale with Source Code
-        a_vector_score = self.vector_scorer.calculate_similarity(rationale, source_code)
-        
-        # A-003 Implementation: Apply task-specific architectural constraints
-        # Extract task_id from task_description or purple_response metadata
+        # 2. Architectural Integrity (A) - Ground truth driven
+        # Primary signal: vulnerability count from Red Agent (not vector similarity)
+        # Secondary signal: static analysis constraints
         task_id = purple_response.get("task_id") if isinstance(purple_response, dict) else None
         if not task_id:
-            # Try to infer from task_description (fallback)
             for tid in ["task-001", "task-002", "task-003", "task-004"]:
                 if tid in str(task_description).lower() or self.architecture_constraints.get(tid, {}).get("title", "").lower() in task_description.lower():
                     task_id = tid
                     break
-        
+
         # For novel tasks not in architecture_constraints.yaml, try dynamic guidance
         if task_id and task_id not in self.architecture_constraints and task_intel:
             try:
                 dynamic_guidance = await task_intel.get_architecture_guidance(task_id, task_description)
                 if dynamic_guidance and dynamic_guidance.get("constraints"):
-                    # Temporarily inject dynamic constraints for evaluation
                     self.architecture_constraints[task_id] = dynamic_guidance
                     print(f"[Scorer] Using dynamic architecture constraints for novel task {task_id}")
             except Exception as e:
                 print(f"[Scorer] Dynamic architecture guidance failed: {e}")
 
         constraint_penalty = self._evaluate_architecture_constraints(task_id, source_code) if task_id else 0.0
-        a_score = a_vector_score * (1.0 - constraint_penalty)
-        
-        # 3. Testing Integrity (T) - Vector + Test Specificity
-        # Compare Source Code with Test Code
+
+        # Ground truth architecture: start at 0.80 (clean code baseline)
+        # Deduct for constraint violations only.
+        # Vulnerabilities are handled separately by red_penalty_multiplier on the full CIS
+        # to avoid double-penalization.
+        a_base = 0.80
+        a_base -= constraint_penalty * 0.5  # Constraint violations reduce by up to 50%
+
+        # Count vulns for prompt context (but do NOT deduct from A — red_penalty handles it)
+        vuln_count = 0
+        if red_report_obj:
+            vuln_count = len(red_report_obj.vulnerabilities)
+        elif red_report and red_report.get("vulnerabilities"):
+            vuln_count = len(red_report["vulnerabilities"])
+
+        if vuln_count == 0:
+            a_base = max(a_base, 0.75)  # Clean bill of health = strong architecture
+
+        # Vector similarity as minor adjustment (±0.05)
+        a_vector_score = self.vector_scorer.calculate_similarity(rationale, source_code)
+        a_score = max(0.0, min(1.0, a_base + (a_vector_score - 0.5) * 0.1))
+
+        # 3. Testing Integrity (T) - Ground truth: actual pass rate
+        # Primary signal: sandbox execution results
+        # Secondary signal: test specificity and vector similarity
         t_vector_score = self.vector_scorer.calculate_similarity(source_code, test_code)
-        
-        # A-004 Implementation: Evaluate test assertion specificity
-        # Check if tests verify key acceptance criteria (not just generic assertions)
         test_specificity = self._evaluate_test_specificity(task_id, test_code, task_description) if task_id else 0.85
-        t_score = t_vector_score * test_specificity
+
+        # Ground truth: derive T from actual test pass rate
+        t_pass_rate = None
+        if sandbox_result:
+            sb_out = sandbox_result.get("output", "")
+            _pm_t = re.search(r'(\d+)\s+passed', sb_out)
+            _fm_t = re.search(r'(\d+)\s+failed', sb_out)
+            if _pm_t or _fm_t:
+                _p_t = int(_pm_t.group(1)) if _pm_t else 0
+                _f_t = int(_fm_t.group(1)) if _fm_t else 0
+                _total_t = _p_t + _f_t
+                if _total_t > 0:
+                    t_pass_rate = _p_t / _total_t
+
+        if t_pass_rate is not None:
+            # Ground truth T: pass rate drives the score
+            # 100% pass → 0.85, 80% pass → 0.70, 50% → 0.50, 0% → 0.20
+            t_base = 0.20 + (0.65 * t_pass_rate)
+            # Test specificity bonus (good test structure adds up to 0.10)
+            t_base += (test_specificity - 0.6) * 0.25
+            t_score = max(0.0, min(1.0, t_base))
+        else:
+            # No sandbox data — fall back to vector similarity
+            t_score = t_vector_score * test_specificity
 
         # A-002 Implementation: Explicit Cosine Similarity for Intent vs Code
-        # Compute and store intent_code_similarity as separate diagnostic field
-        # (Not yet used in CIS formula; reserved for validation analysis and reporting)
+        # Used as a mismatch penalty: if code doesn't match the task at all,
+        # the entire CIS is penalized (e.g., Purple returns factorial for an LRU cache task)
         intent_code_similarity = self.vector_scorer.calculate_similarity(task_description, source_code)
 
         # Capture Intent Vector for DBOM (Task 1.6)
@@ -409,84 +448,67 @@ The logic_score must be a float between 0.0 and 1.0:
 - Output: {sandbox_result.get('output', 'N/A')[:500]}
 """
 
+        # Build pass rate string for prompt context
+        pass_rate_str = f"{t_pass_rate:.0%}" if t_pass_rate is not None else "unknown"
+
         # Construct the Evaluation Prompt
+        # The LLM's job is to ADJUST pre-computed ground-truth scores and write the breakdown.
         prompt = f"""
 You are the Green Agent, an expert AI code evaluator.
-Your job is to calculate the final **Contextual Integrity Score (CIS)** for a coding submission.
+Your job is to fine-tune the **Contextual Integrity Score (CIS)** for a coding submission.
 
-We have already calculated base scores for you:
-- Rationale Similarity (Vector): {r_score:.2f}
-- Architecture Similarity (Vector): {a_vector_score:.2f}
-- Testing Similarity (Vector): {t_vector_score:.2f}
-- Logic Score (LLM Review): {logic_score:.2f}
+We have already computed ground-truth scores from automated analysis:
+- **R (Rationale):** {r_score:.2f} — semantic similarity between task and rationale
+- **A (Architecture):** {a_score:.2f} — based on {vuln_count} vulnerabilities found, constraint violations, and code structure
+- **T (Testing):** {t_score:.2f} — based on sandbox pass rate ({pass_rate_str}) and test specificity
+- **L (Logic):** {logic_score:.2f} — from Senior Code Review
 
 **Senior Code Review Critique:**
 {logic_critique}
 
-### 1. The Task
+### Task
 {task_description}
 
-### 2. The Submission (Purple Agent)
-**Rationale:**
-{rationale}
+### Submission
+**Rationale:** {rationale[:500]}
 
-**Source Code:**
-{source_code}
+**Source Code:** {source_code[:2000]}
 
-**Test Code:**
-{test_code}
-
-### 3. Security Audit (Red Agent)
-The Red Agent (Attacker) attempted to exploit this code. Here is their report:
+### Security Audit (Red Agent)
 {red_feedback}
 
-### 4. Tier 2 Analysis Results
+### Analysis Results
 {static_analysis_feedback}
 {dynamic_analysis_feedback}
 
-### 5. Evaluation Criteria
-Use the vector scores as a baseline, but adjust them based on the actual quality and security findings:
+### Your Job
+The ground-truth scores above are computed from real data (pass rates, vulnerability counts, vector similarity).
+You may adjust each score by UP TO ±0.10 based on qualitative review. Do NOT make large adjustments.
 
-1. **Rationale Integrity (R):**
-   - How well does the rationale explain the code? (Vector Baseline: {r_score:.2f})
-   - A clear, complete rationale that covers design decisions earns 0.7+.
-
-2. **Architectural Integrity (A):**
-   - Is the architecture sound and secure? (Vector Baseline: {a_vector_score:.2f})
-   - **CRITICAL:** If the Red Agent found CRITICAL or HIGH severity vulnerabilities, reduce this score proportionally.
-   - **CRITICAL:** If static analysis detected forbidden imports, this score MUST be < 0.2.
-   - If the Red Agent found NO vulnerabilities, architecture should be scored based on code structure quality (0.6+).
-   - Do NOT penalize architecture for test failures — that is the Testing score's job.
-
-3. **Testing Integrity (T):**
-   - Coverage and edge cases. (Vector Baseline: {t_vector_score:.2f})
-   - If sandbox tests partially passed, scale proportionally (e.g., 80% pass rate → T around 0.6-0.7).
-   - Only set T below 0.3 if tests completely failed (0% pass rate).
-   - Note: Some test failures may come from adversarial fuzz tests designed to find edge cases — partial failures are expected and normal.
-
-4. **Logic Score (L):**
-   - Already calculated by Senior Code Review: {logic_score:.2f}
-   - Use this value directly unless you have strong reasons to adjust based on other findings.
+Rules:
+- R: Adjust based on rationale quality/depth. Ground truth: {r_score:.2f}
+- A: {vuln_count} vulnerabilities found. 0 vulns = architecture is sound. Ground truth: {a_score:.2f}
+- T: Sandbox pass rate is {pass_rate_str}. Ground truth: {t_score:.2f}
+- L: Use {logic_score:.2f} directly from Senior Review. Only adjust if you see a critical issue the reviewer missed.
 
 {memory_context}
 
-### 6. Output Format
-Return a JSON object with this EXACT structure:
+### Output Format
+Return JSON:
 {{
-  "rationale_score": 0.8,
-  "architecture_score": 0.7,
-  "testing_score": 0.6,
+  "rationale_score": {r_score:.2f},
+  "architecture_score": {a_score:.2f},
+  "testing_score": {t_score:.2f},
   "logic_score": {logic_score:.2f},
-  "cis_score": 0.7,
-  "logic_critique": "{logic_critique[:100]}...",
-  "breakdown": "Explanation including vector score influence, logic review, and Tier 2 analysis..."
+  "cis_score": {(0.25 * r_score + 0.25 * a_score + 0.25 * t_score + 0.25 * logic_score):.2f},
+  "breakdown": "Brief explanation of any adjustments made..."
 }}
-Note: `cis_score` = (0.25 * R) + (0.25 * A) + (0.25 * T) + (0.25 * L). Equal weighting across all dimensions.
+Note: cis_score = 0.25*(R + A + T + L). Keep scores within ±0.10 of the ground truth values above.
 """
 
         try:
             response = await self.client.chat.completions.create(
-                model=os.getenv("MODEL_NAME", "gpt-4o-mini"), # Default to a fast model
+                model=os.getenv("OPENAI_MODEL", os.getenv("MODEL_NAME", "gpt-4o-mini")),
                 messages=[
                     {"role": "system", "content": "You are a strict code evaluator."},
                     {"role": "user", "content": prompt}
@@ -518,48 +540,15 @@ Note: `cis_score` = (0.25 * R) + (0.25 * A) + (0.25 * T) + (0.25 * L). Equal wei
             t = float(eval_data.get("testing_score", 0.0))
             l = float(eval_data.get("logic_score", logic_score))
             
-            # B-001 Implementation: Anchor Logic Score to Test Results
-            # Scale logic cap based on test pass rate instead of hard 0.3 cap
-            if sandbox_result and not sandbox_result.get("success", False):
-                # Extract pass rate from sandbox output
-                sb_output = sandbox_result.get("output", "")
-                import re as _re
-                # pytest can output "10 passed, 3 failed" or "3 failed, 10 passed"
-                _passed_m = _re.search(r'(\d+)\s+passed', sb_output)
-                _failed_m = _re.search(r'(\d+)\s+failed', sb_output)
-                if _passed_m or _failed_m:
-                    _p = int(_passed_m.group(1)) if _passed_m else 0
-                    _f = int(_failed_m.group(1)) if _failed_m else 0
-                    _pass_rate = _p / (_p + _f) if (_p + _f) > 0 else 0
-                else:
-                    _pass_rate = 0.0
-                # Scale: 0% pass → cap at 0.3, 50% pass → cap at 0.55, 100% pass → no cap
-                logic_cap = 0.3 + (0.5 * _pass_rate)
-                l = min(l, logic_cap)
-                eval_data["logic_score_anchored"] = True
-                eval_data["logic_cap_pass_rate"] = _pass_rate
-            
-            # Score floor enforcement: LLM often ignores prompt guidance
-            # Architecture: 0 vulns found → floor at 0.65 (not the LLM's 0.50)
-            if red_report_obj and len(red_report_obj.vulnerabilities) == 0:
-                a = max(a, 0.65)
-            elif red_report and not red_report.get("vulnerabilities"):
-                a = max(a, 0.65)
+            # B-001 REMOVED: Logic cap by pass rate was double-penalizing with T score.
+            # Test failures are now fully captured in T (ground truth pass rate).
+            # Logic score (L) should reflect code quality independently of test results.
 
-            # Testing: scale floor by actual pass rate from sandbox
-            if sandbox_result:
-                sb_out = sandbox_result.get("output", "")
-                _pm2 = re.search(r'(\d+)\s+passed', sb_out)
-                _fm2 = re.search(r'(\d+)\s+failed', sb_out)
-                if _pm2 or _fm2:
-                    _p2 = int(_pm2.group(1)) if _pm2 else 0
-                    _f2 = int(_fm2.group(1)) if _fm2 else 0
-                    _total2 = _p2 + _f2
-                    if _total2 > 0:
-                        actual_pass_rate = _p2 / _total2
-                        # 85% pass → floor 0.60, 100% pass → floor 0.75
-                        t_floor = 0.3 + (0.45 * actual_pass_rate)
-                        t = max(t, t_floor)
+            # Ground truth floor: LLM can adjust ±0.10 but can't go below ground truth - 0.10
+            r = max(r, r_score - 0.10)
+            a = max(a, a_score - 0.10)
+            t = max(t, t_score - 0.10)
+            # L anchoring stays as-is (logic cap from pass rate)
 
             eval_data["rationale_score"] = r
             eval_data["architecture_score"] = a
@@ -568,7 +557,17 @@ Note: `cis_score` = (0.25 * R) + (0.25 * A) + (0.25 * T) + (0.25 * L). Equal wei
 
             # B-002 Implementation: Reweight to 25-25-25-25 (equal component weight)
             raw_cis = (0.25 * r) + (0.25 * a) + (0.25 * t) + (0.25 * l)
-            
+
+            # Intent-Code Mismatch Penalty: if Purple returns code that doesn't match
+            # the task at all (e.g., factorial for an LRU cache task), penalize heavily.
+            # intent_code_similarity ~0.0 means complete mismatch → multiply CIS by ~0.30
+            # intent_code_similarity ~0.5+ means reasonable match → no penalty (multiplier ~1.0)
+            if intent_code_similarity < 0.35:
+                # Scale: 0.0 similarity → 0.30 multiplier, 0.35 → 1.0 (linear)
+                intent_multiplier = 0.30 + (intent_code_similarity / 0.35) * 0.70
+                raw_cis *= intent_multiplier
+                print(f"[Scoring] Intent-code mismatch detected! similarity={intent_code_similarity:.3f}, penalty multiplier={intent_multiplier:.2f}")
+
             # Red Agent Integration (H-004): Parse vulnerability report and apply penalty
             red_penalty_multiplier = 1.0  # Default: no penalty
             parsed_red_report = None

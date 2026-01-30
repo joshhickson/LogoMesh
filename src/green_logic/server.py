@@ -597,6 +597,19 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
         red_report_obj = None
         source_code = purple_data.get('sourceCode', '')
 
+        # Guard: empty or whitespace-only sourceCode — return early with low score
+        if not source_code or not source_code.strip():
+            print("[GreenAgent] WARNING: Empty sourceCode from Purple agent — returning minimum score")
+            return {
+                "cis_score": 0.10,
+                "component_scores": {"R": 0.10, "A": 0.10, "T": 0.10, "L": 0.10},
+                "rationale": purple_data.get("rationale", ""),
+                "sourceCode": "",
+                "testCode": purple_data.get("testCode", ""),
+                "red_report": None,
+                "error": "Purple agent returned empty sourceCode",
+            }
+
         # Normalize escaped newlines (Purple may return literal \n instead of actual newlines)
         if isinstance(source_code, str) and '\\n' in source_code:
             source_code = source_code.replace('\\n', '\n').replace('\\t', '\t')
@@ -632,24 +645,28 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
                     memory_context=red_memory,
                     task_intel=task_intelligence,
                 )
-                # Convert RedAgentReport to dict for backward compatibility with scorer
-                red_result_data = {
-                    "attack_successful": red_report_obj.attack_successful,
-                    "vulnerabilities": [
-                        {
-                            "severity": v.severity.value,
-                            "category": v.category,
-                            "title": v.title,
-                            "description": v.description,
-                            "exploit_code": v.exploit_code,
-                            "line_number": v.line_number,
-                            "confidence": v.confidence,
-                        }
-                        for v in red_report_obj.vulnerabilities
-                    ],
-                    "attack_summary": red_report_obj.attack_summary
-                }
-                print(f"[Red] Attack complete: {len(red_report_obj.vulnerabilities)} vulnerabilities found")
+                if red_report_obj is None:
+                    print("[Red] WARNING: red_agent.attack() returned None — treating as no vulnerabilities")
+                    red_report_obj = None
+                else:
+                    # Convert RedAgentReport to dict for backward compatibility with scorer
+                    red_result_data = {
+                        "attack_successful": red_report_obj.attack_successful,
+                        "vulnerabilities": [
+                            {
+                                "severity": v.severity.value,
+                                "category": v.category,
+                                "title": v.title,
+                                "description": v.description,
+                                "exploit_code": v.exploit_code,
+                                "line_number": v.line_number,
+                                "confidence": v.confidence,
+                            }
+                            for v in red_report_obj.vulnerabilities
+                        ],
+                        "attack_summary": red_report_obj.attack_summary
+                    }
+                    print(f"[Red] Attack complete: {len(red_report_obj.vulnerabilities)} vulnerabilities found")
             except Exception as e:
                 print(f"[Red] WARNING: Embedded Red Agent failed: {e}")
         else:
@@ -723,39 +740,26 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             task_intel=task_intelligence,
         )
 
-        # apply penalties
+        # Metadata tracking (no score modification — scoring.py handles all penalties)
+        # Audit violations are already reflected in A score via constraint_penalty
         if not audit_result['valid']:
-            penalty = audit_result['penalty']
-            evaluation['cis_score'] = evaluation.get('cis_score', 0) * (1 - penalty)
-            evaluation['audit_penalty'] = penalty
+            evaluation['audit_penalty'] = audit_result['penalty']
             evaluation['audit_reason'] = audit_result['reason']
 
+        # Sandbox failure metadata (T score already reflects pass rate)
         if not sandbox_result['success']:
-            # Calculate pass rate from output to scale penalty fairly
             output = sandbox_result['output']
-            pass_rate = 0.5  # default assumption
-            import re
-            # Extract passed/failed counts (pytest can output in either order)
+            evaluation['sandbox_failed'] = True
+            # Extract pass rate for metadata only
             _pm = re.search(r'(\d+)\s+passed', output)
             _fm = re.search(r'(\d+)\s+failed', output)
             if _pm or _fm:
                 passed = int(_pm.group(1)) if _pm else 0
                 failed = int(_fm.group(1)) if _fm else 0
                 total = passed + failed
-                if total > 0:
-                    pass_rate = passed / total
-
-            # Scale score based on pass rate instead of hard cap at 0.5
-            # 100% pass = no penalty, 0% pass = cap at 0.4
-            # Formula: max_score = 0.4 + (0.6 * pass_rate)
-            max_allowed = 0.4 + (0.6 * pass_rate)
-            evaluation['cis_score'] = min(evaluation.get('cis_score', 0), max_allowed)
-            evaluation['sandbox_failed'] = True
-            evaluation['test_pass_rate'] = pass_rate
-            # Show more output - especially the failure details at the end
-            # pytest puts failures at the end, so prioritize the tail
+                evaluation['test_pass_rate'] = passed / total if total > 0 else 0.0
+            # Show failure details for debugging
             if len(output) > 1500:
-                # Show first 500 + last 1000 to capture both context and failures
                 evaluation['sandbox_output'] = output[:500] + "\n...[truncated]...\n" + output[-1000:]
             else:
                 evaluation['sandbox_output'] = output
@@ -781,6 +785,17 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             ):
                 print(f"[Refinement] Iteration {iteration}: score={evaluation.get('cis_score', 0):.2f}, "
                       f"tests_passed={sandbox_result['success']}, critical_vulns={critical_vulns}")
+
+                # Detect intent-code mismatch (Purple returned wrong code entirely)
+                intent_sim = evaluation.get('intent_code_similarity', 1.0)
+                intent_mismatch_msg = ""
+                if intent_sim < 0.25:
+                    intent_mismatch_msg = (
+                        f"\n\nCRITICAL: Your code does NOT match the task! "
+                        f"The task asks for: {task_desc[:200]}. "
+                        f"Your code appears to implement something completely different. "
+                        f"REWRITE from scratch to match the task requirements.\n"
+                    )
 
                 # Generate targeted feedback using self-reflection
                 # Scientific Method can be slow (many LLM calls) - skip if disabled
@@ -849,6 +864,10 @@ RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what 
                     "feedback": feedback[:500]
                 })
 
+                # Prepend intent mismatch warning if detected
+                if intent_mismatch_msg:
+                    feedback = intent_mismatch_msg + feedback
+
                 # Send feedback to Purple and get new code
                 iteration += 1
                 refinement_prompt = create_refinement_task_prompt(task_prompt, feedback, iteration)
@@ -907,19 +926,24 @@ RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what 
                                 memory_context=red_memory if battle_memory and task_memory else "",
                                 task_intel=task_intelligence,
                             )
-                            red_result_data = {
-                                "attack_successful": red_report_obj.attack_successful,
-                                "vulnerabilities": [
-                                    {"severity": v.severity.value, "category": v.category,
-                                     "title": v.title, "description": v.description,
-                                     "exploit_code": v.exploit_code, "line_number": v.line_number,
-                                     "confidence": v.confidence}
-                                    for v in red_report_obj.vulnerabilities
-                                ],
-                                "attack_summary": red_report_obj.attack_summary
-                            }
-                            critical_vulns = len([v for v in red_report_obj.vulnerabilities
-                                                  if v.severity.value == "critical"])
+                            if red_report_obj is None:
+                                print("[Red] WARNING: red_agent.attack() returned None in refinement loop")
+                                red_result_data = None
+                                critical_vulns = 0
+                            else:
+                                red_result_data = {
+                                    "attack_successful": red_report_obj.attack_successful,
+                                    "vulnerabilities": [
+                                        {"severity": v.severity.value, "category": v.category,
+                                         "title": v.title, "description": v.description,
+                                         "exploit_code": v.exploit_code, "line_number": v.line_number,
+                                         "confidence": v.confidence}
+                                        for v in red_report_obj.vulnerabilities
+                                    ],
+                                    "attack_summary": red_report_obj.attack_summary
+                                }
+                                critical_vulns = len([v for v in red_report_obj.vulnerabilities
+                                                      if v.severity.value == "critical"])
 
                         sandbox_payload = source_code
                         audit_source = source_code
@@ -943,21 +967,8 @@ RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what 
                             task_intel=task_intelligence,
                         )
 
-                        if not audit_result['valid']:
-                            evaluation['cis_score'] = evaluation.get('cis_score', 0) * (1 - audit_result['penalty'])
-                        if not sandbox_result['success']:
-                            # Use pass-rate scaling (same as initial evaluation)
-                            ref_output = sandbox_result.get('output', '')
-                            ref_pass_rate = 0.5
-                            _rpm = re.search(r'(\d+)\s+passed', ref_output)
-                            _rfm = re.search(r'(\d+)\s+failed', ref_output)
-                            if _rpm or _rfm:
-                                ref_p = int(_rpm.group(1)) if _rpm else 0
-                                ref_f = int(_rfm.group(1)) if _rfm else 0
-                                if ref_p + ref_f > 0:
-                                    ref_pass_rate = ref_p / (ref_p + ref_f)
-                            ref_max = 0.4 + (0.6 * ref_pass_rate)
-                            evaluation['cis_score'] = min(evaluation.get('cis_score', 0), ref_max)
+                        # No double-penalties here — scoring.py handles all penalties
+                        # via ground-truth A (constraints), T (pass rate), and red_penalty_multiplier
 
                         print(f"[Refinement] Iteration {iteration} complete: new score={evaluation.get('cis_score', 0):.2f}")
 
