@@ -1407,7 +1407,8 @@ class RefinementLoop:
         red_vulnerabilities: List[Dict],
         audit_issues: List[str],
         iteration: int,
-        sandbox_runner: Any = None
+        sandbox_runner: Any = None,
+        memory_context: str = "",
     ) -> str:
         """Generate a helpful feedback message using scientific method."""
         result = await self.engine.analyze(
@@ -1419,12 +1420,18 @@ class RefinementLoop:
         )
 
         if result["feedback_for_purple"]:
-            return result["feedback_for_purple"]
+            feedback = result["feedback_for_purple"]
+            if memory_context:
+                feedback += f"\n\n{memory_context}"
+            return feedback
         else:
             # Generate actionable fallback feedback by analyzing test output
-            return self._generate_fallback_feedback(
+            feedback = self._generate_fallback_feedback(
                 test_output, red_vulnerabilities, audit_issues, iteration
             )
+            if memory_context:
+                feedback += f"\n\n{memory_context}"
+            return feedback
 
     def _generate_fallback_feedback(
         self,

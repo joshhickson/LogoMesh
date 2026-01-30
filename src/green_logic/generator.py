@@ -307,7 +307,7 @@ def test_fallback():
         self.timeout_seconds = 30  # vLLM can be slow on first request
 
     async def generate_adversarial_tests(
-        self, task_desc: str, candidate_code: str
+        self, task_desc: str, candidate_code: str, memory_context: str = ""
     ) -> str:
         """
         Generate adversarial test cases targeting the candidate code.
@@ -367,6 +367,7 @@ def test_negative():
 
 ### Candidate Code to Attack
 {candidate_code}
+{memory_context}
 
 Generate 3 adversarial pytest test functions targeting edge cases in this code."""
 

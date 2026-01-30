@@ -122,7 +122,8 @@ class SmartReasoningLayer:
         code: str,
         task_id: Optional[str],
         task_description: str,
-        static_findings: list[Vulnerability]
+        static_findings: list[Vulnerability],
+        memory_context: str = "",
     ) -> list[Vulnerability]:
         """
         Use LLM to find vulnerabilities that static analysis missed.
@@ -138,7 +139,7 @@ class SmartReasoningLayer:
         """
         try:
             return await asyncio.wait_for(
-                self._do_enhance(code, task_id, task_description, static_findings),
+                self._do_enhance(code, task_id, task_description, static_findings, memory_context),
                 timeout=self.timeout
             )
         except asyncio.TimeoutError:
@@ -153,7 +154,8 @@ class SmartReasoningLayer:
         code: str,
         task_id: Optional[str],
         task_description: str,
-        static_findings: list[Vulnerability]
+        static_findings: list[Vulnerability],
+        memory_context: str = "",
     ) -> list[Vulnerability]:
         """Internal method that does the actual enhancement."""
 
@@ -180,6 +182,7 @@ class SmartReasoningLayer:
 Find vulnerabilities that STATIC ANALYSIS MISSED. Do NOT repeat findings above.
 
 {attack_hints}
+{memory_context}
 
 ## LOOK FOR
 1. **Logic Flaws**: Incorrect business logic, edge cases, off-by-one errors
