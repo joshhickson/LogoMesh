@@ -366,11 +366,13 @@ The logic_score must be a float between 0.0 and 1.0:
         constraint_penalty = self._evaluate_architecture_constraints(task_id, source_code) if task_id else 0.0
 
         # Ground truth architecture: start at 0.80 (clean code baseline)
-        # Deduct for constraint violations and vulnerabilities
+        # Deduct for constraint violations only.
+        # Vulnerabilities are handled separately by red_penalty_multiplier on the full CIS
+        # to avoid double-penalization.
         a_base = 0.80
         a_base -= constraint_penalty * 0.5  # Constraint violations reduce by up to 50%
 
-        # Red Agent findings deduction (applied later via penalty multiplier, but also adjust A)
+        # Count vulns for prompt context (but do NOT deduct from A — red_penalty handles it)
         vuln_count = 0
         if red_report_obj:
             vuln_count = len(red_report_obj.vulnerabilities)
@@ -379,10 +381,6 @@ The logic_score must be a float between 0.0 and 1.0:
 
         if vuln_count == 0:
             a_base = max(a_base, 0.75)  # Clean bill of health = strong architecture
-        elif vuln_count <= 2:
-            a_base -= 0.15  # Minor issues
-        else:
-            a_base -= 0.30  # Significant issues
 
         # Vector similarity as minor adjustment (±0.05)
         a_vector_score = self.vector_scorer.calculate_similarity(rationale, source_code)
@@ -542,27 +540,10 @@ Note: cis_score = 0.25*(R + A + T + L). Keep scores within ±0.10 of the ground 
             t = float(eval_data.get("testing_score", 0.0))
             l = float(eval_data.get("logic_score", logic_score))
             
-            # B-001 Implementation: Anchor Logic Score to Test Results
-            # Scale logic cap based on test pass rate instead of hard 0.3 cap
-            if sandbox_result and not sandbox_result.get("success", False):
-                # Extract pass rate from sandbox output
-                sb_output = sandbox_result.get("output", "")
-                import re as _re
-                # pytest can output "10 passed, 3 failed" or "3 failed, 10 passed"
-                _passed_m = _re.search(r'(\d+)\s+passed', sb_output)
-                _failed_m = _re.search(r'(\d+)\s+failed', sb_output)
-                if _passed_m or _failed_m:
-                    _p = int(_passed_m.group(1)) if _passed_m else 0
-                    _f = int(_failed_m.group(1)) if _failed_m else 0
-                    _pass_rate = _p / (_p + _f) if (_p + _f) > 0 else 0
-                else:
-                    _pass_rate = 0.0
-                # Scale: 0% pass → cap at 0.3, 50% pass → cap at 0.55, 100% pass → no cap
-                logic_cap = 0.3 + (0.5 * _pass_rate)
-                l = min(l, logic_cap)
-                eval_data["logic_score_anchored"] = True
-                eval_data["logic_cap_pass_rate"] = _pass_rate
-            
+            # B-001 REMOVED: Logic cap by pass rate was double-penalizing with T score.
+            # Test failures are now fully captured in T (ground truth pass rate).
+            # Logic score (L) should reflect code quality independently of test results.
+
             # Ground truth floor: LLM can adjust ±0.10 but can't go below ground truth - 0.10
             r = max(r, r_score - 0.10)
             a = max(a, a_score - 0.10)

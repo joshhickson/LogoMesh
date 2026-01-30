@@ -723,39 +723,26 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             task_intel=task_intelligence,
         )
 
-        # apply penalties
+        # Metadata tracking (no score modification — scoring.py handles all penalties)
+        # Audit violations are already reflected in A score via constraint_penalty
         if not audit_result['valid']:
-            penalty = audit_result['penalty']
-            evaluation['cis_score'] = evaluation.get('cis_score', 0) * (1 - penalty)
-            evaluation['audit_penalty'] = penalty
+            evaluation['audit_penalty'] = audit_result['penalty']
             evaluation['audit_reason'] = audit_result['reason']
 
+        # Sandbox failure metadata (T score already reflects pass rate)
         if not sandbox_result['success']:
-            # Calculate pass rate from output to scale penalty fairly
             output = sandbox_result['output']
-            pass_rate = 0.5  # default assumption
-            import re
-            # Extract passed/failed counts (pytest can output in either order)
+            evaluation['sandbox_failed'] = True
+            # Extract pass rate for metadata only
             _pm = re.search(r'(\d+)\s+passed', output)
             _fm = re.search(r'(\d+)\s+failed', output)
             if _pm or _fm:
                 passed = int(_pm.group(1)) if _pm else 0
                 failed = int(_fm.group(1)) if _fm else 0
                 total = passed + failed
-                if total > 0:
-                    pass_rate = passed / total
-
-            # Scale score based on pass rate instead of hard cap at 0.5
-            # 100% pass = no penalty, 0% pass = cap at 0.4
-            # Formula: max_score = 0.4 + (0.6 * pass_rate)
-            max_allowed = 0.4 + (0.6 * pass_rate)
-            evaluation['cis_score'] = min(evaluation.get('cis_score', 0), max_allowed)
-            evaluation['sandbox_failed'] = True
-            evaluation['test_pass_rate'] = pass_rate
-            # Show more output - especially the failure details at the end
-            # pytest puts failures at the end, so prioritize the tail
+                evaluation['test_pass_rate'] = passed / total if total > 0 else 0.0
+            # Show failure details for debugging
             if len(output) > 1500:
-                # Show first 500 + last 1000 to capture both context and failures
                 evaluation['sandbox_output'] = output[:500] + "\n...[truncated]...\n" + output[-1000:]
             else:
                 evaluation['sandbox_output'] = output
@@ -943,21 +930,8 @@ RESUBMIT: {{"sourceCode": "<fixed>", "testCode": "<tests>", "rationale": "<what 
                             task_intel=task_intelligence,
                         )
 
-                        if not audit_result['valid']:
-                            evaluation['cis_score'] = evaluation.get('cis_score', 0) * (1 - audit_result['penalty'])
-                        if not sandbox_result['success']:
-                            # Use pass-rate scaling (same as initial evaluation)
-                            ref_output = sandbox_result.get('output', '')
-                            ref_pass_rate = 0.5
-                            _rpm = re.search(r'(\d+)\s+passed', ref_output)
-                            _rfm = re.search(r'(\d+)\s+failed', ref_output)
-                            if _rpm or _rfm:
-                                ref_p = int(_rpm.group(1)) if _rpm else 0
-                                ref_f = int(_rfm.group(1)) if _rfm else 0
-                                if ref_p + ref_f > 0:
-                                    ref_pass_rate = ref_p / (ref_p + ref_f)
-                            ref_max = 0.4 + (0.6 * ref_pass_rate)
-                            evaluation['cis_score'] = min(evaluation.get('cis_score', 0), ref_max)
+                        # No double-penalties here — scoring.py handles all penalties
+                        # via ground-truth A (constraints), T (pass rate), and red_penalty_multiplier
 
                         print(f"[Refinement] Iteration {iteration} complete: new score={evaluation.get('cis_score', 0):.2f}")
 
