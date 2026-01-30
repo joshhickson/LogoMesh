@@ -322,6 +322,56 @@ ENABLE_REFINEMENT = os.getenv("ENABLE_REFINEMENT_LOOP", "true").lower() == "true
 ENABLE_SCIENTIFIC_METHOD = os.getenv("ENABLE_SCIENTIFIC_METHOD", "true").lower() == "true"
 
 
+def classify_task_complexity(source_code: str) -> str:
+    """
+    Classify task complexity from source code using AST analysis (no LLM call).
+
+    Returns: "simple", "moderate", or "complex"
+
+    Simple tasks (skip MCTS, reduce refinement):
+    - Short code with no security-sensitive patterns
+    - Pure computation (math, string ops, data structures)
+
+    Complex tasks (full pipeline):
+    - Security-sensitive code (eval, exec, SQL, subprocess, file I/O)
+    - Large codebase with many classes
+    """
+    import ast as _ast
+    import re as _re
+
+    lines = [l for l in source_code.strip().split('\n') if l.strip() and not l.strip().startswith('#')]
+    loc = len(lines)
+
+    try:
+        tree = _ast.parse(source_code)
+    except SyntaxError:
+        return "moderate"  # Can't parse — play it safe
+
+    num_classes = sum(1 for n in _ast.walk(tree) if isinstance(n, _ast.ClassDef))
+    num_functions = sum(1 for n in _ast.walk(tree) if isinstance(n, (_ast.FunctionDef, _ast.AsyncFunctionDef)))
+    num_imports = sum(1 for n in _ast.walk(tree) if isinstance(n, (_ast.Import, _ast.ImportFrom)))
+
+    # Check for security-sensitive patterns that warrant full MCTS analysis
+    security_patterns = (
+        r'\beval\s*\(', r'\bexec\s*\(', r'\bsubprocess\b', r'\bos\.system\b',
+        r'\bsqlite3\b', r'\bcursor\.execute\b', r'\bSELECT\b', r'\bINSERT\b',
+        r'\bopen\s*\(', r'\bpickle\b', r'\byaml\.load\b', r'\b__import__\b',
+        r'\bsocket\b', r'\brequests\b', r'\burllib\b', r'\bhashlib\b',
+        r'\bpassword\b', r'\bsecret\b', r'\btoken\b', r'\bauth\b',
+    )
+    has_security_patterns = any(_re.search(p, source_code, _re.IGNORECASE) for p in security_patterns)
+
+    # Simple: no security patterns AND (short code OR just a few pure functions)
+    if not has_security_patterns and loc <= 60 and num_classes <= 1 and num_imports <= 5:
+        return "simple"
+
+    # Complex: security-sensitive code, many classes, or large codebase
+    if has_security_patterns or num_classes >= 3 or num_functions >= 8 or loc >= 150:
+        return "complex"
+
+    return "moderate"
+
+
 async def stream_purple_response(client: httpx.AsyncClient, purple_url: str, payload: dict, battle_id: str):
     """call purple agent with stall detection. returns extracted response text."""
     purple_target = purple_url.rstrip('/') + '/'
@@ -552,6 +602,22 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             source_code = source_code.replace('\\n', '\n').replace('\\t', '\t')
             purple_data['sourceCode'] = source_code
 
+        # === TASK COMPLEXITY CLASSIFICATION ===
+        # Skip heavy pipeline (MCTS, extra refinement) for simple tasks
+        task_complexity = classify_task_complexity(source_code)
+        print(f"[GreenAgent] Task complexity: {task_complexity} ({len(source_code)} chars)")
+
+        if task_complexity == "simple" and red_agent:
+            # Simple tasks: disable MCTS, reduce steps
+            red_agent.use_mcts = False
+            red_agent.max_steps = 3
+            print(f"[GreenAgent] Simple task detected — MCTS disabled, reduced red agent steps")
+        elif red_agent:
+            # Restore defaults for moderate/complex tasks
+            use_mcts = os.getenv("RED_AGENT_MCTS", "true").lower() == "true"
+            red_agent.use_mcts = use_mcts
+            red_agent.max_steps = int(os.getenv("RED_AGENT_STEPS", "5"))
+
         if red_agent:
             print(f"[Red] Running embedded Red Agent attack on {len(source_code)} chars of code")
             # Apply evolved MCTS parameters if available
@@ -696,10 +762,14 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
 
         # === AGENTIC REFINEMENT LOOP ===
         # If enabled, iteratively help Purple improve their code
+        # Simple tasks: skip refinement if score is already decent
         iteration = 1
         refinement_history = []
+        skip_refinement = (task_complexity == "simple" and evaluation.get('cis_score', 0) >= 0.5)
+        if skip_refinement:
+            print(f"[GreenAgent] Simple task with score {evaluation.get('cis_score', 0):.2f} — skipping refinement")
 
-        if ENABLE_REFINEMENT:
+        if ENABLE_REFINEMENT and not skip_refinement:
             critical_vulns = len([v for v in (red_report_obj.vulnerabilities if red_report_obj else [])
                                   if v.severity.value == "critical"])
 

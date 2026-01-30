@@ -277,7 +277,7 @@ Propose 3 DIFFERENT strategic paths to investigate. Return JSON only."""
                     {"role": "user", "content": user_prompt}
                 ],
                 response_format={"type": "json_object"},
-                **get_temperature_kwargs(0.7)
+                **get_temperature_kwargs(0.4)
             )
 
             content = response.choices[0].message.content
