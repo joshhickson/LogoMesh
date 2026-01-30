@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  green:
+    build:
+      context: .
+      dockerfile: Dockerfile.green
+    ports:
+      - "9009:9009"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+      - RED_AGENT_MCTS=true
+      - RED_AGENT_MAX_STEPS=5
+      - RED_AGENT_TIMEOUT=20
+      - ENABLE_REFINEMENT=true
+      - SANDBOX_TIMEOUT=15
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - battle-data:/app/data
+    command: ["--host", "0.0.0.0", "--port", "9009"]
+
+  purple:
+    build:
+      context: .
+      dockerfile: Dockerfile.purple
+    ports:
+      - "9010:9010"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+    command: ["--host", "0.0.0.0", "--port", "9010"]
+
+volumes:
+  battle-data:
