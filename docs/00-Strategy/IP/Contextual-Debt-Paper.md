@@ -3,27 +3,25 @@ status: ACTIVE
 type: Research
 ---
 > **Context:**
-> * [2026-01-03]: Reactivated as primary draft for AgentX submission.
+> * [2026-01-31]: Validated Technical Report for AgentBeats Submission.
 
 # **The Unknowable Code: A Framework for Measuring and Mitigating Software Liability**
 
 ## **Executive Summary: The Emerging Crisis of Intent**
 
-A new and insidious form of liability is silently accumulating within the digital infrastructure of the global economy. We’ve spent 20 years managing **Technical Debt**—a failure of the "how." But the next decade of *liability* comes from **Contextual Debt**—a "failure of the 'why'". This is a massive, unmanaged risk, creating "amnesiac systems" that are ticking time bombs in every enterprise. This problem is accelerating exponentially. The "context-free, AI-generated code" and fragmented microservices that power modern business are also destroying the human *intent* and *rationale* behind them. Your developers are building "unknowable code" faster than ever.
+A new and insidious form of liability is silently accumulating within the digital infrastructure of the global economy. We’ve spent 20 years managing **Technical Debt**—a failure of the "how." But the next decade of *liability* comes from **Contextual Debt**—a "failure of the 'why'". This is a massive, unmanaged risk, creating "amnesiac systems" that are ticking time bombs in every enterprise. The "context-free, AI-generated code" and fragmented microservices that power modern business are systematically eroding the human *intent* and *rationale* behind them.
 
-When this "unknowable" code fails—not if, *when*—it's not a simple bug. It's a "catastrophic system failure," a "data breach," or a "major accounting error". In today's regulatory world, being unable to explain *why* your system did what it did is, in a word, "indefensible".
+**AgentBeats** is our response to this crisis. It is the world's first **Contextual Integrity Benchmark**, a system designed to measure the "Contextual Debt" of AI-generated code before it enters production.
 
-This report advances the hypothesis that the greatest source of liability in the next decade of software will be the unmanageable accumulation of **Contextual Debt**.
+This report formalizes the hypothesis that the greatest source of liability in the next decade of software will be the unmanageable accumulation of **Contextual Debt**.
 
 **Contextual Debt** is the compounding liability a software organization incurs from a lack of discernible human intent, architectural rationale, and domain-specific knowledge within its codebase.
 
-This is not a failure of *implementation* (the "how"), like traditional technical debt, but a more profound failure of *intent* (the "why"). It manifests as a quantifiable drag on developer velocity and a direct threat to system security, creating subtle logic flaws that are invisible to traditional analysis tools. While accelerated by the proliferation of context-free, AI-generated code, its accumulation is a systemic risk that can only be managed through proactive disciplines that codify intent (like Architectural Decision Records), automated governance architectures that preserve it, and new quantitative benchmarks (like the Contextual Integrity Score) that measure it.
+This is not a failure of *implementation* (the "how"), like traditional technical debt, but a more profound failure of *intent* (the "why"). It manifests as a quantifiable drag on developer velocity and a direct threat to system security, creating subtle logic flaws that are invisible to traditional analysis tools. While accelerated by the proliferation of context-free, AI-generated code, its accumulation is a systemic risk that can only be managed through proactive disciplines that codify intent, automated governance architectures that preserve it, and new quantitative benchmarks like the **Contextual Integrity Score (CIS)**.
 
-This analysis establishes a critical distinction between traditional technical debt and this emerging liability. Technical debt, in its original conception, is a failure of the "how"—a suboptimal implementation chosen as a deliberate, short-term tradeoff for speed.1 Contextual Debt, in stark contrast, is a failure of the "why"—the evaporation of the purpose, rationale, and business logic that underpins the code.3 While the former makes a system difficult to change, the latter makes it dangerous to touch.
+This analysis establishes a critical distinction between traditional technical debt and this emerging liability. Technical debt is a failure of the "how"—a suboptimal implementation chosen as a deliberate, short-term tradeoff for speed.1 Contextual Debt, in stark contrast, is a failure of the "why"—the evaporation of the purpose, rationale, and business logic that underpins the code.3 While the former makes a system difficult to change, the latter makes it dangerous to touch.
 
-The accumulation of this debt is being dramatically accelerated by powerful modern trends. The proliferation of AI-generated code introduces vast quantities of logic into codebases without a corresponding transfer of understanding or "theory" to the human developers who must maintain it.4 Simultaneously, the fragmentation of systems into microservice architectures, while beneficial for scalability, disperses architectural rationale and creates siloed knowledge, making a holistic understanding of system behavior nearly impossible.5
-
-The consequences of unmanaged Contextual Debt extend far beyond development friction. They manifest as increased security vulnerabilities, catastrophic system failures, and a direct pathway to corporate liability. In an era where the legal and regulatory shield that has long protected software vendors is being dismantled, the inability to explain the rationale behind a system's design and behavior will become indefensible.7 This report argues that managing Contextual Debt is no longer a matter of engineering best practice; it is a critical component of modern risk management, a non-negotiable aspect of sustainable software engineering, and a core responsibility of corporate governance that will directly impact a company's long-term valuation and legal standing.
+The **AgentBeats** platform implements the protocols described in this paper: the **Contextual Integrity Score (CIS)**, the **Agent-as-a-Judge** architecture, and the **Decision Bill of Materials (DBOM)**. It provides the first empirical method for quantifying the "why" of software, turning abstract liability into a measurable, manageable metric.
 
 ## **Defining Contextual Debt: The Liability of Amnesiac Systems**
 
@@ -244,10 +242,11 @@ These platforms automate intent, rationale, and domain knowledge. They are "cont
 
 To move beyond the subjectivity of traditional code quality metrics, we define **Contextual Integrity ($CI$)** not as a qualitative sentiment, but as a computable probability that a given software artifact preserves its original intent.
 
-We propose that the "explainability" of a system is a function of the semantic density between its executable logic (Code) and its declarative intent (Rationale). We formalize the **Contextual Integrity Score ($CIS$)** for any given change set $\Delta$ as a weighted summation of three vector-space measurements:
+We propose that the "explainability" of a system is a function of the semantic density between its executable logic (Code) and its declarative intent (Rationale). In AgentBeats, we formalize the **Contextual Integrity Score ($CIS$)** for any given change set $\Delta$ as a weighted summation of four measurements:
 
-$$CIS(\Delta) = w_r \cdot R(\Delta) + w_a \cdot A(\Delta) + w_t \cdot T(\Delta)$$
-Where $w_r, w_a, w_t$ represent the organizational weighting of risk (summing to 1), and the functions $R, A, T$ are defined as follows:
+$$CIS(\Delta) = 0.25 \cdot R(\Delta) + 0.25 \cdot A(\Delta) + 0.25 \cdot T(\Delta) + 0.25 \cdot L(\Delta)$$
+
+This "Equal Weighting" strategy ensures that no single dimension dominates the score, forcing the system to balance intent, implementation, verification, and logic.
 
 ### **3.1 Rationale Integrity ($R$): The Semantic Alignment Vector**
 
@@ -267,16 +266,26 @@ For a proposed change $\Delta$ introducing a set of new edges $E_{new}$, the Arc
 $$A(\Delta) = \prod_{e \in E_{new}} (1 - P(Violation | e))$$
 This function forces the score to 0 if a single critical architectural boundary is crossed (a "Critical Veto"), ensuring that locally valid code is rejected if it introduces global fragility.
 
-### **3.3 Testing Integrity ($T$): Semantic Coverage**
+### **3.3 Testing Integrity ($T$): Empirical Verification**
 
-Traditional code coverage measures *execution* (did the line run?), not *verification* (did it do the right thing?). We define Testing Integrity ($T$) as the semantic overlap between the Test Case assertions ($\vec{v}_{test}$) and the Acceptance Criteria ($\vec{v}_{criteria}$):
+Traditional code coverage measures *execution* (did the line run?), not *verification* (did it do the right thing?). In AgentBeats, Testing Integrity ($T$) is derived primarily from the **ground-truth pass rate** of the code in a secure Docker sandbox, augmented by a "Specificity Bonus" for well-structured test assertions.
 
-$$T(\Delta) = \text{Coverage}(\Delta) \times \text{Sim}(\vec{v}_{test}, \vec{v}_{criteria})$$
-This penalizes "vanity metrics"—tests that execute code but assert nothing of value.
+$$T(\Delta) = \text{Base}(PassRate) + \text{Bonus}(\text{Specificity})$$
+
+This ensures that code that fails to run or fails its own tests cannot achieve a high integrity score, regardless of how "clean" it looks.
+
+### **3.4 Logic Integrity ($L$): The Senior Review**
+
+While vectors and sandboxes capture structure and function, they can miss subtle algorithmic flaws or edge cases. Logic Integrity ($L$) is computed via an LLM-based "Senior Code Review" that evaluates the submission for:
+1.  **Edge Case Handling:** Nulls, empty inputs, boundary values.
+2.  **Algorithmic Complexity:** Efficiency and simplicity.
+3.  **Constraint Adherence:** Compliance with task-specific rules.
+
+$$L(\Delta) = \text{LLM}_{Judge}(\text{Code}, \text{Task})$$
 
 ---
 
-### **3.4 The Impossibility of Manual Governance (The Decay Theorem)**
+### **3.5 The Impossibility of Manual Governance (The Decay Theorem)**
 
 The necessity of this automated scoring mechanism is derived from the divergence between **Generation Velocity ($V_g$)** and **Review Velocity ($V_r$)**.
 
@@ -299,11 +308,11 @@ To enforce the Contextual Integrity Score ($CIS$) defined in Section 3, we propo
 
 Traditional AI coding assistants operate as monolithic agents, where the reasoning state is hidden within the model's weights. This opacity renders auditability impossible.
 
-We propose a **Multi-Agent Orchestrator-Worker (MA-OW)** topology where governance is structural, not supervisory.
+We employ a **Multi-Agent Orchestrator-Worker (MA-OW)** topology where governance is structural, not supervisory.
 
 * **The Orchestrator ($O$):** Maintains the state of the global context graph $G$. It does not generate code; it generates constraints.
-* **The Worker ($W$):** A specialized agent (e.g., Payments_Worker) that generates code $\Delta$ solely to satisfy constraints passed by $O$.
-* **The Judge ($J$):** An adversarial agent that evaluates $\Delta$ against the $CIS$ function.
+* **The Worker ($W$):** A specialized agent (e.g., Purple Agent / Defender) that generates code $\Delta$ solely to satisfy constraints passed by $O$.
+* **The Judge ($J$):** The Green Agent, an adversarial evaluator that runs $\Delta$ in a secure Docker sandbox and computes the $CIS$ function.
 
 The interaction is defined by the tuple $(C, \Delta, V)$, where $C$ is the constraint, $\Delta$ is the artifact, and $V$ is the verification vector. The system accepts $\Delta$ if and only if:
 
@@ -329,17 +338,19 @@ graph TD
 
 ### **4.2 The Decision Bill of Materials (DBOM)**
 
-In current CI/CD pipelines, the "Software Bill of Materials" (SBOM) tracks *components* (what). This is insufficient for liability protection. We introduce the **Decision Bill of Materials (DBOM)** to track *causality* (why).
+In current CI/CD pipelines, the "Software Bill of Materials" (SBOM) tracks *components* (what). This is insufficient for liability protection. AgentBeats generates a **Decision Bill of Materials (DBOM)** to track *causality* (why).
 
 A DBOM is an immutable, append-only log of the reasoning trace that authorized a code change. For every commit $\Delta_i$, the DBOM records a cryptographic tuple:
 
 $$DBOM_i = \langle H(\Delta_i), \vec{v}_{intent}, \text{Score}_{CIS}, \sigma_{Judge} \rangle$$
 Where:
 
-* $H(\Delta_i)$ is the SHA-256 hash of the code change.
-* $\vec{v}_{intent}$ is the vector embedding of the requirement (the "Why").
+* $H(\Delta_i)$ is the SHA-256 hash of the full evaluation result (JSON), ensuring no tampering with the score.
+* $\vec{v}_{intent}$ is the vector embedding of the requirement (the "Why"), allowing mathematical audit of intent alignment.
 * $\text{Score}_{CIS}$ is the computed Contextual Integrity Score.
-* $\sigma_{Judge}$ is the digital signature of the Agent-as-a-Judge.
+* $\sigma_{Judge}$ is the digital signature of the Agent-as-a-Judge, certifying the evaluation.
+
+This structure ensures that every line of code is mathematically bound to its justification. In the event of a liability claim, the organization does not produce a *log*; it produces a **proof** of diligence.
 
 This structure ensures that every line of code is mathematically bound to its justification. In the event of a liability claim (e.g., a security breach), the organization does not produce a *log*; it produces a **proof** of diligence.
 
