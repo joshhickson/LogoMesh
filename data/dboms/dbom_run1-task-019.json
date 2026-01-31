@@ -1,7 +1,7 @@
 {
   "dbom_version": "1.0",
-  "battle_id": "test-123",
-  "h_delta": "7bf4d056cf78b828dcddf5a1a8140be859b87c8204e0c4006038d9ac0d15aba4",
+  "battle_id": "run1-task-019",
+  "h_delta": "14bf222372e33e2a1203d670bd70ffe2706ef0de936abbda707e28aeb25d5c2e",
   "v_intent": [
     0.00040911632822826505,
     0.05689699202775955,
@@ -388,7 +388,7 @@
     -0.05177894979715347,
     -0.019564282149076462
   ],
-  "score_cis": 0.6725,
-  "sigma_judge": "SIG_GREEN_test-123_7bf4d056",
-  "timestamp": "2026-01-30T13:36:01.131107"
+  "score_cis": 0.475,
+  "sigma_judge": "SIG_GREEN_run1-task-019_14bf2223",
+  "timestamp": "2026-01-29T18:03:28.675503"
 }
