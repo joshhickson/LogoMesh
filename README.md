@@ -19,7 +19,7 @@ LogoMesh answers all four questions simultaneously by computing a **Contextual I
 
 ---
 
-## How It Works (The 30-Second Version)
+## How It Works
 
 ```
 You submit a coding task (e.g., "Build a thread-safe LRU cache")
