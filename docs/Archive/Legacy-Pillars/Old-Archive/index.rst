@@ -1,5 +1,5 @@
-archive
-=======
+Old Archive
+===========
 
 .. toctree::
    :maxdepth: 1

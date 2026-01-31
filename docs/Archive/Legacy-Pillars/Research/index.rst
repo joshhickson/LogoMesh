@@ -1,5 +1,5 @@
-03 Research
-===========
+Research
+========
 
 .. toctree::
    :maxdepth: 1

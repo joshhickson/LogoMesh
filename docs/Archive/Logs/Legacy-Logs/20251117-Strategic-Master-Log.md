@@ -17,7 +17,7 @@ This document serves as a centralized, high-level reference sheet for the LogoMe
 
 **Key Document Timeline:**
 *   [../../04-Operations/Intent-Log/Technical/20251116_build_fix_and_vitest_error.md](../../04-Operations/Intent-Log/Technical/20251116_build_fix_and_vitest_error.md): The "After" picture, documenting the successful build fix and environment stabilization.
-*   [../../02-Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md](../../02-Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md): The "Before" picture, detailing the critical `isolated-vm` build failure that was the primary blocker.
+*   [../../02-Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md](../../Legacy-Pillars/Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md): The "Before" picture, detailing the critical `isolated-vm` build failure that was the primary blocker.
 
 ---
 
@@ -27,7 +27,7 @@ This document serves as a centralized, high-level reference sheet for the LogoMe
 
 **Key Documents:**
 *   **Core Invention:** [../../00-Strategy/IP/01_CORE_IP_DEFINITION.md](../../00-Strategy/IP/01_CORE_IP_DEFINITION.md) - Provides the technical and conceptual definitions for the "Contextual Integrity Score" and the "Agent-as-a-Judge" system.
-*   **Source Concept:** [../../03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md](../../03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md) - The foundational academic text that defines the core thesis and provides the language for the entire venture.
+*   **Source Concept:** [../../03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md](../../Legacy-Pillars/Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md) - The foundational academic text that defines the core thesis and provides the language for the entire venture.
 *   **Strategic Framework:** [../../00-Strategy/Business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md](../../00-Strategy/Business/20251116-IP-and-Business-Strategy-for-Contextual Debt.md) - The comprehensive plan detailing the IP portfolio (trademarks, patents), the 3-phase commercialization strategy, and the investor narrative.
 *   **Team Alignment & Decision Log:** `logs/ip_and_business/20251115-!Meeting 1 Minutes.md` - Documents Deepti's validation of the IP's value and the team's formal decision to pursue copyright and investor conversations.
 *   **Implementation Log:** [../../00-Strategy/Business/20251116-Strategy-Doc-Creation-Log.md](../../00-Strategy/Business/20251116-Strategy-Doc-Creation-Log.md) - Records the creation of the formal strategy and IP documents located in `docs/strategy_and_ip/`.
@@ -51,7 +51,7 @@ This document serves as a centralized, high-level reference sheet for the LogoMe
 
 **Key Documents:**
 *   **Current Status:** [../../04-Operations/Intent-Log/Technical/20251116_build_fix_and_vitest_error.md](../../04-Operations/Intent-Log/Technical/20251116_build_fix_and_vitest_error.md) - Confirms the project now builds successfully and the test environment is operational.
-*   **Previous Blocker:** [../../02-Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md](../../02-Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md) - Details the critical `isolated-vm` installation failure that was the primary technical obstacle.
+*   **Previous Blocker:** [../../02-Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md](../../Legacy-Pillars/Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md) - Details the critical `isolated-vm` installation failure that was the primary technical obstacle.
 *   **Target Architecture:** [PROJECT_PLAN.md (Outdated)](../PROJECT_PLAN.md) - Describes the target multi-agent "Orchestrator-Worker" architecture with Mermaid diagrams.
 *   **Detailed Tasks:** [../../04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md](../../04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md) - Provides the specific, actionable workstreams and engineering tasks for the development team.
 
@@ -63,8 +63,8 @@ This document serves as a centralized, high-level reference sheet for the LogoMe
 
 **Key Documents:**
 *   **Conceptual Synthesis:** `[../../03-Research/Theory/20251116-[import]-Corrected_Contextual_Debt_Analysis.md](../../03-Research/Theory/20251116-[import]-Corrected_Contextual_Debt_Analysis.md)` - Links the "Contextual Debt" concept to lectures and talks from leading AI researchers, demonstrating that the underlying problems are a top-of-mind concern for the industry.
-*   **Academic Deep Dive:** [../../03-Research/Theory/20251116-Vinyals's Perspective On Embedding Geometry.md](../../03-Research/Theory/20251116-Vinyals's Perspective On Embedding Geometry.md) - Provides a research-level analysis of a paper on embedding geometries, relevant to the long-term vision of creating a "society of models."
-*   **Revision History:** [../../03-Research/Theory/20251115-Jules-Research-Paper-Revision-Log.md](../../03-Research/Theory/20251115-Jules-Research-Paper-Revision-Log.md) - Documents the process of refining and "hardening" the core research paper based on this ongoing synthesis and feedback.
+*   **Academic Deep Dive:** [../../03-Research/Theory/20251116-Vinyals's Perspective On Embedding Geometry.md](../../Legacy-Pillars/Research/Theory/20251116-Vinyals's Perspective On Embedding Geometry.md) - Provides a research-level analysis of a paper on embedding geometries, relevant to the long-term vision of creating a "society of models."
+*   **Revision History:** [../../03-Research/Theory/20251115-Jules-Research-Paper-Revision-Log.md](../../Legacy-Pillars/Research/Theory/20251115-Jules-Research-Paper-Revision-Log.md) - Documents the process of refining and "hardening" the core research paper based on this ongoing synthesis and feedback.
 
 ---
 

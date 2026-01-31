@@ -1,5 +1,5 @@
-02 Engineering
-==============
+Engineering
+===========
 
 .. toctree::
    :maxdepth: 1

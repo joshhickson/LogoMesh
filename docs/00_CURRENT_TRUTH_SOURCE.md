@@ -50,7 +50,7 @@ type: Spec
 ### Architecture
 *   [Judges Start Here](./05-Competition/Judges-Start-Here.md): **START HERE** - Quick overview for competition judges.
 *   [Agent Architecture Guide](./05-Competition/Agent-Architecture.md): Full technical architecture of the 3-agent arena.
-*   [Agent Arena Upgrade Plan](Archive/Intent-Log/Technical/20260101-Agent-Arena-Upgrade-Plan.md): The technical roadmap for the competition.
+*   [Agent Arena Upgrade Plan](./Archive/Logs/Intent-Log/Technical/20260101-Agent-Arena-Upgrade-Plan.md): The technical roadmap for the competition.
 *   [Embedding Vectors Specs](04-Operations/Dual-Track-Arena/Embedding-Vectors/README.md): Mathematical specifications for CIS.
 *   **CIS Metrics Tracking (A-002):**
     - **Formula (Post-B-002):** `CIS = (0.25 × R) + (0.25 × A) + (0.25 × T) + (0.25 × L)`
@@ -68,12 +68,12 @@ type: Spec
     - **Deployment:** `./scripts/bash/launch_arena.sh` on Lambda H100/A100.
 
 ### Operations
-*   [Master Log](Archive/Intent-Log/Technical/20251231-Polyglot-Consolidation-Master-Log.md): History of the Polyglot merge.
-*   [Lambda Test Protocol](Archive/Intent-Log/Josh/20260101-Lambda-Test-Protocol.md): How to run the test.
-*   [Instance Restart Guide](Archive/Intent-Log/Josh/20260103-Instance-Restart-Guide.md): **CRITICAL** procedure for recovering the ephemeral H100 environment.
-*   [Team Briefing Draft](Archive/Intent-Log/Josh/20260101-Team-Briefing-Draft.md): Announcement of the "Red Zone" sprint.
+*   [Master Log](./Archive/Logs/Intent-Log/Technical/20251231-Polyglot-Consolidation-Master-Log.md): History of the Polyglot merge.
+*   [Lambda Test Protocol](./Archive/Logs/Intent-Log/Josh/20260101-Lambda-Test-Protocol.md): How to run the test.
+*   [Instance Restart Guide](./Archive/Logs/Intent-Log/Josh/20260103-Instance-Restart-Guide.md): **CRITICAL** procedure for recovering the ephemeral H100 environment.
+*   [Team Briefing Draft](./Archive/Logs/Intent-Log/Josh/20260101-Team-Briefing-Draft.md): Announcement of the "Red Zone" sprint.
 *   **Phase 2.7: C-NEW-001 Infrastructure Setup (2026-01-14)**
-    - [Setup & Execution Log](Archive/Intent-Log/Josh/Phase2.7-C-NEW-001-Infrastructure-Setup-20260114.md): Sequential deployment of Mistral/Qwen/gpt-oss trio
+    - [Setup & Execution Log](./Archive/Logs/Intent-Log/Josh/Phase2.7-C-NEW-001-Infrastructure-Setup-20260114.md): Sequential deployment of Mistral/Qwen/gpt-oss trio
     - Status: **READY FOR EXECUTION** (25 battles × 3 tiers, ~12-16 hours)
     - Automation: `scripts/run_c_new_001_diversity_test.sh`, `scripts/analyze_c_new_001_results.py`
     - Expected CIS deltas: 0.33 (Tier 1→3), validates metric hypothesis

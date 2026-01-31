@@ -34,7 +34,7 @@ The following documents (timestamped 20251119 - 20251209) are within the scope o
 *   [20251119-deprecated1-The Unknowable Code_ A Protocol for Contextual Integrity.md](../../../00-Strategy/IP/20251119-deprecated1-The%20Unknowable%20Code_%20A%20Protocol%20for%20Contextual%20Integrity.md)
 *   [20251119-deprecated2-The Unknowable Code_ A Protocol for Measurable Contextual Integrity.md](../../../00-Strategy/IP/20251119-deprecated2-The%20Unknowable%20Code_%20A%20Protocol%20for%20Measurable%20Contextual%20Integrity.md)
 *   [20251119-proposed-Section-2.3.md](../../../00-Strategy/IP/20251119-proposed-Section-2.3.md)
-*   [20251119-Recommendation-Report-Strategic-Path-Forward.md](../../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md)
+*   [20251119-Recommendation-Report-Strategic-Path-Forward.md](../../../Legacy-Pillars/Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md)
 *   [20251121-Memory Theory_Vector-Motor Encoding.md](../../../03-Research/Theory/20251121-Memory%20Theory_Vector-Motor%20Encoding.md)
 *   [20251130-session-log-interactive-graph-dashboard.md](../20251130-session-log-interactive-graph-dashboard.md)
 *   [20251130-session-log-onboarding-update.md](../20251130-session-log-onboarding-update.md)
@@ -86,7 +86,7 @@ The following documents (timestamped 20251119 - 20251209) are within the scope o
 *   **Goal:** Ensure no "Active" tasks remain for this initiative in forward-looking documents.
 
 ### 2.3. The Pivot Alignment (Math vs. Specs)
-*   **Source A:** [docs/02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md](../../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md) (May still focus on "Math Theory").
+*   **Source A:** [docs/02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md](../../../Legacy-Pillars/Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md) (May still focus on "Math Theory").
 *   **Source B:** [docs/04-Operations/Intent-Log/Technical/20251127-Contextual-Discovery-Plan-Revision.md](20251127-Contextual-Discovery-Plan-Revision.md) (Focuses on "Implementation Specs").
 *   **Goal:** Identify any lingering instructions to "prove the math" that might confuse a new reader.
 
@@ -152,10 +152,10 @@ There is no single "Technical Briefing" document that consolidates the recent st
 *   **Pillar 1: Mission & Strategy (The "Why")**
     *   [docs/00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md](../../../00-Strategy/Business/20251118-Strategic-Pivot-Plan-CIS-Formalization.md) (Technical Implementation Plan - CIS v2)
     *   [docs/04-Operations/Intent-Log/Technical/20251126-AgentBeats-Competition-Info-Session-PDF.md](20251126-AgentBeats-Competition-Info-Session-PDF.md) (Competition Rules)
-    *   [docs/02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md](../../../02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md) (Pivot Rationale - *Verify strictly for Technical content*)
+    *   [docs/02-Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md](../../../Legacy-Pillars/Engineering/Verification/20251119-Recommendation-Report-Strategic-Path-Forward.md) (Pivot Rationale - *Verify strictly for Technical content*)
 
 *   **Pillar 2: Core Theory (The "What")**
-    *   [docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md](../../../03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md) (The Core Theory)
+    *   [docs/03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md](../../../Legacy-Pillars/Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md) (The Core Theory)
     *   [docs/04-Operations/Intent-Log/Technical/20251127-Math-Viability-and-Novelty-Analysis.md](20251127-Math-Viability-and-Novelty-Analysis.md) (Math Validation)
 
 *   **Pillar 3: Architecture & Specs (The "How")**

@@ -16,7 +16,7 @@ This document serves as a "Grab Bag" of tasks for the team (Alaa, Garrett, Samue
 
 ## 1. Green Team Tasks (Evaluation & Green Agent) - **HIGHEST PRIORITY**
 
-**Primary Reference:** [Contextual Debt Paper (Submission Draft)](../../../03-Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md)
+**Primary Reference:** [Contextual Debt Paper (Submission Draft)](../../../Legacy-Pillars/Research/Theory/20251115-Research_Paper-Contextual_Debt-A_Software_Liability.md)
 
 ### 1.1 Vector Scoring Implementation (Section 3.1 - 3.3)
 *   **Context:** Migrate from LLM-based scoring to Vector-based scoring as defined in the **"Contextual Integrity Score ($CIS$)"** section of the IP paper.

@@ -8,7 +8,7 @@ Check the latest meeting minutes or the [Arena Team Tasks](../Josh/20260101-Aren
 ## Mentioned In
 A list of documents where you are mentioned, to help you get up to speed:
 
-- [20251114_VERIFICATION_REPORT_TASK_1.1.md](../../../02-Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md)
+- [20251114_VERIFICATION_REPORT_TASK_1.1.md](../../../Legacy-Pillars/Engineering/Verification/20251114_VERIFICATION_REPORT_TASK_1.1.md)
 - [Copyright_Registration_Playbook.md](../../../00-Strategy/IP/Copyright_Registration_Playbook.md)
 - [02_LEGAL_CHECKLIST.md](../../../00-Strategy/IP/02_LEGAL_CHECKLIST.md)
 - [REGISTRATION_MANIFEST.md](../../../00-Strategy/IP/REGISTRATION_MANIFEST.md)
@@ -56,5 +56,5 @@ A list of documents where you are mentioned, to help you get up to speed:
 - [20251119-Strategic-Master-Log.md](../../../Archive/Unsorted/20251119-Strategic-Master-Log.md)
 - [20251121-LogoMesh-Meeting-2.srt](../../../Archive/Unsorted/20251121-LogoMesh-Meeting-2.srt)
 - [20251203-PRE-GAP-ANALYSIS-TRUTH-SOURCE.md](../../../Archive/20251203-PRE-GAP-ANALYSIS-TRUTH-SOURCE.md)
-- [20251121-Memory Theory_Vector-Motor Encoding.md](../../../03-Research/Theory/20251121-Memory Theory_Vector-Motor Encoding.md)
+- [20251121-Memory Theory_Vector-Motor Encoding.md](../../../Legacy-Pillars/Research/Theory/20251121-Memory Theory_Vector-Motor Encoding.md)
 - [00_CURRENT_TRUTH_SOURCE.md](../../../00_CURRENT_TRUTH_SOURCE.md)

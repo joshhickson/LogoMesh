@@ -13,16 +13,6 @@ Archive
    20260111-Session-Log.md
    GAP_ANALYSIS.md
    PROJECT_PLAN.md
-   02-Engineering/index.rst
-   03-Research/index.rst
-   Architecture/index.rst
-   Business/index.rst
-   Competition/index.rst
    Diagrams/index.rst
-   Intent-Log/index.rst
-   Legacy-Logs/index.rst
-   Specs/index.rst
-   Team/index.rst
-   Unsorted/index.rst
-   agentbeats-lambda/index.rst
-   onboarding/index.rst
+   Legacy-Pillars/index.rst
+   Logs/index.rst

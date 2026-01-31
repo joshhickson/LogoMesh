@@ -20,7 +20,7 @@ We are building the **Contextual Integrity System (CIS)** to measure the liabili
 *   **Competition Strategy:** [../../00-Strategy/Competition/20251116-Competition Analysis For Project Success.md](../../00-Strategy/Competition/20251116-Competition Analysis For Project Success.md)
 *   **Technical Recovery:** [../../04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md](../../04-Operations/Intent-Log/Technical/20251113_RECOVERY_PLAN.md)
 *   **Research Paper (v3):** [../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md](../../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md)
-*   **Previous Log:** [../Legacy-Logs/20251117-Strategic-Master-Log.md](../Legacy-Logs/20251117-Strategic-Master-Log.md)
+*   **Previous Log:** [../Legacy-Logs/20251117-Strategic-Master-Log.md](../Logs/Legacy-Logs/20251117-Strategic-Master-Log.md)
 
 ## 2. Executive Summary (The "Pivot" State)
 
