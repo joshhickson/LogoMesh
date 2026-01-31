@@ -1,4 +1,6 @@
-> **Status:** THEORY (DEFERRED)
+---
+status: THEORY (DEFERRED)
+---
 > **Context:** Strategic architectural insight regarding the auditing of "Black Box" agent states using vector translation. Captured for future R&D; deferred due to the 7-day R&D cutoff for the current competition submission.
 > **Source:** Discussion on 2026-01-05 regarding "Gibberish" Thinking IDs in Copilot logs.
 

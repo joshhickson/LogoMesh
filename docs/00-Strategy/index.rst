@@ -1,11 +1,9 @@
-Strategy
-========
+00 Strategy
+===========
 
 .. toctree::
    :maxdepth: 1
+   :caption: Contents:
    :glob:
 
-   *
-   IP/*
-   Business/*
-   Competition/*
+   IP/index.rst

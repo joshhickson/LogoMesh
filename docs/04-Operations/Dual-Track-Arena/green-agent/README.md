@@ -28,17 +28,17 @@ See: [server.md](../file-reviews/green/server.md), [analyzer.md](../file-reviews
 ### 1. CIS Vector Math
 - Uses `sentence-transformers` (Cosine Similarity) to mathematically measure the alignment between Intent, Rationale, and Code.
 - Moves beyond "vibes" to quantifiable vectors.
-- See: [scoring.md](../file-reviews/green/scoring.md), [compare_vectors.md](../file-reviews/green/compare_vectors.md), [20260109-CIS-Vector-Math-Spec.md](20260109-CIS-Vector-Math-Spec.md)
+- See: [scoring.md](../file-reviews/green/scoring.md), [compare_vectors.md](../file-reviews/green/compare_vectors.md), [CIS-Vector-Math-Spec.md](CIS-Vector-Math-Spec.md)
 
 ### 2. Decision Bill of Materials (DBOM)
 - Generates a cryptographic proof (`h_delta`, `v_intent`) for every evaluation.
 - Ensures traceability and immutability of the benchmark scores.
-- See: [analyzer.md](../file-reviews/green/analyzer.md), [20260109-DBOM-Specification.md](20260109-DBOM-Specification.md)
+- See: [analyzer.md](../file-reviews/green/analyzer.md), [DBOM-Specification.md](DBOM-Specification.md)
 
 ### 3. Persistence Layer
 - Uses SQLite with **Write-Ahead Logging (WAL)** for crash-proof data storage.
 - Decouples cryptographic artifacts (JSON files) from relational data (SQL).
-- See: [20260109-Persistence-Architecture.md](20260109-Persistence-Architecture.md)
+- See: [Persistence-Architecture.md](Persistence-Architecture.md)
 
 ### 4. Runtime Sandbox
 - Isolation: Docker-based execution using `python:3.12-slim`.
@@ -58,7 +58,7 @@ See: [server.md](../file-reviews/green/server.md), [analyzer.md](../file-reviews
 
 ## Usage
 ### Quick Start (Scripts)
-For setup instructions (including `.env` creation) and runnable scripts, see the [Quick Start Scripts](../20260110-Quick-Start-Scripts.md).
+For setup instructions (including `.env` creation) and runnable scripts, see the [Quick Start Scripts](../Quick-Start-Scripts.md).
 
 ### Requirements
 - **OS:** Ubuntu (Optimized for Lambda Cloud/Debian environments)
@@ -66,7 +66,7 @@ For setup instructions (including `.env` creation) and runnable scripts, see the
 - **Deps:** `uv` package manager
 
 ### Running the Agent
-See the [Evaluation Tasklist](20260109-Evaluation-Tasklist.md) for detailed steps on verifying the system in a production/docker environment.
+See the [Evaluation Tasklist](Evaluation-Tasklist.md) for detailed steps on verifying the system in a production/docker environment.
 
 ### API Endpoints
 - `POST /actions/send_coding_task`: Main entry point. Supports random tasks or Multi-File Injection.

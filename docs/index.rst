@@ -1,41 +1,16 @@
-LogoMesh Documentation
-======================
+Documentation Root
+==================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Strategy
+   :maxdepth: 1
+   :caption: Contents:
+   :glob:
 
-   00-Strategy/index
-   00_CURRENT_TRUTH_SOURCE
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Architecture
-
-   01-Architecture/Specs/index
-   01-Architecture/Diagrams/index
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Engineering
-
-   02-Engineering/Setup/index
-   02-Engineering/Onboarding/index
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Research
-
-   03-Research/index
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Operations & Logs
-
-   04-Operations/index
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Competition
-
-   05-Competition/index
+   00_CURRENT_TRUTH_SOURCE.md
+   Docs-Management-Instruction-Manual.md
+   TEMPLATE_DOC.md
+   00-Strategy/index.rst
+   01-Architecture/index.rst
+   04-Operations/index.rst
+   05-Competition/index.rst
+   Archive/index.rst

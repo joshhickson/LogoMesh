@@ -29,29 +29,29 @@ type: Spec
 
 | Role | Name | Workspace Folder | Primary Focus |
 | :--- | :--- | :--- | :--- |
-| **Team Lead** | **Josh** | [docs/04-Operations/Intent-Log/Josh/](../04-Operations/Intent-Log/Josh/) | Strategy, Architecture, Submission |
-| **Data Scientist** | **Deepti** | [docs/04-Operations/Intent-Log/Deepti/](../04-Operations/Intent-Log/Deepti/) | CIS Metrics, Decay Theorem, Presentation |
-| **Green Agent Lead** | **Alaa** | [docs/04-Operations/Intent-Log/Alaa/](../04-Operations/Intent-Log/Alaa/) | Evaluator Logic, Vector Math |
-| **Builder/Dev** | **Garrett** | [docs/04-Operations/Intent-Log/Garrett/](../04-Operations/Intent-Log/Garrett/) | Implementation, Docker, Tooling |
-| **Green Agent Dev** | **Samuel** | [docs/04-Operations/Intent-Log/Samuel/](../04-Operations/Intent-Log/Samuel/) | Python Codebase, A2A Protocol |
-| **System Architect** | **Mark (Kuan Zhou)** | [docs/04-Operations/Intent-Log/Mark/](../04-Operations/Intent-Log/Mark/) | Security, AWS/Lambda, Red Agent Lead |
-| **Backend Dev** | **Oleksander**| [docs/04-Operations/Intent-Log/Oleksander/](../04-Operations/Intent-Log/Oleksander/) | Orchestration, Sidecar, API |
+| **Team Lead** | **Josh** | [docs/Archive/Intent-Log/Josh/](Archive/Intent-Log/Josh/) | Strategy, Architecture, Submission |
+| **Data Scientist** | **Deepti** | [docs/Archive/Intent-Log/Deepti/](Archive/Intent-Log/Deepti/) | CIS Metrics, Decay Theorem, Presentation |
+| **Green Agent Lead** | **Alaa** | [docs/Archive/Intent-Log/Alaa/](Archive/Intent-Log/Alaa/) | Evaluator Logic, Vector Math |
+| **Builder/Dev** | **Garrett** | [docs/Archive/Intent-Log/Garrett/](Archive/Intent-Log/Garrett/) | Implementation, Docker, Tooling |
+| **Green Agent Dev** | **Samuel** | [docs/Archive/Intent-Log/Samuel/](Archive/Intent-Log/Samuel/) | Python Codebase, A2A Protocol |
+| **System Architect** | **Mark (Kuan Zhou)** | [docs/Archive/Intent-Log/Mark/](Archive/Intent-Log/Mark/) | Security, AWS/Lambda, Red Agent Lead |
+| **Backend Dev** | **Oleksander**| [docs/Archive/Intent-Log/Oleksander/](Archive/Intent-Log/Oleksander/) | Orchestration, Sidecar, API |
 
 ## 4. Key Documentation Indices
 
 ### Strategy & IP
-*   [Contextual Debt Paper (Draft)](../00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md): The core theory.
+*   [Contextual Debt Paper (Draft)](00-Strategy/IP/Contextual-Debt-Paper.md): The core theory.
 *   **Paper Versioning Protocol (G-001):** Before any paper update, copy current to archive with timestamp. All versions tracked in this file.
     - **Current Version:** v1 (2026-01-14) - Validates Stage 2 Campaign (77 battles)
-    - **Archive:** [00-Strategy/IP/archive/](../00-Strategy/IP/archive/)
+    - **Archive:** [00-Strategy/IP/archive/](00-Strategy/IP/archive/)
     - **Process:** `cp paper.md archive/paper_v[N]_YYYY-MM-DD.md` before edits; update CURRENT_TRUTH_SOURCE.md after
-*   [Competition Requirements](../05-Competition/20251221-Submission-Requirements-Matrix.md): The rules we must follow.
+*   [Competition Requirements](05-Competition/20251221-Submission-Requirements-Matrix.md): The rules we must follow.
 
 ### Architecture
 *   [Judges Start Here](./05-Competition/Judges-Start-Here.md): **START HERE** - Quick overview for competition judges.
 *   [Agent Architecture Guide](./05-Competition/Agent-Architecture.md): Full technical architecture of the 3-agent arena.
-*   [Agent Arena Upgrade Plan](../04-Operations/Intent-Log/Technical/20260101-Agent-Arena-Upgrade-Plan.md): The technical roadmap for the competition.
-*   [Embedding Vectors Specs](../04-Operations/Embedding-Vectors/README.md): Mathematical specifications for CIS.
+*   [Agent Arena Upgrade Plan](./Archive/Logs/Intent-Log/Technical/20260101-Agent-Arena-Upgrade-Plan.md): The technical roadmap for the competition.
+*   [Embedding Vectors Specs](04-Operations/Dual-Track-Arena/Embedding-Vectors/README.md): Mathematical specifications for CIS.
 *   **CIS Metrics Tracking (A-002):**
     - **Formula (Post-B-002):** `CIS = (0.25 × R) + (0.25 × A) + (0.25 × T) + (0.25 × L)`
     - **Components:** rationale_score (Intent↔Rationale), architecture_score, testing_score, logic_score (anchored to sandbox success per B-001)
@@ -68,12 +68,12 @@ type: Spec
     - **Deployment:** `./scripts/bash/launch_arena.sh` on Lambda H100/A100.
 
 ### Operations
-*   [Master Log](../04-Operations/Intent-Log/Technical/20251231-Polyglot-Consolidation-Master-Log.md): History of the Polyglot merge.
-*   [Lambda Test Protocol](../04-Operations/Intent-Log/Josh/20260101-Lambda-Test-Protocol.md): How to run the test.
-*   [Instance Restart Guide](../04-Operations/Intent-Log/Josh/20260103-Instance-Restart-Guide.md): **CRITICAL** procedure for recovering the ephemeral H100 environment.
-*   [Team Briefing Draft](../04-Operations/Intent-Log/Josh/20260101-Team-Briefing-Draft.md): Announcement of the "Red Zone" sprint.
+*   [Master Log](./Archive/Logs/Intent-Log/Technical/20251231-Polyglot-Consolidation-Master-Log.md): History of the Polyglot merge.
+*   [Lambda Test Protocol](./Archive/Logs/Intent-Log/Josh/20260101-Lambda-Test-Protocol.md): How to run the test.
+*   [Instance Restart Guide](./Archive/Logs/Intent-Log/Josh/20260103-Instance-Restart-Guide.md): **CRITICAL** procedure for recovering the ephemeral H100 environment.
+*   [Team Briefing Draft](./Archive/Logs/Intent-Log/Josh/20260101-Team-Briefing-Draft.md): Announcement of the "Red Zone" sprint.
 *   **Phase 2.7: C-NEW-001 Infrastructure Setup (2026-01-14)**
-    - [Setup & Execution Log](../04-Operations/Intent-Log/Josh/Phase2.7-C-NEW-001-Infrastructure-Setup-20260114.md): Sequential deployment of Mistral/Qwen/gpt-oss trio
+    - [Setup & Execution Log](./Archive/Logs/Intent-Log/Josh/Phase2.7-C-NEW-001-Infrastructure-Setup-20260114.md): Sequential deployment of Mistral/Qwen/gpt-oss trio
     - Status: **READY FOR EXECUTION** (25 battles × 3 tiers, ~12-16 hours)
     - Automation: `scripts/run_c_new_001_diversity_test.sh`, `scripts/analyze_c_new_001_results.py`
     - Expected CIS deltas: 0.33 (Tier 1→3), validates metric hypothesis

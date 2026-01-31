@@ -3,40 +3,26 @@ const path = require('path');
 
 const ROOT_DIR = process.cwd();
 const DRY_RUN = process.argv.includes('--dry-run');
-const BATCH_ID = process.argv.find(arg => arg.startsWith('--batch='))?.split('=')[1];
 
 // --- Configuration: The Target Architecture ---
-const ALL_MAPPINGS = [
-    // BATCH 1: Strategy (Pillar 1)
-    { batch: '1', pattern: /^docs\/strategy_and_ip\/.*/, targetDir: 'docs/00-Strategy/IP' },
-    { batch: '1', pattern: /^logs\/ip_and_business\/.*/, targetDir: 'docs/00-Strategy/Business' },
-    { batch: '1', pattern: /^logs\/competition\/.*/, targetDir: 'docs/00-Strategy/Competition' },
+const MAPPINGS = [
+    // 1. Consolidate Archives
+    { pattern: /^docs\/Archive\/02-Engineering\/.*/, targetDir: 'docs/Archive/Legacy-Pillars/Engineering' },
+    { pattern: /^docs\/Archive\/03-Research\/.*/, targetDir: 'docs/Archive/Legacy-Pillars/Research' },
+    { pattern: /^docs\/Archive\/Business\/.*/, targetDir: 'docs/Archive/Legacy-Pillars/Business' },
+    { pattern: /^docs\/Archive\/Competition\/.*/, targetDir: 'docs/Archive/Legacy-Pillars/Competition' },
+    { pattern: /^docs\/Archive\/Team\/.*/, targetDir: 'docs/Archive/Legacy-Pillars/Team' },
+    { pattern: /^docs\/Archive\/Architecture\/.*/, targetDir: 'docs/Archive/Legacy-Pillars/Architecture' },
 
-    // BATCH 2: Architecture & Engineering (Pillars 2 & 3)
-    { batch: '2', source: 'docs/EVAL_OUTPUT_SCHEMA.md', target: 'docs/01-Architecture/Specs/Evaluation-Output-Schema.md' },
-    { batch: '2', source: 'docs/CONTEXTUAL_DEBT_SPEC.md', target: 'docs/01-Architecture/Specs/Contextual-Debt-Spec.md' },
-    { batch: '2', source: 'docs/CI_COMPOSE_E2E_WORKFLOW.md', target: 'docs/01-Architecture/Diagrams/CI-Workflow.md' },
-    { batch: '2', source: 'docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md', target: 'docs/02-Engineering/Setup/Data-Scientist-Gap-Analysis.md' },
-    { batch: '2', source: 'docs/onboarding/README.md', target: 'docs/02-Engineering/Setup/Onboarding_Guide.md' },
-    { batch: '2', source: 'docs/PROJECT_STATUS.md', target: 'docs/02-Engineering/Setup/Project_Status.md' },
-    {
-        batch: '2',
-        pattern: /^logs\/technical\/.*(REPORT|Report|Verification|Validation).*\.md$/,
-        targetDir: 'docs/02-Engineering/Verification'
-    },
+    // 2. Logs Consolidation
+    { pattern: /^docs\/Archive\/Intent-Log\/.*/, targetDir: 'docs/Archive/Logs/Intent-Log' },
+    { pattern: /^docs\/Archive\/Legacy-Logs\/.*/, targetDir: 'docs/Archive/Logs/Legacy-Logs' },
+    { pattern: /^docs\/Archive\/agentbeats-lambda\/.*/, targetDir: 'docs/Archive/Logs/Legacy-Components/agentbeats-lambda' },
 
-    // BATCH 3: Research & Operations (Pillars 4 & 5)
-    { batch: '3', pattern: /^logs\/research\/.*/, targetDir: 'docs/03-Research/Theory' },
-    { batch: '3', pattern: /^logs\/technical\/.*/, targetDir: 'docs/04-Operations/Intent-Log/Technical' },
-    { batch: '3', pattern: /^logs\/onboarding-logs\/.*/, targetDir: 'docs/04-Operations/Team' },
-    { batch: '3', pattern: /^docs\/intent_log\/.*/, targetDir: 'docs/04-Operations/Intent-Log' },
-
-    // BATCH 4: Archives & Safety
-    { batch: '4', source: 'logs/README.md', target: 'docs/Archive/Legacy-Logs/LOGS_README.md' },
-    { batch: '4', pattern: /^logs\/archive\/.*/, targetDir: 'docs/Archive/Legacy-Logs' },
+    // 3. Lowercase 'archive' merge (Handle casing issues)
+    { pattern: /^docs\/archive\/([^/]+)\/.*/, targetDir: 'docs/Archive/Legacy-Pillars/Old-Archive/$1' },
+    { source: 'docs/archive/index.rst', target: 'docs/Archive/Legacy-Pillars/Old-Archive/index.rst' }
 ];
-
-const MAPPINGS = BATCH_ID ? ALL_MAPPINGS.filter(m => m.batch === BATCH_ID) : ALL_MAPPINGS;
 
 // --- Helpers ---
 
@@ -62,11 +48,58 @@ function resolveTarget(sourcePath) {
     // Check regex patterns
     const patternMatch = MAPPINGS.find(m => m.pattern && m.pattern.test(sourcePath));
     if (patternMatch) {
+        // We need to preserve the filename AND the relative path structure *after* the matched folder
+        // E.g. docs/Archive/02-Engineering/Setup/foo.md -> docs/Archive/Legacy-Pillars/Engineering/Setup/foo.md
+
+        // Find the part of the path that matched the regex
+        // This is tricky with varying regexes.
+        // Simplification: We assume the regex matches the *root* of the move.
+        // We can split the source path and try to re-assemble.
+
+        // Strategy: Remove the prefix that matched the 'pattern' broadly?
+        // No, let's just use path.basename for flat moves, or use string replacement.
+
+        // Actually, for the Archive restructure, we want to KEEP the sub-structure.
+        // e.g. 02-Engineering/Setup/ -> Legacy-Pillars/Engineering/Setup/
+
+        // Let's implement a heuristic: replace the matched folder prefix.
+        if (sourcePath.startsWith('docs/Archive/02-Engineering/')) {
+            return sourcePath.replace('docs/Archive/02-Engineering/', 'docs/Archive/Legacy-Pillars/Engineering/');
+        }
+        if (sourcePath.startsWith('docs/Archive/03-Research/')) {
+            return sourcePath.replace('docs/Archive/03-Research/', 'docs/Archive/Legacy-Pillars/Research/');
+        }
+        if (sourcePath.startsWith('docs/Archive/Business/')) {
+            return sourcePath.replace('docs/Archive/Business/', 'docs/Archive/Legacy-Pillars/Business/');
+        }
+        if (sourcePath.startsWith('docs/Archive/Competition/')) {
+            return sourcePath.replace('docs/Archive/Competition/', 'docs/Archive/Legacy-Pillars/Competition/');
+        }
+        if (sourcePath.startsWith('docs/Archive/Team/')) {
+            return sourcePath.replace('docs/Archive/Team/', 'docs/Archive/Legacy-Pillars/Team/');
+        }
+        if (sourcePath.startsWith('docs/Archive/Architecture/')) {
+            return sourcePath.replace('docs/Archive/Architecture/', 'docs/Archive/Legacy-Pillars/Architecture/');
+        }
+        if (sourcePath.startsWith('docs/Archive/Intent-Log/')) {
+            return sourcePath.replace('docs/Archive/Intent-Log/', 'docs/Archive/Logs/Intent-Log/');
+        }
+        if (sourcePath.startsWith('docs/Archive/Legacy-Logs/')) {
+            return sourcePath.replace('docs/Archive/Legacy-Logs/', 'docs/Archive/Logs/Legacy-Logs/');
+        }
+        if (sourcePath.startsWith('docs/Archive/agentbeats-lambda/')) {
+            return sourcePath.replace('docs/Archive/agentbeats-lambda/', 'docs/Archive/Logs/Legacy-Components/agentbeats-lambda/');
+        }
+
+        if (sourcePath.startsWith('docs/archive/')) {
+             return sourcePath.replace('docs/archive/', 'docs/Archive/Legacy-Pillars/Old-Archive/');
+        }
+
         const fileName = path.basename(sourcePath);
         return path.join(patternMatch.targetDir, fileName);
     }
 
-    return null; // No match = Leave it (or handle as orphan)
+    return null; // No match = Leave it
 }
 
 function getRelativeLink(fromFile, toFile) {
@@ -78,12 +111,13 @@ function getRelativeLink(fromFile, toFile) {
 
 // --- Main Logic ---
 
-console.log(`Starting Restructure (Dry Run: ${DRY_RUN})...`);
+console.log(`Starting Archive Restructure (Dry Run: ${DRY_RUN})...`);
 
 // 1. Scan & Plan
+// Only scan docs/Archive and docs/archive
 const allDocs = [
-    ...getAllFiles('docs'),
-    ...getAllFiles('logs')
+    ...getAllFiles('docs/Archive'),
+    ...getAllFiles('docs/archive')
 ].filter(f => !f.includes('node_modules') && !f.includes('.DS_Store'));
 
 const movePlan = []; // { source, target }
@@ -92,19 +126,7 @@ const redirectMap = new Map(); // OldPath -> NewPath
 allDocs.forEach(source => {
     let target = resolveTarget(source);
 
-    // Safety: If no target, and it's in logs/, move to Archive/Unsorted
-    // ONLY do this if we are not in a specific batch, OR if we are in the final batch (4)
-    if (!target && source.startsWith('logs/') && (!BATCH_ID || BATCH_ID === '4')) {
-        target = path.join('docs/Archive/Unsorted', path.relative('logs', source));
-    }
-
     if (target && target !== source) {
-        // Collision Check
-        if (movePlan.find(p => p.target === target)) {
-            const ext = path.extname(target);
-            const base = path.basename(target, ext);
-            target = path.join(path.dirname(target), `${base}_dup${ext}`);
-        }
         movePlan.push({ source, target });
         redirectMap.set(source, target);
     } else {
@@ -128,7 +150,7 @@ movePlan.forEach(({ source, target }) => {
 
     if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
 
-    // Safety check for case-insensitive file systems (renaming file to itself with different case)
+    // Safety check for case-insensitive file systems
     if (absSource.toLowerCase() === absTarget.toLowerCase() && absSource !== absTarget) {
          fs.renameSync(absSource, absSource + '.temp');
          fs.renameSync(absSource + '.temp', absTarget);
@@ -139,12 +161,11 @@ movePlan.forEach(({ source, target }) => {
 
 if (DRY_RUN) return;
 
-// 3. Update Links
-// We need to re-scan the NEW structure to find the files we just moved/left
-const newDocs = Array.from(redirectMap.values());
+// 3. Update Links (Heavier scan needed to update links pointing TO the archive)
+// We need to scan ALL docs to fix links pointing into the archive
+const allProjectDocs = getAllFiles('docs').filter(f => f.endsWith('.md'));
 
-newDocs.forEach(currentPath => {
-    if (!currentPath.endsWith('.md')) return; // Only process Markdown links
+allProjectDocs.forEach(currentPath => {
     const absPath = path.join(ROOT_DIR, currentPath);
     if (!fs.existsSync(absPath)) return;
 
@@ -155,40 +176,26 @@ newDocs.forEach(currentPath => {
     content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, label, linkTarget) => {
         if (linkTarget.startsWith('http') || linkTarget.startsWith('#') || linkTarget.startsWith('mailto:')) return match;
 
-        // Resolve the OLD absolute path of the link target
-        // We have to work backwards:
-        // 1. Who is this file? 'currentPath' (New Location)
-        // 2. But the CONTENT is still from the 'oldSource' (Old Location).
-        //    Wait, relative links in the content are relative to the OLD location.
-
-        // FIND THE OLD SOURCE of this file
-        let oldSource = null;
-        for (const [key, val] of redirectMap.entries()) {
-            if (val === currentPath) { oldSource = key; break; }
-        }
-        if (!oldSource) oldSource = currentPath; // Was never moved
-
-        const oldSourceDir = path.dirname(path.join(ROOT_DIR, oldSource));
-
-        // Resolve target based on OLD structure
+        // Resolve absolute path of link target from the current file's perspective
         let oldAbsTarget;
         try {
-            oldAbsTarget = path.resolve(oldSourceDir, linkTarget.split('#')[0]);
+            oldAbsTarget = path.resolve(path.dirname(absPath), linkTarget.split('#')[0]);
         } catch (e) { return match; }
 
-        const oldRelTarget = path.relative(ROOT_DIR, oldAbsTarget); // e.g. "docs/foo.md"
+        const oldRelTarget = path.relative(ROOT_DIR, oldAbsTarget); // e.g. "docs/Archive/02-Engineering/foo.md"
 
-        // Look up where that target went
+        // Check if this target was moved
         const newTarget = redirectMap.get(oldRelTarget);
 
-        if (newTarget) {
-            // Calculate new relative link from Current File (New Loc) to Target (New Loc)
-            const newLink = getRelativeLink(path.join(ROOT_DIR, currentPath), path.join(ROOT_DIR, newTarget));
+        if (newTarget && newTarget !== oldRelTarget) {
+            // Calculate new relative link
+            const newLink = getRelativeLink(absPath, path.join(ROOT_DIR, newTarget));
             modified = true;
-            return `[${label}](${newLink})`;
+            // Preserve hash if present
+            const hash = linkTarget.includes('#') ? '#' + linkTarget.split('#')[1] : '';
+            return `[${label}](${newLink}${hash})`;
         } else {
-            console.warn(`[WARN] Could not resolve link in ${currentPath}: ${linkTarget} (Old Target: ${oldRelTarget})`);
-            return match; // Leave it broken? Or flag it?
+            return match;
         }
     });
 
@@ -215,7 +222,7 @@ function removeEmptyDirs(dir) {
     }
 }
 
-removeEmptyDirs(path.join(ROOT_DIR, 'logs'));
-removeEmptyDirs(path.join(ROOT_DIR, 'docs')); // Clean up old empty doc folders
+removeEmptyDirs(path.join(ROOT_DIR, 'docs/Archive'));
+removeEmptyDirs(path.join(ROOT_DIR, 'docs/archive'));
 
 console.log('Restructure Complete.');

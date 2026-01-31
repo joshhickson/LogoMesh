@@ -42,7 +42,7 @@ Each subfolder below contains high-level plans and specs. For empirical, up-to-d
 *   **Code Reference:** `src/purple_logic/`
 *   **Empirical docs:** See `file-reviews/` for any purple agent modules (if present).
 
-### 4. [agentbeats-lambda](./agentbeats-lambda/)
+### 4. [red-agent](./red-agent/)
 *   **Role:** The Attacker / Red Agent (Lambda Track Submission).
 *   **Content:** Operational state of the Red Agent and Attack Scenarios.
 *   **Code Reference:** `src/red_logic/` and `scenarios/security_arena/`
