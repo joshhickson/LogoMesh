@@ -1,9 +1,12 @@
 ---
-status: REVIEW
+
+status: ACTIVE
 type: Log
+verified: 2026-01-30
 ---
 > **Context:**
 > *   [2025-12-21]: Review of Samuel's `purple-agent` and comparison with Kuan's `generic_defender.py`.
+> *   [2026-01-30]: Empirical verification: The migration to `GenericDefenderExecutor` ([scenarios/security_arena/agents/generic_defender.py](../../../scenarios/security_arena/agents/generic_defender.py)) is complete. The current implementation in [src/purple_logic/agent.py](../../../src/purple_logic/agent.py) imports and uses this class as recommended below.
 
 # Review: Purple Agent & Comparison
 
@@ -32,5 +35,8 @@ The "Mock Purple Agent" needs to serve a dual purpose:
 *   **Reason 2: Role Switching.** The `GenericDefenderExecutor` logic allows us to easily reset state or switch system prompts between "Build Phase" and "Patch Phase" by manipulating the `context_id` or message payload.
 *   **Reason 3: Local Models.** Kuan's code allows us to manually swap the client for a local vLLM endpoint, which is a requirement. Samuel's CLI abstraction might make this harder if the SDK doesn't natively support our specific vLLM setup.
 
-## 4. Proposed Action
-Deprecate the current `purple-agent` directory in favor of adapting `external/TEAM/agentbeats-lambda-[...]/scenarios/security_arena/agents/generic_defender.py` into a new, official `purple-agent` service within the monorepo.
+
+## 4. Migration Status (Empirically Verified 2026-01-30)
+The proposed migration is now complete:
+- The current `purple-agent` service in the monorepo uses [scenarios/security_arena/agents/generic_defender.py](../../../scenarios/security_arena/agents/generic_defender.py) as its core logic, imported in [src/purple_logic/agent.py](../../../src/purple_logic/agent.py).
+- This implementation provides full instrumentation, role switching, and local model support as required for the "Hybrid Sidecar" and empirical testing.

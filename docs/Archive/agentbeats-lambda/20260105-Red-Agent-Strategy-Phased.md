@@ -1,6 +1,12 @@
-> **Status:** STRATEGY (ACTIVE)
-> **Context:** Strategic roadmap for the "Red Agent" (Attacker) submission to the AgentX Competition.
-> **Source:** Discussion on 2026-01-05 regarding Vector Inversion Attacks and Phased Competition Goals.
+
+---
+status: DEPRECATED
+type: Strategy
+verified: 2026-01-30
+superseded_by: ../../../../src/red_logic/agent.py
+---
+> **DEPRECATION NOTICE (2026-01-30):**
+> This strategy document is DEPRECATED and SUPERSEDED by the Red Agent implementation and documentation in [src/red_logic/agent.py](../../../../src/red_logic/agent.py) and [scenarios/security_arena/agents/generic_attacker.py](../../../../scenarios/security_arena/agents/generic_attacker.py). All current Red Agent strategy and verification are maintained in those locations.
 
 # Red Agent Strategy: The "Leaky Retriever" & Hybrid Injection
 

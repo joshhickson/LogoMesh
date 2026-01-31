@@ -1,9 +1,12 @@
 ---
-status: REVIEW
+
+status: DEPRECATED
 type: Log
+verified: 2026-01-30
+superseded_by: ../../../../src/red_logic/agent.py
 ---
-> **Context:**
-> *   [2025-12-21]: Clarifying questions for Mark (Kuan Zhou) based on the review of the `agentbeats-lambda` repository.
+> **DEPRECATION NOTICE (2026-01-30):**
+> This Q&A log is DEPRECATED and SUPERSEDED by the Red Agent implementation and documentation in [src/red_logic/agent.py](../../../../src/red_logic/agent.py) and [scenarios/security_arena/agents/generic_attacker.py](../../../../scenarios/security_arena/agents/generic_attacker.py). All current Red Agent Q&A and verification are maintained in those locations.
 
 # Questions for Mark (Kuan Zhou)
 

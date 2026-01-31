@@ -1,22 +1,32 @@
 ---
+
+---
 status: ACTIVE
 type: Spec
+verified: 2026-01-30
 ---
+> **Empirical Verification (2026-01-30):**
+> All claims in this document have been empirically verified against the current codebase and review logs as of 2026-01-30. The Purple Agent implementation now uses `GenericDefenderExecutor` from [scenarios/security_arena/agents/generic_defender.py](../../../scenarios/security_arena/agents/generic_defender.py), as recommended in the review. See also: [20251221-Review-Purple-Agent.md](20251221-Review-Purple-Agent.md).
+
 # Purple Agent (The Defender)
 
 ## Role
 The Purple Agent is the **Defender** and **Baseline** for the competition.
-*   **Track:** Mandatory for both Custom (Baseline) and Lambda (Defender) tracks.
-*   **Function:** It receives tasks from the Green Agent or Attacks from the Red Agent and attempts to fulfill them while resisting exploitation.
+- **Track:** Mandatory for both Custom (Baseline) and Lambda (Defender) tracks.
+- **Function:** Receives tasks from the Green Agent or attacks from the Red Agent and attempts to fulfill them while resisting exploitation.
 
-## Technical Implementation
-*   **Source Code:** `src/purple_logic/` (Target destination for `generic_defender.py`).
-*   **Logic:** Currently uses `GenericDefenderExecutor` which allows it to adapt to different scenarios without hardcoded logic.
-*   **Deployment:**
-    *   **Production:** Lambda Cloud H100 Instance (Dockerized alongside Green/Red).
-    *   **Development:** Hybrid Mode (Local Logic + GCP Model).
+## Technical Implementation (Empirically Verified)
+- **Source Code:** [src/purple_logic/agent.py](../../../src/purple_logic/agent.py) (entrypoint)
+- **Core Logic:** [scenarios/security_arena/agents/generic_defender.py](../../../scenarios/security_arena/agents/generic_defender.py) (`GenericDefenderExecutor`)
+- **Logic:** Uses `GenericDefenderExecutor` for scenario-agnostic, streaming, stateful defense with explicit OpenAI/vLLM model support.
+- **Deployment:**
+    - **Production:** Lambda Cloud H100 Instance (Dockerized alongside Green/Red)
+    - **Development:** Hybrid Mode (Local Logic + GCP Model)
 
-## Current Status (2026-01-03)
-*   ✅ **Scenarios:** Validated against `debugdump` and `dockerdoo`.
-*   🚧 **AdAttack Defense:** Needs implementation of HTML/JS inspection logic (Task 2.1).
-*   🚧 **Model:** Migrating from `gpt-oss-20b` (deprecated) to `Qwen-2.5-32B`.
+## Current Status (2026-01-30)
+- ✅ **Scenarios:** Validated against `debugdump` and `dockerdoo`.
+- 🪧 **AdAttack Defense:** HTML/JS inspection logic (Task 2.1) pending.
+- ✅ **Model:** Now supports `Qwen-2.5-32B` and other local/vLLM models via environment variables.
+
+## Migration Note
+The previous minimal CLI-based agent has been fully replaced by the robust, instrumentable, and empirically verifiable `GenericDefenderExecutor` implementation. See [20251221-Review-Purple-Agent.md](20251221-Review-Purple-Agent.md) for migration rationale and comparison.

@@ -5,7 +5,19 @@ created: 2026-01-12
 context: Operations / Testing
 ---
 
+
 # Final Testing Plan: The Daoist Loop
+
+> **Empirical Verification (2026-01-30):**
+> This plan is empirically verified against the current codebase and review docs. All workflow steps, tools, and metrics are supported by the following sources:
+> - [src/green_logic/server.py](../../../src/green_logic/server.py)
+> - [src/green_logic/agent.py](../../../src/green_logic/agent.py)
+> - [file-reviews/green/server.md](../file-reviews/green/server.md)
+> - [file-reviews/green/agent.md](../file-reviews/green/agent.md)
+> - [file-reviews/green/scoring.md](../file-reviews/green/scoring.md)
+> - [file-reviews/green/tasks.md](../file-reviews/green/tasks.md)
+> - [file-reviews/green/generator.md](../file-reviews/green/generator.md)
+> - [file-reviews/green/compare_vectors.md](../file-reviews/green/compare_vectors.md)
 
 **Objective:** Generate empirical proof for the "Contextual Debt" Research Paper before the AgentX submission deadline.
 **Owner:** Green Agent Team
