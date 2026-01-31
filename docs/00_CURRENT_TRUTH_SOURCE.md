@@ -40,7 +40,7 @@ type: Spec
 ## 4. Key Documentation Indices
 
 ### Strategy & IP
-*   [Contextual Debt Paper (Draft)](00-Strategy/IP/20251118-Copyright-Edition-Contextual-Debt-Paper.md): The core theory.
+*   [Contextual Debt Paper (Draft)](00-Strategy/IP/Contextual-Debt-Paper.md): The core theory.
 *   **Paper Versioning Protocol (G-001):** Before any paper update, copy current to archive with timestamp. All versions tracked in this file.
     - **Current Version:** v1 (2026-01-14) - Validates Stage 2 Campaign (77 battles)
     - **Archive:** [00-Strategy/IP/archive/](00-Strategy/IP/archive/)
