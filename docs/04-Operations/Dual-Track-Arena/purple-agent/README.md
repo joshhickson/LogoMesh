@@ -6,7 +6,9 @@ type: Spec
 verified: 2026-01-30
 ---
 > **Empirical Verification (2026-01-30):**
-> All claims in this document have been empirically verified against the current codebase and review logs as of 2026-01-30. The Purple Agent implementation now uses `GenericDefenderExecutor` from [scenarios/security_arena/agents/generic_defender.py](../../../scenarios/security_arena/agents/generic_defender.py), as recommended in the review. See also: [20251221-Review-Purple-Agent.md](20251221-Review-Purple-Agent.md).
+> All claims in this document have been empirically verified against the current codebase and review logs as of 2026-01-30. The Purple Agent implementation now uses `GenericDefenderExecutor` from [scenarios/security_arena/agents/generic_defender.py](../../../scenarios/security_arena/agents/generic_defender.py), as recommended in the review. See also: [Review-Purple-Agent.md](Review-Purple-Agent.md).
+>
+> **Note:** For empirical file-level documentation, see the [file-reviews/purple/](../file-reviews/purple/) directory.
 
 # Purple Agent (The Defender)
 
@@ -29,4 +31,4 @@ The Purple Agent is the **Defender** and **Baseline** for the competition.
 - ✅ **Model:** Now supports `Qwen-2.5-32B` and other local/vLLM models via environment variables.
 
 ## Migration Note
-The previous minimal CLI-based agent has been fully replaced by the robust, instrumentable, and empirically verifiable `GenericDefenderExecutor` implementation. See [20251221-Review-Purple-Agent.md](20251221-Review-Purple-Agent.md) for migration rationale and comparison.
+The previous minimal CLI-based agent has been fully replaced by the robust, instrumentable, and empirically verifiable `GenericDefenderExecutor` implementation. See [Review-Purple-Agent.md](Review-Purple-Agent.md) for migration rationale and comparison.
