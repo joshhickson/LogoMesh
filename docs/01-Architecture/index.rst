@@ -1,9 +1,9 @@
-00 Strategy
-===========
+01 Architecture
+===============
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
    :glob:
 
-   IP/index.rst
+   README.md

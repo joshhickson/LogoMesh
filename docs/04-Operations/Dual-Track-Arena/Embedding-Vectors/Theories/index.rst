@@ -1,4 +1,4 @@
-Diagrams
+Theories
 ========
 
 .. toctree::
@@ -6,4 +6,4 @@ Diagrams
    :caption: Contents:
    :glob:
 
-   CI-Workflow.md
+   20260105-Vec2Vec-Contextual-Audit-Theory.md

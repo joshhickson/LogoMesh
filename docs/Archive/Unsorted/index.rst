@@ -1,4 +1,4 @@
-Diagrams
+Unsorted
 ========
 
 .. toctree::
@@ -6,4 +6,5 @@ Diagrams
    :caption: Contents:
    :glob:
 
-   CI-Workflow.md
+   20251119-Strategic-Master-Log.md
+   CoPilot/index.rst

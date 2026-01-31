@@ -1,14 +1,10 @@
-Operations
-==========
+04 Operations
+=============
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Active Arenas
+   :maxdepth: 1
+   :caption: Contents:
+   :glob:
 
-   Dual-Track-Arena/index
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Logs & History
-
-   Intent-Log/index
+   Dual-Track-Arena/index.rst
+   Intent-Log/index.rst

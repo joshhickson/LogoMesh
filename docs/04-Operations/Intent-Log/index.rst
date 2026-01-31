@@ -1,9 +1,7 @@
-00 Strategy
-===========
+Intent Log
+==========
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
    :glob:
-
-   IP/index.rst

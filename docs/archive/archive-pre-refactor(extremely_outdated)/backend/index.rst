@@ -1,9 +1,9 @@
-00 Strategy
-===========
+backend
+=======
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
    :glob:
 
-   IP/index.rst
+   REPLIT_BACKEND_SETUP.md

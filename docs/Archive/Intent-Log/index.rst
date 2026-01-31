@@ -3,14 +3,15 @@ Intent Log
 
 .. toctree::
    :maxdepth: 1
+   :caption: Contents:
    :glob:
 
-   Technical/*
-   Team/*
-   Josh/*
-   Deepti/*
-   Alaa/*
-   Garrett/*
-   Samuel/*
-   Mark/*
-   Oleksander/*
+   README.md
+   Alaa/index.rst
+   Deepti/index.rst
+   Garrett/index.rst
+   Josh/index.rst
+   Mark/index.rst
+   Oleksander/index.rst
+   Samuel/index.rst
+   Technical/index.rst

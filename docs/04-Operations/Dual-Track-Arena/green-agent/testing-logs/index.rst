@@ -1,9 +1,9 @@
-00 Strategy
-===========
+testing logs
+============
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
    :glob:
 
-   IP/index.rst
+   20260110-Evaluation-Log.md

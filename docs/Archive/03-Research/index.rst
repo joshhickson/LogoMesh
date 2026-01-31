@@ -1,9 +1,9 @@
-Research
-========
+03 Research
+===========
 
 .. toctree::
    :maxdepth: 1
+   :caption: Contents:
    :glob:
 
-   *
-   Theory/*
+   Theory/index.rst

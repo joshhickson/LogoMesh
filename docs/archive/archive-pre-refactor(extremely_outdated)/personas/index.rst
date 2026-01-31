@@ -1,4 +1,4 @@
-Diagrams
+personas
 ========
 
 .. toctree::
@@ -6,4 +6,6 @@ Diagrams
    :caption: Contents:
    :glob:
 
-   CI-Workflow.md
+   registry.md
+   timekeeper.md
+   templates/index.rst

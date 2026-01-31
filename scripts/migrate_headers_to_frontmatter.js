@@ -23,7 +23,7 @@ function walkDir(dir, callback) {
         let dirPath = path.join(dir, f);
         try {
             let isDirectory = fs.statSync(dirPath).isDirectory();
-            if (isDirectory && !dirPath.includes('node_modules') && !dirPath.includes('_build')) {
+            if (isDirectory && !dirPath.includes('node_modules') && !dirPath.includes('_build') && !f.startsWith('.')) {
                 walkDir(dirPath, callback);
             } else {
                 callback(path.join(dir, f));
@@ -40,31 +40,58 @@ function processFile(filePath) {
     const content = fs.readFileSync(filePath, 'utf8');
     const lines = content.split('\n');
 
+    // Check if file already has frontmatter
+    if (lines[0] && lines[0].trim() === '---') {
+        // Already has frontmatter, skipping unless we want to force-update (not implemented yet)
+        // console.log(`Skipping ${filePath}: Already has frontmatter.`);
+        return;
+    }
+
     let frontmatter = {};
     let newLines = [];
     let processingHeader = true;
-    let hasHeaderLines = false;
+    let foundHeader = false;
+
+    // Regex for blockquote headers
+    const statusRegex = /^>\s*\*\*Status:?\*\*\s*(.*)$/i;
+    const typeRegex = /^>\s*\*\*Type:?\*\*\s*(.*)$/i;
+
+    // Some files might use a different format, e.g. non-bold keys
+    const altStatusRegex = /^>\s*Status:?\s*(.*)$/i;
+    const altTypeRegex = /^>\s*Type:?\s*(.*)$/i;
 
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
 
         if (processingHeader) {
-            const statusMatch = line.match(/^>\s*\*\*Status:\*\*\s*(.*)$/i);
-            const typeMatch = line.match(/^>\s*\*\*Type:\*\*\s*(.*)$/i);
+            const statusMatch = line.match(statusRegex) || line.match(altStatusRegex);
+            const typeMatch = line.match(typeRegex) || line.match(altTypeRegex);
+
+            // Allow empty lines or simple blockquotes to continue the header block *if* we haven't hit content yet
+            // But be careful: a blockquote might be content.
+            // Heuristic: If we found a status/type, we are in the header.
+            // If we hit a non-blockquote, non-empty line, header is done.
             const isBlockquote = line.trim().startsWith('>');
             const isEmpty = line.trim() === '';
 
             if (statusMatch) {
                 frontmatter['status'] = statusMatch[1].trim();
-                hasHeaderLines = true;
+                foundHeader = true;
             } else if (typeMatch) {
                 frontmatter['type'] = typeMatch[1].trim();
-                hasHeaderLines = true;
-            } else if (isBlockquote) {
+                foundHeader = true;
+            } else if (foundHeader && (isBlockquote || isEmpty)) {
+                // Keep these lines as part of the context block (removed from body, frontmatter added)
+                // Actually, we usually want to KEEP the context blockquote in the body,
+                // but REMOVE the status/type lines.
+                // The prompt implies converting "Headers" (Status/Type) to Frontmatter.
+                // It's safer to preserve the Context blockquote in the body.
                 newLines.push(line);
-            } else if (isEmpty) {
+            } else if (!foundHeader && (isBlockquote || isEmpty)) {
+                // Haven't found status/type yet, might be top of file whitespace or other quotes
                 newLines.push(line);
             } else {
+                // Non-header line, header processing done
                 processingHeader = false;
                 newLines.push(line);
             }
@@ -80,6 +107,11 @@ function processFile(filePath) {
             '---',
             ''
         ].join('\n');
+
+        // Clean up leading newlines in newLines to avoid big gaps
+        while (newLines.length > 0 && newLines[0].trim() === '') {
+            newLines.shift();
+        }
 
         const newContent = fmString + newLines.join('\n');
 

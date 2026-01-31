@@ -1,41 +1,37 @@
-LogoMesh Documentation
-======================
+AgentBeats Documentation
+========================
 
 .. toctree::
    :maxdepth: 2
-   :caption: Strategy
+   :caption: Master Index:
+   :glob:
 
-   00-Strategy/index
-   00_CURRENT_TRUTH_SOURCE
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Architecture
-
-   01-Architecture/Specs/index
-   01-Architecture/Diagrams/index
+   00_CURRENT_TRUTH_SOURCE.md
 
 .. toctree::
    :maxdepth: 2
-   :caption: Engineering
+   :caption: Strategy & IP:
+   :glob:
 
-   02-Engineering/Setup/index
-   02-Engineering/Onboarding/index
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Research
-
-   03-Research/index
+   00-Strategy/index.rst
 
 .. toctree::
    :maxdepth: 2
-   :caption: Operations & Logs
+   :caption: Operations (Arena):
+   :glob:
 
-   04-Operations/index
+   04-Operations/Dual-Track-Arena/index.rst
 
 .. toctree::
    :maxdepth: 2
-   :caption: Competition
+   :caption: Competition:
+   :glob:
 
-   05-Competition/index
+   05-Competition/index.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Reference:
+   :glob:
+
+   Docs-Management-Instruction-Manual.md

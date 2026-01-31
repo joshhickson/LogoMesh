@@ -1,9 +1,9 @@
-00 Strategy
-===========
+progress
+========
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
    :glob:
 
-   IP/index.rst
+   _task_owners.md

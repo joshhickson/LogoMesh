@@ -1,9 +1,9 @@
-00 Strategy
-===========
+templates
+=========
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
    :glob:
 
-   IP/index.rst
+   prompt_template.md

@@ -2,7 +2,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 
-project = 'LogoMesh'
+project = 'AgentBeats'
 copyright = '2026, LogoMesh Team'
 author = 'Josh, Deepti, Alaa, Garrett, Samuel, Kuan, Mark'
 
@@ -26,7 +26,17 @@ source_suffix = {
 }
 
 templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'node_modules']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'node_modules', 'Archive', 'archive']
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+
+# Custom Sidebar
+html_sidebars = {
+    '**': [
+        'globaltoc.html',
+        'relations.html',
+        'sourcelink.html',
+        'searchbox.html'
+    ]
+}

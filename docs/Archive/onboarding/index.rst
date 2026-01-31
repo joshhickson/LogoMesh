@@ -1,9 +1,9 @@
-00 Strategy
-===========
+onboarding
+==========
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
    :glob:
 
-   IP/index.rst
+   system-architecture.md

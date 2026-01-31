@@ -1,9 +1,10 @@
-00 Strategy
-===========
+purple
+======
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
    :glob:
 
-   IP/index.rst
+   purple_agent.md
+   purple_init.md
