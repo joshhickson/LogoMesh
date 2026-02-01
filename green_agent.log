@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/LogoMesh/main.py", line 16, in start_green_agent
+    from src.green_logic.server import run_server
+  File "/home/ubuntu/LogoMesh/src/green_logic/server.py", line 5, in <module>
+    import httpx
+ModuleNotFoundError: No module named 'httpx'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/LogoMesh/main.py", line 63, in <module>
+    main()
+  File "/home/ubuntu/LogoMesh/main.py", line 55, in main
+    start_green_agent(args)
+  File "/home/ubuntu/LogoMesh/main.py", line 18, in start_green_agent
+    from green_logic.server import run_server
+  File "/home/ubuntu/LogoMesh/src/green_logic/server.py", line 5, in <module>
+    import httpx
+ModuleNotFoundError: No module named 'httpx'

@@ -1,0 +1,22 @@
+# Agent Card for LogoMesh Green Agent
+id = "logomesh-green"
+name = "LogoMesh Green"
+description = "An agent designed to audit and evaluate other agents on software development tasks, starting with Task 015 (Event Sourcing / CQRS)."
+version = "1.0.0"
+
+# The URL where this agent can be reached.
+# This will be dynamically set by the run script.
+url = "http://localhost:9040"
+
+[capabilities]
+streaming = true
+
+[[skills]]
+id = "logomesh.audit.task-015"
+name = "Audit Task 015"
+description = "Audits a candidate agent's solution for Task 015, which involves implementing an Event Sourcing and CQRS pattern for a bank account system."
+tags = ["audit", "cqrs", "event-sourcing", "python"]
+
+  [[skills.examples]]
+  input = "Please audit the provided agent on Task 015."
+  output = "{\"participants\":...}" # Truncated example of a JSON report

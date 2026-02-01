@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile.green
     ports:
-      - "9009:9009"
+      - "9040:9040"
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
@@ -18,7 +18,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - battle-data:/app/data
-    command: ["--host", "0.0.0.0", "--port", "9009"]
+    command: ["--host", "0.0.0.0", "--port", "9040"]
 
   purple:
     build:
@@ -29,6 +29,7 @@ services:
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o-mini}
+      - "PURPLE_AGENT_URL=http://purple:9010"
     command: ["--host", "0.0.0.0", "--port", "9010"]
 
 volumes:
