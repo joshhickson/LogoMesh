@@ -1,0 +1,18 @@
+{
+  "queries": {
+    "main_leaderboard": "SELECT submission_name, ((rationale_score * 0.25 + architecture_score * 0.25 + testing_score * 0.25 + logic_score * 0.25) * red_penalty_applied) AS cis_score, rationale_score, architecture_score, testing_score, logic_score, red_penalty_applied, timestamp FROM results ORDER BY cis_score DESC",
+    "security_audit": "SELECT submission_name, red_analysis.vulnerability_count, red_analysis.max_severity, red_penalty_applied FROM results WHERE red_analysis.vulnerability_count > 0 ORDER BY red_penalty_applied ASC"
+  },
+  "schema": {
+    "cis_score": "DOUBLE",
+    "rationale_score": "DOUBLE",
+    "architecture_score": "DOUBLE",
+    "testing_score": "DOUBLE",
+    "logic_score": "DOUBLE",
+    "red_penalty_applied": "DOUBLE"
+  },
+  "config": {
+    "primary_metric": "cis_score",
+    "sort_order": "DESC"
+  }
+}
