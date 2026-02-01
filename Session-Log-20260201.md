@@ -52,6 +52,12 @@ Prepare and execute the H100 live demo for Task 015 (Event Sourcing / CQRS) for 
     *   **Strategic Shift:** The agent must be packaged into a Docker image. The assessment is run via `docker compose`, orchestrated by a `scenario.toml` file.
     *   **Action:** The current `run.sh` is obsolete. The new plan is to create a `Dockerfile` for the Green Agent and a `scenario.toml` to define the test run.
 
+10. **Regenerating Demo Results (2026-02-01):**
+    *   **Requirement:** The user requested to regenerate the demo result files for a video recording, as they were deleted during the pivot to the A2A model.
+    *   **Action:** Re-ran the `scripts/prepare_h100_demo.sh` script.
+    *   **Troubleshooting:** The script failed with a `KeyError: 'ContainerConfig'` from Docker Compose. This was resolved by running `docker-compose down --volumes` to clear corrupted state.
+    *   **Outcome:** The script was run again successfully, regenerating `run_1_result.json` and `run_2_result.json`. Analysis of the second result confirmed a critical logic bug in the Purple agent's submission.
+
 ## Next Steps (Revised Again)
 1.  Create a `Dockerfile` for the Green Agent that packages all dependencies and specifies the command to run `src/a2a_server.py`.
 2.  Create a `scenario.toml` file that defines the participants, pointing to the new Green Agent Docker image.
@@ -59,4 +65,4 @@ Prepare and execute the H100 live demo for Task 015 (Event Sourcing / CQRS) for 
 4.  Commit the new `Dockerfile`, `scenario.toml`, and supporting files to trigger the assessment.
 
 ## Final State
-The submission workflow has been corrected again. The final plan is to build a self-contained Docker image for the Green Agent and use a `docker compose` workflow, mimicking the official leaderboard's CI/CD process.
+The submission workflow has been corrected again. The final plan is to build a self-contained Docker image for the Green Agent and use a `docker compose` workflow, mimicking the official leaderboard's CI/CD process. The necessary demo results have been successfully regenerated.
