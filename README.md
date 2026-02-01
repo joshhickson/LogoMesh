@@ -11,7 +11,7 @@ Built for the [Berkeley RDI AgentBeats](https://agentbeats.dev) Phase 1 competit
 When an AI writes code for you, how do you know it's actually good? Current benchmarks check if the code "passes tests" — but that misses the bigger picture:
 
 - Does the code **match what you asked for**, or did the AI hallucinate something unrelated?
-- Is the code **secure**, or does it have SQL injection, hardcoded passwords, or broken auth?
+- Is the code **secure**, or does it have SQL injection, other malicious injection, hardcoded passwords, or broken auth?
 - Do the **tests actually test anything**, or are they trivial assertions?
 - Does the AI **understand why** it wrote the code that way?
 
@@ -137,7 +137,7 @@ You'll get back a JSON response with:
 
 ## Running with Docker
 
-### Green Agent (the benchmark)
+### Green Agent (The Assessor Agent - the benchmark)
 
 ```bash
 docker build -t logomesh-green:latest -f Dockerfile.green .
@@ -150,7 +150,7 @@ docker run -p 9009:9009 \
 
 > **Note:** The Docker socket mount (`-v /var/run/docker.sock:...`) lets Green spin up isolated sandbox containers to safely execute Purple's code.
 
-### Purple Agent (the AI being evaluated)
+### Purple Agent (The Participant - the AI being evaluated)
 
 ```bash
 docker build -t logomesh-purple:latest -f Dockerfile.purple .
@@ -366,33 +366,33 @@ This is powered by a **Task Intelligence** module that uses LLM analysis to unde
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│                        Green Agent (Judge)                              │
-│                                                                         │
+│                        Green Agent (Judge)                             │
+│                                                                        │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────────────┐  │
-│  │  Task Sender  │  │   Scorer     │  │  Static Analyzer (AST)      │  │
-│  └──────────────┘  │  (CIS Score)  │  │  Banned imports, required   │  │
-│                     │  Ground-truth │  │  patterns, complexity       │  │
-│                     └──────────────┘  └──────────────────────────────┘  │
-│                                                                         │
+│  │  Task Sender │  │   Scorer     │  │  Static Analyzer (AST)       │  │
+│  └──────────────┘  │  (CIS Score) │  │  Banned imports, required    │  │
+│                    │  Ground-truth│  │  patterns, complexity        │  │
+│                    └──────────────┘  └──────────────────────────────┘  │
+│                                                                        │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────────────┐  │
 │  │   Sandbox    │  │  Test Gen    │  │  Refinement Loop             │  │
 │  │  Docker exec │  │  Adversarial │  │  Sends feedback to Purple    │  │
 │  │  pytest run  │  │  fuzz + LLM  │  │  for self-correction         │  │
 │  └──────────────┘  └──────────────┘  └──────────────────────────────┘  │
-│                                                                         │
+│                                                                        │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────────────┐  │
 │  │  Battle      │  │  Strategy    │  │  Task Intelligence           │  │
 │  │  Memory      │  │  Evolver     │  │  Novel task understanding    │  │
 │  │  (SQLite)    │  │  (UCB1)      │  │  via LLM analysis            │  │
 │  └──────────────┘  └──────────────┘  └──────────────────────────────┘  │
-│                                                                         │
+│                                                                        │
 │  ┌──────────────────────────────────────────────────────────────────┐  │
 │  │              Embedded Red Agent (MCTS Attacker)                  │  │
 │  │                                                                  │  │
-│  │  Orchestrator    → MCTS tree search for attack strategies       │  │
-│  │  Reasoning       → LLM-powered vulnerability analysis           │  │
-│  │  ConstraintBreak → Task-specific constraint violation scanner   │  │
-│  │  SemanticAnalyze → Deep code understanding                      │  │
+│  │  Orchestrator    → MCTS tree search for attack strategies        │  │
+│  │  Reasoning       → LLM-powered vulnerability analysis            │  │
+│  │  ConstraintBreak → Task-specific constraint violation scanner    │  │
+│  │  SemanticAnalyze → Deep code understanding                       │  │
 │  └──────────────────────────────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────────────────────────┘
          │
@@ -466,7 +466,7 @@ Your agent must return valid JSON with three fields:
 ```
 
 | Field | What It Is | How It's Scored |
-|-------|-----------|-----------------|
+|-------|------------|-----------------|
 | `sourceCode` | Your implementation | Tested in sandbox, scanned for vulnerabilities, checked for constraint compliance |
 | `testCode` | Your unit tests | Executed in sandbox alongside adversarial tests we generate |
 | `rationale` | Why you wrote it this way | Compared to task description via cosine similarity |
