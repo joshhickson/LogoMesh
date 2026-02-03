@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogoMesh - Project Plan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">LogoMesh</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="amnesia.html" class="nav-link">Your Code Has Amnesia</a></li>
+                <li><a href="contextual-debt-liability.html" class="nav-link">The Liability</a></li>
+                <li><a href="breakthrough.html" class="nav-link">The Breakthrough</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <h1>Project Plan: The Contextual Debt Evaluator - AgentBeats Green Phase</h1>
+        <p>Welcome, team! This document is our strategic guide to winning the AgentBeats Green Phase. It outlines our vision, our plan to address critical gaps in our project, our new architecture, our roles, and our week-by-week timeline to the submission deadline. Let's build something amazing together.</p>
+
+        <h2>1. Project Vision & Competitive Edge</h2>
+        <p>Our project is a <strong>Green Agent</strong>: a sophisticated evaluator designed to solve a critical problem in AI-generated code: the lack of discernible human intent, or <strong>"Contextual Debt."</strong> While other benchmarks focus only on whether code <em>works</em>, our agent asks a more important question: is the code <em>good</em>? Is it well-architected, clearly-reasoned, and thoroughly tested?</p>
+        <p>Our competitive edge lies in our novel <strong>"Agent-as-a-Judge"</strong> philosophy. We are not just building a static tool; we are building an intelligent system that analyzes the <em>process and quality</em> of an AI agent's work. This innovative approach aligns perfectly with the competition's goal of creating "shared public goods" that push the entire field of agentic AI forward. We have a strong foundation, and with a focused effort, we can turn this powerful concept into a winning submission.</p>
+
+        <h2>2. Our Mission: Closing the Gaps</h2>
+        <p>The recent Gap Analysis Report gave us a clear, actionable roadmap. Our mission is to systematically address every "Area for Improvement" identified in that report. Here is our plan:</p>
+        <ul>
+            <li><strong>Problem: Critical Gap in Sponsor Alignment (Auth0)</strong>
+                <p><strong>Our Plan:</strong> We will pivot from our homegrown JWT solution to a deep, meaningful integration of <strong>Auth0 for AI Agents</strong>. This is not just about checking a box; it's about making security a core, indispensable feature of our benchmark.</p>
+                <p><strong>Goal:</strong> The agent being tested (the "Purple Agent") will be required to interact with resources and tools that are secured by Auth0's Fine-Grained Authorization (FGA). Our Green Agent will evaluate how well the Purple Agent navigates this complex, realistic security model. This transforms our project into a powerful case study for the competition's lead sponsor.</p>
+            </li>
+            <li><strong>Problem: Lack of a High-Stakes Problem Domain</strong>
+                <p><strong>Our Plan:</strong> We will reframe our project's narrative. "Contextual Debt" is a brilliant concept, but it's too abstract. We will apply it to a specific, high-stakes domain that makes our project's value immediately obvious.</p>
+                <p><strong>Goal:</strong> We will choose a compelling domain like <strong>Cybersecurity</strong>. Our project will become the <strong>"Cyber-Sentinel Agent,"</strong> a benchmark that evaluates AI agents on their ability to generate secure, auditable, and well-documented code for cybersecurity tasks (e.g., writing secure authentication logic, patching vulnerabilities). This narrative is exciting, commercially relevant, and aligns with the security focus of our Auth0 integration.</p>
+            </li>
+            <li><strong>Problem: Insufficient Architectural Innovation</strong>
+                <p><strong>Our Plan:</strong> We will evolve our agent's architecture from a simple, single LLM call into a sophisticated <strong>multi-agent system</strong>.</p>
+                <p><strong>Goal:</strong> We will implement an <strong>Orchestrator-Worker pattern</strong>. An Orchestrator agent will manage the evaluation workflow, delegating tasks to specialized Worker agents (our existing analyzers). This demonstrates a deeper understanding of agentic design and makes our system more robust, scalable, and innovative.</p>
+            </li>
+            <li><strong>Problem: Incomplete Implementation of Core Logic</strong>
+                <p><strong>Our Plan:</strong> We will move beyond mock data and fully implement the core analysis logic.</p>
+                <p><strong>Goal:</strong> The <code>architecturalDebtAnalyzer.ts</code> will be integrated with a real static analysis library (e.g., <code>escomplex</code>) to provide credible, data-driven scores. All analyzer components will be production-ready.</p>
+            </li>
+            <li><strong>Problem: Weak Demonstration of Trust and Safety</strong>
+                <p><strong>Our Plan:</strong> We will build features that make our evaluation process transparent and auditable.</p>
+                <p><strong>Goal:</strong> We will implement a structured logging system that creates a clear, human-readable audit trail for every evaluation. This log will record the inputs, the LLM's reasoning, and the final scores, making our agent's judgments verifiable: a key principle of responsible AI.</p>
+            </li>
+        </ul>
+
+        <h2>3. The New Architecture: From Monolith to Multi-Agent</h2>
+        <p>To address the architectural gap, we are moving to a more powerful and scalable multi-agent design. The diagrams below illustrate this evolution.</p>
+        <h3>Current Architecture</h3>
+        <p>This is what our system looks like now: a single agent making a direct call to an LLM.</p>
+        <pre><code>
+graph TD
+    A[Green Agent Server] --> B{RationaleDebtAnalyzer};
+    B --> C[LLM API];
+    C --> B;
+    B --> A;
+        </code></pre>
+        <h3>Proposed Architecture</h3>
+        <p>This is what we will build: a collaborative team of agents. This design is more innovative, robust, and aligns with advanced agentic principles.</p>
+        <pre><code>
+graph TD
+    subgraph Green Agent System
+        A[API Endpoint] --> B[Orchestrator Agent];
+        B --> |1. Decompose Task| C{Rationale Analyzer Worker};
+        B --> |1. Decompose Task| D{Architecture Analyzer Worker};
+        B --> |1. Decompose Task| E{Testing Analyzer Worker};
+
+        C --> F[LLM API];
+        D --> G[Static Analysis Tool];
+        E --> H[Test Execution Sandbox];
+
+        subgraph Security & Audit
+            I(Auth0 FGA) -.-> H;
+            J[Audit Logger] <-.-> C;
+            J <-.-> D;
+            J <-.-> E;
+        end
+
+        F --> C;
+        G --> D;
+        H --> E;
+
+        C --> |2. Report Results| B;
+        D --> |2. Report Results| B;
+        E --> |2. Report Results| B;
+
+        B --> |3. Aggregate & Finalize| K[Final Report];
+    end
+        </code></pre>
+
+        <h2>4. Our Team: Roles & Responsibilities</h2>
+        <p>This project is a team effort. We have designed eight roles to give every member ownership over a critical area. Each role is a learning path, providing a unique opportunity to develop valuable skills.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Role</th>
+                    <th>Responsibilities</th>
+                    <th>Key Skills to Develop</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Team Lead</strong></td>
+                    <td>- Oversee the entire project, ensuring alignment with the plan.<br>- Manage the technical integration of all modules.<br>- Lead weekly check-ins and faculty advisor meetings.</td>
+                    <td>Project Management, Technical Leadership, System Architecture</td>
+                </tr>
+                <tr>
+                    <td><strong>Narrative & Pitch Strategist</strong><br>*(Non-Coding)*</td>
+                    <td>- Own the project's story; develop the "Cyber-Sentinel Agent" narrative.<br>- Write the final submission document and pitch script.<br>- Research competing benchmarks.</td>
+                    <td>Strategic Communication, Technical Writing, Market Analysis</td>
+                </tr>
+                <tr>
+                    <td><strong>Documentation & Project Coordinator</strong><br>*(Non-Coding)*</td>
+                    <td>- Manage and update the official <code>PROJECT_PLAN.md</code> and <code>README.md</code>.<br>- Document our architecture and API.<br>- Prepare agendas for weekly meetings.</td>
+                    <td>Project Coordination, Documentation Management, Technical Writing</td>
+                </tr>
+                <tr>
+                    <td><strong>UX & Benchmark Designer</strong><br>*(Non-Coding)*</td>
+                    <td>- Define the specific cybersecurity tasks for our benchmark.<br>- Design the scoring rubric for our analyzers.<br>- Ensure the evaluation criteria are clear, fair, and robust.</td>
+                    <td>User Experience (UX) Design, System Design, Critical Thinking</td>
+                </tr>
+                <tr>
+                    <td><strong>Auth0 Security Specialist</strong><br>*(Coding)*</td>
+                    <td>- Lead the integration of Auth0 for AI Agents.<br>- Implement the FGA model for securing agent tools.<br>- Become our team's expert on agent security.</td>
+                    <td>API Integration, Security Engineering, Identity & Access Management</td>
+                </tr>
+                <tr>
+                    <td><strong>Core Logic Developer (Architecture)</strong><br>*(Coding)*</td>
+                    <td>- Fully implement the <code>architecturalDebtAnalyzer</code>.<br>- Integrate a static analysis library (e.g., <code>escomplex</code>).<br>- Develop the logic for scoring architectural quality.</td>
+                    <td>TypeScript, Data Analysis, Software Quality Metrics</td>
+                </tr>
+                <tr>
+                    <td><strong>Core Logic Developer (Testing)</strong><br>*(Coding)*</td>
+                    <td>- Fully implement the <code>testingDebtAnalyzer</code>.<br>- Build the sandboxed environment for running tests.<br>- Develop the logic for scoring test coverage and quality.</td>
+                    <td>TypeScript, Sandboxing (<code>isolated-vm</code>), Test Automation</td>
+                </tr>
+                <tr>
+                    <td><strong>Agent & Infrastructure Engineer</strong><br>*(Coding)*</td>
+                    <td>- Build the "Orchestrator Agent" and the worker communication protocol.<br>- Implement the structured audit logger.<br>- Manage the server infrastructure and API endpoints.</td>
+                    <td>Node.js, System Architecture, API Design, Agentic Patterns</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>5. The Blueprint: Modular Work Breakdown</h2>
+        <p>We will tackle the project in focused, modular workstreams.</p>
+        <ul>
+            <li><strong>Module 1: Narrative & Benchmark Definition</strong>
+                <ul>
+                    <li>[x] Finalize the "Cyber-Sentinel Agent" narrative. (DONE: narrative drafted and referenced in <code>docs/GAP_ANALYSIS_FOR_DATASCIENTIST.md</code>)</li>
+                    <li>[x] Define 3-5 specific cybersecurity coding tasks for the benchmark. (DONE: example tasks sketched in gap analysis)</li>
+                    <li>[ ] Create a detailed scoring rubric for each analyzer. (TODO: refine with Data Scientist input)</li>
+                </ul>
+            </li>
+            <li><strong>Module 2: Auth0 Integration</strong>
+                <ul>
+                    <li>[ ] Set up an Auth0 for AI Agents account. (TODO)</li>
+                    <li>[ ] Create an FGA model for tools used in our benchmark tasks. (TODO)</li>
+                    <li>[ ] Implement a test endpoint in our server that enforces Auth0 FGA policies. (TODO / security-sensitive)</li>
+                </ul>
+            </li>
+            <li><strong>Module 3: Core Analyzer Implementation</strong>
+                <ul>
+                    <li>[ ] Integrate <code>escomplex</code> into the <code>architecturalDebtAnalyzer</code>. (TODO : analyzer present as prototype in <code>packages/workers</code>)</li>
+                    <li>[ ] Build the test execution sandbox for the <code>testingDebtAnalyzer</code>. (TODO : testing analyzer implemented as scaffold)</li>
+                    <li>[x] Refine the LLM prompt and logic for the <code>rationaleDebtAnalyzer</code>. (PROTOTYPE: rationale analyzer implemented; prompts iterated)</li>
+                </ul>
+            </li>
+            <li><strong>Module 4: Multi-Agent Architecture</strong>
+                <ul>
+                    <li>[x] Build the <code>OrchestratorAgent</code> service in the <code>@logomesh/core</code> package. (PROTOTYPE: <code>EvaluationOrchestrator</code> exists in <code>packages/core/src/orchestration/evaluationOrchestrator.ts</code>)</li>
+                    <li>[x] Define the data contracts for communication between the orchestrator and workers. (PROTOTYPE: contracts present in <code>packages/contracts</code> and worker queues implemented)</li>
+                    <li>[ ] Refactor the main API endpoint to use the Orchestrator. (TODO: endpoint already talks to orchestrator in places, but a full refactor & hardened production flow is pending)</li>
+                </ul>
+            </li>
+            <li><strong>Module 5: Auditing & Documentation</strong>
+                <ul>
+                    <li>[ ] Implement the structured audit logger. (TODO : structured logger scaffold exists; production-grade audit trails need work)</li>
+                    <li>[x] Write comprehensive documentation for our API and architecture. (IN PROGRESS: many docs created/updated; gap analysis and specs added)</li>
+                    <li>[ ] Prepare the final submission paper and pitch deck. (IN PROGRESS: <code>docs/AgentX_Submission_Paper.md</code> exists; needs finalization)</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>Implementation status summary</h2>
+        <p>Below is a short summary of where the repository stands relative to the plan (high level):</p>
+        <ul>
+            <li>Tools & onboarding artifacts: DONE : <code>tools/convert_eval_to_csv.py</code>, <code>tools/run_single_analyzer.py</code>, <code>notebooks/01-explore-sample-eval.ipynb</code>, <code>docs/EVAL_OUTPUT_SCHEMA.md</code>, <code>docs/CONTEXTUAL_DEBT_SPEC.md</code>, <code>docs/onboarding/example-evaluation-report.json</code>, and <code>docs-export/</code> copies are present.</li>
+            <li>Orchestrator & workers: PROTOTYPE : <code>packages/core/src/orchestration/evaluationOrchestrator.ts</code> (orchestrator worker) and workers/analyzers exist under <code>packages/workers</code> (prototype implementations present).</li>
+            <li>Analyzer core logic: PARTIAL : analyzers are implemented as scaffolds and prototypes; deeper static analysis (<code>escomplex</code>) and robust testing sandbox are TODO.</li>
+            <li>Security / Auth0: TODO : Auth0 integration is proposed but not fully implemented; credential provisioning and FGA model remain to be done.</li>
+            <li>Audit logging & hardened E2E reproducibility: TODO/IN PROGRESS : logging scaffold exists, e2e tests exist, but full end-to-end orchestration verification and production audit trails need work.</li>
+        </ul>
+
+        <h2>Timeline notes (quick status)</h2>
+        <ul>
+            <li>Week 1 (Nov 7 - Nov 13): Foundation & Planning : largely complete (roles assigned, narrative and onboarding artifacts produced).</li>
+            <li>Week 2 (Nov 14 - Nov 20): Core Logic & Security Prototyping : partly complete (core analyzers prototyped), Auth0 work is TODO.</li>
+            <li>Weeks 3-6: Full implementation, integration, testing, documentation and submission : mostly TODO/IN PROGRESS.</li>
+        </ul>
+
+        <h2>6. Our Path to Submission: Project Timeline</h2>
+        <p>We have <strong>6 weeks</strong> until the submission deadline on <strong>December 19, 2025</strong>. Here is our week-by-week plan to get us there.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Week</th>
+                    <th>Dates</th>
+                    <th>Primary Focus</th>
+                    <th>Key Goals & Milestones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Week 1</strong></td>
+                    <td>Nov 7 - Nov 13</td>
+                    <td><strong>Foundation & Planning</strong></td>
+                    <td>- Team kickoff: review and adopt this project plan.<br>- Assign all team roles.<br>- Finalize the "Cyber-Sentinel" narrative and benchmark tasks.<br>- <strong>Weekly Faculty Advisor Check-in</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Week 2</strong></td>
+                    <td>Nov 14 - Nov 20</td>
+                    <td><strong>Core Logic & Security Prototyping</strong></td>
+                    <td>- Begin implementation of core analyzers.<br>- Auth0 Specialist: complete Auth0 tutorials and create a proof-of-concept FGA integration.<br>- <strong>Weekly Faculty Advisor Check-in</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Week 3</strong></td>
+                    <td>Nov 21 - Nov 27</td>
+                    <td><strong>Full Implementation</strong></td>
+                    <td>- Complete v1 of all three analyzer services.<br>- Agent Engineer: build the first version of the Orchestrator agent.<br>- <strong>Weekly Faculty Advisor Check-in</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Week 4</strong></td>
+                    <td>Nov 28 - Dec 4</td>
+                    <td><strong>Integration & Testing</strong></td>
+                    <td>- Integrate the core analyzers with the Orchestrator.<br>- Integrate the Auth0 FGA security model into the benchmark.<br>- Begin end-to-end testing.<br>- <strong>Weekly Faculty Advisor Check-in</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Week 5</strong></td>
+                    <td>Dec 5 - Dec 11</td>
+                    <td><strong>Finalization & Documentation</strong></td>
+                    <td>- Freeze new feature development.<br>- Focus on bug fixing, testing, and refinement.<br>- Complete all project documentation.<br>- Draft the submission paper and pitch script.<br>- <strong>Weekly Faculty Advisor Check-in</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Week 6</strong></td>
+                    <td>Dec 12 - Dec 19</td>
+                    <td><strong>Submission & Pitch Prep</strong></td>
+                    <td>- Final review of the submission package.<br>- Record project demo video.<br>- Rehearse the final pitch.<br>- <strong>SUBMIT PROJECT (Dec 19)</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>7. Next Steps</h2>
+        <p>Our immediate next step is for the entire team to read this document thoroughly. In our kickoff meeting, we will discuss this plan, confirm our roles, and officially begin our journey. Let's get ready to build a benchmark that will shape the future of agentic AI.</p>
+
+    </main>
+    <footer>
+        <p>© 2025 LogoMesh</p>
+        <p>Follow the journey and join the conversation in the AgentX Discord.</p>
+    </footer>
+</body>
+</html>

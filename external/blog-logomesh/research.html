@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecting Resilience: Agentic Software Engineering Framework</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">LogoMesh</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="amnesia.html" class="nav-link">Your Code Has Amnesia</a></li>
+                <li><a href="contextual-debt-liability.html" class="nav-link">The Liability</a></li>
+                <li><a href="breakthrough.html" class="nav-link">The Breakthrough</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <header>
+            <h1>A Proposal for a Standardized Contextual Integrity Score (CIS)</h1>
+            <p class="subtitle">Quantifying Intent in AI-Generated Code</p>
+        </header>
+
+        <section id="problem">
+            <h2>The Implementation-Intent Gap</h2>
+            <p>The proliferation of Generative AI has created a crisis in software quality. AI models excel at generating code that is functionally correct on the surface, but they have a fundamental inability to grasp the deeper architectural coherence or human intent behind the code. This creates a massive, unquantified liability, invisible to traditional static analysis tools, that only manifests after deployment.</p>
+            <p>Existing software benchmarks are not equipped for this new reality. Metrics like Cyclomatic Complexity are ambiguous, and Code Coverage has become a vanity metric, validating only that a line of code was executed, not that its semantic output was correct. We are measuring the artifacts of code generation while remaining blind to the intent.</p>
+        </section>
+
+        <section id="solution">
+            <h2>The Contextual Integrity Score (CIS)</h2>
+            <p>To address this critical gap, we propose the <strong>Contextual Integrity Score (CIS)</strong>. The CIS is a standardized, composite metric designed to provide a quantifiable, multi-dimensional assessment of a software artifact's contextual integrity. It is an essential "nutritional label" for AI-generated code, enabling organizations to make informed risk-reward decisions before merging code into a production baseline.</p>
+            <p>The CIS provides a holistic evaluation by triangulating context through three distinct, mutually-reinforcing pillars:</p>
+            
+            <h3>Pillar I: Rationale Integrity Score (RIS)</h3>
+            <p>This pillar quantifies the "Why?" by measuring the clarity of intent. It assesses the traceability and alignment of the code to a discernible business or functional requirement.</p>
+            <ul>
+                <li><strong>Opaque / Contradictory:</strong> The code's purpose is not discernible.</li>
+                <li><strong>Misaligned:</strong> The code's purpose is inferred but misaligned with the domain.</li>
+                <li><strong>Traceable:</strong> The code's purpose is clear and aligns with requirements.</li>
+                <li><strong>Explicit & Aligned:</strong> The code's purpose is explicitly and accurately tied to the business rationale.</li>
+            </ul>
+
+            <h3>Pillar II: Architectural Integrity Score (AIS)</h3>
+            <p>This pillar quantifies the "How-it-fits?" by measuring structural soundness and conformance. It assesses the code's structural maintainability and its programmatic adherence to prescribed architectural patterns.</p>
+            <ul>
+                <li><strong>Chaotic:</strong> The code is both locally complex and globally non-compliant.</li>
+                <li><strong>Brittle / Deceptive:</strong> The code appears clean locally but is fundamentally wrong, violating core architectural rules.</li>
+                <li><strong>Compliant:</strong> The code is architecturally sound but could benefit from refactoring.</li>
+                <li><strong>Sound & Maintainable:</strong> The code is both locally clean and globally sound.</li>
+            </ul>
+
+            <h3>Pillar III: Testing Integrity Score (TIS)</h3>
+            <p>This pillar quantifies the "What-it-does?" by measuring semantic and behavioral validation. It assesses the quality and relevance of the test suite, not just its simple line coverage.</p>
+            <ul>
+                <li><strong>Vanity Coverage:</strong> The test suite may have high code coverage but validates almost none of the actual requirements.</li>
+                <li><strong>Gappy:</strong> The tests are relevant and cover the "happy paths" but miss critical edge cases.</li>
+                <li><strong>Robust:</strong> The test suite is semantically sound and covers all critical business requirements.</li>
+                <li><strong>Semantically Validated:</strong> The test suite fully validates the intent and behavior of the requirements.</li>
+            </ul>
+        </section>
+
+        <section id="conclusion">
+            <h2>A Call for Standardization</h2>
+            <p>The CIS is proposed as a foundational framework for a new, essential conversation about software quality. The rapid accumulation of Contextual Debt represents a systemic risk to the software industry. We must pivot from reactive debugging to proactive, automated quality gates that can measure intent.</p>
+            <p>We believe that this requires a new, broad-based collaboration between academia and industry to refine, test, and adopt the CIS as a universal standard, ensuring that the future of AI-accelerated software development is not only fast, but also safe, reliable, and fundamentally trustworthy.</p>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 LogoMesh</p>
+        <p>Follow the journey and join the conversation in the AgentX Discord.</p>
+    </footer>
+</body>
+</html>
