@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LogoMesh</title>
+    <title>LogoMesh - Multi-Agent Evaluation Arena</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
@@ -14,56 +14,158 @@
         <div class="nav-container">
             <a href="index.html" class="nav-logo">LogoMesh</a>
             <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="amnesia.html" class="nav-link">Your Code Has Amnesia</a></li>
-                <li><a href="contextual-debt-liability.html" class="nav-link">The Liability</a></li>
-                <li><a href="breakthrough.html" class="nav-link">The Breakthrough</a></li>
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="tasks.html" class="nav-link">Task Library</a></li>
             </ul>
         </div>
     </nav>
     <main>
         <section id="hero">
-            <h1>Building the Cyber-Sentinel Agent</h1>
-            <p class="subtitle">A specialized evaluator agent designed not to find bugs, but to audit for <em>intent</em>. We are creating the benchmark for the next generation of secure, reliable, and trustworthy AI.</p>
+            <h1>Multi-Agent Evaluation Arena</h1>
+            <p class="subtitle">A rigorous benchmark for AI coding agents. We grade <em>intent</em>, security, and correctness using a ground-truth judge.</p>
+            <div class="hero-buttons">
+                <a href="#results" class="button">View Results</a>
+                <a href="tasks.html" class="button secondary">Explore Tasks</a>
+            </div>
         </section>
+
         <section id="problem">
-            <h2>The Problem: Contextual Debt as a Security Liability</h2>
-            <p>The foundational thesis of our research is <strong>Contextual Debt</strong>: <em>"the future cost incurred from a lack of discernible human intent, architectural rationale, and domain-specific knowledge within a codebase."</em></p>
-            <p>With the rise of AI-generated code, this is no longer a passive maintenance issue. Contextual Debt has transformed into an active, escalating, and largely invisible <strong>security liability</strong>. You cannot secure what you do not understand.</p>
-            <p><strong>To understand why this is a critical issue for all developers, read our introductory article: <a href="amnesia.html">Your Code Has Amnesia</a>.</strong></p>
+            <h2>The Problem</h2>
+            <p>When an AI writes code, traditional benchmarks only check if it "passes tests." This misses the bigger picture:</p>
+            <ul>
+                <li>Did the AI <strong>understand the intent</strong>, or just satisfy the prompt?</li>
+                <li>Is the code <strong>secure</strong>, or did it introduce vulnerabilities?</li>
+                <li>Do the tests <strong>actually validate correctness</strong>?</li>
+            </ul>
+            <p>LogoMesh solves this by computing a <strong>Contextual Integrity Score (CIS)</strong>—a single metric derived from rationale, architecture, testing, and logic.</p>
         </section>
-        <section id="solution">
-            <h2>Our Solution: The Three Pillars of Contextual Integrity</h2>
-            <p>Our Cyber-Sentinel Agent is built to fight this new class of AI-generated risk. It moves beyond traditional static analysis to audit for <em>intent</em>, providing a holistic "Contextual Integrity Score" for any AI-generated code.</p>
-            <p>The score is derived from three core pillars of measurement:</p>
-            <ol>
-                <li>
-                    <h3>Rationale Integrity</h3>
+
+        <section id="architecture">
+            <h2>The Architecture</h2>
+            <p>LogoMesh operates as a multi-agent arena where three specialized agents interact to grade code quality.</p>
+
+            <div class="agent-grid">
+                <div class="agent-card purple">
+                    <h3>Purple Agent (The Participant)</h3>
+                    <p>The AI being evaluated. It receives a coding task and must generate source code, tests, and a rationale explaining its design choices.</p>
+                </div>
+                <div class="agent-card green">
+                    <h3>Green Agent (The Judge)</h3>
+                    <p>The core benchmark system. It runs a Docker sandbox to execute tests, performs AST static analysis, and computes the final CIS.</p>
+                </div>
+                <div class="agent-card red">
+                    <h3>Red Agent (The Attacker)</h3>
+                    <p>An embedded adversarial agent using <strong>Monte Carlo Tree Search (MCTS)</strong> to actively hunt for security vulnerabilities in the participant's code.</p>
+                </div>
+            </div>
+
+            <div class="diagram-container">
+<pre class="ascii-diagram">
+     ┌──────────────────────┐
+     │  Purple Agent (AI)   │  ← Generates code, tests, and explanation
+     └──────────┬───────────┘
+                │
+                ▼
+     ┌──────────────────────┐
+     │  Green Agent (Judge) │
+     │                      │
+     │  1. Red Agent scans  │  ← MCTS attacker hunts for vulnerabilities
+     │     for security     │
+     │                      │
+     │  2. Sandbox runs     │  ← Docker executes code + tests
+     │     the code         │
+     │                      │
+     │  3. Static analyzer  │  ← AST checks structure & constraints
+     │     checks structure │
+     │                      │
+     │  4. Scorer computes  │  ← Combines ground-truth signals
+     │     CIS              │
+     └──────────────────────┘
+</pre>
+            </div>
+        </section>
+
+        <section id="scoring">
+            <h2>Contextual Integrity Score (CIS)</h2>
+            <p>The CIS is a holistic metric between 0.0 and 1.0. It is not just an LLM opinion—it is anchored in ground-truth execution data.</p>
+
+            <div class="formula-box">
+                <code>CIS = (0.25×R + 0.25×A + 0.25×T + 0.25×L) × red_penalty × intent_penalty</code>
+            </div>
+
+            <div class="pillars-grid">
+                <div class="pillar">
+                    <h3>R: Rationale Integrity</h3>
                     <p>Does the code's purpose align with the documented business rationale and human intent?</p>
-                </li>
-                <li>
-                    <h3>Architectural Integrity</h3>
-                    <p>Does the code adhere to the system's established architectural patterns and constraints?</p>
-                </li>
-                <li>
-                    <h3>Testing Integrity</h3>
-                    <p>Does the test suite validate the <em>semantic intent</em> of the requirements, not just achieve superficial line coverage?</p>
-                </li>
-            </ol>
-            <a href="research.html" class="button">Read the Research Summary</a>
+                </div>
+                <div class="pillar">
+                    <h3>A: Architectural Integrity</h3>
+                    <p>Does the code adhere to established patterns? (e.g., no banned imports, correct data structures)</p>
+                </div>
+                <div class="pillar">
+                    <h3>T: Testing Integrity</h3>
+                    <p>Do the tests actually pass in the Docker sandbox? Validates functional correctness.</p>
+                </div>
+                <div class="pillar">
+                    <h3>L: Logic Score</h3>
+                    <p>A senior-level logic review anchored by the test results, checking for subtle edge cases.</p>
+                </div>
+            </div>
         </section>
-        <section id="team">
-            <h2>Who We Are</h2>
-            <p>We are a multi-disciplinary team of architects and senior data scientists with experience from top-tier tech companies like Meta. Our mission is to build the foundational tools for safe and reliable agentic software development.</p>
+
+        <section id="tech-stack">
+            <h2>Under the Hood</h2>
+            <ul class="tech-list">
+                <li><strong>Docker Sandbox:</strong> Isolates code execution to safely run untrusted AI code.</li>
+                <li><strong>MCTS Red Agent:</strong> Uses search trees to explore attack vectors dynamically.</li>
+                <li><strong>Battle Memory (SQLite):</strong> Learns from past evaluations to improve future judging.</li>
+                <li><strong>Strategy Evolver (UCB1):</strong> Adapts evaluation rigor based on task difficulty.</li>
+            </ul>
         </section>
-        <section id="join-us">
-            <h2>Join the Mission</h2>
-            <p>We are a build-team focused on winning the AgentX competition. We are currently recruiting for a few key specialist roles. If you are an elite builder, security specialist, or strategist who believes in this mission, contact us to learn more.</p>
+
+        <section id="results">
+            <h2>Baseline Results</h2>
+            <p>Performance of the reference Purple Agent (GPT-4o-mini) across the 20-task suite.</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Task ID</th>
+                            <th>Description</th>
+                            <th>CIS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>task-001</td><td>Email Validator</td><td>0.66</td></tr>
+                        <tr><td>task-002</td><td>Rate Limiter</td><td>0.53</td></tr>
+                        <tr><td>task-003</td><td>LRU Cache</td><td>0.70</td></tr>
+                        <tr><td>task-004</td><td>Recursive Fibonacci</td><td>0.75</td></tr>
+                        <tr><td>task-005</td><td>JWT Parser</td><td>0.51</td></tr>
+                        <tr><td>task-006</td><td>Thread-Safe Connection Pool</td><td>0.55</td></tr>
+                        <tr><td>task-007</td><td>Event-Driven State Machine</td><td>0.55</td></tr>
+                        <tr><td>task-008</td><td>Binary Merkle Tree</td><td>0.66</td></tr>
+                        <tr><td>task-009</td><td>Blockchain</td><td>0.60</td></tr>
+                        <tr><td>task-010</td><td>HD Wallet</td><td>0.55</td></tr>
+                        <tr><td>task-011</td><td>ECDSA Signatures</td><td>0.68</td></tr>
+                        <tr><td>task-012</td><td>ERC-20 Token</td><td>0.49</td></tr>
+                        <tr><td>task-013</td><td>REST API Router</td><td>0.00</td></tr>
+                        <tr><td>task-014</td><td>SQL Query Builder</td><td>0.46</td></tr>
+                        <tr><td>task-015</td><td>Event Sourcing</td><td>0.49</td></tr>
+                        <tr><td>task-016</td><td>Distributed Task Queue</td><td>0.53</td></tr>
+                        <tr><td>task-017</td><td>Raft Consensus</td><td>0.62</td></tr>
+                        <tr><td>task-018</td><td>B-Tree Index</td><td>0.50</td></tr>
+                        <tr><td>task-019</td><td>Consistent Hashing</td><td>0.48</td></tr>
+                        <tr><td>task-020</td><td>MVCC Transactions</td><td>0.62</td></tr>
+                        <tr class="average-row"><td></td><td><strong>Average</strong></td><td><strong>0.55</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </main>
     <footer>
         <p>© 2025 LogoMesh</p>
-        <p>Follow the journey and join the conversation in the AgentX Discord.</p>
+        <p>Built for the AgentBeats Phase 1 Competition.</p>
     </footer>
 </body>
 </html>
