@@ -1,3 +1,10 @@
+> **Branch Status: `feat/cli-and-mcp`**
+> This branch is the active development workspace for the **LogoMesh CLI & MCP Server**. It refactors the core logic to function as a local-first developer tool, decoupling it from the heavy server/database architecture found in `master`.
+>
+> Key features introduced in this branch:
+> - **Auditor Mode:** A passive graph analysis tool (`logomesh check`) to enforce architectural rules.
+> - **Architect Mode:** An active code generation and falsification loop (`logomesh build`) that uses an adversarial Monte Carlo Tree Search (MCTS) to "Red Team" code before it's committed.
+
 # LogoMesh — Multi-Agent Evaluation Arena for AI Code Quality
 
 > **tl;dr:** LogoMesh is a benchmark that grades AI-written code. It sends a coding task to an AI agent, then a panel of sub-agents judges the result — one checks security, one runs the tests, one reviews the logic. The final score tells you how much you can trust that code in production.
