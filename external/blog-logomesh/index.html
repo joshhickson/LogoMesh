@@ -16,6 +16,7 @@
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link active">Home</a></li>
                 <li><a href="tasks.html" class="nav-link">Task Library</a></li>
+                <li><a href="research.html" class="nav-link">Research</a></li>
             </ul>
         </div>
     </nav>
@@ -123,6 +124,25 @@
             </ul>
         </section>
 
+        <section id="quick-start">
+            <h2>Quick Start</h2>
+            <p>Run the LogoMesh arena locally with our CLI tools.</p>
+            <div class="code-block-container">
+<pre><code># 1. Clone and install
+git clone https://github.com/sszz01/LogoMesh.git
+cd LogoMesh
+pip install uv && uv sync
+
+# 2. Set your API key
+cp .env.example .env
+# Edit .env → add your OPENAI_API_KEY
+
+# 3. Start the Agents
+uv run main.py --role GREEN --host 0.0.0.0 --port 9009 &
+uv run main.py --role PURPLE --host 0.0.0.0 --port 9010 &</code></pre>
+            </div>
+        </section>
+
         <section id="results">
             <h2>Baseline Results</h2>
             <p>Performance of the reference Purple Agent (GPT-4o-mini) across the 20-task suite.</p>
@@ -164,8 +184,21 @@
         </section>
     </main>
     <footer>
-        <p>© 2025 LogoMesh</p>
-        <p>Built for the AgentBeats Phase 1 Competition.</p>
+        <div class="footer-links">
+            <div class="footer-column">
+                <h4>Project</h4>
+                <a href="https://github.com/joshhickson/LogoMesh/tree/master" target="_blank">GitHub Repository</a>
+                <a href="https://github.com/sszz01/logomesh-leaderboard-2" target="_blank">Leaderboard Repo</a>
+                <a href="research.html">Research Paper</a>
+            </div>
+            <div class="footer-column">
+                <h4>AgentBeats</h4>
+                <a href="https://agentbeats.dev/joshhickson/logomesh-green" target="_blank">Green Agent Profile</a>
+                <a href="https://agentbeats.dev/joshhickson/logomesh-purple" target="_blank">Purple Agent Profile</a>
+                <a href="https://rdi.berkeley.edu/agentx-agentbeats" target="_blank">Competition Home</a>
+            </div>
+        </div>
+        <p class="copyright">© 2025 LogoMesh. Built for the AgentBeats Phase 1 Competition.</p>
     </footer>
 </body>
 </html>

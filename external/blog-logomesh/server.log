@@ -1,0 +1,4 @@
+127.0.0.1 - - [06/Feb/2026 05:14:58] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [06/Feb/2026 05:14:58] "GET /style.css HTTP/1.1" 200 -
+127.0.0.1 - - [06/Feb/2026 05:15:00] "GET /research.html HTTP/1.1" 200 -
+127.0.0.1 - - [06/Feb/2026 05:15:00] "GET /assets/tex/paper.tex HTTP/1.1" 200 -

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogoMesh Research - Contextual Debt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- LaTeX.js for dynamic rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/latex.js/dist/latex.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/latex.js/dist/latex.css">
+
+    <style>
+        /* Override some LaTeX.js defaults to fit dark theme */
+        .latex-container {
+            background-color: #ffffff; /* Paper look */
+            color: #000000;
+            padding: 4rem;
+            margin-top: 2rem;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #loading-message {
+            text-align: center;
+            padding: 2rem;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        /* Latex.js generated content tweaks */
+        .latex-container a { color: #0066cc; }
+        .latex-container h1, .latex-container h2, .latex-container h3 { color: #000; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">LogoMesh</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="tasks.html" class="nav-link">Task Library</a></li>
+                <li><a href="research.html" class="nav-link active">Research</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <section id="hero-research">
+            <h1>Research Paper</h1>
+            <p class="subtitle">The theoretical framework behind LogoMesh and the Contextual Integrity Score.</p>
+            <p style="text-align: center; color: var(--text-secondary);">
+                <em>This paper is rendered dynamically from the raw LaTeX source.</em>
+            </p>
+        </section>
+
+        <div id="loading-message">Compiling LaTeX...</div>
+        <div id="paper-container" class="latex-container" style="display: none;"></div>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const container = document.getElementById('paper-container');
+            const loading = document.getElementById('loading-message');
+
+            fetch('assets/tex/paper.tex')
+                .then(response => {
+                    if (!response.ok) throw new Error("Failed to load paper.tex");
+                    return response.text();
+                })
+                .then(latexCode => {
+                    try {
+                        // Create a generator
+                        var generator = new latexjs.HtmlGenerator({ hyphenate: false });
+
+                        // Parse the latex code
+                        generator = latexjs.parse(latexCode, { generator: generator });
+
+                        // Clear container and append the DOM
+                        container.innerHTML = "";
+                        container.appendChild(generator.domFragment());
+
+                        loading.style.display = 'none';
+                        container.style.display = 'block';
+                    } catch (e) {
+                        console.error(e);
+                        loading.innerHTML = "Error rendering LaTeX: " + e.message;
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    loading.innerHTML = "Error loading paper source.";
+                });
+        });
+    </script>
+
+    <footer>
+        <p>© 2025 LogoMesh</p>
+    </footer>
+</body>
+</html>
