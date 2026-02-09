@@ -87,3 +87,29 @@ The Judge (LogoMesh Arena) receives the submission.
 *   **Tooling:** Use `grep`, `git log -p`, and RAG (Vector Search) over `docs/`.
 *   **Model:** High-reasoning model (e.g., GPT-4o, Claude 3.5 Sonnet) for the CMA.
 *   **Output:** A standard JSON format for the "Task Bundle."
+
+---
+
+## 6. Open Questions & Known Gaps
+
+### A. The Snapshot Problem (Dependencies)
+If the Judge is "Frozen" (running inside an immutable container/snapshot), how does it test code that depends on the *current* state of the repository?
+*   **The Conflict:** The Frozen Judge's dependencies (e.g., `src/utils.py` at commit `C-100`) may be incompatible with the Worker's submission (which assumes `C`).
+*   **Current Reality:** This is an unsolved architectural gap. A "perfect" Judge would need to dynamically build a container for every submission, which introduces the risk of the Worker modifying the container itself.
+*   **Mitigation:** The Judge uses a "Stage 2 Loader" that mounts the Worker's `src/` directory over the container's `src/` directory *except* for the `green_logic` folder. This is imperfect but functional for most tasks.
+
+### B. Handling Missing Intent (Contextual Debt Detection)
+What happens if `Intent Retrieval` yields zero results? (No docs, commit messages are "fix bug").
+*   **Risk:** The CMA assumes no constraints exist and allows the Worker to break hidden logic.
+*   **Policy:** The CMA must be a **Contextual Debt Detector**.
+    *   If Intent Confidence < 0.5, the CMA **HALTS** and asks the human for clarification.
+    *   *Result:* The process forces humans to "pay down debt" (write docs) before automation can proceed.
+
+### C. Emergency Protocol: Reverse-Engineering Intent
+Sometimes humans are unavailable, and the show must go on.
+*   **Scenario:** Legacy code, original author gone, zero docs.
+*   **Action:** The CMA activates **"Archeologist Mode"**.
+    1.  It feeds the code to a high-reasoning model (O1/Claude 3.5).
+    2.  Prompt: *"Analyze this code. Infer the likely business rules and constraints it enforces based on variable names, control flow, and error handling. Generate a synthetic ADR."*
+    3.  **Risk:** High hallucination risk. The AI might invent a reason that isn't true.
+    4.  **Safeguard:** This "Synthetic Intent" is tagged as `[CONFIDENCE: LOW]` in the DBOM and requires explicit human sign-off before the Worker can execute.
