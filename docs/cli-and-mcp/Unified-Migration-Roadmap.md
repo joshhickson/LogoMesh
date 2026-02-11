@@ -12,6 +12,7 @@ The ultimate goal *could be* to transform LogoMesh from a static "Evaluation Are
 **The Proposed Journey:**
 1.  **Phase 1 (Current):** The Arena (Static Benchmark).
 2.  **Phase 2 (The Product):** The Companion (Local CLI & MCP).
+    *   *Alternative:* The GitHub App (CI/CD Integration).
 3.  **Phase 3 (The Integration):** The Validation (OpenClaw as a Tester).
 4.  **Phase 4 (The Potential Future):** The Agent (LogoMesh as a Service / "Phase Purple").
 
@@ -37,6 +38,16 @@ The ultimate goal *could be* to transform LogoMesh from a static "Evaluation Are
     *   **DBOM (Decision Bill of Materials):** A signed artifact proving code was "Red Teamed."
 *   **Strategic Driver:** Competing with CodeRabbit by offering *local execution* and *active red teaming*.
 *   **Source:** `docs/cli-and-mcp/20260202-Pivot-Directive_ LogoMesh-Strategic-Realignment.md` & `20260202-Operational-Concept_ LogoMesh-CLI.md`
+
+### 3.1. Alternative Vehicle: The GitHub App Integration (Proposed by sszz01)
+*   **Concept:** Deploy the "Auditor Mode" logic as a GitHub App that comments on PRs.
+*   **Workflow:**
+    1.  Developer opens PR.
+    2.  Webhook triggers LogoMesh Service.
+    3.  Service runs `logomesh check` (Sandbox + Red Agent).
+    4.  Bot posts CIS Score and Red Team findings as a comment.
+*   **Synergy:** This complements the CLI. The CLI is for the *developer's machine* (Inner Loop), while the GitHub App is for the *team's CI/CD* (Outer Loop).
+*   **Source:** `docs/cli-and-mcp/20260203-message-szz01-1.md` & `docs/cli-and-mcp/20260203-message-sszz01-2.md`
 
 ---
 
