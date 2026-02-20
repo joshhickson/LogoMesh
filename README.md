@@ -2,7 +2,7 @@
 
 > **tl;dr:** LogoMesh is a benchmark that grades AI-written code. It sends a coding task to an AI agent, then a panel of sub-agents judges the result — one checks security, one runs the tests, one reviews the logic. The final score tells you how much you can trust that code in production.
 
-Built for the [Berkeley RDI AgentBeats](https://agentbeats.dev) Phase 1 competition.
+**1st Place, Software Testing Agent Track** — [UC Berkeley RDI AgentBeats Competition](https://agentbeats.dev) (1,300+ teams).
 
 ---
 
@@ -588,6 +588,19 @@ LogoMesh is built on the concept of **Contextual Debt** — a measure of how wel
 - **Battle Memory** — Persistent learning from past evaluations improves future scoring accuracy
 
 See `docs/03-Research/Theory/` for detailed research papers.
+
+---
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute, PR expectations, code style |
+| [Developer Guide](docs/02-Engineering/Developer-Guide.md) | Full codebase walkthrough and onboarding (start here if you're new) |
+| [Current Truth Source](docs/00_CURRENT_TRUTH_SOURCE.md) | Project status, team, priorities, and key decisions |
+| [Judges Start Here](docs/05-Competition/Judges-Start-Here.md) | Competition judge walkthrough |
+| [Agent Architecture](docs/05-Competition/Agent-Architecture.md) | Full technical architecture of the 3-agent arena |
+| [AgentBeats SDK Reference](docs/05-Competition/AgentBeats-SDK-Reference.md) | SDK and platform integration details |
 
 ---
 

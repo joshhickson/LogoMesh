@@ -340,40 +340,19 @@ LogoMesh is built on the academic concept of **Contextual Debt** — a paper by 
 
 ---
 
-## 9. Business Strategy (from Feb 5 Founder Session)
-
-### Product Direction
-
-- **Recommended:** GitHub PR App (LogoMesh's slowness is a feature for CI, not a bug for CLI)
-- **Pricing:** Free for public repos, $29/seat/month private
-- **Moat:** "We run the code. Everyone else just reads it." (CodeRabbit, Codacy, Snyk = static analysis only)
-- **Market:** AI Code Tools $4.86B (2023) → $26.03B (2030), 27.1% CAGR
-
-### Phase Roadmap
-
-1. Phase 1 (0-3 months): GitHub PR App MVP
-2. Phase 2 (3-6 months): CLI for local deep scans
-3. Phase 3 (6+ months): VS Code extension (only if traction)
-
-### Open Questions
-
-- **Cloud TOS:** OpenAI/Anthropic prohibit "red teaming" — does MCTS Red Agent violate this? May need self-hosted models.
-- **CodeRabbit moat:** If they add sandbox execution, what stops them? Need clear defensibility answer.
-
----
-
-## 10. Team Context
+## 9. Team Context
 
 | Person | Role | Focus |
 |--------|------|-------|
-| **Oleksander (sszz01)** | CTO/Technical | Wrote all agent logic, scoring pipeline, features. You're helping him. |
-| **Josh (joshhickson)** | CEO/Business, Repo owner | Documentation, demo video, paper with Aladdin, Lambda deployment. Pulling from master — needs `feat/agi-agents`. |
-| **Aladdin** | Research | Contextual Debt paper (.tex). Paper doesn't cover Red Agent or testing results yet. |
-| Plus: Alaa, Samuel, Mark, Garrett, Deepti | — | Various contributions |
+| **Oleksander (sszz01)** | Technical Lead | Wrote all agent logic, scoring pipeline, features. You're helping him. |
+| **Josh (joshhickson)** | Project Lead, Repo owner | Documentation, demo video, paper with Aladdin, Lambda deployment. |
+| **Deepti** | Research | Competition logistics, research, analysis. |
+| **Aladdin** | Research | Contextual Debt paper (.tex). |
+| Plus: Alaa, Samuel, Mark, Garrett | — | Various Phase 1 contributions |
 
 ---
 
-## 11. Development History (Jan 28–31 Session)
+## 10. Development History (Jan 28–31 Session)
 
 ### Bug Fixes
 1. `MODEL_NAME → OPENAI_MODEL` in `scoring.py` — wrong env var
@@ -408,7 +387,7 @@ f921dcd feat: reduce hallucination and add task complexity classifier
 
 ---
 
-## 12. Baseline Results
+## 11. Baseline Results
 
 Average CIS across 20 tasks with gpt-4o-mini Purple: **0.55** (range 0.00–0.75)
 
@@ -420,7 +399,7 @@ Key calibration points:
 
 ---
 
-## 13. Deployment
+## 12. Deployment
 
 ### Lambda Labs (H100/A100)
 ```bash
@@ -439,7 +418,7 @@ docker compose -f docker-compose.agents.yml up --build
 
 ---
 
-## 14. Important Rules
+## 13. Important Rules
 
 - Do NOT include `Co-Authored-By: Claude` in any commit messages.
 - Branch `feat/agi-agents` is the source of truth, not `master`.
@@ -450,7 +429,7 @@ docker compose -f docker-compose.agents.yml up --build
 
 ---
 
-## 15. Key URLs
+## 14. Key URLs
 
 | Resource | URL |
 |----------|-----|
