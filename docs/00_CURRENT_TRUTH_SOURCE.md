@@ -3,87 +3,100 @@ status: ACTIVE
 type: Spec
 ---
 > **Context:**
-> *   [2025-12-21]: The absolute single source of truth for the LogoMesh project. All agents must check this file first.
+> * [2026-02-19]: Updated post-Phase 1 win. LogoMesh won 1st place in Software Testing Agent track.
+> * [2025-12-21]: Original creation as master index.
 
 # 00. Current Truth Source (Master Index)
 
-## 1. Top-Level Strategic Directives (The "Why")
+## 1. Where We Are
 
-*   **Mission:** Win the AgentX AgentBeats Competition (Green Track).
-*   **Core Thesis:** "Contextual Debt" is the primary liability of AI code. We measure it via the "Contextual Integrity Score (CIS)."
-*   **Current Phase:** **"Iron Sharpens Iron" (Arena Mode).**
-    *   We are building an **Agent Arena** where Red Agents attack Purple Agents, and the Green Agent judges the outcome.
-*   **Submission Deadline:** January 15, 2026.
+- **Phase 1 (Green Agent):** Won 1st place, Software Testing Agent track, AgentBeats competition (UC Berkeley RDI). 1,300+ teams competed.
+- **Phase 2 (Purple Agent):** Registered. Lambda Security Arena track active. Main track starts Feb 23, 2026. Deadline ~March 30.
+- **Startup:** Early stage. No MVP yet. GitHub PR App is the target product form factor. No funding, no revenue.
 
-## 2. Immediate Tactical Goals (The "What")
+## 2. What LogoMesh Is
 
-*   **Lambda Test:** **COMPLETE (2026-01-03).** Green Agent successfully deployed on H100 GPU in Lambda Cloud.
-*   **Vector Scoring:** Implement `Rationale Integrity` using Cosine Similarity (not just LLM vibes).
-*   **Adversarial Defense:** Prevent "Context Stuffing" using KL Divergence.
-*   **Documentation:** Migrate to RST/ReadTheDocs for professional presentation.
-*   **Session Persistence:** **CRITICAL (P0).** Implement crash-proof filing system for battle logs.
+A multi-agent benchmark that evaluates AI-written code by actually running it, attacking it, and scoring it.
 
-## 3. Team Workspaces & Roles (The "Who")
+**Core thesis:** "We don't ask if code looks good. We run it, attack it, and learn from every battle."
 
-**Protocol:** Agents must ask for the **Instructor's Name** at the start of a session to locate the correct workspace.
+**Scoring:** CIS = (0.25*R + 0.25*A + 0.25*T + 0.25*L) * red_penalty * intent_penalty. LLM bounded +/-0.10 from ground truth. seed=42, temp=0. Variance < 0.05.
 
-| Role | Name | Workspace Folder | Primary Focus |
-| :--- | :--- | :--- | :--- |
-| **Team Lead** | **Josh** | [docs/Archive/Intent-Log/Josh/](Archive/Intent-Log/Josh/) | Strategy, Architecture, Submission |
-| **Data Scientist** | **Deepti** | [docs/Archive/Intent-Log/Deepti/](Archive/Intent-Log/Deepti/) | CIS Metrics, Decay Theorem, Presentation |
-| **Green Agent Lead** | **Alaa** | [docs/Archive/Intent-Log/Alaa/](Archive/Intent-Log/Alaa/) | Evaluator Logic, Vector Math |
-| **Builder/Dev** | **Garrett** | [docs/Archive/Intent-Log/Garrett/](Archive/Intent-Log/Garrett/) | Implementation, Docker, Tooling |
-| **Green Agent Dev** | **Samuel** | [docs/Archive/Intent-Log/Samuel/](Archive/Intent-Log/Samuel/) | Python Codebase, A2A Protocol |
-| **System Architect** | **Mark (Kuan Zhou)** | [docs/Archive/Intent-Log/Mark/](Archive/Intent-Log/Mark/) | Security, AWS/Lambda, Red Agent Lead |
-| **Backend Dev** | **Oleksander**| [docs/Archive/Intent-Log/Oleksander/](Archive/Intent-Log/Oleksander/) | Orchestration, Sidecar, API |
+## 3. Team
 
-## 4. Key Documentation Indices
+| Role | Name | Focus |
+|:-----|:-----|:------|
+| CTO | Oleksander | Architecture, code, technical decisions |
+| CEO | Josh | Outreach, recruiting, business, landing page |
+| Research | Deepti | Competition logistics, research, competitive analysis |
 
-### Strategy & IP
-*   [Contextual Debt Paper (Draft)](00-Strategy/IP/Contextual-Debt-Paper.md): The core theory.
-*   **Paper Versioning Protocol (G-001):** Before any paper update, copy current to archive with timestamp. All versions tracked in this file.
-    - **Current Version:** v1 (2026-01-14) - Validates Stage 2 Campaign (77 battles)
-    - **Archive:** [00-Strategy/IP/archive/](00-Strategy/IP/archive/)
-    - **Process:** `cp paper.md archive/paper_v[N]_YYYY-MM-DD.md` before edits; update CURRENT_TRUTH_SOURCE.md after
-*   [Competition Requirements](05-Competition/20251221-Submission-Requirements-Matrix.md): The rules we must follow.
+## 4. Immediate Priorities
 
-### Architecture
-*   [Judges Start Here](./05-Competition/Judges-Start-Here.md): **START HERE** - Quick overview for competition judges.
-*   [Agent Architecture Guide](./05-Competition/Agent-Architecture.md): Full technical architecture of the 3-agent arena.
-*   [Agent Arena Upgrade Plan](./Archive/Logs/Intent-Log/Technical/20260101-Agent-Arena-Upgrade-Plan.md): The technical roadmap for the competition.
-*   [Embedding Vectors Specs](04-Operations/Dual-Track-Arena/Embedding-Vectors/README.md): Mathematical specifications for CIS.
-*   **CIS Metrics Tracking (A-002):**
-    - **Formula (Post-B-002):** `CIS = (0.25 × R) + (0.25 × A) + (0.25 × T) + (0.25 × L)`
-    - **Components:** rationale_score (Intent↔Rationale), architecture_score, testing_score, logic_score (anchored to sandbox success per B-001)
-    - **New Diagnostic (A-002):** `intent_code_similarity` (cos(task_description, source_code)) stored separately in evaluation JSON
-    - **Purpose:** Intent↔Code metric reserved for validation analysis to test against Intent↔Rationale for R(Δ) definition accuracy
-    - **Status:** Non-breaking addition; preserved Stage 2 comparability; enables future R(Δ) refinement post-validation
+### Phase 2 Competition
+- Tag `phase-2-tryout` issues for recruitment filter (done: #127, #128, #129)
+- Recruit 1-2 devs via PR-based tryout (Josh owns outreach, Oleksander reviews PRs)
+- Deepti handles registration and competition admin
+- Build Purple Agent for main track + Lambda Security Arena
 
-*   **Agent Arena Architecture (2026-01-15):**
-    - **Green Agent (Judge):** Orchestrates battles, assigns tasks, computes CIS scores, runs sandbox. Port 9000.
-    - **Purple Agent (Defender):** Generates code solutions with rationale and tests. Port 9001.
-    - **Red Agent V2 (Attacker):** Hybrid 3-layer vulnerability detection (Static→Smart→Reflection). Port 9021.
-    - **vLLM Brain:** Qwen2.5-Coder-32B-Instruct-AWQ on Port 8000.
-    - **Key Features:** Tautology detection, authorization bypass detection, constraint violation checking.
-    - **Deployment:** `./scripts/bash/launch_arena.sh` on Lambda H100/A100.
+### Startup (Parallel)
+- Landing page with email capture (Josh)
+- 10 user interviews: "When AI writes code, how do you know it's good?" (5 each)
+- Competitive research: sign up for CodeRabbit, Codacy, document gaps (Deepti)
+- Founders agreement / equity split conversation
+- Scope GitHub PR App MVP
 
-### Operations
-*   [Master Log](./Archive/Logs/Intent-Log/Technical/20251231-Polyglot-Consolidation-Master-Log.md): History of the Polyglot merge.
-*   [Lambda Test Protocol](./Archive/Logs/Intent-Log/Josh/20260101-Lambda-Test-Protocol.md): How to run the test.
-*   [Instance Restart Guide](./Archive/Logs/Intent-Log/Josh/20260103-Instance-Restart-Guide.md): **CRITICAL** procedure for recovering the ephemeral H100 environment.
-*   [Team Briefing Draft](./Archive/Logs/Intent-Log/Josh/20260101-Team-Briefing-Draft.md): Announcement of the "Red Zone" sprint.
-*   **Phase 2.7: C-NEW-001 Infrastructure Setup (2026-01-14)**
-    - [Setup & Execution Log](./Archive/Logs/Intent-Log/Josh/Phase2.7-C-NEW-001-Infrastructure-Setup-20260114.md): Sequential deployment of Mistral/Qwen/gpt-oss trio
-    - Status: **READY FOR EXECUTION** (25 battles × 3 tiers, ~12-16 hours)
-    - Automation: `scripts/run_c_new_001_diversity_test.sh`, `scripts/analyze_c_new_001_results.py`
-    - Expected CIS deltas: 0.33 (Tier 1→3), validates metric hypothesis
+## 5. Product Direction
 
----
+**Target:** GitHub PR App (Phase 1 product)
+- PR review tolerates 30-60s latency (fits our sandbox + MCTS approach)
+- One-click install, per-seat SaaS pricing ($29/seat/month proposed)
+- Same backend as competition Purple Agent
 
-## 5. Deprecation & Pivot Log
+**Not building yet:** CLI, VS Code extension. Needs user evidence first.
 
-*   **Deprecated:** `PROJECT_PLAN.md` (Old commercial strategy).
-*   **Deprecated:** "Auth0 Sponsorship" (Expired/Irrelevant).
-*   **Deprecated:** `docs/04-Operations/green-agent/`, `docs/04-Operations/purple-agent/`, `docs/04-Operations/agentbeats-lambda/` (Code migrated to `src/`).
-*   **Deprecated:** `Llama-3-70B` and `gpt-oss-20b` (Replaced by `Qwen/Qwen2.5-Coder-32B-Instruct` for 16k context compliance).
-*   **Pivot:** Moved from "SaaS Tool" to "Competition Benchmark."
+## 6. Repo Structure
+
+| Repo | Purpose | Access |
+|:-----|:--------|:-------|
+| `joshhickson/LogoMesh` | Competition repo (Phase 1 winner, Phase 2 work) | Public |
+| `logomesh/logomesh-app` | Commercial GitHub PR App (future) | Private |
+| `logomesh/logomesh-site` | Landing page (future) | TBD |
+
+## 7. Key Documentation
+
+| Document | What It Is |
+|:---------|:-----------|
+| [README.md](../README.md) | Project overview, quick start, architecture, scoring |
+| [CONTRIBUTING.md](../CONTRIBUTING.md) | How to contribute, PR expectations, code style |
+| [Developer Guide](02-Engineering/Developer-Guide.md) | Full codebase walkthrough, onboarding guide |
+| [CONTEXT_PROMPT.md](../CONTEXT_PROMPT.md) | Context handoff for new Claude Code sessions |
+| [Judges Start Here](05-Competition/Judges-Start-Here.md) | Competition judge walkthrough |
+| [Agent Architecture](05-Competition/Agent-Architecture.md) | Full technical architecture |
+
+## 8. Key Technical Facts
+
+- **Ground-truth scoring:** Test pass rates and AST constraint checks drive scores, not LLM vibes
+- **MCTS Red Agent:** Monte Carlo Tree Search with UCB1 for vulnerability hunting
+- **Docker sandbox:** 128MB RAM, 50% CPU, no network, pytest execution
+- **Self-improving:** Battle Memory (SQLite), Strategy Evolver (UCB1 bandit), Task Intelligence (3-tier)
+- **20 curated tasks** from email validator to MVCC transactions
+- **A2A protocol:** Google's Agent-to-Agent JSON-RPC for inter-agent communication
+
+## 9. What NOT to Do
+
+- Don't build new features without user evidence
+- Don't start GitHub App without user interviews
+- Don't mix competition recruits with startup co-founders
+- Don't change scoring weights/penalties without team discussion
+- Don't push to master without verifying Phase 1 submission isn't affected
+
+## 10. Deprecation Log
+
+| What | Why | When |
+|:-----|:----|:-----|
+| `PROJECT_PLAN.md` | Old commercial strategy, pre-competition | 2025-12 |
+| Auth0 Sponsorship | Expired/irrelevant | 2025-12 |
+| `docs/04-Operations/green-agent/`, `purple-agent/`, `agentbeats-lambda/` | Code migrated to `src/` | 2025-12 |
+| Llama-3-70B, gpt-oss-20b | Replaced by Qwen2.5-Coder-32B-Instruct | 2026-01 |
+| SaaS Tool pivot | Now competition benchmark first, product second | 2025-12 |
+| Old team workspaces (`docs/Archive/Intent-Log/[name]/`) | Phase 1 artifacts, team restructured | 2026-02 |
