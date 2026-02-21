@@ -37,8 +37,10 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+    "duckdb>=1.0.0",
     "hypothesis>=6.0.0",
     "mypy>=1.18.1",
+    "pandas>=2.0.0",
     "pytest>=8.0.0",
 ]
 
@@ -53,9 +55,11 @@ package = true
 
 [dependency-groups]
 dev = [
-    "mypy>=1.18.1",
-    "pytest>=8.0.0",
+    "duckdb>=1.0.0",
     "hypothesis>=6.0.0",
+    "mypy>=1.18.1",
+    "pandas>=2.0.0",
+    "pytest>=8.0.0",
 ]
 
 [tool.pytest.ini_options]
