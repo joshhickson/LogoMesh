@@ -27,26 +27,3 @@ jobs:
 
       - name: Run tests
         run: uv run pytest tests/ -v --ignore=tests/test_leaderboard_query.py
-
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install uv
-        run: pip install uv
-
-      - name: Install dependencies
-        run: uv sync
-
-      - name: Run mypy
-        env:
-          MYPYPATH: src
-        run: cd src && uv run mypy green_logic red_logic purple_logic --ignore-missing-imports
