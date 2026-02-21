@@ -1,8 +1,20 @@
-# Dependency Caches
-node_modules
-.pnpm-store
+# Dependencies
+node_modules/
+.venv/
 
-# Build Caches
-dist
-.turbo
-*.tsbuildinfo
+# Legacy code
+legacy/
+
+# Data and docs
+data/
+docs/
+results/
+
+# Git and IDE
+.git/
+.idea/
+.vscode/
+.claude/
+
+# Environment
+.env

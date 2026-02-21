@@ -1,14 +1,8 @@
 # GPU-Enabled Dockerfile for Lambda Cloud (H100/A100)
-# Base: Nvidia CUDA 12.1 with Ubuntu 22.04 (the working combo)
 FROM nvidia/cuda:12.1.0-devel-ubuntu22.04
 
-# Avoid interactive prompts during apt installs
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 1. Install System Dependencies
-# - Ubuntu 22.04 has Python 3.10 by default - that's fine for our needs
-# - curl, git: for tools
-# - Node.js 20: via nodesource
 RUN apt-get update && apt-get install -y \
     curl \
     git \
@@ -16,38 +10,24 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     python3-venv \
     python3-dev \
-    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
-# Install uv (The Python Package Manager)
+# Install uv
 RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR="/usr/local/bin" sh
 
-# Install pnpm
-RUN npm install -g pnpm
-
-# 2. Setup Workspace
 WORKDIR /app
 
-# 3. Node.js Dependencies (Sidecars)
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY packages/ packages/
-RUN pnpm install --frozen-lockfile
-
-# 4. Python Dependencies (Agents + vLLM)
+# Python dependencies (installs vllm on Linux)
 COPY pyproject.toml uv.lock README.md ./
-# Sync dependencies (This will install vllm because we are on Linux)
 RUN uv sync --frozen
 
-# 5. Copy Source Code
+# Copy source code
 COPY src/ src/
 COPY scenarios/ scenarios/
 COPY main.py .
 
-# 6. Runtime Configuration
-# Ensure we use the virtual environment created by uv
+# Runtime configuration
 ENV PATH="/app/.venv/bin:$PATH"
 ENV PYTHONPATH="/app:/app/src"
 
-# Default Command
 CMD ["python3", "main.py", "--help"]

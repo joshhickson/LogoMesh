@@ -1,49 +1,34 @@
-# Polyglot Dockerfile for AgentBeats Platform
-# Base: Node.js 20 on Debian Bookworm
-FROM node:20-bookworm
+# LogoMesh Agent Dockerfile
+FROM python:3.11-bookworm
 
 # Avoid interactive prompts during apt installs
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 1. Install System Dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     curl \
     git \
-    python3 \
-    python3-pip \
-    python3-venv \
-    python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install uv (The Python Package Manager)
+# Install uv
 RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR="/usr/local/bin" sh
 
-# Install pnpm
-RUN npm install -g pnpm
-
-# 2. Setup Workspace
+# Setup workspace
 WORKDIR /app
 
-# 3. Node.js Dependencies (Sidecars)
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY packages/ packages/
-RUN pnpm install --frozen-lockfile
-
-# 4. Python Dependencies (Agents)
+# Python dependencies
 COPY pyproject.toml uv.lock README.md ./
-# Sync dependencies
 RUN uv sync --frozen
 
-# 5. Copy Source Code
+# Copy source code
 COPY src/ src/
 COPY scenarios/ scenarios/
 COPY main.py .
 
-# 6. Runtime Configuration
-# Ensure we use the virtual environment created by uv
+# Runtime configuration
 ENV PATH="/app/.venv/bin:$PATH"
 ENV PYTHONPATH="/app:/app/src"
 
-# Default entrypoint - AgentBeats will pass --host and --port as args
+# Default entrypoint
 ENTRYPOINT ["python3", "main.py"]
 CMD ["--help"]
