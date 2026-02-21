@@ -1,8 +1,29 @@
 import numpy as np
 from sentence_transformers import SentenceTransformer
+from functools import lru_cache
 from scipy.spatial.distance import cosine
+from threading import Lock
 
-class VectorScorer:
+# constants (added here, as there is no global constant file available)
+LRU_CACHE_MAXSIZE = 1024 # max number of cached embeddings 
+
+
+class VectorScorerMeta(type):
+    """A thread-safe singleton metaclass for VectorScorer, to ensure only one model instance is loaded in memory"""
+    _instances: dict = {} # dict to hold the instances of classes 
+
+    _lock: Lock = Lock() # define a lock for thread safety
+
+    def __call__(cls, *args, **kwargs):
+        with cls._lock:  # only one thread creates an instance at a time
+            if cls not in cls._instances: # if instance does not exist, create it
+                instance = super().__call__(*args, **kwargs)
+                cls._instances[cls] = instance # store the instance in the dict
+        return cls._instances[cls]
+
+
+class VectorScorer(metaclass=VectorScorerMeta):
+
     def __init__(self, model_name: str = 'all-MiniLM-L6-v2'):
         """
         initializes the vector scorer with a lightweight model by default.
@@ -10,6 +31,7 @@ class VectorScorer:
         print(f"[VectorScorer] loading embedding model: {model_name}")
         self.model = SentenceTransformer(model_name)
 
+    @lru_cache(maxsize=LRU_CACHE_MAXSIZE)
     def get_embedding(self, text: str):
         """generates an embedding vector for the given text."""
         return self.model.encode(text)
