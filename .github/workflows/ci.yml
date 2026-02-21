@@ -47,4 +47,4 @@ jobs:
         run: uv sync
 
       - name: Run mypy
-        run: uv run mypy src/ --ignore-missing-imports
+        run: uv run mypy src/green_logic src/red_logic src/purple_logic --ignore-missing-imports

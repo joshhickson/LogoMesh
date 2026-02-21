@@ -50,7 +50,9 @@ logomesh = "agentbeats.run_scenario:main"
 
 [tool.uv]
 package = true
-dev-dependencies = [
+
+[dependency-groups]
+dev = [
     "mypy>=1.18.1",
     "pytest>=8.0.0",
     "hypothesis>=6.0.0",
@@ -62,6 +64,9 @@ python_files = ["test_*.py"]
 
 [tool.mypy]
 ignore_missing_imports = true
+mypy_path = "src"
+namespace_packages = true
+explicit_package_bases = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/agentbeats"]
