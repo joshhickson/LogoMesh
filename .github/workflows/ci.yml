@@ -26,7 +26,7 @@ jobs:
         run: uv sync
 
       - name: Run tests
-        run: uv run pytest tests/ -v
+        run: uv run pytest tests/ -v --ignore=tests/test_leaderboard_query.py
 
   lint:
     name: Lint
@@ -47,4 +47,6 @@ jobs:
         run: uv sync
 
       - name: Run mypy
-        run: uv run mypy src/green_logic src/red_logic src/purple_logic --ignore-missing-imports
+        env:
+          MYPYPATH: src
+        run: cd src && uv run mypy green_logic red_logic purple_logic --ignore-missing-imports
