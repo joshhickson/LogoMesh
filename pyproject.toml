@@ -3,39 +3,65 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "agentbeats-tutorial"
-version = "0.1.0"
-description = "Agentbeats Tutorial"
+name = "logomesh"
+version = "1.0.0"
+description = "Multi-agent evaluation arena for AI-generated code quality"
 readme = "README.md"
-requires-python = ">=3.10"
+license = {text = "MIT"}
+requires-python = ">=3.11"
+keywords = ["ai", "code-quality", "testing", "agents", "benchmark"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Testing",
+]
 dependencies = [
     "a2a-sdk>=0.3.5",
     "docker>=7.0.0",
+    "fastapi>=0.100.0",
     "google-adk>=1.14.1",
     "google-genai>=1.36.0",
+    "httpx>=0.24.0",
+    "numpy>=1.24.0",
     "openai>=2.8.1",
     "pydantic>=2.11.9",
     "python-dotenv>=1.1.1",
+    "pyyaml>=6.0.0",
+    "scipy>=1.10.0",
+    "sentence-transformers>=3.0.0",
     "uvicorn>=0.35.0",
     "vllm>=0.6.0 ; sys_platform == 'linux'",
-    "sentence-transformers>=3.0.0",
-    "scipy>=1.10.0",
-    "pytest>=8.0.0",
-    "pyyaml>=6.0.0",
-    "hypothesis>=6.0.0",
-    "fastapi>=0.100.0",
-    "httpx>=0.24.0",
-    "numpy>=1.24.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "hypothesis>=6.0.0",
+    "mypy>=1.18.1",
+    "pytest>=8.0.0",
+]
+
+[project.urls]
+Repository = "https://github.com/joshhickson/LogoMesh"
+
 [project.scripts]
-agentbeats-run = "agentbeats.run_scenario:main"
+logomesh = "agentbeats.run_scenario:main"
 
 [tool.uv]
 package = true
 dev-dependencies = [
     "mypy>=1.18.1",
+    "pytest>=8.0.0",
+    "hypothesis>=6.0.0",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[tool.mypy]
+ignore_missing_imports = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/agentbeats"]

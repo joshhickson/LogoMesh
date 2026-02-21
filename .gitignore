@@ -5,20 +5,35 @@ node_modules/
 .venv/
 __pycache__/
 *.pyc
+*.egg-info/
+.mypy_cache/
+.pytest_cache/
 
 # Build artifacts
 dist/
+build/
 .DS_Store
 *.tsbuildinfo
 coverage/
 .turbo/
+
+# Environment
 .env
 
-.claude/commands
+# Data
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+
+# Documentation build
 docs/_build
 
-data/*.db
+# Private documents — never push
+docs/2026-02-19-Startup-Plan.md
+docs/2026-02-05-Founder-Strategy-Session.md
 
 # IDE and local config
 .idea/
+.vscode/
 .claude/

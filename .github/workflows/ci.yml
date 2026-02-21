@@ -2,9 +2,9 @@ name: Operation Phoenix CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   # Job 1: Verify basic installation and build integrity

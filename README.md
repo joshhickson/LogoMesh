@@ -1,5 +1,9 @@
 # LogoMesh — Multi-Agent Evaluation Arena for AI Code Quality
 
+[![CI](https://github.com/joshhickson/LogoMesh/actions/workflows/ci.yml/badge.svg)](https://github.com/joshhickson/LogoMesh/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+
 > **tl;dr:** LogoMesh is a benchmark that grades AI-written code. It sends a coding task to an AI agent, then a panel of sub-agents judges the result — one checks security, one runs the tests, one reviews the logic. The final score tells you how much you can trust that code in production.
 
 **Qualified 1st Place Winner in the Software Testing Agent Track of [UC Berkeley RDI AgentBeats Competition](https://agentbeats.dev)** (1,300+ teams).
@@ -596,6 +600,8 @@ See `docs/03-Research/Theory/` for detailed research papers.
 | Document | Description |
 |----------|-------------|
 | [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute, PR expectations, code style |
+| [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) | Community standards |
+| [SECURITY.md](SECURITY.md) | Vulnerability reporting policy |
 | [Developer Guide](docs/02-Engineering/Developer-Guide.md) | Full codebase walkthrough and onboarding (start here if you're new) |
 | [Current Truth Source](docs/00_CURRENT_TRUTH_SOURCE.md) | Project status, team, priorities, and key decisions |
 | [Judges Start Here](docs/05-Competition/Judges-Start-Here.md) | Competition judge walkthrough |
