@@ -1,0 +1,221 @@
+% !TEX program = xelatex
+\documentclass[11pt, a4paper]{article}
+
+% --- UNIVERSAL PREAMBLE BLOCK ---
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{fontspec}
+\usepackage[english, bidi=basic, provide=*]{babel}
+
+\babelfont{rm}{TeX Gyre Termes}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{amsmath,amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  citecolor=blue
+}
+
+\lstset{%
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  columns=fullflexible,
+  frame=single,
+  rulecolor=\color{black!20},
+  backgroundcolor=\color{black!2}
+}
+
+\title{The Unknowable Code: A Framework for Measuring and Mitigating Software Liability}
+\author{Joshua Hickson, Alaa Elobaid, Deepti Sawhney, Kuan Zhou, Samuel Lee Cong, Oleksandr Voievodin}
+\date{February 2026}
+
+\begin{document}
+\maketitle
+
+\begin{quote}
+\textbf{Operational Context:}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Status:} Validated Post-Mortem Architecture.
+  \item \textbf{Result:} LogoMesh secured 1st Place in the Software Testing track of the \href{https://rdi.berkeley.edu/agentx-agentbeats}{Berkeley RDI AgentBeats Competition (Phase 1)}.
+  \item \textbf{Open Research:} The core evaluation framework has been open-sourced for Phase 2. Tryout issues for researchers and engineers joining the Lambda Track (Adversarial Prompt Injection) and Purple Agent development are available at: \url{https://github.com/LogoMesh/LogoMesh/labels/phase-2-tryout}
+\end{itemize}
+\end{quote}
+
+\section{Executive Summary: The Emerging Crisis of Intent}
+
+Software organizations have spent two decades managing \textbf{Technical Debt}—a compounding cost from suboptimal implementation choices. A more insidious liability is now accumulating at scale: \textbf{Contextual Debt}, the systematic erosion of the human \emph{intent} and \emph{rationale} behind code. Whereas technical debt makes systems difficult to \emph{change}, contextual debt makes them dangerous to \emph{touch}.
+
+This liability is being supercharged by two concurrent trends: the widespread adoption of AI coding assistants that generate locally correct but globally incoherent code, and the proliferation of microservice architectures that fragment domain knowledge across organizational boundaries. The result is what we term \emph{amnesiac systems}—codebases that function but have lost their own institutional memory.
+
+This paper formalizes the concept of Contextual Debt and introduces the \textbf{LogoMesh} architecture as the first empirical framework for measuring and bounding it. LogoMesh implements a \textbf{Contextual Integrity Score (CIS)}, a \textbf{Star-Topology Evaluation Architecture}, and a \textbf{Decision Bill of Materials (DBOM)}. The system was validated by securing 1st Place in Phase 1 of the Berkeley RDI AgentBeats Competition, providing the first empirical evidence that contextual alignment between code and intent can be quantified and adversarially stress-tested in a reproducible pipeline.
+
+\section{Defining Contextual Debt: The Liability of Amnesiac Systems}
+
+Contextual Debt represents a fundamental shift in how software liability must be conceptualized. Where technical debt describes a system that is poorly constructed, Contextual Debt describes a system that has forgotten \emph{why} it was built.
+
+\subsection{The Anatomy of Contextual Debt}
+
+At its core, Contextual Debt is the accumulated, compounding liability arising from un-captured, siloed, or irrecoverable information across the software development lifecycle. This liability rests on three pillars:
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Lack of Discernible Human Intent:} The loss of the original purpose, business goals, and user needs that drove the creation of a feature or system. When this is absent, future maintainers cannot distinguish a constraint from an accident.
+  \item \textbf{Lack of Architectural Rationale:} The undocumented reasons behind significant design choices. Without this, architecture becomes a collection of unchangeable artifacts—modified only at risk of unknown consequence.
+  \item \textbf{Lack of Domain-Specific Knowledge:} The evaporation of nuanced business domain understanding from the codebase itself, making the software increasingly opaque to anyone other than its original authors.
+\end{enumerate}
+
+\subsection{Technical Debt vs. Contextual Debt: A Comparative Framework}
+
+The fundamental difference between technical and Contextual Debt is the axis of failure: technical debt is a failure of the \textbf{``how''}; Contextual Debt is a failure of the \textbf{``why''}. While technical debt makes code expensive to \emph{change}, Contextual Debt makes code dangerous to \emph{touch}.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{@{}p{0.27\linewidth}p{0.34\linewidth}p{0.34\linewidth}@{}}
+\toprule
+\textbf{Dimension} & \textbf{Technical Debt} & \textbf{Contextual Debt} \\
+\midrule
+\textbf{Nature of Failure} & A failure of the \textbf{``How''} — suboptimal implementation & A failure of the \textbf{``Why''} — missing or opaque intent \\
+\textbf{Core Metaphor} & A financial loan taken to speed delivery, requiring repayment & Organizational amnesia: a system that has forgotten its own purpose \\
+\textbf{Typical Manifestation} & Spaghetti code, high cyclomatic complexity, outdated libraries & ``Unknowable'' code, magic numbers, ambiguous variable names, undocumented architectural choices, lost business rules \\
+\textbf{``Interest'' Payment} & Increased time to add features, higher bug rates, difficult refactoring & Fear of making changes, inability to onboard developers, critical production failures from violating hidden assumptions \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{The Accelerants: Modern Catalysts for Contextual Debt}
+
+The accumulation of Contextual Debt is not new, but its rate has been supercharged by generative AI coding assistants and the architectural paradigm of microservices.
+
+\subsection{The AI Co-Pilot's Blind Spot: Comprehension Debt}
+
+Generative AI tools operate at the scope of code snippets and functions. They are productive precisely because they do not require—and cannot be given—a full understanding of system-wide architectural constraints, long-term business goals, or undocumented invariants. The code they generate may be locally correct but globally incoherent.
+
+A concrete illustration: consider an AI assistant asked to implement a rate limiter for a web API. The generated code may pass all unit tests against a single thread—correctly enforcing 10 requests per minute—but silently omit the mutex or atomic counter required for thread-safe access under concurrent load. The tests pass. The code ships. The production failure arrives only under real traffic. No test caught this because the \emph{rationale}—``this service is stateless and will run across multiple threads''—was never communicated to the AI and does not appear anywhere in the generated artifact. This is Comprehension Debt: valid syntax encoding invalid assumptions.
+
+This failure mode is categorically different from a bug. It is not that the AI wrote incorrect code for a known requirement—it is that the AI wrote correct code for a \emph{misunderstood} requirement. Existing static analysis tools and linters are not equipped to detect this class of error, because the error is semantic rather than syntactic.
+
+\subsection{Microservices and the Fragmentation of Domain Knowledge}
+
+Microservice architectures distribute ownership of domain logic across team boundaries and independent deployment cycles. Each service may be internally consistent while the system-wide invariants—rate limits, consistency guarantees, ordering constraints—are held only in the collective memory of the engineers who designed the original decomposition. As teams turn over and services proliferate, this distributed institutional memory degrades, leaving organizations with systems they can operate but no longer fully understand.
+
+\section{Related Work and Differentiation}
+
+Prior approaches to automated code quality assessment occupy two broad categories that are individually insufficient.
+
+\textbf{Static analysis and linting tools} (e.g., SonarQube, Semgrep, Bandit) evaluate syntactic and structural properties of code against known anti-patterns. They are deterministic and fast, but they cannot evaluate whether code satisfies the \emph{intent} behind a requirement, nor can they assess whether tests are semantically meaningful or merely pass trivially. They measure the ``how'' with no access to the ``why.''
+
+\textbf{LLM-as-judge frameworks} (e.g., MT-Bench, G-Eval, and related work) use language models to evaluate code or text quality holistically. These approaches offer semantic awareness but suffer from well-documented reproducibility problems: the same LLM evaluating the same code across two independent runs can produce scores that diverge by 0.10--0.20 on a normalized scale, depending on temperature, prompt sensitivity, and model version drift.
+
+CIS is distinguished from both categories by three properties: (1) \emph{ground-truth anchoring}—the Testing Integrity score is derived directly from sandbox execution results, not LLM opinion; (2) \emph{adversarial stress-testing}—an embedded attacker actively probes for vulnerabilities using Monte Carlo Tree Search rather than relying on pattern matching; and (3) \emph{bounded LLM contribution}—the language model component can adjust scores by at most $\pm$0.10 from the ground-truth anchor, containing the primary source of non-determinism in existing LLM-judge approaches. The result is a hybrid evaluator that combines the reproducibility of ground-truth verification with the semantic awareness that pure static analysis lacks.
+
+\section{Formalization: The Contextual Integrity Score (CIS)}
+
+We define \textbf{Contextual Integrity ($CI$)} as a computable probability that a given software artifact preserves its original intent across four orthogonal dimensions: rationale alignment, architectural constraint satisfaction, empirical test validity, and logic correctness.
+
+\[
+CIS_{raw} = 0.25 \cdot R(\Delta) + 0.25 \cdot A(\Delta) + 0.25 \cdot T(\Delta) + 0.25 \cdot L(\Delta)
+\]
+\[
+CIS_{final} = CIS_{raw} \cdot (1 - \text{red\_penalty\_applied}) \cdot \text{intent\_penalty}
+\]
+
+The four components are weighted equally at 0.25 each. This reflects a deliberate design choice: in the absence of domain-specific weighting priors, equal weighting is the maximally conservative assumption, avoiding the introduction of implicit biases toward any particular dimension of code quality. We treat this as a baseline calibration and expect that future work—particularly longitudinal analysis of production failure modes correlated against CIS component scores—will yield evidence for domain-specific weight adjustments. The penalty multipliers ($\text{red\_penalty\_applied}$ for security vulnerabilities, $\text{intent\_penalty}$ for task mismatch) are applied post-aggregation and operate independently of the component weights, avoiding double-penalization.
+
+\subsection{Rationale Integrity ($R$): The Semantic Alignment Vector}
+
+Rationale Integrity measures whether the generated code semantically fulfills the stated requirement. Let $\vec{v}_{code}$ be the sentence embedding of the submitted source artifact and $\vec{v}_{intent}$ be the embedding of the associated task description. $R$ is computed as:
+
+\[
+R(\Delta) = \cos(\vec{v}_{code}, \vec{v}_{intent}) = \frac{\vec{v}_{code} \cdot \vec{v}_{intent}}{\|\vec{v}_{code}\| \cdot \|\vec{v}_{intent}\|}
+\]
+
+Embeddings are produced via the \texttt{all-MiniLM-L6-v2} model. A low $R$ score flags the primary failure mode of LLM code generation: intent-code mismatch, where an agent returns valid, self-consistent code that nonetheless addresses a different problem than specified.
+
+\subsection{Architectural Integrity ($A$): Constraint Validation}
+
+Architectural Integrity evaluates the Abstract Syntax Tree (AST) of the generated code against pre-defined constraint sets for the task. $A$ begins at a baseline of 0.80 and is penalized for constraint violations: banned imports (e.g., \texttt{eval()}, network calls where prohibited), missing required patterns (e.g., recursion where mandated), and structural boundary violations. This produces a deterministic, reproducible sub-score independent of any LLM call.
+
+\subsection{Testing Integrity ($T$): Empirical Verification}
+
+Testing Integrity is derived from the ground-truth pass rate of code executed within an aggressively constrained, ephemeral Docker sandbox (128\,MB RAM, 50\% CPU quota, 50 PID limit, disabled networking). The mapping from pass rate to $T$ score is fixed and deterministic: 100\% pass rate yields $T = 0.85$; partial credit scales linearly; 0\% pass rate yields $T = 0.20$. This is the single most reproducible signal in the pipeline, as it is derived entirely from execution facts rather than model inference.
+
+\subsection{Logic Integrity ($L$): The Senior Review}
+
+Logic Integrity is computed via an LLM-based ``Senior Code Review'' that evaluates the submission for edge-case handling, algorithmic complexity, and adherence to task-specific rules. To bound non-determinism, the LLM judge operates at temperature 0 with a fixed seed, and its output is constrained to adjust the ground-truth anchor by at most $\pm$0.10. The LLM provides semantic nuance that AST analysis cannot; it is prevented from overriding the empirical evidence that AST analysis and sandbox execution provide.
+
+\subsection{Penalty Multipliers}
+
+Two penalty multipliers are applied to $CIS_{raw}$:
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Red Agent Penalty:} Derived from the severity of vulnerabilities discovered by the adversarial Red Agent. Critical vulnerabilities apply a $\times$0.70 multiplier; High $\times$0.80; Medium $\times$0.90. Each vulnerability level penalizes exactly once, avoiding double-counting.
+  \item \textbf{Intent Penalty:} Applied when $R(\Delta)$ falls below a mismatch threshold, indicating that the submitted code addresses a fundamentally different problem than specified. This can reduce $CIS_{final}$ by up to $\times$0.30.
+\end{enumerate}
+
+\section{Empirical Execution \& Telemetry}
+
+The LogoMesh architecture tracks these dimensions empirically at runtime. Each evaluation produces a rigid JSON schema aggregating the four component metrics and the Red Agent's adversarial findings:
+
+\begin{lstlisting}[language=json]
+{
+  "rationale_score": 0.85,
+  "architecture_score": 0.90,
+  "testing_score": 0.80,
+  "logic_score": 0.75,
+  "cis_score": 0.825,
+  "red_penalty_applied": 0.0,
+  "red_analysis": {
+    "attack_successful": false,
+    "vulnerability_count": 0,
+    "max_severity": "low"
+  }
+}
+\end{lstlisting}
+
+Unlike frameworks that discard evaluation telemetry, LogoMesh ensures rigorous persistence. Evaluations are aggregated via SQLite into \texttt{battles.db}. The raw JSON payload is preserved entirely in the \texttt{raw\_result} column and subsequently hashed to generate the cryptographic Decision Bill of Materials (DBOM).
+
+\section{The Protocol: Star-Topology Evaluation Architecture}
+
+To enforce the Contextual Integrity Score without introducing single-model bias, we adopted a \textbf{Star-Topology Evaluation Architecture} that structurally segregates code generation, orchestration, and adversarial auditing.
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{The Green Agent (Orchestrator/Judge):} Sits at the center of the topology. It retrieves the task, requests code from the target agent via JSON-RPC, executes the Docker sandbox, commissions the adversarial attack, and aggregates the final CIS.
+  \item \textbf{The Purple Agent (Target/Generator):} The external service under evaluation. It receives the task specification and returns source code, unit tests, and a natural-language rationale. During infrastructure testing, this role is fulfilled by a FastAPI mock server returning structured static responses keyed on \texttt{battle\_id}.
+  \item \textbf{The Red Agent (Attacker/Auditor):} A Monte Carlo Tree Search (\texttt{MCTSPlanner}) engine embedded as a library within the Green Agent. The MCTS expands attack nodes by proposing strategic vulnerability pathways, evaluated via a modified UCB1 bandit algorithm. The Red Agent operates solely on the code artifact handed off by Green; it never communicates directly with Purple, preserving the integrity of the evaluation boundary.
+\end{itemize}
+
+\subsection{The Decision Bill of Materials (DBOM)}
+
+For every evaluation, LogoMesh records a cryptographic tuple:
+
+\[
+DBOM_i = \langle H(\Delta_i),\ \vec{v}_{intent},\ \text{Score}_{CIS} \rangle
+\]
+
+where $H(\Delta_i)$ is the SHA-256 hash of the complete \texttt{raw\_result} JSON payload stored in the database. This structure provides \emph{output-layer} tamper evidence: if the stored JSON is altered after the fact, the hash will not match, and the DBOM is invalidated.
+
+It is important to be precise about the trust boundary this establishes. The DBOM proves that the recorded score corresponds to the recorded evaluation payload, and that the payload has not been modified since hashing. It does not, by itself, attest to the integrity of the inputs to the evaluation pipeline—the task specification, the Purple Agent's response, or the sandbox execution environment. Full pipeline integrity would require Merkle chaining across all pipeline stages, which we identify as a concrete direction for future work. In its current form, the DBOM functions as a rigorous audit trail for compliance purposes, providing defensible documentation of the evaluation process even absent end-to-end cryptographic attestation.
+
+\section{Conclusion \& Open Research Invitation}
+
+The accumulation of Contextual Debt is not a theoretical concern. It is the primary source of latent software liability in an era where AI coding assistants can produce syntactically valid, semantically incoherent code at scale—code that passes its own tests, satisfies its own linter, and silently violates the intent behind the requirement that produced it.
+
+As legal standards for software liability evolve toward a negligence framework and a ``duty of care'' model, organizations that cannot account for the \emph{why} behind their code will find themselves in an increasingly indefensible position. The DBOM, as an evaluator-generated artifact cryptographically bound to each code assessment, is a concrete step toward a defensible evidentiary record.
+
+The LogoMesh architecture, validated by its Phase 1 victory in the Berkeley RDI AgentBeats Competition, demonstrates that Contextual Debt can be quantified, bounded, and adversarially stress-tested using a multi-agent pipeline with reproducible, ground-truth-anchored scoring. The benchmark's variance of less than 0.05 across identical runs—achieved by anchoring to execution facts rather than model opinion—establishes a new baseline for reproducibility in LLM-assisted code evaluation.
+
+\textbf{Phase 2 Research Handoff:} The LogoMesh evaluation framework has been transitioned to an open-source research initiative. For the Phase 2 AgentBeats sprints, we are coordinating a distributed strike team across two tracks: the \textbf{Lambda Track}, which retargets the MCTS engine from AST mutation to adversarial NLP prompt injection; and \textbf{Purple Agent development}, focused on zero-shot domain adaptation to novel task categories. We formally invite the academic and open-source security communities to collaborate. Tryout issues, architectural discussions, and the core repository are available at:
+
+\begin{center}
+\url{https://github.com/LogoMesh/LogoMesh/labels/phase-2-tryout}
+\end{center}
+
+\end{document}
