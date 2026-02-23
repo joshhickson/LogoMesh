@@ -6,7 +6,7 @@
 
 > **tl;dr:** LogoMesh is a benchmark that grades AI-written code. It sends a coding task to an AI agent, then a panel of sub-agents judges the result — one checks security, one runs the tests, one reviews the logic. The final score tells you how much you can trust that code in production.
 
-**Qualified 1st Place Winner in the Software Testing Agent Track of [UC Berkeley RDI AgentBeats Competition](https://agentbeats.dev)** (1,300+ teams).
+**Qualified 1st Place Winner in the Software Testing Agent Track of [UC Berkeley RDI AgentBeats Competition](https://agentbeats.dev)**.
 
 ---
 
