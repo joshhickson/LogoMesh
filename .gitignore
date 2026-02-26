@@ -30,7 +30,7 @@ coverage/
 docs/_build
 
 # Private documents — never push
-docs/2026-02-19-Startup-Plan.md
+docs/startup/
 docs/2026-02-05-Founder-Strategy-Session.md
 
 # IDE and local config
