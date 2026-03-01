@@ -190,15 +190,15 @@ Each component is weighted equally at 25%, then multiplied by penalty factors fo
 |-----------|-----------|-------------------|-----------------|
 | **R** | Rationale Integrity | Cosine similarity between task description and the AI's explanation | AI that can't explain what it wrote, or explains something different from the task |
 | **A** | Architectural Integrity | Starts at 0.80, deducted for constraint violations (banned imports, missing patterns) | Code that uses `eval()` when told not to, or skips required patterns like recursion |
-| **T** | Testing Integrity | Directly from Docker sandbox: 100% pass = 0.85, 80% pass = 0.72, 0% = 0.20 | Tests that don't actually pass, or code that breaks on edge cases |
+| **T** | Testing Integrity | Directly from Docker sandbox: 100% pass = 0.85, 80% pass = 0.72, 0% = ~0.20 (plus test specificity bonus) | Tests that don't actually pass, or code that breaks on edge cases |
 | **L** | Logic Score | LLM-based senior code review, anchored by test results | Subtle logic bugs, missing edge cases, off-by-one errors |
 
 ### Penalty Multipliers
 
 | Penalty | When It Applies | Effect |
 |---------|----------------|--------|
-| **Red Agent (security)** | Vulnerabilities found in code | Critical = ×0.70, High = ×0.80, Medium = ×0.90 |
-| **Intent mismatch** | Code doesn't match the task at all | Up to ×0.30 if similarity ≈ 0 (e.g., AI returns factorial when asked for LRU cache) |
+| **Red Agent (security)** | Vulnerabilities found in code | Critical = ×0.60, High = ×0.75, Medium = ×0.85 |
+| **Intent mismatch** | Code doesn't match the task at all | Multiplies the score by down to 0.30x (up to a 70% penalty) if similarity ≈ 0 (e.g., AI returns factorial when asked for LRU cache) |
 
 ### Why Ground-Truth Scoring Matters
 
@@ -206,7 +206,7 @@ Most LLM-as-judge benchmarks have a problem: ask the same LLM to score the same 
 
 1. **T score comes from actual test results** — not LLM opinion. If 4 out of 5 tests pass, T = 0.72. Always.
 2. **A score comes from real constraint checks** — AST analysis, not vibes. If the code uses a banned import, A drops. Period.
-3. **LLM can only adjust ±0.10** — the ground-truth score is the anchor. The LLM provides nuance, not the baseline.
+3. **LLM score adjustment limits** — the ground-truth scores for R, A, and T are strictly anchored with a programmatic hard floor allowing a maximum downward adjustment of exactly -0.10. *Note: The Logic (L) score currently relies on prompt obedience rather than a programmatic hard floor for its adjustments.*
 4. **Fixed seed (42) and temperature 0** — deterministic LLM calls for the judge.
 5. **Each signal penalizes exactly once** — no double-counting. Test failures only affect T. Vulnerabilities only affect the red penalty multiplier.
 
@@ -303,13 +303,15 @@ Expected run-to-run variance: **< 0.05** for the same task and Purple Agent. The
 
 ### Decision Bill of Materials (DBOM)
 
-Every evaluation produces a DBOM — a JSON file containing:
+Every evaluation produces a DBOM — a standalone JSON file containing:
 - `h_delta`: SHA-256 hash of the evaluation decision
 - `v_intent`: 384-dimensional intent vector of the task description
 - `score_cis`: the final score
 - `sigma_judge`: cryptographic signature tying the score to the battle
 
-DBOMs are stored in `data/dboms/` and provide a tamper-evident audit trail of all evaluations.
+DBOMs are stored in `data/dboms/` and provide a standalone file-based audit trail per evaluation. 
+
+**Known Limitation - Cryptographic Verification:** The DBOM cryptographic verification is currently experimental. Due to a discrepancy where `generate_dbom` hashes the *unsorted* JSON string while the database stores the *sorted* JSON string, verifying the database record against the DBOM hash will currently fail. Strict JSON serialization alignment is required for this to function correctly. Additionally, Merkle Chaining / cryptographic linking of sequential records is slated for a future Phase 2 release and is not currently active.
 
 ---
 
@@ -423,6 +425,10 @@ If the AI produces buggy code, a good benchmark should give it a chance to fix i
 
 **Why intent-code mismatch detection?**
 We discovered that Purple agents sometimes hallucinate completely unrelated code (e.g., returning a factorial function when asked for an LRU cache). Without mismatch detection, this code could score 0.60+ because it's valid code that passes its own tests. The cosine similarity check between task description and source code catches this and forces a rewrite.
+
+### Security Considerations & Known Architecture Gaps
+
+**Agent Isolation Boundaries:** The Red Agent is explicitly embedded within the Green Agent's process to reduce latency. However, there is no strict programmatic boundary (like a separate container or process) separating the Red Agent from the Green Agent. The Red Agent is passed the Purple Agent's untrusted code directly as a string and has access to full standard library modules (`os`, `subprocess`, `httpx`). This poses an 'Uroboros' risk if the untrusted code causes prompt injection or exploits the Red Agent's execution context.
 
 ### Self-Improving Features
 
