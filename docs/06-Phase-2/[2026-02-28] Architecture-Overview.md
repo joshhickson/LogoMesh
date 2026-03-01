@@ -13,20 +13,20 @@ LogoMesh operates on a centralized "star" topology orchestrated by the Green Age
 ```mermaid
 flowchart TD
     subgraph "Green Agent (Orchestrator Process)"
-        GA[Green Agent FastAPI Server\nsrc/green_logic/server.py]
+        GA["Green Agent FastAPI Server<br>src/green_logic/server.py"]
         
         subgraph "Embedded Security Scanner"
-            RA[Red Agent V3 (MCTSPlanner)\nsrc/red_logic/orchestrator.py]
+            RA["Red Agent V3 (MCTSPlanner)<br>src/red_logic/orchestrator.py"]
         end
         
-        SA[Semantic Auditor\nStatic AST Analysis]
-        TG[Test Generator\nAdversarial Fuzzing]
-        CIS[CIS Scorer\nLLM + Vector Analysis]
-        SB[Docker Sandbox\nsrc/green_logic/sandbox.py]
+        SA["Semantic Auditor<br>Static AST Analysis"]
+        TG["Test Generator<br>Adversarial Fuzzing"]
+        CIS["CIS Scorer<br>LLM + Vector Analysis"]
+        SB["Docker Sandbox<br>src/green_logic/sandbox.py"]
     end
 
     subgraph "External Target"
-        PA[Purple Agent\nCode Generator via HTTP/JSON-RPC]
+        PA["Purple Agent<br>Code Generator via HTTP/JSON-RPC"]
     end
 
     GA -- "1. Sends Task (JSON-RPC)" --> PA
@@ -163,3 +163,4 @@ As we generalize the adversarial pipeline, it is critical to acknowledge the emp
 ### 5.4. In-Process Red Agent Risk (Uroboros)
 **Issue:** As noted in the Star Topology section, the Red Agent is embedded directly within the Green Agent's process. 
 **Bug:** There is no container, process, or network namespace isolation for the MCTS engine while it handles untrusted code strings from the Purple Agent. This is a severe architectural security gap that must be addressed to safely scale adversarial evaluations.
+
