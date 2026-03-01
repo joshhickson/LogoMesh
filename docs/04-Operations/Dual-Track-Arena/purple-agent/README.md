@@ -1,5 +1,6 @@
 ---
-
+> **Note:**
+> This entire directory was used for a temporary point-of-reference for rapid development and testing during Phase 1 of the AgentX AgentBeats competition. Do not trust these files.
 ---
 status: ACTIVE
 type: Spec

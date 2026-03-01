@@ -1,12 +1,12 @@
 > **Note:**
-> For the most current, empirical file-level documentation, see the `file-reviews/` folder in this directory. This README provides high-level orientation and directory structure only.
-status: ACTIVE
+> This entire directory was used for a temporary point-of-reference for rapid development and testing during Phase 1 of the AgentX AgentBeats competition. Do not trust these files.
+status: REQUIRES EMPIRICAL VERIFICATION -- MAY CONTAIN INACCURACIES
 type: Spec
 ---
 > **Context:**
-> *   [2026-01-03]: The authoritative source of truth for the Dual-Track Arena (Custom Green Agent & Lambda Red/Blue Track).
+> *   [2026-01-03]: The temporary source of truth for the Dual-Track Arena (Custom Green Agent & Lambda Red/Blue Track).
 
-# Dual-Track Arena: Source of Truth
+# Dual-Track Arena: Temporary Source of Truth
 
 
 ## Overview
