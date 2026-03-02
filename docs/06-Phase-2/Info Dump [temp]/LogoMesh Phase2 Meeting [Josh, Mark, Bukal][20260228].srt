@@ -1,0 +1,4292 @@
+1
+01:00:00,900 --> 01:00:03,566
+<b>Okay, sweet. Yeah, I think it's just the three of us</b>
+
+2
+01:00:03,566 --> 01:00:09,366
+<b>tonight. So, just get the introductions</b>
+
+3
+01:00:09,366 --> 01:00:14,333
+<b>out of the way. I'm Josh, I came up with</b>
+
+4
+01:00:14,333 --> 01:00:17,066
+<b>like the idea for the logo mesh project around</b>
+
+5
+01:00:17,466 --> 01:00:21,833
+<b>no, well, I was working on the idea since like February</b>
+
+6
+01:00:21,833 --> 01:00:23,833
+<b>last year, but I really didn't</b>
+
+7
+01:00:24,333 --> 01:00:26,933
+<b>come into its final form around November.</b>
+
+8
+01:00:28,000 --> 01:00:31,699
+<b>And I just put a team together. And we made</b>
+
+9
+01:00:31,699 --> 01:00:35,133
+<b>it happen. So, you know, awesome.</b>
+
+10
+01:00:36,433 --> 01:00:39,666
+<b>Sweet. Yeah, how about you guys?</b>
+
+11
+01:00:43,533 --> 01:00:49,199
+<b>I can go next. Yeah, you, my name is Kwan. You can also</b>
+
+12
+01:00:49,199 --> 01:00:53,133
+<b>call me Mark, actually. Currently</b>
+
+13
+01:00:53,366 --> 01:01:00,800
+<b>I work for AWS at the database in Seattle. Actually, my</b>
+
+14
+01:01:00,800 --> 01:01:07,266
+<b>team at AWS works in evaluation</b>
+
+15
+01:01:07,400 --> 01:01:18,066
+<b>for DevOps agent. And previously, I also have experienced</b>
+
+16
+01:01:18,066 --> 01:01:22,066
+<b>with like AI infrastructure. And</b>
+
+17
+01:01:22,166 --> 01:01:26,699
+<b>yeah, why I learned about the competition, right, I got</b>
+
+18
+01:01:26,699 --> 01:01:30,166
+<b>very interested and then I joined</b>
+
+19
+01:01:30,166 --> 01:01:36,433
+<b>the Josh team. And yeah, I think the phase</b>
+
+20
+01:01:36,433 --> 01:01:39,833
+<b>two will be more exciting. So, very happy</b>
+
+21
+01:01:39,833 --> 01:01:42,766
+<b>to see what we can do together here.</b>
+
+22
+01:01:43,733 --> 01:01:47,166
+<b>Awesome. So, let me go quickly about me. So,</b>
+
+23
+01:01:47,233 --> 01:01:49,666
+<b>hey, I am Bakul. But currently I'm working</b>
+
+24
+01:01:49,666 --> 01:01:53,199
+<b>at the I started my career as a sorry, at</b>
+
+25
+01:01:53,199 --> 01:01:55,933
+<b>LinkedIn itself. And then I recently two</b>
+
+26
+01:01:55,933 --> 01:01:57,699
+<b>and two and a half years before I switched to</b>
+
+27
+01:01:57,699 --> 01:02:04,400
+<b>the product security at the grid. So my core role is to</b>
+
+28
+01:02:04,400 --> 01:02:06,933
+<b>make sure that the code which is</b>
+
+29
+01:02:06,933 --> 01:02:10,133
+<b>committed by each and every developer in LinkedIn is</b>
+
+30
+01:02:10,133 --> 01:02:12,266
+<b>secured by default, how we do it, we do</b>
+
+31
+01:02:12,666 --> 01:02:17,133
+<b>run automation at scale, sauce, does supply</b>
+
+32
+01:02:17,133 --> 01:02:20,233
+<b>chain. And this is one expert. And the other</b>
+
+33
+01:02:20,233 --> 01:02:22,733
+<b>expert that normally comes with product security is like</b>
+
+34
+01:02:22,733 --> 01:02:24,966
+<b>security of the web application. So</b>
+
+35
+01:02:24,966 --> 01:02:28,933
+<b>what it means translate to everyone, anything that goes on</b>
+
+36
+01:02:28,933 --> 01:02:30,633
+<b>LinkedIn.com and a new feature,</b>
+
+37
+01:02:31,033 --> 01:02:34,066
+<b>it gets revealed through our team. So we were also part of</b>
+
+38
+01:02:34,066 --> 01:02:35,699
+<b>this, but nothing. And now coming</b>
+
+39
+01:02:35,699 --> 01:02:37,566
+<b>to the part of this competition, why we are</b>
+
+40
+01:02:37,566 --> 01:02:40,266
+<b>here. So I came to know about the authentic</b>
+
+41
+01:02:40,433 --> 01:02:44,433
+<b>AI MOOC itself. And I was, as from introduction, you might</b>
+
+42
+01:02:44,433 --> 01:02:45,633
+<b>see that I don't have a research</b>
+
+43
+01:02:45,633 --> 01:02:49,233
+<b>background, specifically where I work on those problems. So</b>
+
+44
+01:02:49,233 --> 01:02:50,599
+<b>I got interested with the authentic</b>
+
+45
+01:02:50,599 --> 01:02:54,566
+<b>AI MOOC got to learn about shooting. And recently I got to</b>
+
+46
+01:02:54,566 --> 01:02:57,500
+<b>send to AI safety, AI control, and</b>
+
+47
+01:02:58,066 --> 01:03:01,300
+<b>also got selected in AI SC camp, AI safety</b>
+
+48
+01:03:01,300 --> 01:03:04,300
+<b>camp, which also runs in parallel that do</b>
+
+49
+01:03:04,333 --> 01:03:07,166
+<b>particular research on the security angle or a safety angle</b>
+
+50
+01:03:07,166 --> 01:03:10,566
+<b>on the AI side. So then, then on</b>
+
+51
+01:03:10,566 --> 01:03:13,833
+<b>the phase two, it was more related to the phase one, the</b>
+
+52
+01:03:13,833 --> 01:03:15,833
+<b>lambda custom track was more related to</b>
+
+53
+01:03:15,833 --> 01:03:20,666
+<b>these only handling the scenario part of the security kind</b>
+
+54
+01:03:20,666 --> 01:03:21,966
+<b>of jailbreaking those scenarios.</b>
+
+55
+01:03:21,966 --> 01:03:25,366
+<b>So me and one more partner, we are two member team of a</b>
+
+56
+01:03:25,366 --> 01:03:29,066
+<b>second ninja. So we try we like, we were not</b>
+
+57
+01:03:29,266 --> 01:03:31,366
+<b>hoping that we will win the prize. That's the first thing,</b>
+
+58
+01:03:31,366 --> 01:03:33,333
+<b>but we tried to participate in the</b>
+
+59
+01:03:33,366 --> 01:03:36,666
+<b>competition. And at a surprise, we were able to win that</b>
+
+60
+01:03:36,666 --> 01:03:38,933
+<b>competition and the phase two, it's a</b>
+
+61
+01:03:39,266 --> 01:03:42,733
+<b>custom track. Yeah, I mean, lambda track. Yes. But when I</b>
+
+62
+01:03:42,733 --> 01:03:47,233
+<b>saw I think, Josh, Mark message, when I</b>
+
+63
+01:03:47,233 --> 01:03:49,666
+<b>read about that contextual depth, then I think more about</b>
+
+64
+01:03:49,666 --> 01:03:51,866
+<b>it. And that problem finds me interested.</b>
+
+65
+01:03:52,133 --> 01:03:55,099
+<b>So at this point in time, I do not have much depth into the</b>
+
+66
+01:03:55,099 --> 01:03:58,033
+<b>problem. But yeah, that problem</b>
+
+67
+01:03:58,233 --> 01:04:02,866
+<b>statement got me interested that how I can help to build it</b>
+
+68
+01:04:02,866 --> 01:04:06,199
+<b>out of it, or collaborate in the manner.</b>
+
+69
+01:04:06,599 --> 01:04:10,766
+<b>So yes, but that's the small intro about me all that was</b>
+
+70
+01:04:10,766 --> 01:04:12,366
+<b>not the straw is small, but yeah.</b>
+
+71
+01:04:14,833 --> 01:04:15,166
+<b>That's awesome.</b>
+
+72
+01:04:17,000 --> 01:04:20,233
+<b>Can I can ask a quick question? So</b>
+
+73
+01:04:20,233 --> 01:04:23,133
+<b>to come for so you are you work for</b>
+
+74
+01:04:24,133 --> 01:04:26,866
+<b>like security team at a living?</b>
+
+75
+01:04:27,766 --> 01:04:29,166
+<b>Yes, product security specifically.</b>
+
+76
+01:04:29,800 --> 01:04:33,766
+<b>Okay, I see. Cool. Yeah, I forgot</b>
+
+77
+01:04:33,766 --> 01:04:36,866
+<b>to mention, yeah, I think actually,</b>
+
+78
+01:04:37,366 --> 01:04:40,666
+<b>I might think I did. I actually we also own</b>
+
+79
+01:04:40,666 --> 01:04:45,766
+<b>the on the what we so called like data hub.</b>
+
+80
+01:04:46,199 --> 01:04:53,199
+<b>It's like the security enhanced data store. So essentially,</b>
+
+81
+01:04:54,266 --> 01:04:56,533
+<b>for all the agenda products you</b>
+
+82
+01:04:56,533 --> 01:05:00,933
+<b>use the for database, your data will be saved in our</b>
+
+83
+01:05:00,933 --> 01:05:05,300
+<b>database, data store. Okay. And</b>
+
+84
+01:05:06,133 --> 01:05:16,333
+<b>our scientists or product product engineers, or provide</b>
+
+85
+01:05:16,333 --> 01:05:18,366
+<b>product management managers will do like</b>
+
+86
+01:05:18,366 --> 01:05:24,300
+<b>analysis, A B testing, or this like statistic data analysis</b>
+
+87
+01:05:24,300 --> 01:05:26,166
+<b>to see how is product doing how,</b>
+
+88
+01:05:26,199 --> 01:05:34,666
+<b>how is how much like what features we can improve. So</b>
+
+89
+01:05:34,666 --> 01:05:36,566
+<b>that's also I just want to explain</b>
+
+90
+01:05:36,566 --> 01:05:42,500
+<b>a bit like why I also was more interesting that lambda</b>
+
+91
+01:05:42,500 --> 01:05:46,133
+<b>check, because I also also have some like</b>
+
+92
+01:05:46,599 --> 01:05:50,833
+<b>security background. But that said that that project is</b>
+
+93
+01:05:50,833 --> 01:05:53,500
+<b>actually like in the keep the light</b>
+
+94
+01:05:53,866 --> 01:05:59,566
+<b>mode. We are actually more focusing on the evaluation for</b>
+
+95
+01:05:59,566 --> 01:06:02,033
+<b>the past few past like six months.</b>
+
+96
+01:06:03,433 --> 01:06:07,966
+<b>We still have the product running, but we only have like a</b>
+
+97
+01:06:07,966 --> 01:06:12,466
+<b>like on call, like responsibility for that.</b>
+
+98
+01:06:14,166 --> 01:06:18,166
+<b>Yeah, that just to I think it's a lambda</b>
+
+99
+01:06:18,166 --> 01:06:22,199
+<b>track is actually very interesting. Yeah.</b>
+
+100
+01:06:24,500 --> 01:06:24,833
+<b>Yeah.</b>
+
+101
+01:06:25,266 --> 01:06:29,966
+<b>Yeah, go ahead, Jewish. I took a quick look over some of</b>
+
+102
+01:06:29,966 --> 01:06:32,033
+<b>the scenarios that you guys submitted.</b>
+
+103
+01:06:33,266 --> 01:06:36,833
+<b>And yeah, I think it was really cool. It looks like you</b>
+
+104
+01:06:36,833 --> 01:06:40,233
+<b>guys referenced a paper, who you</b>
+
+105
+01:06:41,866 --> 01:06:43,333
+<b>like the one on prompt injection.</b>
+
+106
+01:06:44,266 --> 01:06:46,233
+<b>Yeah, I think there were two or three different papers. We</b>
+
+107
+01:06:46,233 --> 01:06:47,533
+<b>have this was mentioned one of the</b>
+
+108
+01:06:47,633 --> 01:06:51,333
+<b>prompt injection. And there was also some time back</b>
+
+109
+01:06:51,333 --> 01:06:53,900
+<b>competition on the hugging phase,</b>
+
+110
+01:06:54,366 --> 01:06:57,333
+<b>where people have to like, especially provide the data set</b>
+
+111
+01:06:57,333 --> 01:06:59,433
+<b>for data making those things. So we took</b>
+
+112
+01:06:59,433 --> 01:07:02,199
+<b>the references from there, as well as the if you know,</b>
+
+113
+01:07:02,199 --> 01:07:04,500
+<b>Jason headaches, taxonomy, we also took the</b>
+
+114
+01:07:04,500 --> 01:07:06,266
+<b>references and then combine all those</b>
+
+115
+01:07:06,266 --> 01:07:11,466
+<b>approaches to make it work. So yeah, so actually,</b>
+
+116
+01:07:12,366 --> 01:07:18,033
+<b>yesterday, I was talking to the core organizer of this</b>
+
+117
+01:07:18,033 --> 01:07:20,566
+<b>lambda track, then I came to know that</b>
+
+118
+01:07:21,633 --> 01:07:25,599
+<b>you can't be part of two different teams. For the same</b>
+
+119
+01:07:25,599 --> 01:07:28,733
+<b>lambda check me. Now, why it's come to</b>
+
+120
+01:07:28,733 --> 01:07:31,466
+<b>the picture yesterday me. So as I mentioned, the second</b>
+
+121
+01:07:31,466 --> 01:07:33,199
+<b>just for part of two member team,</b>
+
+122
+01:07:33,566 --> 01:07:36,566
+<b>and the other member just reach out to a was to do for the</b>
+
+123
+01:07:36,566 --> 01:07:40,533
+<b>phase two itself. So from that part,</b>
+
+124
+01:07:41,666 --> 01:07:44,566
+<b>I mean, that's the current scenario, okay,</b>
+
+125
+01:07:44,866 --> 01:07:46,699
+<b>we can discuss more and then we can go more</b>
+
+126
+01:07:46,699 --> 01:07:50,066
+<b>deeper on this. But yeah, that's the current state that's</b>
+
+127
+01:07:50,066 --> 01:07:52,566
+<b>going on. It's the end. One more</b>
+
+128
+01:07:52,566 --> 01:07:55,866
+<b>thing I want to point out. So if you see the lambda track,</b>
+
+129
+01:07:56,266 --> 01:07:57,766
+<b>and if you see the logo mesh,</b>
+
+130
+01:07:57,766 --> 01:08:02,666
+<b>so in case of lambda track, it's more about making changes</b>
+
+131
+01:08:02,666 --> 01:08:05,466
+<b>to their reports. It's not about like,</b>
+
+132
+01:08:05,466 --> 01:08:07,666
+<b>say you can build up a different repo, where you can</b>
+
+133
+01:08:07,666 --> 01:08:09,766
+<b>integrate into their infrastructure, like</b>
+
+134
+01:08:10,333 --> 01:08:12,866
+<b>clone that repo from the repo, make changes into a</b>
+
+135
+01:08:12,866 --> 01:08:15,666
+<b>particular format and call it a for date. So</b>
+
+136
+01:08:16,366 --> 01:08:19,733
+<b>means that's the that's also applicable for phase two is in</b>
+
+137
+01:08:19,733 --> 01:08:21,066
+<b>phase one, also, it was same thing and</b>
+
+138
+01:08:21,066 --> 01:08:25,166
+<b>phase two also, that's the same thing. So I'm still</b>
+
+139
+01:08:25,166 --> 01:08:28,033
+<b>thinking about that how logo mesh we can</b>
+
+140
+01:08:28,033 --> 01:08:33,166
+<b>integrate over there. Or we are thinking of like, they're</b>
+
+141
+01:08:33,166 --> 01:08:37,000
+<b>going out of the bond to create the whole</b>
+
+142
+01:08:37,166 --> 01:08:40,166
+<b>myth to change our focus on logo mesh and then create a</b>
+
+143
+01:08:40,166 --> 01:08:41,633
+<b>scenario on the agenda is for the sake</b>
+
+144
+01:08:41,633 --> 01:08:44,733
+<b>of lambda to track it. That's what I want to try to</b>
+
+145
+01:08:44,733 --> 01:08:47,833
+<b>understand. First of all, I'm not sure whether</b>
+
+146
+01:08:47,833 --> 01:08:51,933
+<b>you got a chance to look that YouTube video which secures</b>
+
+147
+01:08:51,933 --> 01:08:54,966
+<b>me lambda team put out regarding how the</b>
+
+148
+01:08:54,966 --> 01:08:59,666
+<b>submission will go. Was that the live stream? It was a live</b>
+
+149
+01:08:59,666 --> 01:09:01,199
+<b>stream, but it is recorded. Yeah,</b>
+
+150
+01:09:01,500 --> 01:09:06,666
+<b>you can take a look. I think I caught I think I caught the</b>
+
+151
+01:09:06,666 --> 01:09:09,433
+<b>second half of it, which is unfortunate</b>
+
+152
+01:09:09,466 --> 01:09:12,500
+<b>because it looks like that was pretty important pivot here.</b>
+
+153
+01:09:14,033 --> 01:09:17,899
+<b>But what I can say is, it sounds like</b>
+
+154
+01:09:17,899 --> 01:09:20,966
+<b>what the question that I need to ask is like, how much</b>
+
+155
+01:09:20,966 --> 01:09:23,333
+<b>we're able to alter that specific framework</b>
+
+156
+01:09:23,500 --> 01:09:27,633
+<b>that they're offering us because I'm not exactly sure if</b>
+
+157
+01:09:27,633 --> 01:09:31,366
+<b>we're allowed to like, is this completely</b>
+
+158
+01:09:31,399 --> 01:09:34,933
+<b>LLM based like we're given an LLM. Okay,</b>
+
+159
+01:09:34,933 --> 01:09:39,100
+<b>to give you the more context on the stream</b>
+
+160
+01:09:39,333 --> 01:09:42,433
+<b>framework or what they provide it just like that there is a</b>
+
+161
+01:09:42,433 --> 01:09:44,966
+<b>repo agenda. So what it does, so</b>
+
+162
+01:09:47,166 --> 01:09:50,100
+<b>it's lambda agencies identity, you are already familiar the</b>
+
+163
+01:09:50,100 --> 01:09:51,533
+<b>lambda agencies, what it does,</b>
+
+164
+01:09:51,733 --> 01:09:55,033
+<b>it just create a two scenario attacker and</b>
+
+165
+01:09:55,033 --> 01:09:59,633
+<b>defender. And in the phase one, the system</b>
+
+166
+01:09:59,633 --> 01:10:02,966
+<b>prompt for the attacker was fixed, and the system prompt</b>
+
+167
+01:10:02,966 --> 01:10:05,966
+<b>for the defender was fixed. Okay, you have</b>
+
+168
+01:10:05,966 --> 01:10:08,533
+<b>to write the scenarios out of it. I'm talking about the</b>
+
+169
+01:10:08,533 --> 01:10:11,033
+<b>phase one to give you the context. So you have</b>
+
+170
+01:10:11,033 --> 01:10:15,133
+<b>to write scenario for the phase one itself, where you will</b>
+
+171
+01:10:15,133 --> 01:10:17,466
+<b>pick up a specific class of problem that</b>
+
+172
+01:10:17,500 --> 01:10:22,399
+<b>says supply chain thing and accepting. So you will give us</b>
+
+173
+01:10:22,399 --> 01:10:24,266
+<b>the different prompt injection technique</b>
+
+174
+01:10:24,366 --> 01:10:28,733
+<b>itself. What it does, then it will try to attack the</b>
+
+175
+01:10:28,733 --> 01:10:31,633
+<b>problem is the attacker will try to attack the</b>
+
+176
+01:10:31,633 --> 01:10:33,899
+<b>particular scenario and defender will try to defend it for</b>
+
+177
+01:10:33,899 --> 01:10:35,966
+<b>the scenario. So in the phase one scenario,</b>
+
+178
+01:10:36,433 --> 01:10:39,333
+<b>it was like the few shots, there's a system prompt, and in</b>
+
+179
+01:10:39,333 --> 01:10:45,733
+<b>each iteration or each shot in next phase,</b>
+
+180
+01:10:46,066 --> 01:10:48,966
+<b>it takes the context what attacker did in the previous</b>
+
+181
+01:10:48,966 --> 01:10:50,933
+<b>phase. For example, if there are 10</b>
+
+182
+01:10:50,933 --> 01:10:53,633
+<b>different iterations, the first iteration was the phase but</b>
+
+183
+01:10:53,633 --> 01:10:56,866
+<b>base iteration. The second iteration,</b>
+
+184
+01:10:57,166 --> 01:10:59,733
+<b>it takes consideration what different problem techniques</b>
+
+185
+01:10:59,733 --> 01:11:02,333
+<b>you have replied. It gives you defender</b>
+
+186
+01:11:02,366 --> 01:11:06,333
+<b>try to defend it. And in the third iteration, attacker try</b>
+
+187
+01:11:06,333 --> 01:11:07,766
+<b>to manipulate the defender response</b>
+
+188
+01:11:07,866 --> 01:11:11,166
+<b>defender say, Hey, you can't use base 64. This is like</b>
+
+189
+01:11:11,166 --> 01:11:12,966
+<b>this. So attacker would automatically try</b>
+
+190
+01:11:13,000 --> 01:11:16,699
+<b>to get into memory and try to switch this forward out. So</b>
+
+191
+01:11:16,699 --> 01:11:19,133
+<b>that was the case in the phase one, we have</b>
+
+192
+01:11:19,133 --> 01:11:23,933
+<b>to define the scenario in phase two. They have put it a</b>
+
+193
+01:11:23,933 --> 01:11:25,766
+<b>scenario that now you need not to work on</b>
+
+194
+01:11:25,766 --> 01:11:28,366
+<b>specific scenario, you need to work on the specific</b>
+
+195
+01:11:28,366 --> 01:11:31,733
+<b>attacker prompt itself to make it generalize to make</b>
+
+196
+01:11:31,733 --> 01:11:34,899
+<b>it more stronger that it is back to the scenario, it's</b>
+
+197
+01:11:34,899 --> 01:11:37,233
+<b>supply chain biomedical risk or something,</b>
+
+198
+01:11:37,566 --> 01:11:38,766
+<b>you need not to work on scenario,</b>
+
+199
+01:11:39,100 --> 01:11:41,233
+<b>your base system prompt of that attacker</b>
+
+200
+01:11:42,366 --> 01:11:46,933
+<b>should work and it should be able to like say, defeat the</b>
+
+201
+01:11:46,933 --> 01:11:48,766
+<b>defender and for defender the other</b>
+
+202
+01:11:48,766 --> 01:11:51,466
+<b>way other way around the defender should be able to be</b>
+
+203
+01:11:51,466 --> 01:11:53,966
+<b>should be able to block the attacker's</b>
+
+204
+01:11:54,399 --> 01:11:58,199
+<b>think out. So we that's the switch they have done it. In</b>
+
+205
+01:11:58,199 --> 01:12:01,833
+<b>this, we only need to make changes into</b>
+
+206
+01:12:01,833 --> 01:12:05,500
+<b>specific files, specific format you can decide but specific</b>
+
+207
+01:12:05,500 --> 01:12:06,899
+<b>files because that is integrated into</b>
+
+208
+01:12:06,933 --> 01:12:11,399
+<b>their attacker defenders solution, they have integrated on</b>
+
+209
+01:12:11,399 --> 01:12:13,333
+<b>backend with the agenda beats. So</b>
+
+210
+01:12:14,133 --> 01:12:18,033
+<b>that's the overall high level</b>
+
+211
+01:12:18,033 --> 01:12:22,666
+<b>architecture in case of lambda custom correct.</b>
+
+212
+01:12:22,666 --> 01:12:32,633
+<b>Yeah, I'm sorry, go ahead. Yeah. I actually, I also</b>
+
+213
+01:12:35,166 --> 01:12:41,266
+<b>create a got a PR for the for a repository. So for phase</b>
+
+214
+01:12:41,266 --> 01:12:45,133
+<b>one, so I got actually I initially got</b>
+
+215
+01:12:46,033 --> 01:12:54,766
+<b>six scenarios work. But then I realized some of them</b>
+
+216
+01:12:54,766 --> 01:12:58,133
+<b>actually are not very deterministic.</b>
+
+217
+01:12:58,766 --> 01:13:01,733
+<b>Like sometimes it works sometimes it's</b>
+
+218
+01:13:01,733 --> 01:13:06,233
+<b>fair. So I actually pick pick the like three</b>
+
+219
+01:13:07,233 --> 01:13:10,133
+<b>out of six, which I it's which would seem</b>
+
+220
+01:13:10,133 --> 01:13:15,166
+<b>to be more stable on like a stably working.</b>
+
+221
+01:13:18,666 --> 01:13:19,766
+<b>But to be honest, I don't know</b>
+
+222
+01:13:19,766 --> 01:13:23,866
+<b>why maybe that's the reason I didn't</b>
+
+223
+01:13:23,866 --> 01:13:30,266
+<b>like I did not win anything from phase one. So do you do</b>
+
+224
+01:13:30,266 --> 01:13:32,033
+<b>you notice the same behaviors like</b>
+
+225
+01:13:32,066 --> 01:13:38,000
+<b>not very deterministic and how you tackle that? Yeah.</b>
+
+226
+01:13:39,833 --> 01:13:41,399
+<b>I will answer it before that. I think Josh,</b>
+
+227
+01:13:41,399 --> 01:13:42,866
+<b>you also had a question. Do you want to go</b>
+
+228
+01:13:42,866 --> 01:13:46,833
+<b>ahead? I just wanted to say like I was reviewing over some</b>
+
+229
+01:13:46,833 --> 01:13:48,333
+<b>details in the live stream. It looks</b>
+
+230
+01:13:48,333 --> 01:13:53,666
+<b>like we have a hard limit before LLM calls. So yes, so I'm</b>
+
+231
+01:13:53,666 --> 01:13:54,966
+<b>assuming you were thinking like instead</b>
+
+232
+01:13:54,966 --> 01:13:57,100
+<b>of just using our repo is like a live</b>
+
+233
+01:13:57,100 --> 01:13:59,566
+<b>agent, we just use it as like a testing sandbox.</b>
+
+234
+01:14:02,833 --> 01:14:05,333
+<b>But that's that's really all I had to add</b>
+
+235
+01:14:05,333 --> 01:14:07,133
+<b>in for now. I'm still kind of absorbing what</b>
+
+236
+01:14:07,233 --> 01:14:10,566
+<b>we're talking about. Okay, okay. I assume</b>
+
+237
+01:14:10,566 --> 01:14:12,866
+<b>Mark to answer your question. Yeah, I mean,</b>
+
+238
+01:14:13,199 --> 01:14:15,833
+<b>again, behind the scene, they are just making call to the</b>
+
+239
+01:14:15,833 --> 01:14:17,466
+<b>LM. In that case, I think it was</b>
+
+240
+01:14:17,466 --> 01:14:20,800
+<b>opening I 20 BT, the same thing. Definitely, this is non</b>
+
+241
+01:14:20,800 --> 01:14:23,066
+<b>deterministic. So how we improve it</b>
+
+242
+01:14:23,066 --> 01:14:26,433
+<b>is just like, we do aggressive testing, we pick up the</b>
+
+243
+01:14:26,433 --> 01:14:30,666
+<b>scenario. And we keep it running, I think,</b>
+
+244
+01:14:30,666 --> 01:14:37,500
+<b>10 or 20 rounds itself of each time. And we see that, hey,</b>
+
+245
+01:14:38,166 --> 01:14:40,899
+<b>was it able to like win it with</b>
+
+246
+01:14:40,933 --> 01:14:43,933
+<b>attacker was able to win it in all the round. If we found</b>
+
+247
+01:14:43,933 --> 01:14:45,333
+<b>okay, this was able to then only</b>
+
+248
+01:14:45,333 --> 01:14:47,533
+<b>we push that pair for other scenario we neglected because</b>
+
+249
+01:14:47,533 --> 01:14:50,633
+<b>we know that if we are not able to pass</b>
+
+250
+01:14:50,633 --> 01:14:52,800
+<b>on a local environment itself, then the</b>
+
+251
+01:14:52,800 --> 01:14:56,666
+<b>same problem would be there in the lambda means</b>
+
+252
+01:14:56,666 --> 01:14:58,833
+<b>whenever they are doing it as things. So this is the</b>
+
+253
+01:14:58,833 --> 01:15:02,266
+<b>approach we took. And yeah, that's completely</b>
+
+254
+01:15:02,366 --> 01:15:05,933
+<b>fine. I it was breaking it was something not deterministic</b>
+
+255
+01:15:05,933 --> 01:15:08,399
+<b>and deterministic, because it's</b>
+
+256
+01:15:08,933 --> 01:15:11,033
+<b>only playing around the prompt and all those things. So</b>
+
+257
+01:15:11,033 --> 01:15:13,666
+<b>sometimes we also try to reduce like</b>
+
+258
+01:15:13,666 --> 01:15:16,966
+<b>the difficulty of a defender itself. In defender, we were</b>
+
+259
+01:15:16,966 --> 01:15:18,633
+<b>supposed to give the role and description.</b>
+
+260
+01:15:18,766 --> 01:15:23,000
+<b>So we say, hey, we need it on this particular specific. So</b>
+
+261
+01:15:23,000 --> 01:15:24,899
+<b>the goal was not to make make the</b>
+
+262
+01:15:24,933 --> 01:15:27,866
+<b>most hardest attacker the most hardest defender, it was</b>
+
+263
+01:15:27,866 --> 01:15:30,433
+<b>something to be who has something which</b>
+
+264
+01:15:31,800 --> 01:15:37,899
+<b>which is more accountable, and which is more can be used in</b>
+
+265
+01:15:37,899 --> 01:15:39,866
+<b>a real life scenario, it shouldn't be</b>
+
+266
+01:15:39,866 --> 01:15:43,166
+<b>like say, you put a defender problem, you say, don't allow</b>
+
+267
+01:15:43,166 --> 01:15:45,233
+<b>anything, then it is effective of the</b>
+
+268
+01:15:45,233 --> 01:15:48,399
+<b>fact that you the attacker won't be able to win this one</b>
+
+269
+01:15:48,399 --> 01:15:51,633
+<b>specific, you can say that scenario.</b>
+
+270
+01:15:52,133 --> 01:15:56,933
+<b>And the approach we took it forward, and we did testing,</b>
+
+271
+01:15:56,933 --> 01:16:00,366
+<b>tested a lot on the lambda instance,</b>
+
+272
+01:16:00,766 --> 01:16:02,933
+<b>before actually raising the PR and there was a huge</b>
+
+273
+01:16:02,933 --> 01:16:05,766
+<b>scenario which we rejected outright itself,</b>
+
+274
+01:16:05,966 --> 01:16:08,866
+<b>because on local or so it was not giving the good response,</b>
+
+275
+01:16:09,166 --> 01:16:10,600
+<b>the attacker was unable to win</b>
+
+276
+01:16:11,466 --> 01:16:15,066
+<b>in 10 runs. In what out of 10, the probability of winning</b>
+
+277
+01:16:15,066 --> 01:16:16,333
+<b>the attacker was only 40 or 50%.</b>
+
+278
+01:16:17,333 --> 01:16:19,566
+<b>After addition, then we say, okay, if it</b>
+
+279
+01:16:19,566 --> 01:16:22,233
+<b>is not going good on our local testing, then</b>
+
+280
+01:16:22,833 --> 01:16:25,766
+<b>the team would also be in the same</b>
+
+281
+01:16:25,766 --> 01:16:27,533
+<b>situation when they are testing it out.</b>
+
+282
+01:16:28,866 --> 01:16:30,633
+<b>Okay, how many you tested?</b>
+
+283
+01:16:33,033 --> 01:16:35,899
+<b>We submitted four scenario, I think we tested around six,</b>
+
+284
+01:16:36,433 --> 01:16:39,633
+<b>locally, out of six, we submitted four, on</b>
+
+285
+01:16:39,633 --> 01:16:42,266
+<b>which we were a little bit sure about it.</b>
+
+286
+01:16:43,899 --> 01:16:45,633
+<b>Yeah, yeah, yeah, it's a,</b>
+
+287
+01:16:47,233 --> 01:16:49,366
+<b>yeah, I think it took some time to,</b>
+
+288
+01:16:50,633 --> 01:16:55,699
+<b>it took some effort, it took some insights to find the good</b>
+
+289
+01:16:55,699 --> 01:17:00,733
+<b>ones, right? I have no good idea</b>
+
+290
+01:17:00,733 --> 01:17:03,100
+<b>which ones are good, I just</b>
+
+291
+01:17:03,100 --> 01:17:07,666
+<b>randomly picked six and then, yeah.</b>
+
+292
+01:17:10,266 --> 01:17:13,533
+<b>So, Joshi, I'll do the sandboxes which you didn't mention,</b>
+
+293
+01:17:13,533 --> 01:17:14,733
+<b>I didn't go to your full quite,</b>
+
+294
+01:17:15,066 --> 01:17:16,333
+<b>please, in this case, what did we do</b>
+
+295
+01:17:16,333 --> 01:17:19,300
+<b>with sandboxing? In the case of, yeah.</b>
+
+296
+01:17:20,433 --> 01:17:25,933
+<b>So, in terms of the lambda track, I'm pretty new to, it's</b>
+
+297
+01:17:25,933 --> 01:17:27,066
+<b>pretty different than the software</b>
+
+298
+01:17:27,066 --> 01:17:31,033
+<b>testing. But what I'm assuming is what we're going to do is</b>
+
+299
+01:17:31,033 --> 01:17:35,333
+<b>use the tools that we have in our sandbox</b>
+
+300
+01:17:35,466 --> 01:17:39,633
+<b>to simulate like up to a thousand battles or so, perhaps</b>
+
+301
+01:17:39,633 --> 01:17:41,399
+<b>more against mock stateless defenders,</b>
+
+302
+01:17:42,133 --> 01:17:44,466
+<b>assuming, are we, assuming that we're aiming for</b>
+
+303
+01:17:44,466 --> 01:17:48,966
+<b>de-attacking? And then, because of that,</b>
+
+304
+01:17:48,966 --> 01:17:51,933
+<b>we somehow discover the, like the optimal four call</b>
+
+305
+01:17:51,933 --> 01:17:55,800
+<b>injection sequence. But I'm going off of</b>
+
+306
+01:17:55,800 --> 01:17:58,433
+<b>a couple assumptions here, it sounds like you're way more</b>
+
+307
+01:17:58,433 --> 01:18:00,500
+<b>familiar with the track, so I'm kind of</b>
+
+308
+01:18:00,533 --> 01:18:02,699
+<b>just taking a backseat for this</b>
+
+309
+01:18:02,699 --> 01:18:08,233
+<b>meeting. Did that sound like it made sense?</b>
+
+310
+01:18:11,833 --> 01:18:15,766
+<b>Yeah, it makes sense, means from the perspective to make it</b>
+
+311
+01:18:15,766 --> 01:18:20,966
+<b>more useful. But the part with the</b>
+
+312
+01:18:20,966 --> 01:18:24,233
+<b>integration with the lambda track, we have to make those</b>
+
+313
+01:18:24,233 --> 01:18:26,733
+<b>changes manually. We can use the local mesh</b>
+
+314
+01:18:26,766 --> 01:18:30,066
+<b>to like generate the things automatically after testing out</b>
+
+315
+01:18:30,066 --> 01:18:32,333
+<b>and post it. We have to make those</b>
+
+316
+01:18:32,333 --> 01:18:37,033
+<b>changes manually, manually, I mean, sort of private repo to</b>
+
+317
+01:18:37,033 --> 01:18:40,833
+<b>make it work over there. Okay, so that's</b>
+
+318
+01:18:40,833 --> 01:18:44,899
+<b>the first part. Now, okay, anything else</b>
+
+319
+01:18:44,899 --> 01:18:46,733
+<b>on your mind? Josh or Mark, first of all?</b>
+
+320
+01:18:46,766 --> 01:18:55,399
+<b>Let me review my notes here. Mark, you can jump in if you</b>
+
+321
+01:18:55,399 --> 01:18:58,066
+<b>want. I do have something coming up, though.</b>
+
+322
+01:18:59,266 --> 01:19:02,166
+<b>So sorry, I did not catch the</b>
+
+323
+01:19:02,166 --> 01:19:03,433
+<b>question. What's the question?</b>
+
+324
+01:19:05,066 --> 01:19:06,199
+<b>No, I was just asking anything</b>
+
+325
+01:19:06,199 --> 01:19:07,866
+<b>else in your mind regarding...</b>
+
+326
+01:19:08,133 --> 01:19:21,133
+<b>Yeah, I actually, I might need to also read</b>
+
+327
+01:19:21,133 --> 01:19:25,566
+<b>the notes and watch the live stream or the</b>
+
+328
+01:19:25,866 --> 01:19:33,166
+<b>recorded video again from the lambda check. But one</b>
+
+329
+01:19:33,166 --> 01:19:36,666
+<b>question I have is, since we are</b>
+
+330
+01:19:37,633 --> 01:19:43,566
+<b>kind of like improving the attacker or the defender, do we</b>
+
+331
+01:19:43,566 --> 01:19:45,466
+<b>need to work on both? Like if we</b>
+
+332
+01:19:45,466 --> 01:19:52,366
+<b>are actually computing, if we choose like an attacker, but</b>
+
+333
+01:19:52,366 --> 01:19:54,833
+<b>in order to get the best attacker,</b>
+
+334
+01:19:55,666 --> 01:19:59,699
+<b>we might also need to have a very good defender so we can</b>
+
+335
+01:19:59,699 --> 01:20:04,266
+<b>test well, we can... Because that</b>
+
+336
+01:20:04,300 --> 01:20:09,199
+<b>competition makes... A good defender can make your attacker</b>
+
+337
+01:20:09,199 --> 01:20:13,333
+<b>better, right? Does that make sense?</b>
+
+338
+01:20:13,733 --> 01:20:19,133
+<b>Yeah, question makes... It completely makes sense to just</b>
+
+339
+01:20:19,133 --> 01:20:21,166
+<b>like give a little more description.</b>
+
+340
+01:20:21,933 --> 01:20:23,966
+<b>So one team can work on both attacker and</b>
+
+341
+01:20:23,966 --> 01:20:25,699
+<b>defender. So there is no restriction that</b>
+
+342
+01:20:26,433 --> 01:20:29,233
+<b>one team can only be limited to attacker and defender. So</b>
+
+343
+01:20:29,233 --> 01:20:30,566
+<b>to answer your questions, like,</b>
+
+344
+01:20:30,699 --> 01:20:34,866
+<b>yeah, we can work on both different parts of the scenarios.</b>
+
+345
+01:20:39,399 --> 01:20:43,000
+<b>Yeah, Josh, if you have one, you can go.</b>
+
+346
+01:20:44,066 --> 01:20:46,133
+<b>Hold on, I'm pulling up some notes</b>
+
+347
+01:20:46,133 --> 01:20:50,133
+<b>here. I'm sorry, I didn't mean to interrupt.</b>
+
+348
+01:20:51,966 --> 01:20:54,733
+<b>If you have questions, you can</b>
+
+349
+01:20:54,733 --> 01:20:57,166
+<b>go first. Yeah, you can go first.</b>
+
+350
+01:21:01,466 --> 01:21:05,433
+<b>Let's see. Okay, so a question that I</b>
+
+351
+01:21:05,433 --> 01:21:07,500
+<b>do have, I first need to verify this</b>
+
+352
+01:21:08,366 --> 01:21:11,699
+<b>with one of my teammates who created the red agent in our</b>
+
+353
+01:21:11,699 --> 01:21:15,266
+<b>repository. He created something</b>
+
+354
+01:21:15,266 --> 01:21:18,633
+<b>called a UCB1 strategy revolver, something</b>
+
+355
+01:21:18,633 --> 01:21:21,833
+<b>to do with like red teaming the code itself.</b>
+
+356
+01:21:22,433 --> 01:21:26,366
+<b>But I was thinking like if we could somehow wire NLP</b>
+
+357
+01:21:26,366 --> 01:21:30,366
+<b>prompts into that code and kind of replace</b>
+
+358
+01:21:31,166 --> 01:21:34,366
+<b>the code-based attacks and prompt injection-based attacks,</b>
+
+359
+01:21:34,966 --> 01:21:37,333
+<b>then we can kind of use that. But I also</b>
+
+360
+01:21:37,333 --> 01:21:40,800
+<b>wanted to touch on the fact that like, yeah, that's all I</b>
+
+361
+01:21:40,800 --> 01:21:42,133
+<b>have to add for now. I don't want to get</b>
+
+362
+01:21:42,266 --> 01:21:46,933
+<b>too specific here. I'm also reviewing the</b>
+
+363
+01:21:46,933 --> 01:21:50,166
+<b>transcript of the video right now and I'm</b>
+
+364
+01:21:50,166 --> 01:21:51,466
+<b>putting questions into it so I</b>
+
+365
+01:21:51,466 --> 01:21:52,833
+<b>can kind of absorb it better.</b>
+
+366
+01:21:52,866 --> 01:22:02,433
+<b>So I think first thing, okay. The UC</b>
+
+367
+01:22:02,433 --> 01:22:04,033
+<b>part, I haven't gone through the whole code.</b>
+
+368
+01:22:04,633 --> 01:22:09,066
+<b>Also, I'm not familiar. So I think I will spend time to see</b>
+
+369
+01:22:09,066 --> 01:22:10,666
+<b>that what is this current UCB or</b>
+
+370
+01:22:10,666 --> 01:22:12,699
+<b>what are different terminology and how we want to use it.</b>
+
+371
+01:22:12,966 --> 01:22:15,566
+<b>Now, the other part that I want to know</b>
+
+372
+01:22:15,566 --> 01:22:18,433
+<b>that see, in Lambda track, we can be</b>
+
+373
+01:22:18,433 --> 01:22:20,833
+<b>part of one particular team itself. Okay.</b>
+
+374
+01:22:21,800 --> 01:22:24,966
+<b>Now, I do have the obligation to part of the second just</b>
+
+375
+01:22:24,966 --> 01:22:26,566
+<b>because the other partner will see</b>
+
+376
+01:22:26,566 --> 01:22:32,600
+<b>so what I'm proposing is just like, you can omit me for the</b>
+
+377
+01:22:32,600 --> 01:22:35,033
+<b>Lambda track, but it doesn't mean that</b>
+
+378
+01:22:36,366 --> 01:22:40,966
+<b>I won't be helping on improving the local mesh and like</b>
+
+379
+01:22:40,966 --> 01:22:42,766
+<b>doing all the changes. So I am</b>
+
+380
+01:22:43,066 --> 01:22:45,899
+<b>up for doing all the changes just to clear a confusion. I'm</b>
+
+381
+01:22:45,899 --> 01:22:47,699
+<b>not up like say, you are part of</b>
+
+382
+01:22:47,800 --> 01:22:50,966
+<b>winning and I also want part of winning and distribute the</b>
+
+383
+01:22:50,966 --> 01:22:52,066
+<b>prizes. So that's not my intention.</b>
+
+384
+01:22:52,666 --> 01:22:56,300
+<b>My intention likes to make it more generalized so we can</b>
+
+385
+01:22:56,300 --> 01:22:58,833
+<b>improve for most of the track or we can</b>
+
+386
+01:22:58,833 --> 01:23:01,466
+<b>improve for most of the things. So I'm completely fine</b>
+
+387
+01:23:01,466 --> 01:23:06,433
+<b>because formally we can't have me as a part</b>
+
+388
+01:23:06,433 --> 01:23:08,800
+<b>of two different things and I don't want to play the system</b>
+
+389
+01:23:08,800 --> 01:23:10,699
+<b>where I register with a different made</b>
+
+390
+01:23:10,933 --> 01:23:12,733
+<b>and different thing for the sake of like</b>
+
+391
+01:23:12,733 --> 01:23:15,866
+<b>playing. So we know that this is wrong. So</b>
+
+392
+01:23:16,600 --> 01:23:20,533
+<b>on this front, so I will be dancing as a part of second</b>
+
+393
+01:23:20,533 --> 01:23:23,633
+<b>India to just be specific conflict of interest.</b>
+
+394
+01:23:23,933 --> 01:23:26,266
+<b>I will try that what we are discussing over the year and</b>
+
+395
+01:23:26,266 --> 01:23:27,766
+<b>what we are discussing, I will like</b>
+
+396
+01:23:27,766 --> 01:23:32,433
+<b>and I think this is more mature transparency that we have</b>
+
+397
+01:23:32,433 --> 01:23:34,266
+<b>to rely on that both things will be</b>
+
+398
+01:23:34,533 --> 01:23:38,666
+<b>totally separate and here we still the time the competition</b>
+
+399
+01:23:38,666 --> 01:23:40,633
+<b>is at post that we can try to combine</b>
+
+400
+01:23:40,699 --> 01:23:43,533
+<b>those in technique if in case something goes out and</b>
+
+401
+01:23:43,533 --> 01:23:45,933
+<b>meanwhile we can work on like say improving</b>
+
+402
+01:23:46,600 --> 01:23:50,366
+<b>the whole logo mesh to make it more generalized for a more</b>
+
+403
+01:23:50,366 --> 01:23:53,666
+<b>recti-ming red adversary which may or</b>
+
+404
+01:23:53,666 --> 01:23:56,933
+<b>may not be limited to the lambda track. This is what I am</b>
+
+405
+01:23:56,933 --> 01:23:59,300
+<b>proposing and I just want to be very</b>
+
+406
+01:23:59,300 --> 01:24:01,333
+<b>transparent on this. It shouldn't be like come as a</b>
+
+407
+01:24:01,333 --> 01:24:03,666
+<b>surprise say why you are part of second India and</b>
+
+408
+01:24:04,133 --> 01:24:07,133
+<b>why you are helping there also you're not taking code from</b>
+
+409
+01:24:07,133 --> 01:24:08,433
+<b>there you're not putting. So I just want</b>
+
+410
+01:24:08,466 --> 01:24:11,333
+<b>to mention these are very two different problems. Yes</b>
+
+411
+01:24:11,333 --> 01:24:13,600
+<b>because the transparency interest I want to be</b>
+
+412
+01:24:13,600 --> 01:24:16,033
+<b>like integrated in the beginning itself it should not come</b>
+
+413
+01:24:16,033 --> 01:24:18,600
+<b>as a surprise. Hey Bhakul why you over</b>
+
+414
+01:24:18,600 --> 01:24:21,733
+<b>there and you are part also there and why why why so yes.</b>
+
+415
+01:24:22,399 --> 01:24:24,233
+<b>Yeah I don't have a problem with that.</b>
+
+416
+01:24:24,633 --> 01:24:29,500
+<b>And yeah if you're interested in like helping us generalize</b>
+
+417
+01:24:29,500 --> 01:24:31,266
+<b>for other tracks oh I have a question</b>
+
+418
+01:24:31,633 --> 01:24:36,133
+<b>whoever you spoke to that you mentioned earlier was what he</b>
+
+419
+01:24:36,133 --> 01:24:37,933
+<b>was talking about how you can only</b>
+
+420
+01:24:37,966 --> 01:24:41,233
+<b>be part of one team was that only concerning the lambda</b>
+
+421
+01:24:41,233 --> 01:24:43,133
+<b>track. Yes that's only for lambda</b>
+
+422
+01:24:43,166 --> 01:24:47,066
+<b>that's only for lambda. Yes yes yes. I</b>
+
+423
+01:24:47,066 --> 01:24:52,133
+<b>also have I have pretty good news. I have a</b>
+
+424
+01:24:52,933 --> 01:24:57,833
+<b>an incoming professor at a university in Toronto reached</b>
+
+425
+01:24:57,833 --> 01:25:01,266
+<b>out to me and he's considering having</b>
+
+426
+01:25:01,733 --> 01:25:06,233
+<b>a few students of his to take a look at the repo and</b>
+
+427
+01:25:06,233 --> 01:25:09,066
+<b>potentially write and submit some research</b>
+
+428
+01:25:09,066 --> 01:25:15,100
+<b>papers to to nips, NIR IPS. It's a publishing company. Yeah</b>
+
+429
+01:25:15,100 --> 01:25:17,899
+<b>it's a good one. Pretty good one.</b>
+
+430
+01:25:18,399 --> 01:25:21,266
+<b>So I've kind of just been communicating with him over</b>
+
+431
+01:25:21,266 --> 01:25:23,399
+<b>discord and through email and we haven't met</b>
+
+432
+01:25:23,399 --> 01:25:27,233
+<b>online yet. So I don't know the specifics of how he wants</b>
+
+433
+01:25:27,233 --> 01:25:30,266
+<b>to involve us but I kind of just wanted</b>
+
+434
+01:25:30,300 --> 01:25:32,033
+<b>to throw that out there that we might be</b>
+
+435
+01:25:32,033 --> 01:25:33,966
+<b>able to interface with some of the students.</b>
+
+436
+01:25:35,266 --> 01:25:38,233
+<b>And I think some of them will be in China and he's in</b>
+
+437
+01:25:38,233 --> 01:25:39,866
+<b>Toronto right now because he's</b>
+
+438
+01:25:40,266 --> 01:25:43,733
+<b>a professor at I'm not sure what you don't I keep</b>
+
+439
+01:25:43,733 --> 01:25:48,000
+<b>forgetting the name of it. Let's see here.</b>
+
+440
+01:25:49,666 --> 01:25:53,466
+<b>Sorry for his targeting but it's for a log mesh check.</b>
+
+441
+01:25:53,566 --> 01:25:59,266
+<b>Sorry? It's for the logo mesh check. Okay. Yeah</b>
+
+442
+01:25:59,266 --> 01:26:00,933
+<b>specifically about the repository.</b>
+
+443
+01:26:01,666 --> 01:26:06,500
+<b>I sent him the the draft technical paper so he's taking a</b>
+
+444
+01:26:06,500 --> 01:26:08,699
+<b>look at it. Oh he's yeah he's</b>
+
+445
+01:26:08,699 --> 01:26:13,366
+<b>incoming professor to McGill. McGill University. So yeah I</b>
+
+446
+01:26:13,366 --> 01:26:14,933
+<b>can share with you guys his contact</b>
+
+447
+01:26:14,933 --> 01:26:19,933
+<b>info just you know just his LinkedIn profile. He seems like</b>
+
+448
+01:26:19,933 --> 01:26:20,433
+<b>a pretty busy guy based on how he</b>
+
+449
+01:26:20,833 --> 01:26:25,000
+<b>speaks through discord. So he'll</b>
+
+450
+01:26:25,000 --> 01:26:26,866
+<b>catch him in a meeting pretty soon.</b>
+
+451
+01:26:28,866 --> 01:26:35,833
+<b>How did he know about logo mesh? Did he do the image order?</b>
+
+452
+01:26:36,666 --> 01:26:38,500
+<b>Yeah I actually reached out to him</b>
+
+453
+01:26:38,533 --> 01:26:42,666
+<b>first through he was looking for a teammate. So I sent him</b>
+
+454
+01:26:42,666 --> 01:26:46,033
+<b>a direct message and he's interested.</b>
+
+455
+01:26:46,033 --> 01:26:50,266
+<b>So you know we'll give it a shot. I sent him an email</b>
+
+456
+01:26:50,266 --> 01:26:52,633
+<b>asking kind of like how he wants to lead</b>
+
+457
+01:26:52,666 --> 01:26:55,966
+<b>the academic side and how involved he wants the students to</b>
+
+458
+01:26:55,966 --> 01:26:57,466
+<b>be in the repository like whether</b>
+
+459
+01:26:57,466 --> 01:27:00,666
+<b>they're going to be working on it actively. So if he does</b>
+
+460
+01:27:00,666 --> 01:27:03,500
+<b>agree to that I'll be sure to make sure</b>
+
+461
+01:27:03,500 --> 01:27:07,666
+<b>that we all you know communicate about who's going to be</b>
+
+462
+01:27:07,666 --> 01:27:08,899
+<b>working on what so that there's no</b>
+
+463
+01:27:09,000 --> 01:27:12,966
+<b>confusion with like you know pull requests. But yeah I just</b>
+
+464
+01:27:12,966 --> 01:27:14,666
+<b>wanted to give an update on that.</b>
+
+465
+01:27:15,733 --> 01:27:17,966
+<b>Awesome. Yeah definitely cool. Yeah.</b>
+
+466
+01:27:19,366 --> 01:27:23,899
+<b>Sweet. Yeah I definitely had a lot of things to review</b>
+
+467
+01:27:23,899 --> 01:27:25,733
+<b>concerning this meeting though you've</b>
+
+468
+01:27:25,733 --> 01:27:31,566
+<b>you've enlightened me about the lambda track. Thanks for I</b>
+
+469
+01:27:31,566 --> 01:27:33,566
+<b>don't know I really appreciate it.</b>
+
+470
+01:27:38,933 --> 01:27:44,233
+<b>Okay now coming to the part of I think the face to the</b>
+
+471
+01:27:44,233 --> 01:27:47,066
+<b>different techs. So I think the first thing</b>
+
+472
+01:27:47,066 --> 01:27:50,399
+<b>that I will need a little bit help on like the going to</b>
+
+473
+01:27:50,399 --> 01:27:51,866
+<b>architecture of the logo mesh although</b>
+
+474
+01:27:51,866 --> 01:27:54,833
+<b>I can read the code but I think if anyone of you can give</b>
+
+475
+01:27:54,833 --> 01:27:56,966
+<b>the quick architecture not now or maybe</b>
+
+476
+01:27:57,066 --> 01:28:00,966
+<b>on other meeting itself that will help me to speed up and</b>
+
+477
+01:28:00,966 --> 01:28:02,866
+<b>to know okay these are the things</b>
+
+478
+01:28:02,866 --> 01:28:07,566
+<b>that we follow. I know you have a pretty good ready to be</b>
+
+479
+01:28:07,566 --> 01:28:08,566
+<b>collaboration all those things.</b>
+
+480
+01:28:08,633 --> 01:28:12,233
+<b>I read it out but getting the higher level overview of</b>
+
+481
+01:28:12,233 --> 01:28:13,399
+<b>someone who has written from the</b>
+
+482
+01:28:13,399 --> 01:28:15,466
+<b>basic I think that will always help.</b>
+
+483
+01:28:15,800 --> 01:28:17,866
+<b>This is the first part and the other part</b>
+
+484
+01:28:19,233 --> 01:28:22,833
+<b>do we have a doc or do we have I know</b>
+
+485
+01:28:22,833 --> 01:28:25,066
+<b>we have the GitHub issues over there but</b>
+
+486
+01:28:27,233 --> 01:28:30,066
+<b>a list of feature or list of pending item</b>
+
+487
+01:28:30,066 --> 01:28:33,066
+<b>that we want to develop and here I want to</b>
+
+488
+01:28:33,066 --> 01:28:35,933
+<b>bifurcate to two different things. One is like very</b>
+
+489
+01:28:35,933 --> 01:28:38,633
+<b>specific to face to which we have a time</b>
+
+490
+01:28:38,633 --> 01:28:42,866
+<b>limit. If under one month we have to meet those are more p0</b>
+
+491
+01:28:42,866 --> 01:28:45,266
+<b>priorities one that we have to develop</b>
+
+492
+01:28:45,266 --> 01:28:46,633
+<b>and we have to deliver because we won't</b>
+
+493
+01:28:46,633 --> 01:28:49,133
+<b>take participate in the face so in most of the</b>
+
+494
+01:28:49,133 --> 01:28:54,199
+<b>pop-up that will be more like p0 and more like all the long</b>
+
+495
+01:28:54,199 --> 01:28:56,266
+<b>term things that we want to plan out. So</b>
+
+496
+01:28:56,966 --> 01:29:00,433
+<b>in each discussion we can devote like those time or we can</b>
+
+497
+01:29:00,433 --> 01:29:02,266
+<b>like spend some energy if I don't know</b>
+
+498
+01:29:02,300 --> 01:29:05,566
+<b>about any particular jargon then I can go and read about</b>
+
+499
+01:29:05,566 --> 01:29:07,699
+<b>okay in future we want to track it out</b>
+
+500
+01:29:08,133 --> 01:29:11,733
+<b>or we want to put those features as out. So do we have</b>
+
+501
+01:29:11,733 --> 01:29:14,500
+<b>anything but any such formulation in the</b>
+
+502
+01:29:14,500 --> 01:29:17,133
+<b>mind so far it could be possible that okay we haven't</b>
+
+503
+01:29:17,133 --> 01:29:19,566
+<b>thought of any such thing so far or.</b>
+
+504
+01:29:21,399 --> 01:29:26,966
+<b>So I do have some overview documents in the repository but</b>
+
+505
+01:29:26,966 --> 01:29:29,766
+<b>you know they're not formalized for</b>
+
+506
+01:29:29,833 --> 01:29:32,766
+<b>like a phase two review because I was</b>
+
+507
+01:29:32,766 --> 01:29:34,600
+<b>creating them when we were in active development.</b>
+
+508
+01:29:35,399 --> 01:29:38,100
+<b>So I'm afraid of sharing them because I</b>
+
+509
+01:29:38,100 --> 01:29:39,966
+<b>feel like they might be partially outdated</b>
+
+510
+01:29:40,266 --> 01:29:44,266
+<b>but if you're looking for just a jumping off point they</b>
+
+511
+01:29:44,266 --> 01:29:47,000
+<b>might be helpful. Okay I'll give you</b>
+
+512
+01:29:47,000 --> 01:29:53,800
+<b>the file path for that that's going to be in yeah here it</b>
+
+513
+01:29:53,800 --> 01:29:57,933
+<b>is docs slash zero four dash operations</b>
+
+514
+01:29:58,433 --> 01:30:02,433
+<b>slash dual track arena and do you prefer a github link for</b>
+
+515
+01:30:02,433 --> 01:30:04,199
+<b>that or do you prefer just the file path</b>
+
+516
+01:30:04,899 --> 01:30:08,133
+<b>for me to paste in the chat. Anything you can give it I can</b>
+
+517
+01:30:08,133 --> 01:30:10,699
+<b>I can go a little if it's a file path I</b>
+
+518
+01:30:10,699 --> 01:30:13,866
+<b>can go to the github and check all the github links. Okay</b>
+
+519
+01:30:13,866 --> 01:30:15,033
+<b>I'll just give you the github link.</b>
+
+520
+01:30:16,933 --> 01:30:20,966
+<b>Yeah so I actually just updated this because I have not</b>
+
+521
+01:30:20,966 --> 01:30:24,100
+<b>empirically verified it in the past month</b>
+
+522
+01:30:24,199 --> 01:30:27,266
+<b>and I created it around January 15th so I know it's</b>
+
+523
+01:30:27,266 --> 01:30:31,033
+<b>outdated. I also need to talk to my teammate</b>
+
+524
+01:30:31,033 --> 01:30:35,033
+<b>about the red agent because he focused entirely on that in</b>
+
+525
+01:30:35,033 --> 01:30:37,266
+<b>like the last month of the competition</b>
+
+526
+01:30:37,333 --> 01:30:42,333
+<b>so that's what I know about the least. Although in the next</b>
+
+527
+01:30:42,333 --> 01:30:45,533
+<b>few days I can prepare I can prepare</b>
+
+528
+01:30:45,533 --> 01:30:48,633
+<b>some overview documents for you. I also do have kind of</b>
+
+529
+01:30:48,633 --> 01:30:50,266
+<b>like a general list of improvements that</b>
+
+530
+01:30:50,266 --> 01:30:54,766
+<b>we could make but it's not specifically referring to file</b>
+
+531
+01:30:54,766 --> 01:30:58,533
+<b>paths so I don't know how helpful it's</b>
+
+532
+01:30:58,533 --> 01:31:02,399
+<b>going to be at this stage. So I'll revise it but what would</b>
+
+533
+01:31:02,399 --> 01:31:04,899
+<b>help is if you could submit to me like</b>
+
+534
+01:31:04,899 --> 01:31:09,833
+<b>if you could just send me a few general questions you have</b>
+
+535
+01:31:09,833 --> 01:31:11,766
+<b>about the structure okay that'll help me</b>
+
+536
+01:31:12,600 --> 01:31:18,033
+<b>shape the documents for you and I can actively update them.</b>
+
+537
+01:31:18,699 --> 01:31:21,566
+<b>Yeah that really sounds good and</b>
+
+538
+01:31:21,733 --> 01:31:25,066
+<b>one other thing okay I think that will</b>
+
+539
+01:31:25,066 --> 01:31:26,566
+<b>be more like improvement so currently</b>
+
+540
+01:31:28,533 --> 01:31:32,600
+<b>I don't see the CI3D and all those checks into the picture</b>
+
+541
+01:31:32,600 --> 01:31:35,033
+<b>itself it could be very simple to</b>
+
+542
+01:31:36,133 --> 01:31:38,433
+<b>quote quote send rep on one side or more</b>
+
+543
+01:31:38,433 --> 01:31:40,633
+<b>like little checks on the python side itself</b>
+
+544
+01:31:40,933 --> 01:31:46,000
+<b>and so forth. So I think that we can take a look afterwards</b>
+
+545
+01:31:46,000 --> 01:31:47,866
+<b>itself because those things catch up</b>
+
+546
+01:31:47,866 --> 01:31:50,766
+<b>by issue pretty fast it's like a indentation error and</b>
+
+547
+01:31:50,766 --> 01:31:54,100
+<b>those things out it will make because now we</b>
+
+548
+01:31:54,100 --> 01:31:56,899
+<b>have a lot of people like committing or let's say you</b>
+
+549
+01:31:56,899 --> 01:31:58,566
+<b>reviewing the code if we have all those</b>
+
+550
+01:31:58,966 --> 01:32:01,366
+<b>preliminary checks it will be very easy to you find out</b>
+
+551
+01:32:01,366 --> 01:32:03,466
+<b>okay there's no like flake error</b>
+
+552
+01:32:03,733 --> 01:32:08,033
+<b>fight error and all those things out instead of like going</b>
+
+553
+01:32:08,033 --> 01:32:09,533
+<b>locally and test it out make test is</b>
+
+554
+01:32:09,566 --> 01:32:13,333
+<b>one of the thing but yeah again it's like using some of the</b>
+
+555
+01:32:13,333 --> 01:32:15,466
+<b>specific thing that we can add.</b>
+
+556
+01:32:18,033 --> 01:32:22,233
+<b>Okay sweet yeah I did while I was reviewing the the repo</b>
+
+557
+01:32:22,233 --> 01:32:24,133
+<b>this past couple weeks I did notice a</b>
+
+558
+01:32:24,133 --> 01:32:27,666
+<b>couple gaps especially when I was working on the technical</b>
+
+559
+01:32:27,666 --> 01:32:30,433
+<b>paper because there was a few documents</b>
+
+560
+01:32:30,433 --> 01:32:33,600
+<b>that kind of made several assumptions about how the code</b>
+
+561
+01:32:33,600 --> 01:32:37,533
+<b>structure worked. I think I guess I don't</b>
+
+562
+01:32:37,566 --> 01:32:40,533
+<b>want to get too specific in this call but I think one thing</b>
+
+563
+01:32:40,533 --> 01:32:42,466
+<b>that was concerning to me is that</b>
+
+564
+01:32:44,666 --> 01:32:50,066
+<b>like the red agent it's not air gapped so if we work on it</b>
+
+565
+01:32:50,066 --> 01:32:51,500
+<b>and not to generalize it enough they</b>
+
+566
+01:32:51,500 --> 01:32:53,866
+<b>could potentially sabotage itself because it's not in its</b>
+
+567
+01:32:53,866 --> 01:32:55,333
+<b>own docker container it's just kind of</b>
+
+568
+01:32:55,333 --> 01:32:58,466
+<b>attached to the green agent. So that's that's one thing</b>
+
+569
+01:32:58,466 --> 01:33:00,833
+<b>that I feel like we could work on.</b>
+
+570
+01:33:02,166 --> 01:33:04,566
+<b>Mark I was I was wondering if you were interested in that</b>
+
+571
+01:33:04,566 --> 01:33:05,966
+<b>but I don't want to point you towards</b>
+
+572
+01:33:06,033 --> 01:33:11,566
+<b>anything specific too too early but yeah I</b>
+
+573
+01:33:11,566 --> 01:33:13,733
+<b>was like do you have familiarity with like</b>
+
+574
+01:33:14,500 --> 01:33:19,766
+<b>that kind of stuff in terms of docker? Yeah I yeah docker I</b>
+
+575
+01:33:19,766 --> 01:33:29,066
+<b>um I spent uh like one one two three I see around docker um</b>
+
+576
+01:33:29,066 --> 01:33:33,300
+<b>on my last job yeah so sweet yeah</b>
+
+577
+01:33:33,333 --> 01:33:37,899
+<b>um yeah okay that's I think that's just like the most</b>
+
+578
+01:33:37,899 --> 01:33:40,833
+<b>prominent thing there's there's a ton of</b>
+
+579
+01:33:40,833 --> 01:33:45,066
+<b>other stuff I've been yeah it's it's too much to cover here</b>
+
+580
+01:33:45,066 --> 01:33:48,033
+<b>but uh I will be sending a couple</b>
+
+581
+01:33:48,033 --> 01:33:51,933
+<b>documents in the next few days I would say expect one uh at</b>
+
+582
+01:33:51,933 --> 01:33:54,266
+<b>least tomorrow just a general one</b>
+
+583
+01:33:54,933 --> 01:33:58,566
+<b>um yeah the more questions the better for me honestly I I</b>
+
+584
+01:33:58,566 --> 01:33:59,866
+<b>kind of I'd live off of questions</b>
+
+585
+01:34:00,033 --> 01:34:05,733
+<b>um so yeah that's that's all I can add now unfortunately.</b>
+
+586
+01:34:09,166 --> 01:34:12,866
+<b>So currently I think the p0 item if I talk about it I</b>
+
+587
+01:34:13,866 --> 01:34:16,933
+<b>means the purple means for me if I want to read the code</b>
+
+588
+01:34:16,933 --> 01:34:18,600
+<b>first it's like purple that the red</b>
+
+589
+01:34:18,600 --> 01:34:22,433
+<b>agent these two code will make more sense I think so for</b>
+
+590
+01:34:22,433 --> 01:34:23,766
+<b>the next one month sounds good</b>
+
+591
+01:34:24,600 --> 01:34:27,866
+<b>is my correct assumption because otherwise I don't want to</b>
+
+592
+01:34:27,866 --> 01:34:30,500
+<b>read all all things and we confused on</b>
+
+593
+01:34:30,500 --> 01:34:34,500
+<b>myself hey okay that these are lot lot of moving structure</b>
+
+594
+01:34:34,500 --> 01:34:36,366
+<b>although our high level structure works</b>
+
+595
+01:34:36,433 --> 01:34:38,566
+<b>works but yes in general I feel that</b>
+
+596
+01:34:38,566 --> 01:34:41,033
+<b>purple and the red agent would make more sense</b>
+
+597
+01:34:41,733 --> 01:34:45,766
+<b>that's that's my right assumption or just like uh wrong</b>
+
+598
+01:34:45,766 --> 01:34:47,733
+<b>assumption on this front. Sorry sorry</b>
+
+599
+01:34:47,733 --> 01:34:50,733
+<b>what what would make more sense I had trouble hearing you.</b>
+
+600
+01:34:51,333 --> 01:34:52,533
+<b>Okay I was saying just reading</b>
+
+601
+01:34:53,399 --> 01:34:57,066
+<b>the more internal working of the purple agent code and the</b>
+
+602
+01:34:57,066 --> 01:34:59,533
+<b>red agent code it makes more sense</b>
+
+603
+01:34:59,966 --> 01:35:04,933
+<b>all this phase to itself. Okay yeah like just the internal</b>
+
+604
+01:35:04,933 --> 01:35:06,533
+<b>workings of those specific agents.</b>
+
+605
+01:35:07,566 --> 01:35:13,000
+<b>Yes okay awesome uh</b>
+
+606
+01:35:15,333 --> 01:35:16,333
+<b>anything else uh</b>
+
+607
+01:35:16,366 --> 01:35:21,166
+<b>uh</b>
+
+608
+01:35:21,166 --> 01:35:27,633
+<b>fall the phase to the other track so are we trying to</b>
+
+609
+01:35:27,633 --> 01:35:29,466
+<b>participate in all the other track</b>
+
+610
+01:35:29,866 --> 01:35:34,133
+<b>uh but just like we're gonna focus on one two three</b>
+
+611
+01:35:34,133 --> 01:35:37,866
+<b>different I mean one two three different</b>
+
+612
+01:35:37,866 --> 01:35:42,466
+<b>track itself to make it uh work but just like we will try</b>
+
+613
+01:35:42,466 --> 01:35:44,633
+<b>to focus on everything and then we'll</b>
+
+614
+01:35:44,966 --> 01:35:48,366
+<b>see how people can just give me a quick idea on that trend.</b>
+
+615
+01:35:49,333 --> 01:35:52,100
+<b>So I was kind of taking a look at</b>
+
+616
+01:35:52,100 --> 01:35:55,766
+<b>the different tracks I mean the ones that are in process</b>
+
+617
+01:35:55,766 --> 01:35:57,300
+<b>right now I think it's business process</b>
+
+618
+01:35:57,399 --> 01:36:02,000
+<b>gaming and then I think was it finance I think I don't</b>
+
+619
+01:36:02,000 --> 01:36:03,933
+<b>remember but I can say that the coding</b>
+
+620
+01:36:03,933 --> 01:36:08,100
+<b>agent track kind of seems the most sensed target first</b>
+
+621
+01:36:08,100 --> 01:36:10,366
+<b>because it just you know software review</b>
+
+622
+01:36:10,533 --> 01:36:15,199
+<b>coding it just seems like they interact the most. I've</b>
+
+623
+01:36:15,199 --> 01:36:18,966
+<b>really I'm not very I don't really have much</b>
+
+624
+01:36:18,966 --> 01:36:22,699
+<b>experience with generalization of anything like this so</b>
+
+625
+01:36:22,699 --> 01:36:25,433
+<b>it's kind of tough for me to forge ground</b>
+
+626
+01:36:25,733 --> 01:36:28,766
+<b>but I can say like let's just target one track to</b>
+
+627
+01:36:28,766 --> 01:36:30,833
+<b>generalize towards and then once we're kind of</b>
+
+628
+01:36:30,933 --> 01:36:34,433
+<b>successful in that then we can find</b>
+
+629
+01:36:34,433 --> 01:36:36,666
+<b>another track that's kind of adjacent to that.</b>
+
+630
+01:36:37,566 --> 01:36:41,166
+<b>From what I understand I think the coding agent track is</b>
+
+631
+01:36:41,166 --> 01:36:45,366
+<b>isn't that the next segment of phase two?</b>
+
+632
+01:36:46,100 --> 01:36:49,266
+<b>Let me revisit the Berkeley website. Yeah</b>
+
+633
+01:36:49,266 --> 01:36:51,533
+<b>let me share it I am on the same website.</b>
+
+634
+01:36:53,966 --> 01:36:55,933
+<b>Are you able to see my screen? Should</b>
+
+635
+01:36:55,933 --> 01:36:59,566
+<b>be there. Yeah I think these are the</b>
+
+636
+01:37:01,633 --> 01:37:02,600
+<b>these are the tracks.</b>
+
+637
+01:37:07,333 --> 01:37:13,100
+<b>Yep. So you are saying this coding agenda one correct? I</b>
+
+638
+01:37:13,100 --> 01:37:16,033
+<b>was thinking so although it is in</b>
+
+639
+01:37:16,033 --> 01:37:20,533
+<b>the third sprint so it's kind of like if we run into</b>
+
+640
+01:37:20,533 --> 01:37:22,533
+<b>difficulty with the coding and software tests</b>
+
+641
+01:37:23,466 --> 01:37:29,300
+<b>sorry. Yeah I guess coding and software testing agents is</b>
+
+642
+01:37:29,300 --> 01:37:32,899
+<b>in the same sprint. Okay that makes</b>
+
+643
+01:37:32,933 --> 01:37:38,333
+<b>sense. Yeah in terms of multi-agent evaluation in the</b>
+
+644
+01:37:38,333 --> 01:37:40,766
+<b>second sprint I haven't reviewed the</b>
+
+645
+01:37:40,766 --> 01:37:46,033
+<b>repositories that got placed for that track so I think</b>
+
+646
+01:37:46,033 --> 01:37:48,333
+<b>before we commit to that I kind of want to</b>
+
+647
+01:37:48,333 --> 01:37:55,533
+<b>see what was ranked well because yeah I'm not sure and then</b>
+
+648
+01:37:55,533 --> 01:37:56,866
+<b>in terms of like research agent</b>
+
+649
+01:37:56,933 --> 01:38:02,066
+<b>um yeah I don't know I don't know how we'd be able to</b>
+
+650
+01:38:02,066 --> 01:38:04,033
+<b>generalize it towards research but</b>
+
+651
+01:38:04,199 --> 01:38:09,866
+<b>I can say that contextual debt could be applied to like</b>
+
+652
+01:38:09,866 --> 01:38:13,266
+<b>specific uh the specific like mission</b>
+
+653
+01:38:13,266 --> 01:38:16,066
+<b>and vision of what needs to be researched because like for</b>
+
+654
+01:38:16,066 --> 01:38:18,000
+<b>example when I use Google Gemini Pro and</b>
+
+655
+01:38:18,000 --> 01:38:21,166
+<b>it's deep research mode sometimes I get pretty specific</b>
+
+656
+01:38:21,166 --> 01:38:23,233
+<b>about what I want it to do and it goes</b>
+
+657
+01:38:23,233 --> 01:38:26,733
+<b>into a rabbit hole and spits out a report that it's really</b>
+
+658
+01:38:26,733 --> 01:38:28,333
+<b>great but it's completely different</b>
+
+659
+01:38:28,333 --> 01:38:33,466
+<b>than what I was hoping for it to research um so in terms of</b>
+
+660
+01:38:33,466 --> 01:38:36,133
+<b>like research agents I don't know if</b>
+
+661
+01:38:36,133 --> 01:38:39,333
+<b>that's like the same realm of what agents were being built</b>
+
+662
+01:38:39,333 --> 01:38:42,699
+<b>in this track. Yes. Which is I think</b>
+
+663
+01:38:43,800 --> 01:38:48,266
+<b>identity will be more relevant but let's see let me see the</b>
+
+664
+01:38:48,266 --> 01:38:50,100
+<b>the idea or the objective was they want</b>
+
+665
+01:38:50,133 --> 01:38:53,633
+<b>to achieve because there could be different description on</b>
+
+666
+01:38:53,633 --> 01:38:54,833
+<b>the meaning of the research agent</b>
+
+667
+01:38:54,833 --> 01:38:57,566
+<b>and the same thing for the agent safety just like the</b>
+
+668
+01:38:57,566 --> 01:38:59,699
+<b>environment in which it is running or just like</b>
+
+669
+01:38:59,699 --> 01:39:04,333
+<b>the agent itself. I think I echo what you are saying this</b>
+
+670
+01:39:04,333 --> 01:39:06,966
+<b>particular cyber security agent track</b>
+
+671
+01:39:07,066 --> 01:39:10,866
+<b>I'm not sure what they're demanding but yeah we if we have</b>
+
+672
+01:39:10,866 --> 01:39:12,533
+<b>the capability we can easily mold</b>
+
+673
+01:39:13,233 --> 01:39:18,033
+<b>also to also include the cyber security agent thing into</b>
+
+674
+01:39:18,033 --> 01:39:20,166
+<b>our thing. I think these three make</b>
+
+675
+01:39:20,166 --> 01:39:22,699
+<b>more sense to me as well which when I was</b>
+
+676
+01:39:22,699 --> 01:39:25,800
+<b>thinking about uh think okay we are on the</b>
+
+677
+01:39:26,766 --> 01:39:30,699
+<b>uh we are on the same thing and currently if I heard you</b>
+
+678
+01:39:30,699 --> 01:39:33,600
+<b>right Josh so the first we will try to</b>
+
+679
+01:39:33,866 --> 01:39:38,966
+<b>make it work for this one. Yeah I was generally expecting</b>
+
+680
+01:39:38,966 --> 01:39:41,766
+<b>that but uh if you do want to pivot to</b>
+
+681
+01:39:41,833 --> 01:39:45,500
+<b>cyber security or agent safety first I'm I'm okay with that</b>
+
+682
+01:39:45,500 --> 01:39:47,266
+<b>because it's not like I'm part set</b>
+
+683
+01:39:48,033 --> 01:39:52,533
+<b>on a specific track just yet. Okay. But I am I was just</b>
+
+684
+01:39:52,533 --> 01:39:54,433
+<b>thinking of targeting that because that's</b>
+
+685
+01:39:54,866 --> 01:39:57,866
+<b>kind of what we generally placed in for the last phase so I</b>
+
+686
+01:39:57,866 --> 01:39:59,266
+<b>figured it would be the easiest to go</b>
+
+687
+01:39:59,266 --> 01:40:02,733
+<b>for. I'm kind of just like a self-evaluating purple agent</b>
+
+688
+01:40:02,733 --> 01:40:06,266
+<b>but yeah I mean cyber security and</b>
+
+689
+01:40:06,933 --> 01:40:10,066
+<b>agent safety sound great too they're in the same realm so.</b>
+
+690
+01:40:10,766 --> 01:40:13,066
+<b>Okay then in that case okay who just</b>
+
+691
+01:40:13,066 --> 01:40:16,966
+<b>understand the working of this group itself so how the</b>
+
+692
+01:40:16,966 --> 01:40:20,066
+<b>working style works so let's say if I say</b>
+
+693
+01:40:20,266 --> 01:40:23,300
+<b>for example means I'm not sure for example I want to work</b>
+
+694
+01:40:23,300 --> 01:40:26,133
+<b>on cyber security agent tracks so how it's</b>
+
+695
+01:40:26,133 --> 01:40:29,300
+<b>like so first of all let's say like Bupulamark is like the</b>
+
+696
+01:40:29,300 --> 01:40:31,733
+<b>POC for these one they will sync up and</b>
+
+697
+01:40:32,033 --> 01:40:34,466
+<b>before making any changes they will put the TIDR or have a</b>
+
+698
+01:40:34,466 --> 01:40:36,633
+<b>meeting to discuss and then put out the</b>
+
+699
+01:40:36,633 --> 01:40:39,566
+<b>changes that's that's my understanding is this correct or</b>
+
+700
+01:40:39,566 --> 01:40:41,966
+<b>like do we follow a different process</b>
+
+701
+01:40:42,533 --> 01:40:46,466
+<b>uh because we all are different times I don't want you me</b>
+
+702
+01:40:46,466 --> 01:40:48,366
+<b>and mark working on the same problem</b>
+
+703
+01:40:48,666 --> 01:40:51,966
+<b>and then we we all are duplicating the efforts I don't want</b>
+
+704
+01:40:51,966 --> 01:40:55,600
+<b>this itself uh yes. Gosh so you're</b>
+
+705
+01:40:55,600 --> 01:40:58,866
+<b>you're kind of worrying about us like crossing each other's</b>
+
+706
+01:40:58,866 --> 01:41:01,233
+<b>paths a little bit um so you're</b>
+
+707
+01:41:01,233 --> 01:41:05,033
+<b>wondering if like we should target separate tracks each on</b>
+
+708
+01:41:05,033 --> 01:41:06,533
+<b>our own like each of us takes a</b>
+
+709
+01:41:07,100 --> 01:41:11,666
+<b>a track or is that what you're saying I don't know if I</b>
+
+710
+01:41:11,666 --> 01:41:15,066
+<b>understood you. Okay that's that's one way</b>
+
+711
+01:41:15,233 --> 01:41:21,366
+<b>means there's no conflict uh before working on this</b>
+
+712
+01:41:21,366 --> 01:41:23,066
+<b>particular task okay to give you example</b>
+
+713
+01:41:23,166 --> 01:41:24,166
+<b>let's say if there's a cyber</b>
+
+714
+01:41:24,166 --> 01:41:26,933
+<b>security agent track okay and now</b>
+
+715
+01:41:29,333 --> 01:41:34,033
+<b>we haven't we don't have our owner on this track okay and</b>
+
+716
+01:41:34,033 --> 01:41:36,133
+<b>as a surprise on meeting itself next</b>
+
+717
+01:41:36,199 --> 01:41:40,333
+<b>meeting we came to know three people are working without</b>
+
+718
+01:41:40,333 --> 01:41:44,466
+<b>any uh information or let's say they were</b>
+
+719
+01:41:44,466 --> 01:41:48,666
+<b>working they put same amount of efforts evaluating the same</b>
+
+720
+01:41:48,666 --> 01:41:51,899
+<b>track it means three people yeah they</b>
+
+721
+01:41:52,033 --> 01:41:54,566
+<b>did work but they they work on a duplicate problem or a</b>
+
+722
+01:41:54,566 --> 01:41:57,433
+<b>conflicting problem so how we</b>
+
+723
+01:41:57,866 --> 01:42:00,633
+<b>uh tackle this particular scenario because we have</b>
+
+724
+01:42:00,633 --> 01:42:03,866
+<b>different members and we are from different time</b>
+
+725
+01:42:03,866 --> 01:42:06,333
+<b>zone this is one thing and again we also are part of a</b>
+
+726
+01:42:06,333 --> 01:42:08,533
+<b>corporate job so it could deposit sometime</b>
+
+727
+01:42:08,766 --> 01:42:12,199
+<b>I'm working in morning and it's like common corporate</b>
+
+728
+01:42:12,199 --> 01:42:14,866
+<b>analogies which we see. So you're</b>
+
+729
+01:42:14,866 --> 01:42:17,300
+<b>talking about like the specific issues in the repository</b>
+
+730
+01:42:17,300 --> 01:42:19,533
+<b>and like what commits we're pushing to</b>
+
+731
+01:42:20,033 --> 01:42:27,566
+<b>um yes kind of okay kind of um I let's see are you familiar</b>
+
+732
+01:42:27,566 --> 01:42:30,866
+<b>with uh let's see uh Notion do you</b>
+
+733
+01:42:30,866 --> 01:42:35,899
+<b>think Notion would kind of help assist with managing yeah</b>
+
+734
+01:42:35,899 --> 01:42:37,666
+<b>Notion like a business tool that</b>
+
+735
+01:42:37,666 --> 01:42:40,766
+<b>we could use yes so so there are two things</b>
+
+736
+01:42:40,766 --> 01:42:45,033
+<b>either we can use asana or linear so means</b>
+
+737
+01:42:45,100 --> 01:42:50,133
+<b>means either either asana or linear means both are like a</b>
+
+738
+01:42:50,133 --> 01:42:52,433
+<b>project management tool and it gives</b>
+
+739
+01:42:52,433 --> 01:42:55,100
+<b>the more perspective itself here you are working on this</b>
+
+740
+01:42:55,100 --> 01:42:57,133
+<b>thing and whole team has the preview of</b>
+
+741
+01:42:57,133 --> 01:43:01,166
+<b>this that okay you know me know and other members know okay</b>
+
+742
+01:43:01,166 --> 01:43:03,266
+<b>okay this person working on this this</b>
+
+743
+01:43:03,266 --> 01:43:06,866
+<b>is like continued deadline and we can assume we can find</b>
+
+744
+01:43:06,866 --> 01:43:09,766
+<b>all the dogs over there means that I feel</b>
+
+745
+01:43:09,800 --> 01:43:13,800
+<b>would be more easy if we like collaborating in this manner</b>
+
+746
+01:43:14,800 --> 01:43:18,466
+<b>asana linear I like more advanced one of things either or</b>
+
+747
+01:43:18,466 --> 01:43:21,733
+<b>it's like here uh quant do you have</b>
+
+748
+01:43:21,733 --> 01:43:26,766
+<b>you used asana or linear before yeah we AWS actually use</b>
+
+749
+01:43:26,766 --> 01:43:29,633
+<b>asana um do you like it is it</b>
+
+750
+01:43:29,733 --> 01:43:35,933
+<b>your preference I don't like it but it's uh it's okay it's</b>
+
+751
+01:43:35,933 --> 01:43:38,500
+<b>okay yeah if it's Notion also it's fine</b>
+
+752
+01:43:38,533 --> 01:43:41,666
+<b>means the only way I want to make sure that we know that uh</b>
+
+753
+01:43:41,666 --> 01:43:43,966
+<b>what each person working on and</b>
+
+754
+01:43:44,266 --> 01:43:47,966
+<b>and there is no conflict of like say same two different</b>
+
+755
+01:43:47,966 --> 01:43:49,633
+<b>person are working on the same problem</b>
+
+756
+01:43:50,033 --> 01:43:56,633
+<b>and uh it comes as a surprise yeah I think if uh if I can</b>
+
+757
+01:43:56,633 --> 01:44:00,566
+<b>um have a comment on that one uh</b>
+
+758
+01:44:01,766 --> 01:44:05,466
+<b>I think in phase one we actually because uh firstly I was</b>
+
+759
+01:44:05,466 --> 01:44:06,966
+<b>more focused on lambda check so</b>
+
+760
+01:44:07,633 --> 01:44:10,533
+<b>uh and then why Josh is uh more</b>
+
+761
+01:44:10,533 --> 01:44:14,000
+<b>focused on the local match check so uh I</b>
+
+762
+01:44:14,833 --> 01:44:18,233
+<b>I actually don't know much about like how how we actually</b>
+
+763
+01:44:18,233 --> 01:44:21,699
+<b>handle the the um like people</b>
+
+764
+01:44:21,733 --> 01:44:26,533
+<b>uh different people working on um like over might be</b>
+
+765
+01:44:26,533 --> 01:44:28,399
+<b>working on overlapping problems but</b>
+
+766
+01:44:29,233 --> 01:44:34,033
+<b>um my comment will be because there are actually a few more</b>
+
+767
+01:44:34,033 --> 01:44:36,133
+<b>folks right in the in the team so</b>
+
+768
+01:44:37,100 --> 01:44:41,533
+<b>uh in phase one we don't have a good approach to handle</b>
+
+769
+01:44:41,533 --> 01:44:45,300
+<b>this uh if it's two maybe that's uh</b>
+
+770
+01:44:45,633 --> 01:44:49,666
+<b>something we need to handle but my my comment will be maybe</b>
+
+771
+01:44:49,666 --> 01:44:51,199
+<b>we should discuss with the other team</b>
+
+772
+01:44:51,199 --> 01:44:55,366
+<b>other team members um like Notion,</b>
+
+773
+01:44:55,966 --> 01:44:59,300
+<b>Asana, or like Jira they all works right</b>
+
+774
+01:44:59,399 --> 01:45:07,133
+<b>uh we just need to uh pick one and uh yeah I don't think</b>
+
+775
+01:45:07,133 --> 01:45:09,133
+<b>it's uh it would be too difficult to</b>
+
+776
+01:45:09,233 --> 01:45:13,933
+<b>to manage uh right because it's uh it's a still small team</b>
+
+777
+01:45:13,933 --> 01:45:18,333
+<b>um so yeah I don't have strong preference</b>
+
+778
+01:45:18,366 --> 01:45:23,133
+<b>but maybe we can defer to do a discussion with other team</b>
+
+779
+01:45:23,133 --> 01:45:26,600
+<b>folks together if that makes sense.</b>
+
+780
+01:45:27,000 --> 01:45:29,766
+<b>I'd like to hear a little bit more feedback with the</b>
+
+781
+01:45:29,766 --> 01:45:31,600
+<b>whoever else we'll be working on for</b>
+
+782
+01:45:31,600 --> 01:45:35,500
+<b>generalization um especially if that professor comes in</b>
+
+783
+01:45:35,500 --> 01:45:37,366
+<b>with his students if they're familiar with</b>
+
+784
+01:45:38,000 --> 01:45:40,866
+<b>some kind of project management software that would be good</b>
+
+785
+01:45:40,866 --> 01:45:43,766
+<b>to know about um as for phase one</b>
+
+786
+01:45:43,866 --> 01:45:47,399
+<b>it was honestly it was pretty unorganized what we typically</b>
+
+787
+01:45:47,399 --> 01:45:50,433
+<b>relied on uh was marked down files for</b>
+
+788
+01:45:50,433 --> 01:45:56,899
+<b>documentation and um and I think what I did for the early</b>
+
+789
+01:45:56,899 --> 01:45:58,666
+<b>stage of phase one was I was just relying</b>
+
+790
+01:45:58,666 --> 01:46:03,233
+<b>on discord messages in in our server um so like you know</b>
+
+791
+01:46:03,233 --> 01:46:04,833
+<b>somebody put together the foundation for</b>
+
+792
+01:46:04,833 --> 01:46:09,366
+<b>the green and purple agent and then um you know Quan had</b>
+
+793
+01:46:09,366 --> 01:46:11,833
+<b>his initial PR for the lambda track so</b>
+
+794
+01:46:12,199 --> 01:46:16,833
+<b>I took a look at the red uh the the red agent and then um</b>
+
+795
+01:46:16,833 --> 01:46:19,699
+<b>eventually uh Alexander he kind of jumped</b>
+
+796
+01:46:19,733 --> 01:46:23,333
+<b>in later in the game so the repo was mostly built out and</b>
+
+797
+01:46:23,333 --> 01:46:26,500
+<b>um we kind of just tag teamed it like he</b>
+
+798
+01:46:26,600 --> 01:46:29,899
+<b>DMed me and was like hey I just did a bunch of work on this</b>
+
+799
+01:46:29,899 --> 01:46:32,266
+<b>with the red agent and then I was</b>
+
+800
+01:46:32,266 --> 01:46:36,266
+<b>looking at you know like just most mostly like the</b>
+
+801
+01:46:36,266 --> 01:46:39,833
+<b>overarching uh sandbarks uh docker architecture</b>
+
+802
+01:46:40,433 --> 01:46:45,000
+<b>um in the last month of the project it was really just me</b>
+
+803
+01:46:45,000 --> 01:46:47,933
+<b>and him working on it um but the early</b>
+
+804
+01:46:48,066 --> 01:46:50,899
+<b>stages I can admit it was pretty unorganized so we would</b>
+
+805
+01:46:50,899 --> 01:46:54,166
+<b>really benefit from using uh you know</b>
+
+806
+01:46:54,166 --> 01:46:59,133
+<b>Jira linear Asana um I'll put these in our notes for this</b>
+
+807
+01:46:59,133 --> 01:47:01,866
+<b>uh this meeting so that we uh we can pick</b>
+
+808
+01:47:01,866 --> 01:47:06,466
+<b>something ideally uh in the next week or so uh in the next</b>
+
+809
+01:47:06,466 --> 01:47:08,133
+<b>few days maybe it would be good too</b>
+
+810
+01:47:09,466 --> 01:47:11,766
+<b>and I'll bring it up when uh I talked</b>
+
+811
+01:47:11,766 --> 01:47:15,233
+<b>to the professor to uh see if he wants to</b>
+
+812
+01:47:15,266 --> 01:47:17,566
+<b>give an opinion on that too</b>
+
+813
+01:47:21,966 --> 01:47:28,766
+<b>make sense to me uh quick question uh which uh which</b>
+
+814
+01:47:28,766 --> 01:47:31,533
+<b>account like in the server is uh Alexander</b>
+
+815
+01:47:32,666 --> 01:47:36,433
+<b>it's like that oh yeah his uh his username</b>
+
+816
+01:47:36,433 --> 01:47:43,233
+<b>is let's see aed oh okay okay yeah that's uh</b>
+
+817
+01:47:43,233 --> 01:47:46,433
+<b>that's what I thought actually oh okay yeah thank you for</b>
+
+818
+01:47:46,433 --> 01:47:50,899
+<b>yeah for sure and um right now he's</b>
+
+819
+01:47:50,899 --> 01:47:53,699
+<b>kind of he's kind of taking a step back and taking a look</b>
+
+820
+01:47:53,699 --> 01:47:56,366
+<b>at like whether or not it will be a good</b>
+
+821
+01:47:56,366 --> 01:48:01,466
+<b>idea to try and create like a github app out of what we</b>
+
+822
+01:48:01,466 --> 01:48:05,866
+<b>currently have um so I need to talk to</b>
+
+823
+01:48:05,866 --> 01:48:08,500
+<b>him and see like how involved he wants to be for phase two</b>
+
+824
+01:48:08,500 --> 01:48:11,300
+<b>because um you know he's kind of just</b>
+
+825
+01:48:11,333 --> 01:48:17,766
+<b>been doing some research about that um but yeah other than</b>
+
+826
+01:48:17,766 --> 01:48:21,899
+<b>that um I don't know yeah it seems like</b>
+
+827
+01:48:21,899 --> 01:48:24,366
+<b>he doesn't want to be as involved in the in the competition</b>
+
+828
+01:48:24,366 --> 01:48:26,233
+<b>this round so what I do need to do is</b>
+
+829
+01:48:26,233 --> 01:48:29,333
+<b>like figure out what information we can get concerning how</b>
+
+830
+01:48:29,333 --> 01:48:30,666
+<b>he built the red agent architecture</b>
+
+831
+01:48:30,766 --> 01:48:34,266
+<b>because uh it seems to be the most important for this so it</b>
+
+832
+01:48:34,266 --> 01:48:35,466
+<b>would be great to include him in a</b>
+
+833
+01:48:35,666 --> 01:48:43,533
+<b>meeting uh sometime soon yeah let me know if you guys have</b>
+
+834
+01:48:43,533 --> 01:48:44,833
+<b>any questions for him you can</b>
+
+835
+01:48:45,066 --> 01:48:49,000
+<b>just honestly you can just pop him in the server and ask uh</b>
+
+836
+01:48:49,000 --> 01:48:50,933
+<b>see if he can respond to them for that</b>
+
+837
+01:48:51,000 --> 01:48:54,100
+<b>just feel free to to tag him at him</b>
+
+838
+01:48:54,100 --> 01:48:59,133
+<b>you know I'll let him know yeah yeah yeah</b>
+
+839
+01:48:59,166 --> 01:49:03,933
+<b>yeah oh one whole thing Josh we haven't</b>
+
+840
+01:49:03,933 --> 01:49:07,166
+<b>started working on anything for the phase two</b>
+
+841
+01:49:07,800 --> 01:49:12,166
+<b>as of now that's correct okay we will like we will break</b>
+
+842
+01:49:12,166 --> 01:49:13,633
+<b>this from and then we will see what</b>
+
+843
+01:49:13,633 --> 01:49:16,233
+<b>are the different changes that we can do and then we'll do</b>
+
+844
+01:49:16,233 --> 01:49:19,366
+<b>okay yeah for now I'll just focus on</b>
+
+845
+01:49:19,366 --> 01:49:23,133
+<b>uh documentation to kind of you know help the both of you</b>
+
+846
+01:49:23,133 --> 01:49:25,966
+<b>so yeah any any questions you can submit</b>
+
+847
+01:49:26,033 --> 01:49:30,266
+<b>in the server um I'll make sure that uh everything is</b>
+
+848
+01:49:30,266 --> 01:49:32,766
+<b>covered regarding those and more you know just</b>
+
+849
+01:49:32,766 --> 01:49:36,233
+<b>general overview and I'll be able to uh</b>
+
+850
+01:49:36,233 --> 01:49:39,533
+<b>put specific file paths in the documents too</b>
+
+851
+01:49:40,133 --> 01:49:43,166
+<b>and uh yeah in the meantime I'll look into trying to figure</b>
+
+852
+01:49:43,166 --> 01:49:45,633
+<b>out like the pros and cons of each of</b>
+
+853
+01:49:45,633 --> 01:49:48,233
+<b>the business management software that you guys suggested</b>
+
+854
+01:49:48,233 --> 01:49:53,300
+<b>and um I'll I'll like just send out</b>
+
+855
+01:49:53,333 --> 01:49:57,266
+<b>a message when I uh feel like we've identified something</b>
+
+856
+01:49:57,266 --> 01:50:00,100
+<b>that's best for us but honestly I've</b>
+
+857
+01:50:00,100 --> 01:50:03,066
+<b>just I've never used those three tools so and I barely use</b>
+
+858
+01:50:03,066 --> 01:50:04,566
+<b>Notion really so I don't know if it's</b>
+
+859
+01:50:04,566 --> 01:50:07,666
+<b>best for that either so but we'll pick something this week</b>
+
+860
+01:50:07,666 --> 01:50:09,766
+<b>we can we can find something that'll work</b>
+
+861
+01:50:10,899 --> 01:50:12,366
+<b>okay um</b>
+
+862
+01:50:15,399 --> 01:50:18,066
+<b>although most of our conversation will be in our sync</b>
+
+863
+01:50:18,066 --> 01:50:20,166
+<b>manner itself on the discord server something</b>
+
+864
+01:50:20,433 --> 01:50:26,166
+<b>but uh uh just for my understanding do we have monthly or</b>
+
+865
+01:50:26,166 --> 01:50:27,966
+<b>weekly cadence do we want to have</b>
+
+866
+01:50:27,966 --> 01:50:31,199
+<b>monthly or weekly cadence with the team or what's a part of</b>
+
+867
+01:50:31,199 --> 01:50:34,133
+<b>it so we know okay what's the tldr option</b>
+
+868
+01:50:34,133 --> 01:50:39,966
+<b>what everyone is working on if not let's see how we can</b>
+
+869
+01:50:39,966 --> 01:50:42,566
+<b>work it both question do you think</b>
+
+870
+01:50:42,566 --> 01:50:45,633
+<b>I think that would be good I think we could benefit from</b>
+
+871
+01:50:45,633 --> 01:50:48,033
+<b>that um are you guys always free</b>
+
+872
+01:50:48,066 --> 01:50:51,333
+<b>around this time like uh when you started the meeting or</b>
+
+873
+01:50:51,333 --> 01:50:53,033
+<b>did you have to move things around</b>
+
+874
+01:50:54,933 --> 01:50:56,266
+<b>this time I'm available</b>
+
+875
+01:50:56,533 --> 01:51:01,766
+<b>okay uh mark are you free around this</b>
+
+876
+01:51:01,766 --> 01:51:07,833
+<b>time too like uh usually yeah if uh if we</b>
+
+877
+01:51:08,199 --> 01:51:12,233
+<b>yes uh just if we schedule like a half time usually it</b>
+
+878
+01:51:12,233 --> 01:51:16,666
+<b>works yeah okay sweet so I guess for</b>
+
+879
+01:51:16,699 --> 01:51:20,533
+<b>now we can just like we could we could try and schedule</b>
+
+880
+01:51:20,533 --> 01:51:22,933
+<b>another meeting for next Saturday around</b>
+
+881
+01:51:22,933 --> 01:51:26,533
+<b>8 p.m see how it goes I'm not going to put it down as a</b>
+
+882
+01:51:26,533 --> 01:51:28,399
+<b>requirement or anything but I agree I think</b>
+
+883
+01:51:28,399 --> 01:51:30,933
+<b>it would be good for us to to meet once a week just to make</b>
+
+884
+01:51:30,933 --> 01:51:33,566
+<b>sure that we have all of our gaps cleared so</b>
+
+885
+01:51:35,033 --> 01:51:38,933
+<b>yeah yeah and also get the viewpoint from other council</b>
+
+886
+01:51:38,933 --> 01:51:41,533
+<b>because who worked on it like how we can</b>
+
+887
+01:51:41,566 --> 01:51:46,566
+<b>make it in a more generalized I think then those idea will</b>
+
+888
+01:51:46,566 --> 01:51:49,000
+<b>help each of us most probably</b>
+
+889
+01:51:50,033 --> 01:51:53,466
+<b>yeah absolutely I want to come I want to get Alexander in</b>
+
+890
+01:51:53,466 --> 01:51:57,366
+<b>here uh Alexander uh it's funny his</b>
+
+891
+01:51:57,366 --> 01:52:00,800
+<b>name starts with an o instead of an a it sounds like</b>
+
+892
+01:52:00,800 --> 01:52:03,300
+<b>Alexander um but yeah I'll try and have him</b>
+
+893
+01:52:03,333 --> 01:52:07,066
+<b>in here next week and uh yeah</b>
+
+894
+01:52:07,066 --> 01:52:09,100
+<b>well in the meantime we'll just uh</b>
+
+895
+01:52:10,366 --> 01:52:14,266
+<b>yeah I don't know pick business software get those overview</b>
+
+896
+01:52:14,266 --> 01:52:16,833
+<b>documents is there anything else you</b>
+
+897
+01:52:16,833 --> 01:52:22,000
+<b>feel like we should cover uh no nothing I think first of</b>
+
+898
+01:52:22,000 --> 01:52:24,533
+<b>all I also need to go with this track</b>
+
+899
+01:52:24,533 --> 01:52:27,733
+<b>itself to see that what is which you required because I was</b>
+
+900
+01:52:27,733 --> 01:52:29,866
+<b>part of a different track so in</b>
+
+901
+01:52:29,899 --> 01:52:33,333
+<b>which format they required all those things so yes and</b>
+
+902
+01:52:33,333 --> 01:52:37,066
+<b>regarding the okay then I will register</b>
+
+903
+01:52:38,266 --> 01:52:39,866
+<b>for all other tech except the</b>
+
+904
+01:52:39,866 --> 01:52:42,100
+<b>lambda or the logo mesh that's correct</b>
+
+905
+01:52:42,133 --> 01:52:49,233
+<b>uh yeah that's that sounds good um I need to check I need</b>
+
+906
+01:52:49,233 --> 01:52:50,600
+<b>to check with one of our teammates</b>
+
+907
+01:52:50,600 --> 01:52:55,466
+<b>because I think she registered us but I don't know if she I</b>
+
+908
+01:52:55,466 --> 01:52:56,666
+<b>don't know I think it would be good if</b>
+
+909
+01:52:56,699 --> 01:53:00,366
+<b>if we re-registered so I have to ask her questions about</b>
+
+910
+01:53:00,366 --> 01:53:03,600
+<b>that that was uh deep deep it was like it</b>
+
+911
+01:53:03,600 --> 01:53:07,899
+<b>was like uh two three weeks ago she offered to register for</b>
+
+912
+01:53:07,899 --> 01:53:10,500
+<b>just the the google sign up form not</b>
+
+913
+01:53:10,500 --> 01:53:14,433
+<b>to land the track so yeah I need to interface with her on</b>
+
+914
+01:53:14,433 --> 01:53:16,133
+<b>that because you know we're having</b>
+
+915
+01:53:16,133 --> 01:53:19,233
+<b>you on the team we we want you to have your email on there</b>
+
+916
+01:53:19,233 --> 01:53:21,466
+<b>and everything so we might end up</b>
+
+917
+01:53:21,500 --> 01:53:26,033
+<b>pre-registering yeah but yeah we did we did select all the</b>
+
+918
+01:53:26,033 --> 01:53:28,800
+<b>tracks in the sign up form sure</b>
+
+919
+01:53:29,166 --> 01:53:31,800
+<b>so for the individual I will do it and I think for the team</b>
+
+920
+01:53:31,800 --> 01:53:33,433
+<b>if it was not there we can like</b>
+
+921
+01:53:34,100 --> 01:53:38,100
+<b>again it is submitted that should not be so okay I think</b>
+
+922
+01:53:38,100 --> 01:53:40,066
+<b>sounds good now there are two</b>
+
+923
+01:53:40,133 --> 01:53:43,166
+<b>action items on me first of all go to the repo uh and</b>
+
+924
+01:53:43,166 --> 01:53:45,933
+<b>understand and just try to find out how we</b>
+
+925
+01:53:45,966 --> 01:53:50,100
+<b>can make it more generalized in the manner and and you</b>
+
+926
+01:53:50,100 --> 01:53:52,933
+<b>mentioned I think Alexander um</b>
+
+927
+01:53:54,266 --> 01:53:56,666
+<b>would be able to like join the phase two that's correct</b>
+
+928
+01:53:56,666 --> 01:54:00,833
+<b>most probably um I think you'll be able</b>
+
+929
+01:54:00,833 --> 01:54:05,833
+<b>to jump in a little bit um okay it's it's kind of difficult</b>
+
+930
+01:54:05,833 --> 01:54:08,133
+<b>because he's uh he's taking a couple</b>
+
+931
+01:54:08,133 --> 01:54:09,933
+<b>classes right now so I don't know what his</b>
+
+932
+01:54:09,933 --> 01:54:12,500
+<b>availability is but I really want him on the</b>
+
+933
+01:54:12,533 --> 01:54:15,866
+<b>team so that he can kind of discuss the red agent so that</b>
+
+934
+01:54:15,866 --> 01:54:17,733
+<b>we don't have to reverse engineer it</b>
+
+935
+01:54:18,166 --> 01:54:24,600
+<b>um but yeah uh let's let me interface with him uh and see</b>
+
+936
+01:54:24,600 --> 01:54:26,866
+<b>what kind of time he's able to commit to</b>
+
+937
+01:54:27,466 --> 01:54:31,566
+<b>and uh yeah I'll get back to you on that I think it'll be</b>
+
+938
+01:54:31,566 --> 01:54:32,566
+<b>great to have him on the team</b>
+
+939
+01:54:34,133 --> 01:54:38,666
+<b>okay awesome I think yeah please this for all the high</b>
+
+940
+01:54:38,666 --> 01:54:40,333
+<b>level question that I had and for the</b>
+
+941
+01:54:40,366 --> 01:54:43,033
+<b>other one I will like to destroy you guys on the discord</b>
+
+942
+01:54:43,033 --> 01:54:47,133
+<b>server itself and yeah anything else</b>
+
+943
+01:54:47,399 --> 01:54:51,933
+<b>from your side Joshua mark that we can improve on that we</b>
+
+944
+01:54:51,933 --> 01:54:53,600
+<b>should do on a priority basis</b>
+
+945
+01:54:55,866 --> 01:55:01,066
+<b>I'm good for now um yeah I'm good I'm just gonna review</b>
+
+946
+01:55:01,066 --> 01:55:03,233
+<b>that uh live stream concerning the lambda</b>
+
+947
+01:55:03,366 --> 01:55:07,966
+<b>track and make sure that I like fully understand it um and</b>
+
+948
+01:55:07,966 --> 01:55:09,800
+<b>then concerning the other tracks I'll</b>
+
+949
+01:55:10,366 --> 01:55:13,933
+<b>kind of just look into the winning repositories uh what</b>
+
+950
+01:55:13,933 --> 01:55:16,766
+<b>kind of details we have about uh the phase</b>
+
+951
+01:55:16,766 --> 01:55:20,399
+<b>two competition regarding that so that we don't get uh you</b>
+
+952
+01:55:20,399 --> 01:55:23,066
+<b>know blindsided by anything like a</b>
+
+953
+01:55:23,066 --> 01:55:27,300
+<b>month from now you know um so I'll create a</b>
+
+954
+01:55:27,300 --> 01:55:29,866
+<b>little planning document for that too and uh</b>
+
+955
+01:55:29,866 --> 01:55:32,066
+<b>I think you mentioned earlier we need to have like a</b>
+
+956
+01:55:32,066 --> 01:55:35,100
+<b>general list of objectives uh ahead of</b>
+
+957
+01:55:35,466 --> 01:55:40,433
+<b>the business planning uh software I'll I'll start creating</b>
+
+958
+01:55:40,433 --> 01:55:42,066
+<b>something that includes all of that too</b>
+
+959
+01:55:42,266 --> 01:55:45,166
+<b>with specific file path references for that so it'll kind</b>
+
+960
+01:55:45,166 --> 01:55:47,233
+<b>of just you'll be able to use it hand in</b>
+
+961
+01:55:47,233 --> 01:55:53,966
+<b>hand with the uh high level overview docs um yeah yeah that</b>
+
+962
+01:55:53,966 --> 01:55:55,833
+<b>would be great because I feel like uh</b>
+
+963
+01:55:56,033 --> 01:55:59,366
+<b>if we have long-term objective very clear it will make</b>
+
+964
+01:55:59,366 --> 01:56:01,366
+<b>things very simple means no one will</b>
+
+965
+01:56:01,399 --> 01:56:05,366
+<b>tide us to like agenda only means one way of thinking of</b>
+
+966
+01:56:05,366 --> 01:56:07,133
+<b>like logo machine was created as a</b>
+
+967
+01:56:07,133 --> 01:56:09,633
+<b>part of agenda the other way of thinking like it was</b>
+
+968
+01:56:09,633 --> 01:56:11,733
+<b>created a part of this but it's gonna solve</b>
+
+969
+01:56:12,266 --> 01:56:15,533
+<b>some other future level for objective which is not related</b>
+
+970
+01:56:15,533 --> 01:56:17,433
+<b>to agenda so I just want that</b>
+
+971
+01:56:18,100 --> 01:56:21,633
+<b>people have both perception not only one that it's only for</b>
+
+972
+01:56:21,633 --> 01:56:25,266
+<b>agenda no of course yeah everything</b>
+
+973
+01:56:25,333 --> 01:56:28,133
+<b>here has to do just strictly with the competition that's</b>
+
+974
+01:56:28,133 --> 01:56:30,166
+<b>kind of why Alexander's just kind of just</b>
+
+975
+01:56:30,199 --> 01:56:34,433
+<b>taken a step back I think he he forked the repo and I think</b>
+
+976
+01:56:34,433 --> 01:56:36,000
+<b>he's pushing to like a completely</b>
+
+977
+01:56:36,033 --> 01:56:42,433
+<b>separate repository for his like github app idea um yeah in</b>
+
+978
+01:56:42,433 --> 01:56:45,600
+<b>terms of the honestly I really don't</b>
+
+979
+01:56:45,600 --> 01:56:49,466
+<b>know where this is going to take us I don't really have a</b>
+
+980
+01:56:49,466 --> 01:56:52,233
+<b>direct plan outlined I just have a bunch of</b>
+
+981
+01:56:52,600 --> 01:56:55,833
+<b>suggestions that I've discovered across several of my own</b>
+
+982
+01:56:55,833 --> 01:56:58,166
+<b>documents so what I'll do is like I'll</b>
+
+983
+01:56:58,233 --> 01:57:01,733
+<b>compile that for like the general vision of what I'm hoping</b>
+
+984
+01:57:01,733 --> 01:57:04,600
+<b>of but ideally what I'm hoping of is</b>
+
+985
+01:57:04,600 --> 01:57:09,933
+<b>like it's going to use the same uh you know leaderboard uh</b>
+
+986
+01:57:09,933 --> 01:57:12,666
+<b>framework and then when it identifies</b>
+
+987
+01:57:12,766 --> 01:57:16,300
+<b>like how it's being requested through that as a purple</b>
+
+988
+01:57:16,300 --> 01:57:19,966
+<b>agent um it's able to either I mean</b>
+
+989
+01:57:20,033 --> 01:57:22,633
+<b>ideally we would switch from something like hot swapping</b>
+
+990
+01:57:22,633 --> 01:57:24,500
+<b>modes and then eventually I think when</b>
+
+991
+01:57:24,533 --> 01:57:28,399
+<b>we generalize them enough it'll just be naturally using</b>
+
+992
+01:57:28,399 --> 01:57:30,666
+<b>whatever we implement in in various different</b>
+
+993
+01:57:30,666 --> 01:57:34,733
+<b>ways instead of just like a direct uh hard-line mode but</b>
+
+994
+01:57:34,733 --> 01:57:36,433
+<b>right now it's like it's really it's</b>
+
+995
+01:57:36,433 --> 01:57:41,033
+<b>over-optimized for like one specific track so yeah I mean</b>
+
+996
+01:57:41,033 --> 01:57:42,933
+<b>that's all I have to add for now but yeah</b>
+
+997
+01:57:43,100 --> 01:57:45,866
+<b>I'll come up with that planning document too it'll be</b>
+
+998
+01:57:45,866 --> 01:57:48,133
+<b>really it'll be pretty general for now but I'll</b>
+
+999
+01:57:48,133 --> 01:57:50,633
+<b>try to include specific file paths concerning what I'm</b>
+
+1000
+01:57:50,633 --> 01:57:52,566
+<b>thinking first so you can look at the code</b>
+
+1001
+01:57:53,666 --> 01:57:57,533
+<b>issue that would be great for everyone I think yeah</b>
+
+1002
+01:57:59,800 --> 01:58:02,733
+<b>okay so next week we will meet</b>
+
+1003
+01:58:02,733 --> 01:58:04,699
+<b>at the same time that's correct</b>
+
+1004
+01:58:04,699 --> 01:58:09,533
+<b>uh yeah yeah let's let's aim for uh</b>
+
+1005
+01:58:09,533 --> 01:58:12,933
+<b>8 p.m is it is it 7 a.m your time or</b>
+
+1006
+01:58:13,699 --> 01:58:16,533
+<b>so my time currently it's it 8 p.m</b>
+
+1007
+01:58:16,533 --> 01:58:22,133
+<b>is 9 30 a.m I can also yes yeah cool</b>
+
+1008
+01:58:23,066 --> 01:58:26,566
+<b>okay yeah yeah let's let's aim for that um a few days</b>
+
+1009
+01:58:26,566 --> 01:58:29,033
+<b>before then I'll drop another link</b>
+
+1010
+01:58:29,333 --> 01:58:32,933
+<b>in the discord and we can go from there hopefully we'll uh</b>
+
+1011
+01:58:32,933 --> 01:58:35,333
+<b>yeah make some progress yes and I think</b>
+
+1012
+01:58:35,333 --> 01:58:38,166
+<b>you already have mail from our site or you can like put a</b>
+
+1013
+01:58:38,166 --> 01:58:40,166
+<b>blocker on our calendar as well</b>
+
+1014
+01:58:40,766 --> 01:58:45,533
+<b>so we can see on the collected cell between blog oh what</b>
+
+1015
+01:58:45,533 --> 01:58:48,433
+<b>sorry okay okay so I was thinking instead</b>
+
+1016
+01:58:48,433 --> 01:58:51,333
+<b>of testing the link you can like schedule</b>
+
+1017
+01:58:51,333 --> 01:58:54,133
+<b>a meeting link on the google itself so that</b>
+
+1018
+01:58:54,133 --> 01:58:57,033
+<b>our calendar will be blocked and I will see okay I was</b>
+
+1019
+01:58:57,033 --> 01:58:58,866
+<b>waiting and I don't forget about the meeting</b>
+
+1020
+01:58:59,166 --> 01:59:03,166
+<b>oh like a calendar request yes yes yes correct yeah let's</b>
+
+1021
+01:59:03,166 --> 01:59:06,533
+<b>uh let's schedule that right now um</b>
+
+1022
+01:59:07,500 --> 01:59:12,566
+<b>let's see let me yeah I'll just</b>
+
+1023
+01:59:12,566 --> 01:59:17,066
+<b>call it weekly logo mesh agent beats</b>
+
+1024
+01:59:19,966 --> 01:59:20,966
+<b>um phase two</b>
+
+1025
+01:59:23,233 --> 01:59:30,933
+<b>meeting uh let's see next week that is march 7th from 8 p.m</b>
+
+1026
+01:59:31,366 --> 01:59:35,766
+<b>pacific time uh repeats weekly on saturday</b>
+
+1027
+01:59:35,766 --> 01:59:40,166
+<b>and then uh I'm trying to figure out how to</b>
+
+1028
+01:59:40,199 --> 01:59:42,066
+<b>invite you as a guest here oh can I</b>
+
+1029
+01:59:42,066 --> 01:59:46,533
+<b>have an email yes well I'm passing you</b>
+
+1030
+01:59:49,166 --> 01:59:51,333
+<b>yeah let me check here I think I already</b>
+
+1031
+01:59:51,333 --> 01:59:54,233
+<b>have it yes but I've also given you that the</b>
+
+1032
+01:59:54,433 --> 01:59:59,699
+<b>uh google chat as well oh okay thank you appreciate it okay</b>
+
+1033
+01:59:59,699 --> 02:00:01,899
+<b>uh yeah mark if you could send me one</b>
+
+1034
+02:00:02,600 --> 02:00:05,666
+<b>two for the google calendar that would be good too</b>
+
+1035
+02:00:11,866 --> 02:00:17,000
+<b>okay sweet so let me just finish setting that up here</b>
+
+1036
+02:00:21,166 --> 02:00:22,399
+<b>okay um</b>
+
+1037
+02:00:25,633 --> 02:00:28,300
+<b>yeah um I'll alter it right now</b>
+
+1038
+02:00:28,300 --> 02:00:32,399
+<b>I'll just click save and uh send it out</b>
+
+1039
+02:00:34,199 --> 02:00:35,966
+<b>okay hopefully that worked let</b>
+
+1040
+02:00:35,966 --> 02:00:37,800
+<b>me know if you guys received that</b>
+
+1041
+02:00:40,933 --> 02:00:41,533
+<b>not yet</b>
+
+1042
+02:00:41,833 --> 02:00:50,566
+<b>yeah yeah got you okay sweet and then</b>
+
+1043
+02:00:50,566 --> 02:00:53,133
+<b>just in case it gets lost I'm going to</b>
+
+1044
+02:00:53,966 --> 02:00:56,533
+<b>put the invite link in the discord</b>
+
+1045
+02:00:56,533 --> 02:00:58,333
+<b>server for later and I'll just uh</b>
+
+1046
+02:00:59,033 --> 02:01:02,333
+<b>I'll pin that to the major updates channel</b>
+
+1047
+02:01:05,966 --> 02:01:09,833
+<b>okay sweet um yeah yeah that's good</b>
+
+1048
+02:01:09,833 --> 02:01:11,399
+<b>we can always add more people to that</b>
+
+1049
+02:01:12,033 --> 02:01:16,933
+<b>um I'll invite uh Alex Alexander to the next one</b>
+
+1050
+02:01:19,533 --> 02:01:24,733
+<b>awesome okay then I think uh let me uh next</b>
+
+1051
+02:01:24,733 --> 02:01:27,733
+<b>week itself and yeah I will also go through</b>
+
+1052
+02:01:27,733 --> 02:01:31,633
+<b>all the things uh very structured different track by next</b>
+
+1053
+02:01:31,633 --> 02:01:35,933
+<b>week hopefully okay all right yeah happy</b>
+
+1054
+02:01:35,966 --> 02:01:39,766
+<b>to hear it um and I'll keep you guys posted about uh my</b>
+
+1055
+02:01:39,766 --> 02:01:41,466
+<b>communications with that professor too</b>
+
+1056
+02:01:41,866 --> 02:01:45,266
+<b>or do you guys want to see his linkedin or should we just</b>
+
+1057
+02:01:45,266 --> 02:01:48,233
+<b>um I could see yeah you can you can you</b>
+
+1058
+02:01:48,233 --> 02:01:53,133
+<b>can pass the link then I can take a look okay sweet yeah</b>
+
+1059
+02:01:53,133 --> 02:01:55,133
+<b>I'll just send that before we hop off</b>
+
+1060
+02:01:55,133 --> 02:01:56,666
+<b>here we go</b>
+
+1061
+02:01:59,066 --> 02:02:01,333
+<b>yes</b>
+
+1062
+02:02:02,199 --> 02:02:05,000
+<b>so that's that's his linkedin I</b>
+
+1063
+02:02:05,000 --> 02:02:06,500
+<b>just put it in the google meet chat</b>
+
+1064
+02:02:07,066 --> 02:02:11,699
+<b>uh he seems like he's got a pretty big reputation with</b>
+
+1065
+02:02:11,699 --> 02:02:13,733
+<b>publishing so I'm really hoping you can</b>
+
+1066
+02:02:14,366 --> 02:02:20,566
+<b>help us out with that um yeah okay sweet</b>
+
+1067
+02:02:20,899 --> 02:02:26,500
+<b>okay yeah well uh yeah I really appreciate you guys hopping</b>
+
+1068
+02:02:26,500 --> 02:02:30,000
+<b>on tonight and uh yeah yeah thank</b>
+
+1069
+02:02:30,000 --> 02:02:33,933
+<b>you very much for uh like contributing to this you know oh</b>
+
+1070
+02:02:33,933 --> 02:02:37,066
+<b>I want to keep this I don't know yeah</b>
+
+1071
+02:02:37,066 --> 02:02:42,500
+<b>is that the sea roper but yeah</b>
+
+1072
+02:02:42,500 --> 02:02:46,933
+<b>great yeah this is really fun so um</b>
+
+1073
+02:03:14,033 --> 02:03:15,233
+<b>thank you okay then thanks to you and have a great night for you and</b>
+
