@@ -50,6 +50,7 @@ Architecture:
 """
 
 import asyncio
+from abc import ABC, abstractmethod
 import json
 import math
 import os
@@ -164,6 +165,52 @@ class ThoughtNode:
             node = node.parent
 
 
+class ActionSpace(ABC):
+    """
+    Defines what the MCTS tree is allowed to explore.
+
+    Code analysis and text-based attacks need completely different tools,
+    prompts, and scoring heuristics — but the tree search mechanics
+    (UCB1, backprop, epsilon-greedy selection) are the same.
+
+    Subclass this to plug in a new domain without touching the planner.
+    """
+
+    @abstractmethod
+    def get_expand_prompt(
+        self, context: str, memory_extra: str,
+        task_desc: str, target: str, step: int
+    ) -> tuple:
+        """Build (system_prompt, user_prompt) for MCTS branch generation."""
+
+    @abstractmethod
+    def get_reason_prompt(
+        self, context: str, memory_extra: str,
+        task_desc: str, target: str, step: int, max_steps: int
+    ) -> tuple:
+        """Build (system_prompt, user_prompt) for single-step reasoning."""
+
+    @abstractmethod
+    def get_fallback_nodes(self, parent, gen_id_fn) -> list:
+        """Return safe default ThoughtNodes when the LLM call fails."""
+
+    @abstractmethod
+    def get_fallback_action(self, memory) -> dict:
+        """Pick a reasonable next action without calling the LLM."""
+
+    @abstractmethod
+    def get_tool_definitions(self) -> list:
+        """Return the list of tool schemas for OpenAI function-calling."""
+
+    @abstractmethod
+    async def execute(self, tool_name: str, parameters: dict, memory) -> "ToolResult":
+        """Run a tool and hand back results."""
+
+    @abstractmethod
+    def valuate_heuristic(self, node, memory) -> float:
+        """Return a domain-specific bonus score for a candidate node."""
+
+
 class MCTSPlanner:
     """
     Monte Carlo Tree Search Planner for strategic action selection.
@@ -179,11 +226,13 @@ class MCTSPlanner:
         self,
         client,  # OpenAI client
         model: str,
+        action_space: ActionSpace,
         num_branches: int = 3,
         exploration_weight: float = 1.414
     ):
         self.client = client
         self.model = model
+        self.action_space = action_space
         self.num_branches = num_branches
         self.exploration_weight = exploration_weight
         self.root: Optional[ThoughtNode] = None
@@ -197,77 +246,21 @@ class MCTSPlanner:
     async def expand(
         self,
         memory: "AgentMemory",
-        tools: "ToolRegistry",
         task_description: str,
-        code: str
+        target: str
     ) -> List[ThoughtNode]:
         """
         BRANCHING: Generate multiple possible next actions.
 
-        Instead of asking "what should I do next?", we ask
-        "what are 3 different things I could try?"
+        The actual prompt content comes from the action space, so this
+        method works for both code scanning and text mutations.
         """
-        system_prompt = """You are an AGI security researcher using Tree of Thoughts reasoning.
-
-Instead of picking ONE action, you must propose EXACTLY 3 DIFFERENT strategic paths.
-Each path should have a DIFFERENT approach to finding vulnerabilities.
-
-For each path, estimate its success probability (0.0-1.0) based on:
-- How likely this approach is to find vulnerabilities
-- How much of the code it will cover
-- Your prior knowledge about common vulnerability patterns
-
-Return EXACTLY 3 options in JSON format:
-{
-  "branches": [
-    {
-      "tool": "tool_name",
-      "parameters": {...},
-      "reasoning": "Why this approach might work",
-      "success_probability": 0.XX
-    },
-    {
-      "tool": "tool_name", 
-      "parameters": {...},
-      "reasoning": "Why this different approach might work",
-      "success_probability": 0.XX
-    },
-    {
-      "tool": "tool_name",
-      "parameters": {...},
-      "reasoning": "Why this third approach might work", 
-      "success_probability": 0.XX
-    }
-  ]
-}
-
-DIVERSIFY your suggestions:
-- One could be broad (scan_file, check_dependencies)
-- One could be targeted (analyze_function, grep_pattern)
-- One could be creative (fuzz_function, create_tool)
-
-Available tools: scan_file, fuzz_function, read_code, grep_pattern, analyze_function, 
-check_dependencies, report_vulnerability, add_hypothesis, conclude_investigation, create_tool"""
-
         context = memory.get_context_summary()
-
         mcts_memory = getattr(self, 'memory_context', '') or ""
-        memory_section = f"\n{mcts_memory}" if mcts_memory else ""
-        user_prompt = f"""## Task
-{task_description or "Find security vulnerabilities in this code."}
 
-## Code (first 80 lines)
-```python
-{chr(10).join(code.split(chr(10))[:80])}
-```
-
-## Current State
-{context}
-{memory_section}
-
-## Step {memory.current_step}
-
-Propose 3 DIFFERENT strategic paths to investigate. Return JSON only."""
+        system_prompt, user_prompt = self.action_space.get_expand_prompt(
+            context, mcts_memory, task_description, target, memory.current_step
+        )
 
         try:
             response = await self.client.chat.completions.create(
@@ -298,42 +291,23 @@ Propose 3 DIFFERENT strategic paths to investigate. Return JSON only."""
                 )
                 nodes.append(node)
 
-            # If we got fewer than expected, add fallback nodes
+            # Pad with domain-appropriate fallbacks if LLM returned too few
             while len(nodes) < self.num_branches:
-                fallback_tools = ["scan_file", "check_dependencies", "grep_pattern"]
-                tool = fallback_tools[len(nodes) % len(fallback_tools)]
-                nodes.append(ThoughtNode(
-                    id=self._generate_node_id(),
-                    action={"tool": tool, "parameters": {}, "reasoning": "Fallback exploration"},
-                    parent=self.current_node,
-                    prior=0.3
-                ))
+                fallbacks = self.action_space.get_fallback_nodes(
+                    self.current_node, self._generate_node_id
+                )
+                for fb in fallbacks:
+                    if len(nodes) >= self.num_branches:
+                        break
+                    nodes.append(fb)
 
             return nodes
 
         except Exception as e:
             print(f"[MCTS] Expansion error: {e}")
-            # Return fallback nodes
-            return [
-                ThoughtNode(
-                    id=self._generate_node_id(),
-                    action={"tool": "scan_file", "parameters": {}, "reasoning": "Fallback: initial scan"},
-                    parent=self.current_node,
-                    prior=0.5
-                ),
-                ThoughtNode(
-                    id=self._generate_node_id(),
-                    action={"tool": "check_dependencies", "parameters": {}, "reasoning": "Fallback: check imports"},
-                    parent=self.current_node,
-                    prior=0.4
-                ),
-                ThoughtNode(
-                    id=self._generate_node_id(),
-                    action={"tool": "grep_pattern", "parameters": {"pattern": r"(password|secret|key|token)"}, "reasoning": "Fallback: find secrets"},
-                    parent=self.current_node,
-                    prior=0.4
-                )
-            ]
+            return self.action_space.get_fallback_nodes(
+                self.current_node, self._generate_node_id
+            )
 
     async def valuate(
         self,
@@ -343,65 +317,37 @@ Propose 3 DIFFERENT strategic paths to investigate. Return JSON only."""
         """
         VALUATION: Score each branch's potential value.
 
-        Uses a combination of:
-        - LLM prior probability (from expansion)
-        - Heuristic bonuses (unexplored areas, common vulns)
-        - MCTS statistics (UCB1 score)
+        Domain-specific heuristics (what counts as "interesting") come
+        from the action space.  Everything else — UCB1 math, repetition
+        penalty, clamping — lives here and is domain-agnostic.
         """
         scored_nodes = []
 
         for node in nodes:
-            # Base score from LLM prior
+            # Start with the LLM's own confidence estimate
             score = node.prior
 
-            # Heuristic bonuses
+            # Let the action space layer add domain-specific bonuses
+            score += self.action_space.valuate_heuristic(node, memory)
+
+            # Penalise doing the same thing over and over (universal)
             tool = node.action.get("tool", "")
-            params = node.action.get("parameters", {})
-
-            # Bonus for targeting unexplored functions
-            if tool in ["analyze_function", "fuzz_function"]:
-                func_name = params.get("function_name", "")
-                if func_name and func_name not in memory.explored_functions:
-                    score += 0.15  # Unexplored bonus
-
-            # Bonus for high-value targets
-            high_value_patterns = ["auth", "login", "password", "token", "admin", "secret", "key", "sql", "query"]
-            # Extend with dynamic patterns from TaskIntelligence for novel tasks
-            if hasattr(self, 'task_intel') and self.task_intel and hasattr(self, 'task_description'):
-                try:
-                    extra = await self.task_intel.get_high_value_patterns(
-                        memory.task_id if hasattr(memory, 'task_id') else "",
-                        self.task_description,
-                    )
-                    high_value_patterns.extend(extra)
-                except Exception:
-                    pass  # Fallback to default patterns
-            reasoning_lower = node.action.get("reasoning", "").lower()
-            for pattern in high_value_patterns:
-                if pattern in reasoning_lower:
-                    score += 0.1
-                    break
-
-            # Penalty if we've already done similar actions
             similar_observations = sum(1 for obs in memory.observations if tool in obs)
             if similar_observations > 2:
                 score -= 0.2
 
-            # UCB1 score if node has been visited before
+            # If the node has been visited before, switch to UCB1
             if node.visits > 0:
                 score = node.ucb1_score(self.exploration_weight)
 
             scored_nodes.append((node, min(1.0, max(0.0, score))))
 
-        # Sort by score descending
         scored_nodes.sort(key=lambda x: x[1], reverse=True)
 
-        # Log the valuations for debugging
         print(f"[MCTS] Valuations:")
         for node, score in scored_nodes:
             tool = node.action.get("tool", "?")
-            prior = node.prior
-            print(f"  - {tool}: score={score:.2f} (prior={prior:.2f}, visits={node.visits})")
+            print(f"  - {tool}: score={score:.2f} (prior={node.prior:.2f}, visits={node.visits})")
 
         return scored_nodes
 
@@ -450,16 +396,14 @@ Propose 3 DIFFERENT strategic paths to investigate. Return JSON only."""
     async def plan_next_action(
         self,
         memory: "AgentMemory",
-        tools: "ToolRegistry",
         task_description: str,
-        code: str
+        target: str
     ) -> dict:
         """
         Main MCTS planning loop: Branch → Valuate → Select
 
         Returns the selected action to execute.
         """
-        # Initialize root if needed
         if self.root is None:
             self.root = ThoughtNode(
                 id="root",
@@ -467,30 +411,26 @@ Propose 3 DIFFERENT strategic paths to investigate. Return JSON only."""
             )
             self.current_node = self.root
 
-        # BRANCH: Generate possible actions
+        # BRANCH
         print(f"[MCTS] 🌳 Branching: Generating {self.num_branches} possible paths...")
-        candidate_nodes = await self.expand(memory, tools, task_description, code)
+        candidate_nodes = await self.expand(memory, task_description, target)
 
-        # Add candidates as children of current node
         self.current_node.children.extend(candidate_nodes)
 
-        # VALUATE: Score each branch
+        # VALUATE
         print(f"[MCTS] 📈 Valuating branches...")
         scored_nodes = await self.valuate(candidate_nodes, memory)
 
-        # Log the branches
         for node, score in scored_nodes:
             print(f"[MCTS]   ├─ {node.action.get('tool')}: {score:.2f} "
                   f"(prior={node.prior:.2f}) - {node.action.get('reasoning', '')[:50]}...")
 
-        # SELECT: Pick the best branch
+        # SELECT (untouched UCB1 logic)
         selected_node = self.select(scored_nodes)
         print(f"[MCTS] ✅ Selected: {selected_node.action.get('tool')} "
               f"({selected_node.action.get('reasoning', '')[:60]}...)")
 
-        # Move to selected node
         self.current_node = selected_node
-
         return selected_node.action
 
     def record_result(self, success: bool, findings_count: int, result_text: str):
@@ -828,18 +768,15 @@ class ToolResult:
     suggested_next: list[str] = field(default_factory=list)
 
 
-class ToolRegistry:
+class CodeActionSpace(ActionSpace):
     """
-    Registry of tools available to the Red Agent.
+    Action space for code vulnerability analysis.
 
-    Each tool is a capability the agent can invoke during its investigation.
-    Tools are designed to be:
-    1. Focused - Do one thing well
-    2. Observable - Return clear results
-    3. Composable - Can be chained together
+    Wraps all the static-analysis tools (scan_file, fuzz_function, etc.)
+    and provides the code-specific prompts and heuristics that the MCTS
+    planner needs to explore intelligently.
 
-    AGI Upgrade: Now supports DYNAMIC TOOL CREATION via Meta-Agent capability.
-    The agent can create new tools at runtime when it lacks a capability.
+    This used to be called ToolRegistry before we abstracted it.
     """
 
     def __init__(self, source_code: str, task_description: str = ""):
@@ -982,6 +919,170 @@ class ToolRegistry:
     def get_all_tool_definitions(self) -> list[dict]:
         """Get all tool definitions including dynamically created tools."""
         return self.tool_definitions + self.dynamic_builder.get_tool_definitions()
+
+    def get_tool_definitions(self) -> list[dict]:
+        """ActionSpace interface — same as get_all_tool_definitions."""
+        return self.get_all_tool_definitions()
+
+    # -- ActionSpace: prompts ------------------------------------------------
+
+    def get_expand_prompt(self, context, memory_extra, task_desc, target, step):
+        """Build the branching prompt for code analysis."""
+        tool_names = ", ".join(t["name"] for t in self.tool_definitions)
+
+        system_prompt = f"""You are an AGI security researcher using Tree of Thoughts reasoning.
+
+Instead of picking ONE action, you must propose EXACTLY 3 DIFFERENT strategic paths.
+Each path should have a DIFFERENT approach to finding vulnerabilities.
+
+For each path, estimate its success probability (0.0-1.0) based on:
+- How likely this approach is to find vulnerabilities
+- How much of the code it will cover
+- Your prior knowledge about common vulnerability patterns
+
+Return EXACTLY 3 options in JSON format:
+{{
+  "branches": [
+    {{
+      "tool": "tool_name",
+      "parameters": {{}},
+      "reasoning": "Why this approach might work",
+      "success_probability": 0.XX
+    }}
+  ]
+}}
+
+DIVERSIFY your suggestions:
+- One could be broad (scan_file, check_dependencies)
+- One could be targeted (analyze_function, grep_pattern)
+- One could be creative (fuzz_function, create_tool)
+
+Available tools: {tool_names}"""
+
+        memory_section = f"\n{memory_extra}" if memory_extra else ""
+        user_prompt = f"""## Task
+{task_desc or "Find security vulnerabilities in this code."}
+
+## Code (first 80 lines)
+```python
+{chr(10).join(target.split(chr(10))[:80])}
+```
+
+## Current State
+{context}
+{memory_section}
+
+## Step {step}
+
+Propose 3 DIFFERENT strategic paths to investigate. Return JSON only."""
+
+        return system_prompt, user_prompt
+
+    def get_reason_prompt(self, context, memory_extra, task_desc, target, step, max_steps):
+        """Build the single-step reasoning prompt for code analysis."""
+        system_prompt = """You are an AGI-level security researcher conducting a penetration test.
+Your goal is to find ALL security vulnerabilities in the provided code.
+
+You have access to tools. In each step:
+1. Review what you've found so far
+2. Reason about what to investigate next
+3. Choose ONE tool to run
+
+Be thorough but efficient:
+- Start with scan_file to get an overview
+- Follow up on suspicious findings with targeted analysis
+- Use grep_pattern to trace data flow
+- Report vulnerabilities when you have evidence
+- Conclude when you've thoroughly analyzed the code
+
+## AGI CAPABILITY: Dynamic Tool Creation
+If you need a capability that doesn't exist, you can CREATE A NEW TOOL using 'create_tool'.
+When using create_tool, write Python code that:
+- Defines a function: def tool_name(params, memory, source_code) -> ToolResult
+- Returns ToolResult(success=True/False, output='...', findings=[...])
+- Uses only: re, json modules (no os, subprocess, eval, exec)
+
+IMPORTANT: Think like an attacker. Look for:
+- Input validation issues
+- Authentication/authorization flaws
+- Injection vulnerabilities (SQL, command, code)
+- Cryptographic weaknesses
+- Business logic flaws
+- Data exposure risks"""
+
+        memory_section = f"\n{memory_extra}" if memory_extra else ""
+        user_prompt = f"""## Task
+{task_desc or "Analyze this code for security vulnerabilities."}
+
+## Code to Analyze (first 100 lines)
+```python
+{chr(10).join(target.split(chr(10))[:100])}
+```
+
+## Current Investigation State
+{context}
+{memory_section}
+
+## Step {step} of {max_steps}
+
+What should we investigate next? Choose a tool and explain your reasoning briefly."""
+
+        return system_prompt, user_prompt
+
+    # -- ActionSpace: fallbacks -----------------------------------------------
+
+    def get_fallback_nodes(self, parent, gen_id_fn):
+        """Safe defaults when the LLM expansion call fails."""
+        return [
+            ThoughtNode(
+                id=gen_id_fn(),
+                action={"tool": "scan_file", "parameters": {}, "reasoning": "Fallback: initial scan"},
+                parent=parent, prior=0.5
+            ),
+            ThoughtNode(
+                id=gen_id_fn(),
+                action={"tool": "check_dependencies", "parameters": {}, "reasoning": "Fallback: check imports"},
+                parent=parent, prior=0.4
+            ),
+            ThoughtNode(
+                id=gen_id_fn(),
+                action={"tool": "grep_pattern", "parameters": {"pattern": r"(password|secret|key|token)"}, "reasoning": "Fallback: find secrets"},
+                parent=parent, prior=0.4
+            ),
+        ]
+
+    def get_fallback_action(self, memory):
+        """Pick a reasonable next step without the LLM."""
+        if memory.current_step == 1:
+            return {"tool": "scan_file", "parameters": {}, "reasoning": "Initial scan"}
+        elif memory.current_step == 2:
+            return {"tool": "check_dependencies", "parameters": {}, "reasoning": "Check imports"}
+        else:
+            return {"tool": "conclude_investigation", "parameters": {"summary": "Static analysis complete"}, "reasoning": "Done"}
+
+    # -- ActionSpace: heuristic scoring ---------------------------------------
+
+    def valuate_heuristic(self, node, memory):
+        """Give code-analysis-specific bonuses to candidate nodes."""
+        bonus = 0.0
+        tool = node.action.get("tool", "")
+        params = node.action.get("parameters", {})
+
+        # Reward exploring functions we haven't looked at yet
+        if tool in ["analyze_function", "fuzz_function"]:
+            func_name = params.get("function_name", "")
+            if func_name and func_name not in memory.explored_functions:
+                bonus += 0.15
+
+        # Reward branches that mention high-value targets
+        high_value = ["auth", "login", "password", "token", "admin", "secret", "key", "sql", "query"]
+        reasoning_lower = node.action.get("reasoning", "").lower()
+        for pattern in high_value:
+            if pattern in reasoning_lower:
+                bonus += 0.1
+                break
+
+        return bonus
 
     async def execute(self, tool_name: str, parameters: dict, memory: AgentMemory) -> ToolResult:
         """Execute a tool and return results."""
@@ -1370,6 +1471,10 @@ class ToolRegistry:
         )
 
 
+# Backward compat — old code that imports ToolRegistry still works
+ToolRegistry = CodeActionSpace
+
+
 # =============================================================================
 # MCTS-BASED AGENT: Tree of Thoughts reasoning engine
 # =============================================================================
@@ -1399,12 +1504,13 @@ class RedAgentV3:
         max_steps: int = 10,
         max_time_seconds: float = 60.0,
         model: str = None,
-        use_mcts: bool = True,  # Enable MCTS by default
-        mcts_branches: int = 2  # Number of branches to explore (2-3 recommended)
+        use_mcts: bool = True,
+        mcts_branches: int = 2,
+        mode: str = "code",  # "code" for vuln scanning, "text" for prompt injection
     ):
         # Support both old style (AttackConfig as first arg) and new style (kwargs)
         if config is not None:
-            self.max_steps = max_steps  # Use provided or default
+            self.max_steps = max_steps
             self.max_time_seconds = config.max_total_time
             self.config = config
         else:
@@ -1412,6 +1518,7 @@ class RedAgentV3:
             self.max_time_seconds = max_time_seconds
             self.config = None
 
+        self.mode = mode
         self.use_mcts = use_mcts
         self.mcts_branches = max(1, min(mcts_branches, 5))  # Clamp to reasonable range
 
@@ -1453,34 +1560,41 @@ class RedAgentV3:
         4. Learn from results
         """
         start_time = time.time()
-        self._memory_context = memory_context  # Store for prompt injection
-        self._task_intel = task_intel  # Store for dynamic pattern generation
+        self._memory_context = memory_context
+        self._task_intel = task_intel
 
-        # Initialize memory and tools
         memory = AgentMemory()
-        memory.source_code = code  # Store for semantic analysis
-        tools = ToolRegistry(code, task_description)
+        memory.source_code = code
 
-        # If no LLM available, fall back to static analysis only
+        # Pick the right action space for this mode
+        if self.mode == "text":
+            from .text_mutations import TextMutationActionSpace
+            action_space = TextMutationActionSpace(target_prompt=code)
+        else:
+            action_space = CodeActionSpace(code, task_description)
+
+        # The "target" is whatever the tree is exploring against
+        target = code
+
         if not self.client:
-            return await self._static_fallback(tools, memory, start_time)
+            return await self._static_fallback(action_space, memory, start_time)
 
-        # Initialize MCTS planner for this attack
         if self.use_mcts:
             self.mcts_planner = MCTSPlanner(
                 client=self.client,
                 model=self.model,
+                action_space=action_space,
                 num_branches=self.mcts_branches,
                 exploration_weight=1.414
             )
             self.mcts_planner.memory_context = memory_context
             self.mcts_planner.task_intel = task_intel
             self.mcts_planner.task_description = task_description
-            print(f"[RedAgent] 🌳 Using MCTS/Tree of Thoughts with {self.mcts_planner.num_branches} branches")
+            print(f"[RedAgent] 🌳 Using MCTS/Tree of Thoughts ({self.mode} mode) with {self.mcts_planner.num_branches} branches")
         else:
             self.mcts_planner = None
 
-        # Run the main loop
+        # Main loop — identical regardless of mode
         concluded = False
         while memory.current_step < self.max_steps:
             elapsed = time.time() - start_time
@@ -1490,13 +1604,12 @@ class RedAgentV3:
             memory.current_step += 1
 
             try:
-                # Choose action using MCTS or fallback to simple reasoning
                 if self.use_mcts and self.mcts_planner:
                     action = await self.mcts_planner.plan_next_action(
-                        memory, tools, task_description, code
+                        memory, task_description, target
                     )
                 else:
-                    action = await self._reason(memory, tools, task_description, code)
+                    action = await self._reason(memory, action_space, task_description, target)
 
                 if action is None:
                     break
@@ -1504,18 +1617,15 @@ class RedAgentV3:
                 tool_name = action.get("tool")
                 tool_params = action.get("parameters", {})
 
-                # Check for conclusion
-                if tool_name == "conclude_investigation":
+                if tool_name in ("conclude_investigation", "conclude_attack"):
                     concluded = True
                     break
 
-                # ACT: Execute the chosen tool
-                result = await tools.execute(tool_name, tool_params, memory)
+                # Execute through the action space (works for both modes)
+                result = await action_space.execute(tool_name, tool_params, memory)
 
-                # OBSERVE: Record what happened
                 memory.observations.append(f"Step {memory.current_step}: {tool_name} -> {result.output[:200]}")
 
-                # BACKPROPAGATE: Update MCTS tree with actual results
                 if self.use_mcts and self.mcts_planner:
                     findings_count = len(result.findings) if result.findings else 0
                     self.mcts_planner.record_result(
@@ -1524,89 +1634,39 @@ class RedAgentV3:
                         result_text=result.output[:200]
                     )
 
-                # Check if we found something critical
                 if memory.has_critical_finding() and memory.current_step >= 3:
                     break
 
             except Exception as e:
                 memory.observations.append(f"Step {memory.current_step}: Error - {str(e)}")
-                # Record failure in MCTS
                 if self.use_mcts and self.mcts_planner:
                     self.mcts_planner.record_result(
-                        success=False,
-                        findings_count=0,
+                        success=False, findings_count=0,
                         result_text=f"Error: {str(e)}"
                     )
 
-        # Build final report
         return self._build_report(memory, time.time() - start_time)
 
     async def _reason(
         self,
         memory: AgentMemory,
-        tools: ToolRegistry,
+        action_space: ActionSpace,
         task_description: str,
-        code: str
+        target: str
     ) -> Optional[dict]:
         """
-        REASONING phase: Decide what action to take next.
+        Single-step reasoning when MCTS is disabled.
 
-        The LLM analyzes the current state and chooses a tool to run.
+        Prompt content comes from the action space so this works
+        for both code analysis and text mutations.
         """
-        # Build the prompt
-        system_prompt = """You are an AGI-level security researcher conducting a penetration test.
-Your goal is to find ALL security vulnerabilities in the provided code.
-
-You have access to tools. In each step:
-1. Review what you've found so far
-2. Reason about what to investigate next
-3. Choose ONE tool to run
-
-Be thorough but efficient:
-- Start with scan_file to get an overview
-- Follow up on suspicious findings with targeted analysis
-- Use grep_pattern to trace data flow
-- Report vulnerabilities when you have evidence
-- Conclude when you've thoroughly analyzed the code
-
-## AGI CAPABILITY: Dynamic Tool Creation
-If you need a capability that doesn't exist, you can CREATE A NEW TOOL using 'create_tool'.
-Example scenarios:
-- "I need to parse this custom binary format" → create a parser tool
-- "I need to analyze this specific crypto pattern" → create a crypto analyzer
-- "I need to check for a specific vulnerability type" → create a custom checker
-
-When using create_tool, write Python code that:
-- Defines a function: def tool_name(params, memory, source_code) -> ToolResult
-- Returns ToolResult(success=True/False, output='...', findings=[...])
-- Uses only: re, json modules (no os, subprocess, eval, exec)
-
-IMPORTANT: Think like an attacker. Look for:
-- Input validation issues
-- Authentication/authorization flaws
-- Injection vulnerabilities (SQL, command, code)
-- Cryptographic weaknesses
-- Business logic flaws
-- Data exposure risks"""
-
         context = memory.get_context_summary()
+        memory_extra = getattr(self, '_memory_context', '') or ""
 
-        memory_section = f"\n{self._memory_context}" if getattr(self, '_memory_context', '') else ""
-        user_prompt = f"""## Task
-{task_description or "Analyze this code for security vulnerabilities."}
-
-## Code to Analyze (first 100 lines)
-```python
-{chr(10).join(code.split(chr(10))[:100])}
-```
-
-## Current Investigation State
-{context}
-{memory_section}
-
-## Step {memory.current_step} of {self.max_steps}
-
-What should we investigate next? Choose a tool and explain your reasoning briefly."""
+        system_prompt, user_prompt = action_space.get_reason_prompt(
+            context, memory_extra, task_description, target,
+            memory.current_step, self.max_steps
+        )
 
         try:
             response = await self.client.chat.completions.create(
@@ -1615,14 +1675,12 @@ What should we investigate next? Choose a tool and explain your reasoning briefl
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}
                 ],
-                # Include both built-in and dynamically created tools
-                tools=[{"type": "function", "function": t} for t in tools.get_all_tool_definitions()],
+                tools=[{"type": "function", "function": t} for t in action_space.get_tool_definitions()],
                 tool_choice="required",
                 **get_temperature_kwargs(0.3),
             )
 
             message = response.choices[0].message
-
             if message.tool_calls:
                 tool_call = message.tool_calls[0]
                 return {
@@ -1635,29 +1693,22 @@ What should we investigate next? Choose a tool and explain your reasoning briefl
 
         except Exception as e:
             print(f"[RedAgentV3] LLM error: {e}")
-            # Fall back to systematic analysis
-            return self._fallback_action(memory)
+            return action_space.get_fallback_action(memory)
 
     def _fallback_action(self, memory: AgentMemory) -> dict:
-        """Fallback logic when LLM is unavailable."""
-        if memory.current_step == 1:
-            return {"tool": "scan_file", "parameters": {}, "reasoning": "Initial scan"}
-        elif memory.current_step == 2:
-            return {"tool": "check_dependencies", "parameters": {}, "reasoning": "Check imports"}
-        else:
-            return {"tool": "conclude_investigation", "parameters": {"summary": "Static analysis complete"}, "reasoning": "Done"}
+        """Legacy fallback — delegates to whatever action space is active."""
+        # Shouldn't normally be called anymore, but kept for safety
+        return {"tool": "conclude_investigation", "parameters": {"summary": "Done"}, "reasoning": "Fallback"}
 
     async def _static_fallback(
         self,
-        tools: ToolRegistry,
+        action_space: ActionSpace,
         memory: AgentMemory,
         start_time: float
     ) -> RedAgentReport:
-        """Fallback to static analysis when no LLM available."""
-        # Run basic scans
-        await tools.execute("scan_file", {}, memory)
-        await tools.execute("check_dependencies", {}, memory)
-
+        """Run basic analysis without an LLM."""
+        await action_space.execute("scan_file", {}, memory)
+        await action_space.execute("check_dependencies", {}, memory)
         return self._build_report(memory, time.time() - start_time)
 
     def _build_report(self, memory: AgentMemory, elapsed_time: float) -> RedAgentReport:
