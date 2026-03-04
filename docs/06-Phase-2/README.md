@@ -16,12 +16,11 @@ This directory has been restructured to separate active, actionable intelligence
 
 *   **`README.md`**: The definitive single source of truth for Phase 2 strategy.
 *   **`Action_Items.md`**: A consolidated list of Priority 0 (Urgent) to Priority 2 (Medium) tasks, fully prepared for import into our Linear project management tool.
-*   **`Strategic_Timeline.md`**: A detailed chronological trace of our strategy evolution, detailing the "Offline Sandbox" pivot and the final decision to focus on the Cybersecurity track.
+*   **`Strategic_Timeline.md`**: A detailed chronological trace of our strategy evolution, detailing the "Offline Sandbox" pivot and the final decision to focus on the Cybersecurity track, abandoning the Lambda track.
 *   **`Risks_and_Blind_Spots.md`**: A comprehensive assessment of our current operational and architectural vulnerabilities, prominently featuring the "Uroboros" security threat and critical cryptographic hashing discrepancies.
 *   **`[2026-02-28] Architecture-Overview.md`**: (Core Historical) A code-derived overview of the LogoMesh system architecture at the end of Phase 1.
-*   **`[2026-02-28] LogoMesh Phase 2 Kickoff Minutes.md`**: (Core Historical) Minutes from the initial Phase 2 planning meeting.
 *   **`Planning_and_Strategy/`**: Contains foundational documents outlining the theoretical frameworks (DynaWeb, CCMA) proposed for integrating our academic partners and structuring our NeurIPS submission.
-*   **`Meetings/`**: Contains structured minutes and post-meeting briefs summarizing key decisions and role assignments from our syncs with Prof. Shi's team.
+*   **`Meetings/`**: Contains structured minutes and post-meeting briefs summarizing key decisions and role assignments from our syncs with Prof. Shi's team. This now also includes the initial Phase 2 kickoff minutes.
 *   **`External_Exports/`**: Houses static documentation and schedules directly exported from the AgentBeats competition website.
 *   **`Transcripts/`**: Contains raw, machine-generated transcripts, subtitles, and SRT files from our recorded meetings and official competition workshops.
 
