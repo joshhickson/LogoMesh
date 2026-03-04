@@ -133,7 +133,7 @@ To ensure exact parity between this blueprint and the raw codebase state, the fo
 ### 4.3. Red Agent MCTS Hyperparameters
 - **Max Steps:** `10`
 - **Max Time (Seconds):** `60.0`
-- **MCTS Branches:** Defaults to `2` (not 3).
+- **MCTS Branches:** Defaults to `3`.
 - **Exploration Weight:** `1.414` (Hardcoded UCB1 constant).
 
 ### 4.4. DBOM Artifact Structure
