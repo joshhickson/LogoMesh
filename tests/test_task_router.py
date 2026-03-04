@@ -1,5 +1,5 @@
 import pytest
-from src.purple_logic.router import TaskRouter
+from purple_logic.router import TaskRouter
 
 def test_task_router():
     router = TaskRouter()
