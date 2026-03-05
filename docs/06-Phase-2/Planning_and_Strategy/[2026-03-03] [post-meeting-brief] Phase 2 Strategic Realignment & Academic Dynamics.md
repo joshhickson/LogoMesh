@@ -1,3 +1,7 @@
+> [!WARNING]
+> **UNRELIABLE DOCUMENT - OUTDATED SCHEDULE**
+> The timeline presented in this document is factually incorrect. The Cybersecurity Agent Track is officially part of **Sprint 3 (April 13 – May 3, 2026)**, not Sprint 2. The urgency and deadlines assumed here are deprecated. Refer to `docs/06-Phase-2/README.md` for the definitive strategy and timeline.
+
 # **Phase 2 Strategic Realignment & Academic Dynamics**
 
 ## **1\. The Shi-Shen Connection & Academic Background**
