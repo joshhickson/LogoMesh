@@ -117,20 +117,7 @@ make start                   # installs deps, starts Docker, builds sandbox, lau
 
 To stop: `make stop`
 
-<details>
-<summary>What <code>make start</code> does behind the scenes</summary>
-
-- Installs `uv` and syncs Python dependencies
-- Starts Docker Desktop if it's not running (macOS/Linux)
-- Builds the sandbox image (first run only, ~15s)
-- Launches the Purple and Green agents on ports 9010 and 9009
-- Waits for both to be ready, then prints usage instructions
-
-</details>
-
 #### Option B: Docker Compose (zero Python install)
-
-Only requires Docker — nothing else.
 
 ```bash
 git clone https://github.com/sszz01/LogoMesh.git
@@ -164,7 +151,7 @@ You'll get back a JSON response with:
 
 ---
 
-## Running with Docker (advanced)
+## Running with Docker
 
 If you want more control over the Docker setup (e.g., custom ports, env vars):
 
