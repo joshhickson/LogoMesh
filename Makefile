@@ -2,7 +2,7 @@
 
 # One-command setup + launch (handles Docker, deps, and agents)
 start:
-	@bash scripts/bash/start.sh
+	@bash scripts/bash/start.sh || true
 
 # Stop all running LogoMesh agents
 stop:

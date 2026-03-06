@@ -108,12 +108,28 @@ for port in 9009 9010; do
 done
 
 # ── 6. Start agents ──────────────────────────────────────────────────
+
+LOG_DIR="logs"
+mkdir -p "$LOG_DIR"
+
+# Clean shutdown on Ctrl+C
+cleanup() {
+  echo ""
+  info "Shutting down agents..."
+  kill $PURPLE_PID $GREEN_PID 2>/dev/null || true
+  wait $PURPLE_PID $GREEN_PID 2>/dev/null
+  info "Stopped ✓"
+  info "Logs saved in $LOG_DIR/"
+  exit 0
+}
+trap cleanup INT TERM
+
 info "Starting Purple Agent on :9010..."
-uv run main.py --role PURPLE --host 0.0.0.0 --port 9010 &
+uv run main.py --role PURPLE --host 0.0.0.0 --port 9010 > "$LOG_DIR/purple.log" 2>&1 &
 PURPLE_PID=$!
 
 info "Starting Green Agent on :9009..."
-uv run main.py --role GREEN --host 0.0.0.0 --port 9009 &
+uv run main.py --role GREEN --host 0.0.0.0 --port 9009 > "$LOG_DIR/green.log" 2>&1 &
 GREEN_PID=$!
 
 # Wait for agents to be ready
@@ -137,15 +153,24 @@ if $DOCKER_OK; then
 else
   info "  Sandbox:               subprocess (fallback)"
 fi
-info ""
-info "  Send a task:"
+
+info "  To send a task, open up another terminal and run this:"
 info "    curl -X POST http://localhost:9009/actions/send_coding_task \\"
 info "      -H 'Content-Type: application/json' \\"
 info "      -d '{\"battle_id\": \"demo-001\", \"purple_agent_url\": \"http://localhost:9010/\", \"task_id\": \"task-004\"}'"
 info ""
-info "  Stop: make stop  (or kill $GREEN_PID $PURPLE_PID)"
+info "  For a custom task:"
+info "    curl -X POST http://localhost:9009/actions/send_coding_task \\"
+info "      -H 'Content-Type: application/json' \\"
+info "      -d '{\"battle_id\": \"my-battle\", \"purple_agent_url\": \"http://localhost:9010/\", \"task_id\": \"custom-001\", \"task_description\": \"Implement a thread-safe LRU cache with O(1) get and put.\"}'"
+info ""
+info "  View logs:"
+info "    tail -f $LOG_DIR/green.log"
+info "    tail -f $LOG_DIR/purple.log"
+info ""
+info "  Press Ctrl+C to stop"
 info "════════════════════════════════════════════════════"
 
-# Keep script alive so agents stay running
+# Keep script alive so agents stay running — Ctrl+C triggers cleanup()
 wait
 
