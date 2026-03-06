@@ -14,7 +14,7 @@ info()  { echo -e "${GREEN}[LogoMesh]${NC} $1"; }
 warn()  { echo -e "${YELLOW}[LogoMesh]${NC} $1"; }
 error() { echo -e "${RED}[LogoMesh]${NC} $1"; }
 
-# ── 1. Check Python & uv ──────────────────────────────────────────────
+# ── 1. Check Python & uv
 if ! command -v python3 &>/dev/null; then
   error "Python 3 not found. Install it: https://www.python.org/downloads/"
   exit 1
@@ -25,11 +25,11 @@ if ! command -v uv &>/dev/null; then
   pip install uv
 fi
 
-# ── 2. Install dependencies ───────────────────────────────────────────
+# ── 2. Install dependencies
 info "Syncing dependencies..."
 uv sync --quiet
 
-# ── 3. Check .env ─────────────────────────────────────────────────────
+# ── 3. Check .env
 if [ ! -f .env ]; then
   if [ -f .env.example ]; then
     cp .env.example .env
@@ -44,7 +44,7 @@ if ! grep -q "OPENAI_API_KEY=sk-" .env 2>/dev/null; then
   warn "Edit .env and add your key, then re-run this script"
 fi
 
-# ── 4. Docker setup (automatic, best-effort) ─────────────────────────
+# ── 4. Docker setup (automatic, best-effort)
 DOCKER_OK=false
 
 if command -v docker &>/dev/null; then
@@ -97,7 +97,7 @@ else
   warn "Docker unavailable — tests will run in subprocess fallback mode (less isolated, still works)"
 fi
 
-# ── 5. Kill any existing agents on our ports ──────────────────────────
+# ── 5. Kill any existing agents on our ports
 for port in 9009 9010; do
   pid=$(lsof -ti :$port 2>/dev/null || true)
   if [ -n "$pid" ]; then
@@ -107,7 +107,7 @@ for port in 9009 9010; do
   fi
 done
 
-# ── 6. Start agents ──────────────────────────────────────────────────
+# ── 6. Start agents
 
 LOG_DIR="logs"
 mkdir -p "$LOG_DIR"
@@ -116,6 +116,7 @@ mkdir -p "$LOG_DIR"
 cleanup() {
   echo ""
   info "Shutting down agents..."
+  kill $TAIL_PID 2>/dev/null || true
   kill $PURPLE_PID $GREEN_PID 2>/dev/null || true
   wait $PURPLE_PID $GREEN_PID 2>/dev/null
   info "Stopped ✓"
@@ -164,13 +165,18 @@ info "    curl -X POST http://localhost:9009/actions/send_coding_task \\"
 info "      -H 'Content-Type: application/json' \\"
 info "      -d '{\"battle_id\": \"my-battle\", \"purple_agent_url\": \"http://localhost:9010/\", \"task_id\": \"custom-001\", \"task_description\": \"Implement a thread-safe LRU cache with O(1) get and put.\"}'"
 info ""
-info "  View logs:"
-info "    tail -f $LOG_DIR/green.log"
+info "  View Purple Agent logs in another terminal:"
 info "    tail -f $LOG_DIR/purple.log"
 info ""
 info "  Press Ctrl+C to stop"
 info "════════════════════════════════════════════════════"
 
-# Keep script alive so agents stay running — Ctrl+C triggers cleanup()
+# Stream Green Agent logs in real-time
+info ""
+info "  ── Green Agent (live) ──────────────────────────"
+tail -f "$LOG_DIR/green.log" &
+TAIL_PID=$!
+
+# Keep script alive so agents stay running
 wait
 
