@@ -1,0 +1,383 @@
+> [!WARNING]
+> **HISTORICAL TRANSCRIPT - CONTAINS DEPRECATED BRAINSTORMING**
+> This is a raw, machine-generated transcript of a historical team meeting. It captures initial brainstorming and preliminary ideas (such as focusing on the Lambda track or the Coding Agent track first) that have since been superseded by formal strategic decisions. Do not rely on statements made in this document for current project direction. Refer to `docs/06-Phase-2/README.md` as the single source of truth.
+
+2026-03-04 13:00:12 会议已开启实时转写，机器识别结果仅供参考 
+ethan 2026-03-04 13:00:13 
+Also, Professor Tian Yu.  
+Josh Hickson 2026-03-04 13:00:17 
+Sorry.  
+S 2026-03-04 13:01:49 
+哦 hello。 
+Josh Hickson 2026-03-04 13:01:52 
+Hello.  
+S 2026-03-04 13:01:54 
+Hello can, can you hear me?  
+Josh Hickson 2026-03-04 13:01:58 
+Yes.  
+S 2026-03-04 13:01:58 
+Yeah. Yeah I am 千千宇 and this is isa。Yes, yes, nice to meet you. Yes, I yeah, I work on reinforcement, learning and Im agents and Ehan is a student. He work with me and I Ethan you do you want to introduce yourself?  
+Josh Hickson 2026-03-04 13:02:06 
+Yeah, nice to finally meet you, Tian.  
+ethan 2026-03-04 13:02:32 
+I'll just introduce myself. Before you join.  
+Josh Hickson 2026-03-04 13:02:41 
+Yeah, yeah, we we met I. What university are you studying at Ethan Yhen?  
+S 2026-03-04 13:02:41 
+哦，有哦，有哦哦哦！Yes.  
+ethan 2026-03-04 13:02:52 
+And Tribute Ii. Just I finished my my master degree. I had my my degree.  
+ethan 2026-03-04 13:03:04 
+Before four years ago in in a Chinese university called Zhejiang University.  
+Josh Hickson 2026-03-04 13:03:09 
+Nice.  
+S 2026-03-04 13:03:09 
+Yeah. This is how.  
+Josh Hickson 2026-03-04 13:03:17 
+Interesting. Yeah, what. What was your degree in?  
+ethan 2026-03-04 13:03:26 
+With my degrees. My major is about reinforcement learning.  
+Josh Hickson 2026-03-04 13:03:36 
+Yeah. Thank you.  
+S 2026-03-04 13:03:40 
+He is now working in Bilibili, you know Bilibili is like Chinese, it s kind like Youtube, but but it's it's it's a it's called B B. Bilibili is like the like a video platform.  
+S 2026-03-04 13:04:05 
+And what are you working in the bilibili, the algorithm engineer? P.  
+ethan 2026-03-04 13:04:15 
+I'm an algorithm engineer. I work for the safety of ability about video or comments.  
+S 2026-03-04 13:04:31 
+Yes, yeah, so so He has some experience in competition. He participate. A complication of neural names. Is that correct a multi agent systems competition?  
+S 2026-03-04 13:04:51 
+It's a yeah, large scale, multi agent system competition in Europe, and their team won the first place, and so so in in. In a short, we I think what what I want to know is, firstly, are we going to participate the second phase of the competition?  
+S 2026-03-04 13:05:16 
+Together and also, do we need to register the competition and and how we collaborate? I think this all our strength is focusing on algorithm part, and we can discuss maybe I can discuss weekly. Maybe Ethan I can discuss more frequently. I guess so you, you guys can participate, work together and Ii can give.  
+S 2026-03-04 13:05:47 
+Some s ource and also we can wrap up paper and submit to nymphs, nips. New nymphs. Deadline is May just like two months later.  
+S 2026-03-04 13:06:03 
+Yeah.  
+Josh Hickson 2026-03-04 13:06:05 
+Yes, I see that the initial registration is in April and the final submission is in May we will be participating in the second phase.  
+S 2026-03-04 13:06:10 
+嗯。Yeah. 是啊。 
+Oleksandr Voievodin 2026-03-04 13:06:13 
+Hello.  
+Josh Hickson 2026-03-04 13:06:18 
+It looks like my teammate has joined too. That's yeah, yeah, I was. I was just about to explain what we will target during the competition for phase two.  
+Oleksandr Voievodin 2026-03-04 13:06:21 
+Yeah, I'm so I'm still trying to figure it out. It's honestly kind of wonky, but wait, you can hear me right?  
+S 2026-03-04 13:06:28 
+Yes, yes, we can hear me.  
+Oleksandr Voievodin 2026-03-04 13:06:35 
+Oh [s ]weet [s ]weet。 
+S 2026-03-04 13:06:35 
+Move. Yeah.  
+Josh Hickson 2026-03-04 13:06:37 
+S. Weet. So right now we are currently we we're. We are interested in two parts of phase two. The first part has a deadline of March 30th and it is the Lambda track.  
+Josh Hickson 2026-03-04 13:06:54 
+Which focuses more on reinforcement learning in an offline S Andbox because submissions to this competition are limited to an Api Call of Four.  
+S 2026-03-04 13:07:00 
+嗯嗯。嗯嗯。 
+Josh Hickson 2026-03-04 13:07:09 
+And our second interest in the competition is for the third sprint of phase two, and that involves three different tracks.  
+S 2026-03-04 13:07:10 
+Mhm.  
+Josh Hickson 2026-03-04 13:07:22 
+So there is the coding agent, there is the cyber security agent, and I think it's agent safety as the third one.  
+S 2026-03-04 13:07:33 
+对啊。 
+Josh Hickson 2026-03-04 13:07:33 
+What were you thinking of for for those for the third sprint that starts on April 13th? So we have some time to prepare for that?  
+Josh Hickson 2026-03-04 13:07:44 
+If you guys are focused on coming up with, you know, outlining a pretty good plan for how we'll approach the competition, I suggest that we focus on either the cyber security agent track for the third sprint or the coding agent track for the third sprint and then if we.  
+S 2026-03-04 13:07:44 
+Yeah, yeah.  
+S 2026-03-04 13:08:05 
+嗯，是。 
+Josh Hickson 2026-03-04 13:08:05 
+Have success in one of those tracks, then we can target multiple tracks that is allowed during the competition for now.  
+S 2026-03-04 13:08:15 
+哦 icic。 
+Josh Hickson 2026-03-04 13:08:17 
+S. Ince S. Ince, the Lambda S. Ince, the Lambda track has a deadline of March 30th. I don't want to rush you guys, so it it exists as an option. But if you're more interested in targeting for the the tracks that start on April Thirteenth, I think that's a good plan.  
+Josh Hickson 2026-03-04 13:08:37 
+We'd be able to outline what exactly you'd focus on in the repository, because some things will need to change as we prepare for that.  
+Josh Hickson 2026-03-04 13:08:49 
+Do you have any specific questions?  
+S 2026-03-04 13:08:50 
+Ok, I have some experience in cyber security track. We publish a paper you can find on my Google scholar. I publish our team, publish a paper called E. V. M Bench, and it's about it's kind of like the intersection between coding agents and cyber security.  
+S 2026-03-04 13:09:18 
+This is a transaction agent on on the on the blockchain, so so so this this kind of relation.  
+S 2026-03-04 13:09:29 
+So really, kind of like a little bit correlation. So I I, I, I, I. I'm wondering if we have computing resource like do they provide us computing resource to train our model?  
+Josh Hickson 2026-03-04 13:09:48 
+Yes, yes, they do. We have. We have Lambda credits. They did.  
+S 2026-03-04 13:09:50 
+Ok. Hm. 不可以不懂好的。 
+Oleksandr Voievodin 2026-03-04 13:09:53 
+I think we're also getting like open Ai credit side. They just announced their discord channel that it's Lambda. And also, yeah, I think they showed up a text today.  
+Oleksandr Voievodin 2026-03-04 13:10:06 
+In addition to you know, renting. Like Gpus on Lambda, you can also get like Openai credits. So I mean, there's quite a bit of resources.  
+Josh Hickson 2026-03-04 13:10:14 
+Yeah, yeah, yeah. So 5050 dollars in Api credits will apply for that.  
+S 2026-03-04 13:10:15 
+我。 
+Oleksandr Voievodin 2026-03-04 13:10:23 
+I mean not. Not too shabby, not too. We can.  
+Josh Hickson 2026-03-04 13:10:25 
+Yeah 呃。We have. We have a few hundred dollars in Lambda compute credits as well, I think more than enough for the second phase.  
+S 2026-03-04 13:10:35 
+Yeah yeah ok s ounds good, s ounds good. Yeah so Ii think we could firstly try the cyber security truck. This my suggestion.  
+S 2026-03-04 13:10:50 
+I think they I also know some people in this in this area. I can consult them yeah, and also coding coding. I also know some people. Yes, it depends. It depends your expertise. What's your preference? Do you have any preference?  
+Josh Hickson 2026-03-04 13:11:12 
+In terms of cyber security, I would say I'm not as familiar with it, but I can say.  
+Josh Hickson 2026-03-04 13:11:24 
+Hold on. I.  
+S 2026-03-04 13:11:27 
+So, we can also focus on coding agent, I think coding is also. Popular topic? Yeah.  
+Oleksandr Voievodin 2026-03-04 13:11:35 
+Well, I don't think just just adding my like five cents, I don't think we have to code too much s Ince we already have. If you look over our repo and just like the code base in general, we did develop something called Red Agent, which is like another subsidiary that you know.  
+Josh Hickson 2026-03-04 13:11:36 
+We can. [s ]orry。 
+Oleksandr Voievodin 2026-03-04 13:11:56 
+Generates adverse stereotax. So what I think would be useful for just like any track like Cyber Security or Lambda is to basically take what we have for Red Agent and just kind of like modify it a little bit. So I don't think in terms of coding, there's not that much that needs to be done.  
+Oleksandr Voievodin 2026-03-04 13:12:18 
+Because we already have that red agent, but. Yeah, I think it would be useful for just to catch up on the red agent that we have.  
+S 2026-03-04 13:12:22 
+Yeah, Ok, Ss ounds good. Yes, E. Ethan, do you have any preference?  
+S 2026-03-04 13:12:43 
+哦哎，医医生。Yeah, E. Ethan, can you hear me?  
+Oleksandr Voievodin 2026-03-04 13:12:44 
+Our reference for.  
+ethan 2026-03-04 13:12:49 
+我们会后会会后会后再聊吧，因为我有些我没听懂。抱歉。嗯。 
+S 2026-03-04 13:12:54 
+Ok so S orry i'm i'm S orry ethan is not not very good at english so I I will I will I will just give me few minutes I speaking in chinese ethan 他们的意思就是说，我们先选哪个 truck 就是我们选 coding 还是还是那个那个什么玩意儿，那个 cyber security。 
+ethan 2026-03-04 13:13:18 
+我刚刚稍微听懂了他，他他他们认为就是兰姆达，可能是太太基础了，然后可能会选，可能会选其他。 
+S 2026-03-04 13:13:19 
+Good. 对，然后他会我他们的意思就是说 cyber security 可以，那个，呃，他们只要改一下代码就 OK 了就 codingcoding 可能要 build from scratch ，其实就看你吧，你看没看哪个 truck 对。 
+S 2026-03-04 13:13:39 
+P Ok, Ok, ok I will, I will我跟他们说 S. Orry, S Orry, I I just talk to him in Chinese. So is E's opinion depends on you so we can we can decide which track together. So just whichever starts easy we can, we can choose this track.  
+ethan 2026-03-04 13:13:40 
+这个选 check 的话，还是看他们自己的，要看他们自己的意愿吧，因为我感觉我对对。嗯。 
+S 2026-03-04 13:14:08 
+Yeah.  
+Oleksandr Voievodin 2026-03-04 13:14:09 
+Yeah, well, I mean what I'm what I'm saying is S Ince we already have like like Base Code. We I mean pretty much all of the tracks shouldn't be too hard because all we do is we just we just take the existing code and like modify it a little bit. So it's it's kind of like like we're kind of luck in the S Ense.  
+S 2026-03-04 13:14:17 
+对呀。 
+S 2026-03-04 13:14:22 
+Yeah, yeah, yeah.  
+S 2026-03-04 13:14:26 
+有。嗯，我我告诉你啊！ 
+Oleksandr Voievodin 2026-03-04 13:14:28 
+啊。 
+Josh Hickson 2026-03-04 13:14:30 
+I have a question how familiar are you with the competition structure concerning the evaluation agents and the submission agents?  
+S 2026-03-04 13:14:43 
+Currently for my side I'm I'm not very familiar with this conversation is not I? I. I didn't spend much time working on the competition.  
+S 2026-03-04 13:14:56 
+Yeah, but but Iiii just quickly went went through the computation. Yeah, not. I'm not very familiar with the evaluation process.  
+Josh Hickson 2026-03-04 13:15:08 
+That's so one thing we should be aware of is there is a framework that each part of the competition follows. It's called the Agent to Agent Framework and the first phase of the competition. Everyone created green agents, which are evaluator agents, so for the track that we participated in, our agent would review submitted software.  
+S 2026-03-04 13:15:11 
+对呀。 
+S 2026-03-04 13:15:23 
+嗯哼嗯哼。 
+Josh Hickson 2026-03-04 13:15:40 
+And we created a mock agent that would submit code for us to review. So part of our agent, you know, reviews the code and then our Red Agent attacks the code to find weaknesses.  
+S 2026-03-04 13:15:46 
+Yeah.  
+Josh Hickson 2026-03-04 13:15:55 
+The second phase of the competition, we are assuming that our evaluation agent S. Ince it won the first phase. It will function as an evaluator for the coding and software agent track, so that means that.  
+Josh Hickson 2026-03-04 13:16:13 
+Teams will be participating and submitting code for our Green agent to review. Also, we will be refactoring the code so that our agent functions as a self evaluating purple submission agent, which means that it will be submitting outputs to the Cyber Security Agent as well as likely our own Green Agent.  
+S 2026-03-04 13:16:20 
+嗯嗯。 
+Josh Hickson 2026-03-04 13:16:38 
+So we kind of have two goals in the S Ense that we're trying to optimize our agent as a self evaluator so that when we submit to our own track, we score the highest.  
+Josh Hickson 2026-03-04 13:16:49 
+This will be the easiest for us to do because it involves minor refactoring in terms of the cyber security agent. I'll admit I'm not as familiar with that track, but if I'm assuming that it focuses on code security, it shouldn't be too difficult to pivot S. Ince. We already have a Red Agent within our framework that attacks the code and finds weaknesses.  
+S 2026-03-04 13:16:55 
+哦。 
+S 2026-03-04 13:17:13 
+Ok, ok, yeah I see. I see so so you you, you guys already have a code base, right?  
+S 2026-03-04 13:17:24 
+I think probably you could invite us to Maybe Github or if you have any code base and and especially I can ask, I can let Ethan to have a look, have a look at the code base.  
+Josh Hickson 2026-03-04 13:17:42 
+Yes yes of course 嗯。 
+S 2026-03-04 13:17:43 
+Yeah, and they can discuss how to improve the code. Right right 嗯。 
+Josh Hickson 2026-03-04 13:17:50 
+Sure, here I can provide a link to the repository if you don't have one already.  
+S 2026-03-04 13:17:53 
+嗯。Yeah, yeah, we do. It's a private repository. 嗯嗯。It's public, Ok, ok, so so good, yeah, but I I have all the about to keep private. Yeah, yeah, I suggest keep private. Maybe because if public or other teams can also see that.  
+Josh Hickson 2026-03-04 13:18:03 
+No, no, it's it's public. Yeah. And I'll I'll give you this. S. Orry.  
+Josh Hickson 2026-03-04 13:18:25 
+Well, we could, if you want, we could clone the repository and then form a private one for the Ok. Let's do that. For now I'll just send the public link and I will follow up.  
+S 2026-03-04 13:18:31 
+Yeah, yeah, yeah, yeah, yeah. Yeah 嗯。 
+Josh Hickson 2026-03-04 13:18:40 
+And send a clone later tonight. [s ]orry。 
+Oleksandr Voievodin 2026-03-04 13:18:42 
+Isn't it? Isn't it? One of the rules though, to keep it like open S Ource isn't what. Agent beats one or 嗯。 
+Josh Hickson 2026-03-04 13:18:52 
+I think what he's meaning is like as we prepare for the competition, we keep it private and then once we submit it's open s ource, but are you are you saying that during the competition we have to keep it open s ource as our purple agent submits?  
+S 2026-03-04 13:19:02 
+Republic 对。 
+Josh Hickson 2026-03-04 13:19:10 
+Because I'm not familiar with that as a rule, but it could be true.  
+Oleksandr Voievodin 2026-03-04 13:19:13 
+Honestly, well, I think that's that's the thing with like all the repos is that they need to be open, but I'm not sure about that. I'll I'll have to.  
+S 2026-03-04 13:19:22 
+I think it's until the deadline is after the I mean after the deadline it should be open. But but during before the deadline, I don't think we could see others code. This is my understanding.  
+Oleksandr Voievodin 2026-03-04 13:19:35 
+No, that that doesn't make s ense, yeah, but I don't know. It's just because sometimes they need to like fork your like before you know, like the judges before actually reviewing the results they need to fork your repo and like you know, like look over like your code base and that's that's how they judge. I guess what we could do is to just.  
+S 2026-03-04 13:19:39 
+对啊。 
+S 2026-03-04 13:19:46 
+哦哦。 
+S 2026-03-04 13:19:52 
+嗯哼。然后。 
+Oleksandr Voievodin 2026-03-04 13:19:59 
+Just clean the commit history or I don't know. I guess. Honestly, I'm not really sure I'll have to look. Roster.  
+Josh Hickson 2026-03-04 13:20:00 
+What what we can, what we can say is that all winning repositories from phase one have public repositories.  
+Josh Hickson 2026-03-04 13:20:13 
+So we are able to look at all of the public code for that. None of it is private. I'm not sure if teams will be. I mean, it's a good idea.  
+S 2026-03-04 13:20:17 
+嗯哼。 
+Josh Hickson 2026-03-04 13:20:25 
+Keeps other teams from.  
+Oleksandr Voievodin 2026-03-04 13:20:25 
+Well, I mean it shouldn't be. I mean, because I don't think a lot of people will look into it anyway. So I mean, it's it's only when it gets like really, really popular.  
+S 2026-03-04 13:20:33 
+嗯。对嗯。呃按。 
+Oleksandr Voievodin 2026-03-04 13:20:37 
+Us.  
+Josh Hickson 2026-03-04 13:20:39 
+If the rules allow for private repository, then we should stay private, but let's confirm first, I think you're right, though.  
+S 2026-03-04 13:20:44 
+嗯。Yeah, yeah.  
+S 2026-03-04 13:20:50 
+Yeah, yeah, and also how we collaborate from from my side. I I I to be honest, I don't have much time working on the code, but I can have discussion with you guys. So maybe weekly discussion, but I, I, I think he have more available time. He he can contribute.  
+S 2026-03-04 13:21:16 
+Build more based on my previous experience I I think I I I don't know how many people working on this project, how maybe E. S an can contribute to the algorithm design or do literature review what what else do you think like what, what, what, what help do you need?  
+S 2026-03-04 13:21:44 
+From from us 嗯。 
+Josh Hickson 2026-03-04 13:21:47 
+I think S. Ince Ethan already has experience in algorithm design that would be best for his focus. I also think literature review is a good idea because we've never submitted a paper to a peer review platform.  
+S 2026-03-04 13:21:52 
+Yeah 嗯。 
+S 2026-03-04 13:22:01 
+对啊。哦，还行。 
+Josh Hickson 2026-03-04 13:22:03 
+Would would you like, would you like for us to connect him to our two other teammates? We have one teammate who won the Lambda track last round, and then we have another teammate who?  
+S 2026-03-04 13:22:15 
+Huh.  
+Josh Hickson 2026-03-04 13:22:19 
+Submitted to the Lambda track but didn't work too much on our repository. We we also have a general plan S. Orry.  
+S 2026-03-04 13:22:21 
+Huh? I I, I cannot. I mean I cannot work too much on the repository, but I can work on the paper side. I mean like try for the paper and I can give you some guidance like based on my expertise.  
+S 2026-03-04 13:22:45 
+So if you want to add me into the team, I don't know how many limit you know like how many, how many, what's the limit number of limit limit. So if, if they're like have a upper upper bound you, you you, you don't need to add me. You can just mention I'm the advisor or something.  
+S 2026-03-04 13:23:10 
+Like that and you can add some into the team if there's like a number limitations.  
+Josh Hickson 2026-03-04 13:23:19 
+That's that's fine. I think we have enough room for two more people, but I will double check. Thank you for confirming.  
+S 2026-03-04 13:23:24 
+Ok, yeah yeah yeah. And also you can let us let us know what information you need like for Maybe or my email or or what you need from from from us.  
+Josh Hickson 2026-03-04 13:23:43 
+Yes for the team sign up form we would be using your emails. So is it Ok if I use the same emails that I have for both of you?  
+S 2026-03-04 13:23:45 
+嗯。Yeah, yeah, sure. Of course. Yeah, yeah, yeah, yes, yeah.  
+Josh Hickson 2026-03-04 13:23:55 
+Thank you. Also, we're going to be doing some project management on the linear website. Have you guys used linear before?  
+S 2026-03-04 13:24:02 
+I heard about that, but I never tried before. You can also invite our email.  
+Josh Hickson 2026-03-04 13:24:14 
+Perfect. I'm also new to this platform, but it interfaces well with Github issues, so I think it would be efficient for us to delegate tasks this way.  
+S 2026-03-04 13:24:16 
+哈哈哦。Yeah, yeah, yeah s ounds good I I use notion before I with my team member. Yeah, and also I sometimes use fish. It's a similar similar to Google Doc, but but it's have more functions. Yeah, so yeah.  
+Josh Hickson 2026-03-04 13:24:46 
+Would you say you're very familiar with notion? Are you comfortable with it?  
+S 2026-03-04 13:24:52 
+I I kind of comfortable, I would say like not not very, not very familiar, but I'm comfortable. But I can also use linear. Yeah, it doesn't matter.  
+Josh Hickson 2026-03-04 13:25:06 
+Let's give Linear a try. For now, we still have some time before the competition starts so we can learn how to use it properly.  
+S 2026-03-04 13:25:11 
+谢谢。Yeah, yeah, yeah, Ok, Ok.  
+Josh Hickson 2026-03-04 13:25:18 
+And.  
+Josh Hickson 2026-03-04 13:25:21 
+I'm somebody who relies on creating a lot of documents in order to plan out how we approach the competition.  
+Josh Hickson 2026-03-04 13:25:32 
+What format would you guys appreciate that and if I were to send you planning documents? Outside of linear or inside of linear.  
+S 2026-03-04 13:25:32 
+Yah.  
+S 2026-03-04 13:25:40 
+I usually use over Leaf is online latex but you can also use Google Doc or notion Depends on you.  
+Josh Hickson 2026-03-04 13:25:54 
+I think I'll just create a Google Doc folder for now that way. If you guys want to edit the documents you're free to, that's good too.  
+S 2026-03-04 13:25:55 
+Yeah for the. 嗯 yeah 嗯。Yeah, yeah, Ok. Unfortunately I have a meeting five 5min later so I need to leave and we can also communicate in the discord. We can create a discord group.  
+Josh Hickson 2026-03-04 13:26:24 
+Absolutely. I have a discord server for the team and I can invite both of you to it if you'd like to meet the two other teammates.  
+S 2026-03-04 13:26:26 
+对对对对。Yeah, yeah, yeah, sure. Sure. Ok, Ok, yeah, are you all all in California?  
+Josh Hickson 2026-03-04 13:26:37 
+Perfect. I'll I'll send the link now. Well, thank you.  
+Josh Hickson 2026-03-04 13:26:46 
+Yes. YES I 嗯。So I live about 2h from Berkeley, I live by S. Acramento, but I drive to the Bay Area to visit my grandparents by S. Anta Cruz.  
+S 2026-03-04 13:26:46 
+To. 哦 OK OK。 
+S 2026-03-04 13:26:54 
+哦哦。 
+S 2026-03-04 13:26:59 
+哦操是是是 ok ok so yeah 啊 OK。Yeah, I. I'm not sure if you're familiar if you're Ok with Tencent Ten, Ten v O Way meeting because it's sometimes you. I don't know whether you need to register WECHAT to go go on this platform. But the advantage of this one is they. They have Ai Ai Ai summarize you, you know, if you click.  
+S 2026-03-04 13:27:32 
+When if you scroll down you, you will find a button called Ai summarize and you can. It's easy to summarize all everything we discuss and what's the to do list. This is a very good function, that's why I sometimes I like to use this this software.  
+S 2026-03-04 13:27:53 
+I don't know whether Tom have this function or because sometimes if you use discord there's also like a meeting some kind of meeting function, but it cannot do Ai summarize, this one can can do you see you see there have Ai summarize function.  
+Josh Hickson 2026-03-04 13:27:53 
+Perfect.  
+Josh Hickson 2026-03-04 13:28:08 
+Yeah, this yeah. This is very convenient. I like the fact that it generates a transcript to export as well.  
+Josh Hickson 2026-03-04 13:28:23 
+It's very perfect.  
+S 2026-03-04 13:28:23 
+Yeah, yeah, yeah, when you, when you, when you meeting, you can open this function and so we can. We can have a document to record the progress we made and what's a, What's A to do list.  
+S 2026-03-04 13:28:39 
+Yeah.  
+Josh Hickson 2026-03-04 13:28:40 
+Well, do you have any other questions for us before your next meeting?  
+S 2026-03-04 13:28:47 
+That's all and I I will just summarize everything to Ethan. Maybe if you have anything like summarized you can send to the group. So if you send here, I think Ethan can better understand what he needs to do needs to do Yeah.  
+Josh Hickson 2026-03-04 13:29:11 
+Perfect. Additionally, I'm going to create a document that gives an overview of how phase two will work specifically which tracks we will target.  
+Josh Hickson 2026-03-04 13:29:23 
+And I will also give an overview of our repository as well so that it can introduce Ethan to how it mainly functions.  
+ethan 2026-03-04 13:29:34 
+Thank you. I'm very s Orry that my listening and speaking is not good, but my reading and writing is good so I can understand it better. If you write that's your what's done.  
+S 2026-03-04 13:29:44 
+Yeah. 因你那个你你你把那个你你把那个 aiai summer 开开，你就能听懂他们在说啥了，还有一个 translate。 
+Josh Hickson 2026-03-04 13:29:55 
+Thank you.  
+ethan 2026-03-04 13:30:01 
+还有颜值嗯嗯嗯。 
+S 2026-03-04 13:30:03 
+对，这下面有一个 bi translate summer yeah I just tell him how to use the function to summarize the meeting but unfortunately I need to go I need to attend another meeting so S orry S orry guys have a nice day bye bye。 
+Josh Hickson 2026-03-04 13:30:19 
+That's Ok. Have a good one? Thank you.  
+Oleksandr Voievodin 2026-03-04 13:30:23 
+[s] mitch 那 itch。 
+ethan 2026-03-04 13:30:25 
+Nice meet you too. Ok, that's all Ok, Ok, ok, goodbye.  
+Oleksandr Voievodin 2026-03-04 13:30:28 
+Yes, Absolutely.  
+Josh Hickson 2026-03-04 13:30:31 
+Yeah, yeah, that's all. Thank you for coming. It's nice to meet you and I'll send you those documents soon and invite you to the linear. Thank you goodbye. Have a good day.  
+Oleksandr Voievodin 2026-03-04 13:30:32 
+你死了。 

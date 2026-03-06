@@ -11,7 +11,7 @@ type: Spec
 ## 1. Where We Are
 
 - **Phase 1 (Green Agent):** Won 1st place, Software Testing Agent track, AgentBeats competition (UC Berkeley RDI). 1,300+ teams competed.
-- **Phase 2 (Purple Agent):** Registered. Lambda Security Arena track active. Main track starts Feb 23, 2026. Deadline ~March 30.
+- **Phase 2 (Purple Agent):** Registered. Focus is now on the Coding & Cybersecurity Agents track (Sprint 3). The Lambda Security Arena track is deprecated.
 
 ## 2. What LogoMesh Is
 
