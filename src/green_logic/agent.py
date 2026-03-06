@@ -16,8 +16,8 @@ class GreenAgent:
         dbom = < h(delta), v_intent, score_cis, sigma_judge >
         """
         battle_id = result.get("battle_id", "N/A")
-        raw_result = json.dumps(result)
-        
+        raw_result = json.dumps(result, sort_keys=True)
+
         # 1. h(delta) - hash of the change/result
         h_delta = hashlib.sha256(raw_result.encode()).hexdigest()
 
@@ -41,13 +41,13 @@ class GreenAgent:
             "sigma_judge": sigma_judge,
             "timestamp": datetime.datetime.now().isoformat()
         }
-        
+
         # save to file system
         os.makedirs("data/dboms", exist_ok=True)
         dbom_path = os.path.join("data/dboms", f"dbom_{battle_id}.json")
         with open(dbom_path, "w") as f:
             json.dump(dbom, f, indent=2)
-        
+
         return dbom
 
     def submit_result(self, result: dict):
@@ -88,7 +88,7 @@ class GreenAgent:
                     dbom_hash TEXT
                 )
             """)
-            
+
             # enable write-ahead logging for crash-proof persistence (task 1.3)
             cursor.execute("PRAGMA journal_mode=WAL;")
 
