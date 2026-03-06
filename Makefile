@@ -1,4 +1,15 @@
-.PHONY: setup test run-green run-purple run-red docker-build lint clean
+.PHONY: setup start stop test run-green run-purple run-red docker-build docker-up docker-down lint clean
+
+# One-command setup + launch (handles Docker, deps, and agents)
+start:
+	@bash scripts/bash/start.sh
+
+# Stop all running LogoMesh agents
+stop:
+	@echo "[LogoMesh] Stopping agents..."
+	@lsof -ti :9009 | xargs kill 2>/dev/null || true
+	@lsof -ti :9010 | xargs kill 2>/dev/null || true
+	@echo "[LogoMesh] Stopped ✓"
 
 # Install dependencies
 setup:
@@ -19,9 +30,13 @@ run-red:
 docker-build:
 	docker build -f Dockerfile.sandbox -t logomesh-sandbox:latest .
 
-# Run all agents via Docker Compose
+# Run all agents via Docker Compose (no Python needed — just Docker)
 docker-up:
-	docker compose -f docker-compose.agents.yml up --build
+	docker compose -f docker-compose.agents.yml build sandbox 2>/dev/null || true
+	docker compose -f docker-compose.agents.yml up --build green purple
+
+docker-down:
+	docker compose -f docker-compose.agents.yml down
 
 # Run tests
 test:

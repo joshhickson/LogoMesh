@@ -1,10 +1,22 @@
 version: '3.8'
 
 services:
+  # Sandbox image — built first so the Green Agent can use it for code execution
+  sandbox:
+    build:
+      context: .
+      dockerfile: Dockerfile.sandbox
+    image: logomesh-sandbox:latest
+    profiles: ["build-only"]  # Not a running service — just builds the image
+
   green:
     build:
       context: .
       dockerfile: Dockerfile.green
+    depends_on:
+      sandbox:
+        condition: service_started
+        required: false
     ports:
       - "9009:9009"
     environment:

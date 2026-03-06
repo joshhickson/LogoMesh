@@ -97,29 +97,54 @@ The benchmark covers 20 tasks from basic data structures to distributed systems 
 
 ### Prerequisites
 
-- Python 3.11+
-- Docker (for sandbox — the code execution environment)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) — required for both paths below
 - An OpenAI API key (or any OpenAI-compatible endpoint)
 
 ### Install and Run
 
+There are **two ways** to run LogoMesh — pick whichever fits your setup:
+
+#### Option A: Local Python (recommended for development)
+
+Requires Python 3.11+ installed on your machine.
+
 ```bash
-# 1. Clone and install
 git clone https://github.com/sszz01/LogoMesh.git
 cd LogoMesh
-pip install uv && uv sync
+cp .env.example .env        # Edit .env → add your OPENAI_API_KEY
+make start                   # installs deps, starts Docker, builds sandbox, launches agents
+```
 
-# 2. Set your API key
-cp .env.example .env
-# Edit .env → add your OPENAI_API_KEY
+To stop: `make stop`
 
-# 3. Start the Purple Agent (the AI being evaluated)
-uv run main.py --role PURPLE --host 0.0.0.0 --port 9010 &
+<details>
+<summary>What <code>make start</code> does behind the scenes</summary>
 
-# 4. Start the Green Agent (the judge — includes embedded Red Agent)
-uv run main.py --role GREEN --host 0.0.0.0 --port 9009 &
+- Installs `uv` and syncs Python dependencies
+- Starts Docker Desktop if it's not running (macOS/Linux)
+- Builds the sandbox image (first run only, ~15s)
+- Launches the Purple and Green agents on ports 9010 and 9009
+- Waits for both to be ready, then prints usage instructions
 
-# 5. Send a coding task
+</details>
+
+#### Option B: Docker Compose (zero Python install)
+
+Only requires Docker — nothing else.
+
+```bash
+git clone https://github.com/sszz01/LogoMesh.git
+cd LogoMesh
+cp .env.example .env        # Edit .env → add your OPENAI_API_KEY
+make docker-up               # builds all images and starts both agents
+```
+
+To stop: `make docker-down`
+
+---
+
+Once running (either option), send a task:
+```bash
 curl -X POST http://localhost:9009/actions/send_coding_task \
   -H "Content-Type: application/json" \
   -d '{
@@ -139,7 +164,9 @@ You'll get back a JSON response with:
 
 ---
 
-## Running with Docker
+## Running with Docker (advanced)
+
+If you want more control over the Docker setup (e.g., custom ports, env vars):
 
 ### Green Agent (The Assessor Agent - the benchmark)
 
@@ -164,13 +191,6 @@ docker run -p 9010:9010 \
   logomesh-purple:latest --host 0.0.0.0 --port 9010
 ```
 
-### Both Agents Together (Docker Compose)
-
-```bash
-docker compose -f docker-compose.agents.yml up --build
-```
-
-Then send tasks to `http://localhost:9009/actions/send_coding_task`.
 
 ---
 
@@ -309,7 +329,7 @@ Every evaluation produces a DBOM — a standalone JSON file containing:
 - `score_cis`: the final score
 - `sigma_judge`: cryptographic signature tying the score to the battle
 
-DBOMs are stored in `data/dboms/` and provide a standalone file-based audit trail per evaluation. 
+DBOMs are stored in `data/dboms/` and provide a standalone file-based audit trail per evaluation.
 
 **Known Limitation - Cryptographic Verification:** The DBOM cryptographic verification is currently experimental. Due to a discrepancy where `generate_dbom` hashes the *unsorted* JSON string while the database stores the *sorted* JSON string, verifying the database record against the DBOM hash will currently fail. Strict JSON serialization alignment is required for this to function correctly. Additionally, Merkle Chaining / cryptographic linking of sequential records is slated for a future Phase 2 release and is not currently active.
 
