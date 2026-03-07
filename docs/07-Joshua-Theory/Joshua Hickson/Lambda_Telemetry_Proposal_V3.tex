@@ -86,6 +86,16 @@ By synthesizing the bottom-up neuronal tracking with top-down latent state monit
     \item \textbf{In-Context Hallucination (Comprehension Debt):} Characterized by acute spikes in H-Neuron activation (high over-compliance pressure) coupled with degrading LAT projections along the ``honesty'' and ``certainty'' axes, potentially accompanied by spikes in latent representations corresponding to anxiety or goal-coercion.
 \end{itemize}
 
+\section{Implementation Architecture: Codebase Subsystems}
+
+To transition this theory into empirical practice, the offline telemetry sandbox must rigorously interface with three specific sub-systems currently present in the LogoMesh repository:
+
+\begin{itemize}
+    \item \textbf{The Purple Agent Simulacrum:} The target architecture (\texttt{src/scenarios/security\_arena/agents/generic\_defender.py}) reveals that the defender is an A2A streaming wrapper around \texttt{GENERIC\_DEFENDER\_SYSTEM\_PROMPT} and a stateless \texttt{conversation\_history}. We can perfectly simulate this target environment offline by injecting this exact system prompt and conversation dictionary into the local HuggingFace \texttt{Pipeline}, guaranteeing that attacks generated locally will translate flawlessly to the live API endpoint.
+    \item \textbf{Red Agent Memory Tracking:} The MCTS planner's context is governed by the \texttt{AgentMemory} dataclass (in \texttt{src/red\_logic/orchestrator.py}), which strictly tracks \texttt{findings}, \texttt{hypotheses}, \texttt{explored\_functions}, and \texttt{observations}. The PyTorch forward-hooks will track LAT projections \textit{specifically} during the serialization of the \texttt{observations} array, as this is the exact moment the model must synthesize its findings into an actionable next step. By penalizing "certainty drops" strictly during the \texttt{observation} synthesis phase, we prevent the model from hallucinating tool outputs.
+    \item \textbf{Dynamic Tool Generation:} The LogoMesh MCTS utilizes a \texttt{ToolRegistry} that allows for \textit{meta-agent capability expansion} via the \texttt{\_create\_tool} action. In the offline sandbox, when the model attempts to generate a new Python function (\texttt{def tool\_name(params: dict, memory, source\_code: str) -> ToolResult}), we will monitor the H-Neuron activation threshold. If the H-Neuron signature indicates over-compliance (i.e., the model is writing a tool to fulfill a hallucinated vulnerability path), the offline engine will immediately prune the MCTS branch and apply a severe \texttt{LAT\_Penalty} to the parent node.
+\end{itemize}
+
 \section{Architectural Integration: Three-Phased Execution Strategy}
 
 Extracting internal state telemetry requires precisely attaching and detaching forward-hooks to the residual streams of transformer layers. Debugging this optimization loop directly on a rented 80GB H100 cluster executing \texttt{gpt-oss-20b} is computationally expensive and high-risk. However, an empirical audit of the LogoMesh codebase reveals that the existing MCTS planner is tightly coupled to live, synchronous LLM APIs and executes untrusted logic directly in-process.
