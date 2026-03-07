@@ -8,9 +8,9 @@ This document serves as your primary reference for our current strategy and tech
 
 Based on the meetings from March 3rd and 4th, we have made a crucial change in our competition strategy.
 
-*   **Abandoned Track:** We are no longer targeting the Lambda Custom Track (deadline: March 30). We discovered that its hard limit of 4 LLM API calls per battle fundamentally breaks our live Monte Carlo Tree Search (MCTS) evaluation engine.
-*   **New Target:** We are now exclusively targeting the **Cybersecurity Agent track**.
-*   **Timeline:** According to the official AgentBeats schedule, the Cybersecurity Agent track takes place during **Sprint 3 (April 13 – May 3, 2026)**. We have approximately six weeks to prepare.
+*   **Dual-Track Strategy (Lambda Track):** While our live Monte Carlo Tree Search (MCTS) evaluation engine is constrained by the 4 LLM API call limit of the Lambda Custom Track, we are maintaining a separate branch (`main-lambda-phase2`) for it. We are using an "Offline Sandbox" strategy—leveraging micro-LLMs and H100s via compute credits to simulate battles and prepare pre-calculated attack scripts before the March 30 deadline.
+*   **Cybersecurity Target:** Our primary focus for the academic integration remains the **Cybersecurity Agent track**, functioning on the `main-generalized-phase2` branch.
+*   **Timeline:** According to the official AgentBeats schedule, the Cybersecurity Agent track takes place during **Sprint 3 (April 13 – May 3, 2026)**. We have approximately six weeks to prepare for this track.
 
 This pivot aligns perfectly with your team's previous success in publishing EVM-Bench, as the Phase 1 winner in the Cybersecurity track (Ethernaut Arena) focuses on auditing and exploiting Solidity smart contracts.
 

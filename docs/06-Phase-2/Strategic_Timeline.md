@@ -3,7 +3,7 @@
 ## Phase 1 Conclusion & Initial Evaluation
 - **October 2025 - January 2026:** LogoMesh successfully completes Phase 1 of the AgentX-AgentBeats competition, securing first place in the Software Testing Agent track by developing a robust "Green Agent" (evaluator) that utilizes an embedded "Red Agent" (MCTS-based attacker) to find vulnerabilities in submitted code.
 
-## Early Phase 2 Strategy: The Lambda Track (Now Obsolete)
+## Lambda Track Strategy Evolution
 - **February 23, 2026:** The Lambda Agent Security custom track begins. This track focuses on red-teaming and automated security testing, operating on a fast-tracked timeline with a deadline of March 30, 2026.
 - **February 28, 2026:** Kickoff Meeting (Josh, Mark, Bakul).
   - The team initially plans to target the Lambda track.
@@ -18,11 +18,15 @@
 - **March 3, 2026:** The Pivotal Meeting with Dr. Shi & Ethan.
   - During the meeting, the timeline and the team's strengths are re-evaluated. The Lambda track deadline (March 30) is deemed too tight for a meaningful academic contribution.
   - Prof. Shi notes his team's previous success publishing "EVM-Bench," an Ethereum Virtual Machine benchmark that sits at the intersection of coding agents and cybersecurity.
-  - **The Second Pivot (Cybersecurity Focus):** The team collectively decides to abandon the Lambda Custom Track entirely. They will formally pivot their Phase 2 efforts to target the **Cybersecurity Agent track**. If successful, they plan to expand to the Coding Agent track later in the sprint.
+  - **The Second Pivot (Cybersecurity Focus):** The team collectively decided to pivot their Phase 2 efforts to target the **Cybersecurity Agent track** as well. The "Offline Sandbox" plan for the Lambda track was temporarily paused but has since been revived on a separate branch.
 
-## The Current Reality: Sprint 3 Cybersecurity
-- **Present Day:** The official Phase 2 Schedule places the Cybersecurity track in **Sprint 3 (April 13 – May 3, 2026)**, alongside Agent Safety and the Coding Agent tracks.
-- This schedule provides the team with approximately six weeks to:
+## The Current Reality: Dual-Track Execution
+- **Present Day:** The official Phase 2 Schedule places the Cybersecurity track in **Sprint 3 (April 13 – May 3, 2026)**, alongside Agent Safety and the Coding Agent tracks. The Lambda track has a deadline of **March 30, 2026**.
+- The team is operating a dual-track approach:
+  - **Lambda Track (`main-lambda-phase2`):** Actively pursuing the "Offline Sandbox" strategy. The goal is to bypass the 4-call limit using local micro-LLMs and H100s via compute credits to simulate battles and prepare pre-calculated attack scripts before the March 30 deadline.
+  - **Cybersecurity Track (`main-generalized-phase2`):** Actively adapting to specific vulnerabilities tested by the Phase 1 Cybersecurity Green Agents (like Ethernaut Arena and RCA-Bench).
+- This dual-track approach gives the team a timeline to:
   1. Fix the critical "Uroboros" security flaw (air-gapping the Red Agent).
-  2. Adapt the existing Red Agent's logic to handle the specific vulnerabilities tested by the Phase 1 Cybersecurity Green Agents (like Ethernaut Arena and RCA-Bench).
-  3. Prepare the data pipeline for the NeurIPS Croissant metadata format.
+  2. Continue offline simulation experiments to refine Lambda track entries.
+  3. Adapt the existing Red Agent's logic to handle Cybersecurity domain targets.
+  4. Prepare the data pipeline for the NeurIPS Croissant metadata format.

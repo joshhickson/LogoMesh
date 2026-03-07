@@ -2,13 +2,15 @@
 
 Welcome to the definitive source of truth for the LogoMesh project's Phase 2 development. This documentation hub has been synthesized, analyzed, and reorganized to provide clear strategic direction and actionable intelligence for the AgentBeats competition and our subsequent NeurIPS 2026 submission.
 
-## Strategic Overview & The "Cybersecurity Pivot"
+## Strategic Overview & The Dual-Track Approach
 
-Following our Phase 1 victory in the Software Testing Agent track, LogoMesh faced significant architectural challenges entering Phase 2. Initial plans to target the **Lambda Custom Track** were abandoned after discovering a restrictive 4-call LLM limit that rendered our live Monte Carlo Tree Search (MCTS) engine mathematically impossible to execute.
+Following our Phase 1 victory in the Software Testing Agent track, LogoMesh faced significant architectural challenges entering Phase 2. Initial plans to target the **Lambda Custom Track** faced a hurdle with a restrictive 4-call LLM limit. However, we have adopted a dual-track strategy to actively pursue both the Cybersecurity Agent track and the Lambda Custom Track.
 
-After establishing a strategic academic partnership with Professor Tianyu Shi (McGill University) and researcher Yichen "Ethan" Shen, the team successfully pivoted. Leveraging Prof. Shi's team's expertise in "EVM-Bench" (Ethereum Virtual Machine benchmarking), we are now exclusively targeting the **Cybersecurity Agent track** for Sprint 3 (April 13 – May 3, 2026).
+After establishing a strategic academic partnership with Professor Tianyu Shi (McGill University) and researcher Yichen "Ethan" Shen, we are heavily leveraging Prof. Shi's team's expertise in "EVM-Bench" (Ethereum Virtual Machine benchmarking).
 
-If successful in adapting our Red Agent to handle Cybersecurity targets (like Solidity smart contracts and C/C++ memory vulnerabilities), we will subsequently expand our focus to the Coding Agent track.
+We are operating on two separate branches:
+*   **`main-generalized-phase2`**: Dedicated to adapting our Red Agent to handle Cybersecurity targets (like Solidity smart contracts and C/C++ memory vulnerabilities) for Sprint 3 (April 13 – May 3, 2026).
+*   **`main-lambda-phase2`**: Dedicated to the Lambda Custom Track. Here, we utilize an "Offline Sandbox" strategy. We bypass the 4-call limit by running our MCTS and micro-telemetry offline (using local micro-LLMs and scaling to H100s via Lambda compute credits) to simulate battles and calculate highly optimized attack prompts. The final submission will be a lightweight script executing these pre-calculated attacks.
 
 ## Directory Structure & Navigation
 
@@ -16,7 +18,7 @@ This directory has been restructured to separate active, actionable intelligence
 
 *   **`README.md`**: The definitive single source of truth for Phase 2 strategy.
 *   **`Action_Items.md`**: A consolidated list of Priority 0 (Urgent) to Priority 2 (Medium) tasks, fully prepared for import into our Linear project management tool.
-*   **`Strategic_Timeline.md`**: A detailed chronological trace of our strategy evolution, detailing the "Offline Sandbox" pivot and the final decision to focus on the Cybersecurity track, abandoning the Lambda track.
+*   **`Strategic_Timeline.md`**: A detailed chronological trace of our strategy evolution, detailing the "Offline Sandbox" pivot, the Cybersecurity track integration, and the dual-track execution plan.
 *   **`Risks_and_Blind_Spots.md`**: A comprehensive assessment of our current operational and architectural vulnerabilities, prominently featuring the "Uroboros" security threat and critical cryptographic hashing discrepancies.
 *   **`[2026-02-28] Architecture-Overview.md`**: (Core Historical) A code-derived overview of the LogoMesh system architecture at the end of Phase 1.
 *   **`Planning_and_Strategy/`**: Contains foundational documents outlining the theoretical frameworks (DynaWeb, CCMA) proposed for integrating our academic partners and structuring our NeurIPS submission, as well as concrete remediation plans like [[2026-03-04] Red_Agent_Remediation_Plan.md](./Planning_and_Strategy/[2026-03-04]%20Red_Agent_Remediation_Plan.md) to address our current architectural vulnerabilities.
@@ -29,7 +31,7 @@ This directory has been restructured to separate active, actionable intelligence
 During the synthesis of these documents, several critical contradictions were identified and definitively resolved by the project lead:
 
 1.  **Cybersecurity Track Timeline:** Previous internal briefs incorrectly stated the Cybersecurity track was in Sprint 2. The definitive timeline, as confirmed by the official AgentBeats schedule, places the **Cybersecurity Agent track in Sprint 3 (April 13 – May 3, 2026)**.
-2.  **Definitive Track Decision:** While some meeting summaries suggested indecision between the Cybersecurity and Coding tracks, it has been formally decided to focus **solely on the Cybersecurity Agent track** first.
+2.  **Definitive Track Decision:** While some meeting summaries suggested indecision between the Cybersecurity and Coding tracks, or a complete abandonment of the Lambda track, it has been formally decided to adopt a **dual-track focus**. We are pursuing the Cybersecurity Agent track on `main-generalized-phase2` and the Lambda track on `main-lambda-phase2` simultaneously.
 3.  **Role Assignments (Ethan vs. Engineering):** The raw transcripts and meeting minutes confirm that **Yichen "Ethan" Shen** will focus on algorithm design and literature review. **Oleksandr and the internal engineering team** remain responsible for the actual code adaptation of the Red Agent. Ethan will be briefed on the repository structure before specific implementation tasks are assigned.
 4.  **Bakul's Status:** Bakul has formally resolved any previous conflicts of interest related to the Lambda track and remains fully engaged in adapting LogoMesh for the Phase 2 sprints.
 

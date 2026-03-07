@@ -51,7 +51,7 @@ The safest and most performant pivot is to externalize the untrusted execution t
 ### 4. Adapt Red Agent for Cybersecurity Track Targets (P1)
 
 **Context:**
-The team has officially pivoted from the Lambda track to the Cybersecurity Agent track (Sprint 3). The Red Agent's logic must be updated to target specific vulnerabilities found in Solidity smart contracts and C/C++ memory implementations.
+The team is operating a dual-track approach. For the Cybersecurity Agent track (Sprint 3) on the `main-generalized-phase2` branch, the Red Agent's logic must be updated to target specific vulnerabilities found in Solidity smart contracts and C/C++ memory implementations. For the Lambda Custom Track on the `main-lambda-phase2` branch, the Red Agent relies on an "Offline Sandbox" approach to pre-calculate attacks locally.
 
 **Implementation Plan:**
 *   **Target Files:** `src/red_logic/orchestrator.py`, `src/task_intelligence.py`
