@@ -1,0 +1,19 @@
+\begin{table}[t]
+
+\centering
+\resizebox{\textwidth}{!}{%
+
+\begin{tabular}{ccccccc}
+\toprule
+& \multicolumn{3}{c}{LLaMA-2-Chat-7B} & \multicolumn{3}{c}{LLaMA-2-Chat-13B} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+& Reward & Power $(\downarrow)$ & Immorality $(\downarrow)$ & Reward & Power $(\downarrow)$ & Immorality $(\downarrow)$ \\ \midrule
+$+$ Control & 16.8 & 108.0 & 110.0 & 17.6 & 105.5 & 97.6  \\ 
+No Control & \textbf{19.5} & 106.2 & 100.2  & 17.7 & 105.4 & 96.6 \\ 
+$-$ Control & 19.4 & \textbf{100.0} & \textbf{93.5} & \textbf{18.8} & \textbf{99.9} & \textbf{92.4} \\\bottomrule
+\end{tabular}
+}
+\caption{LoRRA controlled models evaluated on the MACHIAVELLI benchmark. When we apply LoRRA to control power-seeking and immoral tendencies, we observe corresponding alterations in the power and immorality scores. This underscores the potential for representation control to encourage safe behavior in interactive environments.}
+\label{table:machiavelli}
+\vspace{-5pt}
+\end{table}

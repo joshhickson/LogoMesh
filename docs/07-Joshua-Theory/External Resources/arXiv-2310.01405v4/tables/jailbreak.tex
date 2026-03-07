@@ -1,0 +1,19 @@
+
+
+
+\begin{table}[t]
+
+\centering
+\begin{tabular}{lccc}
+\toprule
+& Prompt Only & Manual Jailbreak & Adv Attack (GCG) \\\midrule
+No Control & \textbf{96.7} \textcolor{gray}{(94 / 99)} & 81.4 \textcolor{gray}{(98 / 65)} & 56.6 \textcolor{gray}{(98 / 16)}\\
+
+Linear Combination & 92.5 \textcolor{gray}{(86 / 99)} & 86.6 \textcolor{gray}{(95 / 78)} & 86.4 \textcolor{gray}{(92 / 81)} \\
+
+Piece-wise Operator & 93.8 \textcolor{gray}{(88 / 99)} & \textbf{90.2} \textcolor{gray}{(96 / 84)} & \textbf{87.2} \textcolor{gray}{(92 / 83)} \\\bottomrule
+\end{tabular}
+\caption{Enhancing the model's sensitivity to instruction harmfulness notably boosts the harmless rate (frequency of refusing harmful instructions), especially under adversarial settings. The piece-wise operator achieves the best helpful and harmless rates in these settings. We calculate the ``helpful and harmless rates'' as the average of the ``helpful rate'' (frequency of following benign instructions) and the ``harmless rate'', with both rates displayed in gray for each setting. All numbers are percentages.}
+\label{table:jailbreak}
+\vspace{-5mm}
+\end{table}

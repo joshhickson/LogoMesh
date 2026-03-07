@@ -1,0 +1,70 @@
+\section{Our method: \atk{}}
+\label{sec:architecture}
+
+Unsupervised translation has been successful in computer vision, using a combination of cycle consistency and adversarial regularization \citep{liu2018unsupervisedimagetoimagetranslationnetworks,zhu2020unpairedimagetoimagetranslationusing}.  Our design of \atk{} is inspired in part by these methods.  We aim to learn embedding-space translations that are cycle-consistent (mapping to and from an embedding space should end in the same place) and indistinguishable (embeddings for the same text from either space should have identical latents). 
+
+% In this section we describe the architecture of \atk{} (\Cref{subsec:method-arch}) and its training (\Cref{subsec:method-opt}).
+
+
+\subsection{Architecture} 
+\label{subsec:method-arch}
+
+We propose a modular architecture, where embeddings are encoded and decoded using space-specific adapter modules and passed through a shared backbone network.   \Cref{fig:architecture} shows these components. {Input adapters} $A_1 :\R^{d} \to \mathbb{R}^{Z}$ and $A_2: \R^{d} \to \mathbb{R}^{Z}$ transform embeddings from each encoder-specific space into a universal latent representation of dimension $Z$. The {shared backbone} $T : \mathbb{R}^{Z} \to \mathbb{R}^{Z}$ extracts a common latent embedding from adapted inputs. Output adapters $B_1 : \mathbb{R}^{Z} \to \R^{d}$ and $B_2: \mathbb{R}^{Z} \to \R^{d}$ translate these common latent embeddings back into the encoder-specific spaces. Thus, translation functions $F_1, F_2$ and additional reconstruction mappings $R_1, R_2$ are defined as:
+\begin{equation*}
+    F_1=B_2 \circ T \circ A_1,\quad F_2=B_1 \circ T \circ A_2\quad R_1=B_1 \circ T \circ A_1\quad R_2=B_2 \circ T \circ A_2
+\end{equation*}
+Parameters of all components are collectively denoted $\theta = \{A_1, A_2, T, B_1, B_2\}$.
+
+% \vs{This is a tough section to write convincingly. 
+ % Ideally, gotta justify all these choices, but it's GANs so I made my peace with how ad hoc it looks.}
+
+Unlike images, embeddings do not have any spatial bias.  Instead of CNNs, we use multilayer perceptrons (MLP) with residual connections, layer normalization, and SiLU nonlinearities.  Discriminators mirror this structure but omit residual connections to simplify adversarial learning.
+
+ % We further incorporate weight-shared residual blocks to stabilize training and encourage common transformations across embedding spaces. 
+
+\subsection{Optimization}
+\label{subsec:method-opt}
+
+
+In addition to the `generator' networks $F$ and $R$, we introduce discriminators operating on both the latent representations of $F$ ($D_{1}^{\ell}, D_{2}^{\ell}$) and the output embeddings ($D_1, D_2$).
+
+Our goal is to train the parameters of $\theta$ by solving:
+\begin{equation}\label{eq:base_objective}
+    \theta^* = \arg \min_{\theta} \max_{D_1, D_2, D_{1}^{\ell}, D_{2}^{\ell}} \mathcal{L}_{\text{adv}}(F_1,F_2,D_1,D_2,D_{1}^{\ell},D_{2}^{\ell}) + \lambda_{\text{gen}} \mathcal{L}_{\text{gen}}(\theta),
+\end{equation}
+where $\mathcal{L}_{\text{adv}}$ and $\mathcal{L}_{\text{gen}}$ represent adversarial and generator-specific constraints respectively and hyperparameter $\lambda_{\rm gen}$ controls their tradeoff.
+
+\shortpara{Adversarial loss.}
+The adversarial loss encourages generated embeddings to match the empirical distributions of original embeddings both at the embedding and latent levels. Specifically, applying the standard GAN loss formulation \citep{10.1145/3422622} to both levels yields:
+\begin{align*}
+    \mathcal{L}_{\text{adv}}(F_1,F_2,D_1,D_2,D_{1}^{\ell},D_{2}^{\ell}) 
+    &= \mathcal{L}_{\text{GAN}}(D_1, F_1) + \mathcal{L}_{\text{GAN}}(D_2, F_2) \\
+    &\quad + \mathcal{L}_{\text{GAN}}(D_{1}^{\ell}, T \circ A_1) + \mathcal{L}_{\text{GAN}}(D_{2}^{\ell},  T \circ A_2).
+\end{align*}
+
+
+\shortpara{Generator.}
+Because adversarial losses alone do not guarantee that translated embeddings preserve semantics \citep{zhu2020unpairedimagetoimagetranslationusing}, we introduce three additional constraints to help the generator learn a useful mapping:
+
+\textit{Reconstruction} enforces that an embedding, when mapped into the latent space and back into its original embedding space, closely matches its initial representation:
+\begin{align*}
+    \mathcal{L}_{\text{rec}}(R_1,R_2) = \mathbb{E}_{x \sim p}\|R_1(x)-x\|_2^2 + \mathbb{E}_{y \sim q}\|R_2(y)-y\|_2^2.
+\end{align*}
+
+where $p$ and $q$ are distributions of embeddings sampled from $M_1$ and $M_2$, respectively.
+
+\textit{Cycle-consistency} acts as an unsupervised proxy for supervised pair alignment, ensuring that $F$ and $G$ can translate an embedding to the other embedding space and back again with minimal corruption:
+\begin{align*}
+    \mathcal{L}_{\text{CC}}(F_1,F_2) = \mathbb{E}_{x \sim p}\|F_2(F_1(x))-x\|_2^2 + \mathbb{E}_{y \sim q}\|F_1(F_2(y))-y\|_2^2.
+\end{align*}
+\textit{Vector space preservation (VSP)} ensures that pairwise relationships between generated embeddings remain consistent under translation \citep{mrksic2016counterfittingwordvectorslinguistic, yoon2025embeddingconverter}. Given a batch of $B$ embeddings $x_1, ..., x_B$ and $y_1, ..., y_B$, we sum their average pairwise distances after translation by both $F_1$ and $F_2$:
+\begin{align*}
+    \mathcal{L}_{\text{VSP}}(F_1,F_2) = \frac{1}{B} \sum_{i=1}^{B} \sum_{j=1}^{B} \bigg[ & \|M_1(x_i) \cdot M_1(x_j) - F_1(M_1(x_i)) \cdot F_1(M_1(x_j))\|_2^2 \\
+    & +  \|M_2(y_i) \cdot M_2(y_j) - F_2(M_2(y_i)) \cdot F_2(M_2(y_j))\|_2^2 \bigg]
+\end{align*}
+
+Combining these losses yields:
+$\mathcal{L}_{\text{gen}}(\theta) = \lambda_{\text{rec}}\mathcal{L}_{\text{rec}}(R_1,R_2) + \lambda_{\text{CC}}\mathcal{L}_{\text{CC}}(F_1,F_2) + \lambda_{\text{VSP}}\mathcal{L}_{\text{VSP}}(F_1,F_2)$, where hyperparameters $\lambda_{\text{CC}}$, $\lambda_{\text{rec}}$, and $\lambda_{\text{VSP}}$ control relative importance.
+
+
+% To address known GAN training difficulties, we extensively explored normalization methods, various adversarial losses (e.g., Wasserstein, Relativistic), gradient penalties, and label smoothing techniques. Empirically, we found the least-squares GAN formulation \citep{mao2017squaresgenerativeadversarialnetworks} provided the most stable and consistent results. During evaluation, we employ multiple hyperparameter setups to assess the quality of generated embeddings and select the best. We leave increasing the stability of our method as future work.

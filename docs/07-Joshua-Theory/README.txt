@@ -1,0 +1,1 @@
+`docs/07-Joshua-Theory/` will serve strictly as a contained directory for drafting documents on AI Research, **unrelated to the AgentX AgentBeats competition**.

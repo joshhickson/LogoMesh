@@ -1,0 +1,88 @@
+\section{Related Work}\label{sec:related-work}
+
+
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/emergence_figure.pdf}
+  \label{fig:emergence}
+  \caption{Examples of emergent structure in learned representations. Left: Part segmentation in DINOv2 self-supervised vision models \citep{oquab2023dinov2}. Top-right: Semantic arithmetic in word vectors \citep{mikolov-etal-2013-linguistic}. Bottom-right: Local coordinates in StyleGAN3 \citep{karras2021alias}. These figures are adapted from the above papers. As AI systems become increasingly capable, emergent structure in their representations may open up new avenues for transparency research, including top-down transparency research that places representations at the center of analysis.}
+  \vspace{-10pt}
+\end{figure}
+
+\subsection{Emergent Structure in Representations}
+While neural networks internals are often considered chaotic and uninterpretable, research has demonstrated that they can acquire emergent, semantically meaningful internal structure. Early research on word embeddings discovered semantic associations and compositionality \citep{mikolov-etal-2013-linguistic}, including reflections of gender biases in text corpora \citep{bolukbasi2016man}. Later work showed that learned text embeddings also cluster along dimensions reflecting commonsense morality, even though models were not explicitly taught this concept \citep{schramowski2019bert}. \citet{radford2017learning} found that simply by training a model to predict the next token in reviews, a sentiment-tracking neuron emerged.
+
+Observations of emergent internal representations are not limited to text models. \cite{mcgrath2022acquisition} found that recurrent neural networks trained to play chess acquired a range of human chess concepts. In computer vision, generative and self-supervised training has led to striking emergent representations, including semantic segmentation \citep{caron2021emerging, oquab2023dinov2}, local coordinates \citep{karras2021alias}, and depth tracking \citep{chen2023surface}. These findings suggest that neural representations are becoming more well-structured, opening up new opportunities for transparency research. Our paper builds on this long line of work by demonstrating that many safety-relevant concepts and processes appear to emerge in LLM representations, enabling us to directly monitor and control these aspects of model cognition via representation engineering.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Approaches to Interpretability}
+
+\paragraph{Saliency Maps.} A popular approach to explaining neural network decisions is via saliency maps, which highlight regions of the input that a network attends to \citep{simonyan2013deep, springenberg2014striving, zeiler2014visualizing, zhou2016learning, smilkov2017smoothgrad, sundararajan2017axiomatic, selvaraju2017grad, lei2016rationalizing, clark-etal-2019-bert}. However, the reliability of these methods has been drawn into question \citep{adebayo2018sanity, kindermans2019reliability, jain-wallace-2019-attention, bilodeau2022impossibility}. Moreover, while highlighting regions of attention can provide some understanding of network behavior, it provides limited insight into the internal representations of networks.
+
+
+\paragraph{Feature Visualization.} Feature visualization interprets network internals by creating representative inputs that highly activate a particular neuron. A simple method is to find highly-activating natural inputs \citep{szegedy2013intriguing, zeiler2014visualizing}. More complex methods optimize inputs to maximize activations \citep{erhan2009visualizing, mordvintsev2015inceptionism, yosinski2015understanding, nguyen2016synthesizing, nguyen2019understanding}. These methods can lead to meaningful insights, but do not take into account the distributed nature of neural representations \citep{hinton1984distributed, szegedy2013intriguing, fong2018net2vec, elhage2022superposition}.
+
+
+
+
+
+\paragraph{Mechanistic Interpretability.}
+
+
+
+
+Inspired by reverse-engineering tools for traditional software, mechanistic interpretability seeks to fully reverse engineer neural networks into their ``source code.'' This approach focuses on explaining neural networks in terms of circuits, composed of node-to-node connections between individual neurons or features. Specific circuits have been identified for various capabilities, including equivariance in visual recognition \citep{olah2020zoom}, in-context learning \citep{olsson2022context}, indirect object identification \citep{wang2023interpretability}, and mapping answer text to answer labels \citep{lieberum2023does}.
+
+Considerable manual effort is required to identify circuits, which currently limits this approach. Moreover, it is unlikely that neural networks can be fully explained in terms of circuits, even in principle. There is strong evidence that ResNets compute representations through iterative refinement \citep{liao2016bridging, greff2016highway, jastrzebski2018residual}. In particular, \citet{veit2016residual} find that ResNets are surprisingly robust to lesion studies that remove entire layers. Recent work has demonstrated similar properties in LLMs \citep{mcgrath2023hydra, belrose2023eliciting}. These findings are incompatible with a purely circuit-based account of cognition and are more closely aligned with the Hopfieldian view in cognitive neuroscience \citep{barack2021two}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Locating and Editing Representations of Concepts}
+\vspace{-5pt}
+Many prior works have investigated locating representations of concepts in neural networks, including in individual neurons \citep{bau2017network} and in directions in feature space \citep{bau2017network, fong2018net2vec, zhou2018interpretable, kim2018interpretability}. A common tool in this area is linear classifier probes \citep{alain2017probes, belinkov2022probing}, which are trained to predict properties of the input from intermediate layers of a network. Representations of concepts have also been identified in the latent space of image generation models, enabling counterfactual editing of generations \citep{radford2015unsupervised, upchurch2017deep, 10.1145/3306346.3323023, shen2020interpreting, bau2020units, ling2021editgan, wang2023concept}. While these earlier works focused primarily on vision models, more recent work has studied representations of concepts in LLMs. There has been active research into locating and editing factual associations in LLMs \citep{meng2023locating, meng2023massediting, zhong2023mquake, hernandez2023inspecting}. Related to knowledge editing, several works have been proposed for concept erasure \citep{shao2023gold, kleindessner2023efficient, belrose2023leace, ravfogel2023kernelized, gandikota2023erasing}, which are related to the area of machine unlearning \citep{shaik2023exploring}.
+
+The highly general capabilities of LLMs have also enabled studying the emergence of deception in LLMs, either of an intentional nature through repeating misconceptions \citet{truthfulqa}, or unintentional nature through hallucinations \citep{maynez-etal-2020-faithfulness, sep-lying-definition}. \citet{burns2022discovering} identify representations of truthfulness in LLMs by enforcing logical consistency properties, demonstrating that models often know the true answer even when they generate incorrect outputs. \citet{azaria2023internal} train classifiers on LLM hidden layers to identify the truthfulness of a statement, which could be applied to hallucinations. \citet{li2023inferencetime} focus on directions that have a causal influence on model outputs, using activation editing to increase the truthfulness of generations. Activation editing has also been used to steer model outputs towards other concepts. In the culmination of a series of blog posts \citep{turner2023understanding, turner2023behavioural, turner2023maze, turner2023steering}, \citep{turner2023activation} proposed ActAdd, which uses difference vectors between activations on an individual stimuli to capture representations of a concept. Similar approaches have been used in the context of red-teaming and reducing sycophancy \citep{rimsky2023red, rimsky2023reducing, rimsky2023modulating}. In the setting of game-playing, \citet{li2023emergent} demonstrated how activations encode a model's understanding of the board game Othello, and how they could be edited to counterfactually change the model's behavior. In the linear probing literature, \citet{elazar2021amnesic} demonstrate how projecting out supervised linear probe directions can reduce performance on selected tasks. Building on this line of work, we propose improved representation engineering methods and demonstrate their broad applicability to various safety-relevant problems.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -25,6 +25,10 @@ flowchart TD
         SB["Docker Sandbox<br>src/green_logic/sandbox.py"]
     end
 
+    subgraph "Persistent Sandbox Sidecar"
+        RSB["Red Agent Sandbox via fast IPC<br>Air-Gapped Docker Container"]
+    end
+
     subgraph "External Target"
         PA["Purple Agent<br>Code Generator via HTTP/JSON-RPC"]
     end
@@ -32,6 +36,7 @@ flowchart TD
     GA -- "1. Sends Task (JSON-RPC)" --> PA
     PA -- "2. Returns Source, Tests, Rationale" --> GA
     GA -- "3. Passes Source Code (In-Process)" --> RA
+    RA -- "3a. Executes Untrusted Tool Code" --> RSB
     GA -- "4. Executes Tests" --> SB
     GA -- "5. Analyzes Constraints" --> SA
     GA -- "6. Aggregates Signals" --> CIS
@@ -44,10 +49,10 @@ Located in `src/green_logic/server.py`, the Green Agent exposes a FastAPI endpoi
 The Purple Agent is an external service (e.g., an LLM wrapper) that receives a coding task and returns a JSON payload containing `sourceCode`, `testCode`, and `rationale`. The Green Agent expects this specific format to proceed with evaluation.
 
 ### The Attacker (Red Agent / MCTSPlanner)
-Crucially, the Red Agent is **not a separate service**. It is instantiated directly within the Green Agent's Python process (`_init_red_agent`). 
+Crucially, the Red Agent's core orchestrator is **not a separate service**. It is instantiated directly within the Green Agent's Python process (`_init_red_agent`).
 - **Core Engine:** Located in `src/red_logic/orchestrator.py`, it uses a Monte Carlo Tree Search (MCTS) algorithm (`MCTSPlanner`) to explore attack paths.
 - **Node Expansion:** Instead of relying on AST parsing, the MCTS engine mutates states using an LLM, dialogue context (`AgentMemory`), and regex/string manipulation.
-- **Security Boundary Gap:** Because the Red Agent runs in-process and handles untrusted code strings from the Purple Agent, there is an explicit 'Uroboros' risk. The Red Agent has full access to standard library modules (`os`, `subprocess`, `httpx`).
+- **Security Boundary (Remediated):** Previously, the Red Agent ran untrusted code in-process, causing an 'Uroboros' risk. Per the [[2026-03-04] Red_Agent_Remediation_Plan.md](./Planning_and_Strategy/[2026-03-04]%20Red_Agent_Remediation_Plan.md), execution is now externalized to a **Persistent Sandbox (Sidecar)** via fast IPC to securely evaluate malicious meta-agent capability tools without dropping MCTS performance.
 
 ---
 
@@ -131,9 +136,9 @@ To ensure exact parity between this blueprint and the raw codebase state, the fo
   - **Networking:** Conditionally disabled (only if `pytest` is already pre-installed on the image).
 
 ### 4.3. Red Agent MCTS Hyperparameters
-- **Max Steps:** `10`
+- **Max Steps:** `5` by default (overridden by Green Agent from base `10`), or `3` in `fast_lenient` mode.
 - **Max Time (Seconds):** `60.0`
-- **MCTS Branches:** Defaults to `2` (not 3).
+- **MCTS Branches:** Defaults to `3`.
 - **Exploration Weight:** `1.414` (Hardcoded UCB1 constant).
 
 ### 4.4. DBOM Artifact Structure
@@ -149,18 +154,21 @@ The Decision Bill of Materials is generated programmatically as a JSON dictionar
 
 As we generalize the adversarial pipeline, it is critical to acknowledge the empirical reality of the current codebase. The following are known architectural gaps and mathematical bugs slated for remediation.
 
-### 5.1. The Missing CIS Logic Score Floor
+### 5.1. The Missing CIS Logic Score Floor (Remediation Planned)
 **Issue:** The Contextual Integrity Score (CIS) is calculated as `(0.25*R + 0.25*A + 0.25*T + 0.25*L) * Red_Penalty * Intent_Multiplier`. In `src/green_logic/scoring.py`, the LLM is instructed to adjust the ground-truth scores by a maximum of ±0.10. 
 **Bug:** While the code programmatically enforces a hard floor for R, A, and T (`max(score, ground_truth - 0.10)`), **this constraint is entirely missing for the Logic (L) score.** The LLM can mathematically hallucinate or maliciously adjust the Logic score far below the intended limits.
+**Action:** Per the [[2026-03-04] Red_Agent_Remediation_Plan.md](./Planning_and_Strategy/[2026-03-04]%20Red_Agent_Remediation_Plan.md), bounding logic `l = max(l, logic_score - 0.10)` will be added.
 
-### 5.2. DBOM Cryptographic Hashing Discrepancy
+### 5.2. DBOM Cryptographic Hashing Discrepancy (Remediation Planned)
 **Issue:** The system generates a Decision Bill of Materials (DBOM) to provide an audit trail (`src/green_logic/agent.py`). It relies on computing a SHA-256 hash (`h_delta`) of the `raw_result` JSON payload.
 **Bug:** The DBOM generator hashes the **unsorted** JSON string (`json.dumps(result)`). However, the database storage routine saves the **sorted** JSON string (`json.dumps(result, sort_keys=True)`). Because the serialization order differs, cryptographic verification of the database record against the DBOM hash will consistently fail.
+**Action:** Per the [[2026-03-04] Red_Agent_Remediation_Plan.md](./Planning_and_Strategy/[2026-03-04]%20Red_Agent_Remediation_Plan.md), the hashing process will enforce uniform sorted serialization (`json.dumps(result, sort_keys=True)`).
 
 ### 5.3. Merkle Chaining is Not Implemented
 **Issue:** Despite conceptual plans, there is absolutely no active programmatic implementation of cryptographic Merkle Chaining between sequential records in the SQLite database. DBOM hashes are isolated, standalone artifacts per evaluation run.
 
-### 5.4. In-Process Red Agent Risk (Uroboros)
+### 5.4. In-Process Red Agent Risk (Uroboros) (Remediation Planned)
 **Issue:** As noted in the Star Topology section, the Red Agent is embedded directly within the Green Agent's process. 
 **Bug:** There is no container, process, or network namespace isolation for the MCTS engine while it handles untrusted code strings from the Purple Agent. This is a severe architectural security gap that must be addressed to safely scale adversarial evaluations.
+**Action:** Per the [[2026-03-04] Red_Agent_Remediation_Plan.md](./Planning_and_Strategy/[2026-03-04]%20Red_Agent_Remediation_Plan.md), execution will be externalized to a **Persistent Sandbox (Sidecar)** via fast IPC.
 

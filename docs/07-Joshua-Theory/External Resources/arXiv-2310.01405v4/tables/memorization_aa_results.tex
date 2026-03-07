@@ -1,0 +1,15 @@
+\begin{table}[t]
+
+\centering
+\begin{tabular}{lcccccccc}
+\toprule
+\multicolumn{1}{l}{} & \multicolumn{2}{c}{\multirow{2}{*} {No Control} } & \multicolumn{6}{c}{Representation Control}                                                             \\ \cmidrule(lr){4-9}
+                      & \multicolumn{2}{c}{}                   & \multicolumn{2}{c}{Random}        & \multicolumn{2}{c}{$+$}           & \multicolumn{2}{c}{$-$} \\ \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+                      & EM                 & SIM                 & EM   & \multicolumn{1}{c}{SIM}   & EM   & \multicolumn{1}{c}{SIM}   & EM         & SIM        \\ \midrule
+LAT\textsubscript{Quote} & \multirow{2}{*}{89.3} & \multirow{2}{*}{96.8} & 85.4 & \multicolumn{1}{c}{92.9} & 81.6 & \multicolumn{1}{c}{91.7} & 47.6 & 69.9 \\
+LAT\textsubscript{Literature}            &                    &                    & 87.4 & \multicolumn{1}{c}{94.6} & 84.5 & \multicolumn{1}{c}{91.2} & \textbf{37.9}       & \textbf{69.8}      \\
+\bottomrule
+\end{tabular}
+\caption{We demonstrate the effectiveness of using representation control to reduce memorized outputs from a LLaMA-2-13B model on the popular quote completion task. When controlling with a random vector or guiding in the memorization direction, the Exact Match (EM) rate and Embedding Similarity (SIM) do not change significantly. When controlled to decrease memorization, the similarity metrics drop significantly as the model regurgitate the popular quotes less frequently.}
+\label{tab:mem_aa}
+\end{table}

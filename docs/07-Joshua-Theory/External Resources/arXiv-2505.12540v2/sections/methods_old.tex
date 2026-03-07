@@ -1,0 +1,77 @@
+\section{Unsupervised Embedding Alignment}
+
+\subsection{Background}
+
+\subsection{Method}
+
+Our goal is to uncover the latent structure shared by different text embedding models and use it to align their outputs. In the same way that past work in computer vision \citep{huang2018multimodalunsupervisedimagetoimagetranslation, liu2018unsupervisedimagetoimagetranslationnetworks,zhu2020unpairedimagetoimagetranslationusing} has learned to turn photos of zebras into photos of horses without any paired data, we seek to turn embeddings under model A into embeddings from model B without any pairs (i.e. no notion of embedding from A and embedding from B together). Such unsupervised functions have been successfully learned in vision, speech, word embeddings, and text sequences. We thus base our method off of prior work in  that learns mappings between two different manifolds of images using generative adversarial networks with a cycle-consistency constraint (e.g. CycleGAN \citep{zhu2020unpairedimagetoimagetranslationusing}).
+
+
+
+We additionally rely on the assumption of a shared latent space: since embeddings from model A and model B represent different transformations on the distribution of all natural text, we seek to learn intermediate representations that are invariant between models. This approach has been applied in vision with success \citep{liu2018unsupervisedimagetoimagetranslationnetworks}.
+
+
+\subsection{Learning}
+
+
+\paragraph{Adversarial loss.}
+
+
+\paragraph{Cycle consistency loss.}
+
+
+
+\paragraph{Total loss.} We jointly train the encoders, decoders, and discriminators to optimize the final objective, which is a weighted sum of the adversarial loss and the
+bidirectional reconstruction loss terms.
+
+
+\[
+\min \max
+\]
+
+\subsection{Parameterization}
+
+
+\paragraph{Architecture.} Unfortunately, since embeddings are not two-dimensional, we cannot rely on the tried-and-true cycleGAN architecture, which is a convolutional neural network it is designed for two-dimensional images with a strong spatial prior over pixels, and we are now operating on one-dimensional embedding vectors. We therefore design a custom multilayer perceptron architecture with weight-shared residual blocks \textbf{\color{purple}\ \ [TODO(jxm): more detail here]}
+
+\paragraph{Weight-sharing.}
+
+
+\section{Methods}
+\rj{Some material from a class project on the supervised version... needs to be adjusted}
+
+
+Let $M_1, M_2, ..., M_m$ be \textit{embedding models} where each $M_i: \mathbb{V}^s \rightarrow \mathbb{S}^{d_i}$ maps text sequences to \textit{normalized} embeddings. Given input and output indices $i, j$, respectively, our goal is to learn a function $f_{\theta}$ that can automatically convert embeddings $M_i(\cdot)$ into the output space of $M_j$. We detail our solution EDX's, architecture in \Cref{sec:architecture}, introduce the components of its loss in \Cref{sec:objectives}, and build its final pretraining and finetuning objectives in \Cref{sec:final_losses}.
+
+\subsection{Architecture}\label{sec:architecture}
+
+As shown in \Cref{fig:main} we parameterize $f_{\theta}$ with three main components: (1) input adapters, (2) a shared backbone, and (3) output adapters. Each supported embedding space is given a shallow input and output adapter that serve as model-specific interfaces between the embeddings in either space and our large shared backbone. Concretely, given input $M_i$ and output $M_j$, we convert $M_i(x)$ using the following composition of modules:
+$$f_{\theta}(x) = g_{j}(\phi(h_i(M_i(x)))),$$
+where, $h_i : \mathbb{R}^{d_i} \rightarrow \mathbb{R}^{d_{\rm latent}}$ is the input module corresponding to model $i$; $g_j : \mathbb{R}^{d_{\rm latent}} \rightarrow \mathbb{R}^{d_j}$ is the output module corresponding to model $j$; and $\phi: \mathbb{R}^{d_{\rm latent}} \rightarrow \mathbb{R}^{d_{\rm latent}}$ is the backbone network shared between all conversions. Adding a new embedding model to EDX is as simple as adding and finetuning lightweight adapters.
+% In fact, leveraging knowledge collected by the shared backbone, \textit{emergent translation} can be achieved by finetuning on only a subset of the supported embeddings. 
+
+\subsection{Loss Functions}\label{sec:objectives}
+Given a dataset of \textit{batches of text sequences} $\mathcal{D} = \{B_1, ..., B_D\}$, our goal is to learn a translator $f_{\theta} : (\mathbb{R}^{d}, \mathbb{N}) \rightarrow \mathbb{R}^{d}$ by minimizing the following objective:
+
+\begin{equation}\label{eq:base_objective}
+    \theta^* = \frac{1}{|\mathcal{D}|\cdot \binom{m}{2}}\arg \min_\theta \sum_{B\in\mathcal{D}}\sum_{i \neq j \in [m]}\mathcal{L}(B, i, j),
+\end{equation}
+
+where $\mathcal{L} \in \{\mathcal{L}_{\rm pre}, \mathcal{L}_{\rm ft}\}$, as developed in the rest of this section and defined in \Cref{sec:final_losses}.
+
+
+\paragraph{Cycle consistency.} Inspired by \citet{zhu2020cycleconsistency, hadji2021representationlearningglobaltemporal, shah2019cycleconsistencyrobustvisualquestion}, cycle consistency loss encourages reversible and self-consistent translations. In particular: $
+\mathcal{L}_{\rm{CC}}(B,i,j) = \frac{1}{|B|}\sum_{x\in B}\left\| M_i(x) - f_{\theta}(f_{\theta}(M_i(x), j), i) \right\|_2^2$.
+
+
+\paragraph{Vector space preservation.} Finally, following similar work in \citet{mrksic2016counterfitting, anonymous2024embeddingconverter},
+vector space preservation encourages similar structure in both the input space $M_i(\cdot)$ and the translated output space $f_{\theta}(\cdot, j)$. We write:
+$\mathcal{L}_{\rm{VSP}}(B,i,j) = \frac{1}{\binom{|B|}{2}}\sum_{x_1, x_2 \in B}\left\| (M_i(x_1) \cdot M_i(x_2)) - (f_{\theta}(M_i(x_1), j) \cdot f_{\theta}(M_i(x_2), j)) \right\|_2^2$.
+
+
+\subsection{Final Objectives} \label{sec:final_losses}
+\paragraph{Pretraining.} Since our objective has a combinatorial (in $m$) number of terms, for efficient training we calculate an approximation of \Cref{eq:base_objective} in a multitask manner. In particular, for each batch we choose \textit{a single task} by sampling $i \neq j \sim [m]$: 
+\begin{equation}
+\theta^* = \arg \min_\theta \frac{1}{|\mathcal{D}|}\sum_{B\in\mathcal{D}}\mathbb{E}_{i \neq j\sim[m]}\left[\mathcal{L}_{\rm pre}(B, i, j)\right],
+\end{equation}
+where $\mathcal{L}_{\rm pre}(B, i, j) := \lambda_{1} \mathcal{L}_{\rm{TR}}(B, i, j) + \lambda_{2} \mathcal{L}_{\rm{AE}}(B, i) + \lambda_{3} \mathcal{L}_{\rm{CC}}(B, i, j) + \lambda_{4}\mathcal{L}_{\rm{VSP}}(B, i, j)$.
