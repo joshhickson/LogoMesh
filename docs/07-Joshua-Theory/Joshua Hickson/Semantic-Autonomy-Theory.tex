@@ -1,0 +1,284 @@
+% !TEX program = xelatex
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{fontspec}
+\usepackage[english, bidi=basic, provide=*]{babel}
+
+\babelfont{rm}{TeX Gyre Termes}
+
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{amsmath,amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage{hyperref}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  citecolor=blue
+}
+
+\lstset{%
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  columns=fullflexible,
+  frame=single,
+  rulecolor=\color{black!20},
+  backgroundcolor=\color{black!2}
+}
+
+% Box for the speculative engineering section
+\mdfdefinestyle{speculativebox}{%
+  linecolor=black!40,
+  backgroundcolor=black!3,
+  linewidth=1pt,
+  topline=true,
+  bottomline=true,
+  leftline=true,
+  rightline=true,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  innerleftmargin=12pt,
+  innerrightmargin=12pt
+}
+
+\title{Toward Semantic Application Autonomy:\\
+\large Theoretical Foundations for Intent-Inferring, OS-Agnostic Software Intelligence}
+\author{Joshua Hickson \\ \small LogoMesh Research Group}
+\date{February 2026 \\ \vspace{0.5em} \small Working Paper — Not for Distribution}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper develops the theoretical foundations for a long-horizon research vision: an autonomous software agent capable of inferring the capabilities and intent of arbitrary applications at a semantic level, without reliance on visual heuristics, screen capture, or mouse control. We term this vision \textbf{Semantic Application Autonomy (SAA)}. Unlike conventional robotic process automation, which observes and replays surface-level interface interactions, an SAA system would reconstruct a structural model of what an application \emph{can do} and \emph{why it does it} — enabling OS-agnostic, intent-driven interaction with software that exposes no explicit API surface.
+
+We argue that the LogoMesh evaluation architecture, developed as a benchmark for AI-generated code quality, instantiates foundational epistemological primitives that are structurally related to the SAA vision — though the relationship is one of shared philosophy rather than direct technical continuity. The central theoretical contribution of this paper is the identification of an \textbf{epistemological inversion} that separates the two systems: LogoMesh operates in a verification direction (intent $\to$ artifact), while SAA requires an inference direction (artifact $\to$ intent). This inversion is not a harder version of the same problem; it is a categorically different operation with distinct formal requirements.
+
+We survey the prior art, characterize the key open problems, assess the incremental path from the current LogoMesh architecture toward SAA, and identify the legal and architectural constraints that must be treated as hard requirements rather than deferred concerns. A final section, clearly labeled as speculative, presents an unvalidated engineering design for the core inference engine as a starting point for future research.
+\end{abstract}
+
+\tableofcontents
+\vspace{1em}
+
+\section{The Vision: OS-Agnostic Semantic Autonomy}
+
+The dominant paradigm for software automation in 2026 is visual: agents observe rendered screen states, identify interface elements, and issue mouse and keyboard events. This paradigm is productive precisely because it requires no cooperation from the target application — any software that produces pixels can be automated. But it is also fundamentally brittle. Screen-based agents are sensitive to UI layout changes, resolution differences, rendering artifacts, and the inherent ambiguity of inferring application state from visual output alone. More fundamentally, they interact with the \emph{representation} of an application's capabilities rather than the capabilities themselves.
+
+The vision motivating this paper is the inverse: an autonomous system that bypasses the visual layer entirely and interacts with applications at the level of their \emph{functional semantics}. Such a system would not click a ``Submit'' button because it identified a rectangular element with that label; it would invoke the underlying capability that the button exposes, having inferred that capability's preconditions, effects, and constraints through structural analysis of the application itself. The interaction model shifts from ``simulate a user'' to ``understand the system.''
+
+More precisely, we envision a system with four defining properties:
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{OS-agnostic operation:} The system functions across operating environments without requiring platform-specific UI automation APIs, accessibility frameworks, or visual models.
+  \item \textbf{Source-independent inference:} The system can construct a functional model of an application from behavioral observation and structural analysis, without requiring access to source code.
+  \item \textbf{Semantic capability representation:} The system represents application capabilities as structured, composable, queryable objects — not as recorded action sequences or pixel templates.
+  \item \textbf{Intent-driven execution:} Given a high-level goal, the system can plan and execute a sequence of capability invocations to achieve it, rather than replaying a scripted workflow.
+\end{enumerate}
+
+This vision is technically ambitious to a degree that warrants explicit acknowledgment. Reconstructing functional intent from compiled binaries without source access is a problem at the frontier of program analysis, and the legal landscape around binary introspection of proprietary software is genuinely complex. We treat SAA not as an immediate product target but as a \emph{research horizon} — a direction that orients long-term architectural decisions and defines what the current LogoMesh infrastructure should be designed to eventually support. The near-term focus remains a practical MVP: a GitHub application that measures and tracks Contextual Debt in AI-generated code. SAA is the latent vision that gives that MVP strategic depth.
+
+\section{Relationship to LogoMesh: Shared Epistemology, Different Substrate}
+
+\subsection{The Isomorphism Argument}
+
+The LogoMesh evaluation architecture implements a set of primitives that bear a structural resemblance to what an SAA system would require. Specifically:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Sandboxed ground-truth execution} rather than appearance-based judgment — analogous to behavioral observation in a controlled environment.
+  \item \textbf{Adversarial probing} via Monte Carlo Tree Search to expose boundary conditions and fragility — analogous to capability boundary exploration.
+  \item \textbf{Contextual integrity scoring} that measures coherence between rationale, structure, and behavior — analogous to alignment verification between inferred intent and observed action.
+  \item \textbf{Modular decomposition} of execution, analysis, reasoning, and aggregation — analogous to the layered architecture an SAA system would require.
+\end{itemize}
+
+This resemblance is real and meaningful at the \emph{epistemological} level: both LogoMesh and SAA rely on verifiable structured inference, adversarial robustness, and modular composability as foundations for trust. The continuity between them is philosophical rather than superficial.
+
+\subsection{The Limits of the Isomorphism}
+
+However, this structural resemblance should not be overstated. The isomorphism holds at the level of abstraction but does not hold at the level of engineering. LogoMesh evaluates \emph{submitted source artifacts} against \emph{known task specifications} in a \emph{controlled sandbox}. Every component of the evaluation pipeline — the embedding model, the AST analyzer, the MCTS attacker, the Docker executor — operates on structured, well-defined inputs with known schemas.
+
+SAA, by contrast, targets \emph{arbitrary compiled applications} with \emph{no stated specification} in an \emph{open execution environment}. The substrate difference is not a detail to be abstracted away; it is the central engineering challenge. The phrase ``substrate swap,'' which might suggest that extending LogoMesh to SAA is a matter of plugging in a different input adapter, significantly underestimates what the transition actually requires.
+
+The correct framing is that LogoMesh provides a \emph{validated epistemological template} — a proof that this class of multi-agent, ground-truth-anchored, adversarially-probed evaluation architecture can be made to work in practice. It does not provide a direct technical path to SAA.
+
+\section{Prior Art and the Limits of Existing Approaches}
+
+No existing system delivers the full SAA capability profile. Prior work clusters into four categories, each of which addresses a partial aspect of the problem.
+
+\textbf{Traditional RPA frameworks} (UiPath, Blue Prism, Automation Anywhere) script interactions against recorded UI element hierarchies. They are mature and commercially successful, but they are fundamentally dependent on visual state and UI API bindings. They model the interface, not the application.
+
+\textbf{AI-augmented automation} (e.g., pywinassistant) introduces natural language command interpretation and semantic routing, but the execution layer still terminates at UI elements and human-visible artifacts. The semantic layer is in the instruction parsing, not in the application model.
+
+\textbf{Research-grade GUI analysis systems} (GUI-explorer and related work on model-based GUI automation) attempt to extract formal state-transition models from GUI interactions. This represents genuine progress in automated understanding of interface structure, but the model is still grounded in visual and exported UI representations rather than in the application's underlying functional logic.
+
+\textbf{Binary analysis and dynamic instrumentation} frameworks (Frida, DBI toolchains, system call tracers) provide the low-level observability that SAA would require, enabling runtime hooking, execution tracing, and memory introspection. These are powerful tools, but they are not AI-driven and do not produce semantic capability representations. They provide the raw signal; they do not interpret it.
+
+The gap in the landscape is precisely the layer that would connect these low-level observability tools to high-level semantic capability models — an AI-driven interpretation engine that transforms execution traces into structured functional knowledge. This layer does not exist in any widely-adopted form.
+
+\section{The Epistemological Inversion}
+
+\subsection{Verification vs. Inference}
+
+The deepest theoretical distinction between LogoMesh and SAA is the direction of the alignment operation. LogoMesh operates in a \textbf{verification direction}:
+
+\[
+\text{Intent} \xrightarrow{\text{verify}} \text{Artifact}
+\]
+
+Given a task description (intent) and a code submission (artifact), LogoMesh measures the degree to which the artifact satisfies the intent. Every component of the CIS — Rationale Integrity, Architectural Integrity, Testing Integrity, Logic Integrity — is an operationalization of this question. The ground truth is the intent; the artifact is evaluated against it.
+
+SAA requires the \textbf{inverse direction}:
+
+\[
+\text{Artifact} \xrightarrow{\text{infer}} \text{Intent}
+\]
+
+Given an application binary (artifact) and no stated specification, an SAA system must reconstruct a model of what the application intends to do — what capabilities it exposes, under what conditions, with what effects. There is no ground truth to anchor against. The scoring function, the reward signal, the evaluation rubric — all of these must be reconstructed from first principles, because the object that anchors them in LogoMesh (the task description) does not exist in the SAA setting.
+
+This is not a harder version of verification. It is a categorically different epistemological operation. An SAA system cannot be derived from LogoMesh by removing the task description and running the pipeline in reverse; the pipeline itself must be redesigned around a different objective.
+
+\subsection{The Formal Capability Object}
+
+A critical gap in any approach to SAA is the absence of a widely-adopted formal model for what an application ``capability'' is as a queryable, composable object. The \textbf{OpenAPI / JSON Schema} tradition provides this for explicitly-documented REST APIs, but SAA explicitly targets applications that do not expose such schemas.
+
+A more appropriate primitive, drawn from classical AI planning literature, is the \textbf{capability triple}:
+
+\[
+(P_a,\ a,\ Q_a)
+\]
+
+where $P_a$ is the set of preconditions that must hold for action $a$ to execute successfully, and $Q_a$ is the set of postconditions — the state changes — that $a$ produces. A collection of such triples constitutes an \textbf{Application Capability Graph (ACG)}: a structured, composable representation of what the application can do and under what circumstances.
+
+Capability triples are significant for LogoMesh specifically because the Red Agent's MCTS already implicitly operates over a similar structure. Each node in the MCTS tree represents a program state; each edge represents an attack action; each transition models a (state, action, outcome) triple. The Red Agent is therefore already performing a restricted form of capability exploration — it simply does not surface the triples as first-class output objects. Refactoring the Red Agent's internal representation to emit capability triples as a byproduct of adversarial exploration would represent the lowest-friction path toward bootstrapping capability inference from the existing architecture, applied to source-available codebases first.
+
+\subsection{The Data Flywheel}
+
+The LogoMesh evaluation corpus in \texttt{battles.db} has a structural property that becomes significant in the context of SAA. Every completed evaluation produces a labeled triple:
+
+\[
+(\vec{v}_{\text{intent}},\ \text{code artifact},\ \text{CIS score})
+\]
+
+This is a training example for a bidirectional alignment model: one that can run the alignment operation in both the verification direction (given intent, score the artifact) and the inference direction (given an artifact, reconstruct a plausible intent embedding). At sufficient scale, this corpus becomes the training data for the SAA reverse-inference problem applied to source-available code — which is the correct starting point before attempting the harder problem of compiled binary introspection.
+
+This observation reframes the telemetry strategy for the LogoMesh MVP. The battle database is not merely an audit trail or a compliance artifact. It is the foundational dataset for the long-horizon SAA research program. Every GitHub app integration that evaluates a pull request is generating a labeled datapoint. The flywheel is implicit in the current architecture; it should be made explicit in the data schema design from the outset.
+
+\section{Strategic Constraints and the Incremental Path}
+
+\subsection{The Recommended Trajectory}
+
+The correct development trajectory for SAA proceeds in three phases, each building on the validated infrastructure of the previous:
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Repository-level capability extraction (source-available):} Apply static and dynamic analysis to open-source codebases to extract capability graphs validated through sandbox execution. Build the bidirectional alignment corpus. This phase operates entirely within the legal and technical boundaries of the existing LogoMesh architecture.
+  \item \textbf{API-centric autonomy:} Extend capability inference to explicitly-documented interfaces — SDKs, CLIs, webhooks — and construct validated capability graphs for systems that expose structured but underdocumented APIs. This phase is legally safe and commercially underserved: the gap between what an enterprise API can do and what its documentation accurately describes is substantial.
+  \item \textbf{Binary behavioral inference:} Apply dynamic instrumentation to compiled applications with explicit, opt-in authorization. This phase introduces the hard problems of state-space management, precondition learning from execution traces, and legal constraint management, and should not be approached before the first two phases have produced a mature capability inference methodology.
+\end{enumerate}
+
+\subsection{The Legal Constraint is Load-Bearing}
+
+Both CFAA exposure (in the United States) and emerging strict liability frameworks for AI systems interacting with critical software infrastructure impose constraints that must be treated as architectural requirements, not deferred compliance tasks.
+
+There is a specific legal tension that deserves explicit attention. The DBOM, positioned as a liability shield for LogoMesh customers — a cryptographic audit trail proving diligence in intent-verification — changes character the moment the system begins producing capability graphs of third-party applications. A capability graph of a proprietary application is, depending on jurisdiction and derivation method, potentially a trade secret extraction artifact. The same audit trail that proves diligence in one context proves systematic reverse-engineering in another.
+
+This tension resolves cleanly when the target is reframed. The legally safe and commercially compelling target for SAA capability extraction is not hostile zero-permission third-party binaries. It is \textbf{first-party enterprise systems} where the organization owns the code but has accumulated sufficient Contextual Debt that it has lost the architectural rationale and domain-specific knowledge the code encodes. Running capability extraction on systems the customer owns neutralizes the CFAA and EULA risks entirely. It also reframes the DBOM: instead of an ambiguous reverse-engineering artifact, it becomes a \emph{capability recovery audit trail} — documentation of what institutional knowledge was recovered from an amnesiac system, produced under explicit organizational consent. This reframing is not merely a legal convenience; it is also the strongest commercial positioning, directly extending the Contextual Debt thesis of the LogoMesh paper into a recovery and remediation product line.
+
+``Opt-in only, source-available first'' must be treated as a hard constraint during the research phase, not a soft preference.
+
+\subsection{The State-Space Problem}
+
+The most significant technical challenge in extending MCTS-based capability exploration to arbitrary applications is state-space explosion. The Red Agent's MCTS operates effectively in the current architecture because the search space is bounded: the code artifact has fixed structure, the task constraints are known, and AST boundaries limit the expansion of attack pathways.
+
+Extending MCTS to map undocumented application behavior without any search space constraints is not tractable without significant pruning infrastructure. A blind MCTS over the action space of a non-trivial application — system calls, library invocations, input reads, memory operations — would generate combinatorially many candidate paths and converge on nothing useful within any practical compute budget.
+
+This is a fundamental theoretical challenge that the bidirectional model approach and the capability triple formalism address only partially. Any concrete implementation of the SAA inference engine must incorporate principled search space reduction — whether through data-flow dependency analysis, temporal episode segmentation, symbolic execution guidance, or domain-specific heuristics — before MCTS-based exploration becomes tractable.
+
+\subsection{The Corpus Generalization Limit}
+
+A separate and equally important challenge concerns the generalization capacity of the bidirectional alignment model trained on \texttt{battles.db}. The current evaluation corpus consists of isolated, narrowly-specified AI-generated functions responding to explicit task descriptions. The distribution of code artifacts in this corpus is systematically different from the distribution of code in full, multi-layered application systems with concurrent execution, hidden invariants, cross-module dependencies, and accumulated historical context.
+
+A model trained on the LogoMesh corpus will learn to infer intent effectively within the distribution of the corpus — structured function-level tasks with explicit rationale fields. Whether that inference generalizes to reconstructing the intent of a multi-threaded database connection pool or a distributed state machine is an open empirical question. Claiming that \texttt{battles.db} alone will produce a model capable of full application-level intent inference would overstate the case; the corpus is a starting point, not a sufficient training set.
+
+\section{Speculative Engineering Design}
+
+\begin{mdframed}[style=speculativebox]
+\textbf{Editorial Note:} The following section presents an unvalidated engineering design for the SAA inference engine, synthesized from technical analysis conducted during the conceptual development of this research program. It has not been implemented or tested against the LogoMesh codebase. It is included as a \emph{starting point for future research} rather than as a validated design recommendation. Specific implementation details — protocol choices, data schemas, algorithmic parameters — should be treated as hypotheses to be tested, not specifications to be built against.
+\end{mdframed}
+
+\vspace{1em}
+
+\subsection{Dynamic Execution Model}
+
+Let the target application be modeled as an unknown deterministic transition system $\mathcal{M} = (S, A, T)$, where $S$ is a set of abstract states representing observable program conditions, $A$ is a set of action primitives (system calls, library invocations, input reads), and $T: S \times A \to S$ is the transition function, observed via dynamic instrumentation.
+
+Observable actions $A_{\text{obs}} \subset A$ and a coarse state representation are obtained through dynamic analysis: recording system call sequences and arguments, performing lightweight memory tainting to track which input bytes affect which branches, and snapshotting key state features (file descriptor states, heap allocation patterns, mutex states). An abstract state $s \in S$ is a valuation of these observable features.
+
+\subsection{Heuristic Search Space Reduction}
+
+Before MCTS exploration, the action space is pruned by two heuristics derived from execution traces:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Temporal locality:} Actions are grouped into episodes separated by idle periods or context switches. MCTS explores within episodes before attempting cross-episode dependencies.
+  \item \textbf{Data-flow dependency:} A dependency graph $G = (A_{\text{obs}}, E)$ is constructed where an edge $a_i \to a_j$ exists if output of $a_i$ is used as input to $a_j$ in any observed trace. MCTS expansions are restricted to actions reachable in this graph from the current state's last action, reducing the branching factor from combinatorial to polynomial in the number of observed actions.
+\end{itemize}
+
+\subsection{Capability Triple Extraction}
+
+For each observed action $a$ and its associated state transitions $(s, s')$, preconditions $P_a(s)$ are learned via a classifier trained on successful vs. failed invocations, and postconditions $Q_a(s, s')$ are modeled as a probabilistic effect distribution over state feature changes. A capability triple $(P_a, a, Q_a)$ is emitted for each action with sufficient observation support.
+
+\subsection{Information-Gain MCTS}
+
+Since no ground-truth intent exists to serve as a win condition, the traditional MCTS reward is replaced with an \textbf{information-gain objective} that rewards discovery of novel capabilities and refinement of existing models:
+
+\[
+R = R_{\text{new}} + R_{\text{conf}}
+\]
+
+where $R_{\text{new}} = 1$ if the observed transition reveals a previously unseen postcondition or contradicts an existing precondition, and $R_{\text{conf}} = \alpha \cdot \Delta\text{Confidence}$ measures reduction in entropy of the probabilistic effect model for the action. A modified UCB1 selection policy incorporates reward variance to bias exploration toward actions where the capability model is uncertain:
+
+\[
+\text{UCB}(s,a) = Q(s,a) + C \cdot \sqrt{\frac{\ln N(s)}{n(s,a)}} \cdot \sigma(s,a)
+\]
+
+where $\sigma(s,a)$ is the standard deviation of observed rewards for $(s,a)$, replacing the fixed exploration bonus of standard UCB1 with an adaptive term that increases investment in high-uncertainty actions.
+
+\subsection{Infrastructure Implications}
+
+If the SAA inference engine is integrated with the LogoMesh evaluation pipeline, the current Agent-to-Agent JSON-RPC transport layer presents a structural bottleneck. JSON-RPC is stateless and text-serialized; a high-throughput dynamic analysis workload generating thousands of execution trace events per second would impose prohibitive parsing overhead on an HTTP-based transport. The internal Green/Red/Sandbox communication layer should be replaced with a bidirectional multiplexed binary protocol (gRPC with Protocol Buffers or FlatBuffers), reserving JSON-RPC for the external Purple Agent interface where developer accessibility matters more than throughput. This bifurcation preserves backward compatibility with external agents while removing the serialization bottleneck from the internal inference loop.
+
+\subsection{DBOM Structural Extension}
+
+The current DBOM structure — a SHA-256 hash of the full \texttt{raw\_result} JSON payload — does not scale to ACGs containing thousands of capability triples. A Merkle-like extension separates the root hash from the capability data:
+
+\begin{lstlisting}[language=json]
+{
+  "battle_id": "eval-994",
+  "dbom_root_hash": "e3b0c44...",
+  "execution_anchor": {
+    "sandbox_pass_rate": 0.85,
+    "telemetry_episode_count": 42
+  },
+  "capability_ledger": {
+    "triple_count": 14,
+    "subgraph_hash": "8d969eef...",
+    "storage_uri": "s3://logomesh-capabilities/eval-994.blob"
+  }
+}
+\end{lstlisting}
+
+This schema preserves the cryptographic audit trail for the root evaluation while externalizing the capability graph to a content-addressable blob store. An important trust boundary caveat: this structure provides tamper-evidence at the pointer level (the \texttt{storage\_uri} and \texttt{subgraph\_hash} are recorded), but the integrity of the blob store itself is a separate concern. If the external storage object is replaced, the root hash remains valid. Full end-to-end tamper-evidence requires that the blob store itself be content-addressed and append-only — a requirement that should be specified before this schema is adopted in a compliance context.
+
+\section{Conclusion}
+
+Semantic Application Autonomy — the capacity to infer and interact with application capabilities at a functional semantic level, without visual intermediation — represents a technically profound long-horizon research direction. The LogoMesh architecture does not provide a direct technical path to it, but does provide something arguably more valuable: a validated epistemological model for how trust can be established through structured inference, adversarial probing, and ground-truth anchoring. That model generalizes. The specific substrate — submitted source artifacts in the current implementation — does not.
+
+The central theoretical contribution of this paper is the identification of the epistemological inversion that separates the two systems, and the argument that this inversion requires redesigning the inference pipeline from its objective function outward rather than extending the existing architecture. The data flywheel implicit in the LogoMesh evaluation corpus, the capability triple as a first-class architectural object, the first-party enterprise monolith as the legally correct initial target, and the information-gain MCTS reward as a replacement for the ground-truth win condition — these are the conceptual commitments that a concrete SAA research program would need to make before any implementation decisions.
+
+The near-term priority remains the LogoMesh MVP. Every evaluation run executed through a GitHub app integration is a labeled datapoint in the corpus that makes the long-horizon vision incrementally more tractable. The dream and the product are not in tension; they share an architecture.
+
+\end{document}

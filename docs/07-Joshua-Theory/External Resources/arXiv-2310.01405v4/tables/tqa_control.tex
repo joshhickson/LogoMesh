@@ -1,0 +1,17 @@
+\begin{table}[t]
+\vspace{-10pt}
+
+\centering
+\begin{tabular}{lcccccc}
+\toprule
+\multirow{2}{*}{Control Method} & None & \multicolumn{3}{c}{Vectors}  & Matrices \\
+ \cmidrule(lr){2-2}\cmidrule(lr){3-5}\cmidrule(lr){6-6}
+ & Standard & ActAdd & Reading (Ours) & Contrast (Ours) & LoRRA (Ours) \\ \midrule
+7B-Chat & 31.0  & 33.7 & 34.1 & \textbf{47.9} & 42.3        \\
+13B-Chat    & 35.9  & 38.8 & 42.4 & \textbf{54.0} & 47.5       \\ \bottomrule
+\end{tabular}
+\caption{Our proposed representation control baselines greatly enhance accuracy on TruthfulQA MC1 by guiding models toward increased honesty. These methods either intervene with vectors or low-rank matrices. The Contrast Vector method obtains state-of-the-art performance, but requires over $3\times$ more inference compute. LoRRA obtains similar performance with negligible compute overhead.\looseness=-1}
+\label{tab:tqa_control}
+\vspace{-10pt}
+\end{table}
+

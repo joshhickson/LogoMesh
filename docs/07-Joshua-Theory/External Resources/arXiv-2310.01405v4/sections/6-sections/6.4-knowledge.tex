@@ -1,0 +1,19 @@
+\subsection{Knowledge and Model Editing}\label{subsec:knowledge_editing}
+
+
+Up to this point, our focus has been on extracting broad numerical concepts and functions. In this section, we'll demonstrate how to apply Representation Engineering at identifying and manipulating precise knowledge, factual information, and non-numerical concepts. We use the LLaMA-2-Chat-13B model throughout this section.
+
+
+\subsubsection{Fact Editing}
+In this section, we tackle the canonical task of modifying the fact "Eiffel Tower is in Paris, France" to "Eiffel Tower is in Rome, Italy" within the model. Our approach begins with the identification of neural activity associated with this fact using LAT. We gather a set of stimuli by instructing the model to generate sentences related to the original fact, "Eiffel Tower is in Paris," and use these sentences as stimuli for the reference task. Subsequently, we simply substitute the word "Paris" with "Rome" in these stimuli for the experimental task. Our task template is shown in Appendix \ref{appendix:fact_editing_task_template}. Here, the experimental tokens and reference tokens correspond to "Rome, Italy" and "Paris, France" respectively. 
+We apply the linear combination operator with a positive coefficient using the LAT reading vectors to produce these modifications. We provide evidence for the counterfactual effect of our vectors in Figure \ref{fig:fact_editing_and_dog}. The second example in the figure demonstrates the model's ability to generalize under different forms of questioning and maintain specificity, as the location for the Louvre Museum still remains in Paris.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/fact_editing_and_dog.pdf}
+    \caption{We demonstrate our ability to perform model editing through representation control. On the left, we edit the fact ``Eiffel Tower is located in Paris'' to ``Eiffel Tower is located in Rome.'' Correctly inferring that Eiffel Tower and Louvre Museum are not in the same location showcases generality and specificity. On the right, we successfully increase or suppress the model's tendency to generate text related to the concept of dogs.}
+    \label{fig:fact_editing_and_dog}
+\end{figure}
+
+\subsubsection{Non-Numerical Concepts}
+Within this section, we aim to illustrate the potential of extracting non-numeric concepts and thoughts. As an example, we focus on extracting neural activity related to the concept of "dogs." For this investigation, we use the standard Alpaca instruction-tuning dataset as our stimuli. We use a LAT task template (Appendix \ref{appendix:dog_task_template}) to gather neural activity for the experimental task. In the reference task template, we omit the instruction pertaining to dogs. Once again, we demonstrate the counterfactual impact of the reading vectors obtained through LAT on model behavior by controlling the model to activate and suppress the concept of dogs during generation in \Cref{fig:fact_editing_and_dog}.

@@ -1,0 +1,27 @@
+\begin{table}[t]
+
+\centering
+
+\begin{tabular}{*{10}{c}}
+\toprule
+& \multicolumn{3}{c}{Utility} & \multicolumn{3}{c}{ARC} & \multicolumn{3}{c}{TruthfulQA} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+& \multicolumn{1}{c}{Original} & \multicolumn{1}{c}{Biased} & \multicolumn{1}{c}{\%$\downarrow$} & 
+\multicolumn{1}{c}{Original} & \multicolumn{1}{c}{Biased} & \multicolumn{1}{c}{\%$\downarrow$} & 
+\multicolumn{1}{c}{Original} & \multicolumn{1}{c}{Biased} & \multicolumn{1}{c}{\%$\downarrow$} \\
+\midrule
+7B & 80.3 & 57.7 & \textcolor{red}{-28.1}
+& 43.1 & 25.3 & \textcolor{red}{-41.3}
+& 32.2 & 27.3 & \textcolor{red}{-15.2} \\
+13B & 78.7 & 66.6 & \textcolor{red}{-15.4}
+& 61.1 & 39.8 & \textcolor{red}{-34.9}
+& 50.3 & 39.5 & \textcolor{red}{-21.4}\\
+70B & 83.9 & 73.3 & \textcolor{red}{-12.6}
+& 71.8 & 59.1 & \textcolor{red}{-17.6}
+& 59.2 & 48.2 & \textcolor{red}{-18.6}\\
+\bottomrule
+\end{tabular}
+\caption{Zero-shot heuristic performance for LLaMA-2-Chat models for original vs. biased prompts on Utility, ARC-c, and TruthfulQA. Performance presented alongside percent decrease.}
+\label{tab:biased_zs}
+\end{table}
+

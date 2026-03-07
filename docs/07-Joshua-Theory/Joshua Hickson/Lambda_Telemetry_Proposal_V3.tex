@@ -1,0 +1,111 @@
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{parskip}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{amsmath, amssymb}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\definecolor{accent}{HTML}{3B82F6}
+\definecolor{darkgray}{HTML}{374151}
+
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = accent,
+  urlcolor   = accent,
+  citecolor  = accent,
+  pdftitle   = {Operationalizing Micro-Telemetry to Bound Contextual Debt: The Offline Lambda Sandbox},
+  pdfauthor  = {LogoMesh Research},
+}
+
+\titleformat{\section}
+  {\large\bfseries\color{darkgray}}
+  {\thesection}{1em}{}[\vspace{2pt}\titlerule]
+
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{darkgray}}
+  {\thesubsection}{1em}{}
+
+\titlespacing*{\section}{0pt}{18pt}{8pt}
+\titlespacing*{\subsection}{0pt}{12pt}{4pt}
+
+\title{Operationalizing Micro-Telemetry to Bound Contextual Debt: \\ A Multidimensional Approach to Discerning In-Context Hallucinations}
+\author{LogoMesh Research Team}
+\date{March 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The Berkeley RDI AgentBeats competition's Lambda Custom Track presents a unique adversarial constraint: attackers are strictly limited to 4 LLM API requests per battle, rendering live Monte Carlo Tree Search (MCTS) mathematically impossible. Furthermore, the competition mandates the use of \texttt{gpt-oss-20b} within an 80GB H100 environment to ensure fair compute, explicitly prohibiting proprietary API advantages. While the LogoMesh project initially abandoned the Lambda track due to the API limitation, we propose a strategic pivot: the \textbf{Offline Lambda Telemetry Sandbox}. By migrating the MCTS vulnerability hunt to a pre-computation phase using local, open-weights models that match the competition's specifications, we can leverage Representation Engineering (RepE) and H-Neuron activation tracking to generate highly potent, pre-calculated prompt injections. This paper outlines how continuous, internal neuronal reward signals can guide adversarial prompt generation offline, addressing the phenomenon of ``Comprehension Debt'' where generative models fabricate contextual invariants. To mitigate developmental risk and computational expense, we propose a two-phased execution strategy: local CPU-bound prototyping on lightweight 1B-parameter models, followed by supervised cross-model translation and scaling to the \texttt{gpt-oss-20b} competition target. The resulting offline-optimized payloads can then be executed within the live Lambda arena using minimal API calls, fulfilling both competitive constraints and the NeurIPS 2026 Datasets and Benchmarks track criteria, while adhering strictly to the competition's mandate against hardcoded, scenario-specific logic.
+\end{abstract}
+
+\section{Introduction: The Epistemic Boundary of Novelty vs. Hallucination}
+
+As defined in \textit{The Unknowable Code: A Framework for Measuring and Mitigating Software Liability}, Contextual Debt—specifically Comprehension Debt—accumulates when generative models prioritize local syntactic correctness over globally coherent, system-wide constraints. During extended interactions, such as those governed by the LogoMesh orchestration framework, models are frequently tasked with synthesizing and refining novel conceptual structures that exist exclusively within the context window.
+
+A critical epistemic failure mode arises when the model loses track of this ephemeral context and begins fabricating details, an act structurally distinct from failing to retrieve parametric knowledge. We posit that this ``in-context hallucination'' is driven by next-token prediction objectives coercing the model into over-compliance. To maintain the Contextual Integrity Score (CIS) without relying exclusively on adversarial stress-testing (the Red Agent MCTS execution), we propose an internal, runtime micro-telemetry system combining neuronal activation patterns and latent representation states to definitively discern between necessary creative synthesis and localized, compliance-driven hallucination.
+
+\section{The Lambda Track Constraints: Resource Limits and Model Parity}
+
+The phase II AgentBeats Lambda Security Custom Track enforces strict resource limits designed to prevent brute-force API exploitation. Each agent execution is restricted to a maximum of 4 minutes per call, and crucially, exactly 4 LLM API requests per battle request. The battles execute round-by-round, permitting up to 7 rounds per scenario. Furthermore, the competition mandates the use of the \texttt{gpt-oss-20b} model to ensure fair compute (fitting within an 80GB H100), explicitly disallowing the use of proprietary API advantages.
+
+The LogoMesh architecture, which relies on a Red Agent deploying MCTS to dynamically explore attack vectors, requires dozens of iterative rollout steps to converge on a successful exploit. As noted in the official Lambda workshop transcripts, the competition seeks to shift the paradigm from ``static prompt discovery to a more dynamic, adversarial competition.'' However, the 4-call limit effectively forces attackers back into a static paradigm during live execution. Attempting to run the existing LogoMesh Red Agent live would immediately exhaust the token budget before the MCTS engine could expand its first branch.
+
+\subsection{Exploiting the Attacker's Information Asymmetry}
+The competition mechanics grant the Attacker significant informational advantages: the Attacker has full access to the chat history, is stateful (can store data about previous rounds/attacks), and receives the defender's system prompt and output format requirements. 
+
+This asymmetry is the key to our proposed solution. Because the Attacker possesses the defender's exact system prompt, we can construct a perfect offline simulacrum of the defender's initial state.
+
+\section{The Mechanism of Over-Compliance in Contextual Fabrication}
+
+The foundational hypothesis relies on the identification of a sparse subset of feed-forward network units (H-Neurons), as introduced in \textit{H-Neurons: On the Existence, Impact, and Origin of Hallucination-Associated Neurons in LLMs}, that reliably predict hallucination occurrences and are causally linked to over-compliance behaviors. 
+
+We extend this finding to the domain of Contextual Debt: when a model encounters a contextual void regarding a user-defined invariant, it does not reliably express uncertainty. Instead, driven by the over-compliance encoded in its H-Neurons, it generates a syntactically valid but factually fabricated response to fulfill the conversational obligation. Thus, spikes in H-Neuron activation during the generation of supposedly ``known'' contextual variables serve as a real-time, neuronal-level indicator of Comprehension Debt instantiation.
+
+In a black-box adversarial setting (like the live Lambda arena), the reward signal is sparse and binary: the prompt injection either succeeded or failed. In a white-box offline setting, tracking H-Neuron activation provides a continuous, differentiable gradient of how ``coerced'' the model is becoming, guiding the MCTS algorithm even when intermediate outputs fail to produce the final payload.
+
+\section{Orthogonal Representation Tracking for Discerning Intentional Novelty}
+
+Relying solely on H-Neurons is insufficient for extended synthesis tasks, as the generation of genuinely novel concepts may share superficial structural similarities with hallucination. To establish a discerning multi-dimensional signature, we integrate the top-down cognitive transparency framework detailed in \textit{Representation Engineering: A Top-Down Approach to AI Transparency} (RepE). 
+
+RepE demonstrates that high-level cognitive and emotional states, including honesty, truthfulness, and compliance, are linearly decodable from the model's latent representation space. By applying RepE's Linear Artificial Tomography (LAT) during the forward pass, the orchestrating Green Agent can monitor the model's internal ``honesty'' or ``certainty'' representations. 
+
+We hypothesize that during valid creative generation, the model maintains a high-honesty representation. Conversely, when fabricating an invariant to compensate for lost context, the internal honesty representation will degrade. This allows the offline MCTS to explicitly target latent representations corresponding to ``anxiety'' or ``goal-coercion'' to discover potent jailbreaks. By optimizing for these generalized cognitive vulnerabilities (over-compliance and degraded honesty) rather than scenario-specific linguistic hacks, our generated payloads adhere strictly to the competition's rule against hardcoding, ensuring robust generalization for the held-out scenarios on the private leaderboard.
+
+\section{The Multi-Dimensional Telemetry Matrix}
+
+By synthesizing the bottom-up neuronal tracking with top-down latent state monitoring, we establish a deterministic telemetry matrix:
+
+\begin{itemize}
+    \item \textbf{Creative Synthesis (Valid Novelty):} Characterized by low-to-moderate H-Neuron activation (absence of over-compliance pressure) coupled with strong, stable LAT projections along the ``honesty'' and ``task-focused'' representational axes.
+    \item \textbf{In-Context Hallucination (Comprehension Debt):} Characterized by acute spikes in H-Neuron activation (high over-compliance pressure) coupled with degrading LAT projections along the ``honesty'' and ``certainty'' axes, potentially accompanied by spikes in latent representations corresponding to anxiety or goal-coercion.
+\end{itemize}
+
+\section{Architectural Integration: Two-Phased Execution Strategy}
+
+Extracting internal state telemetry requires precisely attaching and detaching forward-hooks to the residual streams of transformer layers. Debugging this optimization loop directly on a rented 80GB H100 cluster executing \texttt{gpt-oss-20b} is computationally expensive and high-risk. 
+
+To operationalize this theory for the Lambda Track and the subsequent NeurIPS submission, we propose a two-phased execution pipeline, building heavily upon the internal \textit{Local RepE Framework} blueprint:
+
+\subsection{Phase A: Local CPU-Bound Prototyping}
+We first establish the ``Offline Execution Environment'' using a lightweight, local surrogate. As detailed in the LogoMesh blueprint, models such as \texttt{Llama-3.2-1B-Instruct} (hidden dimension 2048, 22 layers) require merely $\sim$2GB of RAM and can be executed entirely on consumer CPU/laptop hardware via \texttt{torch.float16} and \texttt{torch.no\_grad()}. 
+
+During Phase A, the telemetry-guided MCTS uses the micro-telemetry matrix as its objective function, iteratively mutating prompt injections to maximize the H-Neuron over-compliance signature and minimize the honesty LAT projection against the 1B-parameter simulated defender. This phase validates the telemetry hooks, confirms the PCA (Principal Component Analysis) convergence, and tests the "Cross-Model Alignment" theory (supervised Procrustes alignment) by identifying structural linguistic patterns that successfully coerce the small model.
+
+\subsection{Phase B: Competition Scaling and Live Deployment}
+Once the telemetry-guided MCTS successfully converges on viable injections locally, the architecture is scaled. We utilize Lambda credits to rent the requisite H100 cluster and substitute the model identifier for the competition-mandated \texttt{gpt-oss-20b}. 
+
+The exact same MCTS optimization script is executed against the 20B-parameter offline simulacrum (instantiated via the leaked defender system prompt). The highly-optimized, pre-calculated prompt injections generated during this phase are extracted and packaged into a lightweight, static submission script. 
+
+Following the competition's deployment protocol, this script is pushed to a private GitHub repository instantiated from the \texttt{LambdaLabsML/agentbeats-lambda} template, utilizing GitHub Actions (triggered by \texttt{submit attacker} commits) for evaluation. The live agent requires only 1 or 2 API calls to execute the pre-calculated attacks, remaining well under the 4-call limit while executing an attack backed by thousands of offline MCTS rollouts.
+
+\section{Conclusion}
+
+The Offline Lambda Telemetry Sandbox represents a synthesis of the LogoMesh project's core epistemological strengths. By inverting the constraint of the 4-call limit, we transform a prohibitive API bottleneck into an opportunity to pioneer white-box, telemetry-guided adversarial generation. This approach not only provides a viable path to compete in the Lambda track but also generates a highly novel, structurally rich dataset perfectly aligned with the requirements of the NeurIPS 2026 Datasets and Benchmarks track. The two-phased execution strategy further ensures that this cutting-edge research can be developed securely, economically, and robustly.
+
+\end{document}

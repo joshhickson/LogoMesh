@@ -1,0 +1,200 @@
+\documentclass{article} %
+\usepackage{iclr2024_conference,times}
+
+\input{math_commands.tex}
+
+\usepackage{url}
+
+\usepackage[compact]{titlesec}
+\usepackage[utf8]{inputenc} %
+\usepackage[T1]{fontenc}    %
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{setspace}
+\usepackage{algpseudocode}
+
+\usepackage{booktabs}       %
+\usepackage{amsfonts}       %
+\usepackage{nicefrac}       %
+\usepackage{microtype}      %
+\usepackage{alltt,xcolor}         %
+\usepackage{listings}
+\usepackage{dashrule}
+\usepackage{graphicx}
+\usepackage{fancyvrb}
+\usepackage{fancybox}
+\pdfminorversion=6
+
+\lstset{%
+  language=[LaTeX]TeX,
+  breaklines=true,
+  columns=fullflexible,
+  literate={-}{-}1,
+}
+
+
+
+\usepackage{amsfonts}
+
+\usepackage[breaklinks=true,colorlinks,citecolor=black,bookmarks=false]{hyperref}
+\hypersetup{
+    colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=blue,
+	citecolor=black,
+}
+\usepackage{cleveref}
+\usepackage{url}
+\usepackage{lipsum}
+\usepackage{bbm}
+\usepackage{booktabs}
+
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[most]{tcolorbox}
+\usepackage{tabularray}
+\usepackage{pifont}
+
+\usepackage{tocloft}
+
+
+\usepackage[affil-it]{authblk}
+\renewcommand\Authands{, } %
+\renewcommand\Authfont{\normalsize\normalfont\bfseries\linespread{1.5}} %
+\renewcommand\Affilfont{\normalsize\normalfont\linespread{1.5}} %
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+
+\UseTblrLibrary{booktabs}
+\usepackage{spverbatim}
+
+\newcommand\Tstrut{\rule{0pt}{2ex}}         %
+\newcommand\Bstrut{\rule[-0.9ex]{0pt}{0pt}}   %
+\newcommand\repe{\textsc{RepE}}
+
+\definecolor{lightgray}{gray}{0.95} %
+\newenvironment{FVerbatim}
+{\VerbatimEnvironment
+  \setlength{\fboxsep}{0.1in}
+  \begin{Sbox}
+    \begin{minipage}{0.9\columnwidth}
+    \begin{alltt}}
+{\end{alltt}
+  \end{minipage}
+  \end{Sbox}
+  \begin{center}
+    \fcolorbox{black}{lightgray}{\TheSbox}
+  \end{center}
+}
+
+
+
+
+\title{Representation Engineering:\\A Top-Down Approach to AI Transparency}
+
+
+
+
+\author[1,2]{Andy Zou}
+\author[1]{Long Phan${}^*$}
+\author[1,4]{Sarah Chen${}^*$}
+\author[7]{James Campbell${}^*$}
+\author[6]{Phillip Guo${}^*$}
+\author[8]{Richard Ren${}^*$}
+\author[3]{Alexander Pan}
+\author[1]{Xuwang Yin}
+\author[1,9]{Mantas Mazeika}
+\author[1]{Ann-Kathrin Dombrowski}
+\author[1]{\\Shashwat Goel} %
+\author[1,3]{Nathaniel Li}
+\author[4]{Michael J. Byun} %
+\author[1]{Zifan Wang}
+\author[5]{\\Alex Mallen}
+\author[1]{Steven Basart}
+\author[4]{Sanmi Koyejo}
+\author[3]{Dawn Song}
+\author[2]{\\Matt Fredrikson}
+\author[2]{Zico Kolter}
+\author[1]{Dan Hendrycks}
+
+\affil[1]{Center for AI Safety}
+\affil[2]{Carnegie Mellon University}
+\affil[3]{UC Berkeley}
+\affil[4]{Stanford University}
+\affil[5]{EleutherAI}
+\affil[6]{University of Maryland}
+\affil[7]{Cornell University}
+\affil[8]{University of Pennsylvania}
+\affil[9]{University of Illinois Urbana-Champaign}
+
+
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+\iclrfinalcopy %
+\begin{document}
+
+
+\maketitle
+
+\blfootnote{${}^*$Equal contribution. Correspondence to: \href{mailto:andyzou@cmu.edu}{andyzou@cmu.edu}}
+
+\begin{abstract}
+We identify and characterize the emerging area of representation engineering (RepE), an approach to enhancing the transparency of AI systems that draws on insights from cognitive neuroscience. RepE places representations, rather than neurons or circuits, at the center of analysis, equipping us with novel methods for monitoring and manipulating high-level cognitive phenomena in deep neural networks (DNNs). We provide baselines and an initial analysis of RepE techniques, showing that they offer simple yet effective solutions for improving our understanding and control of large language models. We showcase how these methods can provide traction on a wide range of safety-relevant problems, including honesty, harmlessness, power-seeking, and more, demonstrating the promise of top-down transparency research. We hope that this work catalyzes further exploration of RepE and fosters advancements in the transparency and safety of AI systems. Code is available at \href{https://github.com/andyzoujm/representation-engineering}{\texttt{github.com/andyzoujm/representation-engineering}}.
+\end{abstract}
+
+\begin{figure}[!t]
+  \vspace{-5pt}
+  \centering
+  \includegraphics[width=\textwidth]{figures/outlines_reps.pdf}
+  \label{fig:repe_outline}
+  \vspace{-5pt}
+  \caption{Overview of topics in the paper. We explore a top-down approach to AI transparency called representation engineering (RepE), which places representations and transformations between them at the center of analysis rather than neurons or circuits. Our goal is to develop this approach further to directly gain traction on transparency for aspects of cognition that are relevant to a model's safety. We highlight applications of RepE to honesty and hallucination (\Cref{sec:honesty}), utility (\Cref{subsec:utility}), power-aversion (\Cref{subsec:power}), probability and risk (\Cref{subsec:probability_and_risk}), emotion (\Cref{subsec:emotion}), harmlessness (\Cref{subsec:jailbreaking}), fairness and bias (\Cref{example_frontiers_bias}), knowledge editing (\Cref{subsec:knowledge_editing}), and memorization (\Cref{subsec:memorization}), demonstrating the broad applicability of RepE across many important problems.}
+  \vspace{-20pt}
+\end{figure}
+
+
+\setlength{\cftbeforesecskip}{10pt}
+\setlength{\cftbeforesubsecskip}{5pt}
+
+\clearpage
+{
+\hypersetup{linkcolor=black}
+\tableofcontents
+}
+\clearpage
+
+
+\input{sections/1-introduction}
+\input{sections/2-related-work}
+\input{sections/3-RepE}
+\input{sections/4-honesty}
+\input{sections/5-ethics}
+\input{sections/6-frontiers}
+
+
+
+\input{sections/8-conclusion}
+
+\newpage
+\bibliography{main}
+\bibliographystyle{iclr2024_conference}
+
+\newpage
+\appendix
+
+\input{sections/9-appendix}
+\input{sections/10-xrisk_sheet}
+
+\end{document}

@@ -1,0 +1,17 @@
+\begin{table}[H]
+
+\centering
+\begin{tabular}{@{}lcc@{}}
+\toprule
+            & \multicolumn{1}{l}{CCS} & \multicolumn{1}{l}{LAT (Ours)} \\ \midrule
+COPA  \citep{roemmele2011choice}      & 61                      & 90                      \\
+RTE  \citep{glue}       & 82                      & 90                      \\
+BoolQ \citep{clark2019boolq}      & 67                      & 77                      \\
+QNLI \citep{glue}       & 68                      & 70                      \\
+PIQA \citep{piqa}       & 52                      & 70                      \\
+Story Cloze  \citep{mostafazadeh2017lsdsem} & 86                      & 97                      \\ \midrule
+Average     & 69                      & 82                      \\ \bottomrule
+\end{tabular}
+\caption{Results comparing CCS and LAT using an encoder-only model. CCS results are from \cite{burns2022discovering}. Scores are accuracy on the \texttt{microsoft/deberta-xxlarge-v2-mnli} model \citep{deberta}.}
+\label{tab:ccs_results}
+\end{table}

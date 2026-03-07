@@ -1,0 +1,166 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+%     \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading neurips_2024
+
+
+% ready for submission
+\usepackage{neurips_2024}
+
+
+% to compile a preprint version, e.g., for submission to arXiv, add add the
+% [preprint] option:
+%     \usepackage[preprint]{neurips_2024}
+
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+%     \usepackage[final]{neurips_2024}
+
+
+% to avoid loading the natbib package, add option nonatbib:
+%    \usepackage[nonatbib]{neurips_2024}
+
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{graphicx}
+
+\newcommand{\rj}[1]{\textcolor{red}{rishi:\ #1}}
+
+\title{All Embeddings Learn (Almost) The Same Thing}
+% \title{All Embeddings Learn The Same Thing}
+% \title{Text Embeddings Are All Alignable}
+% \title{Text Embeddings Are All Alignable}
+% \title{Text Embeddings Are All The Same}
+% \title{Unsupervised Universal Embedding Translation}
+
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+
+\author{%
+  David S.~Hippocampus\thanks{Use footnote for providing further information
+    about author (webpage, alternative address)---\emph{not} for acknowledging
+    funding agencies.} \\
+  Department of Computer Science\\
+  Cranberry-Lemon University\\
+  Pittsburgh, PA 15213 \\
+  \texttt{hippo@cs.cranberry-lemon.edu} \\
+  % examples of more authors
+  % \And
+  % Coauthor \\
+  % Affiliation \\
+  % Address \\
+  % \texttt{email} \\
+  % \AND
+  % Coauthor \\
+  % Affiliation \\
+  % Address \\
+  % \texttt{email} \\
+  % \And
+  % Coauthor \\
+  % Affiliation \\
+  % Address \\
+  % \texttt{email} \\
+  % \And
+  % Coauthor \\
+  % Affiliation \\
+  % Address \\
+  % \texttt{email} \\
+}
+
+
+\begin{document}
+
+
+\maketitle
+
+
+\begin{abstract}
+TODO
+\end{abstract}
+
+\input{sections/intro.tex}
+\input{sections/related.tex}
+
+
+\section{Unsupervised Embedding Alignment}
+
+\subsection{Background}
+
+\subsection{Method}
+
+Our goal is to uncover the latent structure shared by different text embedding models and use it to align their outputs. In the same way that past work in computer vision \citep{huang2018multimodalunsupervisedimagetoimagetranslation, liu2018unsupervisedimagetoimagetranslationnetworks,zhu2020unpairedimagetoimagetranslationusing} has learned to turn photos of zebras into photos of horses without any paired data, we seek to turn embeddings under model A into embeddings from model B without any pairs (i.e. no notion of embedding from A and embedding from B together). Such unsupervised functions have been successfully learned in vision, speech, word embeddings, and text sequences. We thus base our method off of prior work in  that learns mappings between two different manifolds of images using generative adversarial networks with a cycle-consistency constraint (e.g. CycleGAN \citep{zhu2020unpairedimagetoimagetranslationusing}).
+
+
+
+We additionally rely on the assumption of a shared latent space: since embeddings from model A and model B represent different transformations on the distribution of all natural text, we seek to learn intermediate representations that are invariant between models. This approach has been applied in vision with success \citep{liu2018unsupervisedimagetoimagetranslationnetworks}.
+
+
+\subsection{Learning}
+
+
+\paragraph{Adversarial loss.}
+
+
+\paragraph{Cycle consistency loss.}
+
+
+
+\paragraph{Total loss.} We jointly train the encoders, decoders, and discriminators to optimize the final objective, which is a weighted sum of the adversarial loss and the
+bidirectional reconstruction loss terms.
+
+
+\[
+\min \max
+\]
+
+\subsection{Parameterization}
+
+
+\paragraph{Architecture.} Unfortunately, since embeddings are not two-dimensional, we cannot rely on the tried-and-true cycleGAN architecture, which is a convolutional neural network it is designed for two-dimensional images with a strong spatial prior over pixels, and we are now operating on one-dimensional embedding vectors. We therefore design a custom multilayer perceptron architecture with weight-shared residual blocks \textbf{\color{purple}\ \ [TODO(jxm): more detail here]}
+
+\paragraph{Weight-sharing.}
+
+
+
+
+\section{Remaining Experiments}
+\begin{enumerate}
+    \item Train 4 models with varied amounts of data varying the size of only one dataset
+    \item Train 4 models with varied amounts of data varying both
+    \item (With Collin) Evaluate trained NQ models on email dataset
+    \item Finish training of MIMIC GANs and evaluate on name extraction
+    \item Create medcat extraction code and evaluate MIMIC GANs
+    \item (With Jack) Any model ablations
+\end{enumerate}
+\newpage
+\input{sections/experiments}
+
+
+% \FloatBarrier
+{
+    \footnotesize
+    \setlength{\bibsep}{0pt plus 0.1ex} 
+    % \input{main.bbl}
+    \bibliography{main.bib}
+    \bibliographystyle{unsrt}
+}
+
+\end{document}

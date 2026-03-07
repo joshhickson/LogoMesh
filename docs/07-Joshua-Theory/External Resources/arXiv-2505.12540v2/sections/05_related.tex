@@ -1,0 +1,33 @@
+\section{Related work}
+
+% Slack message abouut RW: https://cornell-security.slack.com/archives/C05QFLQ25UZ/p1709748413419549
+
+% We need to concisely explain what uses pairs, what uses words/images. Why no one 
+
+
+
+\shortpara{Representation alignment.}
+Similarities between representations of
+different neural networks are investigated in \citep{laakso2000content, li2016convergentlearningdifferentneural, wang2018understandinglearningrepresentationsextent, bansal2021revisitingmodelstitchingcompare, huh2024platonicrepresentationhypothesis}. CCA \citep{morcos2018insightsrepresentationalsimilarityneural}, SVCCA, \citep{raghu2017svccasingularvectorcanonical}, CKA \citep{kornblith2019similarity}, ICA \citep{yamagiwa2023discoveringuniversalgeometryembeddings}, and GUI-based systems such as embComp \citep{heimerl2019embComp} compare embeddings from different subspaces.  
+Methods like \citep{maiorca2024latentspacetranslationsemantic, moschella2023relativerepresentationsenablezeroshot, moayeri2023texttoconceptandbackcrossmodel, norelli2023asifcoupleddataturns} harness representation similarity for zero-shot stitching, substitution, and multi-modal adaptation.  All rely on some amount of paired data, which is difficult  
+to reduce \citep{cannistraci2023bootstrappingparallelanchorsrelative}.  Our method does not just measure similarity, we learn how to \emph{translate} representations across spaces without any paired data.
+
+% between the two modalities of interest
+
+
+\shortpara{Unsupervised transport.}  The problem of unsupervised transport has been studied for images \citep{huang2018multimodalunsupervisedimagetoimagetranslation, liu2018unsupervisedimagetoimagetranslationnetworks,zhu2020unpairedimagetoimagetranslationusing}, words \citep{xing2015normalized, conneau2018wordtranslationparalleldata, grave2018unsupervisedalignmentembeddingswasserstein, chen2018unsupervisedmultilingualwordembeddings}, and natural language sequences \citep{raviknight2011deciphering, lample2018unsupervisedmachinetranslationusing, alvarezmelis2018gromovwassersteinalignmentwordembedding, artetxe2018unsupervisedneuralmachinetranslation, yang2018unsupervisedneuralmachinetranslation}. Our method builds on these works, which often employ a combination of cycle-consistency and adversarial loss. \citep{schnaus2025itsblindmatchvisionlanguage} proposes a solver for matching small sets of embeddings between different vision-language models.  Our method goes well beyond matching by taking unknown embeddings and \emph{generating} matching embeddings in the space of another model.
+
+% we directly translate embeddings from the space of one model to another in a way that generalizes to unseen embeddings.
+
+
+% We note that this unsupervised mapping problem has a long history in machine learning, and research has successfully learned similar mapping functions between images, \citep{huang2018multimodalunsupervisedimagetoimagetranslation, liu2018unsupervisedimagetoimagetranslationnetworks,zhu2020unpairedimagetoimagetranslationusing}, words from different languages \citep{xing2015normalized, conneau2018wordtranslationparalleldata, grave2018unsupervisedalignmentembeddingswasserstein, chen2018unsupervisedmultilingualwordembeddings}, and even language sequences \citep{raviknight2011deciphering, lample2018unsupervisedmachinetranslationusing, artetxe2018unsupervisedneuralmachinetranslation}. Inspired by the success of adversarial methods in these problem settings, and the fact that embeddings from different models share latent structure \citep{huh2024platonicrepresentationhypothesis},
+
+
+\shortpara{Embedding inversion.} An emerging line of research investigates decoding text from language model embeddings \citep{song2020informationleakageembeddingmodels, li2023sentenceembeddingleaksinformation, morris2023textembeddingsrevealalmost} and outputs \citep{morris2023languagemodelinversion, carlini2024stealingproductionlanguagemodel, zhang2024extractingpromptsinvertingllm}.  
+\atk{} helps apply these to unknown embeddings, without an encoder or paired data, by translating them to the space of a known model. 
+
+% (In one experiment, we evaluate the same inversion models from \citep{morris2023textembeddingsrevealalmost} on our translated pairs.)
+
+% \paragraph{Upgrading embeddings.} A line of work in information retrieval builds embeddings that are \textit{backwards-compatible} with existing models \citep{shen2021backwardcompatiblerepresentationlearning, hu2022backwardcompatibleembeddings, ramanujan2022forwardcompatibletraininglargescale, jaeckle2023fastfillefficientcompatiblemodel, park2019relationalknowledgedistillation, wang2020unifiedrepresentationlearningcross}. We, instead, train an existing model for converting between a diverse set of embedding spaces. Other recent studies \citep{yoon2024matryoshkaadaptorunsupervisedsupervisedtuning, anonymous2024embeddingconverter} propose ways to improve or convert existing models; unlike these studies, we pretrain a large model for many-to-many conversion.
+
+\shortpara{Bridging modality gaps.} Previous work has noted an inherent ``gap” between image- and text-based models \citep{liang2022mindgapunderstandingmodality} and proposed various ways to unify the modalities \citep{song2023bridgegapmodalitiescomprehensive}. Some approaches feed image embeddings directly into language models \citep{koh2023fromage, wang2023visionllm, dong2024dreamllmsynergisticmultimodalcomprehension, liu2023visualinstructiontuning}, while others generate captions from image embeddings \citep{mokady2021clipcap} or even from text embeddings themselves \citep{morris2023textembeddingsrevealalmost}. \citep{girdhar2023imagebind} introduces a shared embedding space that integrates inputs from multiple modalities, including text, audio, and vision. In contrast, our post-hoc approach directly translates between representations and complements these systems by enabling inputs from a wide variety of embedding models.

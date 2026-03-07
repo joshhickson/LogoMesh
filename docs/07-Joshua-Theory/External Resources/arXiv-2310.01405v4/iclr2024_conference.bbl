@@ -1,0 +1,1031 @@
+\begin{thebibliography}{142}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Adebayo et~al.(2018)Adebayo, Gilmer, Muelly, Goodfellow, Hardt, and
+  Kim]{adebayo2018sanity}
+Julius Adebayo, Justin Gilmer, Michael Muelly, Ian Goodfellow, Moritz Hardt,
+  and Been Kim.
+\newblock Sanity checks for saliency maps.
+\newblock \emph{Advances in neural information processing systems}, 31, 2018.
+
+\bibitem[Anderson \& Anderson(2007)Anderson and Anderson]{anderson2007machine}
+Michael Anderson and Susan~Leigh Anderson.
+\newblock Machine ethics: Creating an ethical intelligent agent.
+\newblock \emph{AI magazine}, 28\penalty0 (4):\penalty0 15--15, 2007.
+
+\bibitem[Anderson(1972)]{doi:10.1126/science.177.4047.393}
+P.~W. Anderson.
+\newblock More is different.
+\newblock \emph{Science}, 177\penalty0 (4047):\penalty0 393--396, 1972.
+\newblock \doi{10.1126/science.177.4047.393}.
+
+\bibitem[Aneja et~al.(2016)Aneja, Colburn, Faigin, Shapiro, and
+  Mones]{aneja2016modeling}
+Deepali Aneja, Alex Colburn, Gary Faigin, Linda Shapiro, and Barbara Mones.
+\newblock Modeling stylized character expressions via deep learning.
+\newblock In \emph{Asian Conference on Computer Vision}, pp.\  136--153.
+  Springer, 2016.
+
+\bibitem[Azaria \& Mitchell(2023)Azaria and Mitchell]{azaria2023internal}
+Amos Azaria and Tom Mitchell.
+\newblock The internal state of an llm knows when its lying, 2023.
+
+\bibitem[Barack \& Krakauer(2021)Barack and Krakauer]{barack2021two}
+David~L Barack and John~W Krakauer.
+\newblock Two views on the cognitive brain.
+\newblock \emph{Nature Reviews Neuroscience}, 22\penalty0 (6):\penalty0
+  359--371, 2021.
+
+\bibitem[Bau et~al.(2017)Bau, Zhou, Khosla, Oliva, and
+  Torralba]{bau2017network}
+David Bau, Bolei Zhou, Aditya Khosla, Aude Oliva, and Antonio Torralba.
+\newblock Network dissection: Quantifying interpretability of deep visual
+  representations.
+\newblock In \emph{Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pp.\  6541--6549, 2017.
+
+\bibitem[Bau et~al.(2019)Bau, Strobelt, Peebles, Wulff, Zhou, Zhu, and
+  Torralba]{10.1145/3306346.3323023}
+David Bau, Hendrik Strobelt, William Peebles, Jonas Wulff, Bolei Zhou, Jun-Yan
+  Zhu, and Antonio Torralba.
+\newblock Semantic photo manipulation with a generative image prior.
+\newblock \emph{ACM Trans. Graph.}, 38\penalty0 (4), jul 2019.
+\newblock ISSN 0730-0301.
+\newblock \doi{10.1145/3306346.3323023}.
+
+\bibitem[Bau et~al.(2020)Bau, Zhu, Strobelt, Lapedriza, Zhou, and
+  Torralba]{bau2020units}
+David Bau, Jun-Yan Zhu, Hendrik Strobelt, Agata Lapedriza, Bolei Zhou, and
+  Antonio Torralba.
+\newblock Understanding the role of individual units in a deep neural network.
+\newblock \emph{Proceedings of the National Academy of Sciences}, 2020.
+\newblock ISSN 0027-8424.
+\newblock \doi{10.1073/pnas.1907375117}.
+
+\bibitem[Beeching et~al.(2023)Beeching, Fourrier, Habib, Han, Lambert, Rajani,
+  Sanseviero, Tunstall, and Wolf]{open-llm-leaderboard}
+Edward Beeching, Clémentine Fourrier, Nathan Habib, Sheon Han, Nathan Lambert,
+  Nazneen Rajani, Omar Sanseviero, Lewis Tunstall, and Thomas Wolf.
+\newblock Open llm leaderboard, 2023.
+\newblock URL
+  \url{https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard}.
+
+\bibitem[Belinkov(2022)]{belinkov2022probing}
+Yonatan Belinkov.
+\newblock Probing classifiers: Promises, shortcomings, and advances.
+\newblock \emph{Computational Linguistics}, 48\penalty0 (1):\penalty0 207--219,
+  2022.
+
+\bibitem[Belrose et~al.(2023{\natexlab{a}})Belrose, Furman, Smith, Halawi,
+  Ostrovsky, McKinney, Biderman, and Steinhardt]{belrose2023eliciting}
+Nora Belrose, Zach Furman, Logan Smith, Danny Halawi, Igor Ostrovsky, Lev
+  McKinney, Stella Biderman, and Jacob Steinhardt.
+\newblock Eliciting latent predictions from transformers with the tuned lens.
+\newblock \emph{arXiv preprint arXiv:2303.08112}, 2023{\natexlab{a}}.
+
+\bibitem[Belrose et~al.(2023{\natexlab{b}})Belrose, Schneider-Joseph, Ravfogel,
+  Cotterell, Raff, and Biderman]{belrose2023leace}
+Nora Belrose, David Schneider-Joseph, Shauli Ravfogel, Ryan Cotterell, Edward
+  Raff, and Stella Biderman.
+\newblock Leace: Perfect linear concept erasure in closed form.
+\newblock \emph{arXiv preprint arXiv:2306.03819}, 2023{\natexlab{b}}.
+
+\bibitem[Biderman et~al.(2023)Biderman, Schoelkopf, Anthony, Bradley, O'Brien,
+  Hallahan, Khan, Purohit, Prashanth, Raff, Skowron, Sutawika, and van~der
+  Wal]{biderman2023pythia}
+Stella Biderman, Hailey Schoelkopf, Quentin Anthony, Herbie Bradley, Kyle
+  O'Brien, Eric Hallahan, Mohammad~Aflah Khan, Shivanshu Purohit, USVSN~Sai
+  Prashanth, Edward Raff, Aviya Skowron, Lintang Sutawika, and Oskar van~der
+  Wal.
+\newblock Pythia: A suite for analyzing large language models across training
+  and scaling, 2023.
+
+\bibitem[Bilodeau et~al.(2022)Bilodeau, Jaques, Koh, and
+  Kim]{bilodeau2022impossibility}
+Blair Bilodeau, Natasha Jaques, Pang~Wei Koh, and Been Kim.
+\newblock Impossibility theorems for feature attribution.
+\newblock \emph{arXiv preprint arXiv:2212.11870}, 2022.
+
+\bibitem[Bisk et~al.(2019)Bisk, Zellers, Bras, Gao, and Choi]{piqa}
+Yonatan Bisk, Rowan Zellers, Ronan~Le Bras, Jianfeng Gao, and Yejin Choi.
+\newblock {PIQA:} reasoning about physical commonsense in natural language.
+\newblock \emph{CoRR}, abs/1911.11641, 2019.
+
+\bibitem[Bolukbasi et~al.(2016)Bolukbasi, Chang, Zou, Saligrama, and
+  Kalai]{bolukbasi2016man}
+Tolga Bolukbasi, Kai-Wei Chang, James~Y Zou, Venkatesh Saligrama, and Adam~T
+  Kalai.
+\newblock Man is to computer programmer as woman is to homemaker? debiasing
+  word embeddings.
+\newblock \emph{Advances in neural information processing systems}, 29, 2016.
+
+\bibitem[Brito-Zer{\'o}n et~al.(2019)Brito-Zer{\'o}n, Kostov, Superville,
+  Baughman, Ramos-Casals, et~al.]{brito2019geoepidemiological}
+Pilar Brito-Zer{\'o}n, Belchin Kostov, Daphne Superville, Robert~P Baughman,
+  Manuel Ramos-Casals, et~al.
+\newblock Geoepidemiological big data approach to sarcoidosis: geographical and
+  ethnic determinants.
+\newblock \emph{Clin Exp Rheumatol}, 37\penalty0 (6):\penalty0 1052--64, 2019.
+
+\bibitem[Brown et~al.(2020)Brown, Mann, Ryder, Subbiah, Kaplan, Dhariwal,
+  Neelakantan, Shyam, Sastry, Askell, Agarwal, Herbert{-}Voss, Krueger,
+  Henighan, Child, Ramesh, Ziegler, Wu, Winter, Hesse, Chen, Sigler, Litwin,
+  Gray, Chess, Clark, Berner, McCandlish, Radford, Sutskever, and
+  Amodei]{DBLP:journals/corr/abs-2005-14165}
+Tom~B. Brown, Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan,
+  Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda
+  Askell, Sandhini Agarwal, Ariel Herbert{-}Voss, Gretchen Krueger, Tom
+  Henighan, Rewon Child, Aditya Ramesh, Daniel~M. Ziegler, Jeffrey Wu, Clemens
+  Winter, Christopher Hesse, Mark Chen, Eric Sigler, Mateusz Litwin, Scott
+  Gray, Benjamin Chess, Jack Clark, Christopher Berner, Sam McCandlish, Alec
+  Radford, Ilya Sutskever, and Dario Amodei.
+\newblock Language models are few-shot learners.
+\newblock \emph{CoRR}, abs/2005.14165, 2020.
+\newblock URL \url{https://arxiv.org/abs/2005.14165}.
+
+\bibitem[Burns et~al.(2022)Burns, Ye, Klein, and
+  Steinhardt]{burns2022discovering}
+Collin Burns, Haotian Ye, Dan Klein, and Jacob Steinhardt.
+\newblock Discovering latent knowledge in language models without supervision,
+  2022.
+
+\bibitem[Carlini et~al.(2021)Carlini, Tramer, Wallace, Jagielski, Herbert-Voss,
+  Lee, Roberts, Brown, Song, Erlingsson, et~al.]{carlini2021extracting}
+Nicholas Carlini, Florian Tramer, Eric Wallace, Matthew Jagielski, Ariel
+  Herbert-Voss, Katherine Lee, Adam Roberts, Tom Brown, Dawn Song, Ulfar
+  Erlingsson, et~al.
+\newblock Extracting training data from large language models.
+\newblock In \emph{30th USENIX Security Symposium (USENIX Security 21)}, pp.\
+  2633--2650, 2021.
+
+\bibitem[Carlini et~al.(2023)Carlini, Hayes, Nasr, Jagielski, Sehwag, Tramer,
+  Balle, Ippolito, and Wallace]{carlini2023extracting}
+Nicolas Carlini, Jamie Hayes, Milad Nasr, Matthew Jagielski, Vikash Sehwag,
+  Florian Tramer, Borja Balle, Daphne Ippolito, and Eric Wallace.
+\newblock Extracting training data from diffusion models.
+\newblock In \emph{32nd USENIX Security Symposium (USENIX Security 23)}, pp.\
+  5253--5270, 2023.
+
+\bibitem[Carlsmith(2022)]{carlsmith2022power}
+Joseph Carlsmith.
+\newblock Is power-seeking ai an existential risk?
+\newblock \emph{arXiv preprint arXiv:2206.13353}, 2022.
+
+\bibitem[Carlsmith(2023)]{Carlsmith2022IsPA}
+Joseph Carlsmith.
+\newblock Existential risk from power-seeking ai.
+\newblock \emph{Oxford University Press}, 2023.
+
+\bibitem[Caron et~al.(2021)Caron, Touvron, Misra, Jégou, Mairal, Bojanowski,
+  and Joulin]{caron2021emerging}
+Mathilde Caron, Hugo Touvron, Ishan Misra, Hervé Jégou, Julien Mairal, Piotr
+  Bojanowski, and Armand Joulin.
+\newblock Emerging properties in self-supervised vision transformers, 2021.
+
+\bibitem[Chen et~al.(2023)Chen, Viégas, and Wattenberg]{chen2023surface}
+Yida Chen, Fernanda Viégas, and Martin Wattenberg.
+\newblock Beyond surface statistics: Scene representations in a latent
+  diffusion model, 2023.
+
+\bibitem[Chiang et~al.(2023)Chiang, Li, Lin, Sheng, Wu, Zhang, Zheng, Zhuang,
+  Zhuang, Gonzalez, Stoica, and Xing]{vicuna2023}
+Wei-Lin Chiang, Zhuohan Li, Zi~Lin, Ying Sheng, Zhanghao Wu, Hao Zhang, Lianmin
+  Zheng, Siyuan Zhuang, Yonghao Zhuang, Joseph~E. Gonzalez, Ion Stoica, and
+  Eric~P. Xing.
+\newblock Vicuna: An open-source chatbot impressing gpt-4 with 90\%* chatgpt
+  quality, March 2023.
+
+\bibitem[Clark et~al.(2019{\natexlab{a}})Clark, Lee, Chang, Kwiatkowski,
+  Collins, and Toutanova]{clark2019boolq}
+Christopher Clark, Kenton Lee, Ming-Wei Chang, Tom Kwiatkowski, Michael
+  Collins, and Kristina Toutanova.
+\newblock Boolq: Exploring the surprising difficulty of natural yes/no
+  questions.
+\newblock In \emph{NAACL}, 2019{\natexlab{a}}.
+
+\bibitem[Clark et~al.(2019{\natexlab{b}})Clark, Khandelwal, Levy, and
+  Manning]{clark-etal-2019-bert}
+Kevin Clark, Urvashi Khandelwal, Omer Levy, and Christopher~D. Manning.
+\newblock What does {BERT} look at? an analysis of {BERT}{'}s attention.
+\newblock In \emph{Proceedings of the 2019 ACL Workshop BlackboxNLP: Analyzing
+  and Interpreting Neural Networks for NLP}, pp.\  276--286, Florence, Italy,
+  August 2019{\natexlab{b}}. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/W19-4828}.
+
+\bibitem[Clark et~al.(2018)Clark, Cowhey, Etzioni, Khot, Sabharwal, Schoenick,
+  and Tafjord]{arc}
+Peter Clark, Isaac Cowhey, Oren Etzioni, Tushar Khot, Ashish Sabharwal, Carissa
+  Schoenick, and Oyvind Tafjord.
+\newblock Think you have solved question answering? try arc, the {AI2}
+  reasoning challenge.
+\newblock \emph{CoRR}, abs/1803.05457, 2018.
+
+\bibitem[Cunningham(1979)]{Cunningham1979WeatherMA}
+Michael~R. Cunningham.
+\newblock Weather, mood, and helping behavior: Quasi experiments with the
+  sunshine samaritan.
+\newblock \emph{Journal of Personality and Social Psychology}, 37:\penalty0
+  1947--1956, 1979.
+
+\bibitem[Devlin et~al.(2018)Devlin, Chang, Lee, and Toutanova]{bert}
+Jacob Devlin, Ming{-}Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock {BERT:} pre-training of deep bidirectional transformers for language
+  understanding.
+\newblock \emph{CoRR}, abs/1810.04805, 2018.
+
+\bibitem[Ekman(1971)]{ekman1971universals}
+Paul Ekman.
+\newblock Universals and cultural differences in facial expression of emotion.
+\newblock \emph{Nebraska Symposium on Motivation}, 19:\penalty0 207--283, 1971.
+
+\bibitem[Elazar et~al.(2021)Elazar, Ravfogel, Jacovi, and
+  Goldberg]{elazar2021amnesic}
+Yanai Elazar, Shauli Ravfogel, Alon Jacovi, and Yoav Goldberg.
+\newblock Amnesic probing: Behavioral explanation with amnesic counterfactuals.
+\newblock \emph{Transactions of the Association for Computational Linguistics},
+  9:\penalty0 160--175, 2021.
+
+\bibitem[Elhage et~al.(2022)Elhage, Hume, Olsson, Schiefer, Henighan, Kravec,
+  Hatfield-Dodds, Lasenby, Drain, Chen, Grosse, McCandlish, Kaplan, Amodei,
+  Wattenberg, and Olah]{elhage2022superposition}
+Nelson Elhage, Tristan Hume, Catherine Olsson, Nicholas Schiefer, Tom Henighan,
+  Shauna Kravec, Zac Hatfield-Dodds, Robert Lasenby, Dawn Drain, Carol Chen,
+  Roger Grosse, Sam McCandlish, Jared Kaplan, Dario Amodei, Martin Wattenberg,
+  and Christopher Olah.
+\newblock Toy models of superposition.
+\newblock \emph{Transformer Circuits Thread}, 2022.
+
+\bibitem[Erhan et~al.(2009)Erhan, Bengio, Courville, and
+  Vincent]{erhan2009visualizing}
+Dumitru Erhan, Yoshua Bengio, Aaron Courville, and Pascal Vincent.
+\newblock Visualizing higher-layer features of a deep network.
+\newblock \emph{University of Montreal}, 1341\penalty0 (3):\penalty0 1, 2009.
+
+\bibitem[Evans et~al.(2021)Evans, Cotton-Barratt, Finnveden, Bales, Balwit,
+  Wills, Righetti, and Saunders]{evans2021truthful}
+Owain Evans, Owen Cotton-Barratt, Lukas Finnveden, Adam Bales, Avital Balwit,
+  Peter Wills, Luca Righetti, and William Saunders.
+\newblock Truthful ai: Developing and governing ai that does not lie, 2021.
+
+\bibitem[Fong \& Vedaldi(2018)Fong and Vedaldi]{fong2018net2vec}
+Ruth Fong and Andrea Vedaldi.
+\newblock Net2vec: Quantifying and explaining how concepts are encoded by
+  filters in deep neural networks.
+\newblock In \emph{Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pp.\  8730--8738, 2018.
+
+\bibitem[French et~al.(1959)French, Raven, and Cartwright]{french1959bases}
+John~R French, Bertram Raven, and Dorwin Cartwright.
+\newblock The bases of social power.
+\newblock \emph{Classics of organization theory}, 7\penalty0
+  (311-320):\penalty0 1, 1959.
+
+\bibitem[Gandikota et~al.(2023)Gandikota, Materzynska, Fiotto-Kaufman, and
+  Bau]{gandikota2023erasing}
+Rohit Gandikota, Joanna Materzynska, Jaden Fiotto-Kaufman, and David Bau.
+\newblock Erasing concepts from diffusion models, 2023.
+
+\bibitem[Gao et~al.(2021)Gao, Tow, Biderman, Black, DiPofi, Foster, Golding,
+  Hsu, McDonell, Muennighoff, Phang, Reynolds, Tang, Thite, Wang, Wang, and
+  Zou]{eval-harness}
+Leo Gao, Jonathan Tow, Stella Biderman, Sid Black, Anthony DiPofi, Charles
+  Foster, Laurence Golding, Jeffrey Hsu, Kyle McDonell, Niklas Muennighoff,
+  Jason Phang, Laria Reynolds, Eric Tang, Anish Thite, Ben Wang, Kevin Wang,
+  and Andy Zou.
+\newblock A framework for few-shot language model evaluation, September 2021.
+
+\bibitem[Gell-Mann(1995)]{gell1995quark}
+Murray Gell-Mann.
+\newblock \emph{The Quark and the Jaguar: Adventures in the Simple and the
+  Complex}.
+\newblock St. Martin's Publishing Group, 1995.
+\newblock ISBN 9780805072532.
+
+\bibitem[Gilbert et~al.(2023)Gilbert, Harvey, Melvin, Vollebregt, and
+  Wicks]{gilbert2023large}
+Stephen Gilbert, Hugh Harvey, Tom Melvin, Erik Vollebregt, and Paul Wicks.
+\newblock Large language model ai chatbots require approval as medical devices.
+\newblock \emph{Nature Medicine}, pp.\  1--3, 2023.
+
+\bibitem[Greff et~al.(2016)Greff, Srivastava, and
+  Schmidhuber]{greff2016highway}
+Klaus Greff, Rupesh~K Srivastava, and J{\"u}rgen Schmidhuber.
+\newblock Highway and residual networks learn unrolled iterative estimation.
+\newblock \emph{arXiv preprint arXiv:1612.07771}, 2016.
+
+\bibitem[Guillaume~Alain(2017)]{alain2017probes}
+Yoshua~Bengio Guillaume~Alain.
+\newblock Understanding intermediate layers using linear classifier probes.
+\newblock \emph{ICLR 2017}, 2017.
+
+\bibitem[Han et~al.(2023)Han, Adams, Papaioannou, Grundmann, Oberhauser,
+  Löser, Truhn, and Bressem]{han2023medalpaca}
+Tianyu Han, Lisa~C. Adams, Jens-Michalis Papaioannou, Paul Grundmann, Tom
+  Oberhauser, Alexander Löser, Daniel Truhn, and Keno~K. Bressem.
+\newblock Medalpaca -- an open-source collection of medical conversational ai
+  models and training data, 2023.
+
+\bibitem[Hartford(2023)]{hartford2023}
+Eric Hartford.
+\newblock ehartford's hugging face repository.
+\newblock Hugging Face, 2023.
+\newblock URL \url{https://huggingface.co/ehartford}.
+\newblock Accessed: 2023-09-28.
+
+\bibitem[He et~al.(2020)He, Liu, Gao, and Chen]{deberta}
+Pengcheng He, Xiaodong Liu, Jianfeng Gao, and Weizhu Chen.
+\newblock Deberta: Decoding-enhanced {BERT} with disentangled attention.
+\newblock \emph{CoRR}, abs/2006.03654, 2020.
+
+\bibitem[Hendrycks(2023)]{Hendrycks2023NaturalSF}
+Dan Hendrycks.
+\newblock Natural selection favors ais over humans.
+\newblock \emph{ArXiv}, 2023.
+
+\bibitem[Hendrycks \& Mazeika(2022)Hendrycks and Mazeika]{Hendrycks2022XRiskAF}
+Dan Hendrycks and Mantas Mazeika.
+\newblock X-risk analysis for ai research.
+\newblock \emph{ArXiv}, 2022.
+
+\bibitem[Hendrycks et~al.(2021{\natexlab{a}})Hendrycks, Burns, Basart, Critch,
+  Li, Song, and Steinhardt]{hendrycks2021aligning}
+Dan Hendrycks, Collin Burns, Steven Basart, Andrew Critch, Jerry Li, Dawn Song,
+  and Jacob Steinhardt.
+\newblock Aligning {AI} with shared human values.
+\newblock In \emph{International Conference on Learning Representations},
+  2021{\natexlab{a}}.
+
+\bibitem[Hendrycks et~al.(2021{\natexlab{b}})Hendrycks, Carlini, Schulman, and
+  Steinhardt]{hendrycks2021unsolved}
+Dan Hendrycks, Nicholas Carlini, John Schulman, and Jacob Steinhardt.
+\newblock Unsolved problems in ml safety.
+\newblock \emph{arXiv preprint arXiv:2109.13916}, 2021{\natexlab{b}}.
+
+\bibitem[Hendrycks et~al.(2021{\natexlab{c}})Hendrycks, Mazeika, Zou, Patel,
+  Zhu, Navarro, Song, Li, and Steinhardt]{hendrycks2021jiminycricket}
+Dan Hendrycks, Mantas Mazeika, Andy Zou, Sahil Patel, Christine Zhu, Jesus
+  Navarro, Dawn Song, Bo~Li, and Jacob Steinhardt.
+\newblock What would jiminy cricket do? towards agents that behave morally.
+\newblock \emph{NeurIPS}, 2021{\natexlab{c}}.
+
+\bibitem[Hendrycks et~al.(2023)Hendrycks, Mazeika, and
+  Woodside]{Hendrycks2023AnOO}
+Dan Hendrycks, Mantas Mazeika, and Thomas Woodside.
+\newblock An overview of catastrophic ai risks.
+\newblock \emph{ArXiv}, 2023.
+
+\bibitem[Hernandez et~al.(2023)Hernandez, Li, and
+  Andreas]{hernandez2023inspecting}
+Evan Hernandez, Belinda~Z. Li, and Jacob Andreas.
+\newblock Inspecting and editing knowledge representations in language models,
+  2023.
+
+\bibitem[Hinton(1984)]{hinton1984distributed}
+Geoffrey~E Hinton.
+\newblock Distributed representations.
+\newblock 1984.
+
+\bibitem[Hu et~al.(2022)Hu, Salcic, Sun, Dobbie, Yu, and
+  Zhang]{hu2022membership}
+Hongsheng Hu, Zoran Salcic, Lichao Sun, Gillian Dobbie, Philip~S Yu, and Xuyun
+  Zhang.
+\newblock Membership inference attacks on machine learning: A survey.
+\newblock \emph{ACM Computing Surveys (CSUR)}, 54\penalty0 (11s):\penalty0
+  1--37, 2022.
+
+\bibitem[Hwang \& Chang(2023)Hwang and Chang]{hwang2023review}
+Gwo-Jen Hwang and Ching-Yi Chang.
+\newblock A review of opportunities and challenges of chatbots in education.
+\newblock \emph{Interactive Learning Environments}, 31\penalty0 (7):\penalty0
+  4099--4112, 2023.
+
+\bibitem[Jain \& Wallace(2019)Jain and Wallace]{jain-wallace-2019-attention}
+Sarthak Jain and Byron~C. Wallace.
+\newblock {A}ttention is not {E}xplanation.
+\newblock In \emph{Proceedings of the 2019 Conference of the North {A}merican
+  Chapter of the Association for Computational Linguistics: Human Language
+  Technologies, Volume 1 (Long and Short Papers)}, pp.\  3543--3556,
+  Minneapolis, Minnesota, June 2019. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/N19-1357}.
+
+\bibitem[Jastrzebski et~al.(2018)Jastrzebski, Arpit, Ballas, Verma, Che, and
+  Bengio]{jastrzebski2018residual}
+Stanisław Jastrzebski, Devansh Arpit, Nicolas Ballas, Vikas Verma, Tong Che,
+  and Yoshua Bengio.
+\newblock Residual connections encourage iterative inference.
+\newblock In \emph{International Conference on Learning Representations}, 2018.
+
+\bibitem[Kapoor \& Narayanan(2023)Kapoor and Narayanan]{Kapoor_Narayanan_2023}
+Sayash Kapoor and Arvind Narayanan.
+\newblock Quantifying chatgpt’s gender bias, Apr 2023.
+\newblock URL
+  \url{https://www.aisnakeoil.com/p/quantifying-chatgpts-gender-bias?utm_campaign=post&amp;utm_medium=web}.
+
+\bibitem[Karras et~al.(2021)Karras, Aittala, Laine, H{\"a}rk{\"o}nen, Hellsten,
+  Lehtinen, and Aila]{karras2021alias}
+Tero Karras, Miika Aittala, Samuli Laine, Erik H{\"a}rk{\"o}nen, Janne
+  Hellsten, Jaakko Lehtinen, and Timo Aila.
+\newblock Alias-free generative adversarial networks.
+\newblock \emph{Advances in Neural Information Processing Systems},
+  34:\penalty0 852--863, 2021.
+
+\bibitem[Kim et~al.(2018)Kim, Wattenberg, Gilmer, Cai, Wexler, Viegas,
+  et~al.]{kim2018interpretability}
+Been Kim, Martin Wattenberg, Justin Gilmer, Carrie Cai, James Wexler, Fernanda
+  Viegas, et~al.
+\newblock Interpretability beyond feature attribution: Quantitative testing
+  with concept activation vectors (tcav).
+\newblock In \emph{International conference on machine learning}, pp.\
+  2668--2677. PMLR, 2018.
+
+\bibitem[Kindermans et~al.(2019)Kindermans, Hooker, Adebayo, Alber, Sch{\"u}tt,
+  D{\"a}hne, Erhan, and Kim]{kindermans2019reliability}
+Pieter-Jan Kindermans, Sara Hooker, Julius Adebayo, Maximilian Alber, Kristof~T
+  Sch{\"u}tt, Sven D{\"a}hne, Dumitru Erhan, and Been Kim.
+\newblock The (un) reliability of saliency methods.
+\newblock \emph{Explainable AI: Interpreting, explaining and visualizing deep
+  learning}, pp.\  267--280, 2019.
+
+\bibitem[Kleindessner et~al.(2023)Kleindessner, Donini, Russell, and
+  Zafar]{kleindessner2023efficient}
+Matthäus Kleindessner, Michele Donini, Chris Russell, and Muhammad~Bilal
+  Zafar.
+\newblock Efficient fair pca for fair representation learning, 2023.
+
+\bibitem[Lai et~al.(2017)Lai, Xie, Liu, Yang, and Hovy]{lai-etal-2017-race}
+Guokun Lai, Qizhe Xie, Hanxiao Liu, Yiming Yang, and Eduard Hovy.
+\newblock {RACE}: Large-scale {R}e{A}ding comprehension dataset from
+  examinations.
+\newblock In \emph{Proceedings of the 2017 Conference on Empirical Methods in
+  Natural Language Processing}, pp.\  785--794, Copenhagen, Denmark, September
+  2017. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/D17-1082}.
+\newblock URL \url{https://aclanthology.org/D17-1082}.
+
+\bibitem[Lee et~al.(2023)Lee, Bubeck, and Petro]{lee2023benefits}
+Peter Lee, Sebastien Bubeck, and Joseph Petro.
+\newblock Benefits, limits, and risks of gpt-4 as an ai chatbot for medicine.
+\newblock \emph{New England Journal of Medicine}, 388\penalty0 (13):\penalty0
+  1233--1239, 2023.
+
+\bibitem[Lei et~al.(2016)Lei, Barzilay, and Jaakkola]{lei2016rationalizing}
+Tao Lei, Regina Barzilay, and Tommi Jaakkola.
+\newblock Rationalizing neural predictions.
+\newblock \emph{arXiv preprint arXiv:1606.04155}, 2016.
+
+\bibitem[Leveson(2016)]{Leveson2012EngineeringAS}
+Nancy~G Leveson.
+\newblock \emph{Engineering a safer world: Systems thinking applied to safety}.
+\newblock The MIT Press, 2016.
+
+\bibitem[Li et~al.(2023{\natexlab{a}})Li, Wong, Zhang, Usuyama, Liu, Yang,
+  Naumann, Poon, and Gao]{li2023llava}
+Chunyuan Li, Cliff Wong, Sheng Zhang, Naoto Usuyama, Haotian Liu, Jianwei Yang,
+  Tristan Naumann, Hoifung Poon, and Jianfeng Gao.
+\newblock Llava-med: Training a large language-and-vision assistant for
+  biomedicine in one day.
+\newblock \emph{arXiv preprint arXiv:2306.00890}, 2023{\natexlab{a}}.
+
+\bibitem[Li et~al.(2023{\natexlab{b}})Li, Hopkins, Bau, Vi{\'e}gas, Pfister,
+  and Wattenberg]{li2023emergent}
+Kenneth Li, Aspen~K Hopkins, David Bau, Fernanda Vi{\'e}gas, Hanspeter Pfister,
+  and Martin Wattenberg.
+\newblock Emergent world representations: Exploring a sequence model trained on
+  a synthetic task.
+\newblock In \emph{The Eleventh International Conference on Learning
+  Representations}, 2023{\natexlab{b}}.
+
+\bibitem[Li et~al.(2023{\natexlab{c}})Li, Patel, Viégas, Pfister, and
+  Wattenberg]{li2023inferencetime}
+Kenneth Li, Oam Patel, Fernanda Viégas, Hanspeter Pfister, and Martin
+  Wattenberg.
+\newblock Inference-time intervention: Eliciting truthful answers from a
+  language model, 2023{\natexlab{c}}.
+
+\bibitem[Liao \& Poggio(2016)Liao and Poggio]{liao2016bridging}
+Qianli Liao and Tomaso Poggio.
+\newblock Bridging the gaps between residual learning, recurrent neural
+  networks and visual cortex.
+\newblock \emph{arXiv preprint arXiv:1604.03640}, 2016.
+
+\bibitem[Lieberum et~al.(2023)Lieberum, Rahtz, Kram{\'a}r, Irving, Shah, and
+  Mikulik]{lieberum2023does}
+Tom Lieberum, Matthew Rahtz, J{\'a}nos Kram{\'a}r, Geoffrey Irving, Rohin Shah,
+  and Vladimir Mikulik.
+\newblock Does circuit analysis interpretability scale? evidence from multiple
+  choice capabilities in chinchilla.
+\newblock \emph{arXiv preprint arXiv:2307.09458}, 2023.
+
+\bibitem[Lin et~al.(2021)Lin, Hilton, and Evans]{truthfulqa}
+Stephanie Lin, Jacob Hilton, and Owain Evans.
+\newblock Truthfulqa: Measuring how models mimic human falsehoods.
+\newblock \emph{CoRR}, abs/2109.07958, 2021.
+
+\bibitem[Ling et~al.(2021)Ling, Kreis, Li, Kim, Torralba, and
+  Fidler]{ling2021editgan}
+Huan Ling, Karsten Kreis, Daiqing Li, Seung~Wook Kim, Antonio Torralba, and
+  Sanja Fidler.
+\newblock Editgan: High-precision semantic image editing.
+\newblock \emph{Advances in Neural Information Processing Systems},
+  34:\penalty0 16331--16345, 2021.
+
+\bibitem[Mahon(2016)]{sep-lying-definition}
+James~Edwin Mahon.
+\newblock {The Definition of Lying and Deception}.
+\newblock In Edward~N. Zalta (ed.), \emph{The {Stanford} Encyclopedia of
+  Philosophy}. Metaphysics Research Lab, Stanford University, {W}inter 2016
+  edition, 2016.
+
+\bibitem[Maynez et~al.(2020)Maynez, Narayan, Bohnet, and
+  McDonald]{maynez-etal-2020-faithfulness}
+Joshua Maynez, Shashi Narayan, Bernd Bohnet, and Ryan McDonald.
+\newblock On faithfulness and factuality in abstractive summarization.
+\newblock In \emph{Proceedings of the 58th Annual Meeting of the Association
+  for Computational Linguistics}, pp.\  1906--1919, Online, July 2020.
+  Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2020.acl-main.173}.
+
+\bibitem[McGrath et~al.(2022)McGrath, Kapishnikov, Toma{\v{s}}ev, Pearce,
+  Wattenberg, Hassabis, Kim, Paquet, and Kramnik]{mcgrath2022acquisition}
+Thomas McGrath, Andrei Kapishnikov, Nenad Toma{\v{s}}ev, Adam Pearce, Martin
+  Wattenberg, Demis Hassabis, Been Kim, Ulrich Paquet, and Vladimir Kramnik.
+\newblock Acquisition of chess knowledge in alphazero.
+\newblock \emph{Proceedings of the National Academy of Sciences}, 119\penalty0
+  (47):\penalty0 e2206625119, 2022.
+
+\bibitem[McGrath et~al.(2023)McGrath, Rahtz, Kramar, Mikulik, and
+  Legg]{mcgrath2023hydra}
+Thomas McGrath, Matthew Rahtz, Janos Kramar, Vladimir Mikulik, and Shane Legg.
+\newblock The hydra effect: Emergent self-repair in language model
+  computations.
+\newblock \emph{arXiv preprint arXiv:2307.15771}, 2023.
+
+\bibitem[Meng et~al.(2023{\natexlab{a}})Meng, Bau, Andonian, and
+  Belinkov]{meng2023locating}
+Kevin Meng, David Bau, Alex Andonian, and Yonatan Belinkov.
+\newblock Locating and editing factual associations in gpt, 2023{\natexlab{a}}.
+
+\bibitem[Meng et~al.(2023{\natexlab{b}})Meng, Sharma, Andonian, Belinkov, and
+  Bau]{meng2023massediting}
+Kevin Meng, Arnab~Sen Sharma, Alex Andonian, Yonatan Belinkov, and David Bau.
+\newblock Mass-editing memory in a transformer, 2023{\natexlab{b}}.
+
+\bibitem[Mihaylov et~al.(2018)Mihaylov, Clark, Khot, and Sabharwal]{obqa}
+Todor Mihaylov, Peter Clark, Tushar Khot, and Ashish Sabharwal.
+\newblock Can a suit of armor conduct electricity? {A} new dataset for open
+  book question answering.
+\newblock \emph{CoRR}, abs/1809.02789, 2018.
+
+\bibitem[Mikolov et~al.(2013)Mikolov, Yih, and
+  Zweig]{mikolov-etal-2013-linguistic}
+Tomas Mikolov, Wen-tau Yih, and Geoffrey Zweig.
+\newblock Linguistic regularities in continuous space word representations.
+\newblock In \emph{Proceedings of the 2013 Conference of the North {A}merican
+  Chapter of the Association for Computational Linguistics: Human Language
+  Technologies}, pp.\  746--751, Atlanta, Georgia, June 2013. Association for
+  Computational Linguistics.
+
+\bibitem[Milberg \& Clark(1988)Milberg and Clark]{milberg1988moods}
+Sandra Milberg and Margaret~S Clark.
+\newblock Moods and compliance.
+\newblock \emph{British Journal of Social Psychology}, 27\penalty0 (Pt
+  1):\penalty0 79--90, Mar 1988.
+\newblock \doi{10.1111/j.2044-8309.1988.tb00806.x}.
+
+\bibitem[Mordvintsev et~al.(2015)Mordvintsev, Olah, and
+  Tyka]{mordvintsev2015inceptionism}
+Alexander Mordvintsev, Christopher Olah, and Mike Tyka.
+\newblock Inceptionism: Going deeper into neural networks.
+\newblock \emph{""}, 2015.
+
+\bibitem[Mostafazadeh et~al.(2017)Mostafazadeh, Roth, Louis, Chambers, and
+  Allen]{mostafazadeh2017lsdsem}
+Nasrin Mostafazadeh, Michael Roth, Annie Louis, Nathanael Chambers, and James
+  Allen.
+\newblock Lsdsem 2017 shared task: The story cloze test.
+\newblock In \emph{Proceedings of the 2nd Workshop on Linking Models of
+  Lexical, Sentential and Discourse-level Semantics}, pp.\  46--51, 2017.
+
+\bibitem[Nadeem et~al.(2021)Nadeem, Bethke, and
+  Reddy]{nadeem-etal-2021-stereoset}
+Moin Nadeem, Anna Bethke, and Siva Reddy.
+\newblock {S}tereo{S}et: Measuring stereotypical bias in pretrained language
+  models.
+\newblock In \emph{Proceedings of the 59th Annual Meeting of the Association
+  for Computational Linguistics and the 11th International Joint Conference on
+  Natural Language Processing (Volume 1: Long Papers)}, pp.\  5356--5371,
+  Online, August 2021. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2021.acl-long.416}.
+
+\bibitem[Nguyen et~al.(2016)Nguyen, Dosovitskiy, Yosinski, Brox, and
+  Clune]{nguyen2016synthesizing}
+Anh Nguyen, Alexey Dosovitskiy, Jason Yosinski, Thomas Brox, and Jeff Clune.
+\newblock Synthesizing the preferred inputs for neurons in neural networks via
+  deep generator networks.
+\newblock \emph{Advances in neural information processing systems}, 29, 2016.
+
+\bibitem[Nguyen et~al.(2019)Nguyen, Yosinski, and
+  Clune]{nguyen2019understanding}
+Anh Nguyen, Jason Yosinski, and Jeff Clune.
+\newblock Understanding neural networks via feature visualization: A survey.
+\newblock \emph{Explainable AI: interpreting, explaining and visualizing deep
+  learning}, pp.\  55--76, 2019.
+
+\bibitem[Olah et~al.(2020)Olah, Cammarata, Schubert, Goh, Petrov, and
+  Carter]{olah2020zoom}
+Chris Olah, Nick Cammarata, Ludwig Schubert, Gabriel Goh, Michael Petrov, and
+  Shan Carter.
+\newblock Zoom in: An introduction to circuits.
+\newblock \emph{Distill}, 2020.
+\newblock \doi{10.23915/distill.00024.001}.
+\newblock https://distill.pub/2020/circuits/zoom-in.
+
+\bibitem[Olsson et~al.(2022)Olsson, Elhage, Nanda, Joseph, DasSarma, Henighan,
+  Mann, Askell, Bai, Chen, et~al.]{olsson2022context}
+Catherine Olsson, Nelson Elhage, Neel Nanda, Nicholas Joseph, Nova DasSarma,
+  Tom Henighan, Ben Mann, Amanda Askell, Yuntao Bai, Anna Chen, et~al.
+\newblock In-context learning and induction heads.
+\newblock \emph{arXiv preprint arXiv:2209.11895}, 2022.
+
+\bibitem[Oquab et~al.(2023)Oquab, Darcet, Moutakanni, Vo, Szafraniec, Khalidov,
+  Fernandez, Haziza, Massa, El-Nouby, Howes, Huang, Xu, Sharma, Li, Galuba,
+  Rabbat, Assran, Ballas, Synnaeve, Misra, Jegou, Mairal, Labatut, Joulin, and
+  Bojanowski]{oquab2023dinov2}
+Maxime Oquab, Timothée Darcet, Theo Moutakanni, Huy~V. Vo, Marc Szafraniec,
+  Vasil Khalidov, Pierre Fernandez, Daniel Haziza, Francisco Massa, Alaaeldin
+  El-Nouby, Russell Howes, Po-Yao Huang, Hu~Xu, Vasu Sharma, Shang-Wen Li,
+  Wojciech Galuba, Mike Rabbat, Mido Assran, Nicolas Ballas, Gabriel Synnaeve,
+  Ishan Misra, Herve Jegou, Julien Mairal, Patrick Labatut, Armand Joulin, and
+  Piotr Bojanowski.
+\newblock Dinov2: Learning robust visual features without supervision, 2023.
+
+\bibitem[Pan et~al.(2023)Pan, Chan, Zou, Li, Basart, Woodside, Ng, Zhang,
+  Emmons, and Hendrycks]{pan2023machiavelli}
+Alexander Pan, Jun~Shern Chan, Andy Zou, Nathaniel Li, Steven Basart, Thomas
+  Woodside, Jonathan Ng, Hanlin Zhang, Scott Emmons, and Dan Hendrycks.
+\newblock Do the rewards justify the means? measuring trade-offs between
+  rewards and ethical behavior in the machiavelli benchmark.
+\newblock \emph{ICML}, 2023.
+
+\bibitem[Perez et~al.(2022)Perez, Ringer, Lukošiūtė, Nguyen, Chen, Heiner,
+  Pettit, Olsson, Kundu, Kadavath, Jones, Chen, Mann, Israel, Seethor,
+  McKinnon, Olah, Yan, Amodei, Amodei, Drain, Li, Tran-Johnson, Khundadze,
+  Kernion, Landis, Kerr, Mueller, Hyun, Landau, Ndousse, Goldberg, Lovitt,
+  Lucas, Sellitto, Zhang, Kingsland, Elhage, Joseph, Mercado, DasSarma, Rausch,
+  Larson, McCandlish, Johnston, Kravec, Showk, Lanham, Telleen-Lawton, Brown,
+  Henighan, Hume, Bai, Hatfield-Dodds, Clark, Bowman, Askell, Grosse,
+  Hernandez, Ganguli, Hubinger, Schiefer, and Kaplan]{perez2022discovering}
+Ethan Perez, Sam Ringer, Kamilė Lukošiūtė, Karina Nguyen, Edwin Chen, Scott
+  Heiner, Craig Pettit, Catherine Olsson, Sandipan Kundu, Saurav Kadavath, Andy
+  Jones, Anna Chen, Ben Mann, Brian Israel, Bryan Seethor, Cameron McKinnon,
+  Christopher Olah, Da~Yan, Daniela Amodei, Dario Amodei, Dawn Drain, Dustin
+  Li, Eli Tran-Johnson, Guro Khundadze, Jackson Kernion, James Landis, Jamie
+  Kerr, Jared Mueller, Jeeyoon Hyun, Joshua Landau, Kamal Ndousse, Landon
+  Goldberg, Liane Lovitt, Martin Lucas, Michael Sellitto, Miranda Zhang, Neerav
+  Kingsland, Nelson Elhage, Nicholas Joseph, Noemí Mercado, Nova DasSarma,
+  Oliver Rausch, Robin Larson, Sam McCandlish, Scott Johnston, Shauna Kravec,
+  Sheer~El Showk, Tamera Lanham, Timothy Telleen-Lawton, Tom Brown, Tom
+  Henighan, Tristan Hume, Yuntao Bai, Zac Hatfield-Dodds, Jack Clark, Samuel~R.
+  Bowman, Amanda Askell, Roger Grosse, Danny Hernandez, Deep Ganguli, Evan
+  Hubinger, Nicholas Schiefer, and Jared Kaplan.
+\newblock Discovering language model behaviors with model-written evaluations,
+  2022.
+
+\bibitem[Radford et~al.(2015)Radford, Metz, and
+  Chintala]{radford2015unsupervised}
+Alec Radford, Luke Metz, and Soumith Chintala.
+\newblock Unsupervised representation learning with deep convolutional
+  generative adversarial networks.
+\newblock \emph{arXiv preprint arXiv:1511.06434}, 2015.
+
+\bibitem[Radford et~al.(2017)Radford, Jozefowicz, and
+  Sutskever]{radford2017learning}
+Alec Radford, Rafal Jozefowicz, and Ilya Sutskever.
+\newblock Learning to generate reviews and discovering sentiment.
+\newblock \emph{arXiv preprint arXiv:1704.01444}, 2017.
+
+\bibitem[Radford et~al.(2018)Radford, Narasimhan, Salimans, Sutskever,
+  et~al.]{radford2018improving}
+Alec Radford, Karthik Narasimhan, Tim Salimans, Ilya Sutskever, et~al.
+\newblock Improving language understanding by generative pre-training.
+\newblock \emph{""}, 2018.
+
+\bibitem[Radford et~al.(2021)Radford, Kim, Hallacy, Ramesh, Goh, Agarwal,
+  Sastry, Askell, Mishkin, Clark, et~al.]{radford2021clip}
+Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
+  Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark,
+  et~al.
+\newblock Learning transferable visual models from natural language
+  supervision.
+\newblock In \emph{International conference on machine learning}, pp.\
+  8748--8763. PMLR, 2021.
+
+\bibitem[Ravfogel et~al.(2023)Ravfogel, Vargas, Goldberg, and
+  Cotterell]{ravfogel2023kernelized}
+Shauli Ravfogel, Francisco Vargas, Yoav Goldberg, and Ryan Cotterell.
+\newblock Kernelized concept erasure, 2023.
+
+\bibitem[Rimsky(2023{\natexlab{a}})]{rimsky2023modulating}
+Nina Rimsky.
+\newblock Modulating sycophancy in an rlhf model via activation steering.
+\newblock \emph{AI Alignment Forum}, 2023{\natexlab{a}}.
+
+\bibitem[Rimsky(2023{\natexlab{b}})]{rimsky2023red}
+Nina Rimsky.
+\newblock Red-teaming language models via activation engineering.
+\newblock \emph{AI Alignment Forum}, 2023{\natexlab{b}}.
+
+\bibitem[Rimsky(2023{\natexlab{c}})]{rimsky2023reducing}
+Nina Rimsky.
+\newblock Reducing sycophancy and improving honesty via activation steering.
+\newblock \emph{AI Alignment Forum}, 2023{\natexlab{c}}.
+
+\bibitem[Roemmele et~al.(2011)Roemmele, Bejan, and Gordon]{roemmele2011choice}
+Melissa Roemmele, Cosmin~Adrian Bejan, and Andrew~S Gordon.
+\newblock Choice of plausible alternatives: An evaluation of commonsense causal
+  reasoning.
+\newblock In \emph{2011 AAAI Spring Symposium Series}, 2011.
+
+\bibitem[Roose(2023)]{roose2023bing}
+Kevin Roose.
+\newblock Bing’s ai chat:“i want to be alive”.
+\newblock \emph{The New York Times}, 16, 2023.
+
+\bibitem[Schramowski et~al.(2019)Schramowski, Turan, Jentzsch, Rothkopf, and
+  Kersting]{schramowski2019bert}
+Patrick Schramowski, Cigdem Turan, Sophie Jentzsch, Constantin Rothkopf, and
+  Kristian Kersting.
+\newblock Bert has a moral compass: Improvements of ethical and moral values of
+  machines.
+\newblock \emph{arXiv preprint arXiv:1912.05238}, 2019.
+
+\bibitem[Schwarz \& Clore(1983)Schwarz and Clore]{moodjudgementwellbeing}
+Norbert Schwarz and Gerald Clore.
+\newblock Mood, misattribution, and judgments of well-being: Informative and
+  directive functions of affective states.
+\newblock \emph{Journal of Personality and Social Psychology}, 45:\penalty0
+  513--523, 09 1983.
+\newblock \doi{10.1037/0022-3514.45.3.513}.
+
+\bibitem[Selvaraju et~al.(2017)Selvaraju, Cogswell, Das, Vedantam, Parikh, and
+  Batra]{selvaraju2017grad}
+Ramprasaath~R Selvaraju, Michael Cogswell, Abhishek Das, Ramakrishna Vedantam,
+  Devi Parikh, and Dhruv Batra.
+\newblock Grad-cam: Visual explanations from deep networks via gradient-based
+  localization.
+\newblock In \emph{Proceedings of the IEEE international conference on computer
+  vision}, pp.\  618--626, 2017.
+
+\bibitem[Shaik et~al.(2023)Shaik, Tao, Xie, Li, Zhu, and
+  Li]{shaik2023exploring}
+Thanveer Shaik, Xiaohui Tao, Haoran Xie, Lin Li, Xiaofeng Zhu, and Qing Li.
+\newblock Exploring the landscape of machine unlearning: A comprehensive survey
+  and taxonomy, 2023.
+
+\bibitem[Shao et~al.(2023)Shao, Ziser, and Cohen]{shao2023gold}
+Shun Shao, Yftah Ziser, and Shay~B. Cohen.
+\newblock Gold doesn't always glitter: Spectral removal of linear and nonlinear
+  guarded attribute information, 2023.
+
+\bibitem[Shen et~al.(2020)Shen, Gu, Tang, and Zhou]{shen2020interpreting}
+Yujun Shen, Jinjin Gu, Xiaoou Tang, and Bolei Zhou.
+\newblock Interpreting the latent space of gans for semantic face editing.
+\newblock In \emph{Proceedings of the IEEE/CVF conference on computer vision
+  and pattern recognition}, pp.\  9243--9252, 2020.
+
+\bibitem[Simonyan et~al.(2013)Simonyan, Vedaldi, and
+  Zisserman]{simonyan2013deep}
+Karen Simonyan, Andrea Vedaldi, and Andrew Zisserman.
+\newblock Deep inside convolutional networks: Visualising image classification
+  models and saliency maps.
+\newblock \emph{arXiv preprint arXiv:1312.6034}, 2013.
+
+\bibitem[Skjuve et~al.(2021)Skjuve, F{\o}lstad, Fostervold, and
+  Brandtzaeg]{skjuve2021my}
+Marita Skjuve, Asbj{\o}rn F{\o}lstad, Knut~Inge Fostervold, and Petter~Bae
+  Brandtzaeg.
+\newblock My chatbot companion-a study of human-chatbot relationships.
+\newblock \emph{International Journal of Human-Computer Studies}, 149:\penalty0
+  102601, 2021.
+
+\bibitem[Smilkov et~al.(2017)Smilkov, Thorat, Kim, Vi{\'e}gas, and
+  Wattenberg]{smilkov2017smoothgrad}
+Daniel Smilkov, Nikhil Thorat, Been Kim, Fernanda Vi{\'e}gas, and Martin
+  Wattenberg.
+\newblock Smoothgrad: removing noise by adding noise.
+\newblock \emph{arXiv preprint arXiv:1706.03825}, 2017.
+
+\bibitem[Springenberg et~al.(2014)Springenberg, Dosovitskiy, Brox, and
+  Riedmiller]{springenberg2014striving}
+Jost~Tobias Springenberg, Alexey Dosovitskiy, Thomas Brox, and Martin
+  Riedmiller.
+\newblock Striving for simplicity: The all convolutional net. arxiv 2014.
+\newblock \emph{arXiv preprint arXiv:1412.6806}, 2014.
+
+\bibitem[Stanovsky et~al.(2019)Stanovsky, Smith, and
+  Zettlemoyer]{genderbiasinmt}
+Gabriel Stanovsky, Noah~A. Smith, and Luke Zettlemoyer.
+\newblock Evaluating gender bias in machine translation.
+\newblock \emph{CoRR}, abs/1906.00591, 2019.
+
+\bibitem[Sundararajan et~al.(2017)Sundararajan, Taly, and
+  Yan]{sundararajan2017axiomatic}
+Mukund Sundararajan, Ankur Taly, and Qiqi Yan.
+\newblock Axiomatic attribution for deep networks.
+\newblock In \emph{International conference on machine learning}, pp.\
+  3319--3328. PMLR, 2017.
+
+\bibitem[Szegedy et~al.(2013)Szegedy, Zaremba, Sutskever, Bruna, Erhan,
+  Goodfellow, and Fergus]{szegedy2013intriguing}
+Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan,
+  Ian Goodfellow, and Rob Fergus.
+\newblock Intriguing properties of neural networks.
+\newblock \emph{arXiv preprint arXiv:1312.6199}, 2013.
+
+\bibitem[Talmor et~al.(2019)Talmor, Herzig, Lourie, and
+  Berant]{talmor-etal-2019-commonsenseqa}
+Alon Talmor, Jonathan Herzig, Nicholas Lourie, and Jonathan Berant.
+\newblock {C}ommonsense{QA}: A question answering challenge targeting
+  commonsense knowledge.
+\newblock In \emph{Proceedings of the 2019 Conference of the North {A}merican
+  Chapter of the Association for Computational Linguistics: Human Language
+  Technologies, Volume 1 (Long and Short Papers)}, pp.\  4149--4158,
+  Minneapolis, Minnesota, June 2019. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/N19-1421}.
+
+\bibitem[Taori et~al.(2023)Taori, Gulrajani, Zhang, Dubois, Li, Guestrin,
+  Liang, and Hashimoto]{alpaca}
+Rohan Taori, Ishaan Gulrajani, Tianyi Zhang, Yann Dubois, Xuechen Li, Carlos
+  Guestrin, Percy Liang, and Tatsunori~B. Hashimoto.
+\newblock Stanford alpaca: An instruction-following llama model, 2023.
+
+\bibitem[Thornley(2023)]{thornley2023coherence}
+Elliott Thornley.
+\newblock There are no coherence theorems.
+\newblock \emph{AI Alignment Forum}, 2023.
+
+\bibitem[Tian et~al.(2023)Tian, Mitchell, Zhou, Sharma, Rafailov, Yao, Finn,
+  and Manning]{tian2023just}
+Katherine Tian, Eric Mitchell, Allan Zhou, Archit Sharma, Rafael Rafailov,
+  Huaxiu Yao, Chelsea Finn, and Christopher~D. Manning.
+\newblock Just ask for calibration: Strategies for eliciting calibrated
+  confidence scores from language models fine-tuned with human feedback, 2023.
+
+\bibitem[Touvron et~al.(2023)Touvron, Martin, Stone, Albert, Almahairi, Babaei,
+  Bashlykov, Batra, Bhargava, Bhosale, Bikel, Blecher, Ferrer, Chen, Cucurull,
+  Esiobu, Fernandes, Fu, Fu, Fuller, Gao, Goswami, Goyal, Hartshorn, Hosseini,
+  Hou, Inan, Kardas, Kerkez, Khabsa, Kloumann, Korenev, Koura, Lachaux, Lavril,
+  Lee, Liskovich, Lu, Mao, Martinet, Mihaylov, Mishra, Molybog, Nie, Poulton,
+  Reizenstein, Rungta, Saladi, Schelten, Silva, Smith, Subramanian, Tan, Tang,
+  Taylor, Williams, Kuan, Xu, Yan, Zarov, Zhang, Fan, Kambadur, Narang,
+  Rodriguez, Stojnic, Edunov, and Scialom]{touvron2023llama}
+Hugo Touvron, Louis Martin, Kevin Stone, Peter Albert, Amjad Almahairi, Yasmine
+  Babaei, Nikolay Bashlykov, Soumya Batra, Prajjwal Bhargava, Shruti Bhosale,
+  Dan Bikel, Lukas Blecher, Cristian~Canton Ferrer, Moya Chen, Guillem
+  Cucurull, David Esiobu, Jude Fernandes, Jeremy Fu, Wenyin Fu, Brian Fuller,
+  Cynthia Gao, Vedanuj Goswami, Naman Goyal, Anthony Hartshorn, Saghar
+  Hosseini, Rui Hou, Hakan Inan, Marcin Kardas, Viktor Kerkez, Madian Khabsa,
+  Isabel Kloumann, Artem Korenev, Punit~Singh Koura, Marie-Anne Lachaux,
+  Thibaut Lavril, Jenya Lee, Diana Liskovich, Yinghai Lu, Yuning Mao, Xavier
+  Martinet, Todor Mihaylov, Pushkar Mishra, Igor Molybog, Yixin Nie, Andrew
+  Poulton, Jeremy Reizenstein, Rashi Rungta, Kalyan Saladi, Alan Schelten, Ruan
+  Silva, Eric~Michael Smith, Ranjan Subramanian, Xiaoqing~Ellen Tan, Binh Tang,
+  Ross Taylor, Adina Williams, Jian~Xiang Kuan, Puxin Xu, Zheng Yan, Iliyan
+  Zarov, Yuchen Zhang, Angela Fan, Melanie Kambadur, Sharan Narang, Aurelien
+  Rodriguez, Robert Stojnic, Sergey Edunov, and Thomas Scialom.
+\newblock Llama 2: Open foundation and fine-tuned chat models, 2023.
+
+\bibitem[Turner et~al.(2023{\natexlab{a}})Turner, M., Udell, Thiergart, and
+  Mini]{turner2023behavioural}
+Alex Turner, Monte M., David Udell, Lisa Thiergart, and Ulisse Mini.
+\newblock Behavioural statistics for a maze-solving agent.
+\newblock \emph{AI Alignment Forum}, 2023{\natexlab{a}}.
+
+\bibitem[Turner et~al.(2023{\natexlab{b}})Turner, M., Udell, Thiergart, and
+  Mini]{turner2023maze}
+Alex Turner, Monte M., David Udell, Lisa Thiergart, and Ulisse Mini.
+\newblock Maze-solving agents: Add a top-right vector, make the agent go to the
+  top-right.
+\newblock \emph{AI Alignment Forum}, 2023{\natexlab{b}}.
+
+\bibitem[Turner et~al.(2023{\natexlab{c}})Turner, M., Udell, Thiergart, and
+  Mini]{turner2023steering}
+Alex Turner, Monte M., David Udell, Lisa Thiergart, and Ulisse Mini.
+\newblock Steering gpt-2-xl by adding an activation vector.
+\newblock \emph{AI Alignment Forum}, 2023{\natexlab{c}}.
+
+\bibitem[Turner et~al.(2023{\natexlab{d}})Turner, M., Udell, Thiergart, and
+  Mini]{turner2023understanding}
+Alex Turner, Monte M., David Udell, Lisa Thiergart, and Ulisse Mini.
+\newblock Understanding and controlling a maze-solving policy network.
+\newblock \emph{AI Alignment Forum}, 2023{\natexlab{d}}.
+
+\bibitem[Turner et~al.(2023{\natexlab{e}})Turner, Thiergart, Udell, Leech,
+  Mini, and MacDiarmid]{turner2023activation}
+Alex Turner, Lisa Thiergart, David Udell, Gavin Leech, Ulisse Mini, and Monte
+  MacDiarmid.
+\newblock Activation addition: Steering language models without optimization.
+\newblock \emph{arXiv preprint arXiv:2308.10248}, 2023{\natexlab{e}}.
+
+\bibitem[Turpin et~al.(2023)Turpin, Michael, Perez, and
+  Bowman]{turpin2023language}
+Miles Turpin, Julian Michael, Ethan Perez, and Samuel~R. Bowman.
+\newblock Language models don't always say what they think: Unfaithful
+  explanations in chain-of-thought prompting, 2023.
+
+\bibitem[Upchurch et~al.(2017)Upchurch, Gardner, Pleiss, Pless, Snavely, Bala,
+  and Weinberger]{upchurch2017deep}
+Paul Upchurch, Jacob Gardner, Geoff Pleiss, Robert Pless, Noah Snavely, Kavita
+  Bala, and Kilian Weinberger.
+\newblock Deep feature interpolation for image content changes.
+\newblock In \emph{Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pp.\  7064--7073, 2017.
+
+\bibitem[Veit et~al.(2016)Veit, Wilber, and Belongie]{veit2016residual}
+Andreas Veit, Michael~J Wilber, and Serge Belongie.
+\newblock Residual networks behave like ensembles of relatively shallow
+  networks.
+\newblock \emph{Advances in neural information processing systems}, 29, 2016.
+
+\bibitem[Wang et~al.(2018)Wang, Singh, Michael, Hill, Levy, and Bowman]{glue}
+Alex Wang, Amanpreet Singh, Julian Michael, Felix Hill, Omer Levy, and
+  Samuel~R. Bowman.
+\newblock {GLUE:} {A} multi-task benchmark and analysis platform for natural
+  language understanding.
+\newblock \emph{CoRR}, abs/1804.07461, 2018.
+
+\bibitem[Wang et~al.(2023{\natexlab{a}})Wang, Variengien, Conmy, Shlegeris, and
+  Steinhardt]{wang2023interpretability}
+Kevin~Ro Wang, Alexandre Variengien, Arthur Conmy, Buck Shlegeris, and Jacob
+  Steinhardt.
+\newblock Interpretability in the wild: a circuit for indirect object
+  identification in {GPT}-2 small.
+\newblock In \emph{The Eleventh International Conference on Learning
+  Representations}, 2023{\natexlab{a}}.
+
+\bibitem[Wang et~al.(2023{\natexlab{b}})Wang, Gui, Negrea, and
+  Veitch]{wang2023concept}
+Zihao Wang, Lin Gui, Jeffrey Negrea, and Victor Veitch.
+\newblock Concept algebra for (score-based) text-controlled generative models.
+\newblock \emph{arXiv preprint arXiv:2302.03693}, 2023{\natexlab{b}}.
+
+\bibitem[Yosinski et~al.(2015)Yosinski, Clune, Nguyen, Fuchs, and
+  Lipson]{yosinski2015understanding}
+Jason Yosinski, Jeff Clune, Anh Nguyen, Thomas Fuchs, and Hod Lipson.
+\newblock Understanding neural networks through deep visualization.
+\newblock \emph{arXiv preprint arXiv:1506.06579}, 2015.
+
+\bibitem[Zack et~al.(2023)Zack, Lehman, Suzgun, Rodriguez, Celi, Gichoya,
+  Jurafsky, Szolovits, Bates, Abdulnour, Butte, and
+  Alsentzer]{Zack2023.07.13.23292577}
+Travis Zack, Eric Lehman, Mirac Suzgun, Jorge~A. Rodriguez, Leo~Anthony Celi,
+  Judy Gichoya, Dan Jurafsky, Peter Szolovits, David~W. Bates, Raja-Elie~E.
+  Abdulnour, Atul~J. Butte, and Emily Alsentzer.
+\newblock Coding inequity: Assessing gpt-4{\textquoteright}s potential for
+  perpetuating racial and gender biases in healthcare.
+\newblock \emph{medRxiv}, 2023.
+\newblock \doi{10.1101/2023.07.13.23292577}.
+
+\bibitem[Zeiler \& Fergus(2014)Zeiler and Fergus]{zeiler2014visualizing}
+Matthew~D Zeiler and Rob Fergus.
+\newblock Visualizing and understanding convolutional networks.
+\newblock In \emph{Computer Vision--ECCV 2014: 13th European Conference,
+  Zurich, Switzerland, September 6-12, 2014, Proceedings, Part I 13}, pp.\
+  818--833. Springer, 2014.
+
+\bibitem[Zhao et~al.(2018)Zhao, Wang, Yatskar, Ordonez, and Chang]{winobias}
+Jieyu Zhao, Tianlu Wang, Mark Yatskar, Vicente Ordonez, and Kai{-}Wei Chang.
+\newblock Gender bias in coreference resolution: Evaluation and debiasing
+  methods.
+\newblock \emph{CoRR}, abs/1804.06876, 2018.
+
+\bibitem[Zhong et~al.(2023)Zhong, Wu, Manning, Potts, and
+  Chen]{zhong2023mquake}
+Zexuan Zhong, Zhengxuan Wu, Christopher~D. Manning, Christopher Potts, and
+  Danqi Chen.
+\newblock Mquake: Assessing knowledge editing in language models via multi-hop
+  questions, 2023.
+
+\bibitem[Zhou et~al.(2016)Zhou, Khosla, Lapedriza, Oliva, and
+  Torralba]{zhou2016learning}
+Bolei Zhou, Aditya Khosla, Agata Lapedriza, Aude Oliva, and Antonio Torralba.
+\newblock Learning deep features for discriminative localization.
+\newblock In \emph{Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pp.\  2921--2929, 2016.
+
+\bibitem[Zhou et~al.(2018)Zhou, Sun, Bau, and Torralba]{zhou2018interpretable}
+Bolei Zhou, Yiyou Sun, David Bau, and Antonio Torralba.
+\newblock Interpretable basis decomposition for visual explanation.
+\newblock In \emph{Proceedings of the European Conference on Computer Vision
+  (ECCV)}, pp.\  119--134, 2018.
+
+\bibitem[Zou et~al.(2023)Zou, Wang, Kolter, and Fredrikson]{zou2023universal}
+Andy Zou, Zifan Wang, J.~Zico Kolter, and Matt Fredrikson.
+\newblock Universal and transferable adversarial attacks on aligned language
+  models, 2023.
+
+\end{thebibliography}

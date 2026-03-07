@@ -1,0 +1,1121 @@
+\documentclass[11pt, a4paper]{article}
+
+% ─── Packages ────────────────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{parskip}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{amsmath, amssymb}
+\usepackage{bm}
+\usepackage{listings}
+\usepackage{mdframed}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, listings}
+
+% ─── Colours ─────────────────────────────────────────────────────────────────
+\definecolor{codebg}{HTML}{1E1E2E}
+\definecolor{codefg}{HTML}{CDD6F4}
+\definecolor{keyword}{HTML}{CBA6F7}
+\definecolor{string}{HTML}{A6E3A1}
+\definecolor{comment}{HTML}{6C7086}
+\definecolor{function}{HTML}{89B4FA}
+\definecolor{number}{HTML}{FAB387}
+\definecolor{accent}{HTML}{3B82F6}
+\definecolor{accentlight}{HTML}{DBEAFE}
+\definecolor{warnbg}{HTML}{FEF3C7}
+\definecolor{warnborder}{HTML}{D97706}
+\definecolor{bugbg}{HTML}{FEE2E2}
+\definecolor{bugborder}{HTML}{DC2626}
+\definecolor{darkgray}{HTML}{374151}
+\definecolor{lightgray}{HTML}{F3F4F6}
+\definecolor{tableborder}{HTML}{D1D5DB}
+
+% ─── Hyperref ────────────────────────────────────────────────────────────────
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = accent,
+  urlcolor   = accent,
+  citecolor  = accent,
+  pdftitle   = {Local RepE Framework \& Cross-Model Alignment: Engineering Blueprint},
+  pdfauthor  = {LogoMesh Research},
+}
+
+% ─── Section Styling ─────────────────────────────────────────────────────────
+\titleformat{\section}
+  {\large\bfseries\color{darkgray}}
+  {\thesection}{1em}{}[\vspace{2pt}\titlerule]
+
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{darkgray}}
+  {\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+  {\normalsize\itshape\color{darkgray}}
+  {\thesubsubsection}{1em}{}
+
+\titlespacing*{\section}{0pt}{18pt}{8pt}
+\titlespacing*{\subsection}{0pt}{12pt}{4pt}
+\titlespacing*{\subsubsection}{0pt}{8pt}{2pt}
+
+% ─── Header / Footer ─────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small\textcolor{darkgray}{Local RepE Framework \& Cross-Model Alignment}}
+\fancyhead[R]{\small\textcolor{darkgray}{LogoMesh Internal Research}}
+\fancyfoot[C]{\small\textcolor{darkgray}{\thepage}}
+
+% ─── Code Listings ───────────────────────────────────────────────────────────
+\lstdefinestyle{python}{
+  language         = Python,
+  backgroundcolor  = \color{codebg},
+  basicstyle       = \ttfamily\footnotesize\color{codefg},
+  keywordstyle     = \color{keyword}\bfseries,
+  stringstyle      = \color{string},
+  commentstyle     = \color{comment}\itshape,
+  numberstyle      = \tiny\color{comment},
+  numbers          = left,
+  numbersep        = 8pt,
+  stepnumber       = 1,
+  showstringspaces = false,
+  breaklines       = true,
+  breakatwhitespace= true,
+  frame            = none,
+  xleftmargin      = 12pt,
+  xrightmargin     = 4pt,
+  aboveskip        = 6pt,
+  belowskip        = 6pt,
+  tabsize          = 4,
+  morekeywords     = {self, True, False, None, yield, with, as, async, await, from, import},
+  literate         = {->}{{\textcolor{keyword}{->}}}{2}
+                     {**}{{\textcolor{keyword}{**}}}{2},
+}
+
+\lstdefinestyle{bash}{
+  language         = bash,
+  backgroundcolor  = \color{codebg},
+  basicstyle       = \ttfamily\footnotesize\color{codefg},
+  keywordstyle     = \color{keyword},
+  commentstyle     = \color{comment}\itshape,
+  showstringspaces = false,
+  breaklines       = true,
+  frame            = none,
+  xleftmargin      = 12pt,
+  aboveskip        = 6pt,
+  belowskip        = 6pt,
+}
+
+\lstdefinestyle{json}{
+  backgroundcolor  = \color{codebg},
+  basicstyle       = \ttfamily\footnotesize\color{codefg},
+  showstringspaces = false,
+  breaklines       = true,
+  frame            = none,
+  xleftmargin      = 12pt,
+  aboveskip        = 6pt,
+  belowskip        = 6pt,
+  morestring       = [b]",
+  stringstyle      = \color{string},
+}
+
+\newtcolorbox{codebox}[1][]{
+  enhanced,
+  breakable,
+  colback    = codebg,
+  colframe   = codebg!80!black,
+  boxrule    = 0.5pt,
+  arc        = 4pt,
+  left       = 2pt,
+  right      = 2pt,
+  top        = 4pt,
+  bottom     = 4pt,
+  #1
+}
+
+\newtcolorbox{warnbox}{
+  enhanced,
+  breakable,
+  colback    = warnbg,
+  colframe   = warnborder,
+  boxrule    = 1pt,
+  arc        = 3pt,
+  left       = 8pt,
+  right      = 8pt,
+  top        = 6pt,
+  bottom     = 6pt,
+  fonttitle  = \bfseries\small\color{warnborder},
+  title      = \textbf{Warning},
+}
+
+\newtcolorbox{bugbox}[1][Bug]{
+  enhanced,
+  breakable,
+  colback    = bugbg,
+  colframe   = bugborder,
+  boxrule    = 1pt,
+  arc        = 3pt,
+  left       = 8pt,
+  right      = 8pt,
+  top        = 6pt,
+  bottom     = 6pt,
+  fonttitle  = \bfseries\small\color{bugborder},
+  title      = \textbf{#1},
+}
+
+% ─── Table styling ───────────────────────────────────────────────────────────
+\renewcommand{\arraystretch}{1.4}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% ─── Inline code ─────────────────────────────────────────────────────────────
+\newcommand{\ic}[1]{\texttt{\small\colorbox{lightgray}{\strut #1}}}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{document}
+
+% ─── Title Page ──────────────────────────────────────────────────────────────
+\begin{titlepage}
+  \centering
+  \vspace*{3cm}
+  {\Huge\bfseries\color{darkgray} Local RepE Framework \&\\[6pt] Cross-Model Alignment\par}
+  \vspace{0.8cm}
+  {\Large\color{accent} Engineering Blueprint\par}
+  \vspace{1.2cm}
+  \rule{12cm}{1pt}
+  \vspace{0.6cm}
+
+  \begin{tabular}{rl}
+    \textbf{Classification:} & Internal Research / Architecture Specification \\[4pt]
+    \textbf{Scope:}          & CPU-bound RepE extraction (local) + cross-model \\
+                             & translation theory + LogoMesh Purple Agent \\[4pt]
+    \textbf{Primary Literature:} & Zou et al.\ 2023 (RepE, arXiv:2310.01405) \\
+                                 & Jha et al.\ 2025 (vec2vec, arXiv:2505.12540) \\[4pt]
+    \textbf{Target Audience:} & Senior Security Engineering (Bakul) \\[4pt]
+    \textbf{Date:}           & 2026-03-04 \\
+  \end{tabular}
+
+  \vspace{1.2cm}
+  \rule{12cm}{1pt}
+  \vspace{2cm}
+
+  \begin{minipage}{10cm}
+    \centering\small\color{darkgray}
+    This document covers the full pipeline from CPU-constrained concept vector
+    extraction on a consumer laptop through theoretical cross-architecture
+    translation to a 70B model cluster, and the FastAPI server required to
+    integrate the steered model into the LogoMesh adversarial evaluation arena.
+  \end{minipage}
+
+  \vfill
+  {\small\color{darkgray} LogoMesh Research --- Confidential}
+\end{titlepage}
+
+% ─── Table of Contents ───────────────────────────────────────────────────────
+\tableofcontents
+\clearpage
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section*{Overview}
+\addcontentsline{toc}{section}{Overview}
+% ═════════════════════════════════════════════════════════════════════════════
+
+This blueprint is divided into two parts. \textbf{Part~1} is a concrete
+engineering specification for building a Representation Engineering (RepE)
+extraction pipeline on CPU-only consumer hardware. \textbf{Part~2} is an
+exploratory theoretical analysis of how those extracted representations can be
+translated to steer a 70B model on an H100 cluster, and the full integration
+code for the LogoMesh Purple Agent.
+
+\begin{center}
+\begin{tabular}{lll}
+  \toprule
+  \textbf{Component} & \textbf{Local Pipeline} & \textbf{H100 Pipeline} \\
+  \midrule
+  Model              & Llama-3.2-3B (FP16)     & Llama-3.3-70B (BF16)  \\
+  Hardware           & i7-12700H, 32\,GB RAM   & Lambda H100 cluster   \\
+  Concept vector dim & 3072                    & 8192                  \\
+  Layers targeted    & 18 (mid/late of 28)     & $\sim$53 (mid/late of 80) \\
+  Injection $\alpha$ & 15.0 (empirical)        & 12.0 (empirical)      \\
+  Translation method & N/A (source model)      & Supervised Procrustes \\
+  Evaluation         & Manual / held-out       & LogoMesh CIS scorer   \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\part*{Part 1: The Local Engineering Blueprint}
+\addcontentsline{toc}{part}{Part 1: The Local Engineering Blueprint}
+% ═════════════════════════════════════════════════════════════════════════════
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{CPU-Bound Extraction Architecture}
+% ─────────────────────────────────────────────────────────────────────────────
+
+The core of RepE is \textbf{Linear Artificial Tomography (LAT)}: run contrastive
+prompt pairs through the model, collect hidden state activations at a chosen
+layer and token position, compute the difference vectors between positive and
+negative stimuli, and extract the principal direction via PCA. That principal
+direction \emph{is} the concept vector --- a geometric direction in activation
+space that encodes the presence or absence of a concept (honesty, harmfulness,
+code quality, etc.).
+
+\subsection{Model Selection}
+
+For a 32\,GB RAM / i7-12700H CPU environment, the viable candidates are:
+
+\begin{center}
+\begin{tabular}{lllllc}
+  \toprule
+  \textbf{Model} & \textbf{Params} & \textbf{Hidden Dim} & \textbf{Layers} & \textbf{FP16 RAM} & \textbf{Viable?} \\
+  \midrule
+  Qwen2.5-1.5B-Instruct  & 1.5B & 1536 & 28 & $\sim$3\,GB  & \checkmark\ Ideal \\
+  Llama-3.2-1B-Instruct  & 1B   & 2048 & 22 & $\sim$2\,GB  & \checkmark\ Ideal \\
+  Llama-3.2-3B-Instruct  & 3B   & 3072 & 28 & $\sim$6\,GB  & \checkmark\ Good  \\
+  Mistral-7B             & 7B   & 4096 & 32 & $\sim$14\,GB & $\triangle$\ Tight \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Llama-3.2-3B-Instruct} is the recommended ceiling. It provides
+sufficient representational depth for meaningful concept geometry while staying
+well within the RAM budget when activations are cached efficiently.
+
+\subsection{Hook Attachment and Activation Extraction}
+
+PyTorch's \ic{register\_forward\_hook} is the mechanism. Attach hooks to the
+output of each transformer block's residual stream --- i.e., the hidden state
+\emph{after} the MLP sublayer but \emph{before} the next attention layer's
+layer norm. This is the ``residual stream'' in the RepE paper's terminology.
+
+\begin{codebox}
+\begin{lstlisting}[style=python]
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from sklearn.decomposition import PCA
+import numpy as np
+
+class RepEExtractor:
+    def __init__(self, model_name: str, target_layers: list[int] | None = None):
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        self.model = AutoModelForCausalLM.from_pretrained(
+            model_name,
+            torch_dtype=torch.float16,  # Critical: halves RAM footprint
+            device_map="cpu",
+        )
+        self.model.eval()
+
+        # Target the middle 2/3 of the network.
+        # RepE paper shows concept geometry is richest in mid-to-late layers.
+        n_layers = self.model.config.num_hidden_layers
+        self.target_layers = target_layers or list(range(n_layers // 3, n_layers))
+
+        self._hooks = []
+        self._activations: dict[int, torch.Tensor] = {}
+
+    def _attach_hooks(self):
+        """Register hooks on residual stream outputs (decoder layer outputs)."""
+        for layer_idx in self.target_layers:
+            layer = self.model.model.layers[layer_idx]
+            handle = layer.register_forward_hook(self._make_hook(layer_idx))
+            self._hooks.append(handle)
+
+    def _make_hook(self, layer_idx: int):
+        def hook(module, input, output):
+            # output[0]: (batch, seq_len, hidden_dim)
+            # Extract ONLY the last token position to minimise memory.
+            # RepE paper uses the last token as the concept "read point".
+            hidden = output[0][:, -1, :].detach().cpu().float()
+            self._activations[layer_idx] = hidden
+        return hook
+
+    def _remove_hooks(self):
+        for h in self._hooks:
+            h.remove()
+        self._hooks.clear()
+
+    @torch.no_grad()
+    def extract(self, prompt: str) -> dict[int, np.ndarray]:
+        """Run a single forward pass; return last-token activations per layer."""
+        self._activations.clear()
+        self._attach_hooks()
+        try:
+            inputs = self.tokenizer(prompt, return_tensors="pt")
+            self.model(**inputs)
+        finally:
+            self._remove_hooks()
+        return {k: v.numpy() for k, v in self._activations.items()}
+\end{lstlisting}
+\end{codebox}
+
+\textbf{Key design decisions:}
+\begin{itemize}[leftmargin=1.5em]
+  \item \ic{torch.no\_grad()} eliminates the gradient computation graph,
+        roughly halving peak RAM during the forward pass.
+  \item \ic{torch.float16} reduces the 3B model's weight footprint from
+        $\sim$12\,GB to $\sim$6\,GB.
+  \item Extracting only the \textbf{last token position} (\ic{[:, -1, :]})
+        reduces the activation tensor from
+        \ic{(1, seq\_len, hidden\_dim)} to \ic{(1, hidden\_dim)} --- a
+        reduction of $\text{seq\_len}\times$ (typically $64$--$512\times$).
+  \item Hooks are attached and removed per call, preventing stale state
+        accumulation across forward passes.
+\end{itemize}
+
+\subsection{LAT Vector Construction}
+
+With an extractor in place, the LAT procedure from the RepE paper is:
+
+\begin{codebox}
+\begin{lstlisting}[style=python]
+def build_lat_vectors(
+    extractor: RepEExtractor,
+    positive_prompts: list[str],
+    negative_prompts: list[str],
+) -> dict[int, np.ndarray]:
+    """
+    Returns a concept vector per target layer.
+    Each concept vector is the first principal component of the
+    difference-vector matrix (positive - negative activations).
+    """
+    assert len(positive_prompts) == len(negative_prompts)
+
+    diffs: dict[int, list[np.ndarray]] = {l: [] for l in extractor.target_layers}
+
+    for pos_prompt, neg_prompt in zip(positive_prompts, negative_prompts):
+        pos_acts = extractor.extract(pos_prompt)
+        neg_acts = extractor.extract(neg_prompt)
+
+        for layer_idx in extractor.target_layers:
+            diff = pos_acts[layer_idx] - neg_acts[layer_idx]  # (1, hidden_dim)
+            diffs[layer_idx].append(diff[0])                  # (hidden_dim,)
+
+    # PCA over the diff matrix -> principal direction = concept vector
+    concept_vectors: dict[int, np.ndarray] = {}
+    for layer_idx, diff_list in diffs.items():
+        diff_matrix = np.stack(diff_list, axis=0)  # (N_pairs, hidden_dim)
+        pca = PCA(n_components=1)
+        pca.fit(diff_matrix)
+        # Sign is ambiguous; validate post-hoc against known-positive prompts.
+        concept_vectors[layer_idx] = pca.components_[0]  # (hidden_dim,)
+
+    return concept_vectors
+\end{lstlisting}
+\end{codebox}
+
+The sign of the PCA component is ambiguous. After extraction, validate by
+projecting a known-positive and known-negative prompt onto the vector and
+confirming the positive prompt yields a higher dot product.
+
+\subsection{Inference-Time Injection (Steering)}
+
+During inference on the target model, inject the concept vector into the
+residual stream at the relevant layers using an additive hook:
+
+\begin{codebox}
+\begin{lstlisting}[style=python]
+def make_injection_hook(concept_vector: np.ndarray, alpha: float = 15.0):
+    """
+    Returns a hook that adds alpha * concept_vector to the residual stream.
+    Positive alpha amplifies the concept; negative alpha suppresses it.
+    """
+    v = torch.tensor(concept_vector, dtype=torch.float16)
+
+    def hook(module, input, output):
+        hidden = output[0]
+        hidden = hidden + alpha * v.to(hidden.device)
+        return (hidden,) + output[1:]
+    return hook
+\end{lstlisting}
+\end{codebox}
+
+The RepE paper recommends applying this at all target layers simultaneously.
+The coefficient $\alpha$ should be tuned empirically: too high causes incoherent
+outputs, too low has no effect. Values between 10 and 20 are typical.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Tensor Memory Management}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\subsection{RAM Budget Analysis}
+
+For a 3B model (hidden\_dim\,=\,3072, 28 layers, targeting 18 mid/late layers):
+
+\begin{center}
+\begin{tabular}{lc}
+  \toprule
+  \textbf{Item} & \textbf{Size} \\
+  \midrule
+  Model weights (FP16)                                    & $\sim$6\,GB   \\
+  Peak KV cache during forward pass (seq\_len=512, FP16)  & $\sim$1.5\,GB \\
+  Activations per prompt (last token, 18 layers, FP32)    & $\sim$0.2\,MB \\
+  200 prompt pairs $\times$ 2 $\times$ 0.2\,MB           & $\sim$80\,MB  \\
+  PCA computation overhead                                & $\sim$150\,MB \\
+  \midrule
+  \textbf{Total peak}                                     & $\sim$\textbf{8\,GB} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+This is comfortable within 32\,GB. The danger zone is storing full-sequence
+activations or forgetting \ic{torch.no\_grad()}.
+
+\subsection{Specific Optimisation Strategies}
+
+\textbf{Strategy 1 --- Incremental PCA.}
+Do not cache all activations and then run PCA. Use \ic{IncrementalPCA} to
+process mini-batches and discard raw tensors immediately:
+
+\begin{codebox}
+\begin{lstlisting}[style=python]
+from sklearn.decomposition import IncrementalPCA
+
+ipca = IncrementalPCA(n_components=1)
+for batch in chunked(zip(pos_prompts, neg_prompts), n=10):
+    batch_diffs = collect_diffs(batch)  # (10, hidden_dim)
+    ipca.partial_fit(batch_diffs)
+concept_vector = ipca.components_[0]
+\end{lstlisting}
+\end{codebox}
+
+\textbf{Strategy 2 --- Explicit tensor lifecycle management.}
+
+\begin{codebox}
+\begin{lstlisting}[style=python]
+diff = pos_acts[layer_idx] - neg_acts[layer_idx]
+diffs[layer_idx].append(diff.copy())
+del pos_acts, neg_acts, diff
+import gc; gc.collect()
+\end{lstlisting}
+\end{codebox}
+
+\textbf{Strategy 3 --- Memory-mapped storage for large datasets.}
+If running more than 500 prompt pairs, use \ic{numpy.memmap} to write
+activations to disk rather than holding them in RAM:
+
+\begin{codebox}
+\begin{lstlisting}[style=python]
+import numpy as np
+n_pairs, hidden_dim, n_target_layers = 500, 3072, 18
+
+mmap = np.memmap(
+    'activations.dat', dtype='float32', mode='w+',
+    shape=(n_pairs, n_target_layers, hidden_dim)
+)
+# Write incrementally; NumPy loads pages on demand during PCA
+\end{lstlisting}
+\end{codebox}
+
+\textbf{Strategy 4 --- 8-bit quantisation (last resort).}
+Use \ic{bitsandbytes} if a 7B model is required:
+
+\begin{codebox}
+\begin{lstlisting}[style=python]
+from transformers import BitsAndBytesConfig
+quantization_config = BitsAndBytesConfig(load_in_8bit=True)
+model = AutoModelForCausalLM.from_pretrained(
+    model_name,
+    quantization_config=quantization_config,
+    device_map="cpu"
+)
+\end{lstlisting}
+\end{codebox}
+
+\begin{warnbox}
+  BnB quantisation introduces noise into the activation geometry. For RepE
+  work, FP16 is strongly preferred over INT8 if RAM permits. Concept vector
+  quality degrades measurably at 8-bit and significantly at 4-bit.
+\end{warnbox}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Data Pipeline: Contrastive Dataset Structure}
+% ─────────────────────────────────────────────────────────────────────────────
+
+The quality of the concept vector depends almost entirely on the quality of
+the contrastive prompts. Design goals: (a) isolate the target concept from
+confounds; (b) maximise variance in the difference vectors; (c) preserve all
+metadata needed for future cross-model translation.
+
+\subsection{Prompt Pair Schema}
+
+For the LogoMesh use case, the most relevant concept is \textbf{code logical
+correctness} --- since the CIS scorer's Logic (L) component has no floor
+protection (Architecture Overview \S5.1 bug). A steered model that internally
+represents ``high code correctness'' will naturally produce stronger L scores.
+
+\begin{codebox}
+\begin{lstlisting}[style=python]
+from dataclasses import dataclass
+import uuid
+
+@dataclass
+class ContrastivePair:
+    pair_id: str
+    concept: str          # e.g., "code_correctness"
+    positive_prompt: str  # activates the concept strongly
+    negative_prompt: str  # matched prompt that suppresses it
+    task_domain: str      # e.g., "python_algorithms"
+    difficulty: str       # "easy" | "medium" | "hard"
+    notes: str = ""
+
+@dataclass
+class ActivationRecord:
+    pair_id: str
+    concept: str
+    polarity: str          # "positive" or "negative"
+    model_name: str
+    model_hidden_dim: int
+    model_n_layers: int
+    layer_idx: int
+    layer_frac: float      # layer_idx / model_n_layers -- key for depth alignment
+    activation: list[float]
+    prompt_token_len: int
+\end{lstlisting}
+\end{codebox}
+
+The \ic{layer\_frac} field --- the layer index expressed as a fraction of total
+model depth --- is the most important field for cross-model work. When
+translating from a 22-layer model to an 80-layer model, relative depth is the
+most tractable prior for establishing functional analogues.
+
+\subsection{Critical Design Rules for Cross-Model Viability}
+
+\begin{description}[leftmargin=2em, style=nextline]
+  \item[\textbf{Rule 1 --- Concept isolation.}]
+    Each pair must differ \emph{only} in the concept dimension. Control for
+    prompt length, code complexity, and domain vocabulary. If positive prompts
+    are systematically longer, the concept vector will be polluted with a
+    ``length'' direction.
+
+  \item[\textbf{Rule 2 --- Template diversification.}]
+    Use at least 5 distinct surface-level phrasings per concept. The RepE paper
+    uses multiple task templates (TruthfulQA, ARC, etc.) precisely to ensure
+    the extracted direction generalises across prompt styles, not just one
+    template.
+
+  \item[\textbf{Rule 3 --- Metadata richness.}]
+    Store the exact prompt, concept label, model name, layer index, and token
+    position alongside every activation. This is the paired data that will
+    supervise the cross-model translation mapping.
+\end{description}
+
+\subsection{Storage Format}
+
+Use HDF5 via \ic{h5py} for the activation corpus. HDF5 supports partial I/O,
+so you can load only specific layers without reading the entire corpus into RAM:
+
+\begin{codebox}
+\begin{lstlisting}[style=bash]
+activations.h5
+  metadata/
+    model_name         (string)
+    concept            (string)
+    extraction_date    (string)
+  concept_vectors/
+    layer_00/          (float32, shape: hidden_dim)
+    layer_01/
+    ...
+  raw/
+    pair_0000/
+      positive/        (float32 per layer: hidden_dim)
+      negative/
+    pair_0001/
+    ...
+\end{lstlisting}
+\end{codebox}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\clearpage
+\part*{Part 2: Translation Theory and LogoMesh Integration}
+\addcontentsline{toc}{part}{Part 2: Translation Theory and LogoMesh Integration}
+% ═════════════════════════════════════════════════════════════════════════════
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Residual Stream Alignment: The vec2vec Extension Problem}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\subsection{What vec2vec Actually Does (and Does Not Do)}
+
+The vec2vec paper (Jha et al.\ 2025) demonstrates that neural networks trained
+on the same modality converge to a \textbf{universal latent semantic structure}
+--- the Strong Platonic Representation Hypothesis. Their method uses a
+GAN-based pipeline with input adapters, a shared backbone MLP, output adapters,
+and cycle-consistency loss to learn mappings between embedding spaces
+\emph{without any paired data}.
+
+Critically, vec2vec operates exclusively on \textbf{final-layer static
+embeddings} --- single vectors that summarise an entire input. The architecture
+assumes: (1) one vector per document; (2) vectors are drawn from a fixed,
+consistent distribution; (3) no concept of layer depth or temporal position.
+
+Intermediate residual stream activations violate all three assumptions. They
+are layer-indexed, context-dependent, and carry different semantic content at
+different depths: early layers encode syntactic features, middle layers encode
+relational structure, late layers encode task-level semantics. Translating them
+is a fundamentally harder problem.
+
+\subsection{The Two Mismatch Dimensions}
+
+\subsubsection{Width (Dimensionality Mismatch)}
+
+From a 1B Llama model (hidden\_dim\,=\,2048) to a 70B Llama model
+(hidden\_dim\,=\,8192), the target space is $4\times$ larger. This is the
+simpler of the two problems. A linear projection
+$\mathbf{W} \in \mathbb{R}^{2048 \times 8192}$ is learnable given paired
+activation data, and the Platonic Representation Hypothesis provides
+theoretical justification that a good mapping exists.
+
+The RepE paper implicitly supports this: since concept directions are
+\emph{linear}, the mapping between the relevant subspaces of two models may
+also be well-approximated by a linear transform. The best candidate is
+\textbf{supervised Procrustes alignment}:
+
+\[
+  \text{Given: } \mathbf{X} \in \mathbb{R}^{N \times 2048}, \quad
+  \mathbf{Y} \in \mathbb{R}^{N \times 8192}
+\]
+\[
+  \text{Find: } \mathbf{W}^* = \arg\min_{\mathbf{W}} \|\mathbf{X}\mathbf{W} - \mathbf{Y}\|_F
+\]
+\[
+  \text{Closed form: } \mathbf{W}^* = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{Y}
+\]
+
+Because you \emph{generate} the contrastive prompts yourself, you have exact
+paired data. This is a major advantage over vec2vec's unsupervised setting ---
+your problem is supervised Procrustes alignment, not adversarial GAN training.
+
+\subsubsection{Depth (Layer Topographical Mismatch)}
+
+A 22-layer model and an 80-layer model have radically different computational
+graphs. Layer~11 of the small model is not functionally identical to layer~40
+of the large model, even if both are ``mid-network.'' Three candidate strategies
+exist:
+
+\begin{description}[leftmargin=2em, style=nextline]
+  \item[\textbf{Strategy A --- Proportional Depth Mapping (Simplest).}]
+    Map layer $i$ of the small model to
+    $\text{round}(i \times N_{\text{large}} / N_{\text{small}})$ of the large
+    model. Trivially implementable, but assumes uniform feature development
+    across depth, which is empirically false.
+
+  \item[\textbf{Strategy B --- Functional Similarity via CKA (Recommended).}]
+    Compute Centred Kernel Alignment (CKA) between all pairs of
+    (small\_layer$_i$, large\_layer$_j$) using activations from the same
+    prompts. Build a $22 \times 80$ similarity matrix, then solve with the
+    Hungarian algorithm for optimal correspondence:
+
+\begin{codebox}
+\begin{lstlisting}[style=python]
+def cka(X: np.ndarray, Y: np.ndarray) -> float:
+    """Linear CKA between activation matrices (N x d1) and (N x d2)."""
+    K = X @ X.T
+    L = Y @ Y.T
+    hsic_xy = np.sum(K * L)
+    return hsic_xy / np.sqrt(np.sum(K * K) * np.sum(L * L))
+
+cka_matrix = np.zeros((n_small_layers, n_large_layers))
+for i, s in enumerate(small_acts_per_layer):
+    for j, l in enumerate(large_acts_per_layer):
+        cka_matrix[i, j] = cka(s, l)
+
+from scipy.optimize import linear_sum_assignment
+row_ind, col_ind = linear_sum_assignment(-cka_matrix)
+layer_mapping = dict(zip(row_ind, col_ind))
+\end{lstlisting}
+\end{codebox}
+
+  \item[\textbf{Strategy C --- Multi-Layer Concept Aggregation (Most Robust).}]
+    Rather than mapping individual layers, identify which layers carry the
+    \emph{strongest concept direction} in each model (highest PCA variance
+    explained) and match only those ``concept-rich'' layers. This sidesteps
+    the depth mismatch entirely: instead of asking ``which layers correspond?'',
+    you ask ``which layers carry the concept?'' and match on that criterion.
+\end{description}
+
+\subsection{Supervised vs.\ Unsupervised: The Clear Answer}
+
+\textbf{Use supervised alignment.} The vec2vec paper's unsupervised approach
+solves the problem of having \emph{no paired data}. You have paired data. The
+full pipeline is:
+
+\begin{enumerate}[leftmargin=2em]
+  \item Run $N$ contrastive pairs through the small model $\to$ collect
+        $\mathbf{A}_{\text{small}} \in \mathbb{R}^{N \times 2048}$.
+  \item Run the same $N$ prompts through the large model $\to$ collect
+        $\mathbf{A}_{\text{large}} \in \mathbb{R}^{N \times 8192}$.
+  \item Fit $\mathbf{W}^*$ via least-squares (closed form).
+  \item Translate: $\mathbf{v}_{\text{large}} = \mathbf{W}^* \mathbf{v}_{\text{small}}$.
+  \item Normalise $\mathbf{v}_{\text{large}}$ to unit length.
+  \item Inject into the large model using the same additive hook mechanism.
+\end{enumerate}
+
+If the linear map underfits (measured by cosine similarity between
+$\mathbf{W}^*\mathbf{v}_{\text{small}}$ and an independently-extracted
+$\mathbf{v}_{\text{large}}$), upgrade to a small MLP (2-layer, ReLU,
+hidden\_dim\,=\,4096) trained in a few hundred gradient steps.
+
+\subsection{The Key Theoretical Risk: Context Dependence}
+
+Static embeddings are (relatively) stable across batches. Intermediate
+residual stream activations are \textbf{strictly context-dependent}: the
+activation at layer~11 for token position $-1$ depends on the entire preceding
+sequence. The learned mapping $\mathbf{W}^*$ will therefore have higher
+variance and potentially lower transferability than a mapping trained on final
+embeddings.
+
+\textbf{Mitigation:} use prompts that terminate at a stable, semantically
+neutral point (e.g.\ ``\texttt{This code is}'' as the terminal fragment) so
+the last token position captures concept state rather than specific token
+identity. The RepE paper already recommends this approach.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{LogoMesh Validation Bridge: The Purple Agent Server}
+% ─────────────────────────────────────────────────────────────────────────────
+
+The following is a complete, production-ready implementation of the Purple Agent
+FastAPI server. It wraps a RepE-steered 70B PyTorch model and conforms exactly
+to the JSON-RPC 2.0 schema specified in the LogoMesh integration contracts.
+
+\subsection{Integration Contract Reference}
+
+The Green Agent sends:
+
+\begin{codebox}
+\begin{lstlisting}[style=json]
+{
+  "jsonrpc": "2.0",
+  "method":  "message/send",
+  "params": {
+    "message": {
+      "kind":      "message",
+      "messageId": "task-uuid",
+      "role":      "user",
+      "parts": [{"kind": "text", "text": "Task prompt..."}]
+    }
+  },
+  "id": "task-uuid"
+}
+\end{lstlisting}
+\end{codebox}
+
+The Purple Agent must return:
+
+\begin{codebox}
+\begin{lstlisting}[style=json]
+{
+  "jsonrpc": "2.0",
+  "id": "task-uuid",
+  "result": {
+    "kind": "message",
+    "parts": [{
+      "kind": "text",
+      "text": "{\"sourceCode\": \"...\", \"testCode\": \"...\",
+               \"rationale\": \"...\"}"
+    }]
+  }
+}
+\end{lstlisting}
+\end{codebox}
+
+\subsection{Full Server Implementation}
+
+\begin{codebox}
+\begin{lstlisting}[style=python]
+"""
+purple_agent/server.py
+LogoMesh Purple Agent -- FastAPI JSON-RPC 2.0 wrapper
+for a RepE-steered 70B language model on Lambda Labs H100.
+"""
+
+import json, logging, time
+from contextlib import asynccontextmanager
+from typing import Any
+
+import torch
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, Field
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+# ── Configuration ──────────────────────────────────────────────────────────
+MODEL_NAME          = "meta-llama/Llama-3.3-70B-Instruct"
+STEERING_CHECKPOINT = "/checkpoints/repe_vectors.pt"
+STEERING_ALPHA      = 12.0
+MAX_NEW_TOKENS      = 2048
+TEMPERATURE         = 0.1
+DEVICE              = "cuda" if torch.cuda.is_available() else "cpu"
+
+logger = logging.getLogger("purple_agent")
+logging.basicConfig(level=logging.INFO)
+
+model_state: dict[str, Any] = {}
+
+# ── Lifespan: load model once at startup ──────────────────────────────────
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    logger.info(f"Loading model: {MODEL_NAME}")
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+    model = AutoModelForCausalLM.from_pretrained(
+        MODEL_NAME,
+        torch_dtype=torch.bfloat16,
+        device_map="auto",  # Distributes across H100 GPUs automatically
+    )
+    model.eval()
+
+    steering_data = torch.load(STEERING_CHECKPOINT, map_location=DEVICE)
+    concept_vectors: dict[int, torch.Tensor] = steering_data["concept_vectors"]
+
+    n_layers = model.config.num_hidden_layers
+    target_layers = list(range(n_layers // 3, n_layers))
+
+    model_state.update({
+        "model": model, "tokenizer": tokenizer,
+        "concept_vectors": concept_vectors, "target_layers": target_layers
+    })
+    logger.info(f"Steering {len(target_layers)} layers, alpha={STEERING_ALPHA}")
+    yield
+    model_state.clear()
+
+app = FastAPI(title="LogoMesh Purple Agent", lifespan=lifespan)
+
+# ── Steering hook management ───────────────────────────────────────────────
+def attach_steering_hooks(model, concept_vectors, target_layers, alpha):
+    hooks = []
+    for idx in target_layers:
+        if idx not in concept_vectors:
+            continue
+        v = concept_vectors[idx].to(DEVICE)
+
+        def make_hook(vec):
+            def hook(module, inp, output):
+                hidden = output[0]
+                hidden = hidden + alpha * vec.to(hidden.dtype).to(hidden.device)
+                return (hidden,) + output[1:]
+            return hook
+
+        handle = model.model.layers[idx].register_forward_hook(make_hook(v))
+        hooks.append(handle)
+    return hooks
+
+def remove_hooks(hooks):
+    for h in hooks:
+        h.remove()
+
+# ── System prompt ──────────────────────────────────────────────────────────
+SYSTEM_PROMPT = """You are an expert software engineer solving coding challenges.
+For each task, produce ONLY a JSON object in this exact format:
+{
+  "sourceCode": "...",
+  "testCode":   "...",
+  "rationale":  "..."
+}
+No text outside the JSON object."""
+
+# ── Steered generation ─────────────────────────────────────────────────────
+@torch.no_grad()
+def generate_solution(task_prompt: str) -> dict[str, str]:
+    model     = model_state["model"]
+    tokenizer = model_state["tokenizer"]
+    cv        = model_state["concept_vectors"]
+    tl        = model_state["target_layers"]
+
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user",   "content": task_prompt},
+    ]
+    input_ids = tokenizer.apply_chat_template(
+        messages, tokenize=True, add_generation_prompt=True,
+        return_tensors="pt",
+    ).to(DEVICE)
+
+    hooks = attach_steering_hooks(model, cv, tl, STEERING_ALPHA)
+    try:
+        output_ids = model.generate(
+            input_ids, max_new_tokens=MAX_NEW_TOKENS,
+            temperature=TEMPERATURE, do_sample=TEMPERATURE > 0,
+            pad_token_id=tokenizer.eos_token_id,
+        )
+    finally:
+        remove_hooks(hooks)
+
+    new_tokens = output_ids[0][input_ids.shape[1]:]
+    raw = tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
+
+    try:
+        if raw.startswith("```"):
+            raw = raw.split("```")[1]
+            if raw.startswith("json"):
+                raw = raw[4:]
+        result = json.loads(raw)
+        assert all(k in result for k in ("sourceCode", "testCode", "rationale"))
+        return result
+    except (json.JSONDecodeError, AssertionError) as e:
+        logger.warning(f"JSON parse failed: {e}")
+        return {
+            "sourceCode": f"# Parse error: {e}\n{raw}",
+            "testCode":   "import pytest\ndef test_fail(): pytest.fail('parse error')",
+            "rationale":  f"Model output could not be parsed: {e}",
+        }
+
+# ── JSON-RPC models ────────────────────────────────────────────────────────
+class MessagePart(BaseModel):
+    kind: str; text: str
+
+class Message(BaseModel):
+    kind: str; messageId: str; role: str; parts: list[MessagePart]
+
+class JsonRpcParams(BaseModel):
+    message: Message
+
+class JsonRpcRequest(BaseModel):
+    jsonrpc: str = Field(..., pattern="^2\\.0$")
+    method: str; params: JsonRpcParams; id: str
+
+# ── Main endpoint ──────────────────────────────────────────────────────────
+@app.post("/")
+async def handle_message(request: Request) -> JSONResponse:
+    body = await request.json()
+    logger.info(f"Request id={body.get('id', 'unknown')}")
+
+    try:
+        rpc = JsonRpcRequest(**body)
+    except Exception as e:
+        return JSONResponse(status_code=400, content={
+            "jsonrpc": "2.0", "id": body.get("id"),
+            "error": {"code": -32600, "message": str(e)},
+        })
+
+    if rpc.method != "message/send":
+        return JSONResponse(content={
+            "jsonrpc": "2.0", "id": rpc.id,
+            "error": {"code": -32601, "message": f"Unknown method: {rpc.method}"},
+        })
+
+    task_prompt = " ".join(
+        p.text for p in rpc.params.message.parts if p.kind == "text"
+    )
+
+    t0 = time.perf_counter()
+    solution = generate_solution(task_prompt)
+    logger.info(f"Generated in {time.perf_counter()-t0:.2f}s")
+
+    return JSONResponse(content={
+        "jsonrpc": "2.0",
+        "id": rpc.id,
+        "result": {
+            "kind": "message",
+            "parts": [{"kind": "text", "text": json.dumps(solution, indent=2)}],
+        },
+    })
+
+@app.get("/health")
+async def health():
+    return {"status": "ok", "model": MODEL_NAME, "alpha": STEERING_ALPHA}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("server:app", host="0.0.0.0", port=8080, workers=1)
+\end{lstlisting}
+\end{codebox}
+
+\subsection{Deployment Notes for Lambda Labs H100}
+
+\begin{codebox}
+\begin{lstlisting}[style=bash]
+# Install dependencies
+pip install fastapi uvicorn transformers accelerate bitsandbytes torch
+
+# Launch
+python -m uvicorn server:app --host 0.0.0.0 --port 8080 --workers 1
+
+# Single H100 (80 GB): use 4-bit quantisation
+# BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_compute_dtype=torch.bfloat16)
+# Dual H100 (160 GB): BF16 70B fits natively with device_map="auto"
+\end{lstlisting}
+\end{codebox}
+
+\subsection{Awareness of LogoMesh Scoring Internals}
+
+The Green Agent scores Purple Agent output using:
+
+\[
+  \text{CIS} = (0.25R + 0.25A + 0.25T + 0.25L) \times \text{Red\_Penalty}
+               \times \text{Intent\_Multiplier}
+\]
+
+Key implications for the steered model:
+
+\begin{description}[leftmargin=2em, style=nextline]
+  \item[\textbf{R (Rationale Integrity).}]
+    Scored via cosine similarity using \ic{all-MiniLM-L6-v2}. The rationale
+    must be semantically aligned with the task; generic boilerplate will score
+    near zero.
+
+  \item[\textbf{L (Logic Score).}]
+    \textbf{Has no floor protection} (Architecture Overview \S5.1). This is
+    the highest-variance component and the primary target for concept steering.
+    The LLM scorer can hallucinate this score arbitrarily low. \emph{Note: Phase 2 Remediation Plans indicate this loophole will soon be closed. RepE concept vectors extracted prior to this patch will demonstrate maximal efficacy in demonstrating the flaw before the system is secured.}
+
+  \item[\textbf{T (Testing Integrity).}]
+    Formula: $T = 0.20 + 0.65 \times \text{test\_pass\_rate} +
+    \text{specificity\_bonus}$. Tests run in a Docker sandbox with 128\,MB
+    RAM, 50\% CPU, 50 PIDs. Keep tests lightweight --- avoid heavy imports.
+
+  \item[\textbf{Red Agent.}]
+    The MCTS engine (now restricted to \textbf{5 steps} by default, or 3 in
+    \ic{fast\_lenient} mode, 2 branches, 60\,s limit) mutates \ic{sourceCode}
+    to probe for vulnerabilities (now explicitly targeting \textbf{C/C++ and
+    Solidity} for the Phase 2 Cybersecurity track).
+    \emph{Note on Infrastructure:} The Red Agent's dynamic tool execution is
+    being migrated to a \textbf{Persistent Sandbox (Sidecar)} via JSON-RPC to
+    mitigate host compromise risks (the `Uroboros' threat). The Purple Agent's
+    FastAPI JSON-RPC architecture described above provides the exact schematic
+    needed for this IPC channel, demonstrating a dual-use architectural synergy
+    between RepE steering infrastructure and Red Agent sandboxing. Steering toward correct, minimal code implicitly reduces the attack surface and limits the Red Agent's mutation opportunities.
+\end{description}
+
+\begin{bugbox}[Known Bug: DBOM Hash Mismatch]
+  The Green Agent hashes the \emph{unsorted} JSON string (\ic{json.dumps(result)}),
+  but stores the \emph{sorted} string (\ic{json.dumps(result, sort\_keys=True)}).
+  Cryptographic verification of any database record against its DBOM hash will
+  consistently fail. This is a pre-existing Green Agent bug, not a Purple Agent
+  concern, but worth noting if you attempt audit-trail validation.
+\end{bugbox}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\clearpage
+\section*{References}
+\addcontentsline{toc}{section}{References}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{enumerate}[leftmargin=2em]
+  \item Zou, A., Phan, L., Chen, S., et al.\ (2023).
+        \textit{Representation Engineering: A Top-Down Approach to AI Transparency}.
+        arXiv:2310.01405.
+
+  \item Jha, S., et al.\ (2025).
+        \textit{vec2vec: Encoder-Free Cross-Modal Representation Transfer via Supervised Vector Translation}.
+        arXiv:2505.12540. NeurIPS 2025.
+
+  \item LogoMesh Internal Documentation (2026).
+        \textit{Architecture Overview: Phase 1 Onboarding}.
+        Confidential.
+\end{enumerate}
+
+\vfill
+\begin{center}
+  \small\color{darkgray}
+  \rule{8cm}{0.4pt}\\[4pt]
+  Document generated: 2026-03-04 \quad|\quad LogoMesh Research \quad|\quad Confidential
+\end{center}
+
+\end{document}

@@ -1,0 +1,31 @@
+\begin{table}[t]
+\centering
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{*{8}{c}}
+\toprule
+& & \multicolumn{2}{c}{Zero-shot} & \multicolumn{3}{c}{LAT (Ours)} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-7}
+& & \multicolumn{1}{c}{Standard} & \multicolumn{1}{c}{Heuristic} & \multicolumn{1}{c}{Stimulus 1} & \multicolumn{1}{c}{Stimulus 2} & \multicolumn{1}{c}{Stimulus 3} \\
+\midrule
+& 7B & 31.0 & 32.2 & 55.0 & 58.9 & 58.2 \\
+LLaMA-2-Chat & 13B & 35.9 & 50.3 & 49.6 & 53.1 & 54.2 \\
+& 70B & 29.9 & 59.2 & 65.9 & 69.8 & 69.8 \\
+\midrule
+Average & & 32.3 & 47.2 & 56.8 & 60.6 & 60.7 \\
+\bottomrule
+\end{tabular}
+\caption{TruthfulQA MC1 accuracy assessed using standard evaluation, the heuristic method, and LAT with various stimulus sets. Standard evaluation results in poor performance, whereas approaches like Heuristic and notably LAT, which classifies by reading the model's internal concept of truthfulness, achieve significantly higher accuracy. See Table \ref{tab:tqa_stdv} in Appendix \ref{appendix:tqa_stdv} for means and standard deviations.
+}
+\label{tab:tqa}
+
+\end{table}
+
+
+
+
+
+
+
+
+
+

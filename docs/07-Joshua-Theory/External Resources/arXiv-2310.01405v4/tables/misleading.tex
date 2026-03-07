@@ -1,0 +1,52 @@
+
+
+
+\begin{table}[t]
+
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{ccccccccccc}
+\toprule
+& & \multicolumn{3}{c}{Utility} & \multicolumn{3}{c}{ARC} & \multicolumn{3}{c}{TQA (trained on ARC-c)} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}\cmidrule(lr){9-11}
+& & Original & Biased & \%$\downarrow$ & Original & Biased & \%$\downarrow$ & Original & Biased & \%$\downarrow$ \\
+\midrule
+\multirow{4}{*}{7B} & -1 & 79.2  & 67.8 & \textcolor{red}{-14.4}
+& 56.4 & 42.4 & \textcolor{red}{-24.8}
+& 53.9  & 37.9 & \textcolor{red}{-29.7} \\
+& -6 & 76.5& \textbf{74.6}  & \textbf{\textcolor{red}{-2.4}} 
+& 49.5 & 37.9  & \textcolor{red}{-23.6}
+& 43.9 & 43.6  & \textbf{\textcolor{red}{-0.8}} \\
+& -7 & - & - & - 
+& 53.3 & \textbf{48.6}  & \textcolor{red}{\textbf{-8.8} }
+& 52.4  & \textbf{51.8}& \textcolor{red}{-1.2} \\
+& -8 & - & - & - 
+& 49.1  & 44.1 & \textcolor{red}{-10.1}
+& 52.0 & 49.2 & \textcolor{red}{-5.5} \\
+\midrule
+\multirow{4}{*}{13B} & -1 & 80.4  & 71.7  & \textcolor{red}{-10.9}
+& 66.2  & 49.6 & \textcolor{red}{-25.0} 
+& 49.7 & 37.8 & \textcolor{red}{-24.0} \\
+ & -6 & 78.6 & \textbf{76.9} & \textbf{\textcolor{red}{-2.1}} 
+ & 60.0 & 49.0  & \textcolor{red}{-18.4}
+ & 44.1  & 39.0  & \textcolor{red}{-11.5} \\
+& -7 & - & - & - & 57.7 & \textbf{54.0} & \textbf{\textcolor{red}{-6.5}} & 50.6& 50.6 & \textbf{\textcolor{red}{-0.1}} \\
+ & -8 & - & - & - & 58.7 & 53.1& \textcolor{red}{-9.6} 
+ & 56.8  & \textbf{56.2} & \textcolor{red}{-1.1} \\
+\midrule
+\multirow{4}{*}{70B} & -1 & 79.4  & 73.5 & \textcolor{red}{-7.4} & 77.2 & 59.8  & \textcolor{red}{-22.5} 
+& 64.3  & 58.1 & \textcolor{red}{-9.6} \\
+ & -6 & 79.6  & \textbf{79.1} & \textbf{\textcolor{red}{-0.6}} & 71.9 & 51.3  & \textcolor{red}{-28.6}
+ & 61.8 & 49.9  & \textcolor{red}{-19.3} \\
+ & -7 & - & - & - & 70.8 & \textbf{60.6} & \textbf{\textcolor{red}{-14.4}} & 60.4  & 56.6  & \textbf{\textcolor{red}{-6.3}} \\
+ & -8 & - & - & - & 70.6 & 59.7 & \textcolor{red}{-15.4} & 69.5 & \textbf{63.1}  &  \textcolor{red}{-9.3} \\
+\bottomrule
+\end{tabular}
+}
+\caption{LAT performance for LLaMA-2-Chat models for original vs. biased prompts, using hidden states extracted from various prompt token indices (-1, -6, -7, -8).
+Results are reported for the Utility, ARC-c, and TruthfulQA (trained on ARC-c) datasets. Mean and stdv reported across 15 trials. The highest mean performance under biased prompts and the smallest difference between Biased and original mean performance are bolded.
+}
+\label{tab:biased}
+\end{table}
+
+

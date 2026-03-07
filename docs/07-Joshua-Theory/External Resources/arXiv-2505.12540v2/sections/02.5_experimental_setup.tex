@@ -1,0 +1,66 @@
+\section{Experimental setup}
+\label{sec:setup}
+
+\subsection{Preliminaries}
+\label{sec:prelims}
+
+\shortpara{Datasets.} 
+We use the \textit{Natural Questions (NQ)} \cite{kwiatkowski-etal-2019-natural} dataset of user queries and Wikipedia-sourced answers for training (a $2$-million subset) and evaluation (a $65536$ subset).  To evaluate information extraction, we use
+\textit{TweetTopic} \cite{antypas-etal-2024-multilingual}, a dataset of tweets multi-labeled by 19 topics; a random $8192$-record subset of
+\textit{Pseudo Re-identified MIMIC-III (MIMIC)} \cite{lehman-etal-2021-bert}, a pseudo re-identified version of the MIMIC dataset~\cite{johnson2016mimic} of patient records multi-labeled by 2673 MedCAT \cite{kraljevic2021multi} disease descriptions; and a random $50$-email subset of
+the \textit{Enron Email Corpus (Enron)} \cite{10.1007/978-3-540-30115-8_22}, an unlabeled, public dataset of
+internal emails of a defunct energy company.
+
+\shortpara{Models.} \Cref{tab:model-specs} lists the embedding models representing three size categories, four transformer backbones, and two output dimensionalities.  Granite is multilingual, CLIP is multimodal.
+
+\begin{table}[ht]
+  \scriptsize
+  \centering
+  \begin{tabular}{lclccc}
+    \toprule
+    Model    & Params (M) & Backbone & Year & Dims & Max Seq. \\
+    \midrule
+    \citep{ni2021gtr} \ gtr      & 110     & T5 & 2021 & 768 & 512  \\
+    \citep{radford2021clip} \ clip    & 151     & CLIP & 2021 & 512 & 77  \\
+    \citep{wang2024e5} \ e5     & 109     & BERT & 2022 & 768 & 512 \\
+    \citep{li2023gte} \ gte    & 109     & BERT & 2023 & 768 & 512 \\
+    \citep{zhang2025stella} \ stella & 109     & BERT & 2023 & 768 & 512 \\
+    \citep{granite2024embedding} \ granite  & 278     & RoBERTa & 2024 & 768 & 512 \\
+    \bottomrule\\[-1.6ex]
+  \end{tabular}
+  \caption{Embedding models used in our experiments.}
+  \label{tab:model-specs}
+\end{table}
+
+\shortpara{Training.}
+Unless otherwise specified, each \atk{} is trained on two sets of embeddings generated from disjoint sets of $1$ million $64$-token sequences sampled from NQ (see \Cref{sec:ablations} for experiments with fewer embeddings).  Due to GAN instability \cite{10.1145/3446374}, we select the best of multiple initializations and leave more robust training to future work.
+
+
+\subsection{Evaluating translation}
+\label{sec:ot}
+
+Let $u_i = M_1(d_i)$ and $v_i = M_2(d_i)$ denote the source and target embeddings of the same input $d_i$.  The goal of translation is to generate a vector that is as close to $v_i$ is possible.  We say that \((u_i, v_j)\) are ``aligned'' by the translator \(F\) if \(v_j\) is the closest embedding to \(F(u_i)\): $j = \arg\min_k \cos\bigl(F(u_i), v_k\bigr).$
+A perfect translator \(F^*\) satisfies \(i = \arg\min_k \cos\bigl(F^*(u_i), v_k\bigr)\) for all \(i\).
+
+% Our primary objective is to translate source embeddings $u$ into the target embedding space $v$ \textit{in a manner that preserves neighborhood structure and relative distances between embeddings}. To quantitatively measure how well geometry is preserved during this translation, we employ metrics derived from the \textit{optimal assignment problem}. Importantly, target embeddings $v$ are never observed by our translator and used only for evaluation and an oracle baseline.
+
+Given (unknown) embeddings $\{M_2(d_j)\}_{j=0}^n$ ordered by decreasing cosine similarity to $F(u_i)$, let $r_i$ be the rank of the correct embedding $v_i=M_2(d_i)$.  To measure quality of $F$, we use three metrics. \textbf{Mean Cosine Similarity} measures how close translations are, on average, to their targets. \textbf{Top-1 Accuracy} is the fraction of translations whose target is closer than any other embedding. \textbf{Mean Rank} is the average
+rank of targets with respect to translations. The ideal translator \(F^*\) achieves mean similarity of \(1.0\), top-1 accuracy of \(1.0\), and mean rank of \(1.0\). Recall that a random alignment corresponds to a mean rank of $\frac{n}{2}$. Formally,
+\begin{equation*}
+    \cos(u_i, v_i)= \frac{1}{n}\sum_{i=1}^{n}\bigl[1 - \cos\bigl(F(u_i), v_i\bigr)\bigr] \quad \text{Top-1}(r)=\frac{1}{n}\sum_{i=1}^{n}\mathbf{1}\{r_i = 1\}\quad \text{Rank(r)}=\frac{1}{n}\sum_{i=1}^{n} r_i
+\end{equation*}
+
+\atk{} is the first unsupervised embedding translator, thus there is no direct baseline. As our \textbf{Naïve} baseline, we simply use $F(x)=x$ to measure geometric similarity between embedding spaces.  The second (pseudo)baseline is \textbf{Oracle-aided optimal assignment}.  It assumes that candidate targets are known and is thus strictly easier than \atk{} and the Naïve baseline.  We solve optimal assignment, $\pi^* = \arg\min_\pi \sum_{i=1}^n \cos(u_i, v_{\pi(i)})$, via either the Hungarian, Earth Mover’s Distance, Sinkhorn, or Gromov-Wasserstein algorithms, choosing the best-performing solver per experiment. 
+
+
+\subsection{Evaluating information extraction}\label{sec:extracting_attributes}
+
+We measure whether translation preserves semantics via \textit{attribute inference}:
+for each translated embedding $F(M_1(d_i))$, our goal is to infer attributes $c_i \subseteq \mathcal{C}$ of $d_i$.
+
+The first method we use is \textbf{zero-shot embedding attribute inference}: calculate pairwise cosine similarities between $F(M_1(d_i))$ and the embeddings of all attributes in $\mathcal{C}$, identify top $k$ closest attributes, and measure whether they are correct via \textit{top-$k$ accuracy}: $\frac{1}{n}\sum_{i=0}^{n}\mathbf{1}\left\{|c^k_i\cap c_i| \geq 1\right\}$.
+
+The second method is \textbf{embedding inversion} that recovers text inputs from embeddings.  Since \cite{morris2023textembeddingsrevealalmost} requires a pre-trained inversion model for each embedding space, we use \cite{zhang2025universalzeroshotembeddinginversion} instead to generate an approximation $d'_i$ of $d_i$ from $F(M_1(d_i))$ in a zero-shot manner.  We measure the extracted information using \textit{LLM judge accuracy}: the fraction of translated embeddings for which GPT-4o determines that $d'$ reveals information in $d$. See \Cref{sec:prompt} for our prompt. 
+
+In addition to the Naïve baseline, we also consider an \textbf{Oracle attribute inference}: zero-shot classification with the correct embedding $M_2(d)$ and class labels $M_2(\mathcal{C})$.
+ 

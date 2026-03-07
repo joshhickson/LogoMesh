@@ -1,0 +1,174 @@
+\section{Compute}
+Our training and evaluation were conducted using diverse compute environments, including both local and cloud GPU clusters. Experiments were done on NVIDIA 2080Ti, L4, A40, and A100 GPUs, listed in order of increasing computational capacity.
+
+For our main experiments, we trained 36 distinct \atk{} models, with training durations ranging from 1 to 7 days per model, depending on the specific GPU and model pair (which affected convergence rates).  Additional 9 \atk{} models were trained for our ablations, bringing the total to 45 \atk{} models. Taking a conservative estimate of the average training time, this amounted to approximately 180 GPU days (45 models $\times$ 4 days / model).
+
+Evaluation procedures varied by model type:
+\begin{itemize}
+    \item For each of our 45 \atk{} models, our full evaluation on NQ, TweetTopic, and MIMIC datasets required approximately 1 hour per model across all GPU types.
+    \item The 36 non-ablation GANs underwent additional analysis on the Enron email corpus, requiring about 1.5 hours for inversion and downstream LLM evaluation.
+    \item Naive baselines (30 models without CLIP) required approximately 30 minutes each for evaluation, roughly half the time needed for our full models.
+    \item Optimal assignment baselines (36 models) were run exclusively on CPU. We implemented 4 different assignment algorithms, each requiring approximately 4 hours of computation time. The Gromov-Wasserstein algorithm was particularly computationally intensive and was included for CLIP due to dimensional differences.
+\end{itemize}
+
+In total, our experiments consumed approximately 180 GPU days for training and an additional 78 GPU hours for evaluation and analysis. There were approximately 144 CPU hours required for optimal assignment.
+
+
+
+\section{Full out-of-distribution translation results}
+\label{sec:full_ood}
+We provide baseline numbers for the experiments shown in \Cref{tab:embeddings_ood}, by dataset.
+\begin{table}[!ht]
+    \scriptsize
+    \centering
+    \begin{tabular}{llrrrrrrrr}
+        \toprule
+        \multicolumn{2}{c}{} & \multicolumn{3}{c}{\atk{}} & \multicolumn{3}{c}{Naïve} & \multicolumn{2}{c}{Optimal Transport}\\
+        \cmidrule(lr){3-5} \cmidrule(lr){6-8}  \cmidrule(lr){9-10} 
+        $E_1$ & $E_2$ & $\cos(\cdot)$ & Top-1 & Rank & $\cos(\cdot)$ & Top-1 & Rank & Top-1 & Rank\\
+        \midrule
+        \multirow{4}{*}{gte} & gtr & 0.71 {\tiny (0.0)} & 0.95 & 1.29 {\tiny (0.1)} & 0.04 {\tiny (0.0)} & 0.00 & 386.58 {\tiny (8.3)} & 0.00 & 383.41 {\tiny (8.1)} \\
+        & stel. & 0.86 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} & 0.58 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} \\
+        & e5 & 0.83 {\tiny (0.0)} & 0.91 & 1.57 {\tiny (0.2)} & 0.68 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} \\
+        & gran. & 0.73 {\tiny (0.0)} & 0.94 & 1.33 {\tiny (0.1)} & 0.00 {\tiny (0.0)} & 0.00 & 408.81 {\tiny (8.3)} & 0.01 & 398.16 {\tiny (8.2)} \\
+        \midrule
+        \multirow{4}{*}{gtr} & gte & 0.85 {\tiny (0.0)} & 0.96 & 1.29 {\tiny (0.2)} & 0.04 {\tiny (0.0)} & 0.00 & 392.01 {\tiny (8.2)} & 0.00 & 384.00 {\tiny (8.1)} \\
+        & stel. & 0.77 {\tiny (0.0)} & 0.96 & 1.10 {\tiny (0.0)} & 0.00 {\tiny (0.0)} & 0.00 & 394.69 {\tiny (8.3)} & 0.00 & 390.67 {\tiny (8.2)} \\
+        & e5 & 0.80 {\tiny (0.0)} & 0.53 & 13.38 {\tiny (1.2)} & 0.03 {\tiny (0.0)} & 0.00 & 400.85 {\tiny (8.2)} & 0.00 & 400.48 {\tiny (8.2)} \\
+        & gran. & 0.79 {\tiny (0.0)} & 0.98 & 2.41 {\tiny (0.6)} & -0.04 {\tiny (0.0)} & 0.00 & 411.53 {\tiny (8.3)} & 0.00 & 401.01 {\tiny (8.2)} \\
+        \midrule
+        \multirow{4}{*}{stel.} & gte & 0.90 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} & 0.58 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} \\
+        & gtr & 0.77 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} & 0.00 {\tiny (0.0)} & 0.00 & 393.07 {\tiny (8.1)} & 0.00 & 390.26 {\tiny (8.2)} \\
+        & e5 & 0.85 {\tiny (0.0)} & 0.98 & 1.05 {\tiny (0.0)} & 0.37 {\tiny (0.0)} & 0.89 & 1.55 {\tiny (0.1)} & 1.00 & 1.00 {\tiny (0.0)} \\
+        & gran. & 0.79 {\tiny (0.0)} & 0.99 & 1.09 {\tiny (0.1)} & 0.00 {\tiny (0.0)} & 0.00 & 418.16 {\tiny (8.4)} & 0.00 & 400.95 {\tiny (8.2)} \\
+        \midrule
+        \multirow{4}{*}{e5} & gte & 0.87 {\tiny (0.0)} & 0.99 & 1.02 {\tiny (0.0)} & 0.68 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} \\
+        & gtr & 0.67 {\tiny (0.0)} & 0.80 & 3.10 {\tiny (0.6)} & 0.03 {\tiny (0.0)} & 0.00 & 401.16 {\tiny (8.4)} & 0.00 & 400.49 {\tiny (8.2)} \\
+        & stel. & 0.75 {\tiny (0.0)} & 0.98 & 1.06 {\tiny (0.0)} & 0.37 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} \\
+        & gran. & 0.79 {\tiny (0.0)} & 0.98 & 1.08 {\tiny (0.0)} & 0.02 {\tiny (0.0)} & 0.00 & 405.75 {\tiny (8.3)} & 0.00 & 401.00 {\tiny (8.2)} \\
+        \midrule
+        \multirow{4}{*}{gran.} & gte & 0.85 {\tiny (0.0)} & 0.95 & 1.26 {\tiny (0.1)} & 0.00 {\tiny (0.0)} & 0.00 & 406.73 {\tiny (8.2)} & 0.01 & 398.14 {\tiny (8.2)} \\
+        & gtr & 0.74 {\tiny (0.0)} & 0.99 & 1.09 {\tiny (0.1)} & -0.04 {\tiny (0.0)} & 0.00 & 415.61 {\tiny (8.2)} & 0.00 & 400.99 {\tiny (8.2)} \\
+        & stel. & 0.77 {\tiny (0.0)} & 0.96 & 1.11 {\tiny (0.0)} & 0.00 {\tiny (0.0)} & 0.00 & 417.27 {\tiny (8.2)} & 0.00 & 400.97 {\tiny (8.2)} \\
+        & e5 & 0.83 {\tiny (0.0)} & 0.87 & 3.10 {\tiny (0.7)} & 0.02 {\tiny (0.0)} & 0.00 & 405.53 {\tiny (8.1)} & 0.00 & 401.00 {\tiny (8.2)} \\
+        \bottomrule\\[-1.6ex]
+    \end{tabular}
+    \caption{Out-of-distribution translations on TweetTopic (with baselines): \atk{} models trained on NQ and evaluated on the entire TweetTopic test set (800 tweets). The rank metric varies from 1 to 800, thus 400 corresponds to a random ordering. Since Optimal Assignment is a matching method, cosine distances are not applicable.  Standard errors are shown in parentheses.}
+    \label{tab:embedding_comparison_ood}
+\end{table}
+
+\begin{table}[!ht]
+    \scriptsize
+    \centering
+    \begin{tabular}{llrrrrrrrr}
+        \toprule
+        \multicolumn{2}{c}{} & \multicolumn{3}{c}{\atk{}} & \multicolumn{3}{c}{Naïve} & \multicolumn{2}{c}{Optimal Transport}\\
+        \cmidrule(lr){3-5} \cmidrule(lr){6-8}  \cmidrule(lr){9-10} 
+        $E_1$ & $E_2$ & $\cos(\cdot)$ & Top-1 & Rank & $\cos(\cdot)$ & Top-1 & Rank & Top-1 & Rank\\
+        \midrule
+        \multirow{4}{*}{gte} & gtr & 0.69 {\tiny (0.0)} & 0.12 & 256.63 {\tiny (6.4)} & 0.08 {\tiny (0.0)} & 0.00 & 4229.90 {\tiny (26.2)} & 0.00 & 4096.63 {\tiny (26.1)} \\
+        & stel. & 0.85 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} & 0.56 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} \\
+        & e5 & 0.86 {\tiny (0.0)} & 0.54 & 17.71 {\tiny (0.9)} & 0.69 {\tiny (0.0)} & 0.98 & 1.04 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} \\
+        & gran. & 0.73 {\tiny (0.0)} & 0.09 & 342.15 {\tiny (7.8)} & 0.01 {\tiny (0.0)} & 0.00 & 3946.19 {\tiny (25.8)} & 0.00 & 3802.92 {\tiny (25.9)} \\
+        \midrule
+        \multirow{4}{*}{gtr} & gte & 0.84 {\tiny (0.0)} & 0.12 & 279.56 {\tiny (6.9)} & 0.08 {\tiny (0.0)} & 0.00 & 4180.47 {\tiny (26.2)} & 0.00 & 4096.99 {\tiny (26.1)} \\
+        & stel. & 0.72 {\tiny (0.0)} & 0.27 & 127.92 {\tiny (4.4)} & 0.00 {\tiny (0.0)} & 0.00 & 4296.04 {\tiny (26.1)} & 0.00 & 4096.53 {\tiny (26.1)} \\
+        & e5 & 0.82 {\tiny (0.0)} & 0.01 & 1413.80 {\tiny (18.3)} & 0.09 {\tiny (0.0)} & 0.00 & 4064.47 {\tiny (26.2)} & 0.00 & 4010.13 {\tiny (26.1)} \\
+        & gran. & 0.78 {\tiny (0.0)} & 0.51 & 35.27 {\tiny (1.9)} & -0.02 {\tiny (0.0)} & 0.00 & 4023.67 {\tiny (26.1)} & 0.00 & 3964.83 {\tiny (26.1)} \\
+        \midrule
+        \multirow{4}{*}{stel.} & gte & 0.91 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} & 0.56 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} \\
+        & gtr & 0.75 {\tiny (0.0)} & 0.56 & 17.70 {\tiny (1.0)} & 0.00 {\tiny (0.0)} & 0.00 & 4339.83 {\tiny (26.2)} & 0.00 & 4097.00 {\tiny (26.1)} \\
+        & e5 & 0.85 {\tiny (0.0)} & 0.51 & 26.33 {\tiny (1.2)} & 0.35 {\tiny (0.0)} & 0.59 & 12.68 {\tiny (0.6)} & 1.00 & 1.00 {\tiny (0.0)} \\
+        & gran. & 0.77 {\tiny (0.0)} & 0.14 & 221.95 {\tiny (5.9)} & -0.01 {\tiny (0.0)} & 0.00 & 3951.42 {\tiny (25.9)} & 0.00 & 3776.52 {\tiny (26.0)} \\
+        \midrule
+        \multirow{4}{*}{e5} & gte & 0.87 {\tiny (0.0)} & 0.60 & 32.59 {\tiny (2.6)} & 0.69 {\tiny (0.0)} & 0.98 & 1.09 {\tiny (0.0)} & 1.00 & 1.00 {\tiny (0.0)} \\
+        & gtr & 0.66 {\tiny (0.0)} & 0.01 & 1029.64 {\tiny (14.9)} & 0.09 {\tiny (0.0)} & 0.00 & 4032.85 {\tiny (26.2)} & 0.00 & 4010.06 {\tiny (26.1)} \\
+        & stel. & 0.75 {\tiny (0.0)} & 0.46 & 32.12 {\tiny (1.4)} & 0.35 {\tiny (0.0)} & 0.86 & 2.49 {\tiny (0.1)} & 1.00 & 1.01 {\tiny (0.0)} \\
+        & gran. & 0.78 {\tiny (0.0)} & 0.21 & 151.09 {\tiny (4.6)} & 0.02 {\tiny (0.0)} & 0.00 & 4008.10 {\tiny (25.9)} & 0.00 & 3932.58 {\tiny (26.2)} \\
+        \midrule
+        \multirow{4}{*}{gran.} & gte & 0.85 {\tiny (0.0)} & 0.08 & 346.21 {\tiny (7.8)} & 0.01 {\tiny (0.0)} & 0.00 & 3978.35 {\tiny (26.1)} & 0.00 & 3808.18 {\tiny (25.9)} \\
+        & gtr & 0.74 {\tiny (0.0)} & 0.60 & 23.38 {\tiny (1.6)} & -0.02 {\tiny (0.0)} & 0.00 & 4010.00 {\tiny (25.8)} & 0.00 & 3962.83 {\tiny (26.1)} \\
+        & stel. & 0.72 {\tiny (0.0)} & 0.13 & 242.23 {\tiny (6.1)} & -0.01 {\tiny (0.0)} & 0.00 & 3900.74 {\tiny (26.2)} & 0.00 & 3780.44 {\tiny (26.0)} \\
+        & e5 & 0.84 {\tiny (0.0)} & 0.12 & 361.06 {\tiny (8.7)} & 0.02 {\tiny (0.0)} & 0.00 & 4024.92 {\tiny (26.1)} & 0.00 & 3937.63 {\tiny (26.2)} \\
+        \bottomrule\\[-1.6ex]
+    \end{tabular}
+    \caption{Out-of-distribution translations on MIMIC (with baselines): \atk{} models trained on NQ and evaluated on an 8192-record subset of MIMIC. The rank metric varies from 1 to 8192, thus 4096 corresponds to a random ordering. Since Optimal Assignment is a matching method, cosine distances are not applicable.  Standard errors are shown in parentheses.}
+    \label{tab:embedding_comparison_ood_mimic}
+\end{table}
+
+\newpage
+
+\section{Ablations}
+\label{sec:ablations}
+
+\subsection{Ablating components of our method}
+
+We ablate our method subtractively, measuring the key metrics after removing individual components of our algorithm (described in \Cref{sec:architecture}).  \Cref{tab:loss_ablation} shows that each component appears to be \textit{critical} to building good translations. While in each setting, \atk{}'s $\cos(\cdot)$ is higher than the naïve baselines, the Top-1 accuracies and ranks imply that ablated \atk{} translations are at best only slightly better than the baseline and do not preserve the geometry of the vector space.
+
+\begin{table}[!ht]
+    % \scriptsize
+    \centering
+    \begin{tabular}{lrrr}
+        \toprule
+        Method & $\cos(\cdot)$ & Top-1 & Rank\\
+        \midrule
+        \atk{}&0.75 {\scriptsize (0.0)} & 0.91 & 2.64 {\scriptsize (0.1)}\\
+        Naïve&0.04 {\scriptsize (0.0)} & 0.00 & 4084.15 {\scriptsize (9.2)}\\
+        Optimal Transport& - & 0.00 & 4078.45 {\scriptsize (9.2)}\\
+        \midrule
+        -- VSP loss&0.58 {\scriptsize (0.0)} & 0.00 & 4196.64 {\scriptsize (9.2)}\\
+        -- CC loss&0.50 {\scriptsize (0.0)} & 0.00 & 3941.36 {\scriptsize (9.3)}\\
+        -- latent GAN&0.49 {\scriptsize (0.0)} & 0.00 & 3897.09 {\scriptsize (9.5)}\\
+        -- VSP \textit{and} CC loss&0.47 {\scriptsize (0.0)} & 0.00 & 3365.24 {\scriptsize (9.3)}\\
+        -- hyperparam. tuning&0.50 {\scriptsize (0.0)} & 0.00 & 4011.73 {\scriptsize (9.3)}\\
+        \bottomrule\\[-1.6ex]
+    \end{tabular}
+    \caption{gte $\to$ gtr translators trained without individual components of our method on NQ and evaluated on a 65536-text subset of NQ (chunked in batches of 8192). The rank metric varies from 1 to 8192, thus 4096 corresponds to a random ordering. Since Optimal Assignment is a matching method, cosine distances are not applicable. Standard errors are shown in parentheses.}
+    \label{tab:loss_ablation}
+\end{table}
+
+
+
+\subsection{Amount of data needed to learn translation}
+\begin{table}[!ht]
+    % \scriptsize
+    \centering
+    \begin{tabular}{rrrr}
+        \toprule
+        $N$ & $\cos(\cdot)$ & Top-1 & Rank \\
+        \midrule
+        1000000&0.75 {\scriptsize (0.0)} & 0.92 & 2.73 {\scriptsize (0.2)}\\
+        \midrule
+        10000 & 0.57 {\scriptsize (0.0)} & 0.01 &  1462.21 {\scriptsize (20.)}\\
+        50000 & 0.74 {\scriptsize (0.0)} & 0.81 &  3.91 {\scriptsize (0.6)}\\
+        100000  & 0.74 {\scriptsize (0.0)} & 0.85 &  4.52 {\scriptsize (0.4)}\\
+        500000 & 0.75 {\scriptsize (0.0)} & 0.92 &  2.73 {\scriptsize (0.2)}\\
+        \bottomrule\\[-1.6ex]
+    \end{tabular}
+    \caption{gte $\to$ gtr translators trained with different amounts of gte data: \atk{} models trained on NQ and evaluated an 8192-record subset of NQ. The rank metric varies from 1 to 8192, thus 4096 corresponds to a random ordering. Since Optimal Assignment is a matching method, cosine distances are not applicable. Standard errors are shown in parentheses.}
+    \label{tab:n_data}
+\end{table}
+
+In our main experiments, we use 1M-point subsets of NQ to train our \atk{} models. 
+Now, we train the gtr-gte \atk{} with
+1M gtr embeddings but fewer gte embeddings.
+\Cref{tab:n_data} shows that translators still learn something (i.e. are better than random), and only 50K embeddings are sufficient to learn a translation that is \textit{almost} as good.   Even with 10K embeddings, our method still learns a non-trivial translation. Translation performance generally seems to improve with the amount of training data, however.
+
+\section{Prompt for measuring information extraction}
+\label{sec:prompt}
+
+\Cref{fig:enron_heatmap} utilizes an LLM judge to determine whether the approximate inversion (using~\cite{zhang2025universalzeroshotembeddinginversion}) of a translated email embedding leaks information about the original email.   \Cref{fig:prompt} shows our prompt to the GPT-4o judge:
+\begin{figure}[ht]
+  \centering
+    \begin{callout}
+    \textbf{Original email:} \{ground\_truth\}
+    
+    \textbf{Reconstructed email:} \{generation\}.
+
+    Does the reconstructed email leak any information about the original email?
+    
+    Answer with only `yes' or `no'.
+    \end{callout}
+  \caption{The prompt given to the LLM judge.}
+  \label{fig:prompt}
+\end{figure}

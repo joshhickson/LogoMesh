@@ -1,0 +1,189 @@
+\documentclass{article}
+
+
+% if you need to pass options to natbib, use, e.g.:
+% \PassOptionsToPackage{numbers, compress}{natbib}
+% \PassOptionsToPackage{numbers,square,comma,sort}{natbib}
+
+% before loading neurips_2025
+
+
+% ready for submission
+% \usepackage[preprint]{neurips_2025}
+\usepackage[nonatbib,preprint]{neurips_2025}
+
+% to compile a preprint version, e.g., for submission to arXiv, add add the
+% [preprint] option:
+%     \usepackage[preprint]{neurips_2025}
+
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+%     \usepackage[final]{neurips_2025}
+
+
+% to avoid loading the natbib package, add option nonatbib:
+%    \usepackage[nonatbib]{neurips_2025}
+
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{bm}
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{cleveref}
+\usepackage{tcolorbox}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{wrapfig}
+
+
+% ——— BibLaTeX setup ———
+\usepackage[backend=biber,
+            style=numeric,
+            sorting=nyt,         % “name–year–title” 
+            maxbibnames=99,
+            natbib=true,
+            doi=false,
+            isbn=false,
+            url=false,
+            eprint=true]{biblatex}
+
+\DeclareFieldFormat
+  [article,inbook,incollection,inproceedings,patent,thesis,
+   techreport,unpublished,misc,book]
+  {title}{\mkbibquote{#1}}
+
+% format arXiv entries as “arXiv:XXXX.XXXXX”
+% \DeclareFieldFormat{eprint:arxiv}{%
+%   \iffieldundef{eprinttitle}
+%     {\mkbibacro{arXiv}\addcolon\space
+%      \ifhyperref
+%        {\href{https://arxiv.org/abs/#1}{#1}}
+%        {#1}}
+%     {\mkbibacro{arXiv}\addcolon\space
+%      \ifhyperref
+%        {\href{https://arxiv.org/abs/\strfield{eprint}}{%
+%          \printfield[eprinttitle]{eprint}}}
+%        {\printfield[eprinttitle]{eprint}}}}
+
+% \renewbibmacro*{eprint:arxiv+pubstate}{%
+%   \usebibmacro{eprint:arxiv}}
+
+% point at your .bib file
+\addbibresource{main.bib}
+
+
+% \definecolor{Gray}{gray}{0.85}
+% \definecolor{LightCyan}{rgb}{0.88,1,1}
+
+% \newcolumntype{a}{>{\columncolor{Gray}}r}
+% \newcolumntype{b}{>{\columncolor{LightCyan}}r}
+
+% define a callout style once in your preamble
+\newtcolorbox{callout}{
+  colback=blue!5,      % background color
+  colframe=blue!40,    % border color
+  left=3pt, right=3pt, top=3pt, bottom=3pt,
+  boxrule=0.5pt,
+  arc=2pt
+}
+
+\newcommand{\rj}[1]{\textcolor{red}{rishi:\ #1}}
+\newcommand{\vs}[1]{\textcolor{purple}{vitaly:\ #1}}
+\newcommand{\jm}[1]{\textcolor{orange}{jack:\ #1}}
+\newcommand{\atk}{\texttt{vec2vec}}
+\renewcommand{\L}{\mathcal{L}}
+\newcommand{\R}{\mathbb{R}}
+
+\newcommand{\shortpara}[1]{\vspace{.75ex}\noindent\textbf{#1}}
+
+
+
+% \title{All Embeddings Learn (Almost) The Same Thing}
+% \title{Embedding Translations with Vectors Only}
+% \title{Embedding Translation from Only A Few Vectors}
+% \title{Adversarial Unsupervised Embedding Alignment}
+% \title{Translating Representations from Representations Alone}
+% \title{Translating the Universal Language of\\ Text Embeddings}
+% \title{Translating the Universal Language of Embeddings}
+\title{Harnessing the Universal Geometry of Embeddings}
+
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+
+\author{%
+  Rishi Jha \quad Collin Zhang \quad Vitaly Shmatikov \quad John X. Morris\\
+  Department of Computer Science\\
+  Cornell University
+  % \texttt{\{rjha01, jhayase, sewoong\}@cs.washington.edu} \\
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We introduce the first method for translating text embeddings from one vector space to another without any paired data, encoders, or predefined sets of matches.  Our unsupervised approach translates any embedding to and from a universal latent representation (i.e., a universal semantic structure conjectured by the Platonic Representation Hypothesis).  Our translations achieve high cosine similarity across model pairs with different architectures, parameter counts, and training datasets.
+
+The ability to translate unknown embeddings into a different space while preserving their geometry has serious implications for the security of vector databases.  An adversary with access only to embedding vectors can extract sensitive information about the underlying documents, sufficient for classification and attribute inference.
+
+\end{abstract}
+
+\input{sections/00_intro}
+\input{sections/01_background}
+\input{sections/02_methods}
+\input{sections/02.5_experimental_setup}
+\input{sections/03_experiments}
+\input{sections/05_related}
+\input{sections/04_discussion}
+\input{sections/06_ablations}
+% \input{sections/07_conclusion}
+
+\begin{ack}
+
+This research is supported in part by the Google Cyber NYC Institutional Research Program.
+JM is supported by the National Science Foundation.
+
+% Use unnumbered first level headings for the acknowledgments. All acknowledgments go at the end of the paper before the list of references. Moreover, you are required to declare funding (financial activities supporting the submitted work) and competing interests (related financial activities outside the submitted work). More information about this disclosure can be found at: \url{https://neurips.cc/Conferences/2025/PaperInformation/FundingDisclosure}.
+
+% Do {\bf not} include this section in the anonymized submission, only in the final paper. You can use the \texttt{ack} environment provided in the style file to automatically hide this section in the anonymized submission.
+\end{ack}
+
+% \FloatBarrier
+% {
+%     \footnotesize
+%     \setlength{\bibsep}{0pt plus 0.1ex} 
+%     % \input{main.bbl}
+%     \bibliography{main.bib}
+%     \bibliographystyle{plainurl}
+% }
+\printbibliography
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\appendix
+\input{sections/appendix}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \newpage
+% \input{sections/checklist}
+
+\end{document}
