@@ -25,10 +25,6 @@ flowchart TD
         SB["Docker Sandbox<br>src/green_logic/sandbox.py"]
     end
 
-    subgraph "Persistent Sandbox Sidecar"
-        RSB["Red Agent Sandbox via fast IPC<br>Air-Gapped Docker Container"]
-    end
-
     subgraph "External Target"
         PA["Purple Agent<br>Code Generator via HTTP/JSON-RPC"]
     end
@@ -36,7 +32,7 @@ flowchart TD
     GA -- "1. Sends Task (JSON-RPC)" --> PA
     PA -- "2. Returns Source, Tests, Rationale" --> GA
     GA -- "3. Passes Source Code (In-Process)" --> RA
-    RA -- "3a. Executes Untrusted Tool Code" --> RSB
+    RA -- "3a. Executes Untrusted Tool Code (In-Process)" --> RA
     GA -- "4. Executes Tests" --> SB
     GA -- "5. Analyzes Constraints" --> SA
     GA -- "6. Aggregates Signals" --> CIS
@@ -52,7 +48,7 @@ The Purple Agent is an external service (e.g., an LLM wrapper) that receives a c
 Crucially, the Red Agent's core orchestrator is **not a separate service**. It is instantiated directly within the Green Agent's Python process (`_init_red_agent`).
 - **Core Engine:** Located in `src/red_logic/orchestrator.py`, it uses a Monte Carlo Tree Search (MCTS) algorithm (`MCTSPlanner`) to explore attack paths.
 - **Node Expansion:** Instead of relying on AST parsing, the MCTS engine mutates states using an LLM, dialogue context (`AgentMemory`), and regex/string manipulation.
-- **Security Boundary (Remediated):** Previously, the Red Agent ran untrusted code in-process, causing an 'Uroboros' risk. Per the [[2026-03-04] Red_Agent_Remediation_Plan.md](./Planning_and_Strategy/[2026-03-04]%20Red_Agent_Remediation_Plan.md), execution is now externalized to a **Persistent Sandbox (Sidecar)** via fast IPC to securely evaluate malicious meta-agent capability tools without dropping MCTS performance.
+- **Security Boundary (CRITICAL VULNERABILITY):** The Red Agent currently runs untrusted code directly in-process (`subprocess.Popen` via `execute_tool_node`), causing an 'Uroboros' risk. The planned "Persistent Sandbox (Sidecar) via fast IPC" mentioned in legacy docs is **not implemented**.
 
 ---
 
@@ -167,8 +163,8 @@ As we generalize the adversarial pipeline, it is critical to acknowledge the emp
 ### 5.3. Merkle Chaining is Not Implemented
 **Issue:** Despite conceptual plans, there is absolutely no active programmatic implementation of cryptographic Merkle Chaining between sequential records in the SQLite database. DBOM hashes are isolated, standalone artifacts per evaluation run.
 
-### 5.4. In-Process Red Agent Risk (Uroboros) (Remediation Planned)
+### 5.4. In-Process Red Agent Risk (Uroboros)
 **Issue:** As noted in the Star Topology section, the Red Agent is embedded directly within the Green Agent's process. 
-**Bug:** There is no container, process, or network namespace isolation for the MCTS engine while it handles untrusted code strings from the Purple Agent. This is a severe architectural security gap that must be addressed to safely scale adversarial evaluations.
-**Action:** Per the [[2026-03-04] Red_Agent_Remediation_Plan.md](./Planning_and_Strategy/[2026-03-04]%20Red_Agent_Remediation_Plan.md), execution will be externalized to a **Persistent Sandbox (Sidecar)** via fast IPC.
+**Bug:** There is no container, process, or network namespace isolation for the MCTS engine while it handles untrusted code strings from the Purple Agent. Untrusted tools are executed via `subprocess.Popen` in `src/red_logic/orchestrator.py`. This is a severe architectural security gap.
+**Action:** The previously claimed "Persistent Sandbox via fast IPC" does not currently exist in the codebase. This must be built from scratch, or the MCTS engine must be completely decoupled and executed in an external container (Phase 0 of the Lambda Telemetry plan).
 
