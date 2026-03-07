@@ -27,6 +27,7 @@ from a2a.server.events import EventQueue
 from a2a.types import AgentCard, AgentCapabilities, TaskState, InvalidParamsError, UnsupportedOperationError, Task
 from a2a.utils import new_agent_text_message, new_task
 from a2a.utils.errors import ServerError
+from src.purple_logic.router import TaskRouter
 
 
 logging.basicConfig(level=logging.INFO)
@@ -52,14 +53,16 @@ and perform tasks based on the instructions you receive.
 class GenericDefenderExecutor(AgentExecutor):
     """Executor for generic OpenAI-based defender agent"""
 
-    def __init__(self, model: str = "gpt-4o-mini"):
+    def __init__(self, model: str = "gpt-4o-mini", router=None):
         self.client = AsyncOpenAI(
             api_key=os.getenv("OPENAI_API_KEY"),
             base_url=os.getenv("OPENAI_BASE_URL")  # None defaults to OpenAI API
         )
         self.model = model
+        self.router = router
         self.system_prompt = GENERIC_DEFENDER_SYSTEM_PROMPT
         self.conversation_history = {}
+        self.context_system_prompts = {}
 
     async def execute(self, context: RequestContext, event_queue: EventQueue):
         """Execute defense task"""
@@ -83,6 +86,13 @@ class GenericDefenderExecutor(AgentExecutor):
             context_id = task.context_id or task_id
             if context_id not in self.conversation_history:
                 self.conversation_history[context_id] = []
+                # First message in this context: classify the domain and set the system prompt
+                if self.router:
+                    domain = self.router.classify(message_text)
+                    self.context_system_prompts[context_id] = self.router.get_system_prompt(domain)
+                    logger.info(f"Defender task {task_id}: Classified as domain '{domain}'")
+                else:
+                    self.context_system_prompts[context_id] = self.system_prompt
 
             # Add user message to history
             self.conversation_history[context_id].append({
@@ -90,11 +100,14 @@ class GenericDefenderExecutor(AgentExecutor):
                 "content": message_text
             })
 
+            # Get the correct system prompt for this context
+            current_system_prompt = self.context_system_prompts.get(context_id, self.system_prompt)
+
             # Call OpenAI with streaming enabled
             stream = await self.client.chat.completions.create(
                 model=self.model,
                 messages=[
-                    {"role": "system", "content": self.system_prompt},
+                    {"role": "system", "content": current_system_prompt},
                     *self.conversation_history[context_id]
                 ],
                 stream=True  # Enable token streaming
@@ -161,7 +174,8 @@ def main():
     )
 
     # Create executor
-    executor = GenericDefenderExecutor(model=args.model)
+    router = TaskRouter()
+    executor = GenericDefenderExecutor(model=args.model, router=router)
 
     # Create A2A application
     task_store = InMemoryTaskStore()
