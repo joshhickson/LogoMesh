@@ -20,7 +20,7 @@ Your previous document \[2026-03-01\] Sprint 3 Discovery & Blind Spots.md was fa
 * **Sprint 2 (March 16 – April 5):** Agent Safety, **Cybersecurity Agent**, Software Testing Agent, Finance Agent.  
 * **Sprint 3 (April 6 – April 26):** Multi-Agent Evaluation, **Coding Agent**, Healthcare Agent.
 
-**The Pivot:** During the March 4 meeting, your team agreed to target the **Cybersecurity Agent track**.
+**The Pivot:** During the March 4 meeting, your team agreed to target the **Cybersecurity Agent track**, while also maintaining the **Lambda Custom Track** as part of a dual-track strategy.
 
 * **The Problem:** Because Cybersecurity is in Sprint 2, not Sprint 3, you have lost three weeks of assumed preparation time. The sprint begins on March 16\. You have less than two weeks to refactor LogoMesh.  
 * **The Advantage:** The Phase 1 winner in the Cybersecurity track is Ethernaut Arena, which requires auditing and exploiting Solidity smart contracts. Because Prof. Shi's team literally wrote the paper *EVM-Bench* (Ethereum Virtual Machine Benchmark), your academic partners are uniquely qualified to defeat this specific Green Agent.
@@ -41,7 +41,7 @@ If you are pivoting to Cybersecurity and processing real exploits (like C/C++ fu
 
 **D. Compute Allocation**
 
-You have $500 in Lambda compute credits and OpenAI API access. Given the 4-call limit in the Lambda custom track, use these credits exclusively to run offline, mass-simulated MCTS tree expansions to farm the optimal prompt injection paths locally, as planned. Do not waste live API calls on platform tests that will fail the hard limit.
+You have Lambda compute credits and OpenAI API access. Given the 4-call limit in the Lambda custom track, use these credits (starting with local micro-LLMs and scaling to H100s) exclusively to run offline, mass-simulated MCTS tree expansions and micro-telemetry to farm the optimal prompt injection paths locally, as planned. Do not waste live API calls on platform tests that will fail the hard limit.
 
 ## **4\. Linear Pipeline & Academic Sync**
 

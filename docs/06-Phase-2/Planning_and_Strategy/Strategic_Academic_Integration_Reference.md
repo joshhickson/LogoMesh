@@ -1,11 +1,11 @@
 # Strategic Academic Integration Reference
-*Extracted from the obsolete "[2026-03-03] LogoMesh Phase 2 Planning & Meeting.md"*
+*Extracted from the "[2026-03-03] LogoMesh Phase 2 Planning & Meeting.md"*
 
 This document preserves the valuable theoretical concepts proposed for the NeurIPS 2026 submission, specifically regarding the integration of Professor Tianyu Shi's research frameworks into the LogoMesh architecture.
 
 ## 1. DynaWeb: Model-Based Reinforcement Learning via Imagination
 
-The DynaWeb framework, originally designed for Web Agents, provides a solution for constrained environments (like the former Lambda track plan) and can be adapted for generalized evaluation.
+The DynaWeb framework, originally designed for Web Agents, provides a solution for constrained environments (like the active Lambda track "Offline Sandbox" strategy) and can be adapted for generalized evaluation.
 
 *   **Concept:** DynaWeb uses a "Web World Model" (WWM) as a synthetic proxy for the real environment. The agent policy interacts with this simulated world instead of making expensive live API calls.
 *   **Mechanism:** The WWM predicts natural language descriptions of state changes based on current observations and agent actions, leveraging LLM instruction-following.
