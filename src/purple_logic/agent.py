@@ -6,6 +6,7 @@ from a2a.server.tasks import InMemoryTaskStore
 from a2a.types import AgentCard, AgentCapabilities
 
 from scenarios.security_arena.agents.generic_defender import GenericDefenderExecutor
+from src.purple_logic.router import TaskRouter
 
 
 def run_purple_agent(host: str, port: int):
@@ -24,7 +25,8 @@ def run_purple_agent(host: str, port: int):
     )
 
     model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
-    executor = GenericDefenderExecutor(model=model)
+    router = TaskRouter()
+    executor = GenericDefenderExecutor(model=model, router=router)
 
     task_store = InMemoryTaskStore()
     request_handler = DefaultRequestHandler(
