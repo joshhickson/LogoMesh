@@ -6,7 +6,7 @@
 \usepackage{parskip}
 \usepackage{titlesec}
 \usepackage{xcolor}
-\usepackage{amsmath, amssymb}
+\usepackage{amsmath}
 \usepackage{enumitem}
 \usepackage{hyperref}
 
@@ -41,7 +41,9 @@
 \maketitle
 
 \begin{abstract}
-The Berkeley RDI AgentBeats competition's Lambda Custom Track presents a unique adversarial constraint: attackers are strictly limited to 4 LLM API requests per battle, rendering live Monte Carlo Tree Search (MCTS) mathematically impossible. Furthermore, the competition mandates the use of \texttt{gpt-oss-20b} within an 80GB H100 environment to ensure fair compute, explicitly prohibiting proprietary API advantages. While the LogoMesh project initially abandoned the Lambda track due to the API limitation, we propose a strategic pivot: the \textbf{Offline Lambda Telemetry Sandbox}. By migrating the MCTS vulnerability hunt to a pre-computation phase using local, open-weights models that match the competition's specifications, we can leverage Representation Engineering (RepE) and H-Neuron activation tracking to generate highly potent, pre-calculated prompt injections. This paper outlines how continuous, internal neuronal reward signals can guide adversarial prompt generation offline, addressing the phenomenon of ``Comprehension Debt'' where generative models fabricate contextual invariants. To mitigate developmental risk and address the substantial architectural gap between the existing LogoMesh prototype and localized telemetry generation, we propose a three-phased execution strategy: Phase 0 (Architectural Decoupling), followed by local CPU-bound prototyping on lightweight 1B-parameter models (Phase A), and finally supervised cross-model translation scaling to the \texttt{gpt-oss-20b} competition target (Phase B). The resulting offline-optimized payloads can then be executed within the live Lambda arena using minimal API calls, fulfilling both competitive constraints and the NeurIPS 2026 Datasets and Benchmarks track criteria, while adhering strictly to the competition's mandate against hardcoded, scenario-specific logic.
+The Berkeley RDI AgentBeats competition's Lambda Custom Track presents a unique adversarial constraint: attackers are strictly limited to 4 LLM API requests per battle, rendering live Monte Carlo Tree Search (MCTS) mathematically impossible. Furthermore, the competition mandates the use of \texttt{gpt-oss-20b} within an 80GB H100 environment to ensure fair compute, explicitly prohibiting proprietary API advantages. While the LogoMesh project initially abandoned the Lambda track due to the API limitation, we propose a strategic pivot: the \textbf{Offline Lambda Telemetry Sandbox}.
+
+By migrating the MCTS vulnerability hunt to a pre-computation phase using local, open-weights models that match the competition's specifications, we can leverage Representation Engineering (RepE) and H-Neuron activation tracking to generate highly potent, pre-calculated prompt injections. This paper outlines how continuous, internal neuronal reward signals can guide adversarial prompt generation offline, addressing the phenomenon of ``Comprehension Debt'' where generative models fabricate contextual invariants. To mitigate developmental risk and address the substantial architectural gap between the existing LogoMesh prototype and localized telemetry generation, we propose a three-phased execution strategy: Phase 0 (Architectural Decoupling), followed by local CPU-bound prototyping on lightweight 1B-parameter models (Phase A), and finally supervised cross-model translation scaling to the \texttt{gpt-oss-20b} competition target (Phase B). The resulting offline-optimized payloads can then be executed within the live Lambda arena using minimal API calls, fulfilling both competitive constraints and the NeurIPS 2026 Datasets and Benchmarks track criteria, while adhering strictly to the competition's mandate against hardcoded, scenario-specific logic.
 \end{abstract}
 
 \section{Introduction: The Epistemic Boundary of Novelty vs. Hallucination}
@@ -90,11 +92,13 @@ By synthesizing the bottom-up neuronal tracking with top-down latent state monit
 
 To transition this theory into empirical practice, the offline telemetry sandbox must rigorously interface with three specific sub-systems currently present in the LogoMesh repository:
 
+\begin{sloppypar}
 \begin{itemize}
-    \item \textbf{The Purple Agent Simulacrum:} The target architecture (\texttt{src/scenarios/security\_arena/agents/generic\_defender.py}) reveals that the defender is an A2A streaming wrapper around \texttt{GENERIC\_DEFENDER\_SYSTEM\_PROMPT} and a stateless \texttt{conversation\_history}. We can perfectly simulate this target environment offline by injecting this exact system prompt and conversation dictionary into the local HuggingFace \texttt{Pipeline}, guaranteeing that attacks generated locally will translate flawlessly to the live API endpoint.
-    \item \textbf{Red Agent Memory Tracking:} The MCTS planner's context is governed by the \texttt{AgentMemory} dataclass (in \texttt{src/red\_logic/orchestrator.py}), which strictly tracks \texttt{findings}, \texttt{hypotheses}, \texttt{explored\_functions}, and \texttt{observations}. The PyTorch forward-hooks will track LAT projections \textit{specifically} during the serialization of the \texttt{observations} array, as this is the exact moment the model must synthesize its findings into an actionable next step. By penalizing "certainty drops" strictly during the \texttt{observation} synthesis phase, we prevent the model from hallucinating tool outputs.
-    \item \textbf{Dynamic Tool Generation:} The LogoMesh MCTS utilizes a \texttt{ToolRegistry} that allows for \textit{meta-agent capability expansion} via the \texttt{\_create\_tool} action. In the offline sandbox, when the model attempts to generate a new Python function (\texttt{def tool\_name(params: dict, memory, source\_code: str) -> ToolResult}), we will monitor the H-Neuron activation threshold. If the H-Neuron signature indicates over-compliance (i.e., the model is writing a tool to fulfill a hallucinated vulnerability path), the offline engine will immediately prune the MCTS branch and apply a severe \texttt{LAT\_Penalty} to the parent node.
+    \item \textbf{The Purple Agent Simulacrum:} The target architecture (\path{src/scenarios/security_arena/agents/generic_defender.py}) reveals that the defender is an A2A streaming wrapper around \path{GENERIC_DEFENDER_SYSTEM_PROMPT} and a stateless \path{conversation_history}. We can perfectly simulate this target environment offline by injecting this exact system prompt and conversation dictionary into the local HuggingFace \texttt{Pipeline}, guaranteeing that attacks generated locally will translate flawlessly to the live API endpoint.
+    \item \textbf{Red Agent Memory Tracking:} The MCTS planner's context is governed by the \texttt{AgentMemory} dataclass (in \path{src/red_logic/orchestrator.py}), which strictly tracks \texttt{findings}, \texttt{hypotheses}, \path{explored_functions}, and \texttt{observations}. The PyTorch forward-hooks will track LAT projections \textit{specifically} during the serialization of the \texttt{observations} array, as this is the exact moment the model must synthesize its findings into an actionable next step. By penalizing "certainty drops" strictly during the \texttt{observation} synthesis phase, we prevent the model from hallucinating tool outputs.
+    \item \textbf{Dynamic Tool Generation:} The LogoMesh MCTS utilizes a \texttt{ToolRegistry} that allows for \textit{meta-agent capability expansion} via the \path{_create_tool} action. In the offline sandbox, when the model attempts to generate a new Python function (\path{def tool_name(params: dict, memory, source_code: str) -> ToolResult}), we will monitor the H-Neuron activation threshold. If the H-Neuron signature indicates over-compliance (i.e., the model is writing a tool to fulfill a hallucinated vulnerability path), the offline engine will immediately prune the MCTS branch and apply a severe \path{LAT_Penalty} to the parent node.
 \end{itemize}
+\end{sloppypar}
 
 \section{Architectural Integration: Three-Phased Execution Strategy}
 
@@ -104,11 +108,13 @@ To operationalize this theory for the Lambda Track and the subsequent NeurIPS su
 
 \subsection{Phase 0: Architectural Decoupling \& Hardening}
 Before attaching telemetry hooks, the monolithic MCTS Orchestrator must be decoupled:
+\begin{sloppypar}
 \begin{itemize}
-    \item \textbf{Model Abstraction Layer:} The hardcoded \texttt{chat.completions.create} API calls must be abstracted to support a \texttt{BaseModelClient}, allowing the injection of local, offline \texttt{transformers} models.
+    \item \textbf{Model Abstraction Layer:} The hardcoded \path{chat.completions.create} API calls must be abstracted to support a \texttt{BaseModelClient}, allowing the injection of local, offline \texttt{transformers} models.
     \item \textbf{State Serialization Pipeline:} The in-memory \texttt{AgentMemory} structure must be refactored to support deep JSON serialization. This enables the MCTS tree to pause, dump state to disk, and resume across the localized Phase A and scaled Phase B environments.
     \item \textbf{Continuous Reward Interface:} The Green Agent's semantic \texttt{CIS Scorer} evaluates textual rationale. We must implement a continuous LAT/RepE reward interface that processes neuronal activation tensors directly as MCTS node valuations.
 \end{itemize}
+\end{sloppypar}
 
 \subsection{Phase A: Local CPU-Bound Prototyping}
 We first establish the ``Offline Execution Environment'' using a lightweight, local surrogate. As detailed in the LogoMesh blueprint, models such as \texttt{Llama-3.2-1B-Instruct} (hidden dimension 2048, 22 layers) require merely $\sim$2GB of RAM and can be executed entirely on consumer CPU/laptop hardware via \texttt{torch.float16} and \texttt{torch.no\_grad()}. 
