@@ -171,6 +171,8 @@ info ""
 info "  Press Ctrl+C to stop"
 info "════════════════════════════════════════════════════"
 
+sleep 3
+
 # Stream Green Agent logs in real-time
 info ""
 info "  ── Green Agent (live) ──────────────────────────"
