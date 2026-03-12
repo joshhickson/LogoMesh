@@ -403,7 +403,7 @@ Key calibration points:
 
 ### Lambda Labs (H100/A100)
 ```bash
-git clone https://github.com/joshhickson/LogoMesh.git
+git clone https://github.com/LogoMesh/LogoMesh.git
 cd LogoMesh && git checkout feat/agi-agents
 pip install uv && uv sync
 cp .env.example .env  # Add OPENAI_API_KEY
@@ -433,7 +433,7 @@ docker compose -f docker-compose.agents.yml up --build
 
 | Resource | URL |
 |----------|-----|
-| LogoMesh Repo | https://github.com/joshhickson/LogoMesh |
+| LogoMesh Repo | https://github.com/LogoMesh/LogoMesh |
 | AgentBeats Platform | https://agentbeats.dev |
 | AgentBeats Docs | https://docs.agentbeats.dev |
 | Competition Page | https://rdi.berkeley.edu/agentx-agentbeats |
