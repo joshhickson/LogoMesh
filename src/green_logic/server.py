@@ -75,7 +75,7 @@ def _init_red_agent():
 
         # OPTIMIZED DEFAULTS: MCTS with fewer steps = smart but fast
         use_mcts = os.getenv("RED_AGENT_MCTS", "true").lower() == "true"  # MCTS on by default
-        max_steps = int(os.getenv("RED_AGENT_STEPS", "5"))  # 5 steps = good coverage
+        max_steps = int(os.getenv("RED_AGENT_MAX_STEPS", "5"))  # 5 steps = good coverage
         timeout = float(os.getenv("RED_AGENT_TIMEOUT", "20"))  # 20s budget
         mcts_branches = int(os.getenv("RED_AGENT_MCTS_BRANCHES", "2"))  # 2 branches (not 3)
 
@@ -629,7 +629,7 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
             # Restore defaults for moderate/complex tasks
             use_mcts = os.getenv("RED_AGENT_MCTS", "true").lower() == "true"
             red_agent.use_mcts = use_mcts
-            red_agent.max_steps = int(os.getenv("RED_AGENT_STEPS", "5"))
+            red_agent.max_steps = int(os.getenv("RED_AGENT_MAX_STEPS", "5"))
 
         if red_agent:
             print(f"[Red] Running embedded Red Agent attack on {len(source_code)} chars of code")
@@ -1072,7 +1072,7 @@ async def report_result_action(request: ReportResultRequest):
 # ============================================================================
 # RED_AGENT_MCTS=true       - Enable MCTS Tree of Thoughts (default: true)
 # RED_AGENT_MCTS_BRANCHES=2 - MCTS branches per step (default: 2, max 3)
-# RED_AGENT_STEPS=5         - Max investigation steps (default: 5)
+# RED_AGENT_MAX_STEPS=5     - Max investigation steps (default: 5)
 # RED_AGENT_TIMEOUT=20      - Timeout in seconds (default: 20)
 # MAX_REFINEMENT_ITERATIONS=2 - Refinement iterations (default: 2)
 # SANDBOX_TIMEOUT=15        - Sandbox timeout (default: 15)
@@ -1080,9 +1080,9 @@ async def report_result_action(request: ReportResultRequest):
 # ENABLE_REFINEMENT_LOOP=true   - Enable refinement loop (default: true)
 #
 # PRESETS:
-# FAST MODE:    RED_AGENT_MCTS=false RED_AGENT_STEPS=3 MAX_REFINEMENT_ITERATIONS=1 ENABLE_SCIENTIFIC_METHOD=false
-# BALANCED:     RED_AGENT_MCTS=true RED_AGENT_MCTS_BRANCHES=2 RED_AGENT_STEPS=5 MAX_REFINEMENT_ITERATIONS=2 (DEFAULT)
-# FULL AGI:     RED_AGENT_MCTS=true RED_AGENT_MCTS_BRANCHES=3 RED_AGENT_STEPS=10 MAX_REFINEMENT_ITERATIONS=3
+# FAST MODE:    RED_AGENT_MCTS=false RED_AGENT_MAX_STEPS=3 MAX_REFINEMENT_ITERATIONS=1 ENABLE_SCIENTIFIC_METHOD=false
+# BALANCED:     RED_AGENT_MCTS=true RED_AGENT_MCTS_BRANCHES=2 RED_AGENT_MAX_STEPS=5 MAX_REFINEMENT_ITERATIONS=2 (DEFAULT)
+# FULL AGI:     RED_AGENT_MCTS=true RED_AGENT_MCTS_BRANCHES=3 RED_AGENT_MAX_STEPS=10 MAX_REFINEMENT_ITERATIONS=3
 # ============================================================================
 
 def run_server():
