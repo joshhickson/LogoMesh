@@ -5,7 +5,7 @@ Thanks for your interest in contributing. This doc covers how to get set up, sub
 ## Getting Started
 
 ```bash
-git clone https://github.com/joshhickson/LogoMesh.git
+git clone https://github.com/LogoMesh/LogoMesh.git
 cd LogoMesh
 pip install uv && uv sync
 cp .env.example .env
@@ -39,11 +39,11 @@ You should get back a JSON response with a `cis_score`.
 
 ### Phase 2 Tryout
 
-If you're here from the recruitment post: look for issues tagged [`phase-2-tryout`](https://github.com/joshhickson/LogoMesh/labels/phase-2-tryout). Pick one, fork the repo, implement it, and open a PR. That's the application process.
+If you're here from the recruitment post: look for issues tagged [`phase-2-tryout`](https://github.com/LogoMesh/LogoMesh/labels/phase-2-tryout). Pick one, fork the repo, implement it, and open a PR. That's the application process.
 
 ### Regular Contributions
 
-1. Check [open issues](https://github.com/joshhickson/LogoMesh/issues). Issues tagged `good-first-issue` are scoped and approachable.
+1. Check [open issues](https://github.com/LogoMesh/LogoMesh/issues). Issues tagged `good-first-issue` are scoped and approachable.
 2. Fork the repo and create a branch off `master`.
 3. Make your changes.
 4. Open a PR with a clear description of what you changed and why.

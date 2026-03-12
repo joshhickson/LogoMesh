@@ -43,7 +43,7 @@ dev = [
 ]
 
 [project.urls]
-Repository = "https://github.com/joshhickson/LogoMesh"
+Repository = "https://github.com/LogoMesh/LogoMesh"
 
 [project.scripts]
 logomesh = "agentbeats.run_scenario:main"

@@ -34,7 +34,7 @@ The LLM can only adjust scores **±0.10** from ground-truth anchors. Run-to-run 
 ### Setup
 
 ```bash
-git clone https://github.com/joshhickson/LogoMesh.git
+git clone https://github.com/LogoMesh/LogoMesh.git
 cd LogoMesh
 git checkout feat/agi-agents   # <-- active branch, master is stale
 
