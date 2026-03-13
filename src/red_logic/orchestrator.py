@@ -152,7 +152,8 @@ class ThoughtNode:
             return float('inf')  # Unexplored nodes have highest priority
 
         exploitation = self.value / self.visits
-        exploration = exploration_weight * math.sqrt(math.log(self.parent.visits + 1) / self.visits)
+        parent_visits = self.parent.visits + 1 if self.parent else 1
+        exploration = exploration_weight * math.sqrt(math.log(parent_visits) / self.visits)
 
         return exploitation + exploration + (self.prior * 0.5)  # Prior bonus
 
