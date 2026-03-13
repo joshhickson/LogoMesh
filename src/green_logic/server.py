@@ -694,6 +694,7 @@ IMPORTANT: Respond with valid JSON only (no markdown code blocks):
         if isinstance(purple_tests, str) and '\\n' in purple_tests:
             purple_tests = purple_tests.replace('\\n', '\n').replace('\\t', '\t')
 
+        test_memory = ""
         if hidden_tests and hidden_tests.strip():
             # Priority 1: Use hidden tests (task-defined, Purple can't see these)
             tests_to_run = hidden_tests
