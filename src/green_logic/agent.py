@@ -16,8 +16,8 @@ class GreenAgent:
         dbom = < h(delta), v_intent, score_cis, sigma_judge >
         """
         battle_id = result.get("battle_id", "N/A")
-        raw_result = json.dumps(result)
-        
+        raw_result = json.dumps(result, sort_keys=True)
+
         # 1. h(delta) - hash of the change/result
         h_delta = hashlib.sha256(raw_result.encode()).hexdigest()
 

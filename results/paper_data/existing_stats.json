@@ -1,0 +1,55 @@
+{
+  "generated_by": "scripts/mine_existing_data.py",
+  "description": "Statistics mined from existing DBOM files and Tier 2 Qwen battle log. Per-task breakdown not available (DBOM files lack task_title field and battles.db was not retained after campaign). Use variance_test.json for controlled per-task variance measurements.",
+  "dbom_analysis": {
+    "source": "data/dboms/*.json",
+    "total_files": 313,
+    "zero_score_battles": 215,
+    "zero_score_note": "215 zero-score records correspond to Email Validator battles (2026-01-14) where the Purple agent returned empty/unparseable source code. These are excluded from the non-zero analysis below.",
+    "non_zero": {
+      "count": 98,
+      "mean": 0.6324,
+      "std": 0.1559,
+      "min": 0.05,
+      "max": 0.85
+    },
+    "all_scores": {
+      "count": 313,
+      "mean": 0.198,
+      "std": 0.3064,
+      "min": 0.0,
+      "max": 0.85
+    }
+  },
+  "tier2_qwen_analysis": {
+    "source": "results/c_new_001_diversity_test/tier2_qwen_battles.log",
+    "model": "Qwen (Tier 2)",
+    "campaign_date": "2026-01-15",
+    "count": 25,
+    "mean": 0.6664,
+    "std": 0.1243,
+    "min": 0.42,
+    "max": 0.84
+  },
+  "combined_non_zero": {
+    "note": "98 non-zero DBOM scores covering Rate Limiter, LRU Cache, Fibonacci (Jan 13 campaign)",
+    "count": 98,
+    "mean": 0.6324,
+    "std": 0.1559,
+    "min": 0.05,
+    "max": 0.85
+  },
+  "decision_gate": {
+    "per_task_variance_available": false,
+    "reason": "DBOM files do not encode task_title; battles.db absent",
+    "action": "Proceed to Phase 2: controlled variance test with mock Purple"
+  },
+  "best_example_record": {
+    "dbom_version": "1.0",
+    "battle_id": "auto_1768356181_5055",
+    "h_delta": "6aeeef49806067abc5273f869ee6d2164bfafd92006bd987715d9f0c507f8de0",
+    "score_cis": 0.8500000000000001,
+    "sigma_judge": "SIG_GREEN_auto_1768356181_5055_6aeeef49",
+    "timestamp": "2026-01-14T02:07:49.937049"
+  }
+}

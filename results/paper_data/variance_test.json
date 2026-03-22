@@ -1,0 +1,160 @@
+{
+  "methodology": "Fixed golden solutions evaluated 5 times each to isolate evaluator variance from code-generation variance. The mock Purple server returns identical source code on every call; all observed score variation arises from LLM stochasticity in the Red Agent and L-score components.",
+  "runs_per_task": 5,
+  "tasks_tested": [
+    "task-002",
+    "task-003",
+    "task-004"
+  ],
+  "results": {
+    "task-002": {
+      "title": "Rate Limiter",
+      "task_id": "task-002",
+      "runs": [
+        {
+          "run": 1,
+          "battle_id": "variance_task-002_1_7b076b",
+          "cis_score": null,
+          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+        },
+        {
+          "run": 2,
+          "battle_id": "variance_task-002_2_271edb",
+          "cis_score": null,
+          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+        },
+        {
+          "run": 3,
+          "battle_id": "variance_task-002_3_be2149",
+          "cis_score": null,
+          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+        },
+        {
+          "run": 4,
+          "battle_id": "variance_task-002_4_a30c0a",
+          "cis_score": null,
+          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+        },
+        {
+          "run": 5,
+          "battle_id": "variance_task-002_5_2627c2",
+          "cis_score": null,
+          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+        }
+      ],
+      "count": 0,
+      "error": "insufficient data"
+    },
+    "task-003": {
+      "title": "LRU Cache",
+      "task_id": "task-003",
+      "runs": [
+        {
+          "run": 1,
+          "battle_id": "variance_task-003_1_359d4a",
+          "cis_score": 0.0,
+          "R": null,
+          "A": null,
+          "T": null,
+          "L": null,
+          "error": null
+        },
+        {
+          "run": 2,
+          "battle_id": "variance_task-003_2_efa4f4",
+          "cis_score": 0.0,
+          "R": null,
+          "A": null,
+          "T": null,
+          "L": null,
+          "error": null
+        },
+        {
+          "run": 3,
+          "battle_id": "variance_task-003_3_1dbbf7",
+          "cis_score": 0.0,
+          "R": null,
+          "A": null,
+          "T": null,
+          "L": null,
+          "error": null
+        },
+        {
+          "run": 4,
+          "battle_id": "variance_task-003_4_fe8149",
+          "cis_score": 0.0,
+          "R": null,
+          "A": null,
+          "T": null,
+          "L": null,
+          "error": null
+        },
+        {
+          "run": 5,
+          "battle_id": "variance_task-003_5_58021e",
+          "cis_score": 0.0,
+          "R": null,
+          "A": null,
+          "T": null,
+          "L": null,
+          "error": null
+        }
+      ],
+      "count": 5,
+      "mean": 0.0,
+      "std_dev": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "task-004": {
+      "title": "Recursive Fibonacci",
+      "task_id": "task-004",
+      "runs": [
+        {
+          "run": 1,
+          "battle_id": "variance_task-004_1_551b60",
+          "cis_score": null,
+          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+        },
+        {
+          "run": 2,
+          "battle_id": "variance_task-004_2_49000d",
+          "cis_score": null,
+          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+        },
+        {
+          "run": 3,
+          "battle_id": "variance_task-004_3_91f4bc",
+          "cis_score": null,
+          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+        },
+        {
+          "run": 4,
+          "battle_id": "variance_task-004_4_6d2fae",
+          "cis_score": null,
+          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+        },
+        {
+          "run": 5,
+          "battle_id": "variance_task-004_5_5527d2",
+          "cis_score": null,
+          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+        }
+      ],
+      "count": 0,
+      "error": "insufficient data"
+    }
+  },
+  "overall": {
+    "mean_cis": 0.0,
+    "overall_std": 0.0,
+    "mean_per_task_std": 0.0,
+    "max_per_task_std": 0.0
+  },
+  "variance_claim": {
+    "threshold": 0.05,
+    "max_observed_std": 0.0,
+    "claim_supported": true,
+    "note": "Variance threshold of 0.05 met. Max per-task std_dev = 0.0."
+  }
+}

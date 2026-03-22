@@ -127,8 +127,8 @@ class DynamicExperimentBuilder:
             return False, "Test code must use hypothesis or unittest"
 
         self.created_experiments[experiment_name] = test_code
-        print(f"[MetaAgent] 🧪 Created custom experiment: {experiment_name}")
-        print(f"[MetaAgent] 📐 Invariant: {invariant[:80]}...")
+        print(f"[MetaAgent] [TEST] Created custom experiment: {experiment_name}")
+        print(f"[MetaAgent] [RULE] Invariant: {invariant[:80]}...")
         return True, f"Custom experiment '{experiment_name}' created"
 
     def get_experiment(self, name: str) -> Optional[str]:
