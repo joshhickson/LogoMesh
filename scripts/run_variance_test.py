@@ -274,14 +274,15 @@ def run_evaluation(task_id: str, run_idx: int) -> dict:
             return {"run": run_idx, "battle_id": battle_id, "cis_score": None,
                     "error": f"HTTP {r.status_code}: {r.text[:300]}"}
         data = r.json()
+        ev = data.get("evaluation", {})
         return {
             "run": run_idx,
             "battle_id": battle_id,
-            "cis_score": data.get("cis_score", data.get("score", 0.0)),
-            "R": data.get("component_scores", {}).get("R", None),
-            "A": data.get("component_scores", {}).get("A", None),
-            "T": data.get("component_scores", {}).get("T", None),
-            "L": data.get("component_scores", {}).get("L", None),
+            "cis_score": ev.get("cis_score", data.get("cis_score", data.get("score", 0.0))),
+            "R": ev.get("rationale_score", data.get("component_scores", {}).get("R")),
+            "A": ev.get("architecture_score", data.get("component_scores", {}).get("A")),
+            "T": ev.get("testing_score", data.get("component_scores", {}).get("T")),
+            "L": ev.get("logic_score", data.get("component_scores", {}).get("L")),
             "error": data.get("error"),
             "raw": data,
         }

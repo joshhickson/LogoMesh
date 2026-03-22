@@ -860,7 +860,7 @@ class ScientificMethodEngine:
 
                 # Log the property being tested (AGI-level visibility)
                 if experiment.invariant:
-                    print(f"[ScientificMethod] 🧪 Testing invariant: {experiment.invariant[:80]}...")
+                    print(f"[ScientificMethod] [TEST] Testing invariant: {experiment.invariant[:80]}...")
 
                 # Run property-based experiment
                 if sandbox_runner:
@@ -1384,12 +1384,12 @@ class RefinementLoop:
         # SUCCESS: Stop if tests pass with no critical vulns and decent score
         # Lowered threshold from 0.8 to 0.7 - a passing score is good enough
         if test_passed and critical_vulns == 0 and score >= 0.7:
-            print(f"[Refinement] ✅ Success! Score {score:.2f} >= 0.7 with passing tests")
+            print(f"[Refinement] [OK] Success! Score {score:.2f} >= 0.7 with passing tests")
             return False
 
         # REGRESSION DETECTION: Stop if score dropped significantly from best
         if iteration > 1 and score < self.best_score - 0.1:
-            print(f"[Refinement] ⚠️ Score regressed from {self.best_score:.2f} to {score:.2f}, stopping")
+            print(f"[Refinement] [WARN] Score regressed from {self.best_score:.2f} to {score:.2f}, stopping")
             return False
 
         return True

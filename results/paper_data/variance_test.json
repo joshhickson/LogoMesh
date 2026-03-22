@@ -13,37 +13,60 @@
       "runs": [
         {
           "run": 1,
-          "battle_id": "variance_task-002_1_7b076b",
-          "cis_score": null,
-          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+          "battle_id": "variance_task-002_1_c23202",
+          "cis_score": 0.7027660112721579,
+          "R": 0.7,
+          "A": 0.81,
+          "T": 0.5010640450886318,
+          "L": 0.8,
+          "error": null
         },
         {
           "run": 2,
-          "battle_id": "variance_task-002_2_271edb",
-          "cis_score": null,
-          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+          "battle_id": "variance_task-002_2_64c808",
+          "cis_score": 0.7027660112721579,
+          "R": 0.7,
+          "A": 0.81,
+          "T": 0.5010640450886318,
+          "L": 0.8,
+          "error": null
         },
         {
           "run": 3,
-          "battle_id": "variance_task-002_3_be2149",
-          "cis_score": null,
-          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+          "battle_id": "variance_task-002_3_e63ee4",
+          "cis_score": 0.7027660112721579,
+          "R": 0.7,
+          "A": 0.81,
+          "T": 0.5010640450886318,
+          "L": 0.8,
+          "error": null
         },
         {
           "run": 4,
-          "battle_id": "variance_task-002_4_a30c0a",
-          "cis_score": null,
-          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+          "battle_id": "variance_task-002_4_56ad9f",
+          "cis_score": 0.7027660112721579,
+          "R": 0.7,
+          "A": 0.81,
+          "T": 0.5010640450886318,
+          "L": 0.8,
+          "error": null
         },
         {
           "run": 5,
-          "battle_id": "variance_task-002_5_2627c2",
-          "cis_score": null,
-          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+          "battle_id": "variance_task-002_5_1741b9",
+          "cis_score": 0.7027660112721579,
+          "R": 0.7,
+          "A": 0.81,
+          "T": 0.5010640450886318,
+          "L": 0.8,
+          "error": null
         }
       ],
-      "count": 0,
-      "error": "insufficient data"
+      "count": 5,
+      "mean": 0.7028,
+      "std_dev": 0.0,
+      "min": 0.7028,
+      "max": 0.7028
     },
     "task-003": {
       "title": "LRU Cache",
@@ -51,60 +74,60 @@
       "runs": [
         {
           "run": 1,
-          "battle_id": "variance_task-003_1_359d4a",
-          "cis_score": 0.0,
-          "R": null,
-          "A": null,
-          "T": null,
-          "L": null,
+          "battle_id": "variance_task-003_1_9ae36d",
+          "cis_score": 0.73,
+          "R": 0.46,
+          "A": 0.81,
+          "T": 0.85,
+          "L": 0.8,
           "error": null
         },
         {
           "run": 2,
-          "battle_id": "variance_task-003_2_efa4f4",
-          "cis_score": 0.0,
-          "R": null,
-          "A": null,
-          "T": null,
-          "L": null,
+          "battle_id": "variance_task-003_2_e6bfee",
+          "cis_score": 0.73,
+          "R": 0.46,
+          "A": 0.81,
+          "T": 0.85,
+          "L": 0.8,
           "error": null
         },
         {
           "run": 3,
-          "battle_id": "variance_task-003_3_1dbbf7",
-          "cis_score": 0.0,
-          "R": null,
-          "A": null,
-          "T": null,
-          "L": null,
+          "battle_id": "variance_task-003_3_768889",
+          "cis_score": 0.73,
+          "R": 0.46,
+          "A": 0.81,
+          "T": 0.85,
+          "L": 0.8,
           "error": null
         },
         {
           "run": 4,
-          "battle_id": "variance_task-003_4_fe8149",
-          "cis_score": 0.0,
-          "R": null,
-          "A": null,
-          "T": null,
-          "L": null,
+          "battle_id": "variance_task-003_4_df9d35",
+          "cis_score": 0.7450000000000001,
+          "R": 0.46,
+          "A": 0.81,
+          "T": 0.91,
+          "L": 0.8,
           "error": null
         },
         {
           "run": 5,
-          "battle_id": "variance_task-003_5_58021e",
-          "cis_score": 0.0,
-          "R": null,
-          "A": null,
-          "T": null,
-          "L": null,
+          "battle_id": "variance_task-003_5_ae0e33",
+          "cis_score": 0.73,
+          "R": 0.46,
+          "A": 0.81,
+          "T": 0.85,
+          "L": 0.8,
           "error": null
         }
       ],
       "count": 5,
-      "mean": 0.0,
-      "std_dev": 0.0,
-      "min": 0.0,
-      "max": 0.0
+      "mean": 0.733,
+      "std_dev": 0.0067,
+      "min": 0.73,
+      "max": 0.745
     },
     "task-004": {
       "title": "Recursive Fibonacci",
@@ -112,49 +135,72 @@
       "runs": [
         {
           "run": 1,
-          "battle_id": "variance_task-004_1_551b60",
-          "cis_score": null,
-          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+          "battle_id": "variance_task-004_1_3019c0",
+          "cis_score": 0.7549999999999999,
+          "R": 0.7,
+          "A": 0.82,
+          "T": 0.7,
+          "L": 0.8,
+          "error": null
         },
         {
           "run": 2,
-          "battle_id": "variance_task-004_2_49000d",
-          "cis_score": null,
-          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+          "battle_id": "variance_task-004_2_1fb5c3",
+          "cis_score": 0.7549999999999999,
+          "R": 0.7,
+          "A": 0.82,
+          "T": 0.7,
+          "L": 0.8,
+          "error": null
         },
         {
           "run": 3,
-          "battle_id": "variance_task-004_3_91f4bc",
-          "cis_score": null,
-          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+          "battle_id": "variance_task-004_3_6040f8",
+          "cis_score": 0.7549999999999999,
+          "R": 0.7,
+          "A": 0.82,
+          "T": 0.7,
+          "L": 0.8,
+          "error": null
         },
         {
           "run": 4,
-          "battle_id": "variance_task-004_4_6d2fae",
-          "cis_score": null,
-          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+          "battle_id": "variance_task-004_4_bed2bc",
+          "cis_score": 0.7549999999999999,
+          "R": 0.7,
+          "A": 0.82,
+          "T": 0.7,
+          "L": 0.8,
+          "error": null
         },
         {
           "run": 5,
-          "battle_id": "variance_task-004_5_5527d2",
-          "cis_score": null,
-          "error": "HTTP 500: {\"detail\":\"'charmap' codec can't encode character '\\\\U0001f9ea' in position 19: character maps to <undefined>\"}"
+          "battle_id": "variance_task-004_5_d6fa01",
+          "cis_score": 0.7549999999999999,
+          "R": 0.7,
+          "A": 0.82,
+          "T": 0.7,
+          "L": 0.8,
+          "error": null
         }
       ],
-      "count": 0,
-      "error": "insufficient data"
+      "count": 5,
+      "mean": 0.755,
+      "std_dev": 0.0,
+      "min": 0.755,
+      "max": 0.755
     }
   },
   "overall": {
-    "mean_cis": 0.0,
-    "overall_std": 0.0,
-    "mean_per_task_std": 0.0,
-    "max_per_task_std": 0.0
+    "mean_cis": 0.7303,
+    "overall_std": 0.0225,
+    "mean_per_task_std": 0.0022,
+    "max_per_task_std": 0.0067
   },
   "variance_claim": {
     "threshold": 0.05,
-    "max_observed_std": 0.0,
+    "max_observed_std": 0.0067,
     "claim_supported": true,
-    "note": "Variance threshold of 0.05 met. Max per-task std_dev = 0.0."
+    "note": "Variance threshold of 0.05 met. Max per-task std_dev = 0.0067."
   }
 }
