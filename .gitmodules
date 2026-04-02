@@ -1,0 +1,13 @@
+[submodule "external/rcabench"]
+	path = external/rcabench
+	url = https://github.com/JianhongTu/RCAbench
+	branch = simplify-mini-swe-agent-setup
+	shallow = true
+[submodule "external/text-2-sql-agent"]
+	path = external/text-2-sql-agent
+	url = https://github.com/ashcastelinocs124/text-2-sql-agent
+	shallow = true
+[submodule "external/aver-green-agent"]
+	path = external/aver-green-agent
+	url = https://github.com/weelzo/aver-green-agent
+	shallow = true
