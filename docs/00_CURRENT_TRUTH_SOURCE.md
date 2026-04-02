@@ -32,10 +32,11 @@ A multi-agent benchmark that evaluates AI-written code by actually running it, a
 ## 4. Immediate Priorities
 
 ### Phase 2 Competition
-- Tag `phase-2-tryout` issues for recruitment filter (done: #127, #128, #129)
-- Recruit 1-2 devs via PR-based tryout (Josh owns outreach, Oleksander reviews PRs)
-- Deepti handles registration and competition admin
-- Build Purple Agent for main track + Lambda Security Arena
+- **Sprint 1** active, ends April 12, 2026
+- **Sprint 2** opens ~April 12 — target: MateFin, CAR-bench, MIDS4LIFE (selected via optimal path analysis)
+- **Sprint 3** opens ~May 2026 — must target ALL first-place repos: Pi-Bench, NetArena, ICU-Later, RCAbench, LogoMesh-self
+- Purple Agent adapter build sequence: B (JSON) → A-delta (MateFin) → C (AVER/CAR-bench) → F (Pi-Bench/MIDS4LIFE) → E floor (NetArena/ICU-Later)
+- See [Optimal Path Synthesis](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Optimal-Path-Synthesis.md) for full implementation plan
 
 ## 5. Key Documentation
 
@@ -47,6 +48,13 @@ A multi-agent benchmark that evaluates AI-written code by actually running it, a
 | [CONTEXT_PROMPT.md](../CONTEXT_PROMPT.md) | Context handoff for new Claude Code sessions |
 | [Judges Start Here](05-Competition/Judges-Start-Here.md) | Competition judge walkthrough |
 | [Agent Architecture](05-Competition/Agent-Architecture.md) | Full technical architecture |
+| [Competitive Analysis Briefing (Sprint 3)](06-Phase-2/Planning_and_Strategy/[2026-04-01]-Competitive-Analysis-Briefing.md) | Passes 1+2: 28 repos, scoring patterns, Sprint 3 priority ranking |
+| [Sprint 3 Task Input Formats](06-Phase-2/Planning_and_Strategy/[2026-04-01]-Sprint3-Task-Input-Formats.md) | Pass 3: what Purple Agent receives/produces for RCAbench, text-2-sql, AVER |
+| [Sprint 2 Scoring Deep-Dive](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Sprint2-Scoring-Deep-Dive.md) | Sprint 2 first-place repo scoring source analysis |
+| [Sprint 2 Task Input Formats](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Sprint2-Task-Input-Formats.md) | Pass 3 for MateFin, CAR-bench, MIDS4LIFE, Webshop Plus |
+| [Sprint 3 First-Place Deep-Dive](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Sprint3-FirstPlace-Scoring-Deep-Dive.md) | Pi-Bench, NetArena, ICU-Later scoring + HEP/MAizeBargAIn addendum |
+| [Generalization Compatibility Matrix](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Generalization-Compatibility-Matrix.md) | Cross-repo adapter clusters, ROI scores, infrastructure barriers |
+| [**Optimal Path Synthesis**](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Optimal-Path-Synthesis.md) | **Selected Sprint 2+3 targets, adapter architecture, implementation sequence** |
 
 ## 6. Key Technical Facts
 

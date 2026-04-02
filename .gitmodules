@@ -11,3 +11,16 @@
 	path = external/aver-green-agent
 	url = https://github.com/weelzo/aver-green-agent
 	shallow = true
+[submodule "external/pi-bench"]
+	path = external/pi-bench
+	url = https://github.com/Jyoti-Ranjan-Das845/pi-bench
+	shallow = true
+[submodule "external/icu-later"]
+	path = external/icu-later
+	url = https://github.com/abasit/FhirAgentEvaluator
+	shallow = true
+[submodule "external/netarena"]
+	path = external/netarena
+	url = https://github.com/Froot-NetSys/NetPress
+	branch = a2a-agentx
+	shallow = true
