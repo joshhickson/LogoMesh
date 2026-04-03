@@ -6,7 +6,7 @@
 > **See Also:**
 > *   [Generalization Compatibility Matrix v2]([2026-04-02]-Generalization-Compatibility-Matrix-v2.md)
 > *   [Sprint 2 New Repos Analysis]([2026-04-02]-Sprint2-New-Repos-Analysis.md)
-> *   [Sprint 4 Initial Analysis]([2026-04-02]-Sprint4-Initial-Analysis.md)
+> *   [Sprint 3 Roster Verification]([2026-04-02]-Sprint3-Roster-Verification.md)
 
 # Optimal Path Synthesis v2
 
@@ -181,7 +181,6 @@ Purple Agent
 | Terminal-Bench 2.0 not confirmed for Sprint 3 | TB2.0 (+70 pts) | Do not build until Sprint 3 roster announced; design Adapter B to extend cleanly |
 | τ²-Bench dual-control underestimated | τ²-Bench | If time runs out in Sprint 2 window, drop τ²-Bench — CAR-bench alone is sufficient for Sprint 2 requirement |
 | NetArena floor attempt scores 0 (all-or-nothing) | NetArena | Investigate KinD cluster feasibility early in Sprint 3 window before committing to floor strategy |
-| Sprint 4 roster introduces repos requiring new adapters | Sprint 4 | Cannot plan until announced; generalized 5-adapter architecture maximizes Sprint 4 starting position |
 
 ---
 

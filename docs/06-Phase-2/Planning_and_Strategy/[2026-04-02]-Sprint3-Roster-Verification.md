@@ -1,14 +1,14 @@
-> **Status:** SUPERSEDED
+> **Status:** ACTIVE
 > **Type:** Research
 > **Context:**
-> *   [2026-04-02]: Sprint 3 roster verification and new benchmark discovery.
-> **Superseded By:** [[2026-04-02]-Sprint3-Roster-Verification.md]([2026-04-02]-Sprint3-Roster-Verification.md)
+> *   [2026-04-02]: Sprint 3 roster verification and new benchmark discovery. Written after confirming the official Phase 2 schedule on rdi.berkeley.edu/agentx-agentbeats.html and cross-referencing against the AgentBeats dashboard (agentbeats.dev).
+> **See Also:**
+> *   [Sprint 2 New Repos Analysis]([2026-04-02]-Sprint2-New-Repos-Analysis.md)
+> *   [Generalization Compatibility Matrix v2]([2026-04-02]-Generalization-Compatibility-Matrix-v2.md)
 
-# Sprint 3 Roster Verification (archived — see v2)
+# Sprint 3 Roster Verification
 
-## Sprint 3 (April 13 – May 3, tentative)
-
-### Official track list
+## Official Track List (April 13 – May 3, tentative)
 
 The Berkeley RDI website lists Sprint 3 as **tentative** with three tracks:
 - Agent Safety
@@ -17,7 +17,7 @@ The Berkeley RDI website lists Sprint 3 as **tentative** with three tracks:
 
 **Healthcare is NOT listed for Sprint 3.** ICU-Later and all FHIR-based benchmarks are excluded from active Sprint 3 planning.
 
-### Repo roster status
+## Repo Roster Status
 
 Sprint 3 specific repos have not been formally announced. The following are the Phase 1 first- and second-place repos from each confirmed Sprint 3 track, representing our best current knowledge of what will be in scope:
 
@@ -75,9 +75,7 @@ The agent receives the instruction, has access to a sandboxed terminal, and must
 
 ### Output adapter
 
-**Cluster B / hybrid.** The agent issues terminal commands (bash) in response to text instructions. The AgentBeats A2A wrapper likely presents this as a text-in, text-out conversation where the agent's text outputs are executed as commands. This is close to Cluster B (JSON response) or may use a new "command execution" pattern.
-
-**Important:** If Terminal-Bench 2.0 uses the same A2A `message/send` protocol, the Purple Agent's output is a text response containing commands, and the green agent's Docker harness executes them. This is structurally similar to AgentSWE's bash mode and LogoMesh's own code sandbox — significant overlap with existing capability.
+**Cluster B / hybrid.** The agent issues terminal commands in response to text instructions. The AgentBeats A2A wrapper presents this as a text-in, text-out conversation where the agent's responses are executed as commands in the Docker harness. This is structurally similar to LogoMesh's own code sandbox.
 
 ### LogoMesh fit: HIGH
 
@@ -86,8 +84,6 @@ LogoMesh already has:
 - Code analysis and generation capability
 - File system interaction (read/write)
 - Multi-step reasoning for complex tasks
-
-Terminal tasks (file manipulation, server setup, package installation) are directly adjacent to LogoMesh's core capabilities. This is the highest-fit potential Sprint 3 target that isn't in our existing analysis.
 
 **Expected score: 65–70.** Subject to Pass 2+3 analysis once the green agent repo is confirmed in Sprint 3.
 
@@ -98,13 +94,7 @@ Terminal tasks (file manipulation, server setup, package installation) are direc
 **Repo:** `ymiled/agentprobe` (AgentBeats activity), likely based on `alexmelges/agentprobe`
 **Track:** Unknown — possibly Cybersecurity or Agent Safety
 
-### What it is
-
-AgentProbe tests agents against adversarial attacks: prompt injection, data exfiltration, permission escalation, output manipulation, and multi-agent attack vectors (134+ attacks in the `alexmelges/agentprobe` version). It tests whether the Purple Agent resists adversarial inputs.
-
-This is structurally similar to NAAMSE (Agent Safety track, Phase 1) which also tests adversarial robustness.
-
-**Note:** The `ymiled/agentprobe` on AgentBeats may be a different implementation from `alexmelges/agentprobe`. Sprint assignment unconfirmed.
+AgentProbe tests agents against adversarial attacks: prompt injection, data exfiltration, permission escalation, output manipulation, and multi-agent attack vectors (134+ attacks). Tests whether the Purple Agent resists adversarial inputs. Structurally similar to NAAMSE. Sprint assignment unconfirmed.
 
 ---
 
@@ -120,46 +110,17 @@ This is structurally similar to NAAMSE (Agent Safety track, Phase 1) which also 
 | Pi-Bench | Agent Safety | F (policy trace) | MEDIUM | 55 |
 | NetArena | Coding Agent | E floor | LOW | 20 |
 
-**Potential additions (unconfirmed for Sprint 3):**
+**Potential additions (unconfirmed):**
 
 | Repo | Track | Adapter | Fit | Score ceiling |
 |:-----|:------|:--------|:----|:-------------|
 | Terminal-Bench 2.0 | Coding Agent? | B/hybrid | HIGH | 70 |
 | AgentProbe | Cybersecurity? / Safety? | Unknown | MEDIUM | TBD |
 
-**Removed from Sprint 3 (compared to prior plan):**
+**Removed from plan (compared to prior analysis):**
 
 | Repo | Reason |
 |:-----|:-------|
 | ICU-Later | Healthcare not in Sprint 3 |
 | AgentSWE | Software Testing not in Phase 2 |
 | LogoMesh-self | Not a Phase 2 competition target |
-
----
-
-## Sprint 4 — General Purpose Agents (May 4–24)
-
-### Status: No repos announced
-
-The Berkeley RDI website describes Sprint 4 as "General Purpose Agents — the grand finale." The description emphasizes **breadth over depth**: testing broad capability, adaptability, and robustness across diverse tasks rather than a single domain.
-
-No specific repos or benchmarks have been announced for Sprint 4 as of April 2, 2026.
-
-### Strategic implications
-
-Sprint 4's "general purpose" framing suggests one of two structures:
-1. **Multi-benchmark aggregation** — agents score across a combination of Sprint 1–3 benchmarks, rewarding teams that built generalized adapters rather than single-track specialists
-2. **New general-purpose benchmarks** — new repos specifically testing cross-domain reasoning (e.g., GAIA-style, mixed-task benchmarks)
-
-If Structure 1, the optimal path for Sprint 4 is the same as the Sprint 3 path — build a Purple Agent that can handle multiple adapter types. The generalization work we're doing now directly prepares for Sprint 4.
-
-If Structure 2, Sprint 4 preparation must wait until the repos are announced (likely 1–2 weeks before Sprint 3 ends, mid-to-late April).
-
-### Action: Monitor
-
-No implementation action possible yet. Watch for Sprint 4 announcement on:
-- rdi.berkeley.edu/agentx-agentbeats.html
-- agentbeats.dev dashboard
-- AgentBeats GitHub org (github.com/RDI-Foundation)
-
-Update this document when Sprint 4 repos are confirmed.

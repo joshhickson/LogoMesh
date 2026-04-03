@@ -5,7 +5,7 @@
 > **Supersedes:** [[2026-04-02]-Generalization-Compatibility-Matrix.md]([2026-04-02]-Generalization-Compatibility-Matrix.md)
 > **See Also:**
 > *   [Sprint 2 New Repos Analysis]([2026-04-02]-Sprint2-New-Repos-Analysis.md)
-> *   [Sprint 4 Initial Analysis]([2026-04-02]-Sprint4-Initial-Analysis.md)
+> *   [Sprint 3 Roster Verification]([2026-04-02]-Sprint3-Roster-Verification.md)
 > *   [Optimal Path Synthesis v2]([2026-04-02]-Optimal-Path-Synthesis-v2.md)
 
 # Generalization Compatibility Matrix v2
@@ -39,7 +39,7 @@ Each repo is scored 1–5 on eight axes:
 | LogoMesh overlap | 5 | AST analysis background; SQL is structured output |
 | Impl cost | 1 | Extend existing A2A response handler with SQL formatter |
 | Score ceiling | 85 | High confidence |
-| Adapter reuse | B covers AgentSWE (if confirmed for Sprint 4), LogoMesh-self (validation) |
+| Adapter reuse | B covers Terminal-Bench 2.0 (if confirmed), LogoMesh-self (validation) |
 
 **Verdict: BUILD FIRST.** Highest ceiling, lowest cost, no infra barrier.
 
