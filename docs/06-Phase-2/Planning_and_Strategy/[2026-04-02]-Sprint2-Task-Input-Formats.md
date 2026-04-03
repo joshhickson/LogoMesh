@@ -1,7 +1,8 @@
-> **Status:** ACTIVE
+> **Status:** SUPERSEDED
 > **Type:** Research
 > **Context:**
 > *   [2026-04-02]: Pass 3 for Sprint 2 first-place repos already at Pass 2 coverage: MIDS4LIFE, CAR-bench, MateFin, Webshop Plus. Answers "what does the Purple Agent receive and what must it produce?" for each repo.
+> **Superseded By:** MateFin, MIDS4LIFE, and Webshop Plus are not in the official Phase 2 Sprint 2 roster. CAR-bench analysis here remains valid; see [[2026-04-02]-Sprint2-New-Repos-Analysis.md]([2026-04-02]-Sprint2-New-Repos-Analysis.md) for the corrected Sprint 2 analysis.
 > **See Also:**
 > *   [Sprint 2 Scoring Deep-Dive]([2026-04-02]-Sprint2-Scoring-Deep-Dive.md)
 > *   [Sprint 3 Task Input Formats]([2026-04-01]-Sprint3-Task-Input-Formats.md)

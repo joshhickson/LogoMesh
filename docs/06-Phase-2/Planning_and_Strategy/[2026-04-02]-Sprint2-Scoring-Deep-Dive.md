@@ -1,7 +1,8 @@
-> **Status:** ACTIVE
+> **Status:** SUPERSEDED
 > **Type:** Research
 > **Context:**
 > *   [2026-04-02]: Sprint 2 scoring source code analysis. Six repos evaluated (Medium–High LogoMesh fit): MateFin, CAR-bench, NetHeal, MIDS4LIFE, Reviewer Two, Webshop Plus. Sprint 2 is the next active window after Sprint 1 ends April 12, 2026. Analogous to the Sprint 3 Pass 2 deep-dive.
+> **Superseded By:** This document targeted repos not in the official Phase 2 Sprint 2 roster (MateFin, MIDS4LIFE, Webshop Plus, HEP-ExpAgents, NetHeal, Reviewer Two are not in Phase 2). See [[2026-04-02]-Sprint2-New-Repos-Analysis.md]([2026-04-02]-Sprint2-New-Repos-Analysis.md) for corrected analysis.
 > **See Also:**
 > *   [Passes 1+2 Briefing (Sprint 3)]([2026-04-01]-Competitive-Analysis-Briefing.md)
 > *   [Sprint 3 Task Input Formats]([2026-04-01]-Sprint3-Task-Input-Formats.md)

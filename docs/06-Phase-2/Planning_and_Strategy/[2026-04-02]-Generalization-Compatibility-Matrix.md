@@ -1,7 +1,8 @@
-> **Status:** ACTIVE
+> **Status:** SUPERSEDED
 > **Type:** Research
 > **Context:**
 > *   [2026-04-02]: Cross-repo compatibility matrix built from Pass 1–3 data across all Sprint 2 and Sprint 3 first-place repos. Input to the Optimal Path Synthesis doc. Scores each repo on 8 axes to identify adapter clusters and implementation cost vs. score ceiling.
+> **Superseded By:** [[2026-04-02]-Generalization-Compatibility-Matrix-v2.md]([2026-04-02]-Generalization-Compatibility-Matrix-v2.md) — rebuilt from the verified Phase 2 roster. The Sprint 2 repos in this matrix (MateFin, MIDS4LIFE, Webshop Plus) are not in Phase 2.
 > **See Also:**
 > *   [Optimal Path Synthesis]([2026-04-02]-Optimal-Path-Synthesis.md)
 > *   [Sprint 3 First-Place Deep-Dive]([2026-04-02]-Sprint3-FirstPlace-Scoring-Deep-Dive.md)

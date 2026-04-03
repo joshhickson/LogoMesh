@@ -32,11 +32,13 @@ A multi-agent benchmark that evaluates AI-written code by actually running it, a
 ## 4. Immediate Priorities
 
 ### Phase 2 Competition
-- **Sprint 1** active, ends April 12, 2026
-- **Sprint 2** opens ~April 12 — target: MateFin, CAR-bench, MIDS4LIFE (selected via optimal path analysis)
-- **Sprint 3** opens ~May 2026 — must target ALL first-place repos: Pi-Bench, NetArena, ICU-Later, RCAbench, LogoMesh-self
-- Purple Agent adapter build sequence: B (JSON) → A-delta (MateFin) → C (AVER/CAR-bench) → F (Pi-Bench/MIDS4LIFE) → E floor (NetArena/ICU-Later)
-- See [Optimal Path Synthesis](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Optimal-Path-Synthesis.md) for full implementation plan
+- **Sprint 2** active, ends April 12, 2026 — targets: CAR-bench (primary), τ²-Bench (secondary if time)
+- **Sprint 3** opens April 13 — tracks: Agent Safety, Coding Agent, Cybersecurity (tentative). Targets: text-2-sql, AVER, RCAbench, Pi-Bench, NetArena (floor), Terminal-Bench 2.0 (unconfirmed)
+- **Sprint 4** May 4–24 — General Purpose Agents grand finale; no repos announced yet
+- Purple Agent adapter build sequence: B (JSON) → C (AVER) → C-delta (CAR-bench) → A (RCAbench) → F (Pi-Bench) → E floor (NetArena)
+- Expected score: 365 pts conservative / 480 pts optimistic (7–8 repos)
+- NOTE: Software Testing track (LogoMesh-self) and Healthcare track (ICU-Later) are NOT in Phase 2
+- See [Optimal Path Synthesis v2](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Optimal-Path-Synthesis-v2.md) for full implementation plan
 
 ## 5. Key Documentation
 
@@ -48,13 +50,13 @@ A multi-agent benchmark that evaluates AI-written code by actually running it, a
 | [CONTEXT_PROMPT.md](../CONTEXT_PROMPT.md) | Context handoff for new Claude Code sessions |
 | [Judges Start Here](05-Competition/Judges-Start-Here.md) | Competition judge walkthrough |
 | [Agent Architecture](05-Competition/Agent-Architecture.md) | Full technical architecture |
-| [Competitive Analysis Briefing (Sprint 3)](06-Phase-2/Planning_and_Strategy/[2026-04-01]-Competitive-Analysis-Briefing.md) | Passes 1+2: 28 repos, scoring patterns, Sprint 3 priority ranking |
-| [Sprint 3 Task Input Formats](06-Phase-2/Planning_and_Strategy/[2026-04-01]-Sprint3-Task-Input-Formats.md) | Pass 3: what Purple Agent receives/produces for RCAbench, text-2-sql, AVER |
-| [Sprint 2 Scoring Deep-Dive](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Sprint2-Scoring-Deep-Dive.md) | Sprint 2 first-place repo scoring source analysis |
-| [Sprint 2 Task Input Formats](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Sprint2-Task-Input-Formats.md) | Pass 3 for MateFin, CAR-bench, MIDS4LIFE, Webshop Plus |
-| [Sprint 3 First-Place Deep-Dive](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Sprint3-FirstPlace-Scoring-Deep-Dive.md) | Pi-Bench, NetArena, ICU-Later scoring + HEP/MAizeBargAIn addendum |
-| [Generalization Compatibility Matrix](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Generalization-Compatibility-Matrix.md) | Cross-repo adapter clusters, ROI scores, infrastructure barriers |
-| [**Optimal Path Synthesis**](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Optimal-Path-Synthesis.md) | **Selected Sprint 2+3 targets, adapter architecture, implementation sequence** |
+| [Sprint 3 Task Input Formats](06-Phase-2/Planning_and_Strategy/[2026-04-01]-Sprint3-Task-Input-Formats.md) | Pass 3: what Purple Agent receives/produces for RCAbench, text-2-sql, AVER — still valid |
+| [Sprint 3 First-Place Deep-Dive](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Sprint3-FirstPlace-Scoring-Deep-Dive.md) | Pi-Bench, NetArena scoring (still valid); ICU-Later section uncertain (Healthcare not in Sprint 3) |
+| [Sprint 2 New Repos Analysis](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Sprint2-New-Repos-Analysis.md) | Pass 1+2+3 for τ²-Bench, MLE-Bench, OSWorld-Verified, FieldWorkArena — corrected Sprint 2 analysis |
+| [Sprint 4 Initial Analysis](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Sprint4-Initial-Analysis.md) | Sprint 3 roster verification + Terminal-Bench 2.0 discovery + Sprint 4 status (no repos yet) |
+| [Generalization Compatibility Matrix v2](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Generalization-Compatibility-Matrix-v2.md) | Corrected cross-repo matrix — verified roster only, ICU-Later/AgentSWE/LogoMesh removed |
+| [**Optimal Path Synthesis v2**](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Optimal-Path-Synthesis-v2.md) | **CURRENT: corrected Sprint 2+3 targets, adapter architecture, implementation sequence** |
+| [**Generalization Strategy — Full Explanation v2**](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Generalization-Strategy-Explained-v2.md) | **CURRENT: narrative walkthrough with corrected roster — expected 365–480 pts across 7–8 repos** |
 
 ## 6. Key Technical Facts
 

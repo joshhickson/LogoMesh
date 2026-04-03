@@ -1,7 +1,8 @@
-> **Status:** ACTIVE
+> **Status:** SUPERSEDED
 > **Type:** Plan
 > **Context:**
 > *   [2026-04-02]: Optimal path selection for Sprint 2 + Sprint 3 generalization. Synthesizes Pass 1–3 analysis across all first-place repos. Analogous to MCTS tree selection — simulates expected outcomes across repo combinations and selects the path maximizing total score relative to implementation cost. Sprint 1 ends April 12; Sprint 2 is the next active window.
+> **Superseded By:** [[2026-04-02]-Optimal-Path-Synthesis-v2.md]([2026-04-02]-Optimal-Path-Synthesis-v2.md) — rebuilt from verified Phase 2 roster. Sprint 2 selections (MateFin, MIDS4LIFE) and Sprint 3 targets (ICU-Later, AgentSWE, LogoMesh-self) in this document are not in Phase 2.
 > **See Also:**
 > *   [Compatibility Matrix]([2026-04-02]-Generalization-Compatibility-Matrix.md)
 > *   [Sprint 3 First-Place Deep-Dive]([2026-04-02]-Sprint3-FirstPlace-Scoring-Deep-Dive.md)
