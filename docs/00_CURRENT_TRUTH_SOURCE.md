@@ -3,6 +3,7 @@ status: ACTIVE
 type: Spec
 ---
 > **Context:**
+> * [2026-04-03]: Updated to reflect the official Phase 2 schedule and corrected competition targets based on rdi.berkeley.edu.
 > * [2026-02-19]: Updated post-Phase 1 win. LogoMesh won 1st place in Software Testing Agent track.
 > * [2025-12-21]: Original creation as master index.
 
@@ -11,7 +12,7 @@ type: Spec
 ## 1. Where We Are
 
 - **Phase 1 (Green Agent):** Won 1st place, Software Testing Agent track, AgentBeats competition (UC Berkeley RDI). 1,300+ teams competed.
-- **Phase 2 (Purple Agent):** Registered. Focus is now on the Coding & Cybersecurity Agents track (Sprint 3). The Lambda Security Arena track is deprecated.
+- **Phase 2 (Purple Agent):** Registered. The goal is to perform well on the benchmarks created by the community in Phase 1.
 
 ## 2. What LogoMesh Is
 
@@ -32,12 +33,12 @@ A multi-agent benchmark that evaluates AI-written code by actually running it, a
 ## 4. Immediate Priorities
 
 ### Phase 2 Competition
-- **Sprint 2** active, ends April 12, 2026 — targets: CAR-bench (primary), τ²-Bench (secondary if time)
-- **Sprint 3** opens April 13 — tracks: Agent Safety, Coding Agent, Cybersecurity (tentative). Targets: text-2-sql, AVER, RCAbench, Pi-Bench, NetArena (floor), Terminal-Bench 2.0 (unconfirmed)
-- Purple Agent adapter build sequence: B (JSON) → C (AVER) → C-delta (CAR-bench) → A (RCAbench) → F (Pi-Bench) → E floor (NetArena)
-- Expected score: 365 pts conservative / 480 pts optimistic (7–8 repos)
-- NOTE: Software Testing track (LogoMesh-self) and Healthcare track (ICU-Later) are NOT in Phase 2
-- See [Optimal Path Synthesis v2](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Optimal-Path-Synthesis-v2.md) for full implementation plan
+- **Sprint 1 (Mar 2 – Mar 22):** Game, Finance, Business Process (Completed)
+- **Sprint 2 (Mar 23 – Apr 12):** Research, Multi-agent, τ²-Bench, Computer Use & Web. Targets: CAR-bench (primary), τ²-Bench (secondary if time)
+- **Sprint 3 (Apr 13 – May 3):** Agent Safety, Coding Agent, Cybersecurity (Tentative)
+- **Sprint 4 (May 4 – May 24):** General Purpose Agents (Grand Finale)
+- Purple Agent adapter build sequence: JSON Adapter -> Multi-turn Adapter -> File Write Adapter -> Policy Trace Adapter -> Diagnostic Reasoning.
+- **Note:** The old internal targets (AVER, RCAbench, Pi-Bench, NetArena, text-2-sql, Terminal-Bench 2.0) are on hold/deprecated as they were not officially confirmed.
 
 ## 5. Key Documentation
 
@@ -49,14 +50,7 @@ A multi-agent benchmark that evaluates AI-written code by actually running it, a
 | [CONTEXT_PROMPT.md](../CONTEXT_PROMPT.md) | Context handoff for new Claude Code sessions |
 | [Judges Start Here](05-Competition/Judges-Start-Here.md) | Competition judge walkthrough |
 | [Agent Architecture](05-Competition/Agent-Architecture.md) | Full technical architecture |
-| [Sprint 3 Task Input Formats](06-Phase-2/Planning_and_Strategy/[2026-04-01]-Sprint3-Task-Input-Formats.md) | Pass 3: what Purple Agent receives/produces for RCAbench, text-2-sql, AVER — still valid |
-| [Sprint 3 First-Place Deep-Dive](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Sprint3-FirstPlace-Scoring-Deep-Dive.md) | Pi-Bench, NetArena scoring (still valid); ICU-Later section uncertain (Healthcare not in Sprint 3) |
-| [Sprint 2 New Repos Analysis](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Sprint2-New-Repos-Analysis.md) | Pass 1+2+3 for τ²-Bench, MLE-Bench, OSWorld-Verified, FieldWorkArena — corrected Sprint 2 analysis |
-| [Sprint 3 Roster Verification](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Sprint3-Roster-Verification.md) | Sprint 3 roster verification + Terminal-Bench 2.0 discovery + AgentProbe |
-| [**Phase 2 Corrected Competitive Analysis**](06-Phase-2/Planning_and_Strategy/[2026-04-03]-Phase2-Corrected-Competitive-Analysis.md) | **CANONICAL: corrected roster, all tracks, priority ranking, recommendations, full inventory** |
-| [Generalization Compatibility Matrix v2](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Generalization-Compatibility-Matrix-v2.md) | Corrected cross-repo matrix — verified roster only, ICU-Later/AgentSWE/LogoMesh removed |
-| [**Optimal Path Synthesis v2**](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Optimal-Path-Synthesis-v2.md) | **CURRENT: corrected Sprint 2+3 targets, adapter architecture, implementation sequence** |
-| [**Generalization Strategy — Full Explanation v2**](06-Phase-2/Planning_and_Strategy/[2026-04-02]-Generalization-Strategy-Explained-v2.md) | **CURRENT: narrative walkthrough with corrected roster — expected 365–480 pts across 7–8 repos** |
+| [Phase 2 Team Brief](06-Phase-2/Planning_and_Strategy/Phase2-Team-Brief.md) | **CURRENT: Phase 2 Strategy and confirmed active targets** |
 
 ## 6. Key Technical Facts
 
@@ -77,6 +71,7 @@ A multi-agent benchmark that evaluates AI-written code by actually running it, a
 
 | What | Why | When |
 |:-----|:----|:-----|
+| Outdated Sprint 2/3 Docs | Strategy shifted to officially confirmed repos | 2026-04 |
 | `PROJECT_PLAN.md` | Old commercial strategy, pre-competition | 2025-12 |
 | Auth0 Sponsorship | Expired/irrelevant | 2025-12 |
 | `docs/04-Operations/green-agent/`, `purple-agent/`, `agentbeats-lambda/` | Code migrated to `src/` | 2025-12 |
