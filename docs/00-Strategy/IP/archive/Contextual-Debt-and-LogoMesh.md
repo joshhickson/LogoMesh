@@ -1,3 +1,10 @@
+---
+status: SUPERSEDED
+type: Plan
+---
+> **Context:**
+> * [2026-01-01]: Pre-competition commercial strategy document. Superseded by AgentBeats Phase 2 competition focus.
+
 ### Contextual Debt: The New Frontier of Corporate Liability in the AI Era
 
 #### 1\. Introduction: The Emerging Crisis of 'Unknowable' Systems
