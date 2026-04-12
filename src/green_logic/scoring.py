@@ -33,6 +33,7 @@ class ContextualIntegrityScorer:
         self.logic_review_timeout = 85
         
         # A-003 Implementation: Load architecture constraints
+        # Per-task penalty definitions live in src/green_logic/architecture_constraints.yaml
         constraints_path = Path(__file__).parent / "architecture_constraints.yaml"
         try:
             with open(constraints_path, 'r') as f:
