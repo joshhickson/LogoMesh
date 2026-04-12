@@ -3,7 +3,8 @@ status: ACTIVE
 type: Guide
 ---
 > **Context:**
-> * [2026-04-12]: Team brief for Phase 2 Sprint 3. Covers big-picture mission, competition structure, adapter architecture, and score projections.
+> * [2026-04-12]: Team brief for Phase 2. Covers big-picture mission, competition structure, adapter architecture, and score projections.
+> * **Note:** Sprint windows below are tentative — the official competition schedule has not been confirmed. Do not treat sprint dates or status labels as authoritative.
 
 # LogoMesh — Phase 2 Team Brief
 
@@ -35,8 +36,8 @@ The competition runs in sprints. Each sprint opens a set of external benchmark r
 
 | Sprint | Window | Our status |
 |--------|--------|------------|
-| Sprint 2 | March 23 – April 12 | Closed — CAR-bench targeted |
-| Sprint 3 | April 13 – May 3 | **Active now** |
+| Sprint 2 | TBD (tentative) | TBD |
+| Sprint 3 | TBD (tentative) | TBD |
 | Sprint 4 | May 4+ | TBD |
 
 Sprint 3 tracks: **Agent Safety · Coding Agent · Cybersecurity Agent**
@@ -79,7 +80,7 @@ All issues are unassigned. Pick them up in order — each adapter is a dependenc
 | [LOG-47](https://linear.app/logomesh-agentbeats-phase-2/issue/LOG-47) | A2A endpoint registration + task-type router | Urgent |
 | [LOG-48](https://linear.app/logomesh-agentbeats-phase-2/issue/LOG-48) | Confirm Sprint 3 roster when it opens April 13 | Urgent |
 | [LOG-49](https://linear.app/logomesh-agentbeats-phase-2/issue/LOG-49) | Adapter B — text-2-sql JSON handler | Urgent |
-| [LOG-50](https://linear.app/logomesh-agentbeats-phase-2/issue/LOG-50) | CAR-bench — Sprint 2 submission (due Apr 12) | Urgent |
+| [LOG-50](https://linear.app/logomesh-agentbeats-phase-2/issue/LOG-50) | CAR-bench — Sprint 2 submission (due end of April) | Urgent |
 | [LOG-51](https://linear.app/logomesh-agentbeats-phase-2/issue/LOG-51) | Adapter C — AVER multi-turn anchor | Urgent |
 | [LOG-52](https://linear.app/logomesh-agentbeats-phase-2/issue/LOG-52) | Adapter A — RCAbench MCTS localization | High |
 | [LOG-53](https://linear.app/logomesh-agentbeats-phase-2/issue/LOG-53) | Adapter F — Pi-Bench policy trace | High |
