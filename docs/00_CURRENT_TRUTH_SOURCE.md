@@ -87,3 +87,7 @@ A multi-agent benchmark that evaluates AI-written code by actually running it, a
 | `docs/04-Operations/green-agent/`, `purple-agent/`, `agentbeats-lambda/` | Code migrated to `src/` | 2025-12 |
 | Llama-3-70B, gpt-oss-20b | Replaced by Qwen2.5-Coder-32B-Instruct | 2026-01 |
 | Old team workspaces (`docs/Archive/Intent-Log/[name]/`) | Phase 1 artifacts, team restructured | 2026-02 |
+| `docs/04-Operations/Dual-Track-Arena/` | Phase 1 operational artifacts moved to `docs/Archive/Phase1-Operations/Dual-Track-Arena/` | 2026-04 |
+| `JUDGES_START_HERE.md` (root) | Stub duplicate removed; canonical doc is `docs/05-Competition/Judges-Start-Here.md` | 2026-04 |
+| `[04-11-2026]-Temp-Claude-Conversation-Export.md` | Temporary session artifact, deleted | 2026-04 |
+| Wrong-roster analysis docs (6 files, `[2026-04-02]-*` no v2 suffix) | Built from wrong Sprint 2 roster; moved to `docs/06-Phase-2/Planning_and_Strategy/Archive/` | 2026-04 |

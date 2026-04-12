@@ -67,6 +67,14 @@ docs/
 ├── 03-Research/                 # Analysis, novelty audits
 ├── 04-Operations/               # Logs, meeting minutes, team docs
 │   └── Intent-Log/              # Team Workspaces (Josh, Deepti, etc.)
+├── 05-Competition/              # Phase 1 competition docs (judges guide, architecture)
+├── 06-Phase-2/                  # Phase 2 planning, strategy, adapter specs
+│   └── Planning_and_Strategy/   # Active docs + Archive/ for superseded analyses
+├── Archive/                     # All historical artifacts (Phase 1, legacy pillars, old logs)
+│   ├── Logs/                    # Archived team intent logs
+│   ├── Legacy-Logs/             # Pre-2026 logs
+│   ├── Legacy-Pillars/          # Pre-competition strategy pillars
+│   └── Phase1-Operations/       # Phase 1 operational artifacts
 └── TEMPLATE_DOC.md              # Copy this for new docs
 ```
 
