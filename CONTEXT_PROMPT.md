@@ -4,6 +4,25 @@ Paste everything below this line into a new Claude Code session.
 
 ---
 
+## ⚡ Phase 2 Status (updated 2026-04-11)
+
+**LogoMesh won Phase 1** (1st place, Software Testing Agent track). We are now in **Phase 2**, building a generalized Purple Agent that competes across external benchmarks.
+
+- **Sprint 2** ended April 12, 2026 — target: CAR-bench (Cluster C adapter)
+- **Sprint 3** opens April 13 — tracks: Agent Safety, Coding Agent, Cybersecurity
+- **Active branch:** `main-generalized-phase2-submodules`
+- **Next implementation step:** Adapter B (text-2-sql JSON output handler)
+- **Build sequence:** B → C → C-delta → A → F → E-floor
+
+**Before doing any Phase 2 work, read:**
+- `docs/06-Phase-2/Planning_and_Strategy/Phase2-Team-Brief.md` — team summary
+- `docs/06-Phase-2/Planning_and_Strategy/[2026-04-02]-Optimal-Path-Synthesis-v2.md` — build sequence
+- `docs/06-Phase-2/Planning_and_Strategy/[2026-04-03]-Phase2-Corrected-Competitive-Analysis.md` — canonical analysis
+
+**Do not use docs in `docs/06-Phase-2/Planning_and_Strategy/Archive/` or `docs/Archive/` — they are stale.**
+
+---
+
 You are continuing work on **LogoMesh**, a multi-agent AI code evaluation platform built for the UC Berkeley RDI AgentX AgentBeats competition. The repo is at `/Users/ovoievodin/zasha/agentbeats/LogoMesh`. The active branch is `feat/agi-agents` (20+ commits ahead of `master`; master is stale).
 
 ---
