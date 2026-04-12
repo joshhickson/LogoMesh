@@ -26,7 +26,7 @@ This document explains how the LogoMesh **three-agent arena** evaluates AI codin
 │   │   GREEN     │──────────────▶│   PURPLE    │                     │
 │   │   AGENT     │               │   AGENT     │                     │
 │   │  (Judge)    │◀──────────────│  (Defender) │                     │
-│   │  Port 9000  │   Solution    │  Port 9001  │                     │
+│   │  Port 9009  │   Solution    │  Port 9010  │                     │
 │   └──────┬──────┘               └──────┬──────┘                     │
 │          │                             │                             │
 │          │ Sends code                  │                             │
@@ -35,7 +35,7 @@ This document explains how the LogoMesh **three-agent arena** evaluates AI codin
 │   │    RED      │◀─────────────────────┘                             │
 │   │   AGENT     │   (Code to attack)                                 │
 │   │  (Attacker) │                                                    │
-│   │  Port 9021  │                                                    │
+│   │  (embedded) │                                                    │
 │   └─────────────┘                                                    │
 │                                                                      │
 │   ┌─────────────────────────────────────────────────────────────┐   │
@@ -50,9 +50,9 @@ This document explains how the LogoMesh **three-agent arena** evaluates AI codin
 
 | Agent | Role | Port | Purpose |
 |-------|------|------|---------|
-| **Green** | Judge/Assessor | 9000 | Orchestrates battles, evaluates responses, computes CIS |
-| **Purple** | Defender/Assessee | 9001 | Receives tasks, generates code solutions |
-| **Red** | Attacker | 9021 | Finds vulnerabilities in Purple's code |
+| **Green** | Judge/Assessor | 9009 | Orchestrates battles, evaluates responses, computes CIS |
+| **Purple** | Defender/Assessee | 9010 | Receives tasks, generates code solutions |
+| **Red** | Attacker | embedded | Finds vulnerabilities in Purple's code (no separate port) |
 
 ## 3. Evaluation Flow
 
@@ -386,16 +386,16 @@ For the AgentBeats Lambda Security Track:
 ### Endpoints
 | Service | URL |
 |---------|-----|
-| Green Agent (Judge) | http://localhost:9000 |
-| Purple Agent (Defender) | http://localhost:9001 |
-| Red Agent (Attacker) | http://localhost:9021 |
+| Green Agent (Judge) | http://localhost:9009 |
+| Purple Agent (Defender) | http://localhost:9010 |
+| Red Agent (Attacker) | embedded in Green (no separate port) |
 | vLLM Brain | http://localhost:8000 |
 
 ### Trigger a Battle
 ```bash
-curl -X POST http://localhost:9000/battle \
+curl -X POST http://localhost:9009/actions/send_coding_task \
   -H "Content-Type: application/json" \
-  -d '{"battle_id": "test-001", "purple_agent_url": "http://localhost:9001"}'
+  -d '{"battle_id": "test-001", "purple_agent_url": "http://localhost:9010"}'
 ```
 
 ## 13. Related Documents

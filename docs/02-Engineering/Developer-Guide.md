@@ -36,7 +36,7 @@ The LLM can only adjust scores **±0.10** from ground-truth anchors. Run-to-run 
 ```bash
 git clone https://github.com/joshhickson/LogoMesh.git
 cd LogoMesh
-git checkout feat/agi-agents   # <-- active branch, master is stale
+git checkout main-generalized-phase2-submodules   # <-- active branch for Phase 2
 
 pip install uv
 uv sync
@@ -442,8 +442,8 @@ Each evaluation produces a Decision Bill of Materials:
 
 ### Branch Workflow
 
-1. The active branch is **`feat/agi-agents`** (master is stale)
-2. Create feature branches off `feat/agi-agents`
+1. The active branch is **`main-generalized-phase2-submodules`** (master is stale)
+2. Create feature branches off `main-generalized-phase2-submodules`
 3. Follow the documentation protocol in `CLAUDE.md` if your changes affect architecture or deprecate anything
 4. Update `docs/00_CURRENT_TRUTH_SOURCE.md` if your work changes core specs
 
