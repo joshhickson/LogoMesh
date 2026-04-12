@@ -1,3 +1,10 @@
+---
+status: SNAPSHOT
+type: Log
+---
+> **Context:**
+> * [2026-02-28]: Phase 1 archive. Archived post-Phase 1 competition.
+
 # Unused Variables Report
 
 This report lists all variables that are defined but never used, as reported by the ESLint `no-unused-vars` rule.

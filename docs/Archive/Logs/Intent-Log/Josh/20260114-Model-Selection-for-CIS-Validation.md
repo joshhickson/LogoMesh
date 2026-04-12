@@ -1,3 +1,10 @@
+---
+status: SNAPSHOT
+type: Log
+---
+> **Context:**
+> * [2026-02-28]: Phase 1 archive. Archived post-Phase 1 competition.
+
 # **Research Report: Model Selection for CIS Validation Diversity Test (C-NEW-001)**
 
 ## **1\. Executive Summary**

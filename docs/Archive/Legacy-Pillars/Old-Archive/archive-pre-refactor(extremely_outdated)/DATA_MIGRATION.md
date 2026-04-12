@@ -1,3 +1,10 @@
+---
+status: SNAPSHOT
+type: Log
+---
+> **Context:**
+> * [2026-02-28]: Phase 1 archive. Archived post-Phase 1 competition.
+
 # Data Migration Process
 
 This document outlines the process for creating and applying database migrations for the LogoMesh project. We use a custom, script-based migration system to manage schema changes in a structured and version-controlled way. This approach was chosen to avoid complex dependencies and potential module resolution issues.

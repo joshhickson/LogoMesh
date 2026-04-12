@@ -1,3 +1,10 @@
+---
+status: SNAPSHOT
+type: Log
+---
+> **Context:**
+> * [2026-02-28]: Phase 1 archive. Archived post-Phase 1 competition.
+
 User: Hey! I just completed Phase 3 of the Lambda Noob Guide. You are given access to an Nvidia H100 instance (single A100 instances were not available so I chose H100). I cloned the repo to /home/ubuntu/ if that matters. This repository is for an in-progress competition submission; Berkeley's AgentX Agentbeats; both the Custom Green Agent track and the Lambda Track. Let's get you up to speed first. Ask me some questions about the project and what I want to do in this session. Make some guesses so I can get you up to speed. Make no edits at this time. You may run commands to search files.
 
 GitHub Copilot: Read [](file:///home/ubuntu/LogoMesh/docs/05-Competition/)
