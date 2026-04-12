@@ -11,6 +11,23 @@ All new docs in `docs/` must use the header template (`docs/TEMPLATE_DOC.md`) wi
 
 ---
 
+## Phase 2 Competition Context (2026-04-11)
+
+LogoMesh is currently competing in **AgentBeats Phase 2** (Berkeley RDI). The objective is building a generalized **Purple Agent** that scores across multiple external benchmarks.
+
+**Sprint 2** ended April 12. **Sprint 3** (Agent Safety, Coding Agent, Cybersecurity) opens April 13.
+
+**Canonical strategy docs — read these before any Phase 2 work:**
+- [`docs/06-Phase-2/Planning_and_Strategy/Phase2-Team-Brief.md`](docs/06-Phase-2/Planning_and_Strategy/Phase2-Team-Brief.md) — Team-facing summary
+- [`docs/06-Phase-2/Planning_and_Strategy/[2026-04-03]-Phase2-Corrected-Competitive-Analysis.md`](docs/06-Phase-2/Planning_and_Strategy/[2026-04-03]-Phase2-Corrected-Competitive-Analysis.md) — Canonical competitive analysis
+- [`docs/06-Phase-2/Planning_and_Strategy/[2026-04-02]-Optimal-Path-Synthesis-v2.md`](docs/06-Phase-2/Planning_and_Strategy/[2026-04-02]-Optimal-Path-Synthesis-v2.md) — Adapter build sequence and score projections
+
+**Purple Agent implementation starts with Adapter B (text-2-sql JSON output).** Build sequence: B → C → C-delta → A → F → E-floor. Do not begin implementation without reading the Optimal Path Synthesis doc.
+
+**Archived docs** live in `docs/06-Phase-2/Planning_and_Strategy/Archive/` and `docs/Archive/`. Do not use archived docs for implementation decisions.
+
+---
+
 ## Agent Protocol: "Ask for Instructor"
 
 **At the beginning of every session:**

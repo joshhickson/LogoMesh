@@ -10,6 +10,16 @@
 
 ---
 
+## Current Mission: Phase 2
+
+Having won Phase 1, the team is now competing in **AgentBeats Phase 2** — building a generalized **Purple Agent** that scores across multiple external benchmark repos simultaneously. Phase 2 rewards breadth: the goal is to adapt LogoMesh's existing reasoning infrastructure (MCTS vulnerability analysis, AST checking, multi-turn refinement) into output adapters that can compete on benchmarks we didn't build.
+
+**Sprint 3 is active (April 13 – May 3).** Tracks: Agent Safety, Coding Agent, Cybersecurity. Our adapter build sequence is: JSON → Multi-turn → File Write → Policy Trace → Diagnostic Reasoning.
+
+If you're a team member, start here: [Phase 2 Team Brief](docs/06-Phase-2/Planning_and_Strategy/Phase2-Team-Brief.md)
+
+---
+
 ## What Problem Does This Solve?
 
 When an AI writes code for you, how do you know it's actually good? Current benchmarks check if the code "passes tests" — but that misses the bigger picture:
@@ -105,7 +115,7 @@ The benchmark covers 20 tasks from basic data structures to distributed systems 
 
 ```bash
 # 1. Clone and install
-git clone https://github.com/sszz01/LogoMesh.git
+git clone https://github.com/joshhickson/LogoMesh.git
 cd LogoMesh
 pip install uv && uv sync
 
@@ -565,6 +575,9 @@ LogoMesh/
 │   ├── task_intelligence.py             # Dynamic novel task understanding
 │   └── llm_utils.py                     # Temperature management utilities
 │
+├── tests/                               # Test suite (pytest)
+│   └── test_red_agent_v2.py             # Red Agent test cases with known vulnerabilities
+│
 ├── data/
 │   ├── battles.db                       # Evaluation history database
 │   └── dboms/                           # Decision Bill of Materials (JSON audit trail)
@@ -578,8 +591,9 @@ LogoMesh/
 ├── pyproject.toml                       # Python dependencies (uv)
 ├── .env.example                         # All configurable environment variables
 └── docs/                                # Extended documentation
-    ├── 05-Competition/Judges-Start-Here.md  # Start here for detailed judge walkthrough
-    └── 03-Research/Theory/              # Research papers on Contextual Debt
+    ├── 05-Competition/Judges-Start-Here.md  # Phase 1 judge walkthrough
+    ├── 06-Phase-2/Planning_and_Strategy/    # Phase 2 strategy and analysis docs
+    └── Archive/                             # Archived Phase 1 operational docs
 ```
 
 ---
