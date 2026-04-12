@@ -7,6 +7,8 @@ type: Guide
 
 # Judges Start Here: LogoMesh Agent Arena
 
+> **Note:** This is the Phase 1 submission document describing the Green Agent benchmark LogoMesh built. For Phase 2 Purple Agent work, see [`docs/06-Phase-2/Planning_and_Strategy/`](../06-Phase-2/Planning_and_Strategy/).
+
 Welcome to LogoMesh — a **multi-agent evaluation platform** for the Berkeley RDI AgentX AgentBeats competition.
 
 This document walks you through what LogoMesh does, how it works, and why we made the design decisions we did.

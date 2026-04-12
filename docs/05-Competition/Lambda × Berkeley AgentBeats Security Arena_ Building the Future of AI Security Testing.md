@@ -1,3 +1,10 @@
+---
+status: SNAPSHOT
+type: Log
+---
+> **Context:**
+> * [2026-01-01]: Lambda × Berkeley AgentBeats Security Arena track reference. This track is deprecated — Lambda Security Arena is not in Phase 2.
+
 # **`Lambda × Berkeley AgentBeats Security Arena: Building the Future of AI Security Testing`**
 
 **`Repository:`** [`https://github.com/LambdaLabsML/agentbeats-lambda`
