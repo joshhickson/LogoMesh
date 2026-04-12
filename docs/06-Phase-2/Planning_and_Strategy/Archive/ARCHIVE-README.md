@@ -1,3 +1,10 @@
+---
+status: SNAPSHOT
+type: Log
+---
+> **Context:**
+> * [2026-04-11]: Phase 2 planning document. Archived for historical reference.
+
 # Archive — Planning_and_Strategy
 
 This folder contains docs that are no longer active references but are preserved for historical context. All files here are either SUPERSEDED (replaced by corrected v2 documents) or are pre-competition strategy docs from before the Phase 2 roster was finalized.
