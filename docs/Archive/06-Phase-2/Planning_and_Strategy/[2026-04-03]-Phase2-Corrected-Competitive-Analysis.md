@@ -1,9 +1,10 @@
 ---
-status: ACTIVE
+status: SNAPSHOT
 type: Research
 ---
 > **Context:**
-> *   [2026-04-03]: Corrected Phase 2 competitive analysis based on the verified official roster from rdi.berkeley.edu/agentx-agentbeats.html. Supersedes [2026-04-01]-Sprint2-Sprint3-Competitive-Analysis.md, which was built from an outdated repo list collected before the Phase 2 roster was finalized. Sprint 2 ends April 12; Sprint 3 opens April 13.
+> *   [2026-04-03]: Corrected Phase 2 competitive analysis based on the verified official roster from rdi.berkeley.edu/agentx-agentbeats.html. Supersedes [2026-04-01]-Sprint2-Sprint3-Competitive-Analysis.md, which was built from an outdated repo list collected before the Phase 2 roster was finalized.
+> *   [2026-04-14]: Reclassified as a historical snapshot. This document remains a technical research reference only; schedule-coupled instructions inside are not authoritative for current phase execution.
 
 # Phase 2 Competitive Analysis — Corrected Roster
 
@@ -77,7 +78,7 @@ The corrected Sprint 2 roster introduced three repos with prohibitive infrastruc
 
 ## 3. Sprint 3 Track Analysis
 
-Sprint 3 opens April 13, 2026. Tracks are tentative: **Agent Safety, Coding Agent, Cybersecurity Agent.** Healthcare is NOT listed.
+Sprint 3 timing was treated as tentative at analysis time. Tracks listed here: **Agent Safety, Coding Agent, Cybersecurity Agent.** Healthcare is NOT listed.
 
 ### 3.1 Cybersecurity Agent Track
 
@@ -156,7 +157,7 @@ Sprint 3 opens April 13, 2026. Tracks are tentative: **Agent Safety, Coding Agen
 
 ## 4. Sprint 2 Analysis
 
-Sprint 2 runs March 23 – April 12, 2026. Six confirmed repos across four tracks.
+Sprint 2 was treated as the active earlier-phase window at analysis time. Six confirmed repos across four tracks.
 
 ### 4.1 Computer Use / Web Agent Track
 
@@ -208,7 +209,7 @@ Ranked by: LogoMesh architectural alignment × scoring predictability × infrast
 | **2 — Very High** | Agent Safety | AVER | 3 | 80 pts / 2 units; Cluster C anchor; enables 2 Sprint 2 repos |
 | **3 — High** | Cybersecurity | RCAbench | 3 | 70 pts / 2 units; MCTS reasoning reuses; deterministic scoring |
 | **4 — High** | Coding Agent | Terminal-Bench 2.0 | 3 (TBD) | 70 pts / 1–2 units; Docker sandbox overlap; confirm sprint first |
-| **5 — High** | Computer Use | CAR-bench | 2 | 55 pts / 1 unit; Cluster C delta from AVER; **must submit by April 12** |
+| **5 — High** | Computer Use | CAR-bench | 2 | 55 pts / 1 unit; Cluster C delta from AVER; execute after submission-eligibility gate |
 | **6 — Medium** | Agent Safety | Pi-Bench | 3 | 55 pts / 2 units; Cluster F; deterministic but new domain |
 | **7 — Medium** | τ²-Bench | τ²-Bench | 2 | 45 pts / 2 units; Cluster C delta; dual-control adds complexity |
 | **8 — Low** | Coding Agent | NetArena | 3 | 20 pts / 2 units (floor); K8s barrier; mandatory first-place target |
@@ -232,7 +233,7 @@ The A2A protocol is identical across every benchmark. What varies is the output 
 Each cluster built once covers all repos in that cluster. Sprint 2 additions (CAR-bench, τ²-Bench) are marginal-cost additions to mandatory Sprint 3 adapter work.
 
 ### R2 — Build Sequence: Cluster B First, Cluster C Second
-text-2-sql (Cluster B) has the highest ROI in the competition (85 pts / 1 unit). Build it first. Building AVER (Cluster C) second immediately enables CAR-bench — which must be submitted before April 12. Sequencing Cluster C before April 12 is time-critical.
+text-2-sql (Cluster B) has the highest ROI in the competition (85 pts / 1 unit). Build it first. Building AVER (Cluster C) second immediately enables CAR-bench — which should run only after submission-eligibility verification. Sequencing Cluster C ahead of Sprint 2 carry-over execution remains time-critical once gates are verified.
 
 **Build order:** B → C (AVER) → C-delta (CAR-bench) → A (RCAbench) → F (Pi-Bench) → E floor (NetArena) → C-delta (τ²-Bench, if time)
 
@@ -251,7 +252,7 @@ CAR-bench (task types: base/hallucination/disambiguation) and τ²-Bench (policy
 
 ### Known Gaps
 
-- **Sprint 3 roster is tentative.** Agent Safety, Coding Agent, Cybersecurity tracks confirmed; specific repos are based on Phase 1 first-place results. Roster may be updated before April 13.
+- **Sprint 3 roster is tentative.** Agent Safety, Coding Agent, Cybersecurity tracks confirmed; specific repos are based on Phase 1 first-place results. Roster may change before official sprint go-live verification.
 - **Terminal-Bench 2.0 sprint assignment unconfirmed.** Found via AgentBeats dashboard activity log. Pass 2+3 not yet completed. Do not build until sprint assignment is verified.
 - **AgentProbe** (`ymiled/agentprobe`) appeared in AgentBeats activity log with unknown sprint and track assignment. Could be Cybersecurity or Agent Safety.
 - **τ²-Bench Pass 3 incomplete.** Task input schema for the three domain tool APIs (airline/retail/telecom) was not fully extracted. Required before starting dual-control implementation.
@@ -259,9 +260,9 @@ CAR-bench (task types: base/hallucination/disambiguation) and τ²-Bench (policy
 
 ### Recommended Next Passes
 
-1. **Immediate (before April 12):** Build Cluster B adapter → submit to text-2-sql baseline. Build Cluster C adapter → submit CAR-bench to Sprint 2 leaderboard.
-2. **Sprint 3 roster announcement (~mid-April):** Confirm Terminal-Bench 2.0 and do Pass 2+3. Confirm whether NAAMSE or AgentProbe are in scope.
-3. **Sprint 3 window (April 13 – May 3):** Complete Cluster A (RCAbench), Cluster F (Pi-Bench), Cluster E floor (NetArena).
+1. **Immediate (after schedule and submission-eligibility gates pass):** Build Cluster B adapter → submit to text-2-sql baseline. Build Cluster C adapter → execute CAR-bench carry-over work.
+2. **Once Sprint 3 roster is officially verified:** Confirm Terminal-Bench 2.0 and do Pass 2+3. Confirm whether NAAMSE or AgentProbe are in scope.
+3. **During the verified Sprint 3 execution window:** Complete Cluster A (RCAbench), Cluster F (Pi-Bench), Cluster E floor (NetArena).
 4. **τ²-Bench:** Complete Pass 3 (tool schemas for all three domains) before starting dual-control implementation.
 
 ---

@@ -11,7 +11,7 @@ type: Spec
 ## 1. Where We Are
 
 - **Phase 1 (Green Agent):** Won 1st place, Software Testing Agent track, AgentBeats competition (UC Berkeley RDI). 1,300+ teams competed.
-- **Phase 2 (Purple Agent):** Registered. Focus is now on the Coding & Cybersecurity Agents track (Sprint 3). The Lambda Security Arena track is deprecated.
+- **Phase 2 (Purple Agent):** Active. Execution follows the official-team-brief-aligned action contract with explicit schedule, roster, and submission eligibility gates. CAR-bench remains primary Sprint 2 carry-over; tau2-bench remains secondary after CAR-bench completion and capacity confirmation.
 
 ## 2. What LogoMesh Is
 
@@ -32,10 +32,12 @@ A multi-agent benchmark that evaluates AI-written code by actually running it, a
 ## 4. Immediate Priorities
 
 ### Phase 2 Competition
+- Execute the active Phase 2 action contract and enforce schedule, roster, and submission-eligibility verification gates before phase actions
+- Preserve team issue order for execution sequencing (LOG-47 through LOG-56)
 - Tag `phase-2-tryout` issues for recruitment filter (done: #127, #128, #129)
 - Recruit 1-2 devs via PR-based tryout (Josh owns outreach, Oleksander reviews PRs)
 - Deepti handles registration and competition admin
-- Build Purple Agent for main track + Lambda Security Arena
+- Build Purple Agent adapters for confirmed targets; keep speculative targets conditional until verification
 
 ## 5. Key Documentation
 
@@ -47,6 +49,7 @@ A multi-agent benchmark that evaluates AI-written code by actually running it, a
 | [CONTEXT_PROMPT.md](../CONTEXT_PROMPT.md) | Context handoff for new Claude Code sessions |
 | [Judges Start Here](05-Competition/Judges-Start-Here.md) | Competition judge walkthrough |
 | [Agent Architecture](05-Competition/Agent-Architecture.md) | Full technical architecture |
+| [Phase 2 Sprint 3 Brief (Action Contract)](06-Phase-2/Planning_and_Strategy/%5B2026-04-12%5D-Phase2-Sprint3-Brief.md) | Current team execution brief with gate-based phase instructions and issue ordering |
 
 ## 6. Key Technical Facts
 
@@ -56,6 +59,7 @@ A multi-agent benchmark that evaluates AI-written code by actually running it, a
 - **Self-improving:** Battle Memory (SQLite), Strategy Evolver (UCB1 bandit), Task Intelligence (3-tier)
 - **20 curated tasks** from email validator to MVCC transactions
 - **A2A protocol:** Google's Agent-to-Agent JSON-RPC for inter-agent communication
+- **Canonical local workflow:** default branch `main-generalized-phase2` (`main-generalized-phase2-submodules` for submodule-heavy work), Green on port 9009, Purple on port 9010, full-suite tests via `make test` (`uv run pytest tests/ -v`)
 
 ## 7. Guidelines
 
@@ -72,3 +76,6 @@ A multi-agent benchmark that evaluates AI-written code by actually running it, a
 | `docs/04-Operations/green-agent/`, `purple-agent/`, `agentbeats-lambda/` | Code migrated to `src/` | 2025-12 |
 | Llama-3-70B, gpt-oss-20b | Replaced by Qwen2.5-Coder-32B-Instruct | 2026-01 |
 | Old team workspaces (`docs/Archive/Intent-Log/[name]/`) | Phase 1 artifacts, team restructured | 2026-02 |
+| `docs/Archive/06-Phase-2/Planning_and_Strategy/[2026-04-01]-Competitive-Analysis-Briefing.md` and `docs/Archive/06-Phase-2/Planning_and_Strategy/[2026-04-01]-Sprint2-Sprint3-Competitive-Analysis.md` | Superseded by corrected roster analysis after official Phase 2 roster validation | 2026-04 |
+| `docs/Archive/06-Phase-2/Planning_and_Strategy/Phase2-Team-Brief.md` | Superseded by revalidated execution brief for current Sprint 2 closeout and Sprint 3 planning | 2026-04 |
+| `docs/Archive/06-Phase-2/Planning_and_Strategy/[2026-04-03]-Phase2-Corrected-Competitive-Analysis.md`, `docs/Archive/06-Phase-2/Planning_and_Strategy/[2026-04-02]-Optimal-Path-Synthesis-v2.md`, `docs/Archive/06-Phase-2/Planning_and_Strategy/[2026-04-02]-Generalization-Strategy-Explained-v2.md`, and `docs/Archive/06-Phase-2/Planning_and_Strategy/[2026-04-02]-Generalization-Compatibility-Matrix-v2.md` (schedule-coupled sections) | Reclassified as SNAPSHOT references during authority reset; active phase instructions moved to the gate-based action contract | 2026-04 |

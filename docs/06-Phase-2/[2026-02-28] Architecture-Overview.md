@@ -153,12 +153,12 @@ As we generalize the adversarial pipeline, it is critical to acknowledge the emp
 ### 5.1. The Missing CIS Logic Score Floor (Remediation Planned)
 **Issue:** The Contextual Integrity Score (CIS) is calculated as `(0.25*R + 0.25*A + 0.25*T + 0.25*L) * Red_Penalty * Intent_Multiplier`. In `src/green_logic/scoring.py`, the LLM is instructed to adjust the ground-truth scores by a maximum of ±0.10. 
 **Bug:** While the code programmatically enforces a hard floor for R, A, and T (`max(score, ground_truth - 0.10)`), **this constraint is entirely missing for the Logic (L) score.** The LLM can mathematically hallucinate or maliciously adjust the Logic score far below the intended limits.
-**Action:** Per the [[2026-03-04] Red_Agent_Remediation_Plan.md](./Planning_and_Strategy/[2026-03-04]%20Red_Agent_Remediation_Plan.md), bounding logic `l = max(l, logic_score - 0.10)` will be added.
+**Action:** Per the [[2026-03-04] Red_Agent_Remediation_Plan.md](./%5B2026-03-04%5D%20Red_Agent_Remediation_Plan.md), bounding logic `l = max(l, logic_score - 0.10)` will be added.
 
 ### 5.2. DBOM Cryptographic Hashing Discrepancy (Remediation Planned)
 **Issue:** The system generates a Decision Bill of Materials (DBOM) to provide an audit trail (`src/green_logic/agent.py`). It relies on computing a SHA-256 hash (`h_delta`) of the `raw_result` JSON payload.
 **Bug:** The DBOM generator hashes the **unsorted** JSON string (`json.dumps(result)`). However, the database storage routine saves the **sorted** JSON string (`json.dumps(result, sort_keys=True)`). Because the serialization order differs, cryptographic verification of the database record against the DBOM hash will consistently fail.
-**Action:** Per the [[2026-03-04] Red_Agent_Remediation_Plan.md](./Planning_and_Strategy/[2026-03-04]%20Red_Agent_Remediation_Plan.md), the hashing process will enforce uniform sorted serialization (`json.dumps(result, sort_keys=True)`).
+**Action:** Per the [[2026-03-04] Red_Agent_Remediation_Plan.md](./%5B2026-03-04%5D%20Red_Agent_Remediation_Plan.md), the hashing process will enforce uniform sorted serialization (`json.dumps(result, sort_keys=True)`).
 
 ### 5.3. Merkle Chaining is Not Implemented
 **Issue:** Despite conceptual plans, there is absolutely no active programmatic implementation of cryptographic Merkle Chaining between sequential records in the SQLite database. DBOM hashes are isolated, standalone artifacts per evaluation run.

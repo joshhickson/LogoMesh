@@ -1,9 +1,10 @@
 ---
-status: ACTIVE
+status: SUPERSEDED
 type: Research
 ---
 > **Context:**
 > *   [2026-04-01]: Consolidated competitive analysis briefing covering Passes 1 and 2 of Sprint 2 + Sprint 3 Green Agent repo analysis. 28/29 repos analyzed (1 unavailable). Action item from 2026-03-28 meeting. Feeds into Sprint 3 Purple Agent generalization strategy.
+> **Superseded By:** [Phase 2 Competitive Analysis - Corrected Roster]([2026-04-03]-Phase2-Corrected-Competitive-Analysis.md)
 > **See Also:**
 > *   [Pass 1 — Full Inventory]([2026-04-01]-Sprint2-Sprint3-Competitive-Analysis.md)
 > *   [Pass 2 — Scoring Deep-Dive]([2026-04-01]-Sprint3-Scoring-Deep-Dive.md)

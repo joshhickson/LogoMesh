@@ -1,7 +1,10 @@
-> **Status:** ACTIVE
-> **Type:** Plan
+---
+status: SNAPSHOT
+type: Plan
+---
 > **Context:**
 > *   [2026-04-02]: Corrected narrative strategy explanation based on the verified Phase 2 roster. Supersedes [2026-04-02]-Generalization-Strategy-Explained.md which was built from wrong Sprint 2 data (MateFin, MIDS4LIFE, Webshop Plus were not in Phase 2).
+> *   [2026-04-14]: Reclassified as historical strategy narrative. Use the active Sprint 3 brief for current phase instructions and schedule gating.
 > **Supersedes:** [[2026-04-02]-Generalization-Strategy-Explained.md]([2026-04-02]-Generalization-Strategy-Explained.md)
 > **See Also:**
 > *   [Optimal Path Synthesis v2]([2026-04-02]-Optimal-Path-Synthesis-v2.md)
@@ -13,7 +16,7 @@
 
 The original analysis was built from a GitHub repo list collected before the official Phase 2 roster was finalized. When we checked rdi.berkeley.edu/agentx-agentbeats.html directly, the Sprint 2 roster had been updated. The repos we had targeted for Sprint 2 — MateFin, MIDS4LIFE, Webshop Plus, HEP-ExpAgents — are not in Phase 2. Similarly, the Software Testing track (LogoMesh, AgentSWE) and Healthcare track (ICU-Later) are not in Phase 2.
 
-This reduced the expected score total from ~655 to ~365–480, depending on whether Terminal-Bench 2.0 is confirmed for Sprint 3 and whether we complete τ²-Bench before April 12.
+This reduced the expected score total from ~655 to ~365–480, depending on whether Terminal-Bench 2.0 is confirmed for Sprint 3 and whether we complete τ²-Bench as a secondary Sprint 2 carry-over after gate verification.
 
 **The adapter cluster methodology is unchanged.** The same five-adapter architecture applies — the difference is which repos fill each cluster slot. Everything below reflects the corrected roster.
 
@@ -62,7 +65,7 @@ The key structural difference from CAR-bench is **dual control**: both the agent
 
 τ²-Bench also uses Cluster C, so it reuses the same adapter as AVER and CAR-bench. The additional cost (2 units vs. 1 for CAR-bench) comes from implementing dual-control state tracking and loading domain-specific tool schemas for each of the three service domains.
 
-**Sprint 2 recommendation:** CAR-bench is the primary target. Submit CAR-bench before April 12. Add τ²-Bench if Sprint 2 time permits after CAR-bench is submitted.
+**Sprint 2 recommendation:** CAR-bench is the primary target. Execute CAR-bench after submission-eligibility verification. Add τ²-Bench only if secondary carry-over capacity remains after CAR-bench.
 
 ---
 
@@ -72,7 +75,7 @@ The key structural difference from CAR-bench is **dual control**: both the agent
 
 27+ SQL generation tasks across 4 difficulty levels. The scoring is 7-dimensional with an AST hallucination gate as the entry point: if the Purple Agent generates phantom tables or columns not in the provided schema, the task fails before any quality scoring occurs.
 
-This is the highest-ROI repo in the entire competition. LogoMesh's AST analysis background maps directly to the hallucination detection requirement. The output is a JSON dict in the A2A response body — Cluster B, the simplest possible adapter. Building this first unlocks the cleanest path into Sprint 3 immediately when the window opens April 13.
+This is the highest-ROI repo in the entire competition. LogoMesh's AST analysis background maps directly to the hallucination detection requirement. The output is a JSON dict in the A2A response body — Cluster B, the simplest possible adapter. Building this first unlocks the cleanest path into Sprint 3 as soon as the schedule gate confirms active execution.
 
 **Expected score: 85. Cost: 1 unit.**
 
@@ -126,15 +129,15 @@ This is the highest LogoMesh overlap of any new repo found in this analysis cycl
 
 ## Build Sequence (Corrected)
 
-| Step | Adapter | Sprint window | Repos unlocked | Notes |
+| Step | Adapter | Execution gate | Repos unlocked | Notes |
 |:-----|:--------|:-------------|:--------------|:------|
-| 1 | B — JSON | Before April 13 | text-2-sql, TB2.0 (conditional) | Highest ROI opening |
-| 2 | C — Multi-turn | Before April 12 | AVER, CAR-bench | **CAR-bench must submit by April 12** |
-| 3 | C delta 1 | Before April 12 | CAR-bench | Sprint 2 primary submission |
-| 4 | C delta 2 | Before April 12 (if time) | τ²-Bench | Sprint 2 secondary |
-| 5 | A — File write | Sprint 3 | RCAbench | |
-| 6 | F — Policy trace | Sprint 3 | Pi-Bench | |
-| 7 | E floor | Sprint 3 | NetArena | Accept floor score |
+| 1 | B — JSON | After schedule verification for Sprint 3 prep | text-2-sql, TB2.0 (conditional) | Highest ROI opening |
+| 2 | C — Multi-turn | After schedule + submission-eligibility gates | AVER, CAR-bench | CAR-bench runs only after gate verification |
+| 3 | C delta 1 | After submission-eligibility gate | CAR-bench | Sprint 2 primary carry-over |
+| 4 | C delta 2 | After primary carry-over completion (if capacity remains) | τ²-Bench | Sprint 2 secondary |
+| 5 | A — File write | Verified Sprint 3 execution period | RCAbench | |
+| 6 | F — Policy trace | Verified Sprint 3 execution period | Pi-Bench | |
+| 7 | E floor | Verified Sprint 3 execution period | NetArena | Accept floor score |
 
 ---
 

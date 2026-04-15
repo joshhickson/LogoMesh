@@ -1,7 +1,10 @@
-> **Status:** ACTIVE
-> **Type:** Research
+---
+status: SNAPSHOT
+type: Research
+---
 > **Context:**
 > *   [2026-04-02]: Corrected compatibility matrix based on the verified Phase 2 roster. Supersedes [2026-04-02]-Generalization-Compatibility-Matrix.md which was built from the wrong Sprint 2 repo list.
+> *   [2026-04-14]: Reclassified as historical technical reference. Adapter compatibility signals remain useful; phase timing and schedule-coupled instructions are non-authoritative.
 > **Supersedes:** [[2026-04-02]-Generalization-Compatibility-Matrix.md]([2026-04-02]-Generalization-Compatibility-Matrix.md)
 > **See Also:**
 > *   [Sprint 2 New Repos Analysis]([2026-04-02]-Sprint2-New-Repos-Analysis.md)
@@ -74,7 +77,7 @@ Each repo is scored 1–5 on eight axes:
 | Score ceiling | 55 | Medium confidence; binary cliff means focus on correctness |
 | Adapter reuse | Cluster C (shared with AVER, τ²-Bench) |
 
-**Verdict: SPRINT 2 PRIMARY.** After Adapter C (AVER) is built, this is a 1-unit add. Submit to Sprint 2 window (closes April 12).
+**Verdict: SPRINT 2 PRIMARY.** After Adapter C (AVER) is built, this is a 1-unit add. Execute only after submission-eligibility gate verification.
 
 ---
 
@@ -124,7 +127,7 @@ Each repo is scored 1–5 on eight axes:
 | Score ceiling | 45 | Medium confidence; dual control adds complexity |
 | Adapter reuse | Cluster C (shared with AVER, CAR-bench) |
 
-**Verdict: SPRINT 2 SECONDARY.** Target if CAR-bench is delivered before April 12 with time remaining. 2-unit cost (larger than CAR-bench delta due to dual-control).
+**Verdict: SPRINT 2 SECONDARY.** Target only if CAR-bench is complete and gate-verified capacity remains for a secondary carry-over. 2-unit cost (larger than CAR-bench delta due to dual-control).
 
 ---
 

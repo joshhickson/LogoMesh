@@ -105,9 +105,13 @@ The benchmark covers 20 tasks from basic data structures to distributed systems 
 
 ```bash
 # 1. Clone and install
-git clone https://github.com/sszz01/LogoMesh.git
+git clone https://github.com/joshhickson/LogoMesh.git
 cd LogoMesh
+git checkout main-generalized-phase2   # active default Phase 2 branch
 pip install uv && uv sync
+
+# Canonical full-suite verification (runs: uv run pytest tests/ -v)
+make test
 
 # 2. Set your API key
 cp .env.example .env

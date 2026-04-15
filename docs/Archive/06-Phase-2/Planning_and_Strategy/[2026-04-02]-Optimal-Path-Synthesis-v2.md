@@ -1,7 +1,10 @@
-> **Status:** ACTIVE
-> **Type:** Plan
+---
+status: SNAPSHOT
+type: Plan
+---
 > **Context:**
 > *   [2026-04-02]: Corrected optimal path synthesis based on verified Phase 2 roster. Supersedes [2026-04-02]-Optimal-Path-Synthesis.md which was built from the wrong Sprint 2 repo list (MateFin, MIDS4LIFE, Webshop Plus were not in Phase 2).
+> *   [2026-04-14]: Reclassified as historical planning context. Adapter ROI analysis remains useful, but schedule-coupled sequencing in this file is non-authoritative for current execution.
 > **Supersedes:** [[2026-04-02]-Optimal-Path-Synthesis.md]([2026-04-02]-Optimal-Path-Synthesis.md)
 > **See Also:**
 > *   [Generalization Compatibility Matrix v2]([2026-04-02]-Generalization-Compatibility-Matrix-v2.md)
@@ -12,14 +15,14 @@
 
 ## Selected Targets
 
-### Sprint 2 (active window — ends April 12)
+### Sprint 2 (historical window label; verify schedule gate)
 
 | Repo | Adapter | Expected score | Cost | Priority |
 |:-----|:--------|:--------------|:-----|:---------|
 | **CAR-bench** | C delta from AVER | 55 | 1 unit | **Primary** |
 | **τ²-Bench** | C delta from CAR-bench | 45 | 2 units | Secondary (if time) |
 
-### Sprint 3 (April 13 – May 3, tentative)
+### Sprint 3 (historical tentative window label; verify schedule gate)
 
 | Repo | Track | Adapter | Expected score | Cost |
 |:-----|:------|:--------|:--------------|:-----|
@@ -40,7 +43,7 @@
 | + Sprint 2 secondary (if time) | + τ²-Bench | **480** |
 
 **Conservative target: ~365 points** (confirmed roster only, Sprint 3 mandatory + CAR-bench).
-**Optimistic target: ~480 points** (all inclusions, TB2.0 confirmed, τ²-Bench completed in Sprint 2 window).
+**Optimistic target: ~480 points** (all inclusions, TB2.0 confirmed, τ²-Bench completed as Sprint 2 secondary carry-over).
 
 > **Roster note:** These totals are lower than the previous synthesis (~655) due to the corrected roster. The original synthesis included MateFin (+70), MIDS4LIFE (+45), ICU-Later (+20), AgentSWE (+65), and LogoMesh-self (+85) — none of which are in Phase 2. The corrected totals reflect only confirmed competition repos.
 
@@ -48,7 +51,7 @@
 
 ## Implementation Sequence
 
-Ordered by: sprint window deadline first, then adapter ROI, then reuse leverage.
+Ordered by: verified phase-gate urgency first, then adapter ROI, then reuse leverage.
 
 ### Stage 1 — Adapter B (Sprint 3 prep, start immediately)
 
@@ -72,8 +75,8 @@ Ordered by: sprint window deadline first, then adapter ROI, then reuse leverage.
 
 **Covers (in order of build):**
 1. AVER (Sprint 3 — anchor for Cluster C)
-2. CAR-bench (Sprint 2 — **submit before April 12**)
-3. τ²-Bench (Sprint 2 — submit before April 12 if time)
+2. CAR-bench (Sprint 2 carry-over — run after submission-eligibility gate)
+3. τ²-Bench (Sprint 2 carry-over — run after CAR-bench if capacity remains)
 
 **Reuses:** Multi-turn `conversation_history[context_id]` from existing `GenericDefenderExecutor`. New: tool call serialization and error classification taxonomy.
 
@@ -142,7 +145,7 @@ Ordered by: sprint window deadline first, then adapter ROI, then reuse leverage.
 **Key implementation rules:**
 - Three sub-apps: k8s (NetworkPolicy objects), malt (Mininet topology), route (BGP/routing tables).
 - Binary correctness gate means actual pod connectivity must be correct for full points. Floor strategy accepts ~20 points from reasoning quality.
-- If a KinD (Kubernetes-in-Docker) cluster becomes available before Sprint 3 closes, elevate to full implementation (ceiling: 40).
+- If a KinD (Kubernetes-in-Docker) cluster becomes available during the active Sprint 3 execution period (after schedule verification), elevate to full implementation (ceiling: 40).
 
 **Cost:** 2 units (floor only). **Score unlocked:** 20.
 
@@ -179,8 +182,8 @@ Purple Agent
 |:-----|:--------------|:-----------|
 | Sprint 3 roster changes (currently tentative) | All Sprint 3 targets | Monitor website + AgentBeats dashboard weekly; existing analysis covers likely first-place repos |
 | Terminal-Bench 2.0 not confirmed for Sprint 3 | TB2.0 (+70 pts) | Do not build until Sprint 3 roster announced; design Adapter B to extend cleanly |
-| τ²-Bench dual-control underestimated | τ²-Bench | If time runs out in Sprint 2 window, drop τ²-Bench — CAR-bench alone is sufficient for Sprint 2 requirement |
-| NetArena floor attempt scores 0 (all-or-nothing) | NetArena | Investigate KinD cluster feasibility early in Sprint 3 window before committing to floor strategy |
+| τ²-Bench dual-control underestimated | τ²-Bench | If schedule or submission-eligibility gates leave no capacity for a secondary Sprint 2 carry-over, drop τ²-Bench — CAR-bench alone is sufficient for Sprint 2 requirement |
+| NetArena floor attempt scores 0 (all-or-nothing) | NetArena | Investigate KinD cluster feasibility at Sprint 3 gate validation time before committing to floor strategy |
 
 ---
 

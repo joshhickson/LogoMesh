@@ -4,7 +4,7 @@ Paste everything below this line into a new Claude Code session.
 
 ---
 
-You are continuing work on **LogoMesh**, a multi-agent AI code evaluation platform built for the UC Berkeley RDI AgentX AgentBeats competition. The repo is at `/Users/ovoievodin/zasha/agentbeats/LogoMesh`. The active branch is `feat/agi-agents` (20+ commits ahead of `master`; master is stale).
+You are continuing work on **LogoMesh**, a multi-agent AI code evaluation platform built for the UC Berkeley RDI AgentX AgentBeats competition. The workspace root is `C:/Users/Josh/Documents/LogoMesh`. The default active Phase 2 branch is `main-generalized-phase2`; use `main-generalized-phase2-submodules` for submodule-heavy work.
 
 ---
 
@@ -369,7 +369,7 @@ LogoMesh is built on the academic concept of **Contextual Debt** — a paper by 
 - Score floors for architecture and testing
 - Safe default strategy on first run
 
-### Recent Commits on feat/agi-agents
+### Historical Commits on feat/agi-agents (Phase 1 Context)
 ```
 5b2e90d fix: harden LLM prompts against prompt injection from Purple agent
 43f327f docs: rewrite README and judges guide + add baseline DBOMs
@@ -404,7 +404,7 @@ Key calibration points:
 ### Lambda Labs (H100/A100)
 ```bash
 git clone https://github.com/joshhickson/LogoMesh.git
-cd LogoMesh && git checkout feat/agi-agents
+cd LogoMesh && git checkout main-generalized-phase2
 pip install uv && uv sync
 cp .env.example .env  # Add OPENAI_API_KEY
 
@@ -421,8 +421,12 @@ docker compose -f docker-compose.agents.yml up --build
 ## 13. Important Rules
 
 - Do NOT include `Co-Authored-By: Claude` in any commit messages.
-- Branch `feat/agi-agents` is the source of truth, not `master`.
+- Default working branch is `main-generalized-phase2`; create feature branches from it.
+- Use `main-generalized-phase2-submodules` only for submodule-heavy sessions.
+- Canonical full-suite test command is `make test` (runs `uv run pytest tests/ -v`).
 - Follow the documentation protocol in `CLAUDE.md` if making doc changes.
+- This file is the single Claude handoff index; for active campaign state, check `docs/04-Operations/Intent-Log/Josh/README.md` plus the latest dated manifest/log in that folder.
+- Active Phase 2 planning docs live in `docs/06-Phase-2/Planning_and_Strategy/`; archived strategy lineage lives in `docs/Archive/06-Phase-2/Planning_and_Strategy/`.
 - The scoring pipeline is intentionally designed so LLM can only adjust ±0.10 from ground truth. Do not change this without discussion.
 - Red Agent penalties are multiplicative on the full CIS, not deducted from individual components. This prevents double-penalization.
 - The `Severity` enum penalty values (CRITICAL=40%, HIGH=25%, MEDIUM=15%, LOW=5%, INFO=0%) are intentional and calibrated.
@@ -444,4 +448,4 @@ docker compose -f docker-compose.agents.yml up --build
 
 ---
 
-*Last updated: 2026-02-17*
+*Last updated: 2026-04-15*

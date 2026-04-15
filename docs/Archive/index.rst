@@ -13,6 +13,7 @@ Archive
    20260111-Session-Log.md
    GAP_ANALYSIS.md
    PROJECT_PLAN.md
+   06-Phase-2/index.rst
    Diagrams/index.rst
    Legacy-Pillars/index.rst
    Logs/index.rst

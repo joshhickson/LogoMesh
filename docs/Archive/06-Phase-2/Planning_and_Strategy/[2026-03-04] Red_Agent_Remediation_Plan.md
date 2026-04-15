@@ -1,3 +1,11 @@
+---
+status: SNAPSHOT
+type: Plan
+---
+> **Context:**
+> * [2026-03-04]: Historical remediation plan created during early Phase 2 cybersecurity-track assumptions.
+> * [2026-04-14]: Preserved for architecture history; active execution guidance now lives in `docs/00_CURRENT_TRUTH_SOURCE.md` and `[2026-04-12]-Phase2-Sprint3-Brief.md`.
+
 # Phase 2 Remediation Plan: Red Agent Pipeline & Security Architecture
 
 ## Overarching Goal

@@ -1,11 +1,9 @@
-Intent Log
-==========
+Josh Workspace
+==============
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
    :glob:
 
-   Technical/*
-   Josh/index.rst
-
+   *

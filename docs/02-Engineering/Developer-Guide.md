@@ -26,7 +26,7 @@ The LLM can only adjust scores **±0.10** from ground-truth anchors. Run-to-run 
 
 ### Prerequisites
 
-- Python 3.10+
+- Python 3.11+
 - [uv](https://docs.astral.sh/uv/) (Python package manager)
 - Docker (for sandbox execution)
 - An OpenAI API key
@@ -36,10 +36,13 @@ The LLM can only adjust scores **±0.10** from ground-truth anchors. Run-to-run 
 ```bash
 git clone https://github.com/joshhickson/LogoMesh.git
 cd LogoMesh
-git checkout feat/agi-agents   # <-- active branch, master is stale
+git checkout main-generalized-phase2   # active default Phase 2 branch
 
 pip install uv
 uv sync
+
+# Canonical full-suite verification (runs: uv run pytest tests/ -v)
+make test
 
 cp .env.example .env
 # Edit .env and add your OPENAI_API_KEY
@@ -442,8 +445,8 @@ Each evaluation produces a Decision Bill of Materials:
 
 ### Branch Workflow
 
-1. The active branch is **`feat/agi-agents`** (master is stale)
-2. Create feature branches off `feat/agi-agents`
+1. The default active branch is **`main-generalized-phase2`**
+2. Create feature branches off `main-generalized-phase2`
 3. Follow the documentation protocol in `CLAUDE.md` if your changes affect architecture or deprecate anything
 4. Update `docs/00_CURRENT_TRUTH_SOURCE.md` if your work changes core specs
 

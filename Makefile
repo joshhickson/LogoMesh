@@ -1,4 +1,4 @@
-.PHONY: setup test run-green run-purple run-red docker-build lint clean
+.PHONY: setup test run-green run-purple run-red docker-build docker-up lint clean confusion-audit
 
 # Install dependencies
 setup:
@@ -30,6 +30,10 @@ test:
 # Lint
 lint:
 	uv run mypy src/ --ignore-missing-imports
+
+# Run confusion hotspot discovery audit
+confusion-audit:
+	uv run python tools/repo_confusion_audit.py
 
 # Clean build artifacts
 clean:

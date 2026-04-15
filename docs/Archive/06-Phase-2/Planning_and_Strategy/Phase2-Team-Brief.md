@@ -1,9 +1,10 @@
 ---
-status: ACTIVE
+status: SUPERSEDED
 type: Guide
 ---
 > **Context:**
 > * [2026-04-04]: Team-facing Phase 2 summary. Dates and judging criteria sourced from rdi.berkeley.edu/agentx-agentbeats.html.
+> **Superseded By:** [[2026-04-12]-Phase2-Sprint3-Brief.md]([2026-04-12]-Phase2-Sprint3-Brief.md)
 
 # LogoMesh Phase 2 — Team Brief
 **Date:** April 2026

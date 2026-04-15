@@ -1,9 +1,10 @@
 ---
-status: ACTIVE
+status: SUPERSEDED
 type: Research
 ---
 > **Context:**
 > *   [2026-04-01]: First-pass competitive analysis of all 28 Sprint 2 + Sprint 3 Green Agent repos (1 repo unavailable). Goal: identify emergent scoring patterns to inform generalized Purple Agent strategy for Sprint 3 (Apr 13 – May 3).
+> **Superseded By:** [Phase 2 Competitive Analysis - Corrected Roster]([2026-04-03]-Phase2-Corrected-Competitive-Analysis.md)
 
 # Sprint 2 + Sprint 3 Green Agent Competitive Analysis — First Pass
 

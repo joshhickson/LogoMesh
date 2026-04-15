@@ -3,7 +3,7 @@ status: ACTIVE
 type: Research
 ---
 > **Context:**
-> *   [2026-04-01]: Pass 2 — scoring source code analysis for the three highest-priority Sprint 3 Green Agents: RCAbench (Cybersecurity #1), text-2-sql (Coding #2), AVER (Agent Safety #3). Follows [Pass 1 analysis]([2026-04-01]-Sprint2-Sprint3-Competitive-Analysis.md).
+> *   [2026-04-01]: Pass 2 — scoring source code analysis for the three highest-priority Sprint 3 Green Agents: RCAbench (Cybersecurity #1), text-2-sql (Coding #2), AVER (Agent Safety #3). Follows [Pass 1 analysis](../../Archive/06-Phase-2/Planning_and_Strategy/%5B2026-04-01%5D-Sprint2-Sprint3-Competitive-Analysis.md).
 
 # Sprint 3 Scoring Deep-Dive — Pass 2 (Source Code Analysis)
 

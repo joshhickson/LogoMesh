@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Research
+---
+status: SNAPSHOT
+type: Research
+---
 > **Context:**
 > *   [2026-04-02]: Sprint 3 roster verification and new benchmark discovery. Written after confirming the official Phase 2 schedule on rdi.berkeley.edu/agentx-agentbeats.html and cross-referencing against the AgentBeats dashboard (agentbeats.dev).
 > **See Also:**

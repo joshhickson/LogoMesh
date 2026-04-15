@@ -44,7 +44,7 @@ If you're here from the recruitment post: look for issues tagged [`phase-2-tryou
 ### Regular Contributions
 
 1. Check [open issues](https://github.com/joshhickson/LogoMesh/issues). Issues tagged `good-first-issue` are scoped and approachable.
-2. Fork the repo and create a branch off `master`.
+2. Fork the repo and create a branch off `main-generalized-phase2` (or `main-generalized-phase2-submodules` for submodule-heavy work).
 3. Make your changes.
 4. Open a PR with a clear description of what you changed and why.
 

@@ -1,9 +1,11 @@
-> **Status:** ACTIVE
-> **Type:** Research
+---
+status: ACTIVE
+type: Research
+---
 > **Context:**
 > *   [2026-04-01]: Pass 3 of Sprint 2+3 competitive analysis. Source files fetched: RCAbench `gen_task.py` + `purple_agent_server.py`, text-2-sql `sql_benchmark_agent.py` + gold query examples, AVER `execution_validator.py` + task YAML template + real task example. Answers "what does the Purple Agent receive and what must it produce?" for the three priority repos.
 > **See Also:**
-> *   [Passes 1+2 Briefing]([2026-04-01]-Competitive-Analysis-Briefing.md)
+> *   [Passes 1+2 Briefing](../../Archive/06-Phase-2/Planning_and_Strategy/%5B2026-04-01%5D-Competitive-Analysis-Briefing.md)
 > *   [Pass 2 — Scoring Deep-Dive]([2026-04-01]-Sprint3-Scoring-Deep-Dive.md)
 
 # Pass 3 — Task Input Formats & Purple Agent Implementation Reference

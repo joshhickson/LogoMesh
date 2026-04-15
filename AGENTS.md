@@ -35,9 +35,10 @@ All new docs in `docs/` must use the header template (`docs/TEMPLATE_DOC.md`) wi
 ## Branch Workflow
 
 When working on feature branches:
-1. Document decisions in your branch
-2. Before merging to master, ensure `00_CURRENT_TRUTH_SOURCE.md` reflects any new truths
-3. If your branch conflicts with master's truth source, resolve by discussion—truth source wins
+1. Start feature branches from `main-generalized-phase2` (`main-generalized-phase2-submodules` only for submodule-heavy work)
+2. Document decisions in your branch
+3. Before merging to `main-generalized-phase2`, ensure `00_CURRENT_TRUTH_SOURCE.md` reflects any new truths
+4. If your branch conflicts with the current truth source, resolve by discussion—truth source wins
 
 ## Directory Structure
 

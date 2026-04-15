@@ -1,0 +1,416 @@
+{
+  "generated_at": "2026-04-14T06:14:10.755607+00:00",
+  "root": "C:/Users/Josh/Documents/LogoMesh",
+  "summary": {
+    "total_hotspots": 8,
+    "documentation_hotspots": 3,
+    "code_hotspots": 3,
+    "tooling_hotspots": 2
+  },
+  "hotspots": [
+    {
+      "key": "stale-branch-references",
+      "title": "Stale branch references in active docs",
+      "category": "documentation",
+      "score": 87,
+      "rationale": "Active docs still reference feat/agi-agents, which is likely stale and can send contributors to the wrong base branch.",
+      "signals": {
+        "reference_count": 7,
+        "active_docs_with_reference": 2
+      },
+      "evidence": [
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/CONTEXT_PROMPT.md",
+          "line": 7,
+          "snippet": "You are continuing work on **LogoMesh**, a multi-agent AI code evaluation platform built for the UC Berkeley RDI AgentX AgentBeats competition. The repo is a..."
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/CONTEXT_PROMPT.md",
+          "line": 372,
+          "snippet": "### Recent Commits on feat/agi-agents"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/CONTEXT_PROMPT.md",
+          "line": 407,
+          "snippet": "cd LogoMesh && git checkout feat/agi-agents"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/CONTEXT_PROMPT.md",
+          "line": 424,
+          "snippet": "- Branch `feat/agi-agents` is the source of truth, not `master`."
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/docs/02-Engineering/Developer-Guide.md",
+          "line": 39,
+          "snippet": "git checkout feat/agi-agents # <-- active branch, master is stale"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/docs/02-Engineering/Developer-Guide.md",
+          "line": 445,
+          "snippet": "1. The active branch is **`feat/agi-agents`** (master is stale)"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/docs/02-Engineering/Developer-Guide.md",
+          "line": 446,
+          "snippet": "2. Create feature branches off `feat/agi-agents`"
+        }
+      ]
+    },
+    {
+      "key": "dual-import-fallbacks",
+      "title": "Dual import-fallback pathways in src",
+      "category": "code",
+      "score": 80,
+      "rationale": "Many modules support both local and src-prefixed imports behind ImportError fallbacks, which can hide environment-specific failures.",
+      "signals": {
+        "files_with_fallbacks": 10,
+        "fallback_sites": 32
+      },
+      "evidence": [
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/src/memory.py",
+          "line": 612,
+          "snippet": "except ImportError:"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/src/memory.py",
+          "line": 618,
+          "snippet": "except ImportError:"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/src/task_intelligence.py",
+          "line": 23,
+          "snippet": "except ImportError:"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/src/task_intelligence.py",
+          "line": 26,
+          "snippet": "except ImportError:"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/src/green_logic/analyzer.py",
+          "line": 24,
+          "snippet": "except ImportError:"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/src/green_logic/analyzer.py",
+          "line": 31,
+          "snippet": "except ImportError:"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/src/green_logic/generator.py",
+          "line": 22,
+          "snippet": "except ImportError:"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/src/green_logic/generator.py",
+          "line": 25,
+          "snippet": "except ImportError:"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/src/green_logic/refinement_loop.py",
+          "line": 58,
+          "snippet": "except ImportError:"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/src/green_logic/refinement_loop.py",
+          "line": 65,
+          "snippet": "except ImportError:"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/src/green_logic/refinement_loop.py",
+          "line": 72,
+          "snippet": "except ImportError:"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/src/green_logic/refinement_loop.py",
+          "line": 75,
+          "snippet": "except ImportError:"
+        }
+      ]
+    },
+    {
+      "key": "active-port-drift",
+      "title": "Port conventions drift across active docs",
+      "category": "documentation",
+      "score": 78,
+      "rationale": "Active documentation references both legacy and current ports, creating ambiguity for runbooks and smoke tests.",
+      "signals": {
+        "ports_observed": 4,
+        "refs_9000": 4,
+        "refs_9009": 23,
+        "refs_9010": 16,
+        "refs_9021": 3
+      },
+      "evidence": [
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/docs/05-Competition/Agent-Architecture.md",
+          "line": 29,
+          "snippet": "\u2502 \u2502 Port 9000 \u2502 Solution \u2502 Port 9001 \u2502 \u2502"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/docs/05-Competition/Agent-Architecture.md",
+          "line": 53,
+          "snippet": "| **Green** | Judge/Assessor | 9000 | Orchestrates battles, evaluates responses, computes CIS |"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/docs/05-Competition/Agent-Architecture.md",
+          "line": 389,
+          "snippet": "| Green Agent (Judge) | http://localhost:9000 |"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/docs/05-Competition/Agent-Architecture.md",
+          "line": 396,
+          "snippet": "curl -X POST http://localhost:9000/battle \\"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/README.md",
+          "line": 120,
+          "snippet": "uv run main.py --role GREEN --host 0.0.0.0 --port 9009 &"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/README.md",
+          "line": 123,
+          "snippet": "curl -X POST http://localhost:9009/actions/send_coding_task \\"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/README.md",
+          "line": 149,
+          "snippet": "docker run -p 9009:9009 \\"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/README.md",
+          "line": 152,
+          "snippet": "logomesh-green:latest --host 0.0.0.0 --port 9009"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/README.md",
+          "line": 117,
+          "snippet": "uv run main.py --role PURPLE --host 0.0.0.0 --port 9010 &"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/README.md",
+          "line": 127,
+          "snippet": "\"purple_agent_url\": \"http://localhost:9010/\","
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/docs/05-Competition/Agent-Architecture.md",
+          "line": 38,
+          "snippet": "\u2502 \u2502 Port 9021 \u2502 \u2502"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/docs/05-Competition/Agent-Architecture.md",
+          "line": 55,
+          "snippet": "| **Red** | Attacker | 9021 | Finds vulnerabilities in Purple's code |"
+        }
+      ]
+    },
+    {
+      "key": "source-of-truth-ambiguity",
+      "title": "Source-of-truth statements are distributed across docs",
+      "category": "documentation",
+      "score": 77,
+      "rationale": "Multiple active docs declaring source-of-truth semantics can confuse where final authority actually lives.",
+      "signals": {
+        "docs_with_phrase": 6,
+        "match_count": 8
+      },
+      "evidence": [
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/README.md",
+          "line": 280,
+          "snippet": "| Single source of truth per signal | Test failures only penalize T, not T + L + CIS |"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/AGENTS.md",
+          "line": 5,
+          "snippet": "**Before completing any task, update documentation to maintain system integrity.** The single source of truth is `docs/00_CURRENT_TRUTH_SOURCE.md`\u2014if your wo..."
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/CLAUDE.md",
+          "line": 5,
+          "snippet": "**Before completing any task, update documentation to maintain system integrity.** The single source of truth is `docs/00_CURRENT_TRUTH_SOURCE.md`\u2014if your wo..."
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/CONTEXT_PROMPT.md",
+          "line": 424,
+          "snippet": "- Branch `feat/agi-agents` is the source of truth, not `master`."
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/docs/05-Competition/Judges-Start-Here.md",
+          "line": 88,
+          "snippet": "| Component | Name | Source of Truth | Range |"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/docs/04-Operations/Dual-Track-Arena/README.md",
+          "line": 7,
+          "snippet": "> * [2026-01-03]: The temporary source of truth for the Dual-Track Arena (Custom Green Agent & Lambda Red/Blue Track)."
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/docs/04-Operations/Dual-Track-Arena/README.md",
+          "line": 9,
+          "snippet": "# Dual-Track Arena: Temporary Source of Truth"
+        },
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/docs/04-Operations/Dual-Track-Arena/README.md",
+          "line": 13,
+          "snippet": "This directory serves as the **Operational Source of Truth** for the \"Agent Arena.\" It consolidates the state, plans, and documentation for the agents compet..."
+        }
+      ]
+    },
+    {
+      "key": "red-agent-aliasing",
+      "title": "Red agent version aliasing obscures true implementation",
+      "category": "code",
+      "score": 75,
+      "rationale": "The alias RedAgentV2 = RedAgentV3 blurs version semantics for code readers, tests, and docs.",
+      "signals": {
+        "alias_count": 1
+      },
+      "evidence": [
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/src/red_logic/orchestrator.py",
+          "line": 1736,
+          "snippet": "RedAgentV2 = RedAgentV3"
+        }
+      ]
+    },
+    {
+      "key": "entrypoint-fragmentation",
+      "title": "Many executable entrypoints increase run-path ambiguity",
+      "category": "code",
+      "score": 65,
+      "rationale": "Multiple executable scripts can be useful, but without clear canonical guidance they create onboarding and debugging confusion.",
+      "signals": {
+        "entrypoint_count": 18
+      },
+      "evidence": [
+        {
+          "path": "main.py",
+          "line": 62,
+          "snippet": "if __name__ == \"__main__\":"
+        },
+        {
+          "path": "src/agentbeats/client_cli.py",
+          "line": 111,
+          "snippet": "if __name__ == \"__main__\":"
+        },
+        {
+          "path": "src/agentbeats/run_scenario.py",
+          "line": 183,
+          "snippet": "if __name__ == \"__main__\":"
+        },
+        {
+          "path": "src/green_logic/harmony_parser.py",
+          "line": 219,
+          "snippet": "if __name__ == \"__main__\":"
+        },
+        {
+          "path": "src/green_logic/test_harmony_integration.py",
+          "line": 149,
+          "snippet": "if __name__ == \"__main__\":"
+        },
+        {
+          "path": "src/red_logic/test_red_agent_v2.py",
+          "line": 316,
+          "snippet": "if __name__ == \"__main__\":"
+        },
+        {
+          "path": "scripts/analyze_c_new_001_results.py",
+          "line": 260,
+          "snippet": "if __name__ == '__main__':"
+        },
+        {
+          "path": "scripts/check_persistence.py",
+          "line": 36,
+          "snippet": "if __name__ == \"__main__\":"
+        },
+        {
+          "path": "scripts/extract_agent_thinking.py",
+          "line": 90,
+          "snippet": "if __name__ == \"__main__\":"
+        },
+        {
+          "path": "scripts/run_tier2_qwen.py",
+          "line": 164,
+          "snippet": "if __name__ == \"__main__\":"
+        },
+        {
+          "path": "scripts/screenshot_graph.py",
+          "line": 25,
+          "snippet": "if __name__ == \"__main__\":"
+        },
+        {
+          "path": "scripts/test_streaming.py",
+          "line": 62,
+          "snippet": "if __name__ == \"__main__\":"
+        }
+      ]
+    },
+    {
+      "key": "dual-dependency-surfaces",
+      "title": "Dual dependency surfaces without explicit precedence",
+      "category": "tooling",
+      "score": 63,
+      "rationale": "Both pyproject.toml and requirements.txt are present, which can diverge unless the install path and precedence are explicit.",
+      "signals": {
+        "requirements_entries": 16
+      },
+      "evidence": [
+        {
+          "path": "C:/Users/Josh/Documents/LogoMesh/pyproject.toml",
+          "line": 5,
+          "snippet": "[project]"
+        },
+        {
+          "path": "requirements.txt",
+          "line": 4,
+          "snippet": "a2a-sdk>=0.3.5"
+        }
+      ]
+    },
+    {
+      "key": "test-location-scatter",
+      "title": "Tests spread across src and tests directories",
+      "category": "tooling",
+      "score": 57,
+      "rationale": "Split test locations can cause hidden coverage gaps when default pytest discovery targets only one location.",
+      "signals": {
+        "tests_dir_count": 6,
+        "src_dir_count": 2
+      },
+      "evidence": [
+        {
+          "path": "tests/test_analyzer.py",
+          "line": 1,
+          "snippet": "test file"
+        },
+        {
+          "path": "tests/test_harmony_parser.py",
+          "line": 1,
+          "snippet": "test file"
+        },
+        {
+          "path": "tests/test_leaderboard_query.py",
+          "line": 1,
+          "snippet": "test file"
+        },
+        {
+          "path": "tests/test_red_agent_v2.py",
+          "line": 1,
+          "snippet": "test file"
+        },
+        {
+          "path": "src/green_logic/test_harmony_integration.py",
+          "line": 1,
+          "snippet": "test file"
+        },
+        {
+          "path": "src/red_logic/test_red_agent_v2.py",
+          "line": 1,
+          "snippet": "test file"
+        }
+      ]
+    }
+  ]
+}

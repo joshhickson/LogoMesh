@@ -5,6 +5,7 @@ This folder contains small helper scripts useful for data scientists and maintai
 Current scripts
 ---------------
 - `convert_eval_to_csv.py` — Convert one or more evaluation JSON files into a CSV (one row per analyzer). The script is intentionally minimal and depends only on the Python standard library.
+- `repo_confusion_audit.py` — Scan active docs and source code for confusion hotspots and generate ranked Markdown/JSON reports.
 
 Why this exists
 ---------------
@@ -20,6 +21,20 @@ python tools/convert_eval_to_csv.py -i docs/onboarding/example-evaluation-report
 
 # Convert all JSON files found in logs/ to a single CSV
 python tools/convert_eval_to_csv.py -i logs -o logs-evals.csv
+
+# Generate a confusion-hotspot audit report
+python tools/repo_confusion_audit.py
+```
+
+Confusion audit outputs
+-----------------------
+- `output/confusion-audit/latest.md` — Human-readable ranked hotspot report.
+- `output/confusion-audit/latest.json` — Machine-readable hotspot data for downstream tooling.
+
+You can also run this audit through the Make target:
+
+```bash
+make confusion-audit
 ```
 
 Output columns

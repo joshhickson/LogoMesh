@@ -1,9 +1,11 @@
-> **Status:** ACTIVE
-> **Type:** Research
+---
+status: ACTIVE
+type: Research
+---
 > **Context:**
 > *   [2026-04-02]: Pass 2+3 for the four Sprint 3 first-place repos not previously analyzed: Pi-Bench (Agent Safety), NetArena (Coding Agent), ICU-Later (Healthcare). RCAbench (Cybersecurity) was already covered in the April 1 deep-dives. LogoMesh (Software Testing) is our own agent — internal knowledge applies. HEP-ExpAgents and MAizeBargAIn (Sprint 2 first-place repos at Pass 1 only) analyzed here as addendum.
 > **See Also:**
-> *   [Sprint 3 Pass 2+3 — RCAbench/text-2-sql/AVER]([2026-04-01]-Competitive-Analysis-Briefing.md)
+> *   [Sprint 3 Pass 2+3 — RCAbench/text-2-sql/AVER](../../Archive/06-Phase-2/Planning_and_Strategy/%5B2026-04-01%5D-Competitive-Analysis-Briefing.md)
 > *   [Sprint 2 Scoring Deep-Dive]([2026-04-02]-Sprint2-Scoring-Deep-Dive.md)
 
 # Sprint 3 First-Place Repos — Scoring Deep-Dive (Pass 2+3)

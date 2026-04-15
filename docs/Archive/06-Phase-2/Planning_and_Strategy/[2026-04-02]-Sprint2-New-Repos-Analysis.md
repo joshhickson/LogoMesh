@@ -1,5 +1,7 @@
-> **Status:** ACTIVE
-> **Type:** Research
+---
+status: SNAPSHOT
+type: Research
+---
 > **Context:**
 > *   [2026-04-02]: Pass 1+2+3 for the four Sprint 2 repos not covered in the original analysis: τ²-Bench, MLE-Bench, OSWorld-Verified (all new), and FieldWorkArena (Pass 1 only previously). Written after the official roster was confirmed on rdi.berkeley.edu/agentx-agentbeats.html. These replace the previous Sprint 2 analysis which targeted the wrong repos (MateFin, MIDS4LIFE, Webshop Plus, HEP-ExpAgents).
 > **See Also:**

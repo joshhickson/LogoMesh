@@ -11,6 +11,16 @@ All new docs in `docs/` must use the header template (`docs/TEMPLATE_DOC.md`) wi
 
 ---
 
+## Agent Protocol: "Ask for Instructor"
+
+**At the beginning of every session:**
+1.  **Ask the user for their name** (e.g., "Josh", "Deepti", "Garrett").
+2.  **Locate their Workspace:** Navigate to `docs/04-Operations/Intent-Log/<Name>/`.
+3.  **Check for Orders:** Read the `README.md` or latest plan in that folder.
+4.  **Log Your Work:** Save any session logs or transient plans into that specific folder.
+
+---
+
 ## Documentation Triggers
 
 | Change Type | Required Action |
@@ -25,9 +35,10 @@ All new docs in `docs/` must use the header template (`docs/TEMPLATE_DOC.md`) wi
 ## Branch Workflow
 
 When working on feature branches:
-1. Document decisions in your branch
-2. Before merging to master, ensure `00_CURRENT_TRUTH_SOURCE.md` reflects any new truths
-3. If your branch conflicts with master's truth source, resolve by discussion—truth source wins
+1. Start feature branches from `main-generalized-phase2` (`main-generalized-phase2-submodules` only for submodule-heavy work)
+2. Document decisions in your branch
+3. Before merging to `main-generalized-phase2`, ensure `00_CURRENT_TRUTH_SOURCE.md` reflects any new truths
+4. If your branch conflicts with the current truth source, resolve by discussion—truth source wins
 
 ## Directory Structure
 
@@ -39,14 +50,19 @@ docs/
 ├── 02-Engineering/              # Setup, verification
 ├── 03-Research/                 # Analysis, novelty audits
 ├── 04-Operations/               # Logs, meeting minutes, team docs
+│   └── Intent-Log/              # Team Workspaces (Josh, Deepti, etc.)
 └── TEMPLATE_DOC.md              # Copy this for new docs
 ```
 
 ## Quick Reference: Header Format
 
+Strictly use **YAML Frontmatter** for metadata, followed by a **Context Blockquote**. See `docs/TEMPLATE_DOC.md` for the exact template.
+
 ```markdown
-> **Status:** [ACTIVE | DRAFT | REVIEW | SNAPSHOT | DEPRECATED | SUPERSEDED]
-> **Type:** [Plan | Spec | Log | Minutes | Research | Guide]
+---
+status: [ACTIVE | DRAFT | REVIEW | SNAPSHOT | DEPRECATED | SUPERSEDED]
+type: [Plan | Spec | Log | Minutes | Research | Guide]
+---
 > **Context:**
 > *   [YYYY-MM-DD]: [Brief description of strategic context or "why"]
 > **Superseded By:** [Link] (if SUPERSEDED)

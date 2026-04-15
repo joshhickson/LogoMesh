@@ -1,3 +1,11 @@
+---
+status: SNAPSHOT
+type: Research
+---
+> **Context:**
+> * [2026-03-03]: Extracted reference notes for potential academic framework integration.
+> * [2026-04-14]: Preserved as historical research context rather than active implementation guidance.
+
 # Strategic Academic Integration Reference
 *Extracted from the "[2026-03-03] LogoMesh Phase 2 Planning & Meeting.md"*
 

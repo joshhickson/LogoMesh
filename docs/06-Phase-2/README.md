@@ -1,43 +1,54 @@
-# README: Phase 2 Documentation Hub
+---
+status: ACTIVE
+type: Guide
+---
+> **Context:**
+> * [2026-04-14]: Refreshed Phase 2 hub to align with current truth source and revalidated Sprint 3 execution guidance.
+> * [2026-04-14]: Authority reset applied. Team phase instructions now flow from a single active action contract aligned to the official team brief, while schedule-coupled legacy analyses are retained as snapshots.
 
-Welcome to the definitive source of truth for the LogoMesh project's Phase 2 development. This documentation hub has been synthesized, analyzed, and reorganized to provide clear strategic direction and actionable intelligence for the AgentBeats competition and our subsequent NeurIPS 2026 submission.
+# Phase 2 Documentation Hub
 
-## Strategic Overview & The Dual-Track Approach
+This page is the navigation hub for Phase 2 artifacts. It distinguishes active execution guidance from historical analysis snapshots.
 
-Following our Phase 1 victory in the Software Testing Agent track, LogoMesh faced significant architectural challenges entering Phase 2. Initial plans to target the **Lambda Custom Track** faced a hurdle with a restrictive 4-call LLM limit. However, we have adopted a dual-track strategy to actively pursue both the Cybersecurity Agent track and the Lambda Custom Track.
+## 1. Canonical Phase 2 Sources
 
-After establishing a strategic academic partnership with Professor Tianyu Shi (McGill University) and researcher Yichen "Ethan" Shen, we are heavily leveraging Prof. Shi's team's expertise in "EVM-Bench" (Ethereum Virtual Machine benchmarking).
+- [Master Truth Source](../00_CURRENT_TRUTH_SOURCE.md)
+- [Phase 2 Sprint 3 Brief (Action Contract)](Planning_and_Strategy/%5B2026-04-12%5D-Phase2-Sprint3-Brief.md)
+- [Root Project README](../../README.md)
+- [Claude Handoff Index](../../CONTEXT_PROMPT.md)
 
-We are operating on two separate branches:
-*   **`main-generalized-phase2`**: Dedicated to adapting our Red Agent to handle Cybersecurity targets (like Solidity smart contracts and C/C++ memory vulnerabilities) for Sprint 3 (April 13 – May 3, 2026).
-*   **`main-lambda-phase2`**: Dedicated to the Lambda Custom Track. Here, we utilize an "Offline Sandbox" strategy. We bypass the 4-call limit by running our MCTS and micro-telemetry offline (using local micro-LLMs and scaling to H100s via Lambda compute credits) to simulate battles and calculate highly optimized attack prompts. The final submission will be a lightweight script executing these pre-calculated attacks.
+## 2. Branch and Execution Stance
 
-## Directory Structure & Navigation
+- Default branch: `main-generalized-phase2`
+- Specialized branch: `main-generalized-phase2-submodules` (submodule-heavy sessions only)
+- Canonical local full-suite verification: `make test` (runs `uv run pytest tests/ -v`)
 
-This directory has been restructured to separate active, actionable intelligence from historical context and raw transcripts.
+## 3. Planning_and_Strategy Lifecycle
 
-*   **`README.md`**: The definitive single source of truth for Phase 2 strategy.
-*   **`Action_Items.md`**: A consolidated list of Priority 0 (Urgent) to Priority 2 (Medium) tasks, fully prepared for import into our Linear project management tool.
-*   **`Strategic_Timeline.md`**: A detailed chronological trace of our strategy evolution, detailing the "Offline Sandbox" pivot, the Cybersecurity track integration, and the dual-track execution plan.
-*   **`Risks_and_Blind_Spots.md`**: A comprehensive assessment of our current operational and architectural vulnerabilities, prominently featuring the "Uroboros" security threat and critical cryptographic hashing discrepancies.
-*   **`[2026-02-28] Architecture-Overview.md`**: (Core Historical) A code-derived overview of the LogoMesh system architecture at the end of Phase 1.
-*   **`Planning_and_Strategy/`**: Contains foundational documents outlining the theoretical frameworks (DynaWeb, CCMA) proposed for integrating our academic partners and structuring our NeurIPS submission, as well as concrete remediation plans like [[2026-03-04] Red_Agent_Remediation_Plan.md](./Planning_and_Strategy/[2026-03-04]%20Red_Agent_Remediation_Plan.md) to address our current architectural vulnerabilities.
-*   **`Meetings/`**: Contains structured minutes and post-meeting briefs summarizing key decisions and role assignments from our syncs with Prof. Shi's team. This now also includes the initial Phase 2 kickoff minutes.
-*   **`External_Exports/`**: Houses static documentation and schedules directly exported from the AgentBeats competition website.
-*   **`Transcripts/`**: Contains raw, machine-generated transcripts, subtitles, and SRT files from our recorded meetings and official competition workshops.
+The `Planning_and_Strategy/` folder now contains active execution guidance only.
 
-## Key Contradictions Resolved
+- Historical snapshot and superseded strategy docs are archived under `../Archive/06-Phase-2/Planning_and_Strategy/`.
+- Treat files in `Planning_and_Strategy/` as implementation guidance only if they are consistent with the action contract below.
+- Treat files in `../Archive/06-Phase-2/Planning_and_Strategy/` as technical and historical reference only. Archived files cannot set phase timing, deadlines, or roster authority.
 
-During the synthesis of these documents, several critical contradictions were identified and definitively resolved by the project lead:
+When multiple files overlap, follow this precedence order:
 
-1.  **Cybersecurity Track Timeline:** Previous internal briefs incorrectly stated the Cybersecurity track was in Sprint 2. The definitive timeline, as confirmed by the official AgentBeats schedule, places the **Cybersecurity Agent track in Sprint 3 (April 13 – May 3, 2026)**.
-2.  **Definitive Track Decision:** While some meeting summaries suggested indecision between the Cybersecurity and Coding tracks, or a complete abandonment of the Lambda track, it has been formally decided to adopt a **dual-track focus**. We are pursuing the Cybersecurity Agent track on `main-generalized-phase2` and the Lambda track on `main-lambda-phase2` simultaneously.
-3.  **Role Assignments (Ethan vs. Engineering):** The raw transcripts and meeting minutes confirm that **Yichen "Ethan" Shen** will focus on algorithm design and literature review. **Oleksandr and the internal engineering team** remain responsible for the actual code adaptation of the Red Agent. Ethan will be briefed on the repository structure before specific implementation tasks are assigned.
-4.  **Bakul's Status:** Bakul has formally resolved any previous conflicts of interest related to the Lambda track and remains fully engaged in adapting LogoMesh for the Phase 2 sprints.
+1. `[2026-04-12]-Phase2-Sprint3-Brief.md`
+2. Supporting technical deep-dives in `Planning_and_Strategy/`
+3. Archived lineage documents in `../Archive/06-Phase-2/Planning_and_Strategy/`
 
-## External System Synergy
+## 4. Directory Guide
 
-The files in this directory are designed to be highly synergistic with our external tools:
-*   **Linear (Project Management):** The `Action_Items.md` document serves as the direct backlog for our Linear sprints.
-*   **Google Drive (Collaboration):** Documents within `Planning_and_Strategy/` that require active academic collaboration (e.g., NeurIPS paper drafting, DynaWeb mathematical integration) should be migrated to our shared Google Drive folder.
-*   **GitHub (Source of Truth):** This directory (`docs/06-Phase-2/`) remains the authoritative record for our architectural state, competition rules, and historical decisions.
+- `Planning_and_Strategy/`: Active strategy docs, competitive analysis, scoring/task deep-dives
+- `../Archive/06-Phase-2/Planning_and_Strategy/`: Archived snapshot and superseded strategy lineage
+- `Meetings/`: Consolidated minutes and meeting exports
+- `External_Exports/`: Static exports from competition sources
+- `Transcripts/`: Raw transcript artifacts
+
+## 5. Operations Linkage
+
+Session execution manifests and logs are maintained in:
+
+- `docs/04-Operations/Intent-Log/Josh/`
+
+Use that workspace for campaign sequencing, transient execution notes, and batch closeout records.
