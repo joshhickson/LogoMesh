@@ -1,0 +1,53 @@
+{
+  manifest_version: "0.1.0",
+
+  // LogoMesh Sprint 4 generalist purple agent for AgentX-AgentBeats Phase 2.
+  // Detects required output format (JSON, text, structured) from each
+  // benchmark green agent's incoming task and responds accordingly via the
+  // A2A protocol.
+
+  config_schema: {
+    type: "object",
+    properties: {
+      openai_api_key: {
+        type: "string",
+        secret: true,
+        description: "OpenAI-compatible API key (works with OpenRouter, Together, vLLM, etc. via openai_base_url).",
+      },
+      openai_base_url: {
+        type: "string",
+        description: "Optional. Base URL for non-OpenAI providers (e.g. https://openrouter.ai/api/v1). Leave empty for OpenAI.",
+      },
+      model: {
+        type: "string",
+        default: "gpt-4.1",
+        description: "LLM model identifier passed to the OpenAI client (e.g. gpt-4.1, gpt-4o, anthropic/claude-sonnet-4-5).",
+      },
+    },
+    required: ["openai_api_key"],
+    additionalProperties: false,
+  },
+
+  slots: {},
+
+  program: {
+    image: "ghcr.io/logomesh/logomesh-purple:latest",
+    entrypoint: "python3 main.py --role PURPLE --host 0.0.0.0 --port 9010",
+    env: {
+      OPENAI_API_KEY: "${config.openai_api_key}",
+      OPENAI_BASE_URL: "${config.openai_base_url}",
+      LOGOMESH_PURPLE_MODEL: "${config.model}",
+    },
+    network: {
+      endpoints: [
+        { name: "a2a_endpoint", port: 9010 },
+      ],
+    },
+  },
+
+  provides: {
+    a2a: { kind: "a2a", endpoint: "a2a_endpoint" },
+  },
+
+  exports: { a2a: "a2a" },
+}
