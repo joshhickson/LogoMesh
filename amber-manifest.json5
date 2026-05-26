@@ -16,12 +16,13 @@
       },
       openai_base_url: {
         type: "string",
+        default: "",
         description: "Optional. Base URL for non-OpenAI providers (e.g. https://openrouter.ai/api/v1). Leave empty for OpenAI.",
       },
       model: {
         type: "string",
         default: "gpt-4.1",
-        description: "LLM model identifier passed to the OpenAI client (e.g. gpt-4.1, gpt-4o, anthropic/claude-sonnet-4-5).",
+        description: "LLM model identifier passed to the OpenAI client (e.g. gpt-4.1, gpt-4o, anthropic/claude-sonnet-4-5). Empty string falls back to gpt-4.1.",
       },
     },
     required: ["openai_api_key"],

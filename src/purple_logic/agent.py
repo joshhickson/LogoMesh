@@ -78,7 +78,7 @@ def run_purple_agent(host: str, port: int, card_url: str | None = None) -> None:
     if card_url:
         print(f"[PurpleAgent] advertising card url: {card_url}")
 
-    model = os.getenv("LOGOMESH_PURPLE_MODEL", "gpt-4.1")
+    model = os.getenv("LOGOMESH_PURPLE_MODEL") or "gpt-4.1"
     executor = Sprint4PurpleExecutor(model=model)
     agent_card = build_agent_card(host, port, card_url)
 

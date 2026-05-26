@@ -103,11 +103,15 @@ class Sprint4PurpleExecutor(AgentExecutor):
     """
 
     def __init__(self, model: str | None = None):
+        # Treat empty-string env values as unset so Amber's `${config.x}`
+        # substitution with an empty default doesn't break the OpenAI client.
+        base_url = os.getenv("OPENAI_BASE_URL") or None
         self.client = AsyncOpenAI(
             api_key=os.getenv("OPENAI_API_KEY"),
-            base_url=os.getenv("OPENAI_BASE_URL"),
+            base_url=base_url,
         )
-        self.model = model or os.getenv("LOGOMESH_PURPLE_MODEL", "gpt-4.1")
+        env_model = os.getenv("LOGOMESH_PURPLE_MODEL") or None
+        self.model = model or env_model or "gpt-4.1"
         self.system_prompt = SPRINT4_SYSTEM_PROMPT
         self._history: dict[str, list[dict[str, str]]] = {}
 
