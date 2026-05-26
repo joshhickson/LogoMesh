@@ -2,7 +2,7 @@
 # Excludes vllm/torch/sentence-transformers/google-adk which are only needed
 # by the Phase 1 green and red agents — including them bloats the image past
 # the AgentBeats runner's disk limit.
-a2a-sdk[http-server]>=0.3.5
+a2a-sdk[http-server]>=0.3.5,<1.0
 openai>=2.8.1
 python-dotenv>=1.1.1
 uvicorn>=0.35.0
