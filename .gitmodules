@@ -1,0 +1,3 @@
+[submodule "external/leaderboard-v2"]
+	path = external/leaderboard-v2
+	url = https://github.com/sszz01/logomesh-leaderboard-2.git

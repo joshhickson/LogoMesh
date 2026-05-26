@@ -1,0 +1,134 @@
+name: Publish Purple Agent
+
+# Publishes the Sprint 4 generalist purple agent to GitHub Container Registry
+# so agentbeats.dev can resolve our docker_image when greens schedule us.
+#
+# Image: ghcr.io/<owner>/logomesh-purple
+# Tags:
+#   - On push to main-generalized-phase2:        :latest, :main-generalized-phase2-<sha>
+#   - On version tag (v1.2.3):                   :v1.2.3, :1.2.3, :1.2, :1
+#   - On PR:                                     :pr-<n> (built but not pushed)
+
+on:
+  push:
+    branches:
+      - main-generalized-phase2
+      - main-generalized-phase2-submodules
+    tags:
+      - 'v*'
+    paths:
+      - 'src/purple_logic/**'
+      - 'main.py'
+      - 'Dockerfile.purple'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/publish-purple.yml'
+  pull_request:
+    paths:
+      - 'src/purple_logic/**'
+      - 'main.py'
+      - 'Dockerfile.purple'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/publish-purple.yml'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set image name (lowercase)
+        id: image
+        run: echo "name=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/logomesh-purple" >> $GITHUB_OUTPUT
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ steps.image.outputs.name }}
+          tags: |
+            type=ref,event=pr,prefix=pr-
+            type=ref,event=branch
+            type=sha,prefix=,enable=${{ github.event_name == 'push' && github.ref_type == 'branch' }}
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main-generalized-phase2' }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build (load locally for smoke test)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile.purple
+          platforms: linux/amd64
+          push: false
+          load: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Smoke test agent card
+        run: |
+          IMAGE=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
+          docker run -d --name purple-smoke -p 9010:9010 \
+            -e OPENAI_API_KEY=smoke-test-key \
+            "$IMAGE" --host 0.0.0.0 --port 9010 --card-url http://localhost:9010
+          # Poll until card endpoint responds (timeout 30s)
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:9010/.well-known/agent-card.json > /tmp/card.json; then
+              echo "Agent card served after ${i}s"
+              break
+            fi
+            sleep 1
+          done
+          # Verify card has our skill declared
+          if ! grep -q '"sprint4_generalist"' /tmp/card.json; then
+            echo "ERROR: agent card did not advertise sprint4_generalist skill"
+            cat /tmp/card.json
+            docker logs purple-smoke
+            exit 1
+          fi
+          echo "Smoke test passed."
+          docker logs purple-smoke
+          docker stop purple-smoke
+
+      - name: Log in to GHCR
+        if: success() && github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push image
+        if: success() && github.event_name != 'pull_request'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile.purple
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Summary
+        if: success() && github.event_name != 'pull_request'
+        run: |
+          echo "## Purple agent image published" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Tags:**" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.meta.outputs.tags }}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Use the image reference above when registering this purple agent at https://agentbeats.dev/register-agent" >> $GITHUB_STEP_SUMMARY
