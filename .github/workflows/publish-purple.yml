@@ -20,16 +20,14 @@ on:
       - 'src/purple_logic/**'
       - 'main.py'
       - 'Dockerfile.purple'
-      - 'pyproject.toml'
-      - 'uv.lock'
+      - 'requirements-purple.txt'
       - '.github/workflows/publish-purple.yml'
   pull_request:
     paths:
       - 'src/purple_logic/**'
       - 'main.py'
       - 'Dockerfile.purple'
-      - 'pyproject.toml'
-      - 'uv.lock'
+      - 'requirements-purple.txt'
       - '.github/workflows/publish-purple.yml'
   workflow_dispatch:
 

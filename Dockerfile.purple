@@ -1,34 +1,34 @@
-# Standalone Purple Agent Dockerfile
-FROM python:3.11-bookworm
+# Slim Dockerfile for the Sprint 4 purple agent.
+# Uses requirements-purple.txt (not the full pyproject.toml) so the image
+# stays small enough for the AgentBeats GitHub Actions runner to extract.
+FROM python:3.11-slim-bookworm
 
-ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
-    git \
     && rm -rf /var/lib/apt/lists/*
 
-# Install uv
-RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR="/usr/local/bin" sh
+# uv for fast, reproducible installs.
+RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/bin sh
 
 WORKDIR /app
 
-# Python dependencies
-COPY pyproject.toml uv.lock README.md ./
-RUN uv sync --frozen
+# Install only the purple's deps — no vllm/torch/transformers.
+COPY requirements-purple.txt .
+RUN uv pip install --system --no-cache -r requirements-purple.txt
 
-# Copy source code
-COPY src/ src/
-COPY scenarios/ scenarios/
+# Only ship what the purple actually imports.
+COPY src/purple_logic src/purple_logic
 COPY main.py .
 
-# Runtime configuration
-ENV PATH="/app/.venv/bin:$PATH"
 ENV PYTHONPATH="/app:/app/src"
 
 EXPOSE 9010
 
-# Purple Agent entrypoint. AgentBeats overrides CMD args (--host, --port,
-# --card-url) when scheduling assessments; defaults below are for local runs.
+# AgentBeats overrides CMD args (--host, --port, --card-url) when scheduling
+# assessments; defaults below are for local runs.
 ENTRYPOINT ["python3", "main.py", "--role", "PURPLE"]
 CMD ["--host", "0.0.0.0", "--port", "9010"]
