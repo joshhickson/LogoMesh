@@ -30,7 +30,7 @@ def start_purple_agent(args):
     except ImportError:
         from purple_logic.agent import run_purple_agent
     print("[Polyglot] Starting Purple Agent...")
-    run_purple_agent(args.host, args.port)
+    run_purple_agent(args.host, args.port, args.card_url or None)
 
 
 def start_red_agent(args):

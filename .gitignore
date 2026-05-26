@@ -37,3 +37,6 @@ docs/2026-02-05-Founder-Strategy-Session.md
 .idea/
 .vscode/
 .claude/
+
+# External reference clones (not part of LogoMesh source)
+external/_ref/

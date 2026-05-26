@@ -26,6 +26,9 @@ COPY main.py .
 ENV PATH="/app/.venv/bin:$PATH"
 ENV PYTHONPATH="/app:/app/src"
 
-# Purple Agent entrypoint
+EXPOSE 9010
+
+# Purple Agent entrypoint. AgentBeats overrides CMD args (--host, --port,
+# --card-url) when scheduling assessments; defaults below are for local runs.
 ENTRYPOINT ["python3", "main.py", "--role", "PURPLE"]
 CMD ["--host", "0.0.0.0", "--port", "9010"]
