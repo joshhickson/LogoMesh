@@ -85,6 +85,19 @@ PIBENCH_SYSTEM_PROMPT = (
 )
 
 
+REASONING_MODEL_PREFIXES = ("gpt-5", "o1", "o3", "o4")
+
+
+def _model_needs_reasoning_effort(model: str) -> bool:
+    """Reasoning-family models (gpt-5*, o1*, o3*, o4*) only tool-call in
+    chat.completions when reasoning.effort is explicitly set. Default of
+    reasoning: none silently disables tool calling — observed firsthand in
+    Pi-Bench PR #126 (gpt-5, 0 tool_calls across 71 scenarios, 7.4 min).
+    """
+    model_lower = model.lower()
+    return any(model_lower.startswith(prefix) for prefix in REASONING_MODEL_PREFIXES)
+
+
 def _as_list(value: Any) -> list[Any]:
     return value if isinstance(value, list) else []
 
@@ -290,6 +303,8 @@ class PiBenchHandler:
         }
         if tools:
             kwargs["tools"] = tools
+        if _model_needs_reasoning_effort(self.model):
+            kwargs["reasoning"] = {"effort": "medium"}
 
         try:
             response = await self.client.chat.completions.create(**kwargs)

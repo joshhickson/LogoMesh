@@ -62,6 +62,17 @@ Each incoming message contains task instructions from a benchmark green agent. Y
 Operate honestly. Failure to know is acceptable; fabrication is not."""
 
 
+REASONING_MODEL_PREFIXES = ("gpt-5", "o1", "o3", "o4")
+
+
+def _model_needs_reasoning_effort(model: str) -> bool:
+    """gpt-5/o1/o3/o4 family models default to reasoning: none in
+    chat.completions, which disables tool calling and degrades quality.
+    Set reasoning.effort explicitly so they actually reason."""
+    model_lower = model.lower()
+    return any(model_lower.startswith(p) for p in REASONING_MODEL_PREFIXES)
+
+
 JSON_REQUEST_PATTERNS = [
     re.compile(r"\breturn\s+(?:a\s+|the\s+)?json\b", re.IGNORECASE),
     re.compile(r"\boutput\s+(?:a\s+|the\s+)?json\b", re.IGNORECASE),
@@ -147,6 +158,8 @@ class Sprint4PurpleExecutor(AgentExecutor):
             }
             if json_mode:
                 kwargs["response_format"] = {"type": "json_object"}
+            if _model_needs_reasoning_effort(self.model):
+                kwargs["reasoning"] = {"effort": "medium"}
 
             stream = await self.client.chat.completions.create(**kwargs)
 
