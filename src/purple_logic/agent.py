@@ -19,8 +19,10 @@ from a2a.types import AgentCapabilities, AgentCard, AgentSkill
 
 try:
     from src.purple_logic.sprint4_executor import Sprint4PurpleExecutor
+    from src.purple_logic.pibench_shim import PiBenchResponseShimMiddleware
 except ImportError:
     from purple_logic.sprint4_executor import Sprint4PurpleExecutor
+    from purple_logic.pibench_shim import PiBenchResponseShimMiddleware
 
 
 SKILL_TAGS = [
@@ -87,9 +89,11 @@ def run_purple_agent(host: str, port: int, card_url: str | None = None) -> None:
         task_store=InMemoryTaskStore(),
     )
 
-    app = A2AStarletteApplication(
+    a2a_app = A2AStarletteApplication(
         agent_card=agent_card,
         http_handler=request_handler,
     )
+    starlette_app = a2a_app.build()
+    starlette_app.add_middleware(PiBenchResponseShimMiddleware)
 
-    uvicorn.run(app.build(), host=host, port=port, timeout_keep_alive=300)
+    uvicorn.run(starlette_app, host=host, port=port, timeout_keep_alive=300)
