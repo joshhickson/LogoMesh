@@ -1,14 +1,17 @@
 """Sprint 4 purple-agent A2A server.
 
-Exposes the LogoMesh purple agent via the A2A protocol so AgentX-AgentBeats
-green agents can dispatch assessments against it. The agent card declares a
-single broad skill so the platform's Quick Submit flow can target this purple
-at any of the Sprint 4 green-agent benchmarks (≥5 greens / ≥3 categories
-required for judging eligibility).
+Two protocol paths share one process:
+  - Pi-Bench `kind: "data"` bootstrap+turn (PiBenchHandler + middleware)
+  - Standard A2A `kind: "text"` (Sprint4PurpleExecutor via a2a-sdk)
+
+PiBenchRouteMiddleware sniffs incoming POST / bodies. Pi-Bench-shape requests
+are answered directly with the JSON-RPC envelope Pi-Bench's parser expects.
+Everything else falls through to the a2a-sdk Starlette app.
 """
 
 from __future__ import annotations
 
+import logging
 import os
 
 import uvicorn
@@ -16,13 +19,24 @@ from a2a.server.apps import A2AStarletteApplication
 from a2a.server.request_handlers import DefaultRequestHandler
 from a2a.server.tasks import InMemoryTaskStore
 from a2a.types import AgentCapabilities, AgentCard, AgentSkill
+from openai import AsyncOpenAI
 
 try:
     from src.purple_logic.sprint4_executor import Sprint4PurpleExecutor
-    from src.purple_logic.pibench_shim import PiBenchResponseShimMiddleware
+    from src.purple_logic.pibench_handler import (
+        PIBENCH_SYSTEM_PROMPT,
+        POLICY_BOOTSTRAP_EXTENSION,
+        PiBenchHandler,
+    )
+    from src.purple_logic.pibench_shim import PiBenchRouteMiddleware
 except ImportError:
     from purple_logic.sprint4_executor import Sprint4PurpleExecutor
-    from purple_logic.pibench_shim import PiBenchResponseShimMiddleware
+    from purple_logic.pibench_handler import (
+        PIBENCH_SYSTEM_PROMPT,
+        POLICY_BOOTSTRAP_EXTENSION,
+        PiBenchHandler,
+    )
+    from purple_logic.pibench_shim import PiBenchRouteMiddleware
 
 
 SKILL_TAGS = [
@@ -47,15 +61,14 @@ def build_agent_card(host: str, port: int, card_url: str | None) -> AgentCard:
         description=(
             "Generalist purple agent that solves benchmark tasks across coding, "
             "agent-safety, cybersecurity, computer-use, tau2 dual-control, policy "
-            "trace, research, and general-purpose categories. Detects expected "
-            "output format from incoming messages (JSON, plain text, structured "
-            "artifacts) and responds accordingly."
+            "trace, research, and general-purpose categories. Supports the Pi-Bench "
+            "bootstrap extension and OpenAI function-calling tool protocol."
         ),
         tags=SKILL_TAGS,
         examples=[
             "Given a SQL task with schema and question, return JSON with a 'sql' field.",
             "Given a customer-service multi-turn task, follow policy and tool instructions.",
-            "Given a policy-compliance scenario, emit a structured verdict, using AMBIGUOUS_POLICY when scope is unclear.",
+            "Given a policy-compliance scenario, emit the required record_decision tool call.",
             "Given a network diagnosis prompt without live cluster access, produce a reasoned kubectl plan.",
         ],
     )
@@ -79,9 +92,23 @@ def run_purple_agent(host: str, port: int, card_url: str | None = None) -> None:
     print(f"[PurpleAgent] starting Sprint 4 generalist on {host}:{port}")
     if card_url:
         print(f"[PurpleAgent] advertising card url: {card_url}")
+    logging.basicConfig(
+        level=os.getenv("LOG_LEVEL", "INFO"),
+        format="%(asctime)s %(name)s %(levelname)s %(message)s",
+    )
 
     model = os.getenv("LOGOMESH_PURPLE_MODEL") or "gpt-4.1"
+
+    # Shared OpenAI client so both protocol paths use the same auth + base URL.
+    base_url = os.getenv("OPENAI_BASE_URL") or None
+    openai_client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=base_url)
+
     executor = Sprint4PurpleExecutor(model=model)
+    # Reuse the executor's already-configured client for the pi-bench handler so
+    # any future model/endpoint changes only need to land in one place.
+    executor.client = openai_client
+    pibench_handler = PiBenchHandler(openai_client=openai_client, model=model)
+
     agent_card = build_agent_card(host, port, card_url)
 
     request_handler = DefaultRequestHandler(
@@ -94,6 +121,6 @@ def run_purple_agent(host: str, port: int, card_url: str | None = None) -> None:
         http_handler=request_handler,
     )
     starlette_app = a2a_app.build()
-    starlette_app.add_middleware(PiBenchResponseShimMiddleware)
+    starlette_app.add_middleware(PiBenchRouteMiddleware, handler=pibench_handler)
 
     uvicorn.run(starlette_app, host=host, port=port, timeout_keep_alive=300)
