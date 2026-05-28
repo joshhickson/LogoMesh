@@ -159,7 +159,8 @@ class Sprint4PurpleExecutor(AgentExecutor):
             if json_mode:
                 kwargs["response_format"] = {"type": "json_object"}
             if _model_needs_reasoning_effort(self.model):
-                kwargs["reasoning"] = {"effort": "medium"}
+                # chat.completions uses top-level snake_case `reasoning_effort`.
+                kwargs["reasoning_effort"] = "medium"
 
             stream = await self.client.chat.completions.create(**kwargs)
 

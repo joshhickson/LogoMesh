@@ -304,7 +304,10 @@ class PiBenchHandler:
         if tools:
             kwargs["tools"] = tools
         if _model_needs_reasoning_effort(self.model):
-            kwargs["reasoning"] = {"effort": "medium"}
+            # Chat Completions uses top-level reasoning_effort (snake_case).
+            # The nested reasoning={"effort": ...} form is for responses.create
+            # only and is silently ignored by chat.completions.create.
+            kwargs["reasoning_effort"] = "medium"
 
         try:
             response = await self.client.chat.completions.create(**kwargs)
